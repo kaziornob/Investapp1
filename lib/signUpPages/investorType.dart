@@ -1,5 +1,4 @@
-import 'package:auro/login.dart';
-import 'package:auro/signUpPages/signUp.dart';
+import 'package:auro/signUpPages/piEmpStatus.dart';
 import 'package:flutter/material.dart';
 import 'package:auro/style/theme.dart' as Theme;
 
@@ -63,7 +62,8 @@ class _InvestorTypeState extends State<InvestorType> {
                           ),
                           onPressed: () async {
                             Navigator.of(context).push(new MaterialPageRoute(
-                                builder: (BuildContext context) => new Login()));
+                                builder: (BuildContext context) =>
+                                    PiEmpStatus()));
                           },
                         ),
                       ),
@@ -135,8 +135,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                   fontFamily: "WorkSansBold"),
                             ),
                             onPressed: () async {
-                              Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (BuildContext context) => new Login()));
+
                             },
                           ),
                         ),
@@ -189,8 +188,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                     fontFamily: "WorkSansBold"),
                               ),
                               onPressed: () async {
-                                Navigator.of(context).push(new MaterialPageRoute(
-                                    builder: (BuildContext context) => new Login()));
+
                               },
                             ),
                           ),
