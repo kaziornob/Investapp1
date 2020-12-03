@@ -62,7 +62,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  ScrollController _loginPageScrollController = new ScrollController();
+  ScrollController _signUpPageScrollController = new ScrollController();
 
   @override
   void initState() {
@@ -76,12 +76,12 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
 
         if(visible==true)
         {
-          _loginPageScrollController.animateTo(_loginPageScrollController.position.maxScrollExtent,
+          _signUpPageScrollController.animateTo(_signUpPageScrollController.position.maxScrollExtent,
               duration: Duration(milliseconds: 700), curve: Curves.linear);
         }
         else
         {
-          _loginPageScrollController.animateTo(_loginPageScrollController.position.minScrollExtent,
+          _signUpPageScrollController.animateTo(_signUpPageScrollController.position.minScrollExtent,
               duration: Duration(milliseconds: 700), curve: Curves.linear);
         }
       },
@@ -100,7 +100,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     Form form = new Form(
 
         child: new ListView(
-          controller: _loginPageScrollController,
+          controller: _signUpPageScrollController,
           children: <Widget>[
 
             Container(

@@ -1,14 +1,11 @@
 import 'dart:async';
-
+import 'package:auro/signUpPages/userDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:auro//forgotPassword.dart';
 import 'package:auro/style/theme.dart' as Theme;
 import 'package:auro/serverConfigRequest/AllRequest.dart';
 import 'package:toast/toast.dart';
-
-
 
 
 class OtpPage extends StatefulWidget {
@@ -529,7 +526,9 @@ class OtpPageState extends State<OtpPage> {
 
                             if(finalOtp.length==4)
                             {
-                              var value = await submit(finalOtp);
+                              matchOtp();
+
+                              /*var value = await submit(finalOtp);
 
                               if (value == 'OTP Matched') {
                                 matchOtp();
@@ -539,7 +538,7 @@ class OtpPageState extends State<OtpPage> {
                                 Toast.show("$value" + "", context,
                                     duration: Toast.LENGTH_LONG,
                                     gravity: Toast.BOTTOM);
-                              }
+                              }*/
                             }
                             else
                             {
@@ -715,14 +714,18 @@ class OtpPageState extends State<OtpPage> {
                     _state = 2;
                     otpWaitTimeLabel = "00:00";
                   });
-                  if(_state==2)
+                  /*if(_state==2)
                     {
 
                       Navigator.of(context).pop();
-/*                      Navigator.of(context).push(new MaterialPageRoute(
+                      Navigator.of(context).push(new MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              ForgotPassword(email: widget.email)));*/
-                    }
+                              UserDetails()));
+                    }*/
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          UserDetails()));
                 },
               ),
             ],);

@@ -1,5 +1,5 @@
 import 'package:auro/login.dart';
-import 'package:auro/signUp.dart';
+import 'package:auro/signUpPages/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:auro/style/theme.dart' as Theme;
 
