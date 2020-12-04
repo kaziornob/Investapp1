@@ -17,7 +17,7 @@ class RadioQusTemplate extends StatefulWidget {
 
 class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
-  int selectedValue;
+  String selectedValue;
 
   Widget getOptionList(options) {
     return Column(
@@ -27,9 +27,9 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
             title: Text(
               "${option['title']}",
               style: TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 16.5,
                   color: Color(0xFFFFFFFF),
-                  fontFamily: "WorkSansBold"),
+                  fontFamily: "Poppins"),
             ),
             subtitle: Visibility(
               visible: option['subTitle']!='' ? true :false,
@@ -38,12 +38,12 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                 style: TextStyle(
                     fontSize: 15.0,
                     color: Color(0xFFFFFFFF),
-                    fontFamily: "WorkSansBold"),
+                    fontFamily: "Poppins"),
               ),
             ),
             value: option["option_value"],
             groupValue: selectedValue,
-            // activeColor: Color(0xFFffffff),
+            activeColor: Color(0xFFffffff),
             onChanged: (value) {
               print("Radio Tile pressed $value");
               setState(() => selectedValue = value);
@@ -91,12 +91,12 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 35.0,left: 25.0),
+                    margin: EdgeInsets.only(top: 35.0,bottom: 14.0,left: 25.0,right: 3.0),
                     child: Text(
                       '${widget.optionData[0].qusHeadline}',
                       style: new TextStyle(
                           fontFamily: "WorkSansSemiBold",
-                          color: Color(0xFFFFFFFF), fontSize: 21.0,
+                          color: Color(0xFFFFFFFF), fontSize: 18.0,
                           letterSpacing: 0.1
                       ),
                     ),
@@ -116,20 +116,17 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                     child: MaterialButton(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 42.0),
+                            vertical: 1.0, horizontal: 30.0),
                         child: Text(
                           "NEXT",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 25.0,
+                              fontSize: 22.0,
                               fontFamily: "WorkSansBold"),
                         ),
                       ),
                       onPressed: () async {
                         submit();
- /*                       Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PiVersion()));*/
                       },
                     ),
                   ),
