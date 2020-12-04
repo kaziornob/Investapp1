@@ -1,5 +1,6 @@
-import 'package:auro/models/radioQuestionModel.dart';
+import 'package:auro/models/radioQusModel.dart';
 import 'package:auro/radioQusTemplate.dart';
+import 'package:auro/resources/radioQusTemplateData.dart';
 import 'package:auro/signUpPages/expLevel.dart';
 import 'package:auro/signUpPages/investorType.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,13 @@ import 'package:auro/serverConfigRequest/AllRequest.dart';
 
 
 class PiEmpStatus extends StatefulWidget {
+
+  final String parentFrom;
+
+  const PiEmpStatus({Key key, @required this.parentFrom}) : super(key: key);
+
   static bool piEmpStatusKeyboardVisible=false;
   static bool piEmpStatusSubmitPressed=false;
-  
-  PiEmpStatus({Key key}) : super(key: key);
 
   @override
   _PiEmpStatusState createState() => new _PiEmpStatusState();
@@ -379,87 +383,21 @@ class _PiEmpStatusState extends State<PiEmpStatus> with SingleTickerProviderStat
     }
   }
 
-  // sign up process
   Future empDetailSubmit() async {
 
-    setDataToQusModel();
-
-    // print("radio qus model obj: $obj");
-
+    List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'empStatus');
+    /*if (questions.length < 1) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => ErrorPage(
+            message:
+            "There are not enough questions yet.",
+          )));
+      return;
+    }*/
+    Navigator.of(context).pop();
     Navigator.of(context).push(new MaterialPageRoute(
         builder: (BuildContext context) =>
-            RadioQusTemplate()));
-
-/*    setState(() {
-      _saving = true;
-      UserDetails.userDetailPressed = false;
-    });
-
-    var firstName = detailFirstNameController.text;
-    var lastName = detailLastNameController.text;
-    var dob = detailDobController.text;
-    var country = detailCountryController.text;
-    // set up POST request arguments
-    String json =
-        '{"firstName":"$firstName","lastName":"$lastName","dob":"$dob","country":"$country"}';
-    var response = await request.submitSignUp(json);
-    return response;*/
-  }
-
-
-  setDataToQusModel()
-  {
-
-    var logo = 'login_logo.png';
-    var logoBottomLine = 'YOUR PERSONAL ASSET MANAGER';
-    var qusHeadline = 'What is your level of investing experience?';
-    var qusOptions =
-    [
-      {
-        "title": "Newbie - no experience",
-        "subTitle": "(0 years of trading experience)",
-      },
-      {
-        "title": "Investo-curious - know a little about investing",
-        "subTitle": "(1-2 years of trading experience)",
-      },
-      {
-        "title": "Up-and-Comer-have tried investing before",
-        "subTitle": "(3-5 years of trading experience)",
-      },
-      {
-        "title": "Veteran - lots of experience",
-        "subTitle": "(>5 years of trading experience)",
-      },
-    ];
-
-    RadioQusModel(logo,logoBottomLine,qusHeadline,qusOptions);
-
-/*    RadioQusModel obj = new RadioQusModel();
-
-    obj.logo = 'login_logo.png';
-    obj.logoBottomLine = 'YOUR PERSONAL ASSET MANAGER';
-    obj.qusHeadline = 'What is your level of investing experience?';
-    obj.qusOptions =
-    [
-      {
-        "title": "Newbie - no experience",
-        "subTitle": "(0 years of trading experience)",
-      },
-      {
-        "title": "Investo-curious - know a little about investing",
-        "subTitle": "(1-2 years of trading experience)",
-      },
-      {
-        "title": "Up-and-Comer-have tried investing before",
-        "subTitle": "(3-5 years of trading experience)",
-      },
-      {
-        "title": "Veteran - lots of experience",
-        "subTitle": "(>5 years of trading experience)",
-      },
-    ];*/
-
+            RadioQusTemplate(optionData: questions)));
   }
 
 }

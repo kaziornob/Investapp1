@@ -63,7 +63,7 @@ class _InvestorTypeState extends State<InvestorType> {
                           onPressed: () async {
                             Navigator.of(context).push(new MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    PiEmpStatus()));
+                                    PiEmpStatus(parentFrom: 'Accredited Investor')));
                           },
                         ),
                       ),

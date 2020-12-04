@@ -1,4 +1,5 @@
-import 'package:auro/models/radioQuestionModel.dart';
+import 'package:auro/models/radioQusModel.dart';
+import 'package:auro/resources/radioQusTemplateData.dart';
 import 'package:auro/signUpPages/piVersion.dart';
 import 'package:flutter/material.dart';
 import 'package:auro/style/theme.dart' as Theme;
@@ -16,101 +17,38 @@ class RadioQusTemplate extends StatefulWidget {
 
 class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
-  Widget getOptionList() {
+  int selectedValue;
+
+  Widget getOptionList(options) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        RadioListTile(
-          value: 1,
-          groupValue: 1,
-          title: Text(
-            "Newbie - no experience",
-            style: TextStyle(
-                fontSize: 18.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          subtitle: Text(
-            "(0 years of trading experience)",
-            style: TextStyle(
-                fontSize: 15.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          onChanged: (val) {
-            print("Radio Tile pressed $val");
-          },
-          activeColor: Color(0xFFffffff),
-        ),
-        Divider(),
-        RadioListTile(
-          value: 1,
-          groupValue: 1,
-          title: Text(
-            "Investo-curious - know a little about investing",
-            style: TextStyle(
-                fontSize: 18.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          subtitle: Text(
-            "(1-2 years of trading experience)",
-            style: TextStyle(
-                fontSize: 15.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          onChanged: (val) {
-            print("Radio Tile pressed $val");
-          },
-          activeColor: Color(0xFFffffff),
-        ),
-        Divider(),
-        RadioListTile(
-          value: 1,
-          groupValue: 1,
-          title: Text(
-            "Up-and-Comer-have tried investing before",
-            style: TextStyle(
-                fontSize: 18.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          subtitle: Text(
-            "(3-5 years of trading experience)",
-            style: TextStyle(
-                fontSize: 15.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          onChanged: (val) {
-            print("Radio Tile pressed $val");
-          },
-          activeColor: Color(0xFFffffff),
-        ),
-        Divider(),
-        RadioListTile(
-          value: 1,
-          groupValue: 1,
-          title: Text(
-            "Veteran - lots of experience",
-            style: TextStyle(
-                fontSize: 18.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          subtitle: Text(
-            "(>5 years of trading experience)",
-            style: TextStyle(
-                fontSize: 15.0,
-                color: Color(0xFFFFFFFF),
-                fontFamily: "WorkSansBold"),
-          ),
-          onChanged: (val) {
-            print("Radio Tile pressed $val");
-          },
-          activeColor: Color(0xFFffffff),
-        ),
+        ...options.map((option) => RadioListTile(
+            title: Text(
+              "${option['title']}",
+              style: TextStyle(
+                  fontSize: 18.0,
+                  color: Color(0xFFFFFFFF),
+                  fontFamily: "WorkSansBold"),
+            ),
+            subtitle: Visibility(
+              visible: option['subTitle']!='' ? true :false,
+              child: Text(
+                "${option['subTitle']}",
+                style: TextStyle(
+                    fontSize: 15.0,
+                    color: Color(0xFFFFFFFF),
+                    fontFamily: "WorkSansBold"),
+              ),
+            ),
+            value: option["option_value"],
+            groupValue: selectedValue,
+            // activeColor: Color(0xFFffffff),
+            onChanged: (value) {
+              print("Radio Tile pressed $value");
+              setState(() => selectedValue = value);
+            },
+        )),
       ],
     );
   }
@@ -118,6 +56,10 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
   @override
   Widget build(BuildContext context) {
+
+    RadioQusModel question = widget.optionData[0];
+    final List<dynamic> options = question.qusOptions;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -135,13 +77,12 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                     child: new Image(
                         width: 290.0,
                         fit: BoxFit.fill,
-                        // ${widget.optionData[0].logo}
-                        image: new AssetImage('assets/login_logo.png')),
+                        image: new AssetImage('assets/${widget.optionData[0].logo}')),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 15.0),
                     child: Text(
-                      'YOUR PERSONAL ASSET MANAGER',
+                      '${widget.optionData[0].logoBottomLine}',
                       style: new TextStyle(
                           fontFamily: "WorkSansSemiBold",
                           color: Color(0xFFFFFFFF), fontSize: 17.0,
@@ -152,7 +93,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                   Container(
                     margin: EdgeInsets.only(top: 35.0,left: 25.0),
                     child: Text(
-                      'What is your level of investing experience?',
+                      '${widget.optionData[0].qusHeadline}',
                       style: new TextStyle(
                           fontFamily: "WorkSansSemiBold",
                           color: Color(0xFFFFFFFF), fontSize: 21.0,
@@ -163,11 +104,11 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                   Container(
                     child: Padding(
                       padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                      child: getOptionList(),
+                      child: getOptionList(options),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20.0),
+                    margin: EdgeInsets.only(top: 5.0),
                     decoration: new BoxDecoration(
                       color: Color(0xFFfec20f),
                       borderRadius: BorderRadius.all(Radius.circular(30.0)),
@@ -185,9 +126,10 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                         ),
                       ),
                       onPressed: () async {
-                        Navigator.of(context).push(new MaterialPageRoute(
+                        submit();
+ /*                       Navigator.of(context).push(new MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                PiVersion()));
+                                PiVersion()));*/
                       },
                     ),
                   ),
@@ -200,5 +142,24 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
         ),
       )
     );
+  }
+
+  Future submit() async {
+
+    var childFrom = widget.optionData[0].childFrom=='empStatus' ? 'piVersion' : '';
+
+    List<RadioQusModel> questions = await getRadioQusTempData(widget.optionData[0].parentFrom,childFrom);
+    /*if (questions.length < 1) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => ErrorPage(
+            message:
+            "There are not enough questions yet.",
+          )));
+      return;
+    }*/
+    Navigator.of(context).pop();
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) =>
+            RadioQusTemplate(optionData: questions)));
   }
 }
