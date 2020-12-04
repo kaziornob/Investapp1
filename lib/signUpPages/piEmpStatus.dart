@@ -1,8 +1,6 @@
 import 'package:auro/models/radioQusModel.dart';
 import 'package:auro/radioQusTemplate.dart';
 import 'package:auro/resources/radioQusTemplateData.dart';
-import 'package:auro/signUpPages/expLevel.dart';
-import 'package:auro/signUpPages/investorType.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -60,6 +58,17 @@ class _PiEmpStatusState extends State<PiEmpStatus> with SingleTickerProviderStat
   }
 
   ScrollController _piEmpStatusScrollController = new ScrollController();
+  List<String> empStatusList = <String>['Employed','Retired','Self-Employed','At home trader (no other occupation)','Student/ Intern','Unemployed','Homemaker'];
+  
+  List<String> empNatureBuss = <String>['Architecture/Engineering','Arts/Design','Business, Non-Finance','Community/Social Service',
+    'Computer/Information Technology','Construction/Extraction','Education/Training/Library','Farming, Fishing and Forestry','Finance/Broker Dealer (407 flag)',
+      'Food Preparation and Servicing','Healthcare','Installation, Maintenance, and Repair','Legal','Life, Physical and Social Science','Media and Communications',
+    'Military/Law Enforcement, Government, Protective Service','Personal Care/Service','Production','Transportation and Material Moving'
+  ];
+
+  String selectedEmpStatus;
+  String selectedEmpBuss;
+
 
   @override
   void initState() {
@@ -186,6 +195,114 @@ class _PiEmpStatusState extends State<PiEmpStatus> with SingleTickerProviderStat
     );
   }
 
+  Widget getEmpBussDropDownList()
+  {
+    if (empNatureBuss != null && empNatureBuss.length != 0)
+    {
+      return new DropdownButtonHideUnderline(
+        child: new DropdownButton(
+          value: selectedEmpBuss,
+          isExpanded: true,
+          onChanged: (String newValue) {
+            setState(() {
+              selectedEmpBuss = newValue;
+            });
+          },
+          items: empNatureBuss.map((String value) {
+            return new DropdownMenuItem(
+              value: value,
+              child: new Text(value),
+            );
+          }).toList(),
+        ),
+      );
+    }
+    else
+    {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
+
+
+
+  Widget getEmpBusiness()
+  {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            icon: const Icon(Icons.subject),
+            labelText: 'Nature of employer business',
+            labelStyle: TextStyle(fontSize: 15.0),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedEmpBuss == '',
+          child: getEmpBussDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val!='') || (selectedEmpBuss!=null && selectedEmpBuss!='')) ? null : 'choose nature of employer business';
+      },
+    );
+  }
+  
+  
+  Widget getEmpStatusDropDownList()
+  {
+    if (empStatusList != null && empStatusList.length != 0)
+    {
+      return new DropdownButtonHideUnderline(
+        child: new DropdownButton(
+          value: selectedEmpStatus,
+          isExpanded: true,
+          onChanged: (String newValue) {
+            setState(() {
+              selectedEmpStatus = newValue;
+            });
+          },
+          items: empStatusList.map((String value) {
+            return new DropdownMenuItem(
+              value: value,
+              child: new Text(value),
+            );
+          }).toList(),
+        ),
+      );
+    }
+    else
+    {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
+  
+
+  Widget getEmpStatusField()
+  {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            icon: const Icon(Icons.subject),
+            labelText: 'Employment Status',
+            labelStyle: TextStyle(fontSize: 20.0),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedEmpStatus == '',
+          child: getEmpStatusDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val!='') || (selectedEmpStatus!=null && selectedEmpStatus!='')) ? null : 'Please select employment status';
+      },
+    );
+  }
+
   Widget _buildEmpStatus(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 50.0),
@@ -207,54 +324,14 @@ class _PiEmpStatusState extends State<PiEmpStatus> with SingleTickerProviderStat
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 10.0, bottom: 0.0, left: 25.0, right: 25.0),
-                        child: TextFormField(
-                          focusNode: myFocusNodeEmpStatus,
-                          controller: piEmpStatusController,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.playstation,
-                              color: Colors.black,
-                            ),
-                            hintText: "Employment status",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
+                        padding: EdgeInsets.only(bottom: 0.0, left: 25.0, right: 25.0),
+                        child: getEmpStatusField(),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 10.0, bottom: 0.0, left: 25.0, right: 25.0),
-                        child: TextFormField(
-                          focusNode: myFocusNodeNature,
-                          controller: piEmpStatusNatureController,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.typo3,
-                              color: Colors.black,
-                            ),
-                            hintText: "Nature of employer business",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                          ),
-                        ),
+                        padding: EdgeInsets.only(bottom: 0.0, left: 25.0, right: 25.0),
+                        child: getEmpBusiness(),
                       ),
+
                       Container(
                         width: 250.0,
                         height: 1.0,

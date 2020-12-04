@@ -1,8 +1,7 @@
 import 'package:auro/models/radioQusModel.dart';
 import 'package:auro/resources/radioQusTemplateData.dart';
-import 'package:auro/signUpPages/piVersion.dart';
 import 'package:flutter/material.dart';
-import 'package:auro/style/theme.dart' as Theme;
+import 'package:auro/style/theme.dart' as StyleTheme;
 
 
 class RadioQusTemplate extends StatefulWidget {
@@ -20,7 +19,43 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
   String selectedValue;
 
   Widget getOptionList(options) {
-    return Column(
+    return Theme(
+      data: Theme.of(context).copyWith(
+          unselectedWidgetColor: Colors.white,
+      ),
+      child:  Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ...options.map((option) => RadioListTile(
+            title: Text(
+              "${option['title']}",
+              style: TextStyle(
+                  fontSize: 16.5,
+                  color: Color(0xFFFFFFFF),
+                  fontFamily: "Poppins"),
+            ),
+            subtitle: Visibility(
+              visible: option['subTitle']!='' ? true :false,
+              child: Text(
+                "${option['subTitle']}",
+                style: TextStyle(
+                    fontSize: 15.0,
+                    color: Color(0xFFFFFFFF),
+                    fontFamily: "Poppins"),
+              ),
+            ),
+            value: option["option_value"],
+            groupValue: selectedValue,
+            activeColor: Color(0xFFffffff),
+            onChanged: (value) {
+              print("Radio Tile pressed $value");
+              setState(() => selectedValue = value);
+            },
+          )),
+        ],
+      )
+    );
+/*    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ...options.map((option) => RadioListTile(
@@ -50,7 +85,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
             },
         )),
       ],
-    );
+    );*/
   }
 
 
@@ -68,7 +103,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height*1.1,
               decoration: new BoxDecoration(
-                color: Theme.Colors.backgroundColor,
+                color: StyleTheme.Colors.backgroundColor,
               ),
               child: Column(
                 children: <Widget>[
