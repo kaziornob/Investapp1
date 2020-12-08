@@ -18,6 +18,11 @@ class Colors {
   static const Color loginGradientStart = const Color(0xFFfec20f);
   static const Color loginGradientEnd = const Color(0xFFe70b31);
 
+
+  ///all type button boxDecoration color codes for all of the app pages
+
+  static const Color buttonBoxDecorationColor = const Color(0xFFfec20f);
+
   ///floatingAction color codes
 
   static const Color floatingActionBackground = const Color(0xfffec20f);
@@ -29,11 +34,11 @@ class Colors {
   static const Color BottomNavBarTextColor = const Color(0xff161946);
   static const Color SelectedBottomNavBarTextColor = const Color(0xFFe70b31);
 
-  static const Color BottomNavBarIconColor = const Color(0xff161946);
-  static const Color SelectedBottomNavBarIconColor = const Color(0xFFe70b31);
+  static const Color BottomNavBarIconColor = const Color(0xFFFFFFFF);
+  static const Color SelectedBottomNavBarIconColor = const Color(0xfffec20f);
 
-  static const Color BottomNavBarLabelTextColor = const Color(0xff000000);
-  static const Color SelectedBottomNavBarLabelTextColor = const Color(0xFFe70b31);
+  static const Color BottomNavBarLabelTextColor = const Color(0xFFFFFFFF);
+  static const Color SelectedBottomNavBarLabelTextColor = const Color(0xfffec20f);
 
   ///Drawer color codes
 

@@ -135,7 +135,9 @@ class _InvestorTypeState extends State<InvestorType> {
                                     fontFamily: "WorkSansBold"),
                               ),
                               onPressed: () async {
-
+                                Navigator.of(context).push(new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        PiEmpStatus(parentFrom: 'Retail Investor')));
                               },
                             ),
                           ),

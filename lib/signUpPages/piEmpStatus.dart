@@ -320,7 +320,7 @@ class _PiEmpStatusState extends State<PiEmpStatus> with SingleTickerProviderStat
                 ),
                 child: Container(
                   width: 300.0,
-                  height: 322.0,
+                  height: 365.0,
                   child: Column(
                     children: <Widget>[
                       Padding(

@@ -1,3 +1,5 @@
+import 'package:auro/home.dart';
+import 'package:auro/main.dart';
 import 'package:auro/models/radioQusModel.dart';
 import 'package:auro/resources/radioQusTemplateData.dart';
 import 'package:flutter/material.dart';
@@ -55,37 +57,6 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
         ],
       )
     );
-/*    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        ...options.map((option) => RadioListTile(
-            title: Text(
-              "${option['title']}",
-              style: TextStyle(
-                  fontSize: 16.5,
-                  color: Color(0xFFFFFFFF),
-                  fontFamily: "Poppins"),
-            ),
-            subtitle: Visibility(
-              visible: option['subTitle']!='' ? true :false,
-              child: Text(
-                "${option['subTitle']}",
-                style: TextStyle(
-                    fontSize: 15.0,
-                    color: Color(0xFFFFFFFF),
-                    fontFamily: "Poppins"),
-              ),
-            ),
-            value: option["option_value"],
-            groupValue: selectedValue,
-            activeColor: Color(0xFFffffff),
-            onChanged: (value) {
-              print("Radio Tile pressed $value");
-              setState(() => selectedValue = value);
-            },
-        )),
-      ],
-    );*/
   }
 
 
@@ -103,7 +74,8 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height*1.1,
               decoration: new BoxDecoration(
-                color: StyleTheme.Colors.backgroundColor,
+                // color: StyleTheme.Colors.backgroundColor,
+                color: Color(widget.optionData[0].screenBackGroundColor),
               ),
               child: Column(
                 children: <Widget>[
@@ -145,7 +117,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                   Container(
                     margin: EdgeInsets.only(top: 5.0),
                     decoration: new BoxDecoration(
-                      color: Color(0xFFfec20f),
+                      color: Color(widget.optionData[0].buttonBackGroundColor),
                       borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     ),
                     child: MaterialButton(
@@ -178,10 +150,20 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
   Future submit() async {
 
-    var childFrom = widget.optionData[0].childFrom=='empStatus' ? 'piVersion' : '';
+    if(widget.optionData[0].childFrom=='piVersion')
+      {
+        Navigator.of(context).pop();
 
-    List<RadioQusModel> questions = await getRadioQusTempData(widget.optionData[0].parentFrom,childFrom);
-    /*if (questions.length < 1) {
+        Navigator.of(context).push(new MaterialPageRoute(
+            builder: (BuildContext context) =>
+            new MyHomePage(index: 0)));
+      }
+    else
+      {
+        var childFrom = widget.optionData[0].childFrom=='empStatus' ? 'piVersion' : '';
+
+        List<RadioQusModel> questions = await getRadioQusTempData(widget.optionData[0].parentFrom,childFrom);
+        /*if (questions.length < 1) {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (_) => ErrorPage(
             message:
@@ -189,9 +171,10 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
           )));
       return;
     }*/
-    Navigator.of(context).pop();
-    Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) =>
-            RadioQusTemplate(optionData: questions)));
+        Navigator.of(context).pop();
+        Navigator.of(context).push(new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                RadioQusTemplate(optionData: questions)));
+      }
   }
 }

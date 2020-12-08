@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:auro/firstScreen.dart';
+import 'package:auro/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:auro/serverConfigRequest/config.dart';
 import 'package:auro/shared/globalInstance.dart';
@@ -113,15 +115,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   AllHttpRequest request = new AllHttpRequest();
   Timer timer;
   final _pageOptions = [
-/*    SearchQuestion(),
-    MyQuestions(),
-    MyContent(),
-    MyCourses(),*/
+      Home(),
+      Home(),
+      Home(),
+      Home(),
+      Home(),
   ];
 
 
   setPageValue(int index) {
-    getLocalStorageValues();
+    // getLocalStorageValues();
     setState(() {
       _selectedPage = index;
     });
@@ -135,9 +138,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     prefs.setString('First_name', null);
     prefs.setString('Last_name', null);
     prefs.setString('Session_token', null);
-//    prefs.setInt('Coins', null);
-    prefs.setDouble('Coins', null);
-
     prefs.setString('DateTime', null);
   }
 
@@ -364,7 +364,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         bottomNavigationBar: new Theme(
           data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`
-              canvasColor: Colors.white,
+              canvasColor: Colors.black,
               // sets the active color of the `BottomNavigationBar` if `Brightness` is light
               primaryColor: const Color(0xff161946),
               textTheme: Theme.of(context).textTheme.copyWith(
@@ -381,12 +381,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             },
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.search,
+                icon: Icon(Icons.home,
                     size: _selectedPage == 0 ? 30.0 : 20.0,
                     color: _selectedPage == 0
                         ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                         : AppThemeData.Colors.BottomNavBarIconColor),
-                title: Text('Search',
+                title: Text('Home',
                     style: TextStyle(
                         color: _selectedPage == 0
                             ? AppThemeData
@@ -395,12 +395,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         fontWeight: FontWeight.bold)),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.question_answer,
+                icon: Icon(Icons.attach_money,
                     size: _selectedPage == 1 ? 30.0 : 20.0,
                     color: _selectedPage == 1
                         ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                         : AppThemeData.Colors.BottomNavBarIconColor),
-                title: Text('Questions',
+                title: Text('Invest',
                     style: TextStyle(
                         color: _selectedPage == 1
                             ? AppThemeData
@@ -409,27 +409,45 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         fontWeight: FontWeight.bold)),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.create,
-                      size: _selectedPage == 2 ? 30.0 : 20.0,
-                      color: _selectedPage == 2
+                icon: Icon(
+                    Icons.add,
+                    size: _selectedPage == 2 ? 30.0 : 20.0,
+                    color: _selectedPage == 2
+                        ? AppThemeData.Colors.SelectedBottomNavBarIconColor
+                        : AppThemeData.Colors.BottomNavBarIconColor),
+                title: Text('',
+                    style: TextStyle(
+                        color: _selectedPage == 2
+                            ? AppThemeData
+                            .Colors.SelectedBottomNavBarLabelTextColor
+                            : AppThemeData.Colors.BottomNavBarLabelTextColor,
+                        fontWeight: FontWeight.bold)),
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                      // Icons.create,
+                      FontAwesomeIcons.globe,
+                      size: _selectedPage == 3 ? 30.0 : 20.0,
+                      color: _selectedPage == 3
                           ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                           : AppThemeData.Colors.BottomNavBarIconColor),
-                  title: Text('Content',
+                  title: Text('Social Invest',
                       style: TextStyle(
-                          color: _selectedPage == 2
+                          color: _selectedPage == 3
                               ? AppThemeData
                               .Colors.SelectedBottomNavBarLabelTextColor
                               : AppThemeData.Colors.BottomNavBarLabelTextColor,
                           fontWeight: FontWeight.bold))),
               BottomNavigationBarItem(
-                icon: Icon(Icons.subscriptions,
-                    size: _selectedPage == 3 ? 30.0 : 20.0,
-                    color: _selectedPage == 3
+                icon: Icon(
+                    FontAwesomeIcons.handshake,
+                    size: _selectedPage == 4 ? 30.0 : 20.0,
+                    color: _selectedPage == 4
                         ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                         : AppThemeData.Colors.BottomNavBarIconColor),
-                title: Text('Courses',
+                title: Text('Jobs',
                     style: TextStyle(
-                        color: _selectedPage == 3
+                        color: _selectedPage == 4
                             ? AppThemeData
                             .Colors.SelectedBottomNavBarLabelTextColor
                             : AppThemeData.Colors.BottomNavBarLabelTextColor,
@@ -448,7 +466,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         bottomNavigationBar: new Theme(
           data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`
-              canvasColor: Colors.white,
+              canvasColor: Colors.black,
               // sets the active color of the `BottomNavigationBar` if `Brightness` is light
               primaryColor: AppThemeData.Colors.SelectedBottomNavBarIconColor,
               textTheme: Theme.of(context).textTheme.copyWith(
@@ -465,12 +483,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             },
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.search,
+                icon: Icon(Icons.home,
                     size: _selectedPage == 0 ? 30.0 : 20.0,
                     color: _selectedPage == 0
                         ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                         : AppThemeData.Colors.BottomNavBarIconColor),
-                title: Text('Search',
+                title: Text('Home',
                     style: TextStyle(
                         color: _selectedPage == 0
                             ? AppThemeData
@@ -479,12 +497,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         fontWeight: FontWeight.bold)),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.question_answer,
+                icon: Icon(Icons.attach_money,
                     size: _selectedPage == 1 ? 30.0 : 20.0,
                     color: _selectedPage == 1
                         ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                         : AppThemeData.Colors.BottomNavBarIconColor),
-                title: Text('Questions',
+                title: Text('Invest',
                     style: TextStyle(
                         color: _selectedPage == 1
                             ? AppThemeData
@@ -493,27 +511,45 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         fontWeight: FontWeight.bold)),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.create,
-                      size: _selectedPage == 2 ? 30.0 : 20.0,
-                      color: _selectedPage == 2
+                icon: Icon(
+                    Icons.add,
+                    size: _selectedPage == 2 ? 30.0 : 20.0,
+                    color: _selectedPage == 2
+                        ? AppThemeData.Colors.SelectedBottomNavBarIconColor
+                        : AppThemeData.Colors.BottomNavBarIconColor),
+                title: Text('Invest',
+                    style: TextStyle(
+                        color: _selectedPage == 2
+                            ? AppThemeData
+                            .Colors.SelectedBottomNavBarLabelTextColor
+                            : AppThemeData.Colors.BottomNavBarLabelTextColor,
+                        fontWeight: FontWeight.bold)),
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                      // Icons.create,
+                      FontAwesomeIcons.globe,
+                      size: _selectedPage == 3 ? 30.0 : 20.0,
+                      color: _selectedPage == 3
                           ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                           : AppThemeData.Colors.BottomNavBarIconColor),
-                  title: Text('Content',
+                  title: Text('Social Invest',
                       style: TextStyle(
-                          color: _selectedPage == 2
+                          color: _selectedPage == 3
                               ? AppThemeData
                               .Colors.SelectedBottomNavBarLabelTextColor
                               : AppThemeData.Colors.BottomNavBarLabelTextColor,
                           fontWeight: FontWeight.bold))),
               BottomNavigationBarItem(
-                icon: Icon(Icons.subscriptions,
-                    size: _selectedPage == 3 ? 30.0 : 20.0,
-                    color: _selectedPage == 3
+                icon: Icon(
+                    FontAwesomeIcons.handshake,
+                    size: _selectedPage == 4 ? 30.0 : 20.0,
+                    color: _selectedPage == 4
                         ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                         : AppThemeData.Colors.BottomNavBarIconColor),
-                title: Text('Courses',
+                title: Text('Jobs',
                     style: TextStyle(
-                        color: _selectedPage == 3
+                        color: _selectedPage == 4
                             ? AppThemeData
                             .Colors.SelectedBottomNavBarLabelTextColor
                             : AppThemeData.Colors.BottomNavBarLabelTextColor,

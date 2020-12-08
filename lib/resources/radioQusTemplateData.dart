@@ -7,7 +7,8 @@ Future<List<RadioQusModel>> getRadioQusTempData(parentFrom,childFrom) async {
     {
         tempQuestions = [
         {
-          "backGroundColor": parentFrom=='Accredited Investor' ? "0xFF000000" : "0xFFFFFFFF",
+          "screenBackGroundColor" : parentFrom=='Accredited Investor' ? 0xFF000000 : 0xFF87b5eb,
+          "buttonBackGroundColor" : parentFrom=='Accredited Investor' ? 0xFFfec20f : 0xFF4682B4,
           "parentFrom": parentFrom,
           "childFrom": childFrom,
           "logo": "login_logo.png",
@@ -43,7 +44,8 @@ Future<List<RadioQusModel>> getRadioQusTempData(parentFrom,childFrom) async {
     {
       tempQuestions = [
         {
-          "backGroundColor": parentFrom=='Accredited Investor' ? "0xFF000000" : "0xFFFFFFFF",
+          "screenBackGroundColor" : parentFrom=='Accredited Investor' ? 0xFF000000 : 0xFF87b5eb,
+          "buttonBackGroundColor" : parentFrom=='Accredited Investor' ? 0xFFfec20f : 0xFF4682B4,
           "parentFrom": parentFrom,
           "childFrom": childFrom,
           "logo": "login_logo.png",
