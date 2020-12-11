@@ -115,7 +115,7 @@ class NavigationMenuState extends State<NavigationMenu> {
             ]),
 
             decoration: BoxDecoration(
-              color: const Color(0xff161946),
+              color: const Color(0xFF000000),
               border: Border.all(
                 color: Colors.white30,
                 width: 2.0,

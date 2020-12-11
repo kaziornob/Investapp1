@@ -84,7 +84,7 @@ class _LoginState extends State<Login>
       var password = loginPasswordController.text.trim();
       // set up POST request arguments
 
-      json = '{"username":"$email","password":"$password","provider":"","access_token":""}';
+      json = '{"email":"$email","password":"$password","provider":"","access_token":""}';
     }
     var response = await request.login(json);
     return response;
