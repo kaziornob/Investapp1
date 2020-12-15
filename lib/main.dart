@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:auro/firstScreen.dart';
 import 'package:auro/home.dart';
+import 'package:auro/invest.dart';
+import 'package:auro/jobs.dart';
+import 'package:auro/plusSearch.dart';
+import 'package:auro/socialInvest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -116,10 +120,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Timer timer;
   final _pageOptions = [
       Home(),
-      Home(),
-      Home(),
-      Home(),
-      Home(),
+      Invest(),
+      PlusSearch(),
+      SocialInvest(),
+      Jobs(),
   ];
 
 
@@ -343,7 +347,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
 //    WidgetsBinding.instance.removeObserver(this);
-    timer.cancel();
     super.dispose();
   }
 
@@ -517,7 +520,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     color: _selectedPage == 2
                         ? AppThemeData.Colors.SelectedBottomNavBarIconColor
                         : AppThemeData.Colors.BottomNavBarIconColor),
-                title: Text('Invest',
+                title: Text('',
                     style: TextStyle(
                         color: _selectedPage == 2
                             ? AppThemeData

@@ -1,4 +1,3 @@
-import 'package:auro/home.dart';
 import 'package:auro/main.dart';
 import 'package:auro/models/radioQusModel.dart';
 import 'package:auro/resources/radioQusTemplateData.dart';
@@ -156,7 +155,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
         Navigator.of(context).push(new MaterialPageRoute(
             builder: (BuildContext context) =>
-            new MyHomePage(index: 0)));
+            new MyHomePage(index: 1)));
       }
     else
       {

@@ -42,34 +42,191 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
   final List<Widget> investorsSliders = investorSliderDataList.map((item) => Container(
     child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        child: Padding(
-          padding: EdgeInsets.all(7.0),
-          child: CircleAvatar(
-            radius: 30.0,
-            backgroundImage: new AssetImage('assets/success.png'),
-            backgroundColor: Colors.transparent,
-          ),
-        )
-    ),
-  )).toList();
-
-  final List<Widget> videoSliders = investorSliderDataList.map((item) => Container(
-    child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        child: Column(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              height: 10.0,
-              width: 10.0,
+            Padding(
+              padding: EdgeInsets.all(4.4),
+              child: CircleAvatar(
+                radius: 30.0,
+                backgroundImage: new AssetImage('assets/success.png'),
+                backgroundColor: Colors.transparent,
+              ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 5.0),
-              child: Text('Video 1'),
+              padding: EdgeInsets.all(4.4),
+              child: CircleAvatar(
+                radius: 30.0,
+                backgroundImage: new AssetImage('assets/success.png'),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(4.4),
+              child: CircleAvatar(
+                radius: 30.0,
+                backgroundImage: new AssetImage('assets/success.png'),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(4.4),
+              child: CircleAvatar(
+                radius: 30.0,
+                backgroundImage: new AssetImage('assets/success.png'),
+                backgroundColor: Colors.transparent,
+              ),
             )
           ],
         )
     ),
   )).toList();
+
+  final List<Widget> videoSliders = investorSliderDataList.map((item) => ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+      child: Row(
+        children: <Widget>[
+          Container(
+            height: 77.0,
+            width: 85.0,
+            margin: EdgeInsets.only(top: 2.0,right: 2.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 55.0,
+                  width: 85.0,
+                  decoration: new BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFfec20f),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2.0),
+                    ),
+                  ),
+
+                ),
+                Container(
+                  height: 15.0,
+                  width: 85.0,
+                  decoration: new BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFfec20f),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2.0),
+                    ),
+                  ),
+                  child: Text(
+                      "Video 1",
+                    style: TextStyle(
+                        fontSize: 11.0,
+                        color: Color(0xFFFFFFFF),
+                        fontFamily: "WorkSansBold"),
+                  ),
+                )
+
+              ],
+            ),
+          ),
+          Container(
+            height: 77.0,
+            width: 85.0,
+            margin: EdgeInsets.only(top: 2.0,right: 2.0),
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 55.0,
+                  width: 85.0,
+                  decoration: new BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFfec20f),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2.0),
+                    ),
+                  ),
+
+                ),
+                Container(
+                  height: 15.0,
+                  width: 85.0,
+                  decoration: new BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFfec20f),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2.0),
+                    ),
+                  ),
+                  child: Text(
+                      "Video 1",
+                    style: TextStyle(
+                        fontSize: 11.0,
+                        color: Color(0xFFFFFFFF),
+                        fontFamily: "WorkSansBold"),
+                  ),
+                )
+
+              ],
+            ),
+          ),
+          Container(
+            height: 77.0,
+            width: 85.0,
+            margin: EdgeInsets.only(top: 2.0,right: 2.0),
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 55.0,
+                  width: 85.0,
+                  decoration: new BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFfec20f),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2.0),
+                    ),
+                  ),
+
+                ),
+                Container(
+                  height: 15.0,
+                  width: 85.0,
+                  decoration: new BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFfec20f),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2.0),
+                    ),
+                  ),
+                  child: Text(
+                      "Video 1",
+                    style: TextStyle(
+                        fontSize: 11.0,
+                        color: Color(0xFFFFFFFF),
+                        fontFamily: "WorkSansBold"),
+                  ),
+                )
+
+              ],
+            ),
+          ),
+        ],
+      )
+  )
+  ).toList();
 
   Widget overView()
   {
@@ -489,7 +646,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
         body:  SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*1.6,
+            height: MediaQuery.of(context).size.height*1.7,
             decoration: new BoxDecoration(
               color: widget.callingFrom=="Accredited Investor" ?  StyleTheme.Colors.accScreenBackgroundColor : StyleTheme.Colors.retailScreenBackgroundColor,
             ),
@@ -614,6 +771,59 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
                           ],
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height*0.06,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width*0.48,
+                        margin: EdgeInsets.only(top: 7.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFfec20f),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Buy',
+                            style: new TextStyle(
+                              fontFamily: "WorkSansSemiBold",
+                              color: Color(0xFFFFFFFF), fontSize: 15.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width*0.47,
+                        margin: EdgeInsets.only(top: 7.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFfec20f),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Sell',
+                            style: new TextStyle(
+                              fontFamily: "WorkSansSemiBold",
+                              color: Color(0xFFFFFFFF), fontSize: 15.0,
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

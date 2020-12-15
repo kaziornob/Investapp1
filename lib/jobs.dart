@@ -8,12 +8,12 @@ import 'package:flutter/rendering.dart';
 
 
 
-class Home extends StatefulWidget {
+class Jobs extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _JobsState createState() => _JobsState();
 }
 
-class _HomeState extends State<Home> {
+class _JobsState extends State<Jobs> {
 
   final GlobalKey<ScaffoldState> homeScaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -56,8 +56,8 @@ class _HomeState extends State<Home> {
         child: Stack(
           children: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               decoration: new BoxDecoration(
                 color: StyleTheme.Colors.backgroundColor,
               ),
@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 8.0,top: 2.0),
                         child: Text(
-                          "HOME",
+                          "Coming Soon",
                           style: TextStyle(
                               fontSize: 17.5,
                               color: Color(0xFFFFFFFF),
