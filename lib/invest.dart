@@ -333,17 +333,16 @@ class _InvestState extends State<Invest> {
         ),
       ),
       drawer: NavigationMenu(),
-      body: DoubleBackToCloseApp(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: new BoxDecoration(
-                  color: StyleTheme.Colors.backgroundColor,
-                ),
-                child: Column(
-                  children: <Widget>[
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: new BoxDecoration(
+                color: StyleTheme.Colors.backgroundColor,
+              ),
+              child: Column(
+                children: <Widget>[
 /*                    Padding(
                       padding: EdgeInsets.only(top: 20.0,left: 20.0),
                       child: Text(
@@ -355,217 +354,217 @@ class _InvestState extends State<Invest> {
                         ),
                       ),
                     ),*/
-                    // search box
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.095,
-                      child:  Container(
-                          margin: EdgeInsets.only(top: 25.0,left: 20.0,right: 20.0),
-                          decoration: new BoxDecoration(
+                  // search box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.095,
+                    child:  Container(
+                        margin: EdgeInsets.only(top: 25.0,left: 20.0,right: 20.0),
+                        decoration: new BoxDecoration(
+                          color: Color(0xFFFFFFFF),
+                          border: Border.all(
                             color: Color(0xFFFFFFFF),
-                            border: Border.all(
-                              color: Color(0xFFFFFFFF),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.0),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(top:5.0, left: 140.0),
+                          child: Text(
+                            'Search',
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 22.0,
                             ),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(top:5.0, left: 140.0),
-                            child: Text(
-                              'Search',
-                              style: new TextStyle(
-                                  fontFamily: "Poppins",
-                                  color: Color(0xFF000000), fontSize: 22.0,
-                              ),
-                            ),
-                          )
+                        )
+                    ),
+                  ),
+                  // handshake image box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.25,
+                    child:  Container(
+                      margin: EdgeInsets.only(top: 10.0,left: 5.0,right: 5.0),
+                      child: Image(
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/handShake.png')
                       ),
                     ),
-                    // handshake image box
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.25,
-                      child:  Container(
-                        margin: EdgeInsets.only(top: 10.0,left: 5.0,right: 5.0),
-                        child: Image(
-                            fit: BoxFit.fill,
-                            image: new AssetImage('assets/handShake.png')
+                  ),
+                  // auro paper box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.40,
+                    child:  Container(
+                        margin: EdgeInsets.only(top: 5.0,left: 20.0,right: 20.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFfec20f),
+                            width: 1,
                           ),
-                      ),
-                    ),
-                    // auro paper box
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.40,
-                      child:  Container(
-                          margin: EdgeInsets.only(top: 5.0,left: 20.0,right: 20.0),
-                          decoration: new BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFFfec20f),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2.0),
-                            ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
                           ),
-                          child: ListView(
-                            children: <Widget>[
-                              Container(
-                                  margin: EdgeInsets.only(top:5.0, left: 120.0,bottom: 5.0,right: 5.0),
-                                  child: Text(
-                                    'Auro Paper',
-                                    style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: Color(0xFFFFFFFF), fontSize: 18.0,
-                                    ),
-                                  )
-                              ),
-                              Container(
-                                  margin: EdgeInsets.only(top:1.0, left: 15.0,bottom: 5.0,right: 5.0),
-                                  child: Text(
-                                    "Voila! We've created a paper portfolio for you that can help "
-                                        "you start engaging and learning about how to invest. Please note that this is NOT our recommended investment portfolio for"
-                                        " which you need to complete additional risk-onboarding: Go Pro",
-                                    style: new TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
-                                        color: Color(0xFFFFFFFF), fontSize: 15.0,
-                                    ),
-                                  )
-                              ),
-                              SizedBox(
+                        ),
+                        child: ListView(
+                          children: <Widget>[
+                            Container(
+                                margin: EdgeInsets.only(top:5.0, left: 120.0,bottom: 5.0,right: 5.0),
+                                child: Text(
+                                  'Auro Paper',
+                                  style: new TextStyle(
+                                    fontFamily: "WorkSansSemiBold",
+                                    color: Color(0xFFFFFFFF), fontSize: 18.0,
+                                  ),
+                                )
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(top:1.0, left: 15.0,bottom: 5.0,right: 5.0),
+                                child: Text(
+                                  "Voila! We've created a paper portfolio for you that can help "
+                                      "you start engaging and learning about how to invest. Please note that this is NOT our recommended investment portfolio for"
+                                      " which you need to complete additional risk-onboarding: Go Pro",
+                                  style: new TextStyle(
+                                    fontFamily: "WorkSansSemiBold",
+                                    color: Color(0xFFFFFFFF), fontSize: 15.0,
+                                  ),
+                                )
+                            ),
+                            SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height*0.42,
                                 child: Container(
-                                  margin: EdgeInsets.only(top: 5.0,left: 20.0,right: 20.0,bottom: 5.0),
-                                  decoration: new BoxDecoration(
-                                    color: Color(0xFFFFFFFF),
-                                    border: Border.all(
+                                    margin: EdgeInsets.only(top: 5.0,left: 20.0,right: 20.0,bottom: 5.0),
+                                    decoration: new BoxDecoration(
                                       color: Color(0xFFFFFFFF),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(2.0),
-                                    ),
-                                  ),
-                                  child: SfCircularChart(
-                                      legend: Legend(
-                                          isVisible: true,
-                                          alignment: ChartAlignment.center,
-                                          position: LegendPosition.bottom,
-                                          overflowMode: LegendItemOverflowMode.wrap,
-                                          itemPadding: 0.5
+                                      border: Border.all(
+                                        color: Color(0xFFFFFFFF),
+                                        width: 1,
                                       ),
-                                      series: <CircularSeries>[
-                                    // Render pie chart
-                                      PieSeries<ChartData, String>(
-                                          dataSource: chartData,
-                                          pointColorMapper:(ChartData data,  _) => data.color,
-                                          xValueMapper: (ChartData data, _) => data.x,
-                                          yValueMapper: (ChartData data, _) => data.y,
-                                          dataLabelSettings:DataLabelSettings(isVisible : true),
-                                      )
-                                    ]
-                                  )
-                                )
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 10.0,bottom: 10.0,left: 65.0,right: 50.0),
-                                width: MediaQuery.of(context).size.width * 0.95,
-                                decoration: new BoxDecoration(
-                                  color: Color(0xFFfec20f),
-                                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 20.0,top: 3.0),
-                                    child: Text(
-                                      "Initiate First Name Portfolio",
-                                      style: TextStyle(
-                                          fontSize: 17.5,
-                                          color: Color(0xFFFFFFFF),
-                                          fontFamily: "WorkSansBold"),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(2.0),
+                                      ),
                                     ),
-                                  ),
-                                  onPressed: () async {
-
-                                    Navigator.of(context).push(new MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                        new SearchPageFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
-
-                                  },
-                                ),
-                              ),
-                            ],
-                          )
-                      ),
-                    ),
-                    // go pro button
-                    Container(
-                      margin: EdgeInsets.only(top:15.0,left: 15.0,right: 15.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                            decoration: new BoxDecoration(
-                              color: Color(0xFFfec20f),
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    child: SfCircularChart(
+                                        legend: Legend(
+                                            isVisible: true,
+                                            alignment: ChartAlignment.center,
+                                            position: LegendPosition.bottom,
+                                            overflowMode: LegendItemOverflowMode.wrap,
+                                            itemPadding: 0.5
+                                        ),
+                                        series: <CircularSeries>[
+                                          // Render pie chart
+                                          PieSeries<ChartData, String>(
+                                            dataSource: chartData,
+                                            pointColorMapper:(ChartData data,  _) => data.color,
+                                            xValueMapper: (ChartData data, _) => data.x,
+                                            yValueMapper: (ChartData data, _) => data.y,
+                                            dataLabelSettings:DataLabelSettings(isVisible : true),
+                                          )
+                                        ]
+                                    )
+                                )
                             ),
-                            child: MaterialButton(
-                              splashColor: Colors.grey,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 15.0,right: 15.0),
-                                child: Center(
+                            Container(
+                              margin: EdgeInsets.only(top: 10.0,bottom: 10.0,left: 65.0,right: 50.0),
+                              width: MediaQuery.of(context).size.width * 0.95,
+                              decoration: new BoxDecoration(
+                                color: Color(0xFFfec20f),
+                                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 20.0,top: 3.0),
                                   child: Text(
-                                    "GO PRO",
+                                    "Initiate First Name Portfolio",
                                     style: TextStyle(
-                                        fontSize: 22.0,
+                                        fontSize: 17.5,
                                         color: Color(0xFFFFFFFF),
                                         fontFamily: "WorkSansBold"),
                                   ),
                                 ),
-                              ),
-                              onPressed: () async {
-                                Navigator.of(context).push(new MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                    new OnBoardingFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
-                              },
-                            ),
-                          ),
-                          Container(
-                            width: 33,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                                onPressed: () async {
 
-                            decoration: new BoxDecoration(
-                              color: Color(0xFFfec20f),
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                  Navigator.of(context).push(new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                      new SearchPageFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
+
+                                },
+                              ),
                             ),
-                            child: MaterialButton(
-                              splashColor: Colors.grey,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 10.0,right: 10.0),
-                                child: Center(
-                                  child: Text(
-                                    "GO LIVE",
-                                    style: TextStyle(
-                                        fontSize: 22.0,
-                                        color: Color(0xFFFFFFFF),
-                                        fontFamily: "WorkSansBold"),
-                                  ),
+                          ],
+                        )
+                    ),
+                  ),
+                  // go pro button
+                  Container(
+                    margin: EdgeInsets.only(top:15.0,left: 15.0,right: 15.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                          decoration: new BoxDecoration(
+                            color: Color(0xFFfec20f),
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                          child: MaterialButton(
+                            splashColor: Colors.grey,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 15.0,right: 15.0),
+                              child: Center(
+                                child: Text(
+                                  "GO PRO",
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Color(0xFFFFFFFF),
+                                      fontFamily: "WorkSansBold"),
                                 ),
                               ),
-                              onPressed: () async {
-                              },
                             ),
+                            onPressed: () async {
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                  new OnBoardingFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          width: 33,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 5.0,right: 5.0),
+
+                          decoration: new BoxDecoration(
+                            color: Color(0xFFfec20f),
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                          child: MaterialButton(
+                            splashColor: Colors.grey,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                              child: Center(
+                                child: Text(
+                                  "GO LIVE",
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Color(0xFFFFFFFF),
+                                      fontFamily: "WorkSansBold"),
+                                ),
+                              ),
+                            ),
+                            onPressed: () async {
+                            },
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
 /*                    Container(
                       margin: EdgeInsets.only(top: 15.0,left: 150.0,right: 105.0),
                       width: MediaQuery.of(context).size.width * 0.95,
@@ -589,36 +588,36 @@ class _InvestState extends State<Invest> {
                         },
                       ),
                     ),*/
-                    // portfolio component box
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.50,
-                      child:  Container(
-                          margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
-                          decoration: new BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFFfec20f),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2.0),
-                            ),
+                  // portfolio component box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.50,
+                    child:  Container(
+                        margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFfec20f),
+                            width: 1,
                           ),
-                          child: ListView(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(top:5.0),
-                                child: Center(
-                                    child: Text(
-                                      'PORTFOLIO COMPONENTS',
-                                      style: new TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
-                                        color: Color(0xFFFFFFFF), fontSize: 18.0,
-                                      ),
-                                    )
-                                ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: ListView(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top:5.0),
+                              child: Center(
+                                  child: Text(
+                                    'PORTFOLIO COMPONENTS',
+                                    style: new TextStyle(
+                                      fontFamily: "WorkSansSemiBold",
+                                      color: Color(0xFFFFFFFF), fontSize: 18.0,
+                                    ),
+                                  )
                               ),
-                              Padding(
+                            ),
+                            Padding(
                                 padding: EdgeInsets.only(top:10.0),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -636,20 +635,20 @@ class _InvestState extends State<Invest> {
                                     Padding(
                                         padding: EdgeInsets.only(left:30.0,top: 3.0),
                                         child: Text(
-                                        'See More',
-                                        style: new TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
-                                          color: Color(0xFFFFFFFF), fontSize: 15.0,
-                                        ),
-                                      )
+                                          'See More',
+                                          style: new TextStyle(
+                                            fontFamily: "WorkSansSemiBold",
+                                            color: Color(0xFFFFFFFF), fontSize: 15.0,
+                                          ),
+                                        )
                                     )
                                   ],
                                 )
-                              ),
-                              SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height*0.34,
-                                  child: Container(
+                            ),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height*0.34,
+                                child: Container(
                                     margin: EdgeInsets.only(top: 5.0,left: 20.0,right: 20.0,bottom: 5.0),
                                     decoration: new BoxDecoration(
                                       color: Color(0xFFFFFFFF),
@@ -663,89 +662,89 @@ class _InvestState extends State<Invest> {
                                     ),
                                     child: CarouselSlider(
                                       options: CarouselOptions(
-                                        aspectRatio: 2.0,
-                                        enlargeCenterPage: false,
-                                        scrollDirection: Axis.horizontal,
-                                        autoPlay: false,
-                                        onPageChanged: (index, reason) {
-                                          print("_currentPage: $_currentPage");
-                                          setState(() {
-                                            _currentPage = index;
-                                          });
-                                        }
+                                          aspectRatio: 2.0,
+                                          enlargeCenterPage: false,
+                                          scrollDirection: Axis.horizontal,
+                                          autoPlay: false,
+                                          onPageChanged: (index, reason) {
+                                            print("_currentPage: $_currentPage");
+                                            setState(() {
+                                              _currentPage = index;
+                                            });
+                                          }
                                       ),
                                       items: areaChartSlider,
                                     )
-                                  )
-                              ),
-                              Divider(color: Color(0xFFfec20f),thickness: 1.5,),
-                              Container(
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: EdgeInsets.only(left:50.0,bottom: 5.0),
-                                          child: Text(
-                                            "First Name's Portfolio",
-                                            style: new TextStyle(
-                                              fontFamily: "WorkSansSemiBold",
-                                              color: Color(0xFFFFFFFF), fontSize: 18.0,
-                                            ),
-                                          )
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(left:15.0,bottom: 5.0,top: 3.0),
-                                          child: Text(
-                                            'See More',
-                                            style: new TextStyle(
-                                              fontFamily: "WorkSansSemiBold",
-                                              color: Color(0xFFFFFFFF), fontSize: 15.0,
-                                            ),
-                                          )
-                                      ),
-                                    ],
-                                  )
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left:15.0,bottom: 5.0,top: 5.0),
-                                child: Text(
-                                  'You can also invest in individual securities that you like and create your own portfolio!! ',
-                                  style: new TextStyle(
-                                    fontFamily: "WorkSansSemiBold",
-                                    color: Color(0xFFFFFFFF), fontSize: 15.0,
-                                  ),
-                                ),
-                              ),
-
-                              Container(
-                                margin: EdgeInsets.only(top: 20.0,bottom: 10.0,left: 90.0,right: 75.0),
-                                width: MediaQuery.of(context).size.width * 0.95,
-                                decoration: new BoxDecoration(
-                                  color: Color(0xFFfec20f),
-                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 8.0,top: 2.0),
-                                    child: Text(
-                                      "START NOW",
-                                      style: TextStyle(
-                                          fontSize: 17.5,
-                                          color: Color(0xFFFFFFFF),
-                                          fontFamily: "WorkSansBold"),
+                                )
+                            ),
+                            Divider(color: Color(0xFFfec20f),thickness: 1.5,),
+                            Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: EdgeInsets.only(left:50.0,bottom: 5.0),
+                                        child: Text(
+                                          "First Name's Portfolio",
+                                          style: new TextStyle(
+                                            fontFamily: "WorkSansSemiBold",
+                                            color: Color(0xFFFFFFFF), fontSize: 18.0,
+                                          ),
+                                        )
                                     ),
-                                  ),
-                                  onPressed: () async {
-
-                                  },
+                                    Padding(
+                                        padding: EdgeInsets.only(left:15.0,bottom: 5.0,top: 3.0),
+                                        child: Text(
+                                          'See More',
+                                          style: new TextStyle(
+                                            fontFamily: "WorkSansSemiBold",
+                                            color: Color(0xFFFFFFFF), fontSize: 15.0,
+                                          ),
+                                        )
+                                    ),
+                                  ],
+                                )
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left:15.0,bottom: 5.0,top: 5.0),
+                              child: Text(
+                                'You can also invest in individual securities that you like and create your own portfolio!! ',
+                                style: new TextStyle(
+                                  fontFamily: "WorkSansSemiBold",
+                                  color: Color(0xFFFFFFFF), fontSize: 15.0,
                                 ),
                               ),
-                            ],
-                          )
-                      ),
+                            ),
+
+                            Container(
+                              margin: EdgeInsets.only(top: 20.0,bottom: 10.0,left: 90.0,right: 75.0),
+                              width: MediaQuery.of(context).size.width * 0.95,
+                              decoration: new BoxDecoration(
+                                color: Color(0xFFfec20f),
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0,top: 2.0),
+                                  child: Text(
+                                    "START NOW",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
+                                        color: Color(0xFFFFFFFF),
+                                        fontFamily: "WorkSansBold"),
+                                  ),
+                                ),
+                                onPressed: () async {
+
+                                },
+                              ),
+                            ),
+                          ],
+                        )
                     ),
-                    // go live button
+                  ),
+                  // go live button
 /*                    Container(
                       margin: EdgeInsets.only(top: 15.0,left: 145.0,right: 105.0),
                       width: MediaQuery.of(context).size.width * 0.95,
@@ -767,224 +766,211 @@ class _InvestState extends State<Invest> {
                         },
                       ),
                     ),*/
-                    // investment guru component box
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.40,
-                      child:  Container(
-                          margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
-                          decoration: new BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFFfec20f),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2.0),
-                            ),
+                  // investment guru component box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.40,
+                    child:  Container(
+                        margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFfec20f),
+                            width: 1,
                           ),
-                          child: ListView(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(top:15.0),
-                                child: Center(
-                                    child: Text(
-                                      'INVESTMENT GURUS',
-                                      style: new TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
-                                        color: Color(0xFFFFFFFF), fontSize: 18.0,
-                                      ),
-                                    )
-                                ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: ListView(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top:15.0),
+                              child: Center(
+                                  child: Text(
+                                    'INVESTMENT GURUS',
+                                    style: new TextStyle(
+                                      fontFamily: "WorkSansSemiBold",
+                                      color: Color(0xFFFFFFFF), fontSize: 18.0,
+                                    ),
+                                  )
                               ),
-                              SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height*0.20,
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 10.0,left: 20.0,right: 20.0,bottom: 5.0),
-                                    decoration: new BoxDecoration(
-                                      border: Border.all(
+                            ),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height*0.20,
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 10.0,left: 20.0,right: 20.0,bottom: 5.0),
+                                  decoration: new BoxDecoration(
+                                    border: Border.all(
+                                      color: Color(0xFFFFFFFF),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(2.0),
+                                    ),
+                                  ),
+
+                                )
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(top:10.0,left:220.0),
+                                child: Text(
+                                  'See More',
+                                  style: new TextStyle(
+                                    fontFamily: "WorkSansSemiBold",
+                                    color: Color(0xFFFFFFFF), fontSize: 17.0,
+                                  ),
+                                )
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 20.0,bottom: 10.0,left: 90.0,right: 75.0),
+                              width: MediaQuery.of(context).size.width * 0.95,
+                              decoration: new BoxDecoration(
+                                color: Color(0xFFfec20f),
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0,top: 2.0),
+                                  child: Text(
+                                    "START NOW",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
                                         color: Color(0xFFFFFFFF),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(2.0),
-                                      ),
-                                    ),
+                                        fontFamily: "WorkSansBold"),
+                                  ),
+                                ),
+                                onPressed: () async {
 
-                                  )
+                                },
                               ),
-                              Padding(
-                                  padding: EdgeInsets.only(top:10.0,left:220.0),
+                            ),
+                          ],
+                        )
+                    ),
+                  ),
+                  // pe/vc/re component box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.27,
+                    child:  Container(
+                        margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFfec20f),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: ListView(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top:15.0),
+                              child: Center(
                                   child: Text(
-                                    'See More',
+                                    'PE/VC/RE/ESG',
                                     style: new TextStyle(
                                       fontFamily: "WorkSansSemiBold",
-                                      color: Color(0xFFFFFFFF), fontSize: 17.0,
+                                      color: Color(0xFFFFFFFF), fontSize: 18.0,
                                     ),
                                   )
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: 20.0,bottom: 10.0,left: 90.0,right: 75.0),
-                                width: MediaQuery.of(context).size.width * 0.95,
-                                decoration: new BoxDecoration(
-                                  color: Color(0xFFfec20f),
-                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 8.0,top: 2.0),
-                                    child: Text(
-                                      "START NOW",
-                                      style: TextStyle(
-                                          fontSize: 17.5,
-                                          color: Color(0xFFFFFFFF),
-                                          fontFamily: "WorkSansBold"),
-                                    ),
-                                  ),
-                                  onPressed: () async {
-
-                                  },
-                                ),
-                              ),
-                            ],
-                          )
-                      ),
-                    ),
-                    // pe/vc/re component box
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.27,
-                      child:  Container(
-                          margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
-                          decoration: new BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFFfec20f),
-                              width: 1,
                             ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2.0),
-                            ),
-                          ),
-                          child: ListView(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(top:15.0),
-                                child: Center(
-                                    child: Text(
-                                      'PE/VC/RE/ESG',
-                                      style: new TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
-                                        color: Color(0xFFFFFFFF), fontSize: 18.0,
-                                      ),
-                                    )
-                                ),
+                            Container(
+                              margin: EdgeInsets.only(top: 40.0,bottom: 10.0,left: 90.0,right: 75.0),
+                              width: MediaQuery.of(context).size.width * 0.95,
+                              decoration: new BoxDecoration(
+                                color: Color(0xFFfec20f),
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: 40.0,bottom: 10.0,left: 90.0,right: 75.0),
-                                width: MediaQuery.of(context).size.width * 0.95,
-                                decoration: new BoxDecoration(
-                                  color: Color(0xFFfec20f),
-                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 8.0,top: 2.0),
-                                    child: Text(
-                                      "START NOW",
-                                      style: TextStyle(
-                                          fontSize: 17.5,
-                                          color: Color(0xFFFFFFFF),
-                                          fontFamily: "WorkSansBold"),
-                                    ),
-                                  ),
-                                  onPressed: () async {
-
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.only(left:235.0),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0,top: 2.0),
                                   child: Text(
-                                    'See More',
-                                    style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: Color(0xFFFFFFFF), fontSize: 17.0,
-                                    ),
-                                  )
-                              ),
-
-                            ],
-                          )
-                      ),
-                    ),
-                    // last start now component box
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.27,
-                      child:  Container(
-                          margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
-                          decoration: new BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFFfec20f),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2.0),
-                            ),
-                          ),
-                          child: ListView(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(top: 90.0,bottom: 10.0,left: 90.0,right: 75.0),
-                                width: MediaQuery.of(context).size.width * 0.95,
-                                decoration: new BoxDecoration(
-                                  color: Color(0xFFfec20f),
-                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 8.0,top: 2.0),
-                                    child: Text(
-                                      "START NOW",
-                                      style: TextStyle(
-                                          fontSize: 17.5,
-                                          color: Color(0xFFFFFFFF),
-                                          fontFamily: "WorkSansBold"),
-                                    ),
+                                    "START NOW",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
+                                        color: Color(0xFFFFFFFF),
+                                        fontFamily: "WorkSansBold"),
                                   ),
-                                  onPressed: () async {
-
-                                  },
                                 ),
-                              ),
+                                onPressed: () async {
 
-                            ],
-                          )
-                      ),
+                                },
+                              ),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(left:235.0),
+                                child: Text(
+                                  'See More',
+                                  style: new TextStyle(
+                                    fontFamily: "WorkSansSemiBold",
+                                    color: Color(0xFFFFFFFF), fontSize: 17.0,
+                                  ),
+                                )
+                            ),
+
+                          ],
+                        )
                     ),
-                  ],
-                ),
+                  ),
+                  // last start now component box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.27,
+                    child:  Container(
+                        margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFfec20f),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: ListView(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(top: 90.0,bottom: 10.0,left: 90.0,right: 75.0),
+                              width: MediaQuery.of(context).size.width * 0.95,
+                              decoration: new BoxDecoration(
+                                color: Color(0xFFfec20f),
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0,top: 2.0),
+                                  child: Text(
+                                    "START NOW",
+                                    style: TextStyle(
+                                        fontSize: 17.5,
+                                        color: Color(0xFFFFFFFF),
+                                        fontFamily: "WorkSansBold"),
+                                  ),
+                                ),
+                                onPressed: () async {
+
+                                },
+                              ),
+                            ),
+
+                          ],
+                        )
+                    ),
+                  ),
+                ],
               ),
-            ],
-
-          ),
-        ),
-        snackBar: const SnackBar(
-          content: Text(
-            'Tap again to leave',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontStyle: FontStyle.italic,
             ),
-            textAlign: TextAlign.center,
-          ),
-          backgroundColor: Color(0xff161946),
+          ],
+
         ),
-      )
+      ),
     );
   }
 
