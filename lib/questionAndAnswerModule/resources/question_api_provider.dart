@@ -41,7 +41,7 @@ Future<List<Question>> getQuestions() async {
             "The selling price per unit is dolar 7.50, and the company sold 20,000 bulbs in the previous year. What is the contribution margin after marketing?",
         "question_id": "1",
         "image": [],
-        "video_link": "http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
+        "video_link": "https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
         "answer": [
           {"value": "80000"}
         ],
@@ -66,7 +66,7 @@ Future<List<Question>> getQuestions() async {
         "question_text": "What is Accelerated Depreciation?",
         "question_id": "2",
         "image": [],
-        "video_link": "http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
+        "video_link": "https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
         "answer": [
           {"value": "An acceleration clause is a contract provision"
               "that allows a lender to require a borrower to repay all of an outstanding loan if certain requirements are not met"},

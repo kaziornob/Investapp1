@@ -60,6 +60,7 @@ class Colors {
 
   ///App bar color codes
   // static const Color AppBarBackGroundColor = const Color(0xFF000000);
+  static const Color AppBarBackGroundColor = const Color(0xff33A8FF);
   static const Color AppBarTitleTextColor = const Color(0xFFFFFFFF);
   static const Color AppBarMenuIconColor = const Color(0xFFFFFFFF);
   static const Color AppBarBackIconColor = const Color(0xfffec20f);
@@ -76,16 +77,19 @@ class Colors {
 }
 
 // remove auro version pi your personal asset manager logobottom line remove from home page- done
-// usa, technology,usa technology,(at country sector selection)
+// usa, technology,usa technology,(at country sector selection)- done
 // put the tabs below the search box on home screen(pi version) page
-// put the gear box icon button with search box and it goes to settings page
+// put the gear box icon button with search box and it goes to settings page - done
 // at login page put the slider of 5 images - partially done
 // button should be rectangular with corner curve - done
 // go live and go pro button should be in one row once all risk onboarding complete go pro button got disappear. - done(except condition)
-// pie chart should be 3 slider at invest pi version(pi).(first, second screen should be donut chart)
-// 3 point of note(company page):  at 22 page(long->buy,short->sell) also put the button long and short with long and short section of that page. note: user can vote only after 3 months
+// pie chart should be 3 slider at invest pi version(pi).(first, second screen should be donut chart) - partially done
+
+// 3 point of note(company page):  at 22 page(long->buy,short->sell) also put the button long and short with long and short section of that page.
+// note: user can vote only after 3 months - partially done
+
 // at search area bar page the search text not there on app bar there should be back button.
 
-// search box at invest page with icon
+// search box at invest page with icon - done
 // voting bar section on company profile page
 // bottom bar section same as linkedIn

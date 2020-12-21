@@ -403,7 +403,7 @@ class _QuestionTemplateState extends State<QuestionTemplate>
                     ),
                   ),
                   Visibility(
-                    visible: true,
+                    visible: widget.questions[_currentIndex].userAnswer.length!=0,
                     child: Container(
                       height: MediaQuery.of(context).size.height*0.33,
                       width: MediaQuery.of(context).size.width,
@@ -415,8 +415,12 @@ class _QuestionTemplateState extends State<QuestionTemplate>
                     child: Padding(
                       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 50.0, bottom: 16.0),
                       child: RaisedButton(
+                        color:  AppThemeData.Colors.accButtonBackgroundColor,
                         child: Text(
-                            "Next"
+                            "Next",
+                          style: TextStyle(
+                              fontSize: 21.0,
+                              fontFamily: "WorkSansBold"),
                         ),
                         onPressed: _nextSubmit,
                       ),

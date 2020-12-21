@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:auro/style/theme.dart' as StyleTheme;
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:polls/polls.dart';
 
 
 class SecurityPageFirst extends StatefulWidget {
@@ -31,12 +32,21 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
 
   TabController _tabController;
 
+/*  double option1 = 2.0;
+
+  String user = "king@mail.com";
+  Map usersWhoVoted = {'sam@mail.com': 3, 'mike@mail.com' : 4, 'john@mail.com' : 1, 'kenny@mail.com' : 5};
+  String creator = "eddy@mail.com";*/
+
+  double _voteValue = 3.0;
+
   @override
   void initState() {
     _tabController = new TabController(vsync: this, length: tabList.length);
     // selectedTabIndex=0;
     // TODO: implement initState
     super.initState();
+    // this.usersWhoVoted[this.user] = 5;
   }
 
   final List<Widget> investorsSliders = investorSliderDataList.map((item) => Container(
@@ -315,6 +325,34 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
               ),
             ),
           ),
+          // voting bar box
+/*          Polls(
+            children: [
+              // This cannot be less than 2, else will throw an exception
+              Polls.options(title: 'Voting Bar', value: option1),
+              Polls.options(title: 'Voting Bar', value: option1),
+
+            ], question: Text(''),
+            currentUser: this.user,
+            creatorID: this.creator,
+            voteData: usersWhoVoted,
+            userChoice: usersWhoVoted[this.user],
+            onVoteBackgroundColor: Colors.green,
+            outlineColor: Color(0xFFfec20f),
+            leadingBackgroundColor: Colors.green,
+            backgroundColor: Colors.white,
+            onVote: (choice) {
+              print(choice);
+              setState(() {
+                this.usersWhoVoted[this.user] = choice;
+              });
+              if (choice == 1) {
+                setState(() {
+                  option1 += 1.0;
+                });
+              }
+            },
+          ),*/
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.05,
@@ -326,6 +364,40 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
               ),
               borderRadius: BorderRadius.all(
                 Radius.circular(2.0),
+              ),
+            ),
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                activeTrackColor: Colors.green,
+                inactiveTrackColor: Colors.red[100],
+                trackShape: RoundedRectSliderTrackShape(),
+                trackHeight: 4.0,
+                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                thumbColor: Colors.green,
+                overlayColor: Colors.red.withAlpha(32),
+                overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+                tickMarkShape: RoundSliderTickMarkShape(),
+                activeTickMarkColor: Colors.green,
+                inactiveTickMarkColor: Colors.red[100],
+                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                valueIndicatorColor: Colors.green,
+                valueIndicatorTextStyle: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              child: Slider(
+                value: _voteValue,
+                min: 0,
+                max: 100,
+                divisions: 10,
+                label: '$_voteValue',
+                onChanged: (value) {
+                  setState(
+                        () {
+                          _voteValue = value;
+                    },
+                  );
+                },
               ),
             ),
           ),
@@ -625,28 +697,28 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
-        title: Padding(
-          padding: EdgeInsets.only(left:25.0),
-          child: Padding(
-            padding: EdgeInsets.only(left: 20.0),
-            child: Text(
-              'APPLE',
-              style: new TextStyle(
-                fontFamily: "WorkSansSemiBold",
-                color: Color(0xFFFFFFFF), fontSize: 28.0,
-              ),
+          title: Padding(
+            padding: EdgeInsets.only(left:25.0),
+            child: Padding(
+              padding: EdgeInsets.only(left: 20.0),
+              child: Text(
+                'APPLE',
+                style: new TextStyle(
+                  fontFamily: "WorkSansSemiBold",
+                  color: Color(0xFFFFFFFF), fontSize: 28.0,
+                ),
+              )
             )
-          )
-        ),
-        backgroundColor: widget.callingFrom=="Accredited Investor" ?  StyleTheme.Colors.accAppBarBackgroundColor : StyleTheme.Colors.retailAppBarBackgroundColor,
-        leading: const BackButton(),
-        iconTheme: new IconThemeData(color: StyleTheme.Colors.AppBarMenuIconColor),
+          ),
+          backgroundColor: widget.callingFrom=="Accredited Investor" ?  StyleTheme.Colors.accAppBarBackgroundColor : StyleTheme.Colors.retailAppBarBackgroundColor,
+          leading: const BackButton(),
+          iconTheme: new IconThemeData(color: StyleTheme.Colors.AppBarMenuIconColor),
       ),
         drawer: NavigationMenu(),
         body:  SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*1.7,
+            height: MediaQuery.of(context).size.height*2.3,
             decoration: new BoxDecoration(
               color: widget.callingFrom=="Accredited Investor" ?  StyleTheme.Colors.accScreenBackgroundColor : StyleTheme.Colors.retailScreenBackgroundColor,
             ),

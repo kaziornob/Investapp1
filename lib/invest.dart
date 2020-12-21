@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:auro/style/theme.dart' as StyleTheme;
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:pie_chart/pie_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -15,6 +16,8 @@ import 'riskOnBoardingPages/onBoardingFirst.dart';
 
 
 final List<String> areaChartDataList = ['1','2','3','4'];
+final List<String> pieChartDataList = ['1','2','3'];
+
 
 
 class Invest extends StatefulWidget {
@@ -42,6 +45,91 @@ class _InvestState extends State<Invest> {
     Colors.yellow,
   ];
 
+  Widget _newBuildTitleRecommended(BuildContext context)
+  {
+    return InkWell(
+      onTap: () => homeScaffoldKey.currentState.openDrawer(),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 4.0),
+            child: CircleAvatar(
+              radius: 15.0,
+              backgroundImage: new AssetImage('assets/download.jpeg'),
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+          //search box area
+          Container(
+            margin: EdgeInsets.only(left:14.0),
+            width: MediaQuery.of(context).size.width*0.52,
+            height: MediaQuery.of(context).size.height*0.06,
+            decoration: new BoxDecoration(
+              color: Color(0xFFFFFFFF),
+              border: Border.all(
+                color: Color(0xff696969),
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(5.0),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 4.0),
+                  width: MediaQuery.of(context).size.width*0.50,
+                  height: MediaQuery.of(context).size.height*0.05,
+                  child: TextFormField(
+                    style: TextStyle(
+                        fontFamily: "WorkSansSemiBold",
+                        fontSize: 14.0,
+                        color: Colors.black),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      suffixIcon: Icon(
+                        Icons.settings_applications,
+                        color: Colors.black,
+                        size: 15,
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.search,
+                        color: Colors.black,
+                        size: 15,
+                      ),
+                      hintText: "Search",
+                      hintStyle: TextStyle(
+                          fontFamily: "WorkSansSemiBold", fontSize: 14.0),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          //setting icon
+          InkWell(
+            child: Padding(
+              padding: EdgeInsets.only(top: 4.0,left: 8.0),
+              child: CircleAvatar(
+                radius: 15.0,
+                backgroundColor: Colors.transparent,
+                child: Icon(
+                  Icons.settings,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+              ),
+            )
+          ),
+
+        ],
+      ),
+
+    );
+  }
+
   Widget _buildTitleRecommended(BuildContext context) {
     var horizontalTitleAlignment =
     Platform.isIOS ? CrossAxisAlignment.start : CrossAxisAlignment.start;
@@ -67,11 +155,18 @@ class _InvestState extends State<Invest> {
   @override
   Widget build(BuildContext context) {
 
-    final List<ChartData> chartData = [
+    /*final List<ChartData> chartData = [
       ChartData('USA', 25),
       ChartData('Japan', 38),
       ChartData('China', 34),
       ChartData('India', 52)
+    ];*/
+
+    final List<ChartData> chartData = [
+      ChartData('David', 25, Color.fromRGBO(9,0,136,1)),
+      ChartData('Steve', 38, Color.fromRGBO(147,0,119,1)),
+      ChartData('Jack', 34, Color.fromRGBO(228,0,124,1)),
+      ChartData('Others', 52, Color.fromRGBO(255,189,57,1))
     ];
 
     final List<Color> color = <Color>[];
@@ -323,11 +418,61 @@ class _InvestState extends State<Invest> {
     ,).toList();
 
 
+    final List<Widget> pieChartSlider = pieChartDataList.map((item) =>
+        Container(
+            margin: EdgeInsets.only(left: 5.0),
+            height: MediaQuery.of(context).size.height*0.42,
+            child: Container(
+                decoration: new BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  border: Border.all(
+                    color: Color(0xff696969),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: SfCircularChart(
+                    series: <CircularSeries>[
+                      // Renders doughnut chart
+                      DoughnutSeries<ChartData, String>(
+                          dataSource: chartData,
+                          pointColorMapper:(ChartData data,  _) => data.color,
+                          xValueMapper: (ChartData data, _) => data.x,
+                          yValueMapper: (ChartData data, _) => data.y
+                      )
+                    ]
+                ),
+/*                child: SfCircularChart(
+                    legend: Legend(
+                        isVisible: true,
+                        alignment: ChartAlignment.center,
+                        position: LegendPosition.bottom,
+                        overflowMode: LegendItemOverflowMode.wrap,
+                        itemPadding: 0.5
+                    ),
+                    series: <CircularSeries>[
+                      // Render pie chart
+                      PieSeries<ChartData, String>(
+                        dataSource: chartData,
+                        pointColorMapper:(ChartData data,  _) => data.color,
+                        xValueMapper: (ChartData data, _) => data.x,
+                        yValueMapper: (ChartData data, _) => data.y,
+                        dataLabelSettings:DataLabelSettings(isVisible : true),
+                      )
+                    ]
+                )*/
+            )
+        )
+      ,).toList();
+
+
     return Scaffold(
       key: homeScaffoldKey,
       appBar: AppBar(
-        title: _buildTitleRecommended(context),
-        backgroundColor: Color(0xFF000000),
+        title: _newBuildTitleRecommended(context),
+        backgroundColor: StyleTheme.Colors.AppBarBackGroundColor,
         iconTheme: IconThemeData(
           color: StyleTheme.Colors.AppBarMenuIconColor,
         ),
@@ -355,7 +500,7 @@ class _InvestState extends State<Invest> {
                       ),
                     ),*/
                   // search box
-                  SizedBox(
+/*                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.095,
                     child:  Container(
@@ -381,7 +526,7 @@ class _InvestState extends State<Invest> {
                           ),
                         )
                     ),
-                  ),
+                  ),*/
                   // handshake image box
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
@@ -448,7 +593,16 @@ class _InvestState extends State<Invest> {
                                         Radius.circular(2.0),
                                       ),
                                     ),
-                                    child: SfCircularChart(
+                                    child: CarouselSlider(
+                                      options: CarouselOptions(
+                                          aspectRatio: 2.0,
+                                          enlargeCenterPage: false,
+                                          scrollDirection: Axis.horizontal,
+                                          autoPlay: false,
+                                      ),
+                                      items: pieChartSlider,
+                                    ),
+/*                                    child: SfCircularChart(
                                         legend: Legend(
                                             isVisible: true,
                                             alignment: ChartAlignment.center,
@@ -466,7 +620,7 @@ class _InvestState extends State<Invest> {
                                             dataLabelSettings:DataLabelSettings(isVisible : true),
                                           )
                                         ]
-                                    )
+                                    )*/
                                 )
                             ),
                             Container(
@@ -637,6 +791,7 @@ class _InvestState extends State<Invest> {
                                         child: Text(
                                           'See More',
                                           style: new TextStyle(
+                                            decoration: TextDecoration.underline,
                                             fontFamily: "WorkSansSemiBold",
                                             color: Color(0xFFFFFFFF), fontSize: 15.0,
                                           ),
@@ -697,6 +852,7 @@ class _InvestState extends State<Invest> {
                                         child: Text(
                                           'See More',
                                           style: new TextStyle(
+                                            decoration: TextDecoration.underline,
                                             fontFamily: "WorkSansSemiBold",
                                             color: Color(0xFFFFFFFF), fontSize: 15.0,
                                           ),
@@ -766,10 +922,11 @@ class _InvestState extends State<Invest> {
                         },
                       ),
                     ),*/
+
                   // investment guru component box
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.40,
+                    height: MediaQuery.of(context).size.height*0.50,
                     child:  Container(
                         margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
                         decoration: new BoxDecoration(
@@ -784,7 +941,7 @@ class _InvestState extends State<Invest> {
                         child: ListView(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top:15.0),
+                              padding: EdgeInsets.only(top:10.0),
                               child: Center(
                                   child: Text(
                                     'INVESTMENT GURUS',
@@ -797,29 +954,52 @@ class _InvestState extends State<Invest> {
                             ),
                             SizedBox(
                                 width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height*0.20,
+                                height: MediaQuery.of(context).size.height*0.34,
                                 child: Container(
-                                  margin: EdgeInsets.only(top: 10.0,left: 20.0,right: 20.0,bottom: 5.0),
-                                  decoration: new BoxDecoration(
-                                    border: Border.all(
+                                    margin: EdgeInsets.only(top: 5.0,left: 20.0,right: 20.0,bottom: 5.0),
+                                    decoration: new BoxDecoration(
                                       color: Color(0xFFFFFFFF),
-                                      width: 1,
+                                      border: Border.all(
+                                        color: Color(0xFFFFFFFF),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(2.0),
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(2.0),
-                                    ),
-                                  ),
-
+                                    child: CarouselSlider(
+                                      options: CarouselOptions(
+                                          aspectRatio: 2.0,
+                                          enlargeCenterPage: false,
+                                          scrollDirection: Axis.horizontal,
+                                          autoPlay: false,
+                                          onPageChanged: (index, reason) {
+                                            print("_currentPage: $_currentPage");
+                                            setState(() {
+                                              _currentPage = index;
+                                            });
+                                          }
+                                      ),
+                                      items: areaChartSlider,
+                                    )
                                 )
                             ),
-                            Padding(
-                                padding: EdgeInsets.only(top:10.0,left:220.0),
-                                child: Text(
-                                  'See More',
-                                  style: new TextStyle(
-                                    fontFamily: "WorkSansSemiBold",
-                                    color: Color(0xFFFFFFFF), fontSize: 17.0,
-                                  ),
+                            Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: EdgeInsets.only(left:230.0,bottom: 5.0,top: 3.0),
+                                        child: Text(
+                                          'See More',
+                                          style: new TextStyle(
+                                            fontFamily: "WorkSansSemiBold",
+                                            decoration: TextDecoration.underline,
+                                            color: Color(0xFFFFFFFF), fontSize: 15.0,
+                                          ),
+                                        )
+                                    ),
+                                  ],
                                 )
                             ),
                             Container(
@@ -909,6 +1089,7 @@ class _InvestState extends State<Invest> {
                                   'See More',
                                   style: new TextStyle(
                                     fontFamily: "WorkSansSemiBold",
+                                    decoration: TextDecoration.underline,
                                     color: Color(0xFFFFFFFF), fontSize: 17.0,
                                   ),
                                 )
