@@ -10,9 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:auro/style/theme.dart' as StyleTheme;
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-final List<String> areaChartDataList = ['1','2','3','4'];
+final List<String> perFormerDataList = ['1'];
 
 
 class SocialInvest extends StatefulWidget {
@@ -23,20 +24,6 @@ class SocialInvest extends StatefulWidget {
 class _SocialInvestState extends State<SocialInvest> {
 
   final GlobalKey<ScaffoldState> homeScaffoldKey = new GlobalKey<ScaffoldState>();
-
-  Map<String, double> dataMap = {
-    "Flutter": 5,
-    "React": 3,
-    "Xamarin": 2,
-    "Ionic": 2,
-  };
-
-  List<Color> colorList = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-    Colors.yellow,
-  ];
 
   Widget _buildTitleRecommended(BuildContext context) {
     var horizontalTitleAlignment =
@@ -64,6 +51,91 @@ class _SocialInvestState extends State<SocialInvest> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _newBuildTitleRecommended(BuildContext context)
+  {
+    return InkWell(
+      onTap: () => homeScaffoldKey.currentState.openDrawer(),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 4.0),
+            child: CircleAvatar(
+              radius: 15.0,
+              backgroundImage: new AssetImage('assets/download.jpeg'),
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+          //search box area
+          Container(
+            margin: EdgeInsets.only(left:14.0),
+            width: MediaQuery.of(context).size.width*0.52,
+            height: MediaQuery.of(context).size.height*0.06,
+            decoration: new BoxDecoration(
+              color: Color(0xFFFFFFFF),
+              border: Border.all(
+                color: Color(0xff696969),
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(5.0),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 4.0),
+                  width: MediaQuery.of(context).size.width*0.50,
+                  height: MediaQuery.of(context).size.height*0.05,
+                  child: TextFormField(
+                    style: TextStyle(
+                        fontFamily: "WorkSansSemiBold",
+                        fontSize: 14.0,
+                        color: Colors.black),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      suffixIcon: Icon(
+                        Icons.settings_applications,
+                        color: Colors.black,
+                        size: 15,
+                      ),
+                      prefixIcon: Icon(
+                        FontAwesomeIcons.search,
+                        color: Colors.black,
+                        size: 15,
+                      ),
+                      hintText: "Search",
+                      hintStyle: TextStyle(
+                          fontFamily: "WorkSansSemiBold", fontSize: 14.0),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          //setting icon
+          InkWell(
+              child: Padding(
+                padding: EdgeInsets.only(top: 4.0,left: 8.0),
+                child: CircleAvatar(
+                  radius: 15.0,
+                  backgroundColor: Colors.transparent,
+                  child: Icon(
+                    Icons.settings,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
+                ),
+              )
+          ),
+
+        ],
+      ),
+
     );
   }
 
@@ -176,18 +248,238 @@ class _SocialInvestState extends State<SocialInvest> {
   Widget build(BuildContext context) {
 
     final List<ChartData> chartData = [
-      ChartData('David', 25, Color.fromRGBO(9,0,136,1)),
-      ChartData('Steve', 38, Color.fromRGBO(147,0,119,1)),
-      ChartData('Jack', 34, Color.fromRGBO(228,0,124,1)),
-      ChartData('Others', 52, Color.fromRGBO(255,189,57,1))
+      ChartData('David', 35, Color(0xFFFF8C00)),
+      ChartData('Steve', 38, Color(0xFF008080)),
+      ChartData('Jack', 34, Color(0xFFc7ebdf)),
     ];
 
+
+    final List<Widget> performerSliders = perFormerDataList.map((item) => ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 5.0),
+              width: MediaQuery.of(context).size.width*0.37,
+              height: MediaQuery.of(context).size.height*0.22,
+              decoration: new BoxDecoration(
+                color: Color(0xFFFFFFFF),
+                border: Border.all(
+                  color: Color(0xFFFFFFFF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(2.0),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.0),
+                    child: Center(
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: new AssetImage('assets/download.jpeg'),
+                        backgroundColor: Colors.transparent,
+                      ),
+                    )
+                  ),
+                  Center(
+                    child: Text(
+                      'Adam',
+                      style: new TextStyle(
+                        fontFamily: "Poppins",
+                        color: Color(0xFF000000), fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.0,left: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Today's Score: ",
+                          style: new TextStyle(
+                            fontFamily: "Poppins",
+                            color: Color(0xFF000000), fontSize: 15.0,
+                          ),
+                        ),
+                        Text(
+                          "",
+                          style: new TextStyle(
+                            fontFamily: "Poppins",
+                            color: Color(0xFF000000), fontSize: 15.0,
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(top: 4.0,left: 5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Club: ",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      )
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(top: 4.0,left: 5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Title: ",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      )
+                  )
+
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 5.0),
+              width: MediaQuery.of(context).size.width*0.37,
+              height: MediaQuery.of(context).size.height*0.22,
+              decoration: new BoxDecoration(
+                color: Color(0xFFFFFFFF),
+                border: Border.all(
+                  color: Color(0xFFFFFFFF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(2.0),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 20.0,
+                          backgroundImage: new AssetImage('assets/download.jpeg'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      )
+                  ),
+                  Center(
+                    child: Text(
+                      'Adam',
+                      style: new TextStyle(
+                        fontFamily: "Poppins",
+                        color: Color(0xFF000000), fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(top: 4.0,left: 5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Today's Score: ",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      )
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(top: 4.0,left: 5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Club: ",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      )
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(top: 4.0,left: 5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Title: ",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "",
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                              color: Color(0xFF000000), fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      )
+                  )
+
+                ],
+              ),
+            ),
+          ],
+        )
+    )
+    ).toList();
 
     return Scaffold(
       key: homeScaffoldKey,
       appBar: AppBar(
-        title: _buildTitleRecommended(context),
-        backgroundColor: Color(0xFF000000),
+        title: _newBuildTitleRecommended(context),
+        backgroundColor: StyleTheme.Colors.AppBarBackGroundColor,
         iconTheme: IconThemeData(
           color: StyleTheme.Colors.AppBarMenuIconColor,
         ),
@@ -204,36 +496,8 @@ class _SocialInvestState extends State<SocialInvest> {
               ),
               child: Column(
                 children: <Widget>[
-                  // search box
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.095,
-                    child:  Container(
-                        margin: EdgeInsets.only(top: 25.0,left: 20.0,right: 20.0),
-                        decoration: new BoxDecoration(
-                          color: Color(0xFFFFFFFF),
-                          border: Border.all(
-                            color: Color(0xFFFFFFFF),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(top:5.0, left: 120.0),
-                          child: Text(
-                            'Search',
-                            style: new TextStyle(
-                              fontFamily: "Poppins",
-                              color: Color(0xFF000000), fontSize: 22.0,
-                            ),
-                          ),
-                        )
-                    ),
-                  ),
                   // start learning box
-                  SizedBox(
+/*                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.095,
                     child:  Container(
@@ -265,13 +529,13 @@ class _SocialInvestState extends State<SocialInvest> {
                           )
                         )
                     ),
-                  ),
+                  ),*/
                   // learning  progress box
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.095,
                     child:  Container(
-                        margin: EdgeInsets.only(top: 10.0,left: 20.0,right: 20.0),
+                        margin: EdgeInsets.only(top: 10.0,left: 5.0,right: 5.0),
                         decoration: new BoxDecoration(
                           color: Color(0xFFFFFFFF),
                           border: Border.all(
@@ -285,7 +549,7 @@ class _SocialInvestState extends State<SocialInvest> {
                         child: Padding(
                           padding: EdgeInsets.only(top:10.0, left: 80.0),
                           child: Text(
-                            'LEARNING PROGRESS',
+                            'SCOREBOARD',
                             style: new TextStyle(
                               fontFamily: "Poppins",
                               color: Color(0xFF000000), fontSize: 18.0,
@@ -297,9 +561,9 @@ class _SocialInvestState extends State<SocialInvest> {
                   //donut chart box
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.35,
+                      height: MediaQuery.of(context).size.height*0.30,
                       child: Container(
-                          margin: EdgeInsets.only(left: 20.0,right: 20.0,bottom: 5.0),
+                          margin: EdgeInsets.only(left: 5.0,right: 5.0,bottom: 5.0),
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             border: Border.all(
@@ -310,25 +574,119 @@ class _SocialInvestState extends State<SocialInvest> {
                               Radius.circular(2.0),
                             ),
                           ),
-                        child: SfCircularChart(
-                            series: <CircularSeries>[
-                              // Renders doughnut chart
-                              DoughnutSeries<ChartData, String>(
-                                  dataSource: chartData,
-                                  pointColorMapper:(ChartData data,  _) => data.color,
-                                  xValueMapper: (ChartData data, _) => data.x,
-                                  yValueMapper: (ChartData data, _) => data.y
-                              )
-                            ]
-                        ),
+                        child: Stack(
+                          children: [
+                            SfCircularChart(
+                                series: <CircularSeries>[
+                                  // Renders doughnut chart
+                                  DoughnutSeries<ChartData, String>(
+                                      dataSource: chartData,
+                                      pointColorMapper:(ChartData data,  _) => data.color,
+                                      xValueMapper: (ChartData data, _) => data.x,
+                                      yValueMapper: (ChartData data, _) => data.y
+                                  )
+                                ]
+                            ),
+                            InkWell(
+                              child: new Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                    height: 40,
+                                    width: 80,
+                                    margin: EdgeInsets.only(top:20.0,bottom: 20.0),
+                                    decoration: new BoxDecoration(
+                                      color: Color(0xFF1E90FF),
+                                      border: Border.all(
+                                        color: Color(0xFF1E90FF),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(2.0),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'EASY',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    )
+                                ),
+                              ),
+                              onTap: ()
+                              {
+                                goToQuestionTemp();
+                              },
+                            ),
+                            new Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Container(
+                                  height: 40,
+                                  width: 110,
+                                  margin: EdgeInsets.only(top:20.0,bottom: 20.0),
+                                  decoration: new BoxDecoration(
+                                    color: Color(0xFF1E90FF),
+                                    border: Border.all(
+                                      color: Color(0xFF1E90FF),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(2.0),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'INTERMEDIATE',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                              ),
+                            ),
+                            new Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                  height: 40,
+                                  width: 80,
+                                  margin: EdgeInsets.only(top:60.0,bottom: 40.0),
+                                  decoration: new BoxDecoration(
+                                    color: Color(0xFF1E90FF),
+                                    border: Border.all(
+                                      color: Color(0xFF1E90FF),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(2.0),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'HARD',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                              ),
+                            )
+                          ],
+                        )
                       )
                   ),
                   // todays  progress box
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.27,
+                    height: MediaQuery.of(context).size.height*0.07,
                     child:  Container(
-                        margin: EdgeInsets.only(top: 10.0,left: 20.0,right: 20.0),
+                        margin: EdgeInsets.only(top: 10.0,left: 5.0,right: 5.0),
                         decoration: new BoxDecoration(
                           color: Color(0xFF1E90FF),
                           border: Border.all(
@@ -354,7 +712,7 @@ class _SocialInvestState extends State<SocialInvest> {
                                 ),
                               ),
                             ),
-                            Padding(
+/*                            Padding(
                               padding: EdgeInsets.only(top:8.0, left: 20.0),
                               child: Text(
                                 'MASTER 10 MORE CONCEPTS TO EARN YOUR FIRST COIN',
@@ -373,9 +731,70 @@ class _SocialInvestState extends State<SocialInvest> {
                                   color: Color(0xFFFFFFFF), fontSize: 17.0,
                                 ),
                               ),
-                            )
+                            )*/
                           ],
                         )
+                    ),
+                  ),
+                  // increase score  progress box
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.07,
+                    child:  Container(
+                        margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0),
+                        decoration: new BoxDecoration(
+                          color: Color(0xFFFFFFFF),
+                          border: Border.all(
+                            color: Color(0xFF000000),
+                            width: 4.5,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top:2.0),
+                              child: Center(
+                                child: Text(
+                                  "INCREASE YOUR SCORE",
+                                  style: new TextStyle(
+                                    fontFamily: "Poppins",
+                                    color: Color(0xFF000000), fontSize: 18.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                    ),
+                  ),
+                  // performet board  progress box
+                  Padding(
+                    padding: EdgeInsets.only(top:4.0),
+                    child: Center(
+                      child: Text(
+                        "Star Performer's Of The Day",
+                        style: new TextStyle(
+                          fontFamily: "Poppins",
+                          color: Color(0xFFFFFFFF), fontSize: 17.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.22,
+                    margin: EdgeInsets.all(7.0),
+                    child: CarouselSlider(
+                      items: performerSliders,
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        aspectRatio: 2.0,
+                      ),
                     ),
                   ),
                   //buffet club box
@@ -383,7 +802,7 @@ class _SocialInvestState extends State<SocialInvest> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height*0.55,
                       child: Container(
-                        margin: EdgeInsets.only(top:10.0,left: 20.0,right: 20.0,bottom: 5.0),
+                        margin: EdgeInsets.only(top:10.0,left: 5.0,right: 5.0,bottom: 5.0),
                         decoration: new BoxDecoration(
                           color: Color(0xFFFFFFFF),
                           border: Border.all(
@@ -459,7 +878,7 @@ class _SocialInvestState extends State<SocialInvest> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.11,
                     child:  Container(
-                        margin: EdgeInsets.only(top: 15.0,left: 20.0,right: 20.0),
+                        margin: EdgeInsets.only(top: 15.0,left: 5.0,right: 5.0),
                         decoration: new BoxDecoration(
                           color: Color(0xFFFFFFFF),
                           border: Border.all(
@@ -486,7 +905,7 @@ class _SocialInvestState extends State<SocialInvest> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.61,
-                    margin: EdgeInsets.only(top:10.0,left: 20.0,right: 20.0,bottom: 5.0),
+                    margin: EdgeInsets.only(top:10.0,left: 5.0,right: 5.0,bottom: 5.0),
                     decoration: new BoxDecoration(
                       color: Color(0xFFFFFFFF),
                       border: Border.all(

@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 String apiUrl = GlobalInstance.apiBaseUrl;
 
 Future<List<Question>> getQuestions() async {
-
 /*  String url = "$apiUrl" + "assessment?assessment_id=$assessmentId";
 
 
@@ -66,7 +65,7 @@ Future<List<Question>> getQuestions() async {
         "question_text": "What is Accelerated Depreciation?",
         "question_id": "2",
         "image": [],
-        "video_link": "https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
+        "video_link": "https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_640_3MG.mp4",
         "answer": [
           {"value": "An acceleration clause is a contract provision"
               "that allows a lender to require a borrower to repay all of an outstanding loan if certain requirements are not met"},
@@ -96,7 +95,7 @@ Future<List<Question>> getQuestions() async {
         "question_text": "What is Accounting Profit?",
         "question_id": "3",
         "image": [],
-        "video_link": "http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
+        "video_link": "https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
         "answer": [
           {"value": "1"}
         ],
@@ -120,12 +119,11 @@ Future<List<Question>> getQuestions() async {
       }
   ];
 
-
 /*  List<Map<String, dynamic>> questions = List<Map<String, dynamic>>.from(
       json.decode(res.body)["assessment"]["questions"]);*/
 
-  List<Map<String, dynamic>> questions = List<Map<String, dynamic>>.from(tempQuestions);
+  List<Map<String, dynamic>> questions =
+      List<Map<String, dynamic>>.from(tempQuestions);
 
   return Question.fromData(questions);
-
 }

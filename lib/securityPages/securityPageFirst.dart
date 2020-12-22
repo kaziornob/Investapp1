@@ -353,6 +353,17 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
               }
             },
           ),*/
+          Padding(
+            padding: EdgeInsets.only(top: 5.0,left: 10.0),
+            child: Text(
+              'Voting bar',
+              style: new TextStyle(
+                  fontFamily: "Poppins",
+                  color: Color(0xFFFFFFFF), fontSize: 14.0,
+                  letterSpacing: 0.2
+              ),
+            ),
+          ),
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.05,

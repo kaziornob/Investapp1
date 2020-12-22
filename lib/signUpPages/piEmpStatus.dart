@@ -111,7 +111,7 @@ class _PiEmpStatusState extends State<PiEmpStatus> with SingleTickerProviderStat
 
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*1.1,
+              height: MediaQuery.of(context).size.height*1.3,
               decoration: new BoxDecoration(
                 color: Theme.Colors.backgroundColor,
               ),
