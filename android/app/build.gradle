@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -36,120 +36,21 @@ android {
         disable 'InvalidPackage'
     }
 
-    /*defaultConfig {
+    defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "auro.auro"
-        minSdkVersion 21
+        applicationId "com.advtest"
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
+     
     }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-        }
-    }*/
-
-    defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "auro.auro"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    flavorDimensions "app"
-
-    signingConfigs {
-        dev {
-            def keystorePropertiesFile = rootProject.file("key.properties")
-            def keystoreProperties = new Properties()
-            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-
-        stage {
-            def StagekeystorePropertiesFile = rootProject.file("key.properties")
-            def StagekeystoreProperties = new Properties()
-            StagekeystoreProperties.load(new FileInputStream(StagekeystorePropertiesFile))
-
-            keyAlias StagekeystoreProperties['keyAlias']
-            keyPassword StagekeystoreProperties['keyPassword']
-            storeFile file(StagekeystoreProperties['storeFile'])
-            storePassword StagekeystoreProperties['storePassword']
-        }
-
-        qa {
-            def QakeystorePropertiesFile = rootProject.file("key.properties")
-            def QakeystoreProperties = new Properties()
-            QakeystoreProperties.load(new FileInputStream(QakeystorePropertiesFile))
-
-            keyAlias QakeystoreProperties['keyAlias']
-            keyPassword QakeystoreProperties['keyPassword']
-            storeFile file(QakeystoreProperties['storeFile'])
-            storePassword QakeystoreProperties['storePassword']
-        }
-
-        prod {
-            def ProdkeystorePropertiesFile = rootProject.file("prodKey.properties")
-            def ProdkeystoreProperties = new Properties()
-            ProdkeystoreProperties.load(new FileInputStream(ProdkeystorePropertiesFile))
-
-
-            keyAlias ProdkeystoreProperties['keyAlias']
-            keyPassword ProdkeystoreProperties['keyPassword']
-            storeFile file(ProdkeystoreProperties['storeFile'])
-            storePassword ProdkeystoreProperties['storePassword']
-        }
-    }
-
-    productFlavors {
-
-        dev {
-            dimension "app"
-            applicationIdSuffix ".dev"
-        }
-
-        stage {
-            dimension "app"
-            applicationIdSuffix ".stage"
-        }
-
-        qa {
-            dimension "app"
-            applicationIdSuffix ".qa"
-        }
-
-        prod {
-            dimension "app"
-        }
-    }
-
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            productFlavors.dev.signingConfig signingConfigs.dev
-            productFlavors.stage.signingConfig signingConfigs.stage
-            productFlavors.qa.signingConfig signingConfigs.qa
-            productFlavors.prod.signingConfig signingConfigs.prod
-        }
-    }
-
-    buildTypes {
-        debug{
             signingConfig signingConfigs.debug
         }
     }
@@ -160,5 +61,10 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // testImplementation 'junit:junit:4.12'
+    // androidTestImplementation 'androidx.test:runner:1.1.1'
+    // androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+     implementation 'com.android.support:multidex:1.0.3'
 }
+

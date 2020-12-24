@@ -1,4 +1,5 @@
-import 'package:auro/models/radioQusModel.dart';
+
+import 'package:auroim/model/radioQusModel.dart';
 
 Future<List<RadioQusModel>> getRadioQusTempData(parentFrom,childFrom) async {
 
