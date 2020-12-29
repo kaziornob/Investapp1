@@ -60,7 +60,7 @@ class _EmpStatusState extends State<EmpStatus> {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedEmpStatus,
-          dropdownColor: Colors.black,
+          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
           isExpanded: true,
           onChanged: (String newValue) {
             setState(() {
@@ -124,7 +124,7 @@ class _EmpStatusState extends State<EmpStatus> {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedEmpBuss,
-          dropdownColor: Colors.black,
+          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
           isExpanded: true,
           onChanged: (String newValue) {
             setState(() {
@@ -305,7 +305,6 @@ class _EmpStatusState extends State<EmpStatus> {
                                                   color: AllCoustomTheme.getTextThemeColors(),
                                                 ),
                                                 keyboardType: TextInputType.text,
-                                                obscureText: true,
                                                 decoration: new InputDecoration(
                                                   focusColor: AllCoustomTheme.getTextThemeColors(),
                                                   fillColor: AllCoustomTheme.getTextThemeColors(),
@@ -340,7 +339,6 @@ class _EmpStatusState extends State<EmpStatus> {
                                                   color: AllCoustomTheme.getTextThemeColors(),
                                                 ),
                                                 keyboardType: TextInputType.text,
-                                                obscureText: true,
                                                 decoration: new InputDecoration(
                                                   focusColor: AllCoustomTheme.getTextThemeColors(),
                                                   fillColor: AllCoustomTheme.getTextThemeColors(),

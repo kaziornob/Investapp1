@@ -215,7 +215,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                               fontSize: ConstanceData.SIZE_TITLE16,
                                               color: AllCoustomTheme.getTextThemeColors(),
                                             ),
-                                            keyboardType: TextInputType.text,
+                                            keyboardType: TextInputType.emailAddress,
                                             decoration: new InputDecoration(
                                               focusColor: AllCoustomTheme.getTextThemeColors(),
                                               fillColor: AllCoustomTheme.getTextThemeColors(),
@@ -423,11 +423,11 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   String _validateEmail(value) {
-    // if (value.isEmpty) {
-    //   return "Email cannot be empty";
-    // } else if (Validators.validateEmail(value) == false) {
-    //   return "Please enter valid email";
-    // }
+    if (value.isEmpty) {
+      return "Email cannot be empty";
+    } else if (Validators.validateEmail(value) == false) {
+      return "Please enter valid email";
+    }
     return null;
   }
 
@@ -439,8 +439,14 @@ class _SignInScreenState extends State<SignInScreen> {
     //   return 'Password must contains ${5} characters';
     // }
     // else {
-    return null;
+    // return null;
     //   }
+
+    if (value.isEmpty) {
+      return "Password cannot be empty";
+    } else {
+      return null;
+    }
   }
 }
 

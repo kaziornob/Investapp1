@@ -154,9 +154,9 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height*0.45,
-                        margin: EdgeInsets.only(left: 30.0,right: 30.0),
+                        /*margin: EdgeInsets.only(left: 30.0,right: 30.0),
                         decoration: new BoxDecoration(
-                          color: Color(0xFFFFFFFF),
+                          // color: Color(0xFFFFFFFF),
                           border: Border.all(
                             color: Color(0xFFFFFFFF),
                             width: 1,
@@ -164,7 +164,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                           borderRadius: BorderRadius.all(
                             Radius.circular(2.0),
                           ),
-                        ),
+                        ),*/
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

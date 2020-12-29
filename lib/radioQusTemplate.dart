@@ -132,10 +132,10 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                       ),
                       _visibleRadioQus
                           ? Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5)),
-                            color: AllCoustomTheme.qusBoxColor(),
-                          ),
+                          // decoration: BoxDecoration(
+                          //   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5)),
+                          //   color: AllCoustomTheme.qusBoxColor(),
+                          // ),
                           child: Column(
                             children: <Widget>[
                               SizedBox(

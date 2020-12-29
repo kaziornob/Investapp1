@@ -443,21 +443,6 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                 ),
                               )
                             : SizedBox(),
-                        _visible
-                            ? Expanded(
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: <Widget>[
-                                    Text(
-                                      'Terms & Privacy Policy',
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : SizedBox()
                       ],
                     ),
                   ),

@@ -431,11 +431,13 @@ class _OtpState extends State<Otp> {
     showDialog(context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            // backgroundColor: Colors.orange,
+            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             title: Text(
                 "Success",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black,
+                color: AllCoustomTheme.getTextThemeColors(),
                 fontWeight: FontWeight.bold,
                 fontSize: ConstanceData.SIZE_TITLE18,
               ),
@@ -444,14 +446,21 @@ class _OtpState extends State<Otp> {
                 "Otp matched successfully.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black,
+                color: AllCoustomTheme.getTextThemeColors(),
                 fontWeight: FontWeight.bold,
                 fontSize: ConstanceData.SIZE_TITLE18,
               ),
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Ok'),
+                child: Text(
+                    'Ok',
+                  style: TextStyle(
+                    color: AllCoustomTheme.getTextThemeColors(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                  ),
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context, rootNavigator: true).push(

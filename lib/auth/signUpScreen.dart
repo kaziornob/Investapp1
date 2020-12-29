@@ -71,138 +71,140 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onTap: () {
                     FocusScope.of(context).requestFocus(new FocusNode());
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: appBarheight,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context, rootNavigator: true).pop();
-                              },
-                              child: Animator(
-                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                duration: Duration(milliseconds: 500),
-                                cycles: 0,
-                                builder: (anim) => FractionalTranslation(
-                                  translation: anim.value,
-                                  child: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: AllCoustomTheme.getTextThemeColors(),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 16),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: appBarheight,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context, rootNavigator: true).pop();
+                                  },
+                                  child: Animator(
+                                    tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                    duration: Duration(milliseconds: 500),
+                                    cycles: 0,
+                                    builder: (anim) => FractionalTranslation(
+                                      translation: anim.value,
+                                      child: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: AllCoustomTheme.getTextThemeColors(),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            !_isClickonSignIn
-                                ? GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        _isClickonSignIn = true;
-                                      });
-                                      await Future.delayed(const Duration(milliseconds: 700));
+                                !_isClickonSignIn
+                                    ? GestureDetector(
+                                  onTap: () async {
+                                    setState(() {
+                                      _isClickonSignIn = true;
+                                    });
+                                    await Future.delayed(const Duration(milliseconds: 700));
 
-                                      Navigator.of(context, rootNavigator: true)
-                                          .push(
-                                        CupertinoPageRoute<void>(
-                                          builder: (BuildContext context) => SignInScreen(),
-                                        ),
-                                      )
-                                          .then((onValue) {
-                                        setState(() {
-                                          _isClickonSignIn = false;
-                                        });
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(
+                                      CupertinoPageRoute<void>(
+                                        builder: (BuildContext context) => SignInScreen(),
+                                      ),
+                                    )
+                                        .then((onValue) {
+                                      setState(() {
+                                        _isClickonSignIn = false;
                                       });
-                                    },
-                                    child: Animator(
-                                      tween: Tween<double>(begin: 0.8, end: 1.1),
-                                      curve: Curves.easeInToLinear,
-                                      cycles: 0,
-                                      builder: (anim) => Transform.scale(
-                                        scale: anim.value,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(right: 16),
-                                          child: Text(
-                                            'Sign In',
-                                            style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                    });
+                                  },
+                                  child: Animator(
+                                    tween: Tween<double>(begin: 0.8, end: 1.1),
+                                    curve: Curves.easeInToLinear,
+                                    cycles: 0,
+                                    builder: (anim) => Transform.scale(
+                                      scale: anim.value,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 16),
+                                        child: Text(
+                                          'Sign In',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  )
-                                : Padding(
-                                    padding: EdgeInsets.only(right: 14),
-                                    child: CupertinoActivityIndicator(
-                                      radius: 12,
+                                  ),
+                                )
+                                    : Padding(
+                                  padding: EdgeInsets.only(right: 14),
+                                  child: CupertinoActivityIndicator(
+                                    radius: 12,
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Animator(
+                                  tween: Tween<double>(begin: 0, end: 1),
+                                  duration: Duration(milliseconds: 500),
+                                  cycles: 1,
+                                  builder: (anim) => SizeTransition(
+                                    sizeFactor: anim,
+                                    axis: Axis.horizontal,
+                                    axisAlignment: 1,
+                                    child: Text(
+                                      'Sign Up',
+                                      style: TextStyle(
+                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        fontSize: 36,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Animator(
-                              tween: Tween<double>(begin: 0, end: 1),
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
-                                axis: Axis.horizontal,
-                                axisAlignment: 1,
-                                child: Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        _visible
-                            ? Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
-                                  color: AllCoustomTheme.boxColor(),
-                                ),
-                                child: Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        height: 0.5,
-                                      ),
-                                      Container(
-                                        height: 5,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            _visible
+                                ? Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
+                                color: AllCoustomTheme.boxColor(),
+                              ),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 0.5,
+                                    ),
+                                    Container(
+                                      height: 5,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            globals.buttoncolor1,
+                                            globals.buttoncolor2,
+                                          ],
                                         ),
                                       ),
-                                      /* Container(
+                                    ),
+                                    /* Container(
                                         height: 60,
                                         color: AllCoustomTheme.getsecoundTextThemeColor(),
                                         padding: EdgeInsets.all(10),
@@ -262,170 +264,169 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       SizedBox(
                                         height: 10,
                                       ),*/
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 14, top: 4),
-                                              child: TextFormField(
-                                                validator: _validateEmail,
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 14, top: 4),
+                                            child: TextFormField(
+                                              validator: _validateEmail,
+                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme.getTextThemeColors(),
+                                              ),
+                                              keyboardType: TextInputType.emailAddress,
+                                              decoration: new InputDecoration(
+                                                focusColor: AllCoustomTheme.getTextThemeColors(),
+                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                hintText: 'Enter email here...',
+                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                                labelText: 'E-mail',
+                                                labelStyle: TextStyle(
                                                   fontSize: ConstanceData.SIZE_TITLE16,
                                                   color: AllCoustomTheme.getTextThemeColors(),
                                                 ),
-                                                keyboardType: TextInputType.text,
-                                                decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
-                                                  hintText: 'Enter email here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'E-mail',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                                //controller: lastnameController,
-                                                onSaved: (value) {
-                                                  setState(() {
-                                                    //lastnamesearchText = value;
-                                                  });
-                                                },
                                               ),
+                                              //controller: lastnameController,
+                                              onSaved: (value) {
+                                                setState(() {
+                                                  //lastnamesearchText = value;
+                                                });
+                                              },
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10),
-                                              child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 14, bottom: 10),
+                                            child: TextFormField(
+                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme.getTextThemeColors(),
+                                              ),
+                                              keyboardType: TextInputType.text,
+                                              obscureText: true,
+                                              decoration: new InputDecoration(
+                                                focusColor: AllCoustomTheme.getTextThemeColors(),
+                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                hintText: 'Enter password here...',
+                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                                labelText: 'Password',
+                                                labelStyle: TextStyle(
                                                   fontSize: ConstanceData.SIZE_TITLE16,
                                                   color: AllCoustomTheme.getTextThemeColors(),
                                                 ),
-                                                keyboardType: TextInputType.text,
-                                                obscureText: true,
-                                                decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
-                                                  hintText: 'Enter password here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Password',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                                validator: _validatePassword,
-                                                controller: signUpPasswordController,
-                                                onSaved: (value) {
-                                                  setState(() {
-                                                    //lastnamesearchText = value;
-                                                  });
-                                                },
                                               ),
+                                              validator: _validatePassword,
+                                              controller: signUpPasswordController,
+                                              onSaved: (value) {
+                                                setState(() {
+                                                  //lastnamesearchText = value;
+                                                });
+                                              },
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10),
-                                              child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 14, bottom: 10),
+                                            child: TextFormField(
+                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme.getTextThemeColors(),
+                                              ),
+                                              keyboardType: TextInputType.text,
+                                              obscureText: true,
+                                              decoration: new InputDecoration(
+                                                focusColor: AllCoustomTheme.getTextThemeColors(),
+                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                hintText: 'Re-Enter password here...',
+                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                                labelText: 'Confirm Password',
+                                                labelStyle: TextStyle(
                                                   fontSize: ConstanceData.SIZE_TITLE16,
                                                   color: AllCoustomTheme.getTextThemeColors(),
                                                 ),
-                                                keyboardType: TextInputType.text,
-                                                obscureText: true,
-                                                decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
-                                                  hintText: 'Re-Enter password here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Confirm Password',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                                validator: _validatePassword,
-                                                controller: signUpConfirmPasswordController,
-                                                onSaved: (value) {
-                                                  setState(() {
-                                                    //lastnamesearchText = value;
-                                                  });
-                                                },
                                               ),
+                                              validator: _validatePassword,
+                                              controller: signUpConfirmPasswordController,
+                                              onSaved: (value) {
+                                                setState(() {
+                                                  //lastnamesearchText = value;
+                                                });
+                                              },
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10),
-                                              child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 14, bottom: 10),
+                                            child: TextFormField(
+                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme.getTextThemeColors(),
+                                              ),
+                                              keyboardType: TextInputType.number,
+                                              decoration: new InputDecoration(
+                                                focusColor: AllCoustomTheme.getTextThemeColors(),
+                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                hintText: 'Enter Phone here...',
+                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                                labelText: 'Phone',
+                                                labelStyle: TextStyle(
                                                   fontSize: ConstanceData.SIZE_TITLE16,
                                                   color: AllCoustomTheme.getTextThemeColors(),
                                                 ),
-                                                keyboardType: TextInputType.number,
-                                                obscureText: true,
-                                                decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
-                                                  hintText: 'Enter Phone here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Phone',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                                // validator: _validatePassword,
-                                                onSaved: (value) {
-                                                  setState(() {
-                                                    //lastnamesearchText = value;
-                                                  });
-                                                },
                                               ),
+                                              // validator: _validatePassword,
+                                              onSaved: (value) {
+                                                setState(() {
+                                                  //lastnamesearchText = value;
+                                                });
+                                              },
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            SizedBox(
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          SizedBox(
                                               height: 50,
                                               child: GestureDetector(
                                                 onTap: () {
@@ -464,57 +465,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   ),
                                                 ),
                                               )
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            : SizedBox(),
-                        //social media buttons
-                        Container(
-                          height: 45.0,
-                          alignment: FractionalOffset.center,
-                          child: Text(
-                            "OR",
-                            style: TextStyle(
-                              color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
-                              letterSpacing: 0.3,
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                            ),
-                          ),
-                        ),
-                        AnimatedOpacity(
-                          duration: Duration(milliseconds: 500),
-                          opacity: 1.0,
-                          child: FlatButton(
-                            padding: EdgeInsets.all(0),
-                            child: Container(
-                              height: 45.0,
-                              alignment: FractionalOffset.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 1.5),
-                                borderRadius: BorderRadius.circular(30),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
-                              child: Text(
-                                "Sign Up With E-Mail",
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
-                                  letterSpacing: 0.3,
-                                ),
+                            )
+                                : SizedBox(),
+                          ],
+                        ),
+                      ),
+                      //social media buttons
+                      Container(
+                        height: 45.0,
+                        alignment: FractionalOffset.center,
+                        child: Text(
+                          "OR",
+                          style: TextStyle(
+                            color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                            letterSpacing: 0.3,
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                          ),
+                        ),
+                      ),
+                      AnimatedOpacity(
+                        duration: Duration(milliseconds: 500),
+                        opacity: 1.0,
+                        child: FlatButton(
+                          padding: EdgeInsets.all(0),
+                          child: Container(
+                            height: 45.0,
+                            width: 320.0,
+                            alignment: FractionalOffset.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 1.5),
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  globals.buttoncolor1,
+                                  globals.buttoncolor2,
+                                ],
                               ),
                             ),
-                            onPressed: () async {
+                            child: Text(
+                              "Sign Up With E-Mail",
+                              style: TextStyle(
+                                color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                letterSpacing: 0.3,
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
 /*
                               setState(() {
                                 _isInProgress = true;
@@ -522,89 +527,91 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               await Future.delayed(const Duration(milliseconds: 500));
 */
 
-                            },
-                          ),
+                          },
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AnimatedOpacity(
-                          duration: Duration(milliseconds: 500),
-                          opacity: 1.0,
-                          child: FlatButton(
-                            padding: EdgeInsets.all(0),
-                            child: new Container(
-                              height: 45.0,
-                              alignment: FractionalOffset.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 1.5),
-                                borderRadius: BorderRadius.circular(30),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
-                                  ],
-                                ),
-                              ),
-                              child: Text(
-                                "Facebook",
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
-                                  letterSpacing: 0.3,
-                                ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      AnimatedOpacity(
+                        duration: Duration(milliseconds: 500),
+                        opacity: 1.0,
+                        child: FlatButton(
+                          padding: EdgeInsets.all(0),
+                          child: new Container(
+                            height: 45.0,
+                            width: 320.0,
+
+                            alignment: FractionalOffset.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 1.5),
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  globals.buttoncolor1,
+                                  globals.buttoncolor2,
+                                ],
                               ),
                             ),
-                            onPressed: () async {
+                            child: Text(
+                              "Facebook",
+                              style: TextStyle(
+                                color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                letterSpacing: 0.3,
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
 /*                              setState(() {
                                 _isInProgress = true;
                               });
                               await Future.delayed(const Duration(milliseconds: 500));*/
-                            },
-                          ),
+                          },
                         ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        AnimatedOpacity(
-                          duration: Duration(milliseconds: 500),
-                          opacity: 1.0,
-                          child: FlatButton(
-                            padding: EdgeInsets.all(0),
-                            child: new Container(
-                              height: 45.0,
-                              alignment: FractionalOffset.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 1.5),
-                                borderRadius: BorderRadius.circular(30),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
-                                  ],
-                                ),
-                              ),
-                              child: Text(
-                                "Apple",
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
-                                  letterSpacing: 0.3,
-                                ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      AnimatedOpacity(
+                        duration: Duration(milliseconds: 500),
+                        opacity: 1.0,
+                        child: FlatButton(
+                          padding: EdgeInsets.all(0),
+                          child: new Container(
+                            height: 45.0,
+                            width: 320.0,
+                            alignment: FractionalOffset.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 1.5),
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  globals.buttoncolor1,
+                                  globals.buttoncolor2,
+                                ],
                               ),
                             ),
-                            onPressed: () async {
+                            child: Text(
+                              "Apple",
+                              style: TextStyle(
+                                color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                letterSpacing: 0.3,
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
 /*                              setState(() {
                                 _isInProgress = true;
                               });
                               await Future.delayed(const Duration(milliseconds: 500));*/
-                            },
-                          ),
-                        )
-                      ],
-                    ),
+                          },
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
