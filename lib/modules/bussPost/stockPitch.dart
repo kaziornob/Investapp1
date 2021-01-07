@@ -1,7 +1,8 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/model/tagData.dart';
+import 'package:auroim/model/tagAndChartData.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -31,12 +32,21 @@ class _StockPitchState extends State<StockPitch> {
   String selectedStock;
   String selectedLongShort;
 
+  String fileName;
+  String path;
+  Map<String, String> paths;
+  List<String> extensions;
+  bool isLoadingPath = false;
+  bool isMultiPick = false;
+  FileType fileType;
+
 
   @override
   void initState() {
     super.initState();
     loadUserDetails();
     getTagList();
+    fileType = FileType.any;
   }
 
   loadUserDetails() async {
@@ -46,6 +56,29 @@ class _StockPitchState extends State<StockPitch> {
     await Future.delayed(const Duration(milliseconds: 700));
     setState(() {
       _isInProgress = false;
+    });
+  }
+
+  void _openFileExplorer() async {
+    setState(() => isLoadingPath = true);
+    try {
+      if (isMultiPick) {
+        path = null;
+        paths = await FilePicker.getMultiFilePath(type: true? fileType: FileType.any, allowedExtensions: extensions);
+      }
+      else {
+        path = await FilePicker.getFilePath(type: true? fileType: FileType.any, allowedExtensions: extensions);
+        paths = null;
+      }
+    }
+    on PlatformException catch (e) {
+      print("Unsupported operation" + e.toString());
+    }
+    if (!mounted) return;
+    setState(() {
+      isLoadingPath = false;
+      fileName = path != null ? path.split('/').last : paths != null
+          ? paths.keys.toString() : '...';
     });
   }
 
@@ -85,28 +118,34 @@ class _StockPitchState extends State<StockPitch> {
     if (pollDurationList != null && pollDurationList.length != 0)
     {
       return new DropdownButtonHideUnderline(
-        child: new DropdownButton(
-          value: selectedStock,
-          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-          isExpanded: true,
-          onChanged: (String newValue) {
-            setState(() {
-              selectedStock = newValue;
-            });
-          },
-          items: pollDurationList.map((String value) {
-            return new DropdownMenuItem(
-              value: value,
-              child: new Text(
-                value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                ),
-              ),
-            );
-          }).toList(),
-        ),
+        child: ButtonTheme(
+          alignedDropdown: true,
+          child: Container(
+            height: 16.0,
+            child: new DropdownButton(
+              value: selectedStock,
+              dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+              isExpanded: true,
+              onChanged: (String newValue) {
+                setState(() {
+                  selectedStock = newValue;
+                });
+              },
+              items: pollDurationList.map((String value) {
+                return new DropdownMenuItem(
+                  value: value,
+                  child: new Text(
+                    value,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        )
       );
     }
     else
@@ -254,28 +293,34 @@ class _StockPitchState extends State<StockPitch> {
                                         ),
                                         isEmpty: selectedLongShort == '',
                                         child: new DropdownButtonHideUnderline(
-                                          child: new DropdownButton(
-                                            value: selectedLongShort,
-                                            dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-                                            isExpanded: true,
-                                            onChanged: (String newValue) {
-                                              setState(() {
-                                                selectedLongShort = newValue;
-                                              });
-                                            },
-                                            items: longShortList.map((String value) {
-                                              return new DropdownMenuItem(
-                                                value: value,
-                                                child: new Text(
-                                                  value,
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: ConstanceData.SIZE_TITLE14,
-                                                  ),
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
+                                          child: ButtonTheme(
+                                            alignedDropdown: true,
+                                            child: Container(
+                                              height: 16.0,
+                                              child: new DropdownButton(
+                                                value: selectedLongShort,
+                                                dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                                isExpanded: true,
+                                                onChanged: (String newValue) {
+                                                  setState(() {
+                                                    selectedLongShort = newValue;
+                                                  });
+                                                },
+                                                items: longShortList.map((String value) {
+                                                  return new DropdownMenuItem(
+                                                    value: value,
+                                                    child: new Text(
+                                                      value,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: ConstanceData.SIZE_TITLE14,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            )
+                                          )
                                         ),
                                       );
                                     },
@@ -542,7 +587,7 @@ class _StockPitchState extends State<StockPitch> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Search Tags',
+                                'Search Topic Tags',
                                 style: TextStyle(
                                   color: AllCoustomTheme.getTextThemeColors(),
                                   fontSize: ConstanceData.SIZE_TITLE16,
@@ -564,7 +609,7 @@ class _StockPitchState extends State<StockPitch> {
                                         LengthLimitingTextInputFormatter(30)
                                       ],
                                       decoration: InputDecoration(
-                                        hintText: 'Search Tags',
+                                        hintText: 'Search Topic Tags',
                                         border: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 width: 1.0,
@@ -692,7 +737,101 @@ class _StockPitchState extends State<StockPitch> {
                           ),
 
                           ////upload doc//
-                          Row(
+                          new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+/*                              new Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: new DropdownButton(
+                                    hint: new Text('Select file type'),
+                                    value: fileType,
+                                    items: <DropdownMenuItem>[
+                                      new DropdownMenuItem(
+                                        child: new Text('Audio'),
+                                        value: FileType.audio,
+                                      ),
+                                      new DropdownMenuItem(
+                                        child: new Text('Image'),
+                                        value: FileType.image,
+                                      ),
+                                      new DropdownMenuItem(
+                                        child: new Text('Video'),
+                                        value: FileType.video,
+                                      ),
+                                      new DropdownMenuItem(
+                                        child: new Text('Any'),
+                                        value: FileType.any,
+                                      ),
+                                    ],
+                                    onChanged: (value) => setState(() {
+                                      fileType = value;
+                                    })
+                                ),
+                              ),
+                              new ConstrainedBox(
+                                constraints: BoxConstraints.tightFor(width: 200.0),
+                                child: new SwitchListTile.adaptive(
+                                  title: new Text('Pick multiple files', textAlign: TextAlign.right),
+                                  onChanged: (bool value) => setState(() => isMultiPick = value),
+                                  value: isMultiPick,
+                                ),
+                              ),*/
+                              new Padding(
+                                padding: const EdgeInsets.only(top: 50.0, bottom: 20.0),
+                                child: new RaisedButton(
+                                  onPressed: () => _openFileExplorer(),
+                                  child: new Text(
+                                      "Upload doc",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              new Builder(
+                                builder: (BuildContext context) => isLoadingPath ? Padding(
+                                    padding: const EdgeInsets.only(bottom: 10.0),
+                                    child: const CircularProgressIndicator()
+                                )
+                                    : path != null || paths != null ? new Container(
+                                  padding: const EdgeInsets.only(bottom: 30.0),
+                                  height: MediaQuery.of(context).size.height * 0.50,
+                                  child: new Scrollbar(
+                                      child: new ListView.separated(
+                                        itemCount: paths != null && paths.isNotEmpty ? paths.length : 1,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          final bool isMultiPath = paths != null && paths.isNotEmpty;
+                                          final int fileNo = index + 1;
+                                          final String name = 'File $fileNo : ' +
+                                              (isMultiPath ? paths.keys.toList()[index] : fileName ?? '...');
+                                          final filePath = isMultiPath
+                                              ? paths.values.toList()[index].toString() : path;
+                                          return new ListTile(
+                                            title: new Text(
+                                              name,
+                                              style: TextStyle(
+                                                color: AllCoustomTheme.getTextThemeColors(),
+                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                              ),
+                                            ),
+                                            subtitle: new Text(
+                                                filePath,
+                                              style: TextStyle(
+                                                color: AllCoustomTheme.getTextThemeColors(),
+                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        separatorBuilder: (BuildContext context, int index) => new Divider(),
+                                      )),
+                                )
+                                    : new Container(),
+                              ),
+                            ],
+                          ),
+/*                          Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -725,7 +864,7 @@ class _StockPitchState extends State<StockPitch> {
                                 },
                               ),
                             ],
-                          ),
+                          ),*/
 
                           SizedBox(height: 24.0,),
                           Padding(

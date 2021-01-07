@@ -2,9 +2,13 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
+import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
+import 'package:auroim/modules/invest/InvestedAssetModule.dart';
+import 'package:auroim/modules/invest/auroStrikeBadges.dart';
+import 'package:auroim/modules/invest/clubDetail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
@@ -23,9 +27,12 @@ import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
 import 'package:shimmer/shimmer.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -34,7 +41,7 @@ class HomeScreen extends StatefulWidget {
 
 const String testDevice = 'YOUR_DEVICE_ID';
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool _isInProgress = false;
@@ -42,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSelect2 = false;
   bool isSelect3 = false;
   bool isSelect4 = false;
+  bool isSelect5 = false;
+
 
   bool _isSearch = false;
   bool allCoin = false;
@@ -74,15 +83,61 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AdmobBannerController admobBannerController;
 
-
-
+  // third screen params
   List<String> userList = <String>['Pooja','Ritika'];
 
   String selectedUser;
+  List<String> tagItemList = <String>['native','fixed'];
+
+  //fifth screen params
+  String selectedInceptionLeague;
+  String selectedWeeklyLeague;
+
+  // second screen params
+
+  int selectedTabIndex;
+
+  final List<Tab> tabList = <Tab>[
+    new Tab(text: 'Recommended'),
+    new Tab(text: 'Trending'),
+    new Tab(text: "Week"),
+    new Tab(text: "Month"),
+    new Tab(text: "Ask Question"),
+  ];
+
+  final List<Tab> socialFilterTabList = <Tab>[
+    new Tab(text: 'Overall'),
+    new Tab(text: 'Weekly'),
+  ];
+
+  TabController _tabController;
+
 
   @override
   void initState() {
     super.initState();
+
+/*    if(isSelect2==true)
+    {
+
+      tabList = <Tab>[
+        new Tab(text: 'Recommended'),
+        new Tab(text: 'Trending'),
+        new Tab(text: "Week"),
+        new Tab(text: "Month"),
+        new Tab(text: "Ask Question"),
+      ];
+    }
+    else
+      {
+        tabList = <Tab>[
+          new Tab(text: 'Overall'),
+          new Tab(text: 'Weekly'),
+        ];
+      }*/
+
+    _tabController = new TabController(vsync: this, length: tabList.length);
+
     setFirstTab();
     callItself();
     subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
@@ -435,44 +490,90 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: Column(
                       children: <Widget>[
-                        isSelect4
+                        isSelect5
                             ? Animator(
-                                duration: Duration(milliseconds: 500),
+                          duration: Duration(milliseconds: 500),
+                          cycles: 1,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Container(
+                              height: 2,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                            : SizedBox(
+                          height: 2,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            selectFive();
+                          },
+                          child: isSelect5
+                              ? Animator(
+                                tween: Tween<double>(begin: 0.8, end: 1.1),
+                                curve: Curves.decelerate,
                                 cycles: 1,
                                 builder: (anim) => Transform.scale(
                                   scale: anim.value,
-                                  child: Container(
-                                    height: 2,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.buttoncolor1,
-                                          globals.buttoncolor2,
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  child: fifthAnimation(),
                                 ),
                               )
-                            : SizedBox(
-                                height: 2,
+                              : fifthAnimation(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        isSelect4
+                            ? Animator(
+                          duration: Duration(milliseconds: 500),
+                          cycles: 1,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Container(
+                              height: 2,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2,
+                                  ],
+                                ),
                               ),
+                            ),
+                          ),
+                        )
+                            : SizedBox(
+                          height: 2,
+                        ),
                         GestureDetector(
                           onTap: () {
                             selectFourth();
                           },
                           child: isSelect4
                               ? Animator(
-                                  tween: Tween<double>(begin: 0.8, end: 1.1),
-                                  curve: Curves.decelerate,
-                                  cycles: 1,
-                                  builder: (anim) => Transform.scale(
-                                    scale: anim.value,
-                                    child: fourthAnimation(),
-                                  ),
-                                )
+                            tween: Tween<double>(begin: 0.8, end: 1.1),
+                            curve: Curves.decelerate,
+                            cycles: 1,
+                            builder: (anim) => Transform.scale(
+                              scale: anim.value,
+                              child: fourthAnimation(),
+                            ),
+                          )
                               : fourthAnimation(),
                         ),
                       ],
@@ -520,8 +621,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: isSelect1
                           ? firstScreen()
                           : isSelect2
-                              ? secoundScreen()
-                              : (isSelect3 ? thirdScreen() : fourthScreen()),
+                              ? secondScreen()
+                              : (isSelect3 ? thirdScreen() : (isSelect4 ? fourthScreen() : fifthScreen() )),
                     ),
                   ],
                 ),
@@ -551,7 +652,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: width / 3,
       color: Colors.transparent,
       child: Icon(
-        Icons.pie_chart,
+        Icons.stay_current_landscape_outlined,
         color: isSelect2 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
       ),
     );
@@ -563,7 +664,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: width / 3,
       color: Colors.transparent,
       child: Icon(
-        Icons.add,
+        Icons.add_circle,
         color: isSelect3 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
       ),
     );
@@ -577,6 +678,19 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Icon(
         Icons.settings,
         color: isSelect4 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
+      ),
+    );
+  }
+
+
+  Widget fifthAnimation() {
+    return Container(
+      height: 40,
+      width: width / 3,
+      color: Colors.transparent,
+      child: Icon(
+        FontAwesomeIcons.globe,
+        color: isSelect5 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
       ),
     );
   }
@@ -797,7 +911,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget secoundScreen() {
+/*  Widget oldSecoundScreen() {
     print(lstCryptoCoinDetail[0]);
     graphHeight = height - appBarheight - 42;
     return Container(
@@ -1176,34 +1290,581 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }*/
+
+  // second screen section start
+
+  Widget secondScreen() {
+    print(lstCryptoCoinDetail[0]);
+    graphHeight = height - appBarheight - 42;
+    return Container(
+      height: graphHeight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  child: CircleAvatar(
+                    radius: 15.0,
+                    backgroundImage: new AssetImage('assets/download.jpeg'),
+                    backgroundColor: Colors.transparent,
+                  ),
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                Expanded(
+                  child: Container(
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: AllCoustomTheme.boxColor(),
+                    ),
+                    child: TextFormField(
+                      style: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        color: AllCoustomTheme.getTextThemeColors(),
+                      ),
+                      cursorColor: AllCoustomTheme.getTextThemeColors(),
+                      onChanged: (value) {
+                        filterSearchResults(value);
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        prefixIcon: Icon(
+                          Icons.search,
+                          size: 20,
+                          color: AllCoustomTheme.getsecoundTextThemeColor(),
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: AllCoustomTheme.getsecoundTextThemeColor(),
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+/*                SizedBox(
+                  width: 4,
+                ),
+                Container(
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: AllCoustomTheme.boxColor(),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Q&A',
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                      ),
+                    ),
+                  )
+                ),*/
+                SizedBox(
+                  width: 4,
+                ),
+                Container(
+                  child: CircleAvatar(
+                    radius: 15.0,
+                    backgroundImage: new AssetImage('assets/appIcon.jpg'),
+                    backgroundColor: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(left: 10.0,right: 3.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  onTap: (index)
+                  {
+                    selectedTabIndex = index;
+                  },
+                  // labelColor: StyleTheme.Colors.AppBarTabTextColor,
+                  labelStyle: TextStyle(fontSize: 14.0,letterSpacing: 0.2),
+                  // indicatorColor: StyleTheme.Colors.AppBarSelectedTabLineColor,
+                  indicatorWeight: 4.0,
+                  // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
+                  tabs: <Widget>[
+                    new Tab(text: "Recommended"),
+                    new Tab(text: "Trending"),
+                    new Tab(text: "Week"),
+                    new Tab(text: "Month"),
+                    new Tab(text: "Ask Question"),
+
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.only(top: 10.0),
+              child: new TabBarView(
+                controller: _tabController,
+                children: tabList.map((Tab tab) {
+                  return _getPage(tab);
+                }).toList(),
+                physics: ScrollPhysics(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
+
+  Widget recommended()
+  {
+    return Column(
+      crossAxisAlignment:  CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 8.0,
+        ),
+        // random images
+        Row(
+          crossAxisAlignment:  CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 15.0),
+              child: new Image(
+                  height: 115,
+                  width: 150.0,
+                  fit: BoxFit.fill,
+                  image: new AssetImage('assets/stackOverflow.png')
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      new Image(
+                          height: 70,
+                          width: 85.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/language.png')
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/android.png')
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/askUbuntu.png')
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ),
+            Container(
+                margin: EdgeInsets.only(left: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        new Image(
+                            height: 40,
+                            width: 40.0,
+                            fit: BoxFit.fill,
+                            image: new AssetImage('assets/askUbuntu.png')
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        new Image(
+                            height: 40,
+                            width: 40.0,
+                            fit: BoxFit.fill,
+                            image: new AssetImage('assets/android.png')
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        new Image(
+                            height: 70,
+                            width: 85.0,
+                            fit: BoxFit.fill,
+                            image: new AssetImage('assets/arqade.jpeg')
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                  ],
+                )
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        // question section
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text(
+                  'Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ',
+                  style: TextStyle(
+                    color: AllCoustomTheme.getTextThemeColors(),
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                  ),
+                ),
+              )
+            )
+          ],
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+        // question attributes section
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 15.0),
+              child: CircleAvatar(
+                radius: 15.0,
+                backgroundImage: new AssetImage('assets/download.jpeg'),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            Container(
+              child: new Text(
+                "10K",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20.0),
+              child: Icon(
+                Icons.comment_bank_sharp,
+                color: AllCoustomTheme.getTextThemeColors(),
+              ),
+            ),
+            Container(
+              child: new Text(
+                "10",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20.0),
+              child: Icon(
+                Icons.remove_red_eye_outlined,
+                color: AllCoustomTheme.getTextThemeColors(),
+              ),
+            ),
+            Container(
+              child: new Text(
+                "10",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20.0),
+              child: Icon(
+                Icons.add,
+                color: AllCoustomTheme.getTextThemeColors(),
+              ),
+            ),
+            Container(
+              child: new Text(
+                "100",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                ),
+              ),
+            ),
+
+            SizedBox(
+              width: 8,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20.0),
+              child: Icon(
+                Icons.arrow_upward,
+                color: AllCoustomTheme.getThemeData().textSelectionColor,
+              ),
+            ),
+            Container(
+              child: new Text(
+                "7",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                ),
+              ),
+            ),
+
+          ],
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+        //tags section
+        Container(
+          margin: EdgeInsets.only(left: 15.0),
+          child: StaggeredGridView.countBuilder(
+            itemCount: tagItemList != null ? tagItemList.length : 0,
+            physics: NeverScrollableScrollPhysics(),
+            crossAxisCount: 4,
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
+            shrinkWrap: true,
+            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+            itemBuilder: (context, index){
+              return Container(
+                  decoration: BoxDecoration(
+                      color: AllCoustomTheme.getThemeData().textSelectionColor,
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: AllCoustomTheme.getThemeData().textSelectionColor, width: 1.0)),
+                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          '${tagItemList[index]}',
+                          style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE16,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.normal,
+                              height: 1.3
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget trending()
+  {
+    return Container(
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Coming Soon... ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE18,
+            ),
+          ),
+        )
+    );
+  }
+
+  Widget week()
+  {
+    return Container(
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Coming Soon... ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE18,
+            ),
+          ),
+        )
+    );
+  }
+
+  Widget month()
+  {
+    return Container(
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Coming Soon... ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE18,
+            ),
+          ),
+        )
+    );
+  }
+
+  Widget askQus()
+  {
+    return Container(
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Coming Soon... ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE18,
+            ),
+          ),
+        )
+    );
+  }
+
+  Widget overall()
+  {
+    return Container(
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Coming Soon... ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE18,
+            ),
+          ),
+        )
+    );
+  }
+
+  Widget weekly()
+  {
+    return Container(
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Coming Soon... ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE18,
+            ),
+          ),
+        )
+    );
+  }
+  // ignore: missing_return
+  Widget _getPage(Tab tab){
+    switch(tab.text){
+      case 'Recommended': return recommended();
+      case 'Trending': return trending();
+      case 'Week': return week();
+      case 'Month': return month();
+      case 'Ask Question': return askQus();
+      case 'Overall': return overall();
+      case 'Weekly': return weekly();
+    }
+  }
+
+  // second screen section end
+
 
   Widget getUserDropDownList()
   {
     if (userList != null && userList.length != 0)
     {
       return new DropdownButtonHideUnderline(
-        child: new DropdownButton(
-          value: selectedUser,
-          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-          isExpanded: true,
-          onChanged: (String newValue) {
-            setState(() {
-              selectedUser = newValue;
-            });
-          },
-          items: userList.map((String value) {
-            return new DropdownMenuItem(
-              value: value,
-              child: new Text(
-                value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                ),
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedUser,
+                dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedUser = newValue;
+                  });
+                },
+                items: userList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
-            );
-          }).toList(),
+            )
         ),
       );
     }
@@ -1342,6 +2003,51 @@ class _HomeScreenState extends State<HomeScreen> {
           return Container(
             child: new Wrap(
               children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 40.0,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                      radius: 20,
+                      child: Icon(
+                        Icons.camera_alt_rounded,
+                        color: AllCoustomTheme.boxColor(),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40.0,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                      radius: 20,
+                      child: Icon(
+                        Icons.video_call,
+                        color: AllCoustomTheme.boxColor(),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40.0,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                      radius: 20,
+                      child: Icon(
+                        Icons.image,
+                        color: AllCoustomTheme.boxColor(),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40.0,
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                ),
                 InkWell(
                   child: Padding(
                     padding: EdgeInsets.only(top:10.0),
@@ -1732,6 +2438,954 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+  Widget getInceptionMemberView(data){
+
+    return new ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return Card(
+          color: AllCoustomTheme.getsecoundTextThemeColor(),
+          child: ListTile(
+              leading: CircleAvatar(
+                radius: 15.0,
+                backgroundImage: new AssetImage('assets/download.jpeg'),
+                backgroundColor: Colors.transparent,
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    titleCase(data[index]['name']),
+                    style: new TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+
+                    },
+/*                    child: Icon(
+                      Icons.badge,
+                      color: Colors.yellow,
+                    ),*/
+                    child: Image(
+                      image: AssetImage('assets/buttonBadge.png'),
+                      fit: BoxFit.fill,
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: Image(
+                      image: AssetImage('assets/badgeStar.jpg'),
+                      fit: BoxFit.fill,
+                      height: 30,
+                      width: 40,
+                    ),
+                  ),
+                ],
+              ),
+              onTap: () {
+
+              }
+
+          ),
+        );
+      },
+    );
+  }
+
+  Widget getWeeklyLeagueMemberView(data){
+
+    return new ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return Card(
+          color: AllCoustomTheme.getsecoundTextThemeColor(),
+          child: ListTile(
+              leading: CircleAvatar(
+                radius: 15.0,
+                backgroundImage: new AssetImage('assets/download.jpeg'),
+                backgroundColor: Colors.transparent,
+              ),
+              title: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+/*                  Text(
+                    "${index+1}",
+                    style: new TextStyle(
+                      color: AllCoustomTheme.getTextThemeColors(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                    ),
+                  ),
+                  CircleAvatar(
+                    radius: 15.0,
+                    backgroundImage: new AssetImage('assets/download.jpeg'),
+                    backgroundColor: Colors.transparent,
+                  ),*/
+                  Text(
+                    titleCase(data[index]['name']),
+                    style: new TextStyle(
+                      color: AllCoustomTheme.getTextThemeColors(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: Image(
+                      image: AssetImage('assets/buttonBadge.png'),
+                      fit: BoxFit.fill,
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                ],
+              ),
+              onTap: () {
+
+              }
+
+          ),
+        );
+      },
+    );
+  }
+
+  Widget fifthScreen() {
+
+    final List<ChartData> chartData = [
+      ChartData('David', 35, Color(0xFFFF8C00)),
+      ChartData('Steve', 38, Color(0xFF008080)),
+      ChartData('Jack', 34, Color(0xFFc7ebdf)),
+    ];
+
+
+    final List<ChartData> trackChartData = [
+      ChartData('Total', 35, Color(0xFFFF8C00)),
+      ChartData('Invest Edu', 38, Color(0xFF008080)),
+      ChartData('Track Record', 34, Color(0xFFc7ebdf)),
+      ChartData('Stock Pitch', 38, Color(0xFFe70b31)),
+      ChartData('Invest Q&A', 38, Color(0xFFfec20f)),
+      ChartData('Social Invest', 38, Color(0xFFCD853F)),
+
+    ];
+
+    List<dynamic> inceptionMemberList = <dynamic>[
+      {"name": "green","measure": "741 XP"},
+      {"name": "alena","measure": "716 XP"},
+      {"name": "tat 1 anna","measure": "488 XP"},
+      {"name": "kristie","measure": "413 XP"},
+      {"name": "piotr","measure": "304 XP"},
+    ];
+
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
+                child: Icon(
+                  Icons.sort,
+                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                ),
+              ),
+              Expanded(
+                child: Animator(
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.decelerate,
+                  cycles: 1,
+                  builder: (anim) => Transform.scale(
+                    scale: anim.value,
+                    child: Text(
+                      'Track Record',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontWeight: FontWeight.bold,
+                        fontSize: ConstanceData.SIZE_TITLE20,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 40,
+          ),
+
+          //search box
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: AllCoustomTheme.boxColor(),
+                    ),
+                    child: TextFormField(
+                      style: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        color: AllCoustomTheme.getTextThemeColors(),
+                      ),
+                      cursorColor: AllCoustomTheme.getTextThemeColors(),
+                      onChanged: (value) {
+                        filterSearchResults(value);
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        prefixIcon: Icon(
+                          Icons.search,
+                          size: 20,
+                          color: AllCoustomTheme.getsecoundTextThemeColor(),
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: AllCoustomTheme.getsecoundTextThemeColor(),
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    height: 30,
+/*                    decoration: BoxDecoration(
+                      color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                    ),*/
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Text(
+                        'SCOREBOARD',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          // color: AllCoustomTheme.getsecoundTextThemeColor(),
+                          color: AllCoustomTheme.getTextThemeColors(),
+                          fontSize: ConstanceData.SIZE_TITLE18,
+                        ),
+                      ),
+                    )
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          //donut chart box
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.30,
+              margin: EdgeInsets.only(left: 15.0,right: 5.0),
+              /*decoration: new BoxDecoration(
+                color: AllCoustomTheme.getTextThemeColors(),
+                border: Border.all(
+                  color: AllCoustomTheme.getTextThemeColors(),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(2.0),
+                ),
+              ),*/
+              child: Stack(
+                children: [
+                  SfCircularChart(
+                      series: <CircularSeries>[
+                        // Renders doughnut chart
+                        DoughnutSeries<ChartData, String>(
+                            dataSource: chartData,
+                            pointColorMapper:(ChartData data,  _) => data.color,
+                            xValueMapper: (ChartData data, _) => data.x,
+                            yValueMapper: (ChartData data, _) => data.y
+                        )
+                      ]
+                  ),
+                  new Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      margin: EdgeInsets.only(top:75),
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(
+                              '150',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                color: AllCoustomTheme.getTextThemeColors(),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              'coins',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                color: AllCoustomTheme.getTextThemeColors(),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ),
+                  InkWell(
+                    child: new Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                          height: 40,
+                          width: 80,
+                          margin: EdgeInsets.only(top:20.0,bottom: 20.0),
+                          decoration: new BoxDecoration(
+                            // color: Color(0xFF1E90FF),
+                            color: Color(0xFFc7ebdf),
+                            border: Border.all(
+                              // color: Color(0xFF1E90FF),
+                              color: Color(0xFFc7ebdf),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(2.0),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'EASY',
+                              style: TextStyle(
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                              ),
+                            ),
+                          )
+                      ),
+                    ),
+                    onTap: ()
+                    {
+                      // goToQuestionTemp();
+                    },
+                  ),
+                  new Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                        height: 40,
+                        width: 110,
+                        margin: EdgeInsets.only(top:20.0,bottom: 20.0),
+                        decoration: new BoxDecoration(
+                          color: Color(0xFF008080),
+                          border: Border.all(
+                            color: Color(0xFF008080),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'INTERMEDIATE',
+                            style: TextStyle(
+                              fontSize: ConstanceData.SIZE_TITLE14,
+                              fontWeight: FontWeight.bold,
+                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                            ),
+                          ),
+                        )
+                    ),
+                  ),
+                  new Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                        height: 40,
+                        width: 80,
+                        margin: EdgeInsets.only(top:60.0,bottom: 40.0),
+                        decoration: new BoxDecoration(
+                          color: Color(0xFFFF8C00),
+                          border: Border.all(
+                            color: Color(0xFFFF8C00),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'HARD',
+                            style: TextStyle(
+                              fontSize: ConstanceData.SIZE_TITLE16,
+                              fontWeight: FontWeight.bold,
+                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                            ),
+                          ),
+                        )
+                    ),
+                  )
+                ],
+              )
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                      height: 30,
+                      decoration: new BoxDecoration(
+                        // color: Color(0xFF1E90FF),
+                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                        border: Border.all(
+                          // color: Color(0xFF1E90FF),
+                          color: AllCoustomTheme.getsecoundTextThemeColor(),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(2.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          "Today's progress: 1 concept",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                          ),
+                        ),
+                      )
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          'INCREASE YOUR SCORE',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                          ),
+                        ),
+                      )
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                      height: 30,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          'Ankur’s Investment Track Record',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                          ),
+                        ),
+                      )
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: ()
+                  {
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (BuildContext context) => AuroStrikeBadges(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    child: Image(
+                      image: AssetImage('assets/buttonBadge.png'),
+                      fit: BoxFit.fill,
+                      height: 30,
+                      width: 40,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 18,
+                ),
+                Container(
+                  child: Image(
+                    image: AssetImage('assets/badgeStar.jpg'),
+                    fit: BoxFit.fill,
+                    height: 30,
+                    width: 40,
+                  ),
+                ),
+
+/*                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(left: 10.0,right: 3.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TabBar(
+                        controller: _tabController,
+                        onTap: (index)
+                        {
+                          selectedTabIndex = index;
+                        },
+                        // labelColor: StyleTheme.Colors.AppBarTabTextColor,
+                        labelStyle: TextStyle(fontSize: 14.0,letterSpacing: 0.2),
+                        // indicatorColor: StyleTheme.Colors.AppBarSelectedTabLineColor,
+                        indicatorWeight: 4.0,
+                        // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
+                        tabs: <Widget>[
+                          new Tab(text: "Overall"),
+                          new Tab(text: "Weekly"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: new TabBarView(
+                      controller: _tabController,
+                      children: socialFilterTabList.map((Tab tab) {
+                        return _getPage(tab);
+                      }).toList(),
+                      physics: ScrollPhysics(),
+                    ),
+                  ),
+                ),*/
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          // pie chart
+          Container(
+            child: Stack(
+              children: [
+                SfCircularChart(
+                    legend: Legend(
+                        isVisible: true,
+                        textStyle: TextStyle(color: AllCoustomTheme.getTextThemeColors()),
+                        alignment: ChartAlignment.center,
+                        position: LegendPosition.bottom,
+                        overflowMode: LegendItemOverflowMode.wrap,
+                        itemPadding: 10.0
+                    ),
+                    series: <CircularSeries>[
+                      // Render pie chart
+                      DoughnutSeries<ChartData, String>(
+                        dataSource: trackChartData,
+                        pointColorMapper:(ChartData data,  _) => data.color,
+                        xValueMapper: (ChartData data, _) => data.x,
+                        yValueMapper: (ChartData data, _) => data.y,
+                        dataLabelSettings:DataLabelSettings(
+                          isVisible : true,
+                        ),
+                      )
+                    ]
+                ),
+                new Align(
+                    alignment: Alignment.topCenter,
+                    child: GestureDetector(
+                      onTap: ()
+                      {
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (BuildContext context) => InvestedAssetModule(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top:105),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                '800',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  color: AllCoustomTheme.getTextThemeColors(),
+                                ),
+                              ),
+                            ),
+                            Center(
+                              child: Text(
+                                'coins',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  color: AllCoustomTheme.getTextThemeColors(),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                ),
+              ],
+            ),
+          ),
+          // inception to data league
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Text(
+                        'Inception-To-Date League',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AllCoustomTheme.getTextThemeColors(),
+                          fontSize: ConstanceData.SIZE_TITLE18,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                      child: new FormField(
+                        builder: (FormFieldState state) {
+                          return InputDecorator(
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              ),
+                              labelStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: ConstanceData.SIZE_TITLE20,
+                                  color: AllCoustomTheme.getTextThemeColors()
+                              ),
+
+                              errorText: state.hasError ? state.errorText : null,
+                            ),
+                            isEmpty: selectedInceptionLeague == '',
+                            child: new DropdownButtonHideUnderline(
+                                child: ButtonTheme(
+                                  alignedDropdown: true,
+                                  child: Container(
+                                    height: 16.0,
+                                    child: new DropdownButton(
+                                      value: selectedInceptionLeague,
+                                      dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                      isExpanded: true,
+                                      onChanged: (String newValue) {
+                                        setState(() {
+                                          selectedInceptionLeague = newValue;
+                                        });
+                                      },
+                                      items: <String>['Total Coins', 'Invest Edu coins', 'Track Record coins', 'Stock Pitch coins','Invest Q&A coins',
+                                      'Social Invest coins']
+                                          .map((String value) {
+                                        return new DropdownMenuItem(
+                                          value: value,
+                                          child: new Text(
+                                            value,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE14,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                )
+                            ),
+                          );
+                        },
+                      )
+                  )
+                ],
+              ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.35,
+                    child: getInceptionMemberView(inceptionMemberList),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // weekly auro strike
+          SizedBox(
+            height: 25,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                      height: 30,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          'Weekly Auro Streak',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                          ),
+                        ),
+                      )
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.10,
+                    child: ListView.builder(
+                      itemCount: 10,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: ()
+                            {
+                              var tempField = {"rankingNum": "1" ,"name": "Warren Buffet","philosophy": "Buy companies at a low price, improve them via management and make long term gains",
+                                "trackRecord": "He has a 30-year-plus track record making on average 20 percent a year" ,"image": "WarrenBuffet"};
+                              print("tempfield: $tempField");
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (BuildContext context) => ClubDetail(allField: tempField),
+                                ),
+                              );
+                            },
+                          child: Container(
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25.0,
+                                    backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              )
+                          )
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //weekly league
+          SizedBox(
+            height: 30,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                    child: Text(
+                      'Weekly League',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontSize: ConstanceData.SIZE_TITLE18,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                Expanded(
+                    child: new FormField(
+                      builder: (FormFieldState state) {
+                        return InputDecorator(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            ),
+                            labelStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: ConstanceData.SIZE_TITLE20,
+                                color: AllCoustomTheme.getTextThemeColors()
+                            ),
+
+                            errorText: state.hasError ? state.errorText : null,
+                          ),
+                          isEmpty: selectedWeeklyLeague == '',
+                          child: new DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                                alignedDropdown: true,
+                                child: Container(
+                                  height: 16.0,
+                                  child: new DropdownButton(
+                                    value: selectedWeeklyLeague,
+                                    dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                    isExpanded: true,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        selectedWeeklyLeague = newValue;
+                                      });
+                                    },
+                                    items: <String>['Adaptive Investment Learning', 'Investment Track Record', 'Investment Stock Pitch',
+                                      'Investment QnA',
+                                      'Social Investment Score']
+                                        .map((String value) {
+                                      return new DropdownMenuItem(
+                                        value: value,
+                                        child: new Text(
+                                          value,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: ConstanceData.SIZE_TITLE14,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              )
+                          ),
+                        );
+                      },
+                    )
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.35,
+                    child: getWeeklyLeagueMemberView(inceptionMemberList),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   _upDownMarketCap() {
     isLoadingList();
     if (marketCapUpDown == Icons.arrow_upward) {
@@ -1783,7 +3437,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isSelect2 = false;
         isSelect3 = false;
         isSelect4 = false;
-
+        isSelect5 = false;
       });
     }
   }
@@ -1795,7 +3449,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isSelect2 = true;
         isSelect3 = false;
         isSelect4 = false;
-
+        isSelect5 = false;
       });
       var connectivityResult = await (Connectivity().checkConnectivity());
       if (connectivityResult != ConnectivityResult.none) {
@@ -1811,6 +3465,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isSelect2 = false;
         isSelect3 = true;
         isSelect4 = false;
+        isSelect5 = false;
         selectedUser = "Pooja";
       });
       await Future.delayed(const Duration(milliseconds: 500));
@@ -1826,7 +3481,32 @@ class _HomeScreenState extends State<HomeScreen> {
         isSelect2 = false;
         isSelect3 = false;
         isSelect4 = true;
+        isSelect5 = false;
       });
     }
+  }
+
+  selectFive() {
+    if (!isSelect5) {
+      setState(() {
+        isSelect1 = false;
+        isSelect2 = false;
+        isSelect3 = false;
+        isSelect4 = false;
+        isSelect5 = true;
+      });
+    }
+  }
+
+  /// Inefficient way of capitalizing each word in a string.
+  String titleCase(String text) {
+    if (text.length <= 1) return text.toUpperCase();
+    var words = text.split(' ');
+    var capitalized = words.map((word) {
+      var first = word.substring(0, 1).toUpperCase();
+      var rest = word.substring(1);
+      return '$first$rest';
+    });
+    return capitalized.join(' ');
   }
 }

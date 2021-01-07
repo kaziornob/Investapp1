@@ -1,7 +1,7 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/model/tagData.dart';
+import 'package:auroim/model/tagAndChartData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -249,28 +249,34 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                   ),
                                   isEmpty: selectedTargetMax == '',
                                   child: new DropdownButtonHideUnderline(
-                                    child: new DropdownButton(
-                                      value: selectedTargetMax,
-                                      dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-                                      isExpanded: true,
-                                      onChanged: (String newValue) {
-                                        setState(() {
-                                          selectedTargetMax = newValue;
-                                        });
-                                      },
-                                      items: targetMaxList.map((String value) {
-                                        return new DropdownMenuItem(
-                                          value: value,
-                                          child: new Text(
-                                            value,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
+                                    child: ButtonTheme(
+                                      alignedDropdown: true,
+                                      child: Container(
+                                        height: 15.0,
+                                        child: new DropdownButton(
+                                          value: selectedTargetMax,
+                                          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                          isExpanded: true,
+                                          onChanged: (String newValue) {
+                                            setState(() {
+                                              selectedTargetMax = newValue;
+                                            });
+                                          },
+                                          items: targetMaxList.map((String value) {
+                                            return new DropdownMenuItem(
+                                              value: value,
+                                              child: new Text(
+                                                value,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    )
                                   ),
                                 );
                               },
@@ -323,7 +329,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Search Tags',
+                          'Search Topic Tags',
                           style: TextStyle(
                             color: AllCoustomTheme.getTextThemeColors(),
                             fontSize: ConstanceData.SIZE_TITLE16,
@@ -345,7 +351,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                   LengthLimitingTextInputFormatter(30)
                                 ],
                                 decoration: InputDecoration(
-                                  hintText: 'Search Tags',
+                                  hintText: 'Search Topic Tags',
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           width: 1.0,
@@ -525,28 +531,34 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                     ),
                                                     isEmpty: selectedTargetMax == '',
                                                     child: new DropdownButtonHideUnderline(
-                                                      child: new DropdownButton(
-                                                        value: selectedTargetMax,
-                                                        dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-                                                        isExpanded: true,
-                                                        onChanged: (String newValue) {
-                                                          setState(() {
-                                                            selectedTargetMax = newValue;
-                                                          });
-                                                        },
-                                                        items: targetMaxList.map((String value) {
-                                                          return new DropdownMenuItem(
-                                                            value: value,
-                                                            child: new Text(
-                                                              value,
-                                                              style: TextStyle(
-                                                                color: Colors.white,
-                                                                fontSize: ConstanceData.SIZE_TITLE14,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }).toList(),
-                                                      ),
+                                                      child: ButtonTheme(
+                                                        alignedDropdown: true,
+                                                        child: Container(
+                                                          height: 16.0,
+                                                          child: new DropdownButton(
+                                                            value: selectedTargetMax,
+                                                            dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                                            isExpanded: true,
+                                                            onChanged: (String newValue) {
+                                                              setState(() {
+                                                                selectedTargetMax = newValue;
+                                                              });
+                                                            },
+                                                            items: targetMaxList.map((String value) {
+                                                              return new DropdownMenuItem(
+                                                                value: value,
+                                                                child: new Text(
+                                                                  value,
+                                                                  style: TextStyle(
+                                                                    color: Colors.white,
+                                                                    fontSize: ConstanceData.SIZE_TITLE14,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }).toList(),
+                                                          ),
+                                                        ),
+                                                      )
                                                     ),
                                                   );
                                                 },
@@ -593,7 +605,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                               ),*/
                                             ),
                                             Container(
-                                              height: 50,
+                                              height: 52,
                                               width: MediaQuery.of(context).size.width *0.44,
                                               margin: EdgeInsets.only(left: 5.0),
                                               child: TextFormField(
