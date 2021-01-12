@@ -54,6 +54,8 @@ dependencies:
   flutter_typeahead: ^1.8.6
   file_picker: "^1.12.0"
   horizontal_data_table: ^2.0.0
+  video_player: 0.10.11+2
+  chewie: 0.9.10
 
 dev_dependencies:
   flutter_test:

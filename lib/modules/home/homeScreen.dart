@@ -6,10 +6,14 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
-import 'package:auroim/modules/invest/InvestedAssetModule.dart';
-import 'package:auroim/modules/invest/auroStrikeBadges.dart';
-import 'package:auroim/modules/invest/clubDetail.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:auroim/modules/home/addEditQus.dart';
+import 'package:auroim/modules/socialInvest/InvestedAssetModule.dart';
+import 'package:auroim/modules/socialInvest/auroStrikeBadges.dart';
+import 'package:auroim/modules/socialInvest/clubDetail.dart';
+import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
+import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
+import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
+import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
@@ -20,8 +24,6 @@ import 'package:auroim/main.dart';
 import 'package:auroim/model/listingsModel.dart';
 import 'package:auroim/modules/chagePIN/changepin.dart';
 import 'package:auroim/modules/drawer/drawer.dart';
-import 'package:auroim/modules/news/latestCryptoNews.dart';
-import 'package:auroim/modules/underGroundSlider/cryptoCoinDetailSlider.dart';
 import 'package:auroim/modules/underGroundSlider/notificationSlider.dart';
 import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:flutter/cupertino.dart';
@@ -102,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     new Tab(text: 'Trending'),
     new Tab(text: "Week"),
     new Tab(text: "Month"),
-    new Tab(text: "Ask Question"),
+    // new Tab(text: "Ask Question"),
   ];
 
   final List<Tab> socialFilterTabList = <Tab>[
@@ -116,26 +118,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-
-/*    if(isSelect2==true)
-    {
-
-      tabList = <Tab>[
-        new Tab(text: 'Recommended'),
-        new Tab(text: 'Trending'),
-        new Tab(text: "Week"),
-        new Tab(text: "Month"),
-        new Tab(text: "Ask Question"),
-      ];
-    }
-    else
-      {
-        tabList = <Tab>[
-          new Tab(text: 'Overall'),
-          new Tab(text: 'Weekly'),
-        ];
-      }*/
-
     _tabController = new TabController(vsync: this, length: tabList.length);
 
     setFirstTab();
@@ -306,6 +288,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       isSelect2 = false;
       isSelect3 = false;
       isSelect4 = false;
+      isSelect5 = false;
     });
   }
 
@@ -1302,6 +1285,46 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          Row(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
+                child: Icon(
+                  Icons.sort,
+                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 165),
+                height: 30,
+                width: 150,
+                decoration: BoxDecoration(
+                  color: AllCoustomTheme.getThemeData().textSelectionColor,
+                  border: new Border.all(color: Colors.white, width: 1.5),
+                ),
+                child: MaterialButton(
+                  splashColor: Colors.grey,
+                  child: Text(
+                    "Ask question",
+                    style: TextStyle(
+                      color: AllCoustomTheme.getTextThemeColors(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (BuildContext context) => AddEditQus(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
           SizedBox(
             height: 20,
           ),
@@ -1411,7 +1434,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     new Tab(text: "Trending"),
                     new Tab(text: "Week"),
                     new Tab(text: "Month"),
-                    new Tab(text: "Ask Question"),
+                    // new Tab(text: "Ask Question"),
 
                   ],
                 ),
@@ -1824,9 +1847,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       case 'Trending': return trending();
       case 'Week': return week();
       case 'Month': return month();
-      case 'Ask Question': return askQus();
-      case 'Overall': return overall();
-      case 'Weekly': return weekly();
+      // case 'Ask Question': return askQus();
     }
   }
 
@@ -2902,23 +2923,41 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Expanded(
-                  child: Container(
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                  child: InkWell(
+                    onTap: () async {
+                      List<Question> questions = await getQuestions();
+                      if (questions.length < 1) {
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (_) => ErrorPage(
+                              message: "There are not enough questions yet.",
+                            )
+                        )
+                        );
+                        return;
+                      }
+                      Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (BuildContext context) => QuestionTemplate(questions: questions),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          'INCREASE YOUR SCORE',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AllCoustomTheme.getsecoundTextThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                          ),
+                      );
+                    },
+                    child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
                         ),
-                      )
-                  ),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            'INCREASE YOUR SCORE',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                            ),
+                          ),
+                        )
+                    ),
+                  )
                 ),
               ],
             ),
@@ -2953,7 +2992,163 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           SizedBox(
             height: 10,
           ),
-          Padding(
+          //pie chart with tabs
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.65,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16,right: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: ()
+                          {
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (BuildContext context) => AuroStrikeBadges(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            child: Image(
+                              image: AssetImage('assets/buttonBadge.png'),
+                              fit: BoxFit.fill,
+                              height: 30,
+                              width: 40,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 18,
+                        ),
+                        Container(
+                          child: Image(
+                            image: AssetImage('assets/badgeStar.jpg'),
+                            fit: BoxFit.fill,
+                            height: 30,
+                            width: 40,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.4,
+                    margin: EdgeInsets.only(left: 180.0,right: 3.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        TabBar(
+                          controller: _tabController,
+                          isScrollable: true,
+                          onTap: (index)
+                          {
+                            selectedTabIndex = index;
+                          },
+                          // labelColor: StyleTheme.Colors.AppBarTabTextColor,
+                          labelStyle: TextStyle(fontSize: 14.0,letterSpacing: 0.2),
+                          // indicatorColor: StyleTheme.Colors.AppBarSelectedTabLineColor,
+                          indicatorWeight: 4.0,
+                          // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
+                          tabs: <Widget>[
+                            new Tab(text: "Overall"),
+                            new Tab(text: "Weekly"),
+                            new Tab(text: ""),
+                            new Tab(text: ""),
+                            // new Tab(text: ""),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: new TabBarView(
+                        controller: _tabController,
+                        children: tabList.map((Tab tab) {
+                          return Container(
+                            child: Stack(
+                              children: [
+                                SfCircularChart(
+                                    legend: Legend(
+                                        isVisible: true,
+                                        textStyle: TextStyle(color: AllCoustomTheme.getTextThemeColors()),
+                                        alignment: ChartAlignment.center,
+                                        position: LegendPosition.bottom,
+                                        overflowMode: LegendItemOverflowMode.wrap,
+                                        itemPadding: 10.0
+                                    ),
+                                    series: <CircularSeries>[
+                                      // Render pie chart
+                                      DoughnutSeries<ChartData, String>(
+                                        dataSource: trackChartData,
+                                        pointColorMapper:(ChartData data,  _) => data.color,
+                                        xValueMapper: (ChartData data, _) => data.x,
+                                        yValueMapper: (ChartData data, _) => data.y,
+                                        dataLabelSettings:DataLabelSettings(
+                                          isVisible : true,
+                                        ),
+                                      )
+                                    ]
+                                ),
+                                new Align(
+                                    alignment: Alignment.topCenter,
+                                    child: GestureDetector(
+                                      onTap: ()
+                                      {
+                                        Navigator.of(context).push(
+                                          CupertinoPageRoute(
+                                            builder: (BuildContext context) => InvestedAssetModule(),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(top:105),
+                                        child: Column(
+                                          children: [
+                                            Center(
+                                              child: Text(
+                                                '800',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                ),
+                                              ),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                'coins',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        physics: ScrollPhysics(),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+          ),
+/*          Padding(
             padding: const EdgeInsets.only(left: 16,right: 5.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -2987,46 +3182,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     width: 40,
                   ),
                 ),
-
-/*                Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.only(left: 10.0,right: 3.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TabBar(
-                        controller: _tabController,
-                        onTap: (index)
-                        {
-                          selectedTabIndex = index;
-                        },
-                        // labelColor: StyleTheme.Colors.AppBarTabTextColor,
-                        labelStyle: TextStyle(fontSize: 14.0,letterSpacing: 0.2),
-                        // indicatorColor: StyleTheme.Colors.AppBarSelectedTabLineColor,
-                        indicatorWeight: 4.0,
-                        // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
-                        tabs: <Widget>[
-                          new Tab(text: "Overall"),
-                          new Tab(text: "Weekly"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: new TabBarView(
-                      controller: _tabController,
-                      children: socialFilterTabList.map((Tab tab) {
-                        return _getPage(tab);
-                      }).toList(),
-                      physics: ScrollPhysics(),
-                    ),
-                  ),
-                ),*/
               ],
             ),
           ),
@@ -3101,10 +3256,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
               ],
             ),
-          ),
+          ),*/
           // inception to data league
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),
@@ -3185,7 +3340,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
           ),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),
@@ -3364,6 +3519,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 )
               ],
             ),
+          ),
+          SizedBox(
+            height: 20,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),
