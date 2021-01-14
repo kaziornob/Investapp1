@@ -6,14 +6,15 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
-import 'package:auroim/modules/home/addEditQus.dart';
-import 'package:auroim/modules/socialInvest/InvestedAssetModule.dart';
-import 'package:auroim/modules/socialInvest/auroStrikeBadges.dart';
-import 'package:auroim/modules/socialInvest/clubDetail.dart';
+import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
+import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
+import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
+import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
 import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
 import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
@@ -659,7 +660,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       width: width / 3,
       color: Colors.transparent,
       child: Icon(
-        Icons.settings,
+        FontAwesomeIcons.handshake,
         color: isSelect4 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
       ),
     );
@@ -1278,6 +1279,1041 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   // second screen section start
 
   Widget secondScreen() {
+    int _currentPage;
+
+    final List<String> areaChartDataList = ['1','2','3','4'];
+    final List<String> pieChartDataList = ['1','2','3'];
+
+    final List<ChartData> chartData = [
+      ChartData('David', 25, Color.fromRGBO(9,0,136,1)),
+      ChartData('Steve', 38, Color.fromRGBO(147,0,119,1)),
+      ChartData('Jack', 34, Color.fromRGBO(228,0,124,1)),
+      ChartData('Others', 52, Color.fromRGBO(255,189,57,1))
+    ];
+
+    final List<Color> color = <Color>[];
+    color.add(Colors.blue[50]);
+    color.add(Colors.blue[200]);
+    color.add(Colors.blue);
+
+    final List<double> stops = <double>[];
+    stops.add(0.0);
+    stops.add(0.5);
+    stops.add(1.0);
+
+    final LinearGradient gradientColors =
+    LinearGradient(colors: color, stops: stops);
+
+    final List<NewSalesData> newSalesData = [
+      NewSalesData(2010, 35),
+      NewSalesData(2011, 28),
+      NewSalesData(2012, 34),
+      NewSalesData(2013, 32),
+      NewSalesData(2014, 40)
+    ];
+
+    final List<Widget> areaChartSlider = areaChartDataList.map((item) =>
+        Container(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                  height: MediaQuery.of(context).size.height*0.33,
+                  child: Container(
+                    decoration: new BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      border: Border.all(
+                        color: Color(0xff696969),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(2.0),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height*0.05,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(left:5.0,top: 5.0),
+                                child: new Image(
+                                    width: 80.0,
+                                    fit: BoxFit.fill,
+                                    image: new AssetImage('assets/logo.png')),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left:20.0,top: 5.0),
+                                child: Text(
+                                  'Title',
+                                  style: new TextStyle(
+                                      fontFamily: "Poppins",
+                                      color: Color(0xFF000000), fontSize: 18.0,
+                                      letterSpacing: 0.2
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left:40.0,top: 5.0),
+                                child: new Icon(
+                                  Icons.menu,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width*0.58,
+                            height: MediaQuery.of(context).size.height*0.12,
+                            child: Container(
+                              child: SfCartesianChart(
+                                  primaryXAxis: NumericAxis(
+                                    isVisible: false,
+                                  ),
+                                  primaryYAxis: NumericAxis(
+                                      isVisible: false
+                                  ),
+                                  series: <ChartSeries>[
+                                    StackedAreaSeries<NewSalesData, double>(
+                                      dataSource: newSalesData,
+                                      xValueMapper: (NewSalesData data, _) => data.year,
+                                      yValueMapper: (NewSalesData data, _) => data.sales,
+                                      gradient: gradientColors,
+                                    ),
+                                  ]
+                              ),
+                            )
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height*0.10,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.26,
+                                height: MediaQuery.of(context).size.height*0.10,
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 5.0,left: 10.0),
+                                  decoration: new BoxDecoration(
+                                    border: Border.all(
+                                      color: Color(0xff696969),
+                                      width: 1,
+                                    ),
+                                    color: Color(0xFFFFFFFF),
+                                  ),
+                                  child: Column(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width*0.33,
+                                        height: MediaQuery.of(context).size.height*0.038,
+                                        child: Container(
+                                            decoration: new BoxDecoration(
+                                              color: Color(0xff696969),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(left: 5.0),
+                                              child: Text(
+                                                'SELL',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Color(0xFF000000),
+                                                    fontFamily: "WorkSansBold"),
+                                              ),
+                                            )
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width*0.33,
+                                        height: MediaQuery.of(context).size.height*0.038,
+                                        child: Container(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(left: 20.0,top: 5.0),
+                                              child: Text(
+                                                '80.42',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Color(0xFF000000),
+                                                    fontFamily: "WorkSansBold"),
+                                              ),
+                                            )
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.29,
+                                height: MediaQuery.of(context).size.height*0.10,
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 5.0,left: 15.0),
+                                  decoration: new BoxDecoration(
+                                    border: Border.all(
+                                      color: Color(0xff696969),
+                                      width: 1,
+                                    ),
+                                    color: Color(0xFFFFFFFF),
+                                  ),
+                                  child: Column(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width*0.33,
+                                        height: MediaQuery.of(context).size.height*0.038,
+                                        child: Container(
+                                            decoration: new BoxDecoration(
+                                              color: Color(0xff696969),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(left: 5.0),
+                                              child: Text(
+                                                'BUY',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Color(0xFF000000),
+                                                    fontFamily: "WorkSansBold"),
+                                              ),
+                                            )
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width*0.33,
+                                        height: MediaQuery.of(context).size.height*0.038,
+                                        child: Container(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(left: 20.0,top: 5.0),
+                                              child: Text(
+                                                '80.42',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Color(0xFF000000),
+                                                    fontFamily: "WorkSansBold"),
+                                              ),
+                                            )
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+              ),
+            ],
+          ),
+        )
+      ,).toList();
+
+    final List<Widget> pieChartSlider = pieChartDataList.map((item) =>
+        Container(
+            margin: EdgeInsets.only(left: 5.0),
+            height: MediaQuery.of(context).size.height*0.42,
+            child: Container(
+              decoration: new BoxDecoration(
+                color: Color(0xFFFFFFFF),
+                border: Border.all(
+                  color: Color(0xff696969),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(2.0),
+                ),
+              ),
+              child: SfCircularChart(
+                  series: <CircularSeries>[
+                    // Renders doughnut chart
+                    DoughnutSeries<ChartData, String>(
+                        dataSource: chartData,
+                        pointColorMapper:(ChartData data,  _) => data.color,
+                        xValueMapper: (ChartData data, _) => data.x,
+                        yValueMapper: (ChartData data, _) => data.y
+                    )
+                  ]
+              ),
+            )
+        )
+      ,).toList();
+
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(left:16.0,right:16.0),
+            child: Row(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    _scaffoldKey.currentState.openDrawer();
+                  },
+                  child: Icon(
+                    Icons.sort,
+                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                  ),
+                ),
+                InkWell(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 4.0),
+                        child: CircleAvatar(
+                          radius: 15.0,
+                          backgroundImage: new AssetImage('assets/download.jpeg'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                      SizedBox(
+                        width:10.0
+                      ),
+                      //search box area
+                      Container(
+                        width: MediaQuery.of(context).size.width*0.64,
+                        height: MediaQuery.of(context).size.height*0.06,
+                        decoration: new BoxDecoration(
+                          color: Color(0xFFFFFFFF),
+                          border: Border.all(
+                            color: Color(0xff696969),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.61,
+                              height: MediaQuery.of(context).size.height*0.05,
+                              child: TextFormField(
+                                style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE14,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  suffixIcon: Icon(
+                                    Icons.settings_applications,
+                                    color: Colors.black,
+                                    size: 15,
+                                  ),
+                                  prefixIcon: Icon(
+                                    FontAwesomeIcons.search,
+                                    color: Colors.black,
+                                    size: 15,
+                                  ),
+                                  hintText: "Search",
+                                  hintStyle: TextStyle(
+                                      color: AllCoustomTheme.boxColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE14,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      //setting icon
+                      InkWell(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 4.0),
+                            child: CircleAvatar(
+                              radius: 15.0,
+                              backgroundColor: Colors.transparent,
+                              child: Icon(
+                                Icons.settings,
+                                color: Colors.grey,
+                                size: 30.0,
+                              ),
+                            ),
+                          )
+                      ),
+
+                    ],
+                  ),
+
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          // handshake image box
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.25,
+            child:  Container(
+              margin: EdgeInsets.only(left: 5.0,right: 5.0),
+              child: Image(
+                  fit: BoxFit.fill,
+                  image: new AssetImage('assets/handShake.png')
+              ),
+            ),
+          ),
+          // auro paper box
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.72,
+            child:  Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                child: ListView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.only(left: 120.0,right: 5.0),
+                        child: Text(
+                          'Auro Paper',
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 15.0,right: 5.0),
+                        child: Text(
+                          "Voila! We've created a paper portfolio for you that can help "
+                              "you start engaging and learning about how to invest. Please note that this is NOT our recommended investment portfolio for"
+                              " which you need to complete additional risk-onboarding: Go Pro",
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                          ),
+                        )
+                    ),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height*0.42,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 20.0,right: 20.0),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              aspectRatio: 2.0,
+                              enlargeCenterPage: false,
+                              scrollDirection: Axis.horizontal,
+                              autoPlay: false,
+                            ),
+                            items: pieChartSlider,
+                          ),
+                        )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 35,
+                            child: Container(
+                              height: 35,
+                              width: 290,
+                              decoration: BoxDecoration(
+                                border: new Border.all(color: Colors.white, width: 1.5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2,
+                                  ],
+                                ),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "Initiate First Name Portfolio",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () async {
+
+        /*                          Navigator.of(context).push(new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                      new SearchPageFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));*/
+
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+            ),
+          ),
+          // go pro button
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 35,
+                      child: Container(
+                        height: 35,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          border: new Border.all(color: Colors.white, width: 1.5),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              globals.buttoncolor1,
+                              globals.buttoncolor2,
+                            ],
+                          ),
+                        ),
+                        child: MaterialButton(
+                          splashColor: Colors.grey,
+                          child: Text(
+                            "GO PRO",
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () async
+                          {
+                            /*                      Navigator.of(context).push(new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                    new OnBoardingFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));*/
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 35,
+                      child: Container(
+                        height: 35,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          border: new Border.all(color: Colors.white, width: 1.5),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              globals.buttoncolor1,
+                              globals.buttoncolor2,
+                            ],
+                          ),
+                        ),
+                        child: MaterialButton(
+                          splashColor: Colors.grey,
+                          child: Text(
+                            "GO LIVE",
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () async
+                          {
+                            /*                      Navigator.of(context).push(new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                    new OnBoardingFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));*/
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          // portfolio component box
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.70,
+            child:  Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xFFfec20f),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: ListView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top:5.0),
+                      child: Center(
+                          child: Text(
+                            'PORTFOLIO COMPONENTS',
+                            style: new TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                            ),
+                          )
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(top:10.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.only(left:90.0,bottom: 5.0),
+                                child: Text(
+                                  'Auro Portfolio',
+                                  style: new TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                  ),
+                                )
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(left:30.0,top: 3.0),
+                                child: Text(
+                                  'See More',
+                                  style: new TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE14,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                )
+                            )
+                          ],
+                        )
+                    ),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height*0.34,
+                        child: Container(
+                            margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                  aspectRatio: 2.0,
+                                  enlargeCenterPage: false,
+                                  scrollDirection: Axis.horizontal,
+                                  autoPlay: false,
+                                  onPageChanged: (index, reason) {
+                                    print("_currentPage: $_currentPage");
+                                    setState(() {
+                                      _currentPage = index;
+                                    });
+                                  }
+                              ),
+                              items: areaChartSlider,
+                            )
+                        )
+                    ),
+                    Divider(color: Color(0xFFfec20f),thickness: 1.5,),
+                    Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.only(left:50.0,bottom: 5.0),
+                                child: Text(
+                                  "First Name's Portfolio",
+                                  style: new TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                  ),
+                                )
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(left:15.0,bottom: 5.0,top: 3.0),
+                                child: Text(
+                                  'See More',
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE14,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                )
+                            ),
+                          ],
+                        )
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left:15.0,bottom: 5.0,top: 5.0),
+                      child: Text(
+                        'You can also invest in individual securities that you like and create your own portfolio!! ',
+                        style: TextStyle(
+                          color: AllCoustomTheme.getTextThemeColors(),
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 35,
+                            child: Container(
+                              height: 35,
+                              width: 180,
+                              decoration: BoxDecoration(
+                                border: new Border.all(color: Colors.white, width: 1.5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2,
+                                  ],
+                                ),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "START NOW",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+            ),
+          ),
+          // go live button
+          // investment guru component box
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.57,
+            child:  Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xFFfec20f),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: ListView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top:10.0),
+                      child: Center(
+                          child: Text(
+                            'INVESTMENT GURUS',
+                            style: new TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                            ),
+                          )
+                      ),
+                    ),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height*0.34,
+                        child: Container(
+                            margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                  aspectRatio: 2.0,
+                                  enlargeCenterPage: false,
+                                  scrollDirection: Axis.horizontal,
+                                  autoPlay: false,
+                                  onPageChanged: (index, reason) {
+                                    print("_currentPage: $_currentPage");
+                                    setState(() {
+                                      _currentPage = index;
+                                    });
+                                  }
+                              ),
+                              items: areaChartSlider,
+                            )
+                        )
+                    ),
+                    Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.only(left:230.0,bottom: 5.0,top: 3.0),
+                                child: Text(
+                                  'See More',
+                                  style: new TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE14,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                )
+                            ),
+                          ],
+                        )
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 35,
+                            child: Container(
+                              height: 35,
+                              width: 180,
+                              decoration: BoxDecoration(
+                                border: new Border.all(color: Colors.white, width: 1.5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2,
+                                  ],
+                                ),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "START NOW",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                )
+            ),
+          ),
+          // pe/vc/re component box
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.27,
+            child:  Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+/*                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xFFfec20f),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),*/
+                child: ListView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top:15.0),
+                      child: Center(
+                          child: Text(
+                            'PE/VC/RE/ESG',
+                            style: new TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                            ),
+                          )
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 35,
+                            child: Container(
+                              height: 35,
+                              width: 180,
+                              decoration: BoxDecoration(
+                                border: new Border.all(color: Colors.white, width: 1.5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2,
+                                  ],
+                                ),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "START NOW",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(left:235.0),
+                        child: Text(
+                          'See More',
+                          style: new TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            decoration: TextDecoration.underline,
+                          ),
+                        )
+                    ),
+
+                  ],
+                )
+            ),
+          ),
+          // last start now component box
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.27,
+            child:  Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top:15.0),
+                      child: Center(
+                          child: Text(
+                            'Student',
+                            style: new TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                            ),
+                          )
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 35,
+                            child: Container(
+                              height: 35,
+                              width: 180,
+                              decoration: BoxDecoration(
+                                border: new Border.all(color: Colors.white, width: 1.5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2,
+                                  ],
+                                ),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "START NOW",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+            ),
+          ),
+        ],
+      )
+    );
+  }
+
+  // second screen section end
+
+
+  // fourth screen section start
+
+  Widget fourthScreen() {
     print(lstCryptoCoinDetail[0]);
     graphHeight = height - appBarheight - 42;
     return Container(
@@ -1285,45 +2321,48 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  _scaffoldKey.currentState.openDrawer();
-                },
-                child: Icon(
-                  Icons.sort,
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 165),
-                height: 30,
-                width: 150,
-                decoration: BoxDecoration(
-                  color: AllCoustomTheme.getThemeData().textSelectionColor,
-                  border: new Border.all(color: Colors.white, width: 1.5),
-                ),
-                child: MaterialButton(
-                  splashColor: Colors.grey,
-                  child: Text(
-                    "Ask question",
-                    style: TextStyle(
-                      color: AllCoustomTheme.getTextThemeColors(),
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (BuildContext context) => AddEditQus(),
-                      ),
-                    );
+          Padding(
+            padding: const EdgeInsets.only(right: 16, left: 16),
+            child: Row(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    _scaffoldKey.currentState.openDrawer();
                   },
+                  child: Icon(
+                    Icons.sort,
+                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  margin: EdgeInsets.only(left: 150),
+                  height: 30,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    color: AllCoustomTheme.getThemeData().textSelectionColor,
+                    border: new Border.all(color: Colors.white, width: 1.5),
+                  ),
+                  child: MaterialButton(
+                    splashColor: Colors.grey,
+                    child: Text(
+                      "Ask question",
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (BuildContext context) => AddEditQus(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 20,
@@ -1851,7 +2890,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
-  // second screen section end
+  // fourth screen section end
 
 
   Widget getUserDropDownList()
@@ -2181,7 +3220,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         });
   }
 
-  Widget fourthScreen() {
+  Widget fourthSettingScreen() {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -2612,37 +3651,40 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  _scaffoldKey.currentState.openDrawer();
-                },
-                child: Icon(
-                  Icons.sort,
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+          Padding(
+            padding: const EdgeInsets.only(right: 16, left: 16),
+            child: Row(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    _scaffoldKey.currentState.openDrawer();
+                  },
+                  child: Icon(
+                    Icons.sort,
+                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Animator(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.decelerate,
-                  cycles: 1,
-                  builder: (anim) => Transform.scale(
-                    scale: anim.value,
-                    child: Text(
-                      'Track Record',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontWeight: FontWeight.bold,
-                        fontSize: ConstanceData.SIZE_TITLE20,
+                Expanded(
+                  child: Animator(
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.decelerate,
+                    cycles: 1,
+                    builder: (anim) => Transform.scale(
+                      scale: anim.value,
+                      child: Text(
+                        'Track Record',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AllCoustomTheme.getTextThemeColors(),
+                          fontWeight: FontWeight.bold,
+                          fontSize: ConstanceData.SIZE_TITLE20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
           SizedBox(
             height: 40,
@@ -3109,7 +4151,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                         );
                                       },
                                       child: Container(
-                                        margin: EdgeInsets.only(top:105),
+                                        margin: EdgeInsets.only(top:115),
                                         child: Column(
                                           children: [
                                             Center(

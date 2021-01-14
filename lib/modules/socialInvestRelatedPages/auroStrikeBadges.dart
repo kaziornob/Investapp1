@@ -1,6 +1,6 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/modules/socialInvest/clubDetail.dart';
+import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/themes.dart';

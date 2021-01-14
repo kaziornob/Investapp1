@@ -14,3 +14,9 @@ class ChartData {
   final double y;
   final Color color;
 }
+
+class NewSalesData {
+  NewSalesData(this.year, this.sales);
+  final double year;
+  final double sales;
+}

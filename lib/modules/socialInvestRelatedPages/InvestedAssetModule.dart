@@ -33,6 +33,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
     await Future.delayed(const Duration(milliseconds: 700));
     setState(() {
       _isInProgress = false;
+      tableModule.initData([]);
     });
   }
 
@@ -89,20 +90,6 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
           backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           body: ModalProgressHUD(
@@ -341,7 +328,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             color: AllCoustomTheme.getTextThemeColors(),
-                                            fontSize: ConstanceData.SIZE_TITLE18, fontWeight: FontWeight.bold
+                                            fontSize: ConstanceData.SIZE_TITLE16,
                                           ),
                                         ),
                                       );
@@ -663,7 +650,6 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
 
         tableModule.initData(tempData);
       }
-
 
     });
   }

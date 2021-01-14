@@ -165,7 +165,8 @@ class _InvestorTypeState extends State<InvestorType> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: <Widget>[
-                                          descTextShowFlag ? Text("Show Less",style: TextStyle(color: Colors.blue),) :  Text("Show More",style: TextStyle(color: Colors.blue))
+                                          descTextShowFlag ? Text("Show Less",style: TextStyle(color: Colors.blue),)
+                                              :  Text("Show More",style: TextStyle(color: Colors.blue))
                                         ],
                                       ),
                                     ),
