@@ -297,269 +297,271 @@ class _AddEditQusState extends State<AddEditQus> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-          body: ModalProgressHUD(
-            inAsyncCall: _isInProgress,
-            opacity: 0,
-            progressIndicator: CupertinoActivityIndicator(
-              radius: 12,
-            ),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16, left: 16),
-                child: !_isInProgress
-                    ? Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: appBarheight,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Animator(
-                                  tween: Tween<Offset>(
-                                      begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                  duration: Duration(milliseconds: 500),
-                                  cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
-                                    translation: anim.value,
-                                    child: Icon(
-                                      Icons.arrow_back_ios,
-                                      color:
-                                          AllCoustomTheme.getTextThemeColors(),
-                                    ),
+        SafeArea(
+            bottom: true,
+            child: Scaffold(
+              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              body: ModalProgressHUD(
+                inAsyncCall: _isInProgress,
+                opacity: 0,
+                progressIndicator: CupertinoActivityIndicator(
+                  radius: 12,
+                ),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16, left: 16),
+                    child: !_isInProgress
+                        ? Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: appBarheight,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            InkWell(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Animator(
+                                tween: Tween<Offset>(
+                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 0,
+                                builder: (anim) => FractionalTranslation(
+                                  translation: anim.value,
+                                  child: Icon(
+                                    Icons.arrow_back_ios,
+                                    color:
+                                    AllCoustomTheme.getTextThemeColors(),
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Animator(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.decelerate,
-                                  cycles: 1,
-                                  builder: (anim) => Transform.scale(
-                                    scale: anim.value,
-                                    child: Text(
-                                      'Ask a question',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: ConstanceData.SIZE_TITLE20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                visible: _qusTitleController.text!='' && _qusBodyController.text!="" ? true : false,
-                                child: Container(
-                                    height: 25,
-                                    width: 95,
-                                    decoration: BoxDecoration(
-                                      color: AllCoustomTheme.getThemeData()
-                                          .textSelectionColor,
-                                      border: new Border.all(
-                                          color: Colors.white, width: 1.0),
-                                    ),
-                                    child: MaterialButton(
-                                      splashColor: Colors.grey,
-                                      child: Text(
-                                        "Preview",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColors(),
-                                          fontSize: ConstanceData.SIZE_TITLE12,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        var tempField = {
-                                          "callingFrom": "add",
-                                          "title": _qusTitleController.text,
-                                          "body": _qusBodyController.text,
-                                          "tags": itemList,
-                                        };
-                                        Navigator.of(context).push(
-                                          CupertinoPageRoute(
-                                            builder: (BuildContext context) =>
-                                                QusView(allParams : tempField),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          // ques title section
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                child: CircleAvatar(
-                                  radius: 15.0,
-                                  backgroundImage:
-                                      new AssetImage('assets/download.jpeg'),
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: AllCoustomTheme.boxColor(),
-                                  ),
-                                  child: TextFormField(
-                                    maxLines: 2,
-                                    controller: _qusTitleController,
+                            ),
+                            Expanded(
+                              child: Animator(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Text(
+                                    'Ask a question',
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                      color:
-                                          AllCoustomTheme.getTextThemeColors(),
-                                    ),
-                                    cursorColor:
-                                        AllCoustomTheme.getTextThemeColors(),
-                                    onChanged: (value) {},
-                                    decoration: InputDecoration(
-                                      hintText: 'Title of your question',
-                                      hintStyle: TextStyle(
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        color: AllCoustomTheme
-                                            .getsecoundTextThemeColor(),
-                                      ),
-                                      border: InputBorder.none,
+                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: ConstanceData.SIZE_TITLE20,
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          // related question section
-                          Visibility(
-                            visible: _qusTitleController.text!=null && _qusTitleController.text!="",
-                            child: ExpandablePanel(
-                              header: Text(
-                                'Related Questions:',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: ConstanceData.SIZE_TITLE16,
+                            ),
+                            Visibility(
+                              visible: _qusTitleController.text!='' && _qusBodyController.text!="" ? true : false,
+                              child: Container(
+                                height: 25,
+                                width: 95,
+                                decoration: BoxDecoration(
+                                  color: AllCoustomTheme.getThemeData()
+                                      .textSelectionColor,
+                                  border: new Border.all(
+                                      color: Colors.white, width: 1.0),
+                                ),
+                                child: MaterialButton(
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "Preview",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme
+                                          .getTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    var tempField = {
+                                      "callingFrom": "add",
+                                      "title": _qusTitleController.text,
+                                      "body": _qusBodyController.text,
+                                      "tags": itemList,
+                                    };
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder: (BuildContext context) =>
+                                            QusView(allParams : tempField),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
-                              expanded: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Container(
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // ques title section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: CircleAvatar(
+                                radius: 15.0,
+                                backgroundImage:
+                                new AssetImage('assets/download.jpeg'),
+                                backgroundColor: Colors.transparent,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                                  color: AllCoustomTheme.boxColor(),
+                                ),
+                                child: TextFormField(
+                                  maxLines: 2,
+                                  controller: _qusTitleController,
+                                  style: TextStyle(
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    color:
+                                    AllCoustomTheme.getTextThemeColors(),
+                                  ),
+                                  cursorColor:
+                                  AllCoustomTheme.getTextThemeColors(),
+                                  onChanged: (value) {},
+                                  decoration: InputDecoration(
+                                    hintText: 'Title of your question',
+                                    hintStyle: TextStyle(
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      color: AllCoustomTheme
+                                          .getsecoundTextThemeColor(),
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        // related question section
+                        Visibility(
+                          visible: _qusTitleController.text!=null && _qusTitleController.text!="",
+                          child: ExpandablePanel(
+                            header: Text(
+                              'Related Questions:',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                              ),
+                            ),
+                            expanded: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                        color: AllCoustomTheme.boxColor(),
+                                      ),
+                                      width: MediaQuery.of(context).size.width,
+                                      height: MediaQuery.of(context).size.height *
+                                          0.35,
+                                      child: Scrollbar(
+                                        child: getRelatedQusView(
+                                            relatedQusList),
+                                      )
+                                  ),
+                                ),
+                              ],
+                            ),
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
+                            iconColor: Colors.white,
+                          ),
+                        ),
+                        Visibility(
+                          visible: _qusTitleController.text!=null && _qusTitleController.text!="",
+                          child: SizedBox(
+                            height: 30,
+                          ),
+                        ),
+                        Container(
+                          height: 200,
+                          child: ChangeNotifierProvider<EditorProvider>(
+                              create: (context) => EditorProvider(),
+                              builder: (context, child) {
+                                return SafeArea(
+                                  child: Scaffold(
+                                      body: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
                                           color: AllCoustomTheme.boxColor(),
                                         ),
-                                        width: MediaQuery.of(context).size.width,
-                                        height: MediaQuery.of(context).size.height *
-                                            0.35,
-                                        child: Scrollbar(
-                                          child: getRelatedQusView(
-                                              relatedQusList),
-                                        )
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              tapHeaderToExpand: true,
-                              hasIcon: true,
-                              iconColor: Colors.white,
-                            ),
-                          ),
-                          Visibility(
-                            visible: _qusTitleController.text!=null && _qusTitleController.text!="",
-                            child: SizedBox(
-                                height: 30,
-                              ),
-                          ),
-                          Container(
-                            height: 200,
-                            child: ChangeNotifierProvider<EditorProvider>(
-                                create: (context) => EditorProvider(),
-                                builder: (context, child) {
-                                  return SafeArea(
-                                    child: Scaffold(
-                                        body: Container(
-                                          decoration: BoxDecoration(
-                                            color: AllCoustomTheme.boxColor(),
-                                          ),
-                                          child: Stack(
-                                            children: <Widget>[
-                                              Positioned(
-                                                  top: 16,
-                                                  left: 0,
-                                                  right: 0,
-                                                  bottom: 56,
-                                                  child: Consumer<EditorProvider>(
-                                                      builder: (context, state, _) {
-                                                        return ListView.builder(
-                                                            itemCount: state.length,
-                                                            itemBuilder: (context, index) {
-                                                              return Focus(
-                                                                  onFocusChange: (hasFocus) {
-                                                                    if (hasFocus) state.setFocus(state.typeAt(index));
-                                                                  },
-                                                                  child: Container(
-                                                                    child: SmartTextField(
-                                                                      type: state.typeAt(index),
-                                                                      controller: state.textAt(index),
-                                                                      focusNode: state.nodeAt(index),
-                                                                    ),
-                                                                  )
-                                                              );
-                                                            }
-                                                        );
-                                                      }
-                                                  )
-                                              ),
-                                              Positioned(
-                                                bottom: 0,
+                                        child: Stack(
+                                          children: <Widget>[
+                                            Positioned(
+                                                top: 16,
                                                 left: 0,
                                                 right: 0,
-                                                child: Selector<EditorProvider, SmartTextType>(
-                                                  selector: (buildContext, state) => state.selectedType,
-                                                  builder: (context, selectedType, _) {
-                                                    return Toolbar(
-                                                      selectedType: selectedType,
-                                                      onSelected: Provider.of<EditorProvider>(context,
-                                                          listen: false).setType,
-                                                    );
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                    ),
-                                  );
-                                }
-                            ),
+                                                bottom: 56,
+                                                child: Consumer<EditorProvider>(
+                                                    builder: (context, state, _) {
+                                                      return ListView.builder(
+                                                          itemCount: state.length,
+                                                          itemBuilder: (context, index) {
+                                                            return Focus(
+                                                                onFocusChange: (hasFocus) {
+                                                                  if (hasFocus) state.setFocus(state.typeAt(index));
+                                                                },
+                                                                child: Container(
+                                                                  child: SmartTextField(
+                                                                    type: state.typeAt(index),
+                                                                    controller: state.textAt(index),
+                                                                    focusNode: state.nodeAt(index),
+                                                                  ),
+                                                                )
+                                                            );
+                                                          }
+                                                      );
+                                                    }
+                                                )
+                                            ),
+                                            Positioned(
+                                              bottom: 0,
+                                              left: 0,
+                                              right: 0,
+                                              child: Selector<EditorProvider, SmartTextType>(
+                                                selector: (buildContext, state) => state.selectedType,
+                                                builder: (context, selectedType, _) {
+                                                  return Toolbar(
+                                                    selectedType: selectedType,
+                                                    onSelected: Provider.of<EditorProvider>(context,
+                                                        listen: false).setType,
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                  ),
+                                );
+                              }
                           ),
+                        ),
 
 /*                          Container(
                             height: 200,
@@ -574,7 +576,7 @@ class _AddEditQusState extends State<AddEditQus> {
                               data: _markdownData,
                             ),
                           ),*/
-                          // ques body section
+                        // ques body section
 /*                          Container(
                             height: 200,
                             decoration: BoxDecoration(
@@ -608,176 +610,176 @@ class _AddEditQusState extends State<AddEditQus> {
                               ),
                             ),
                           ),*/
-                          SizedBox(
-                            height: 20,
-                          ),
-                          // question Tags
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Search Question Tags',
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // question Tags
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Search Question Tags',
+                              style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColors(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8.0),
-                                child: TypeAheadFormField(
-                                  textFieldConfiguration:
-                                      TextFieldConfiguration(
-                                          controller: _searchController,
-                                          textInputAction: TextInputAction.done,
-                                          textAlign: TextAlign.start,
-                                          keyboardType: TextInputType.text,
-                                          maxLines: 1,
-                                          style: TextStyle(fontSize: 16.0),
-                                          inputFormatters: [
-                                            LengthLimitingTextInputFormatter(30)
-                                          ],
-                                          decoration: InputDecoration(
-                                            hintText: 'Search Question Tags',
-                                            border: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 1.0,
-                                                    color: AllCoustomTheme
-                                                        .getTextThemeColors()),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(0.0))),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 1.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.white,
-                                                  width: 1.0),
-                                            ),
-                                            hintStyle: TextStyle(
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8.0),
+                              child: TypeAheadFormField(
+                                textFieldConfiguration:
+                                TextFieldConfiguration(
+                                    controller: _searchController,
+                                    textInputAction: TextInputAction.done,
+                                    textAlign: TextAlign.start,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 1,
+                                    style: TextStyle(fontSize: 16.0),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(30)
+                                    ],
+                                    decoration: InputDecoration(
+                                      hintText: 'Search Question Tags',
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1.0,
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors()),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(0.0))),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey,
+                                            width: 1.0),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.white,
+                                            width: 1.0),
+                                      ),
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                    onSubmitted: (value) {
+                                      setState(() {
+                                        itemList.add(TagData(
+                                            _searchController.text,
+                                            _searchController.text));
+                                        tagListVisible =
+                                        itemList.length == 0
+                                            ? false
+                                            : true;
+                                      });
+                                      _searchController.text = '';
+                                    }),
+                                suggestionsCallback: (pattern) {
+                                  if (pattern.toString().trim().length < 2) {
+                                    return null;
+                                  } else {
+                                    return searchItems(pattern);
+                                  }
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  if (_searchController.text.isNotEmpty) {
+                                    return ListTile(
+                                      title: Text(suggestion['tag']),
+                                    );
+                                  } else
+                                    return Container();
+                                },
+                                transitionBuilder:
+                                    (context, suggestionsBox, controller) {
+                                  return suggestionsBox;
+                                },
+                                onSuggestionSelected: (suggestion) {
+                                  _searchController.text = '';
+                                  setState(() {
+                                    itemList.add(TagData(suggestion['_id'],
+                                        suggestion['tag']));
+                                    tagListVisible =
+                                    itemList.length == 0 ? false : true;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        /////////////question Tag list////////
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: 8.0,
+                                  bottom: tagListVisible ? 24.0 : 0.0),
+                              child: StaggeredGridView.countBuilder(
+                                itemCount:
+                                itemList != null ? itemList.length : 0,
+                                physics: NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 8.0,
+                                mainAxisSpacing: 8.0,
+                                shrinkWrap: true,
+                                staggeredTileBuilder: (int index) =>
+                                    StaggeredTile.fit(1),
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(4.0),
+                                          border: Border.all(
                                               color: Colors.grey,
-                                              fontSize: 15.0,
+                                              width: 1.0)),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Text(
+                                              '${itemList[index].tag}',
+                                              style: TextStyle(
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColors(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight:
+                                                  FontWeight.normal,
+                                                  height: 1.3),
                                             ),
                                           ),
-                                          onSubmitted: (value) {
-                                            setState(() {
-                                              itemList.add(TagData(
-                                                  _searchController.text,
-                                                  _searchController.text));
-                                              tagListVisible =
+                                          SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  itemList.removeAt(index);
+                                                  tagListVisible =
                                                   itemList.length == 0
                                                       ? false
                                                       : true;
-                                            });
-                                            _searchController.text = '';
-                                          }),
-                                  suggestionsCallback: (pattern) {
-                                    if (pattern.toString().trim().length < 2) {
-                                      return null;
-                                    } else {
-                                      return searchItems(pattern);
-                                    }
-                                  },
-                                  itemBuilder: (context, suggestion) {
-                                    if (_searchController.text.isNotEmpty) {
-                                      return ListTile(
-                                        title: Text(suggestion['tag']),
-                                      );
-                                    } else
-                                      return Container();
-                                  },
-                                  transitionBuilder:
-                                      (context, suggestionsBox, controller) {
-                                    return suggestionsBox;
-                                  },
-                                  onSuggestionSelected: (suggestion) {
-                                    _searchController.text = '';
-                                    setState(() {
-                                      itemList.add(TagData(suggestion['_id'],
-                                          suggestion['tag']));
-                                      tagListVisible =
-                                          itemList.length == 0 ? false : true;
-                                    });
-                                  },
-                                ),
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.close,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColors(),
+                                                size: 15.0,
+                                              ))
+                                        ],
+                                      ));
+                                },
                               ),
-                            ],
-                          ),
-                          /////////////question Tag list////////
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: 8.0,
-                                    bottom: tagListVisible ? 24.0 : 0.0),
-                                child: StaggeredGridView.countBuilder(
-                                  itemCount:
-                                      itemList != null ? itemList.length : 0,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 8.0,
-                                  mainAxisSpacing: 8.0,
-                                  shrinkWrap: true,
-                                  staggeredTileBuilder: (int index) =>
-                                      StaggeredTile.fit(1),
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                            border: Border.all(
-                                                color: Colors.grey,
-                                                width: 1.0)),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.0, vertical: 8.0),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                '${itemList[index].tag}',
-                                                style: TextStyle(
-                                                    color: AllCoustomTheme
-                                                        .getTextThemeColors(),
-                                                    fontSize: ConstanceData
-                                                        .SIZE_TITLE16,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    height: 1.3),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 10.0,
-                                            ),
-                                            InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    itemList.removeAt(index);
-                                                    tagListVisible =
-                                                        itemList.length == 0
-                                                            ? false
-                                                            : true;
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  Icons.close,
-                                                  color: AllCoustomTheme
-                                                      .getTextThemeColors(),
-                                                  size: 15.0,
-                                                ))
-                                          ],
-                                        ));
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          // keyboard actions
- /*                         Container(
+                            ),
+                          ],
+                        ),
+                        // keyboard actions
+                        /*                         Container(
                             height: 100,
                             child: KeyboardActions(
                               config: _buildConfig(context),
@@ -804,12 +806,13 @@ class _AddEditQusState extends State<AddEditQus> {
                               ),
                             ),
                           )*/
-                        ],
-                      )
-                    : SizedBox(),
+                      ],
+                    )
+                        : SizedBox(),
+                  ),
+                ),
               ),
-            ),
-          ),
+            )
         )
       ],
     );

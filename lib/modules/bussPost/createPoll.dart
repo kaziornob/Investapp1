@@ -22,6 +22,7 @@ class CreatePoll extends StatefulWidget {
 
 class _CreatePollState extends State<CreatePoll> {
   bool _isInProgress = false;
+  double optionHeight = 0.0;
   
   List<PollOption> optionList = [];
   int _optionIndex = 1;
@@ -143,7 +144,6 @@ class _CreatePollState extends State<CreatePoll> {
   Widget build(BuildContext context) {
     AppBar appBar = AppBar();
     double appBarheight = appBar.preferredSize.height;
-    var tempContext = context;
     return Stack(
       children: <Widget>[
         Container(
@@ -160,316 +160,295 @@ class _CreatePollState extends State<CreatePoll> {
             ),
           ),
         ),
-        Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-          body: ModalProgressHUD(
-            inAsyncCall: _isInProgress,
-            opacity: 0,
-            progressIndicator: CupertinoActivityIndicator(
-              radius: 12,
-            ),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16, left: 16),
-                child: !_isInProgress
-                    ? Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: appBarheight,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Animator(
-                                  tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                  duration: Duration(milliseconds: 500),
-                                  cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
-                                    translation: anim.value,
-                                    child: Icon(
-                                      Icons.arrow_back_ios,
+        SafeArea(
+            bottom: true,
+            child: Scaffold(
+              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              body: ModalProgressHUD(
+                inAsyncCall: _isInProgress,
+                opacity: 0,
+                progressIndicator: CupertinoActivityIndicator(
+                  radius: 12,
+                ),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16, left: 16),
+                    child: !_isInProgress
+                        ? Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: appBarheight,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Animator(
+                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 0,
+                                builder: (anim) => FractionalTranslation(
+                                  translation: anim.value,
+                                  child: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Animator(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Text(
+                                    'Create a poll',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
                                       color: AllCoustomTheme.getTextThemeColors(),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: ConstanceData.SIZE_TITLE20,
                                     ),
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Animator(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.decelerate,
-                                  cycles: 1,
-                                  builder: (anim) => Transform.scale(
-                                    scale: anim.value,
-                                    child: Text(
-                                      'Create a poll',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: ConstanceData.SIZE_TITLE20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Container(
-                            height: 100,
-                            child: TextField(
-                              maxLines: 10,
-                              decoration: InputDecoration(
-                                labelText: 'Your Question',
-                                hintText: 'Which Tech stock offers the best upside return for the next 1 year? ',
-                                hintStyle: TextStyle(
-                                    fontSize: ConstanceData.SIZE_TITLE10,
-                                    color: AllCoustomTheme.getTextThemeColors()
-                                ),
-                                labelStyle: TextStyle(
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    color: AllCoustomTheme.getTextThemeColors()
-                                ),
-                                fillColor: Colors.white,
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Container(
+                          height: 100,
+                          child: TextField(
+                            maxLines: 10,
+                            decoration: InputDecoration(
+                              labelText: 'Your Question',
+                              hintText: 'Which Tech stock offers the best upside return for the next 1 year? ',
+                              hintStyle: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE10,
+                                  color: AllCoustomTheme.getTextThemeColors()
                               ),
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
+                              labelStyle: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  color: AllCoustomTheme.getTextThemeColors()
+                              ),
+                              fillColor: Colors.white,
+                              focusedBorder:OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white, width: 1.0),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            height: optionList.length!=0 ? 200.0 : 0.0,
-                            child: ListView.builder(
-                                // physics: const NeverScrollableScrollPhysics(),
-                                itemCount: optionList.length,
-                                itemBuilder: (context, index) {
-                                  if (optionList.isEmpty) {
-                                    return Row();
-                                  } else {
-                                    return Dismissible(
-                                      key: Key(optionList[index].id.toString()),
-                                      direction: DismissDirection.startToEnd,
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Container(
-                                            height: 70,
-                                            margin: EdgeInsets.only(bottom: 20.0),
-                                            child: TextFormField(
-                                              onChanged: (text) {
-                                                takeOptionNumber(text,'title' ,optionList[index].id);
-                                              },
-                                              initialValue: optionList[index].textTitle,
-                                              decoration: InputDecoration(
-                                                border: new OutlineInputBorder(
-                                                    borderSide: new BorderSide(
-                                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                        width: 12.0
-                                                    )),
-                                                // labelText: 'Option 1',
-                                                hintText: 'Eg: Apple ',
-                                                hintStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors()
-                                                ),
-                                                labelText: 'Option ${index+1} ',
-                                                labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors()
-                                                ),
-                                                fillColor: Colors.white,
-                                                focusedBorder:OutlineInputBorder(
-                                                  borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                                  borderRadius: BorderRadius.circular(5.0),
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                                ),
-
-                                              ),
-                                              style: TextStyle(
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: 0,
-                                            right: 0,
-                                            child: GestureDetector(
-                                              child: IconButton(
-                                                icon: Icon(
-                                                  Icons.delete,
-                                                  size: 20.0,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                              onTap: ()
-                                              {
-                                                _showConfirmation('option',index);
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                }),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 40,
-                                  child: Container(
-                                    height: 40,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      border: new Border.all(color: Colors.white, width: 1.0),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.buttoncolor1,
-                                          globals.buttoncolor2,
-                                        ],
-                                      ),
-                                    ),
-/*                                    child: RaisedButton.icon(
-                                      onPressed: () async {
-                                        setState(() {
-                                          optionList.add(PollOption("$_optionIndex",'',''));
-                                          _optionIndex++;
-                                        });
-                                      },
-                                      icon: new Icon(Icons.add),
-                                      label: Text(
-                                        "Add Option",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme.getTextThemeColors(),
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      splashColor: Colors.grey,
-                                    ),*/
-                                    child: MaterialButton(
-                                      splashColor: Colors.grey,
-                                      child: Text(
-                                        "Add Option",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme.getTextThemeColors(),
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      onPressed: () async {
-                                        setState(() {
-                                          optionList.add(PollOption("$_optionIndex",'',''));
-                                          _optionIndex++;
-                                        });
-                                      },
-                                    ),
-                                  )
-                                ),
-                              ],
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE16,
                             ),
                           ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  child: getDurationField(),
-                                ),
-                              ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          height: optionList.length!=0 ? optionHeight : 0.0,
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: optionList.length,
+                              itemBuilder: (context, index) {
+                                if (optionList.isEmpty) {
+                                  return Row();
+                                } else {
+                                  return Dismissible(
+                                    key: Key(optionList[index].id.toString()),
+                                    direction: DismissDirection.startToEnd,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          height: 70,
+                                          margin: EdgeInsets.only(bottom: 20.0),
+                                          child: TextFormField(
+                                            onChanged: (text) {
+                                              takeOptionNumber(text,'title' ,optionList[index].id);
+                                            },
+                                            initialValue: optionList[index].textTitle,
+                                            decoration: InputDecoration(
+                                              border: new OutlineInputBorder(
+                                                  borderSide: new BorderSide(
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      width: 12.0
+                                                  )),
+                                              // labelText: 'Option 1',
+                                              hintText: 'Eg: Apple ',
+                                              hintStyle: TextStyle(
+                                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                                  color: AllCoustomTheme.getTextThemeColors()
+                                              ),
+                                              labelText: 'Option ${index+1} ',
+                                              labelStyle: TextStyle(
+                                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                                  color: AllCoustomTheme.getTextThemeColors()
+                                              ),
+                                              fillColor: Colors.white,
+                                              focusedBorder:OutlineInputBorder(
+                                                borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                                borderRadius: BorderRadius.circular(5.0),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                              ),
 
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 50,
-                                  child: Animator(
-                                    tween: Tween<double>(begin: 0.8, end: 1.1),
-                                    curve: Curves.easeInToLinear,
-                                    cycles: 0,
-                                    builder: (anim) => Transform.scale(
-                                      scale: anim.value,
-                                      child: Container(
-                                        height: 50,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
-                                        ),
-                                        child: MaterialButton(
-                                          splashColor: Colors.grey,
-                                          child: Text(
-                                            "Done",
+                                            ),
                                             style: TextStyle(
                                               color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
-                                          onPressed: () async {
-                                            Navigator.pop(context);
-                                          },
                                         ),
+                                        Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: GestureDetector(
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.delete,
+                                                size: 20.0,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            onTap: ()
+                                            {
+                                              _showConfirmation('option',index);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                              }),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 40, left: 14, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 30,
+                                child:  Container(
+                                  height: 30,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    color: AllCoustomTheme.getThemeData().textSelectionColor,
+                                    border: new Border.all(color: Colors.white, width: 1.5),
+                                  ),
+                                  child: MaterialButton(
+                                    splashColor: Colors.grey,
+                                    child: Text(
+                                      "Add Option",
+                                      style: TextStyle(
+                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        optionList.add(PollOption("$_optionIndex",'',''));
+                                        _optionIndex++;
+                                        optionHeight = optionHeight + 100.0;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: getDurationField(),
+                              ),
+                            ),
+
+                          ],
+                        ),
+                        SizedBox(
+                          height: 100,
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 50,
+                                child: Animator(
+                                  tween: Tween<double>(begin: 0.8, end: 1.1),
+                                  curve: Curves.easeInToLinear,
+                                  cycles: 0,
+                                  builder: (anim) => Transform.scale(
+                                    scale: anim.value,
+                                    child: Container(
+                                      height: 50,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        border: new Border.all(color: Colors.white, width: 1.5),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            globals.buttoncolor1,
+                                            globals.buttoncolor2,
+                                          ],
+                                        ),
+                                      ),
+                                      child: MaterialButton(
+                                        splashColor: Colors.grey,
+                                        child: Text(
+                                          "Done",
+                                          style: TextStyle(
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                        },
                                       ),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )
-                    : SizedBox(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                        : SizedBox(),
+                  ),
+                ),
               ),
-            ),
-          ),
+            )
         )
       ],
     );
@@ -516,6 +495,7 @@ class _CreatePollState extends State<CreatePoll> {
                           dynamic option;
                           setState(() {
                             option = optionList.removeAt(index);
+                            optionHeight = optionHeight - 100.0;
                           });
 
                           if(option!=null)

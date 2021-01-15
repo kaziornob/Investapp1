@@ -6,6 +6,8 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
+import 'package:auroim/modules/investRelatedPages/searchFirstPage.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
@@ -1667,7 +1669,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.72,
+            height: MediaQuery.of(context).size.height*0.65,
             child:  Container(
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 child: ListView(
@@ -1685,7 +1687,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                         margin: EdgeInsets.only(left: 15.0,right: 5.0),
@@ -1701,7 +1703,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height*0.42,
+                        height: MediaQuery.of(context).size.height*0.35,
                         child: Container(
                           margin: EdgeInsets.only(left: 20.0,right: 20.0),
                           child: CarouselSlider(
@@ -1716,7 +1718,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                      padding: const EdgeInsets.only(left: 14, right: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -1747,11 +1749,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   ),
                                 ),
                                 onPressed: () async {
-
-        /*                          Navigator.of(context).push(new MaterialPageRoute(
+                                  Navigator.of(context).push(new MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                      new SearchPageFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));*/
-
+                                      new SearchFirstPage(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
                                 },
                               ),
                             ),
@@ -1765,13 +1765,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           // go pro button
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -1803,9 +1803,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                           onPressed: () async
                           {
-                            /*                      Navigator.of(context).push(new MaterialPageRoute(
+                              Navigator.of(context).push(new MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                    new OnBoardingFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));*/
+                                    new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
                           },
                         ),
                       ),
@@ -2246,6 +2246,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             child:  Container(
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 child: ListView(
+                  physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(top:15.0),
@@ -2965,7 +2966,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   Widget thirdScreen() {
-
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Padding(
@@ -2975,7 +2975,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             /*SizedBox(
               height: appBarheight,
             ),*/
-
             Row(
               children: <Widget>[
                 GestureDetector(
@@ -3827,8 +3826,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     child: new Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                          height: 40,
-                          width: 80,
+                          height: 30,
+                          width: 70,
                           margin: EdgeInsets.only(top:20.0,bottom: 20.0),
                           decoration: new BoxDecoration(
                             // color: Color(0xFF1E90FF),
@@ -3861,7 +3860,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   new Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
-                        height: 40,
+                        height: 30,
                         width: 110,
                         margin: EdgeInsets.only(top:20.0,bottom: 20.0),
                         decoration: new BoxDecoration(
@@ -3889,8 +3888,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   new Align(
                     alignment: Alignment.topRight,
                     child: Container(
-                        height: 40,
-                        width: 80,
+                        height: 30,
+                        width: 70,
                         margin: EdgeInsets.only(top:60.0,bottom: 40.0),
                         decoration: new BoxDecoration(
                           color: Color(0xFFFF8C00),
@@ -4394,7 +4393,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.35,
-                    child: getInceptionMemberView(inceptionMemberList),
+                    child: Scrollbar(
+                      child: getInceptionMemberView(inceptionMemberList),
+                    )
                   ),
                 ),
               ],
@@ -4441,39 +4442,41 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.10,
-                    child: ListView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: ()
-                            {
-                              var tempField = {"rankingNum": "1" ,"name": "Warren Buffet","philosophy": "Buy companies at a low price, improve them via management and make long term gains",
-                                "trackRecord": "He has a 30-year-plus track record making on average 20 percent a year" ,"image": "WarrenBuffet"};
-                              print("tempfield: $tempField");
-                              Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                  builder: (BuildContext context) => ClubDetail(allField: tempField),
-                                ),
-                              );
-                            },
-                          child: Container(
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 25.0,
-                                    backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
-                                    backgroundColor: Colors.transparent,
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              onTap: ()
+                              {
+                                var tempField = {"rankingNum": "1" ,"name": "Warren Buffet","philosophy": "Buy companies at a low price, improve them via management and make long term gains",
+                                  "trackRecord": "He has a 30-year-plus track record making on average 20 percent a year" ,"image": "WarrenBuffet"};
+                                print("tempfield: $tempField");
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (BuildContext context) => ClubDetail(allField: tempField),
                                   ),
-                                  SizedBox(
-                                    width: 10,
+                                );
+                              },
+                              child: Container(
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 25.0,
+                                        backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
+                                        backgroundColor: Colors.transparent,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      )
+                                    ],
                                   )
-                                ],
                               )
-                          )
-                        );
-                      },
-                    ),
+                          );
+                        },
+                      ),
+                    )
                   ),
                 ),
               ],
@@ -4575,11 +4578,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.35,
-                    child: getWeeklyLeagueMemberView(inceptionMemberList),
+                    child: Scrollbar(
+                      child:getWeeklyLeagueMemberView(inceptionMemberList),
+                    )
                   ),
                 ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 40,
           ),
         ],
       ),

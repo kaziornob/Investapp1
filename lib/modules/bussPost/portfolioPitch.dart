@@ -25,6 +25,7 @@ class PortfolioPitch extends StatefulWidget {
 }
 
 class _PortfolioPitchState extends State<PortfolioPitch> {
+  double stockHeight = 0.0;
   bool _isInProgress = false;
   List tagList = List();
   bool tagListVisible = false;
@@ -130,685 +131,600 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
             ),
           ),
         ),
-        Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-          body: ModalProgressHUD(
-            inAsyncCall: _isInProgress,
-            opacity: 0,
-            progressIndicator: CupertinoActivityIndicator(
-              radius: 12,
-            ),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16, left: 16),
-                child: !_isInProgress
-                    ? Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: appBarheight,
-                    ),
-                    Row(
+        SafeArea(
+            bottom: true,
+            child: Scaffold(
+              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              body: ModalProgressHUD(
+                inAsyncCall: _isInProgress,
+                opacity: 0,
+                progressIndicator: CupertinoActivityIndicator(
+                  radius: 12,
+                ),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16, left: 16),
+                    child: !_isInProgress
+                        ? Column(
                       children: <Widget>[
-                        InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Animator(
-                            tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                            duration: Duration(milliseconds: 500),
-                            cycles: 0,
-                            builder: (anim) => FractionalTranslation(
-                              translation: anim.value,
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: AllCoustomTheme.getTextThemeColors(),
-                              ),
-                            ),
-                          ),
+                        SizedBox(
+                          height: appBarheight,
                         ),
-                        Expanded(
-                          child: Animator(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: Text(
-                                'Portfolio Pitch',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: ConstanceData.SIZE_TITLE20,
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Animator(
+                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 0,
+                                builder: (anim) => FractionalTranslation(
+                                  translation: anim.value,
+                                  child: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                            child: TextField(
-                              maxLines: 1,
-                              decoration: InputDecoration(
-                                labelText: 'Target return %',
-                                hintText: 'Target return %',
-                                hintStyle: TextStyle(
-                                    fontSize: ConstanceData.SIZE_TITLE10,
-                                    color: AllCoustomTheme.getTextThemeColors()
-                                ),
-                                labelStyle: TextStyle(
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    color: AllCoustomTheme.getTextThemeColors()
-                                ),
-                                fillColor: Colors.white,
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            Expanded(
+                              child: Animator(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Text(
+                                    'Portfolio Pitch',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: ConstanceData.SIZE_TITLE20,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                              ),
-                            ),
+                            )
+                          ],
                         ),
                         SizedBox(
-                          width: 50,
+                          height: 40,
                         ),
-                        Expanded(
-                            child: new FormField(
-                              builder: (FormFieldState state) {
-                                return InputDecorator(
-                                  decoration: InputDecoration(
-                                    labelText: 'Target Max',
-                                    labelStyle: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: ConstanceData.SIZE_TITLE20,
-                                        color: AllCoustomTheme.getTextThemeColors()
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                    ),
 
-                                    errorText: state.hasError ? state.errorText : null,
-                                  ),
-                                  isEmpty: selectedTargetMax == '',
-                                  child: new DropdownButtonHideUnderline(
-                                    child: ButtonTheme(
-                                      alignedDropdown: true,
-                                      child: Container(
-                                        height: 15.0,
-                                        child: new DropdownButton(
-                                          value: selectedTargetMax,
-                                          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-                                          isExpanded: true,
-                                          onChanged: (String newValue) {
-                                            setState(() {
-                                              selectedTargetMax = newValue;
-                                            });
-                                          },
-                                          items: targetMaxList.map((String value) {
-                                            return new DropdownMenuItem(
-                                              value: value,
-                                              child: new Text(
-                                                value,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-                                                ),
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      ),
-                                    )
-                                  ),
-                                );
-                              },
-                              validator: (val) {
-                                return ((val != null && val!='') || (selectedTargetMax!=null && selectedTargetMax!='')) ? null : 'choose one';
-                              },
-                            )
-                        )
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 120,
-                      child: TextField(
-                        maxLines: 10,
-                        decoration: InputDecoration(
-                          labelText: 'Portfolio strategy',
-                          hintText: 'Portfolio strategy: ',
-                          hintStyle: TextStyle(
-                              fontSize: ConstanceData.SIZE_TITLE10,
-                              color: AllCoustomTheme.getTextThemeColors()
-                          ),
-                          labelStyle: TextStyle(
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                              color: AllCoustomTheme.getTextThemeColors()
-                          ),
-                          fillColor: Colors.white,
-                          focusedBorder:OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white, width: 1.0),
-                          ),
-                        ),
-                        style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    //search Tags
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Search Topic Tags',
-                          style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 8.0),
-                          child: TypeAheadFormField(
-                            textFieldConfiguration: TextFieldConfiguration(
-                                controller: _searchController,
-                                textInputAction: TextInputAction.done,
-                                textAlign: TextAlign.start,
-                                keyboardType: TextInputType.text,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: TextField(
                                 maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: 16.0
-                                ),
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(30)
-                                ],
                                 decoration: InputDecoration(
-                                  hintText: 'Search Topic Tags',
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 1.0,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      borderRadius: BorderRadius.all(Radius.circular(0.0))),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                                  labelText: 'Target return %',
+                                  hintText: 'Target return %',
+                                  hintStyle: TextStyle(
+                                      fontSize: ConstanceData.SIZE_TITLE10,
+                                      color: AllCoustomTheme.getTextThemeColors()
+                                  ),
+                                  labelStyle: TextStyle(
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      color: AllCoustomTheme.getTextThemeColors()
+                                  ),
+                                  fillColor: Colors.white,
+                                  focusedBorder:OutlineInputBorder(
+                                    borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                    borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white, width: 1.0),
                                   ),
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 15.0,
-                                  ),
                                 ),
-                                onSubmitted: (value){
-                                  setState(() {
-                                    itemList.add(TagData(_searchController.text, _searchController.text));
-                                    tagListVisible = itemList.length == 0 ? false : true;
-                                  });
-                                  _searchController.text = '';
-                                }
-                            ),
-                            suggestionsCallback: (pattern) {
-                              if (pattern.toString().trim().length < 2) {
-                                return null;
-                              } else {
-                                return searchItems(pattern);
-                              }
-                            },
-                            itemBuilder: (context, suggestion) {
-                              if (_searchController.text.isNotEmpty) {
-                                return ListTile(
-                                  title: Text(suggestion['tag']),
-                                );
-                              } else
-                                return Container();
-                            },
-                            transitionBuilder: (context, suggestionsBox, controller) {
-                              return suggestionsBox;
-                            },
-                            onSuggestionSelected: (suggestion) {
-                              _searchController.text = '';
-                              setState(() {
-                                itemList.add(TagData(suggestion['_id'], suggestion['tag']));
-                                tagListVisible = itemList.length == 0 ? false : true;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    /////////////Topic Tag list////////
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Visibility(
-                            visible: tagListVisible,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 20.0),
-                              child: Text(
-                                'Topic Tags',
                                 style: TextStyle(
                                   color: AllCoustomTheme.getTextThemeColors(),
                                   fontSize: ConstanceData.SIZE_TITLE16,
                                 ),
                               ),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Expanded(
+                                child: new FormField(
+                                  builder: (FormFieldState state) {
+                                    return InputDecorator(
+                                      decoration: InputDecoration(
+                                        labelText: 'Target Max',
+                                        labelStyle: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: ConstanceData.SIZE_TITLE20,
+                                            color: AllCoustomTheme.getTextThemeColors()
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                        ),
+
+                                        errorText: state.hasError ? state.errorText : null,
+                                      ),
+                                      isEmpty: selectedTargetMax == '',
+                                      child: new DropdownButtonHideUnderline(
+                                          child: ButtonTheme(
+                                            alignedDropdown: true,
+                                            child: Container(
+                                              height: 15.0,
+                                              child: new DropdownButton(
+                                                value: selectedTargetMax,
+                                                dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                                isExpanded: true,
+                                                onChanged: (String newValue) {
+                                                  setState(() {
+                                                    selectedTargetMax = newValue;
+                                                  });
+                                                },
+                                                items: targetMaxList.map((String value) {
+                                                  return new DropdownMenuItem(
+                                                    value: value,
+                                                    child: new Text(
+                                                      value,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: ConstanceData.SIZE_TITLE14,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ),
+                                          )
+                                      ),
+                                    );
+                                  },
+                                  validator: (val) {
+                                    return ((val != null && val!='') || (selectedTargetMax!=null && selectedTargetMax!='')) ? null : 'choose one';
+                                  },
+                                )
                             )
+                          ],
+                        ),
+
+                        SizedBox(
+                          height: 20,
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 8.0, bottom: tagListVisible ? 24.0 : 0.0),
-                          child: StaggeredGridView.countBuilder(
-                            itemCount: itemList != null ? itemList.length : 0,
-                            physics: NeverScrollableScrollPhysics(),
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 8.0,
-                            shrinkWrap: true,
-                            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                            itemBuilder: (context, index){
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      border: Border.all(color: Colors.grey, width: 1.0)),
-                                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          '${itemList[index].tag}',
-                                          style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.normal,
-                                              height: 1.3
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              itemList.removeAt(index);
-                                              tagListVisible = itemList.length == 0 ? false : true;
-                                            });
-
-                                          },
-                                          child: Icon(
-                                            Icons.close,
-                                            color: AllCoustomTheme.getTextThemeColors(),
-                                            size: 15.0,
-                                          ))
-                                    ],
-                                  ));
-                            },
+                          height: 120,
+                          child: TextField(
+                            maxLines: 10,
+                            decoration: InputDecoration(
+                              labelText: 'Portfolio strategy',
+                              hintText: 'Portfolio strategy: ',
+                              hintStyle: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE10,
+                                  color: AllCoustomTheme.getTextThemeColors()
+                              ),
+                              labelStyle: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  color: AllCoustomTheme.getTextThemeColors()
+                              ),
+                              fillColor: Colors.white,
+                              focusedBorder:OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              ),
+                            ),
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE16,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: optionList.length!=0 ? 200.0 : 0.0,
-                      child: ListView.builder(
-                          itemCount: optionList.length,
-                          itemBuilder: (context, index) {
-                            if (optionList.isEmpty) {
-                              return Row();
-                            } else {
-                              return Dismissible(
-                                key: Key(optionList[index].id.toString()),
-                                direction: DismissDirection.startToEnd,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 5.0,bottom: 9.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                            borderRadius: BorderRadius.circular(5.0),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey,
-                                                blurRadius: 2.0,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        //search Tags
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Search Topic Tags',
+                              style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColors(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8.0),
+                              child: TypeAheadFormField(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                    controller: _searchController,
+                                    textInputAction: TextInputAction.done,
+                                    textAlign: TextAlign.start,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontSize: 16.0
+                                    ),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(30)
+                                    ],
+                                    decoration: InputDecoration(
+                                      hintText: 'Search Topic Tags',
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1.0,
+                                              color: AllCoustomTheme.getTextThemeColors()
+                                          ),
+                                          borderRadius: BorderRadius.all(Radius.circular(0.0))),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                      ),
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                    onSubmitted: (value){
+                                      setState(() {
+                                        itemList.add(TagData(_searchController.text, _searchController.text));
+                                        tagListVisible = itemList.length == 0 ? false : true;
+                                      });
+                                      _searchController.text = '';
+                                    }
+                                ),
+                                suggestionsCallback: (pattern) {
+                                  if (pattern.toString().trim().length < 2) {
+                                    return null;
+                                  } else {
+                                    return searchItems(pattern);
+                                  }
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  if (_searchController.text.isNotEmpty) {
+                                    return ListTile(
+                                      title: Text(suggestion['tag']),
+                                    );
+                                  } else
+                                    return Container();
+                                },
+                                transitionBuilder: (context, suggestionsBox, controller) {
+                                  return suggestionsBox;
+                                },
+                                onSuggestionSelected: (suggestion) {
+                                  _searchController.text = '';
+                                  setState(() {
+                                    itemList.add(TagData(suggestion['_id'], suggestion['tag']));
+                                    tagListVisible = itemList.length == 0 ? false : true;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        /////////////Topic Tag list////////
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Visibility(
+                                visible: tagListVisible,
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 20.0),
+                                  child: Text(
+                                    'Topic Tags',
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                    ),
+                                  ),
+                                )
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8.0, bottom: tagListVisible ? 24.0 : 0.0),
+                              child: StaggeredGridView.countBuilder(
+                                itemCount: itemList != null ? itemList.length : 0,
+                                physics: NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 8.0,
+                                mainAxisSpacing: 8.0,
+                                shrinkWrap: true,
+                                staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                                itemBuilder: (context, index){
+                                  return Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(4.0),
+                                          border: Border.all(color: Colors.grey, width: 1.0)),
+                                      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Text(
+                                              '${itemList[index].tag}',
+                                              style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.normal,
+                                                  height: 1.3
                                               ),
-                                            ]
-                                        ),
-                                        height: 60,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              height: 60,
-                                              width: MediaQuery.of(context).size.width *0.44,
-                                              margin: EdgeInsets.only(left: 5.0),
-                                              child: new FormField(
-                                                builder: (FormFieldState state) {
-                                                  return InputDecorator(
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  itemList.removeAt(index);
+                                                  tagListVisible = itemList.length == 0 ? false : true;
+                                                });
+
+                                              },
+                                              child: Icon(
+                                                Icons.close,
+                                                color: AllCoustomTheme.getTextThemeColors(),
+                                                size: 15.0,
+                                              ))
+                                        ],
+                                      ));
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          height: optionList.length!=0 ? stockHeight : 0.0,
+                          child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: optionList.length,
+                              itemBuilder: (context, index) {
+                                if (optionList.isEmpty) {
+                                  return Row();
+                                } else {
+                                  return Dismissible(
+                                    key: Key(optionList[index].id.toString()),
+                                    direction: DismissDirection.startToEnd,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 5.0,bottom: 9.0),
+                                          child: Container(
+                                            height: 60,
+                                            child: Row(
+                                              children: <Widget>[
+                                                Container(
+                                                  height: 60,
+                                                  width: MediaQuery.of(context).size.width *0.44,
+                                                  margin: EdgeInsets.only(left: 5.0),
+                                                  child: new FormField(
+                                                    builder: (FormFieldState state) {
+                                                      return InputDecorator(
+                                                        decoration: InputDecoration(
+                                                          labelText: 'Stock',
+                                                          labelStyle: TextStyle(
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                                              color: AllCoustomTheme.getTextThemeColors()
+                                                          ),
+                                                          enabledBorder: OutlineInputBorder(
+                                                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                                          ),
+
+                                                          errorText: state.hasError ? state.errorText : null,
+                                                        ),
+                                                        isEmpty: selectedTargetMax == '',
+                                                        child: new DropdownButtonHideUnderline(
+                                                            child: ButtonTheme(
+                                                              alignedDropdown: true,
+                                                              child: Container(
+                                                                height: 16.0,
+                                                                child: new DropdownButton(
+                                                                  value: selectedTargetMax,
+                                                                  dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                                                  isExpanded: true,
+                                                                  onChanged: (String newValue) {
+                                                                    setState(() {
+                                                                      selectedTargetMax = newValue;
+                                                                    });
+                                                                  },
+                                                                  items: targetMaxList.map((String value) {
+                                                                    return new DropdownMenuItem(
+                                                                      value: value,
+                                                                      child: new Text(
+                                                                        value,
+                                                                        style: TextStyle(
+                                                                          color: Colors.white,
+                                                                          fontSize: ConstanceData.SIZE_TITLE14,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }).toList(),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ),
+                                                      );
+                                                    },
+                                                    validator: (val) {
+                                                      return ((val != null && val!='') || (selectedTargetMax!=null && selectedTargetMax!='')) ? null : 'choose one';
+                                                    },
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 52,
+                                                  width: MediaQuery.of(context).size.width *0.44,
+                                                  margin: EdgeInsets.only(left: 5.0),
+                                                  child: TextFormField(
+                                                    onChanged: (text) {
+                                                      takeOptionNumber(text,'title' ,optionList[index].id);
+                                                    },
+                                                    initialValue: optionList[index].textTitle,
                                                     decoration: InputDecoration(
-                                                      labelText: 'Stock',
-                                                      labelStyle: TextStyle(
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: ConstanceData.SIZE_TITLE20,
+                                                      border: new OutlineInputBorder(
+                                                          borderSide: new BorderSide(
+                                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                              width: 12.0
+                                                          )),
+                                                      // labelText: 'Option 1',
+                                                      hintText: 'Weight ',
+                                                      hintStyle: TextStyle(
+                                                          fontSize: ConstanceData.SIZE_TITLE16,
                                                           color: AllCoustomTheme.getTextThemeColors()
+                                                      ),
+                                                      labelText: 'Weight',
+                                                      labelStyle: TextStyle(
+                                                          fontSize: ConstanceData.SIZE_TITLE16,
+                                                          color: AllCoustomTheme.getTextThemeColors()
+                                                      ),
+                                                      fillColor: Colors.white,
+                                                      focusedBorder:OutlineInputBorder(
+                                                        borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                                        borderRadius: BorderRadius.circular(5.0),
                                                       ),
                                                       enabledBorder: OutlineInputBorder(
                                                         borderSide: BorderSide(color: Colors.white, width: 1.0),
                                                       ),
 
-                                                      errorText: state.hasError ? state.errorText : null,
                                                     ),
-                                                    isEmpty: selectedTargetMax == '',
-                                                    child: new DropdownButtonHideUnderline(
-                                                      child: ButtonTheme(
-                                                        alignedDropdown: true,
-                                                        child: Container(
-                                                          height: 16.0,
-                                                          child: new DropdownButton(
-                                                            value: selectedTargetMax,
-                                                            dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-                                                            isExpanded: true,
-                                                            onChanged: (String newValue) {
-                                                              setState(() {
-                                                                selectedTargetMax = newValue;
-                                                              });
-                                                            },
-                                                            items: targetMaxList.map((String value) {
-                                                              return new DropdownMenuItem(
-                                                                value: value,
-                                                                child: new Text(
-                                                                  value,
-                                                                  style: TextStyle(
-                                                                    color: Colors.white,
-                                                                    fontSize: ConstanceData.SIZE_TITLE14,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }).toList(),
-                                                          ),
-                                                        ),
-                                                      )
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE16,
                                                     ),
-                                                  );
-                                                },
-                                                validator: (val) {
-                                                  return ((val != null && val!='') || (selectedTargetMax!=null && selectedTargetMax!='')) ? null : 'choose one';
-                                                },
-                                              ),
-/*                                              child: TextFormField(
-                                                onChanged: (text) {
-                                                  takeOptionNumber(text,'title' ,optionList[index].id);
-                                                },
-                                                initialValue: optionList[index].textTitle,
-                                                decoration: InputDecoration(
-                                                  border: new OutlineInputBorder(
-                                                      borderSide: new BorderSide(
-                                                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                          width: 12.0
-                                                      )),
-                                                  // labelText: 'Option 1',
-                                                  hintText: 'Stock ${index+1} ',
-                                                  hintStyle: TextStyle(
-                                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                                      color: AllCoustomTheme.getTextThemeColors()
                                                   ),
-                                                  labelText: 'Stock ${index+1} ',
-                                                  labelStyle: TextStyle(
-                                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                                      color: AllCoustomTheme.getTextThemeColors()
-                                                  ),
-                                                  fillColor: Colors.white,
-                                                  focusedBorder:OutlineInputBorder(
-                                                    borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                                    borderRadius: BorderRadius.circular(5.0),
-                                                  ),
-                                                  enabledBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                                  ),
-
-                                                ),
-                                                style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                ),
-                                              ),*/
+                                                )
+                                              ],
                                             ),
-                                            Container(
-                                              height: 52,
-                                              width: MediaQuery.of(context).size.width *0.44,
-                                              margin: EdgeInsets.only(left: 5.0),
-                                              child: TextFormField(
-                                                onChanged: (text) {
-                                                  takeOptionNumber(text,'title' ,optionList[index].id);
-                                                },
-                                                initialValue: optionList[index].textTitle,
-                                                decoration: InputDecoration(
-                                                  border: new OutlineInputBorder(
-                                                      borderSide: new BorderSide(
-                                                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                          width: 12.0
-                                                      )),
-                                                  // labelText: 'Option 1',
-                                                  hintText: 'Weight ',
-                                                  hintStyle: TextStyle(
-                                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                                      color: AllCoustomTheme.getTextThemeColors()
-                                                  ),
-                                                  labelText: 'Weight',
-                                                  labelStyle: TextStyle(
-                                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                                      color: AllCoustomTheme.getTextThemeColors()
-                                                  ),
-                                                  fillColor: Colors.white,
-                                                  focusedBorder:OutlineInputBorder(
-                                                    borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                                    borderRadius: BorderRadius.circular(5.0),
-                                                  ),
-                                                  enabledBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                                  ),
-
-                                                ),
-                                                style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: GestureDetector(
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.delete,
+                                                size: 20.0,
+                                                color: Colors.red,
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-/*                                    Container(
-                                      child: TextFormField(
-                                        onChanged: (text) {
-                                          takeOptionNumber(text,'title' ,optionList[index].id);
-                                        },
-                                        initialValue: optionList[index].textTitle,
-                                        decoration: InputDecoration(
-                                          border: new OutlineInputBorder(
-                                              borderSide: new BorderSide(
-                                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                  width: 12.0
-                                              )),
-                                          // labelText: 'Option 1',
-                                          hintText: 'Stock ${index+1} ',
-                                          hintStyle: TextStyle(
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              color: AllCoustomTheme.getTextThemeColors()
-                                          ),
-                                          labelText: 'Stock ${index+1} ',
-                                          labelStyle: TextStyle(
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              color: AllCoustomTheme.getTextThemeColors()
-                                          ),
-                                          fillColor: Colors.white,
-                                          focusedBorder:OutlineInputBorder(
-                                            borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                            borderRadius: BorderRadius.circular(5.0),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                          ),
-
-                                        ),
-                                        style: TextStyle(
-                                          color: AllCoustomTheme.getTextThemeColors(),
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                        ),
-                                      ),
-                                    ),*/
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: GestureDetector(
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.delete,
-                                            size: 20.0,
-                                            color: Colors.red,
+                                            ),
+                                            onTap: ()
+                                            {
+                                              _showConfirmation('option',index);
+                                            },
                                           ),
                                         ),
-                                        onTap: ()
-                                        {
-                                          _showConfirmation('option',index);
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                              height: 40,
-                              child: Container(
-                                height: 40,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                  border: new Border.all(color: Colors.white, width: 1.0),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      globals.buttoncolor1,
-                                      globals.buttoncolor2,
-                                    ],
-                                  ),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Text(
-                                    "Add Stock",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    setState(() {
-                                      optionList.add(PollOption("$_optionIndex",'',''));
-                                      _optionIndex++;
-                                    });
-                                  },
-                                ),
-                              )
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 50,
-                            child: Animator(
-                              tween: Tween<double>(begin: 0.8, end: 1.1),
-                              curve: Curves.easeInToLinear,
-                              cycles: 0,
-                              builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Container(
-                                  height: 50,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: new Border.all(color: Colors.white, width: 1.5),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.buttoncolor1,
-                                        globals.buttoncolor2,
                                       ],
                                     ),
+                                  );
+                                }
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 40, left: 14, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 30,
+                                child:  Container(
+                                  height: 30,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    color: AllCoustomTheme.getThemeData().textSelectionColor,
+                                    border: new Border.all(color: Colors.white, width: 1.5),
                                   ),
                                   child: MaterialButton(
                                     splashColor: Colors.grey,
                                     child: Text(
-                                      "Done",
+                                      "Add Stock",
                                       style: TextStyle(
                                         color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE18,
+                                        fontSize: ConstanceData.SIZE_TITLE16,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    onPressed: () async {
-                                      Navigator.pop(context);
+                                    onPressed: () {
+                                      setState(() {
+                                        optionList.add(PollOption("$_optionIndex",'',''));
+                                        _optionIndex++;
+                                        stockHeight = stockHeight + 100.0;
+                                      });
                                     },
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 50,
+                                child: Animator(
+                                  tween: Tween<double>(begin: 0.8, end: 1.1),
+                                  curve: Curves.easeInToLinear,
+                                  cycles: 0,
+                                  builder: (anim) => Transform.scale(
+                                    scale: anim.value,
+                                    child: Container(
+                                      height: 50,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        border: new Border.all(color: Colors.white, width: 1.5),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            globals.buttoncolor1,
+                                            globals.buttoncolor2,
+                                          ],
+                                        ),
+                                      ),
+                                      child: MaterialButton(
+                                        splashColor: Colors.grey,
+                                        child: Text(
+                                          "Done",
+                                          style: TextStyle(
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     )
-                  ],
-                )
-                    : SizedBox(),
+                        : SizedBox(),
+                  ),
+                ),
               ),
-            ),
-          ),
+            )
         )
       ],
     );
@@ -855,6 +771,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                           dynamic option;
                           setState(() {
                             option = optionList.removeAt(index);
+                            stockHeight = stockHeight - 100.0;
                           });
 
                           if(option!=null)
