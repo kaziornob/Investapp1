@@ -11,12 +11,12 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
-class PollOption {
+class SecurityOption {
   final String id;
-  String textTitle;
-  String textLink;
+  String textSecurity;
+  String textWeight;
 
-  PollOption(this.id,this.textTitle,this.textLink);
+  SecurityOption(this.id,this.textSecurity,this.textWeight);
 }
 
 class PortfolioPitch extends StatefulWidget {
@@ -34,7 +34,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
 
   List<String> targetMaxList = <String>['Long','Short'];
 
-  List<PollOption> optionList = [];
+  List<SecurityOption> securityList = [];
   int _optionIndex = 1;
 
 
@@ -89,19 +89,19 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
   }
 
 
-  void takeOptionNumber(String text, String from , String itemId) {
+  void takeSecurityNumber(String text, String from , String itemId) {
 
     try {
-      if(optionList!=null && optionList.length!=0)
+      if(securityList!=null && securityList.length!=0)
       {
-        for (PollOption optObj in optionList)
+        for (SecurityOption optObj in securityList)
         {
           if(optObj.id == itemId)
           {
-            if(from=="title")
-              optObj.textTitle = text;
-            else if (from=="link")
-              optObj.textLink = text;
+            if(from=="security")
+              optObj.textSecurity = text;
+            else if (from=="weight")
+              optObj.textWeight = text;
           }
         }
 
@@ -196,66 +196,90 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                         SizedBox(
                           height: 40,
                         ),
-
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  labelText: 'Target return %',
-                                  hintText: 'Target return %',
-                                  hintStyle: TextStyle(
-                                      fontSize: ConstanceData.SIZE_TITLE10,
-                                      color: AllCoustomTheme.getTextThemeColors()
-                                  ),
-                                  labelStyle: TextStyle(
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                      color: AllCoustomTheme.getTextThemeColors()
-                                  ),
-                                  fillColor: Colors.white,
-                                  focusedBorder:OutlineInputBorder(
-                                    borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 50,
-                            ),
-                            Expanded(
-                                child: new FormField(
-                                  builder: (FormFieldState state) {
-                                    return InputDecorator(
-                                      decoration: InputDecoration(
-                                        labelText: 'Target Max',
-                                        labelStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: ConstanceData.SIZE_TITLE20,
-                                            color: AllCoustomTheme.getTextThemeColors()
+                        Container(
+                          height: MediaQuery.of(context).size.height*0.20,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                height: MediaQuery.of(context).size.height*0.05,
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      height: MediaQuery.of(context).size.height*0.05,
+                                      width: MediaQuery.of(context).size.width*0.40,
+                                      child: Text(
+                                        "Target return (%)",
+                                        style: new TextStyle(
+                                            fontFamily: "WorkSansSemiBold",
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.1
                                         ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                        ),
-
-                                        errorText: state.hasError ? state.errorText : null,
                                       ),
-                                      isEmpty: selectedTargetMax == '',
-                                      child: new DropdownButtonHideUnderline(
-                                          child: ButtonTheme(
-                                            alignedDropdown: true,
-                                            child: Container(
-                                              height: 15.0,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 20.0),
+                                      height: MediaQuery.of(context).size.height*0.05,
+                                      width: MediaQuery.of(context).size.width*0.44,
+                                      decoration: new BoxDecoration(
+                                        color: AllCoustomTheme.boxColor(),
+                                      ),
+                                      child: TextFormField(
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getTextThemeColors(),
+                                          fontSize: ConstanceData.SIZE_TITLE14,
+                                        ),
+                                        initialValue: "",
+
+                                      ),
+                                    )
+
+                                  ],
+                                ),
+
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.height*0.07,
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      height: MediaQuery.of(context).size.height*0.05,
+                                      width: MediaQuery.of(context).size.width*0.40,
+                                      child: Text(
+                                        "Target Max",
+                                        style: new TextStyle(
+                                            fontFamily: "WorkSansSemiBold",
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.1
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 20.0),
+                                      height: MediaQuery.of(context).size.height*0.07,
+                                      width: MediaQuery.of(context).size.width*0.44,
+                                      child: FormField(
+                                        builder: (FormFieldState state) {
+                                          return InputDecorator(
+                                            decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+                                                  color: AllCoustomTheme.getTextThemeColors()
+                                              ),
+                                              errorText: state.hasError ? state.errorText : null,
+                                            ),
+                                            isEmpty: selectedTargetMax == '',
+                                            child: new DropdownButtonHideUnderline(
                                               child: new DropdownButton(
                                                 value: selectedTargetMax,
                                                 dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
@@ -279,16 +303,20 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                 }).toList(),
                                               ),
                                             ),
-                                          )
+                                          );
+                                        },
+                                        validator: (val) {
+                                          return ((val != null && val!='') || (selectedTargetMax!=null && selectedTargetMax!='')) ? null : 'Please select field';
+                                        },
                                       ),
-                                    );
-                                  },
-                                  validator: (val) {
-                                    return ((val != null && val!='') || (selectedTargetMax!=null && selectedTargetMax!='')) ? null : 'choose one';
-                                  },
-                                )
-                            )
-                          ],
+                                    ),
+                                  ],
+                                ),
+
+                              ),
+
+                            ],
+                          ),
                         ),
 
                         SizedBox(
@@ -300,10 +328,12 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                             maxLines: 10,
                             decoration: InputDecoration(
                               labelText: 'Portfolio strategy',
-                              hintText: 'Portfolio strategy: ',
+                              hintText: 'Example: Focus mostly on US indices, tech and pharma. '
+                                  'Trades will be based on technical analysis using machine learning to understand patterns and trends in the markets. '
+                                  'Keep a diverse portfolio to spread risk.',
                               hintStyle: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE10,
-                                  color: AllCoustomTheme.getTextThemeColors()
+                                  fontSize: ConstanceData.SIZE_TITLE14,
+                                  color: AllCoustomTheme.getTextThemeColors(),
                               ),
                               labelStyle: TextStyle(
                                   fontSize: ConstanceData.SIZE_TITLE16,
@@ -335,7 +365,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                               'Search Topic Tags',
                               style: TextStyle(
                                 color: AllCoustomTheme.getTextThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
+                                fontSize: ConstanceData.SIZE_TITLE14,
                               ),
                             ),
                             Container(
@@ -484,16 +514,16 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                           height: 20,
                         ),
                         Container(
-                          height: optionList.length!=0 ? stockHeight : 0.0,
+                          height: securityList.length!=0 ? stockHeight : 0.0,
                           child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
-                              itemCount: optionList.length,
+                              itemCount: securityList.length,
                               itemBuilder: (context, index) {
-                                if (optionList.isEmpty) {
+                                if (securityList.isEmpty) {
                                   return Row();
                                 } else {
                                   return Dismissible(
-                                    key: Key(optionList[index].id.toString()),
+                                    key: Key(securityList[index].id.toString()),
                                     direction: DismissDirection.startToEnd,
                                     child: Stack(
                                       children: <Widget>[
@@ -507,58 +537,42 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                   height: 60,
                                                   width: MediaQuery.of(context).size.width *0.44,
                                                   margin: EdgeInsets.only(left: 5.0),
-                                                  child: new FormField(
-                                                    builder: (FormFieldState state) {
-                                                      return InputDecorator(
-                                                        decoration: InputDecoration(
-                                                          labelText: 'Stock',
-                                                          labelStyle: TextStyle(
-                                                              fontWeight: FontWeight.bold,
-                                                              fontSize: ConstanceData.SIZE_TITLE20,
-                                                              color: AllCoustomTheme.getTextThemeColors()
-                                                          ),
-                                                          enabledBorder: OutlineInputBorder(
-                                                            borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                                          ),
+                                                  child: TextFormField(
+                                                    onChanged: (text) {
+                                                      takeSecurityNumber(text,'security' ,securityList[index].id);
+                                                    },
+                                                    initialValue: securityList[index].textSecurity,
+                                                    decoration: InputDecoration(
+                                                      border: new OutlineInputBorder(
+                                                          borderSide: new BorderSide(
+                                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                              width: 12.0
+                                                          )),
+                                                      // labelText: 'Option 1',
+                                                      hintText: 'Securities',
+                                                      hintStyle: TextStyle(
+                                                          fontSize: ConstanceData.SIZE_TITLE14,
+                                                          color: AllCoustomTheme.getTextThemeColors()
+                                                      ),
+                                                      labelText: 'Security 1',
+                                                      labelStyle: TextStyle(
+                                                          fontSize: ConstanceData.SIZE_TITLE16,
+                                                          color: AllCoustomTheme.getTextThemeColors()
+                                                      ),
+                                                      fillColor: Colors.white,
+                                                      focusedBorder:OutlineInputBorder(
+                                                        borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                                        borderRadius: BorderRadius.circular(5.0),
+                                                      ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                                      ),
 
-                                                          errorText: state.hasError ? state.errorText : null,
-                                                        ),
-                                                        isEmpty: selectedTargetMax == '',
-                                                        child: new DropdownButtonHideUnderline(
-                                                            child: ButtonTheme(
-                                                              alignedDropdown: true,
-                                                              child: Container(
-                                                                height: 16.0,
-                                                                child: new DropdownButton(
-                                                                  value: selectedTargetMax,
-                                                                  dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-                                                                  isExpanded: true,
-                                                                  onChanged: (String newValue) {
-                                                                    setState(() {
-                                                                      selectedTargetMax = newValue;
-                                                                    });
-                                                                  },
-                                                                  items: targetMaxList.map((String value) {
-                                                                    return new DropdownMenuItem(
-                                                                      value: value,
-                                                                      child: new Text(
-                                                                        value,
-                                                                        style: TextStyle(
-                                                                          color: Colors.white,
-                                                                          fontSize: ConstanceData.SIZE_TITLE14,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  }).toList(),
-                                                                ),
-                                                              ),
-                                                            )
-                                                        ),
-                                                      );
-                                                    },
-                                                    validator: (val) {
-                                                      return ((val != null && val!='') || (selectedTargetMax!=null && selectedTargetMax!='')) ? null : 'choose one';
-                                                    },
+                                                    ),
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                                    ),
                                                   ),
                                                 ),
                                                 Container(
@@ -567,9 +581,9 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                   margin: EdgeInsets.only(left: 5.0),
                                                   child: TextFormField(
                                                     onChanged: (text) {
-                                                      takeOptionNumber(text,'title' ,optionList[index].id);
+                                                      takeSecurityNumber(text,'weight' ,securityList[index].id);
                                                     },
-                                                    initialValue: optionList[index].textTitle,
+                                                    initialValue: securityList[index].textSecurity,
                                                     decoration: InputDecoration(
                                                       border: new OutlineInputBorder(
                                                           borderSide: new BorderSide(
@@ -577,12 +591,12 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                               width: 12.0
                                                           )),
                                                       // labelText: 'Option 1',
-                                                      hintText: 'Weight ',
+                                                      hintText: 'Weightage',
                                                       hintStyle: TextStyle(
-                                                          fontSize: ConstanceData.SIZE_TITLE16,
+                                                          fontSize: ConstanceData.SIZE_TITLE14,
                                                           color: AllCoustomTheme.getTextThemeColors()
                                                       ),
-                                                      labelText: 'Weight',
+                                                      labelText: 'Weightage(%)',
                                                       labelStyle: TextStyle(
                                                           fontSize: ConstanceData.SIZE_TITLE16,
                                                           color: AllCoustomTheme.getTextThemeColors()
@@ -631,36 +645,73 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                               }),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 40, left: 14, right: 10),
+                          padding: const EdgeInsets.only(bottom: 40),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              SizedBox(
+                              Container(
                                 height: 30,
-                                child:  Container(
-                                  height: 30,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: AllCoustomTheme.getThemeData().textSelectionColor,
-                                    border: new Border.all(color: Colors.white, width: 1.5),
-                                  ),
-                                  child: MaterialButton(
-                                    splashColor: Colors.grey,
-                                    child: Text(
-                                      "Add Stock",
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: AllCoustomTheme.getThemeData().textSelectionColor,
+                                  border: new Border.all(color: Colors.white, width: 1.5),
+                                ),
+                                child: MaterialButton(
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "Add Security",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        optionList.add(PollOption("$_optionIndex",'',''));
-                                        _optionIndex++;
-                                        stockHeight = stockHeight + 100.0;
-                                      });
-                                    },
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      securityList.add(SecurityOption("$_optionIndex",'',''));
+                                      _optionIndex++;
+                                      stockHeight = stockHeight + 100.0;
+                                    });
+                                  },
+                                ),
+                              ),
+/*                              Container(
+                                height: 20,
+                                width: 130,
+                                child: Text(
+                                  "Equity Left (?)",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),*/
+                              Container(
+                                height: 30,
+                                width: 150,
+                                child: TextFormField(
+                                  initialValue: '\$' + '100,000',
+                                  decoration: InputDecoration(
+                                    border: new OutlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            width: 12.0
+                                        )),
+                                    fillColor: Colors.white,
+                                    focusedBorder:OutlineInputBorder(
+                                      borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                    ),
+
+                                  ),
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
                                   ),
                                 ),
                               ),
@@ -770,7 +821,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                         {
                           dynamic option;
                           setState(() {
-                            option = optionList.removeAt(index);
+                            option = securityList.removeAt(index);
                             stockHeight = stockHeight - 100.0;
                           });
 

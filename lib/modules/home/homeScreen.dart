@@ -6,6 +6,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
+import 'package:auroim/modules/bussPost/wishList.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/investRelatedPages/searchFirstPage.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
@@ -1849,9 +1850,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                           onPressed: () async
                           {
-                            /*                      Navigator.of(context).push(new MaterialPageRoute(
+                            Navigator.of(context).push(new MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                    new OnBoardingFirst(logo: "login_logo.png",callingFrom: "Accredited Investor",)));*/
+                                    new WishList()));
                           },
                         ),
                       ),
@@ -3201,7 +3202,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(top:10.0),
+                    padding: EdgeInsets.only(top:10.0,bottom: 20.0),
                     child: Center(
                       child: Text(
                         'Create a poll',
