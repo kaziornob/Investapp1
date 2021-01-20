@@ -10,6 +10,10 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
 class Otp extends StatefulWidget {
+
+  final String encodedOtp;
+  const Otp({Key key, this.encodedOtp}) : super(key: key);
+
   @override
   _OtpState createState() => _OtpState();
 }

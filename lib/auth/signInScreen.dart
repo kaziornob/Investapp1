@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/forgotPasswordScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/routes.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:toast/toast.dart';
 
 import 'signUpScreen.dart';
 
@@ -20,6 +24,11 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isInProgress = false;
   bool _isClickonSignUp = false;
   bool _isClickonForgotPassword = false;
+
+  ApiProvider request = new ApiProvider();
+
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
 
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -209,6 +218,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                           padding: EdgeInsets.only(left: 14, top: 4),
                                           child: TextFormField(
                                             validator: _validateEmail,
+                                            controller: emailController,
                                             cursorColor: AllCoustomTheme.getTextThemeColors(),
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -247,6 +257,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                         child: Padding(
                                           padding: EdgeInsets.only(left: 14, bottom: 10),
                                           child: TextFormField(
+                                            controller: passwordController,
                                             cursorColor: AllCoustomTheme.getTextThemeColors(),
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -418,8 +429,26 @@ class _SignInScreenState extends State<SignInScreen> {
       });
       return;
     }
-    //_formKey.currentState.save();
-    Navigator.of(context).pushNamedAndRemoveUntil(Routes.Home, (Route<dynamic> route) => false);
+
+    var email = emailController.text.trim();
+    var password = passwordController.text.trim();
+    // set up POST request arguments
+
+    String jsonReq = 'users/authenticate/me?email=$email&password=$password';
+
+    var response = await request.login(jsonReq);
+    print("login response: $response");
+    if (response == true) {
+      Navigator.pushNamedAndRemoveUntil(context, Routes.Home, (Route<dynamic> route) => false);
+
+    } else {
+      setState(() {
+        _isInProgress = false;
+      });
+      Toast.show("Wrong Email OR Password", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
   }
 
   String _validateEmail(value) {

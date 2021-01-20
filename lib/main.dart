@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screen/screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'constance/global.dart';
 import 'constance/routes.dart';
 import 'constance/themes.dart';
@@ -18,6 +19,9 @@ List marketListData = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
   Admob.initialize();
 
   Map portfolioMap;
@@ -48,12 +52,16 @@ void main() async {
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   ).then(
     (_) => runApp(
-      MyApp(),
+      MyApp(prefs: prefs),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
+
+  final SharedPreferences prefs;
+
+  MyApp({this.prefs});
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -93,6 +101,39 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+
+  _decideMainPage(context) {
+    if (widget.prefs != null &&
+        widget.prefs.containsKey('Session_token') &&
+        widget.prefs.getString('Session_token') != null &&
+        widget.prefs.containsKey('DateTime') &&
+        widget.prefs.getString('DateTime').isNotEmpty) {
+
+      /*var now = new DateTime.now();
+      var strTodayDateTime = new DateFormat("yyyy-MM-dd HH:mm").format(now);
+      var todayDateTime = DateTime.parse("$strTodayDateTime");
+
+      var storedDateTime =
+      DateTime.parse("${widget.prefs.getString('DateTime')}");
+
+      final daysMinDifference = todayDateTime.difference(storedDateTime).inDays;
+
+      if (daysMinDifference >= 30) {
+        setLocalStorageValues();
+        return new Login();
+      } else {
+        return new MyHomePage();
+      }*/
+
+      return new HomeScreen();
+    }
+    else
+      {
+        return new IntroductionScreen();
+      }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -107,8 +148,9 @@ class _MyAppState extends State<MyApp> {
       color: AllCoustomTheme.getThemeData().primaryColor,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Crypto Trade',
-        routes: routes,
+        title: 'Auro',
+        home: _decideMainPage(context),
+        // routes: logInRoutes,
         theme: AllCoustomTheme.getThemeData(),
       ),
     );
@@ -117,6 +159,11 @@ class _MyAppState extends State<MyApp> {
   var routes = <String, WidgetBuilder>{
     Routes.SPLASH: (BuildContext context) => SplashScreen(),
     Routes.Introdution: (BuildContext context) => IntroductionScreen(),
+    Routes.Home: (BuildContext context) => HomeScreen(),
+  };
+
+  var logInRoutes = <String, WidgetBuilder>{
+    Routes.SPLASH: (BuildContext context) => SplashScreen(),
     Routes.Home: (BuildContext context) => HomeScreen(),
   };
 }

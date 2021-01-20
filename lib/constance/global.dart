@@ -367,3 +367,19 @@ String getConvertTime(String utcTime) {
   String min = utcTime.substring(14, 16);
   return day + '-' + month + '-' + year + ' ' + hours + ':' + min;
 }
+
+
+
+class GlobalInstance {
+  static final GlobalInstance _singleton = GlobalInstance._internal();
+  static String apiBaseUrl = 'http://54.212.199.127:80/';
+  static String deviceToken;
+
+  // static int fileChunkSize = 50000; //in bytes i.e 50kb
+
+  factory GlobalInstance() {
+    return _singleton;
+  }
+
+  GlobalInstance._internal();
+}

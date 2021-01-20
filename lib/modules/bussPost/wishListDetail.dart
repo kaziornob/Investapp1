@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
@@ -7,15 +6,13 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/graphDetail/OHLCVGraph.dart';
 import 'package:auroim/graphDetail/QuickPercentChangeBar.dart';
 import 'package:auroim/model/listingsModel.dart';
-import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/modules/bussPost/tradeForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -1039,6 +1036,12 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                       ),
                                     ),
                                     onPressed: () {
+
+                                      Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                          builder: (BuildContext context) => TradeForm(),
+                                        ),
+                                      );
 
                                     },
                                   ),

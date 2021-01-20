@@ -784,7 +784,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       Expanded(
                         child: SizedBox(),
                       ),
-                      Row(
+/*                      Row(
                         children: <Widget>[
                           Animator(
                             duration: Duration(milliseconds: 500),
@@ -834,7 +834,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             ),
                           ),
                         ],
-                      )
+                      )*/
                     ],
                   )
                 : SizedBox(),

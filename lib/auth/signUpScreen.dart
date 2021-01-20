@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/otp.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/constance/constance.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:toast/toast.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -18,9 +22,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isClickonSignIn = false;
   bool _visible = false;
 
+  ApiProvider request = new ApiProvider();
 
+  TextEditingController emailController = new TextEditingController();
   TextEditingController signUpPasswordController = new TextEditingController();
   TextEditingController signUpConfirmPasswordController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+
 
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -270,6 +278,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           child: Padding(
                                             padding: EdgeInsets.only(left: 14, top: 4),
                                             child: TextFormField(
+                                              controller: emailController,
                                               validator: _validateEmail,
                                               cursorColor: AllCoustomTheme.getTextThemeColors(),
                                               style: TextStyle(
@@ -389,6 +398,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           child: Padding(
                                             padding: EdgeInsets.only(left: 14, bottom: 10),
                                             child: TextFormField(
+                                              controller: phoneController,
                                               cursorColor: AllCoustomTheme.getTextThemeColors(),
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -626,14 +636,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   _submit() async {
 
-    if(signUpPasswordController.text == signUpConfirmPasswordController.text)
+    if(signUpPasswordController.text.trim() == signUpConfirmPasswordController.text.trim())
       {
         setState(() {
           _isInProgress = true;
         });
-
         await Future.delayed(const Duration(milliseconds: 700));
-
         FocusScope.of(context).requestFocus(myScreenFocusNode);
         if (_formKey.currentState.validate() == false) {
           setState(() {
@@ -641,23 +649,82 @@ class _SignUpScreenState extends State<SignUpScreen> {
           });
           return;
         }
-        _formKey.currentState.save();
-        // Navigator.pushNamedAndRemoveUntil(context, Routes.Home, (Route<dynamic> route) => false);
-        Navigator.of(context, rootNavigator: true).push(
-          CupertinoPageRoute<void>(
-            builder: (BuildContext context) =>
-                Otp(),
-          ),
-        ).then((onValue) {
+
+        var email = emailController.text.trim();
+        var password = signUpPasswordController.text.trim();
+        var phone = phoneController.text.trim();
+
+        String jsonReq = "users/authenticate/new?email=$email&password=$password&phone=$phone";
+
+        var response = await request.signUp(jsonReq);
+        print("signup response: $response");
+        if (response == true) {
+          getDialog('9090');
+        }
+        else{
           setState(() {
             _isInProgress = false;
           });
-        });
+          Toast.show("Already Exist", context,
+              duration: Toast.LENGTH_LONG,
+              gravity: Toast.BOTTOM);
+        }
       }
-
     else {
       PasswordNotMatched(context);
     }
+  }
+
+  void getDialog(otp) {
+    showDialog(context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+            title: Text(
+                "Success",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AllCoustomTheme.getTextThemeColors(),
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            content: Text(
+                "Otp sent to your entered email.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AllCoustomTheme.getTextThemeColors(),
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                    'Ok',
+                  style: TextStyle(
+                    color: AllCoustomTheme.getTextThemeColors(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context, rootNavigator: true).push(
+                    CupertinoPageRoute<void>(
+                      builder: (BuildContext context) =>
+                          Otp(encodedOtp: "$otp"),
+                    ),
+                  ).then((onValue) {
+                    setState(() {
+                      _isInProgress = false;
+                    });
+                  });
+                },
+              ),
+            ],);
+        }
+    );
   }
 
   // ignore: non_constant_identifier_names
@@ -666,10 +733,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Incorrect Password'),
+          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          title: Text(
+              'Incorrect Password',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontWeight: FontWeight.bold,
+              fontSize: ConstanceData.SIZE_TITLE18,
+            ),
+          ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Ok'),
+              child: Text(
+                  'Ok',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AllCoustomTheme.getTextThemeColors(),
+                  fontWeight: FontWeight.bold,
+                  fontSize: ConstanceData.SIZE_TITLE18,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
