@@ -1,4 +1,5 @@
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/investorType.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/constance/constance.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:toast/toast.dart';
 
 class UserPersonalDetails extends StatefulWidget {
   @override
@@ -16,8 +18,15 @@ class UserPersonalDetails extends StatefulWidget {
 
 class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   bool _isDetailInProgress = false;
-  bool _isClickonSignIn = false;
+  bool _isClickOnDetail = false;
   bool _visible = false;
+
+
+  ApiProvider request = new ApiProvider();
+
+  TextEditingController firstNameController = new TextEditingController();
+  TextEditingController lastNameController = new TextEditingController();
+  TextEditingController countryController = new TextEditingController();
 
   static final now = DateTime.now();
 
@@ -97,11 +106,11 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                 ),
                               ),
                             ),
-                            !_isClickonSignIn
+                            !_isClickOnDetail
                                 ? GestureDetector(
                                     onTap: () async {
                                       setState(() {
-                                        _isClickonSignIn = true;
+                                        _isClickOnDetail = true;
                                       });
                                       await Future.delayed(const Duration(milliseconds: 700));
 
@@ -113,7 +122,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                       )
                                           .then((onValue) {
                                         setState(() {
-                                          _isClickonSignIn = false;
+                                          _isClickOnDetail = false;
                                         });
                                       });
                                     },
@@ -208,6 +217,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                               padding: EdgeInsets.only(left: 14, top: 4),
                                               child: TextFormField(
                                                 validator: _validateName,
+                                                controller: firstNameController,
                                                 cursorColor: AllCoustomTheme.getTextThemeColors(),
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -247,6 +257,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                               padding: EdgeInsets.only(left: 14, top: 4),
                                               child: TextFormField(
                                                 validator: _validateName,
+                                                controller: lastNameController,
                                                 cursorColor: AllCoustomTheme.getTextThemeColors(),
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -351,6 +362,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                             child: Padding(
                                               padding: EdgeInsets.only(left: 14, top: 4),
                                               child: TextFormField(
+                                                controller: countryController,
                                                 cursorColor: AllCoustomTheme.getTextThemeColors(),
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -470,17 +482,43 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
       });
       return;
     }
-    _detailFormKey.currentState.save();
-    Navigator.of(context, rootNavigator: true).push(
-      CupertinoPageRoute<void>(
-        builder: (BuildContext context) =>
-            InvestorType(),
-      ),
-    ).then((onValue) {
+
+    var datePickerValue = DropdownDatePicker();
+
+    var firstName = firstNameController.text.trim();
+    var lastName = lastNameController.text.trim();
+    var country = countryController.text.trim();
+    var dob = datePickerValue.getDate("Y-m-d");
+
+
+    String jsonReq = "users/add_details?first_name=$firstName&last_name=$lastName&residence_country=$country&dob=$dob";
+
+    var response = await request.postSubmitWithParams(jsonReq);
+    print("details response: $response");
+
+    if (response!=null && response.containsKey('auth') && response['auth']==true)
+    {
+      _detailFormKey.currentState.save();
+      Navigator.of(context, rootNavigator: true).push(
+        CupertinoPageRoute<void>(
+          builder: (BuildContext context) =>
+              InvestorType(),
+        ),
+      ).then((onValue) {
+        setState(() {
+          _isDetailInProgress = false;
+        });
+      });
+    }
+    else{
       setState(() {
         _isDetailInProgress = false;
       });
-    });
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
+    
   }
 
 

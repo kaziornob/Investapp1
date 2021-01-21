@@ -656,16 +656,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         String jsonReq = "users/authenticate/new?email=$email&password=$password&phone=$phone";
 
-        var response = await request.signUp(jsonReq);
+        var response = await request.postSubmitWithParams(jsonReq);
         print("signup response: $response");
-        if (response == true) {
-          getDialog('9090');
+        if (response!=null)
+        {
+            if(response.containsKey('auth') && response['auth']==true)
+            {
+/*              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('Session_token', result['token']);*/
+
+              getDialog('9090');
+            }
+            else
+              {
+                setState(() {
+                  _isInProgress = false;
+                });
+                Toast.show("Already Exist!", context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity: Toast.BOTTOM);
+              }
         }
         else{
           setState(() {
             _isInProgress = false;
           });
-          Toast.show("Already Exist", context,
+          Toast.show("Something went wrong!", context,
               duration: Toast.LENGTH_LONG,
               gravity: Toast.BOTTOM);
         }

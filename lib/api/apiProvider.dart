@@ -46,12 +46,11 @@ class ApiProvider {
     return responseData;
   }
 
-
-  Future signUp(urlString) async
+  Future postSubmitWithParams(urlString) async
   {
     String url = GlobalInstance.apiBaseUrl+urlString;
-    print("signup url: $url");
-    bool responseData = false;
+    print("post req url: $url");
+    var responseData;
 
     Map<String, String> headers = {"Content-type": "application/json"};
 
@@ -60,24 +59,9 @@ class ApiProvider {
       if (response.statusCode == 200 || response.statusCode == 201)
       {
         var result = json.decode(response.body);
-        print("resp true: $result");
-        if(result!=null && result['auth']==true)
-        {
-/*          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString('Session_token', result['token']);*/
-          responseData = true;
-          print("req after true modify: $responseData");
-        }
-        else
-        {
-          responseData = false;
-          print("req  body not contains auth field after false modify: $responseData");
-
-        }
+        responseData = result;
       } else {
-        responseData = false;
-        print("req status code not 200 false modify: $responseData");
-
+        responseData = null;
       }
     } catch (e) {
       print("exception");

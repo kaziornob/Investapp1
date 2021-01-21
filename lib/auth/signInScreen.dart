@@ -71,343 +71,349 @@ class _SignInScreenState extends State<SignInScreen> {
             inAsyncCall: _isInProgress,
             opacity: 0,
             progressIndicator: SizedBox(),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(new FocusNode());
-              },
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: appBarheight,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Container(
+                height: MediaQuery.of(context).size.height*1.0,
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                  },
+                  child: Column(
                     children: <Widget>[
-                      InkWell(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Animator(
-                          tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                          duration: Duration(milliseconds: 500),
-                          cycles: 0,
-                          builder: (anim) => FractionalTranslation(
-                            translation: anim.value,
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: AllCoustomTheme.getTextThemeColors(),
+                      SizedBox(
+                        height: appBarheight,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          InkWell(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Animator(
+                              tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 0,
+                              builder: (anim) => FractionalTranslation(
+                                translation: anim.value,
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: AllCoustomTheme.getTextThemeColors(),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      !_isClickonSignUp
-                          ? GestureDetector(
-                              onTap: () async {
-                                setState(() {
-                                  _isClickonSignUp = true;
-                                });
-                                await Future.delayed(const Duration(milliseconds: 700));
+                          !_isClickonSignUp
+                              ? GestureDetector(
+                            onTap: () async {
+                              setState(() {
+                                _isClickonSignUp = true;
+                              });
+                              await Future.delayed(const Duration(milliseconds: 700));
 
-                                Navigator.of(context, rootNavigator: true)
-                                    .push(
-                                  CupertinoPageRoute<void>(
-                                    builder: (BuildContext context) => SignUpScreen(),
-                                  ),
-                                )
-                                    .then((onValue) {
-                                  setState(() {
-                                    _isClickonSignUp = false;
-                                  });
+                              Navigator.of(context, rootNavigator: true)
+                                  .push(
+                                CupertinoPageRoute<void>(
+                                  builder: (BuildContext context) => SignUpScreen(),
+                                ),
+                              )
+                                  .then((onValue) {
+                                setState(() {
+                                  _isClickonSignUp = false;
                                 });
-                              },
-                              child: Animator(
-                                tween: Tween<double>(begin: 0.8, end: 1.1),
-                                curve: Curves.easeInToLinear,
-                                cycles: 0,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 16),
-                                    child: Text(
-                                      'Sign up',
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              });
+                            },
+                            child: Animator(
+                              tween: Tween<double>(begin: 0.8, end: 1.1),
+                              curve: Curves.easeInToLinear,
+                              cycles: 0,
+                              builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 16),
+                                  child: Text(
+                                    'Sign up',
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.only(right: 14),
-                              child: CupertinoActivityIndicator(
-                                radius: 12,
-                              ),
-                            )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Animator(
-                        tween: Tween<double>(begin: 0, end: 1),
-                        duration: Duration(milliseconds: 500),
-                        cycles: 1,
-                        builder: (anim) => SizeTransition(
-                          sizeFactor: anim,
-                          axis: Axis.horizontal,
-                          axisAlignment: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Text(
-                              'Sign In',
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColors(),
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: _visible
-                        ? Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
-                              color: AllCoustomTheme.boxColor(),
-                            ),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 0.5,
-                                  ),
-                                  Container(
-                                    height: 5,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.buttoncolor1,
-                                          globals.buttoncolor2,
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 14, top: 4),
-                                          child: TextFormField(
-                                            validator: _validateEmail,
-                                            controller: emailController,
-                                            cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                            ),
-                                            keyboardType: TextInputType.emailAddress,
-                                            decoration: new InputDecoration(
-                                              focusColor: AllCoustomTheme.getTextThemeColors(),
-                                              fillColor: AllCoustomTheme.getTextThemeColors(),
-                                              hintText: 'Enter email here...',
-                                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                              labelText: 'E-mail',
-                                              labelStyle: TextStyle(
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                              ),
-                                            ),
-                                            //controller: lastnameController,
-                                            onSaved: (value) {
-                                              setState(() {
-                                                //lastnamesearchText = value;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 14, bottom: 10),
-                                          child: TextFormField(
-                                            controller: passwordController,
-                                            cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                            ),
-                                            keyboardType: TextInputType.text,
-                                            obscureText: true,
-                                            decoration: new InputDecoration(
-                                              focusColor: AllCoustomTheme.getTextThemeColors(),
-                                              fillColor: AllCoustomTheme.getTextThemeColors(),
-                                              hintText: 'Enter password here...',
-                                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                              labelText: 'Password',
-                                              labelStyle: TextStyle(
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                              ),
-                                            ),
-                                            validator: _validatePassword,
-                                            //controller: lastnameController,
-                                            onSaved: (value) {
-                                              setState(() {
-                                                //lastnamesearchText = value;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        !_isClickonForgotPassword
-                                            ? GestureDetector(
-                                                onTap: () async {
-                                                  setState(() {
-                                                    _isClickonForgotPassword = true;
-                                                  });
-                                                  await Future.delayed(const Duration(milliseconds: 700));
-
-                                                  Navigator.of(context, rootNavigator: true)
-                                                      .push(
-                                                    CupertinoPageRoute<void>(
-                                                      builder: (BuildContext context) => ForgotPasswordScreen(),
-                                                    ),
-                                                  )
-                                                      .then((onValue) {
-                                                    setState(() {
-                                                      _isClickonForgotPassword = false;
-                                                    });
-                                                  });
-                                                },
-                                                child: Text(
-                                                  'Forgot Password?',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                              )
-                                            : Padding(
-                                                padding: EdgeInsets.only(left: 10),
-                                                child: CupertinoActivityIndicator(
-                                                  radius: 12,
-                                                ),
-                                              ),
-                                        SizedBox(
-                                          height: 50,
-                                          child: !_isInProgress
-                                              ? GestureDetector(
-                                                  onTap: () {
-                                                    _submit();
-                                                  },
-                                                  child: Animator(
-                                                    tween: Tween<double>(begin: 0.8, end: 1.1),
-                                                    curve: Curves.easeInToLinear,
-                                                    cycles: 0,
-                                                    builder: (anim) => Transform.scale(
-                                                      scale: anim.value,
-                                                      child: Container(
-                                                        height: 50,
-                                                        width: 50,
-                                                        decoration: BoxDecoration(
-                                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                                          shape: BoxShape.circle,
-                                                          gradient: LinearGradient(
-                                                            begin: Alignment.topLeft,
-                                                            end: Alignment.bottomRight,
-                                                            colors: [
-                                                              globals.buttoncolor1,
-                                                              globals.buttoncolor2,
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.only(left: 3),
-                                                          child: Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 20,
-                                                            color: AllCoustomTheme.getTextThemeColors(),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              : Padding(
-                                                  padding: EdgeInsets.only(right: 14),
-                                                  child: CupertinoActivityIndicator(
-                                                    radius: 12,
-                                                  ),
-                                                ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
                               ),
                             ),
                           )
-                        : SizedBox(),
-                  ),
-                  _visible
-                      ? Expanded(
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
+                              : Padding(
+                            padding: EdgeInsets.only(right: 14),
+                            child: CupertinoActivityIndicator(
+                              radius: 12,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Animator(
+                            tween: Tween<double>(begin: 0, end: 1),
+                            duration: Duration(milliseconds: 500),
+                            cycles: 1,
+                            builder: (anim) => SizeTransition(
+                              sizeFactor: anim,
+                              axis: Axis.horizontal,
+                              axisAlignment: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16),
                                 child: Text(
-                                  'Terms & Privacy Policy',
+                                  'Sign In',
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                            ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: _visible
+                            ? Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
+                            color: AllCoustomTheme.boxColor(),
+                          ),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 0.5,
+                                ),
+                                Container(
+                                  height: 5,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        globals.buttoncolor1,
+                                        globals.buttoncolor2,
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(left: 14, top: 4),
+                                        child: TextFormField(
+                                          validator: _validateEmail,
+                                          controller: emailController,
+                                          cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: ConstanceData.SIZE_TITLE16,
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                          ),
+                                          keyboardType: TextInputType.emailAddress,
+                                          decoration: new InputDecoration(
+                                            focusColor: AllCoustomTheme.getTextThemeColors(),
+                                            fillColor: AllCoustomTheme.getTextThemeColors(),
+                                            hintText: 'Enter email here...',
+                                            hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                            labelText: 'E-mail',
+                                            labelStyle: TextStyle(
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              color: AllCoustomTheme.getTextThemeColors(),
+                                            ),
+                                          ),
+                                          //controller: lastnameController,
+                                          onSaved: (value) {
+                                            setState(() {
+                                              //lastnamesearchText = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(left: 14, bottom: 10),
+                                        child: TextFormField(
+                                          controller: passwordController,
+                                          cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: ConstanceData.SIZE_TITLE16,
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                          ),
+                                          keyboardType: TextInputType.text,
+                                          obscureText: true,
+                                          decoration: new InputDecoration(
+                                            focusColor: AllCoustomTheme.getTextThemeColors(),
+                                            fillColor: AllCoustomTheme.getTextThemeColors(),
+                                            hintText: 'Enter password here...',
+                                            hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                            labelText: 'Password',
+                                            labelStyle: TextStyle(
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              color: AllCoustomTheme.getTextThemeColors(),
+                                            ),
+                                          ),
+                                          validator: _validatePassword,
+                                          //controller: lastnameController,
+                                          onSaved: (value) {
+                                            setState(() {
+                                              //lastnamesearchText = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      !_isClickonForgotPassword
+                                          ? GestureDetector(
+                                        onTap: () async {
+                                          setState(() {
+                                            _isClickonForgotPassword = true;
+                                          });
+                                          await Future.delayed(const Duration(milliseconds: 700));
+
+                                          Navigator.of(context, rootNavigator: true)
+                                              .push(
+                                            CupertinoPageRoute<void>(
+                                              builder: (BuildContext context) => ForgotPasswordScreen(),
+                                            ),
+                                          )
+                                              .then((onValue) {
+                                            setState(() {
+                                              _isClickonForgotPassword = false;
+                                            });
+                                          });
+                                        },
+                                        child: Text(
+                                          'Forgot Password?',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                          ),
+                                        ),
+                                      )
+                                          : Padding(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: CupertinoActivityIndicator(
+                                          radius: 12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 50,
+                                        child: !_isInProgress
+                                            ? GestureDetector(
+                                          onTap: () {
+                                            _submit();
+                                          },
+                                          child: Animator(
+                                            tween: Tween<double>(begin: 0.8, end: 1.1),
+                                            curve: Curves.easeInToLinear,
+                                            cycles: 0,
+                                            builder: (anim) => Transform.scale(
+                                              scale: anim.value,
+                                              child: Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                  border: new Border.all(color: Colors.white, width: 1.5),
+                                                  shape: BoxShape.circle,
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topLeft,
+                                                    end: Alignment.bottomRight,
+                                                    colors: [
+                                                      globals.buttoncolor1,
+                                                      globals.buttoncolor2,
+                                                    ],
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(left: 3),
+                                                  child: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    size: 20,
+                                                    color: AllCoustomTheme.getTextThemeColors(),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                            : Padding(
+                                          padding: EdgeInsets.only(right: 14),
+                                          child: CupertinoActivityIndicator(
+                                            radius: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         )
-                      : SizedBox()
-                ],
+                            : SizedBox(),
+                      ),
+                      _visible
+                          ? Expanded(
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: Text(
+                                'Terms & Privacy Policy',
+                                style: TextStyle(
+                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                          : SizedBox()
+                    ],
+                  ),
+                ),
               ),
-            ),
+            )
           ),
         )
       ],

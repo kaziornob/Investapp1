@@ -1,4 +1,5 @@
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/radioQusModel.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:toast/toast.dart';
 
 class EmpStatus extends StatefulWidget {
 
@@ -22,6 +24,7 @@ class EmpStatus extends StatefulWidget {
 class _EmpStatusState extends State<EmpStatus> {
   bool _isEmpStatusInProgress = false;
   bool _visibleEmpStatus = false;
+  ApiProvider request = new ApiProvider();
 
 
   TextEditingController empStatusNameController = new TextEditingController();
@@ -428,14 +431,12 @@ class _EmpStatusState extends State<EmpStatus> {
 
   var myScreenFocusNode = FocusNode();
 
-  _submit() async {
-
+  _submit() async
+  {
     setState(() {
       _isEmpStatusInProgress = true;
     });
-
     await Future.delayed(const Duration(milliseconds: 700));
-
     FocusScope.of(context).requestFocus(myScreenFocusNode);
     if (_empStatusFormKey.currentState.validate() == false) {
       setState(() {
@@ -443,20 +444,38 @@ class _EmpStatusState extends State<EmpStatus> {
       });
       return;
     }
-    _empStatusFormKey.currentState.save();
 
-    List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'empStatus');
+    var name = empStatusNameController.text.trim();
+    var occupation = empStatusOccpController.text.trim();
 
-    Navigator.of(context, rootNavigator: true).push(
-      CupertinoPageRoute<void>(
-        builder: (BuildContext context) =>
-            RadioQusTemplate(optionData: questions),
-      ),
-    ).then((onValue) {
+    String jsonReq = "users/add_details?emp_status=$selectedEmpBuss&emp_business=$selectedEmpBuss&occupation=$occupation&emp_name=$name";
+
+    var response = await request.postSubmitWithParams(jsonReq);
+    print("emp status response: $response");
+    if (response!=null && response.containsKey('auth') && response['auth']==true)
+    {
+      _empStatusFormKey.currentState.save();
+      List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'empStatus');
+
+      Navigator.of(context, rootNavigator: true).push(
+        CupertinoPageRoute<void>(
+          builder: (BuildContext context) =>
+              RadioQusTemplate(optionData: questions),
+        ),
+      ).then((onValue) {
+        setState(() {
+          _isEmpStatusInProgress = false;
+        });
+      });
+    }
+    else{
       setState(() {
         _isEmpStatusInProgress = false;
       });
-    });
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
   }
 
   // ignore: missing_return

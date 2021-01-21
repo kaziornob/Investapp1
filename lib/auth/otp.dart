@@ -366,11 +366,21 @@ class _OtpState extends State<Otp> {
                                           child: InkWell(
                                             highlightColor: Colors.transparent,
                                             splashColor: Colors.transparent,
-                                            onTap: ()
-                                            {
+                                            onTap: () async {
                                               print("total number: $totalPinNumber");
                                               if(totalPinNumber==4) {
                                                 matchOtp();
+                                                /*var value = await submit(finalOtp);
+
+                                                if (value == 'OTP Matched') {
+                                                  matchOtp();
+                                                }
+                                                else
+                                                {
+                                                  Toast.show("$value" + "", context,
+                                                      duration: Toast.LENGTH_LONG,
+                                                      gravity: Toast.BOTTOM);
+                                                }*/
                                               }
                                               else
                                               {
@@ -513,6 +523,17 @@ class _OtpState extends State<Otp> {
         }
     );
   }
+
+
+  // otp verify process
+  /*Future submit(otpVal) async {
+
+    var email = widget.email;
+    // set up POST request arguments
+    String json = '{"email":"$email","otp":"$otpVal"}';
+    var response = await request.otpRequest('verify_OTP',json,OtpPage.reqEncodedOtp);
+    return response;
+  }*/
 
   // email verify process
   Future getOtp() async {
