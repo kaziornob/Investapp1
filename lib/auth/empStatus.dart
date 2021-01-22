@@ -448,13 +448,21 @@ class _EmpStatusState extends State<EmpStatus> {
     var name = empStatusNameController.text.trim();
     var occupation = empStatusOccpController.text.trim();
 
-    String jsonReq = "users/add_details?emp_status=$selectedEmpBuss&emp_business=$selectedEmpBuss&occupation=$occupation&emp_name=$name";
+    String jsonReq = "users/add_employment?emp_status=$selectedEmpBuss&emp_business=$selectedEmpBuss&occupation=$occupation&emp_name=$name";
 
     var response = await request.postSubmitWithParams(jsonReq);
     print("emp status response: $response");
-    if (response!=null && response.containsKey('auth') && response['auth']==true)
+
+    // && response.containsKey('auth') && response['auth']==true
+
+    if (response!=null)
     {
       _empStatusFormKey.currentState.save();
+
+      Toast.show("$response", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+
       List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'empStatus');
 
       Navigator.of(context, rootNavigator: true).push(

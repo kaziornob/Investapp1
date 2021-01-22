@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -656,14 +657,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         String jsonReq = "users/authenticate/new?email=$email&password=$password&phone=$phone";
 
-        var response = await request.postSubmitWithParams(jsonReq);
+        var response = await request.signUp(jsonReq);
         print("signup response: $response");
         if (response!=null)
         {
             if(response.containsKey('auth') && response['auth']==true)
             {
 /*              final SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setString('Session_token', result['token']);*/
+              prefs.setString('Session_token', response['token']);*/
 
               getDialog('9090');
             }

@@ -372,7 +372,7 @@ String getConvertTime(String utcTime) {
 
 class GlobalInstance {
   static final GlobalInstance _singleton = GlobalInstance._internal();
-  static String apiBaseUrl = 'http://54.212.199.127:80/';
+  static String apiBaseUrl = 'http://54.212.199.127/';
   static String deviceToken;
 
   // static int fileChunkSize = 50000; //in bytes i.e 50kb

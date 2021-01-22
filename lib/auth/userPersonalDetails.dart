@@ -20,8 +20,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   bool _isDetailInProgress = false;
   bool _isClickOnDetail = false;
   bool _visible = false;
-
-
+  final _detailFormKey = new GlobalKey<FormState>();
   ApiProvider request = new ApiProvider();
 
   TextEditingController firstNameController = new TextEditingController();
@@ -29,6 +28,20 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   TextEditingController countryController = new TextEditingController();
 
   static final now = DateTime.now();
+  final datePicker = DropdownDatePicker(
+    dateFormat: DateFormat.ymd,
+    firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
+    lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
+    textStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: ConstanceData.SIZE_TITLE16,
+      color: AllCoustomTheme.getTextThemeColors(),
+    ),
+    dropdownColor: Colors.black,
+    dateHint: DateHint(year: 'year', month: 'month', day: 'day'),
+    ascending: false,
+  );
+
 
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -42,8 +55,6 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     super.initState();
     animation();
   }
-
-  final _detailFormKey = new GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -306,18 +317,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                           Expanded(
                                               child: Padding(
                                                 padding: EdgeInsets.only(left: 14, top: 4),
-                                                child: DropdownDatePicker(
-                                                  firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
-                                                  lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
-                                                  textStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                  dropdownColor: Colors.black,
-                                                  dateHint: DateHint(year: 'year', month: 'month', day: 'day'),
-                                                  ascending: false,
-                                                )
+                                                child: datePicker
                                               )
                                           ),
 /*                                          Expanded(
@@ -483,22 +483,26 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
       return;
     }
 
-    var datePickerValue = DropdownDatePicker();
-
     var firstName = firstNameController.text.trim();
     var lastName = lastNameController.text.trim();
     var country = countryController.text.trim();
-    var dob = datePickerValue.getDate("Y-m-d");
-
+    var dob = datePicker.getDate();
 
     String jsonReq = "users/add_details?first_name=$firstName&last_name=$lastName&residence_country=$country&dob=$dob";
 
     var response = await request.postSubmitWithParams(jsonReq);
     print("details response: $response");
 
-    if (response!=null && response.containsKey('auth') && response['auth']==true)
+    // && response.containsKey('auth') && response['auth']==true
+
+    if (response!=null )
     {
       _detailFormKey.currentState.save();
+
+      Toast.show("$response", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+
       Navigator.of(context, rootNavigator: true).push(
         CupertinoPageRoute<void>(
           builder: (BuildContext context) =>
