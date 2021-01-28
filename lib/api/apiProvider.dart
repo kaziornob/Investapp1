@@ -46,15 +46,16 @@ class ApiProvider {
     return responseData;
   }
 
-  Future signUp(urlString) async
+  Future signUp(funName,body) async
   {
-    String url = GlobalInstance.apiBaseUrl+urlString;
+    String url = GlobalInstance.apiBaseUrl+funName;
     print("signup req url: $url");
     var responseData;
 
     Map<String, String> headers = {"Content-type": "application/json"};
 
-    var response = await http.post(url, headers: headers);
+    var response = await http.post(url, headers: headers,body: body);
+
     print("signup submit response: ${response.statusCode}");
 
     try{
@@ -72,35 +73,28 @@ class ApiProvider {
     return responseData;
   }
 
-  Future postSubmitWithParams(urlString) async
+
+  Future postSubmit(funName,body) async
   {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
-    String url = GlobalInstance.apiBaseUrl+urlString;
+    String url = GlobalInstance.apiBaseUrl+funName;
     print("post req url: $url");
-    var responseData;
 
     Map<String, String> headers = {"Content-type": "application/json",
-      'Authorization': 'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA1OCwiaWF0IjoxNjExMjkzNzM1LCJleHAiOjE2MTEzODAxMzV9.nTGkdcEoAi7WGdE9o8cO6osMY6qn5K5xX7avDh6zp4s',};
+      'Authorization': 'Token $sessionToken',};
 
-    var response = await http.post(url, headers: headers);
+    var response = await http.post(url, headers: headers,body: body);
     print("post submit response: ${response.statusCode}");
 
     try{
-      if (response.statusCode == 200 || response.statusCode == 201)
-      {
-        // var result = json.decode(response.body);
-        var result = response.body;
-        responseData = result;
-      } else {
-        responseData = null;
-      }
+
     } catch (e) {
       print("exception");
       print(e);
     }
-    return responseData;
+    return response;
   }
 
   Future<List<TradingPair>> getTradingPairsDetail() async {

@@ -150,7 +150,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Auro',
         home: _decideMainPage(context),
-        // routes: logInRoutes,
+        // routes: routes,
         theme: AllCoustomTheme.getThemeData(),
       ),
     );

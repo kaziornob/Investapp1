@@ -6,6 +6,7 @@ import 'package:auroim/auth/forgotPasswordScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/routes.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -436,6 +437,8 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     }
 
+    // Navigator.pushNamedAndRemoveUntil(context, Routes.Home, (Route<dynamic> route) => false);
+
     var email = emailController.text.trim();
     var password = passwordController.text.trim();
     // set up POST request arguments
@@ -445,7 +448,13 @@ class _SignInScreenState extends State<SignInScreen> {
     var response = await request.login(jsonReq);
     print("login response: $response");
     if (response == true) {
-      Navigator.pushNamedAndRemoveUntil(context, Routes.Home, (Route<dynamic> route) => false);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeScreen()
+        ),
+        ModalRoute.withName("/Home")
+    );
 
     } else {
       setState(() {

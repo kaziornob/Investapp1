@@ -109,7 +109,7 @@ class _WishListState extends State<WishList> {
                                 builder: (anim) => Transform.scale(
                                   scale: anim.value,
                                   child: Text(
-                                    'Wish List',
+                                    'Watch List',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: AllCoustomTheme.getTextThemeColors(),

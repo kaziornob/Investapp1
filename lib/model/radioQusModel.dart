@@ -5,10 +5,12 @@ class RadioQusModel {
   final String childFrom;
   final String logo;
   final String logoBottomLine;
+  final String qusID;
   final String qusHeadline;
   final List<dynamic> qusOptions;
 
-  RadioQusModel({this.buttonBackGroundColor,this.screenBackGroundColor,this.parentFrom,this.childFrom ,this.logo,this.logoBottomLine,this.qusHeadline,this.qusOptions});
+  RadioQusModel({this.buttonBackGroundColor,this.screenBackGroundColor,this.parentFrom,this.childFrom ,this.logo,this.logoBottomLine,
+    this.qusID,this.qusHeadline,this.qusOptions});
 
   RadioQusModel.fromMap(Map<String, dynamic> data):
         parentFrom = data["parentFrom"],
@@ -17,6 +19,7 @@ class RadioQusModel {
         buttonBackGroundColor = data["buttonBackGroundColor"],
         logo = data["logo"],
         logoBottomLine= data["logoBottomLine"],
+        qusID = data["qusID"],
         qusHeadline = data["qusHeadline"],
         qusOptions = data["qusOptions"];
 

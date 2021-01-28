@@ -14,6 +14,7 @@ Future<List<RadioQusModel>> getRadioQusTempData(parentFrom,childFrom) async {
           "childFrom": childFrom,
           "logo": "login_logo.png",
           "logoBottomLine": "YOUR PERSONAL ASSET MANAGER",
+          "qusID":"1",
           "qusHeadline": "What is your level of investing experience?",
           "qusOptions":
           [
@@ -51,6 +52,7 @@ Future<List<RadioQusModel>> getRadioQusTempData(parentFrom,childFrom) async {
           "childFrom": childFrom,
           "logo": "login_logo.png",
           "logoBottomLine": "YOUR PERSONAL ASSET MANAGER",
+          "qusID":"2",
           "qusHeadline": "Help us understand your attitude towards risk, by choosing the options that suits you the most",
           "qusOptions":
           [

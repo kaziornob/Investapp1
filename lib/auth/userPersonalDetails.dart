@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/investorType.dart';
@@ -23,10 +25,20 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   final _detailFormKey = new GlobalKey<FormState>();
   ApiProvider request = new ApiProvider();
 
+  String selectedCountry;
+
+  List<String> countryList = <String>['Afghanistan','Algeria','Andorra','Angola',
+    'Antigua and Barbuda','Argentina','Armenia','Australia, Austria','Azerbaijan',
+    'Bahamas','Bahrain','Bangladesh, Barbados','Belarus','Belgium, Belize','Benin',
+    'Bhutan, Bolivia, Bosnia and Herzegovina','Botswana','Brazil','Brunei Darussalam','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Canada','Cape Verde',
+    'Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Croatia','Cuba','Cyprus','Czech Republic','Democratic Peoples Republic of Korea (North Korea]',
+    'Democratic Republic of the Congo','Denmark','Djibouti','Dominica'
+  ];
+
   TextEditingController firstNameController = new TextEditingController();
   TextEditingController lastNameController = new TextEditingController();
-  TextEditingController countryController = new TextEditingController();
 
+  bool dobFound = true;
   static final now = DateTime.now();
   final datePicker = DropdownDatePicker(
     dateFormat: DateFormat.ymd,
@@ -38,6 +50,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
       color: AllCoustomTheme.getTextThemeColors(),
     ),
     dropdownColor: Colors.black,
+    // dateHint: DateHint(day: 'day',year: 'year', month: 'month'),
     dateHint: DateHint(year: 'year', month: 'month', day: 'day'),
     ascending: false,
   );
@@ -166,7 +179,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                           ],
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 35,
                         ),
                         Row(
                           children: <Widget>[
@@ -316,8 +329,8 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                           ),
                                           Expanded(
                                               child: Padding(
-                                                padding: EdgeInsets.only(left: 14, top: 4),
-                                                child: datePicker
+                                                padding: EdgeInsets.only(top: 4),
+                                                child: datePicker,
                                               )
                                           ),
 /*                                          Expanded(
@@ -353,6 +366,23 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                           ),*/
                                         ],
                                       ),
+                                      Visibility(
+                                        visible: dobFound==false ? true : false,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Padding(
+                                                padding: EdgeInsets.only(left: 14, top: 4),
+                                                child: Text(
+                                                  "Please Fill DOB",
+                                                  style: TextStyle(
+                                                    fontSize: ConstanceData.SIZE_TITLE12,
+                                                    color: Colors.red,
+                                                  ),
+                                                )
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                       SizedBox(
                                         height: 10,
                                       ),
@@ -361,7 +391,51 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsets.only(left: 14, top: 4),
-                                              child: TextFormField(
+                                              child: new FormField(
+                                                builder: (FormFieldState state) {
+                                                  return InputDecorator(
+                                                    decoration: InputDecoration(
+                                                      labelText: 'Country Residency',
+                                                      labelStyle: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: ConstanceData.SIZE_TITLE20,
+                                                          color: AllCoustomTheme.getTextThemeColors()
+                                                      ),
+                                                      errorText: state.hasError ? state.errorText : null,
+                                                    ),
+                                                    isEmpty: selectedCountry == '',
+                                                    child: new DropdownButtonHideUnderline(
+                                                      child: new DropdownButton(
+                                                        value: selectedCountry,
+                                                        dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                                        isExpanded: true,
+                                                        onChanged: (String newValue) {
+                                                          setState(() {
+                                                            selectedCountry = newValue;
+                                                          });
+                                                        },
+                                                        items: countryList.map((String value) {
+                                                          return new DropdownMenuItem(
+                                                            value: value,
+                                                            child: new Text(
+                                                              value,
+                                                              style: TextStyle(
+                                                                color: Colors.white,
+                                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                validator: (val) {
+                                                  return ((val != null && val!='') || (selectedCountry!=null && selectedCountry!='')) ? null : 'Please '
+                                                      'select country';
+                                                },
+                                              )
+/*                                              child: TextFormField(
                                                 controller: countryController,
                                                 cursorColor: AllCoustomTheme.getTextThemeColors(),
                                                 style: TextStyle(
@@ -387,7 +461,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                     //lastnamesearchText = value;
                                                   });
                                                 },
-                                              ),
+                                              ),*/
                                             ),
                                           ),
                                         ],
@@ -473,27 +547,80 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     setState(() {
       _isDetailInProgress = true;
     });
+
     await Future.delayed(const Duration(milliseconds: 700));
 
     FocusScope.of(context).requestFocus(myDetailScreenFocusNode);
-    if (_detailFormKey.currentState.validate() == false) {
+    if (_detailFormKey.currentState.validate() == false || (datePicker.year==null || datePicker.month==null || datePicker.day==null)) {
       setState(() {
         _isDetailInProgress = false;
+        dobFound = (datePicker.year==null || datePicker.month==null || datePicker.day==null) ? false : true;
       });
       return;
     }
 
     var firstName = firstNameController.text.trim();
     var lastName = lastNameController.text.trim();
-    var country = countryController.text.trim();
+    var country = selectedCountry.trim();
     var dob = datePicker.getDate();
 
-    String jsonReq = "users/add_details?first_name=$firstName&last_name=$lastName&residence_country=$country&dob=$dob";
+    var tempJsonReq = {"first_name":"$firstName","last_name":"$lastName","residence_country":"$country","dob":"$dob"};
+
+    String jsonReq = json.encode(tempJsonReq);
+
+    var jsonReqResp = await request.postSubmit('users/add_details', jsonReq);
+
+    var result = json.decode(jsonReqResp.body);
+    print("post submit response: $result");
+
+
+    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+    {
+
+      if (result!=null && result.containsKey('auth') && result['auth']==true)
+      {
+        _detailFormKey.currentState.save();
+
+        Toast.show("${result['message']}", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+
+        Navigator.of(context, rootNavigator: true).push(
+          CupertinoPageRoute<void>(
+            builder: (BuildContext context) =>
+                InvestorType(),
+          ),
+        ).then((onValue) {
+          setState(() {
+            _isDetailInProgress = false;
+          });
+        });
+      }
+    }
+    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+    {
+
+      Toast.show("${result['message']}", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+
+      setState(() {
+        _isDetailInProgress = false;
+      });
+    }
+    else{
+      setState(() {
+        _isDetailInProgress = false;
+      });
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
+
+/*    String jsonReq = "users/add_details?first_name=$firstName&last_name=$lastName&residence_country=$country&dob=$dob";
 
     var response = await request.postSubmitWithParams(jsonReq);
     print("details response: $response");
-
-    // && response.containsKey('auth') && response['auth']==true
 
     if (response!=null )
     {
@@ -521,7 +648,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
       Toast.show("Something went wrong!", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
-    }
+    }*/
     
   }
 

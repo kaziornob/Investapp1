@@ -1,13 +1,19 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
+import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/routes.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/radioQusModel.dart';
+import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:toast/toast.dart';
 
 class RadioQusTemplate extends StatefulWidget {
 
@@ -22,7 +28,8 @@ class RadioQusTemplate extends StatefulWidget {
 class _RadioQusTemplateState extends State<RadioQusTemplate> {
   bool _isRadioQusInProgress = false;
   bool _visibleRadioQus = false;
-  String selectedValue = '';
+  String selectedValue;
+  ApiProvider request = new ApiProvider();
 
 
   animation() async {
@@ -34,6 +41,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
   @override
   void initState() {
+    selectedValue = "";
     super.initState();
     animation();
   }
@@ -215,7 +223,13 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                _submit();
+                                                if(selectedValue!=null && selectedValue!="")
+                                                  _submit();
+                                                else{
+                                                  Toast.show("Choose Any Option First", context,
+                                                      duration: Toast.LENGTH_LONG,
+                                                      gravity: Toast.BOTTOM);
+                                                }
                                               },
                                             ),
                                           ),
@@ -240,17 +254,121 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
     );
   }
 
+  setData()
+  {
+    var exist = false;
+    var foundIndex;
+
+    if(GlobalInstance.riskInfoQusAns!=null && GlobalInstance.riskInfoQusAns.length!=0)
+    {
+
+      for(var i = 0; i < GlobalInstance.riskInfoQusAns.length; i++){
+        print("riskInfoQusAns qus_id: ${GlobalInstance.riskInfoQusAns[i]["qus_id"]}");
+        print("qus_id: ${widget.optionData[0].qusID}");
+
+        if(GlobalInstance.riskInfoQusAns[i]["qus_id"]==widget.optionData[0].qusID) {
+            setState(() {
+              exist = true;
+              foundIndex = i;
+            });
+            break;
+          }
+        }
+      print("exist: $exist and foundIndex: $foundIndex");
+
+      // check value exist or not
+      if(exist==false)
+      {
+        GlobalInstance.riskInfoQusAns.add(
+          {
+            "qus_id":"${widget.optionData[0].qusID}",
+            "qus_title":"${widget.optionData[0].qusHeadline}",
+            "ans":"$selectedValue"
+          },
+        );
+      }
+      else
+      {
+        GlobalInstance.riskInfoQusAns[foundIndex]["ans"] = "$selectedValue";
+      }
+    }
+    else
+      {
+        GlobalInstance.riskInfoQusAns = [];
+
+        GlobalInstance.riskInfoQusAns.add(
+          {
+            "qus_id":"${widget.optionData[0].qusID}",
+            "qus_title":"${widget.optionData[0].qusHeadline}",
+            "ans":"$selectedValue"
+          },
+        );
+      }
+  }
+
   _submit() async {
 
     setState(() {
       _isRadioQusInProgress = true;
     });
 
+    setData(); // to set data at risk payload
+
+    print("risk payload: ${GlobalInstance.riskInfoQusAns}");
+
     await Future.delayed(const Duration(milliseconds: 700));
 
     if(widget.optionData[0].childFrom=='piVersion')
       {
-        Navigator.pushNamedAndRemoveUntil(context, Routes.Home, (Route<dynamic> route) => false);
+
+        print("final risk payload: ${GlobalInstance.riskInfoQusAns}");
+
+        String jsonReq = json.encode(GlobalInstance.riskInfoQusAns);
+
+        var jsonReqResp = await request.postSubmit('users/add_risk', jsonReq);
+
+        var result = json.decode(jsonReqResp.body);
+        print("post submit response: $result");
+
+
+        if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+        {
+
+          if (result!=null && result.containsKey('auth') && result['auth']==true)
+          {
+
+            Toast.show("${result['message']}", context,
+                duration: Toast.LENGTH_LONG,
+                gravity: Toast.BOTTOM);
+
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomeScreen()
+                ),
+                ModalRoute.withName("/Home")
+            );
+          }
+        }
+        else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+        {
+
+          Toast.show("${result['message']}", context,
+              duration: Toast.LENGTH_LONG,
+              gravity: Toast.BOTTOM);
+
+          setState(() {
+            _isRadioQusInProgress = false;
+          });
+        }
+        else{
+          setState(() {
+            _isRadioQusInProgress = false;
+          });
+          Toast.show("Something went wrong!", context,
+              duration: Toast.LENGTH_LONG,
+              gravity: Toast.BOTTOM);
+        }
 
       }
     else

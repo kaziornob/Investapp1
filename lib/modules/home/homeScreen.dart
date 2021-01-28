@@ -639,7 +639,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       width: width / 3,
       color: Colors.transparent,
       child: Icon(
-        Icons.stay_current_landscape_outlined,
+        FontAwesomeIcons.coins,
         color: isSelect2 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
       ),
     );

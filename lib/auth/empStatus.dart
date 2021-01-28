@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
@@ -448,12 +450,66 @@ class _EmpStatusState extends State<EmpStatus> {
     var name = empStatusNameController.text.trim();
     var occupation = empStatusOccpController.text.trim();
 
-    String jsonReq = "users/add_employment?emp_status=$selectedEmpBuss&emp_business=$selectedEmpBuss&occupation=$occupation&emp_name=$name";
+    var tempJsonReq = {"emp_status":"$selectedEmpStatus","emp_business":"$selectedEmpBuss","occupation":"$occupation","emp_name":"$name"};
+
+    String jsonReq = json.encode(tempJsonReq);
+
+    var jsonReqResp = await request.postSubmit('users/add_details', jsonReq);
+
+    var result = json.decode(jsonReqResp.body);
+    print("post submit response: $result");
+
+
+    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+    {
+
+      if (result!=null && result.containsKey('auth') && result['auth']==true)
+      {
+        _empStatusFormKey.currentState.save();
+
+        Toast.show("${result['message']}", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+
+        List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'empStatus');
+
+        Navigator.of(context, rootNavigator: true).push(
+          CupertinoPageRoute<void>(
+            builder: (BuildContext context) =>
+                RadioQusTemplate(optionData: questions),
+          ),
+        ).then((onValue) {
+          setState(() {
+            _isEmpStatusInProgress = false;
+          });
+        });
+      }
+    }
+
+    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+    {
+
+      Toast.show("${result['message']}", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+
+      setState(() {
+        _isEmpStatusInProgress = false;
+      });
+    }
+    else{
+      setState(() {
+        _isEmpStatusInProgress = false;
+      });
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
+
+/*    String jsonReq = "users/add_employment?emp_status=$selectedEmpBuss&emp_business=$selectedEmpBuss&occupation=$occupation&emp_name=$name";
 
     var response = await request.postSubmitWithParams(jsonReq);
     print("emp status response: $response");
-
-    // && response.containsKey('auth') && response['auth']==true
 
     if (response!=null)
     {
@@ -483,7 +539,7 @@ class _EmpStatusState extends State<EmpStatus> {
       Toast.show("Something went wrong!", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
-    }
+    }*/
   }
 
   // ignore: missing_return

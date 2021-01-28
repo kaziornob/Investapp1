@@ -407,6 +407,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: AllCoustomTheme.getTextThemeColors(),
                                               ),
                                               keyboardType: TextInputType.number,
+                                              validator: _validatePhone,
                                               decoration: new InputDecoration(
                                                 focusColor: AllCoustomTheme.getTextThemeColors(),
                                                 fillColor: AllCoustomTheme.getTextThemeColors(),
@@ -655,18 +656,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
         var password = signUpPasswordController.text.trim();
         var phone = phoneController.text.trim();
 
-        String jsonReq = "users/authenticate/new?email=$email&password=$password&phone=$phone";
+        // String jsonReq = "users/authenticate/new?email=$email&password=$password&phone=$phone";
 
-        var response = await request.signUp(jsonReq);
+        var tempJsonReq = {"email":"$email","password":"$password","phone":"$phone"};
+        String jsonReq = json.encode(tempJsonReq);
+
+        var response = await request.signUp('users/authenticate/new',jsonReq);
         print("signup response: $response");
         if (response!=null)
         {
             if(response.containsKey('auth') && response['auth']==true)
             {
-/*              final SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setString('Session_token', response['token']);*/
+              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('Session_token', response['token']);
 
-              getDialog('9090');
+              getDialog("$email");
             }
             else
               {
@@ -791,11 +795,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return null;
   }
 
+  String _validatePhone(value) {
+    if (value.isEmpty) {
+      return "Phone cannot be empty";
+    } else {
+      return null;
+    }
+  }
+
   String _validatePassword(value) {
     if (value.isEmpty) {
       return "Password cannot be empty";
     } else {
+
+/*      String  pattern = '/^[A-Za-z]{6}/';
+      RegExp regExp = new RegExp(pattern);
+      if(!regExp.hasMatch(value))
+        {
+          return "Minimum 6 char";
+        }
+      return null;*/
+
+      if(value.length!=6)
+        {
+          return "Min 6 length char";
+        }
       return null;
+
+/*      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+      RegExp regExp = new RegExp(pattern);
+      if(!regExp.hasMatch(value))
+        {
+          return "Minimum 1 UC, LC, Num, spl. character(! @ # '\$' & * ~)";
+        }
+      return null;*/
     }
   }
 }
