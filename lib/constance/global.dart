@@ -12,6 +12,8 @@ import 'constance.dart';
 
 var deviceId = '';
 var isLight = true;
+var isGoldBlack = true;
+
 var isOnLocation = true;
 var isNotification = true;
 var pushtokenId = '';
@@ -21,6 +23,9 @@ var usertoken = '';
 
 var buttoncolor1 = Color(0xFF123962);
 var buttoncolor2 = Color(0xFF7635ff);
+
+var iconButtonColor1 = Color(0xFFD8AF4F);
+var iconButtonColor2 = Color(0xFFD8AF4F);
 
 String coinMarketcap = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=";
 // String coinMarketcap = "https://api.coinmarketcap.com/v1/ticker/?start=";

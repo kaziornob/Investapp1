@@ -344,8 +344,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                         colors: [
-                                          globals.buttoncolor1,
-                                          globals.buttoncolor2,
+                                          globals.iconButtonColor1,
+                                          globals.iconButtonColor2,
                                         ],
                                       ),
                                     ),
@@ -371,8 +371,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                       width: width / 3,
                                       color: Colors.transparent,
                                       child: Icon(
-                                        Icons.card_travel,
-                                        color: isSelect1 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
+                                        Icons.home,
+                                        color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
                                       ),
                                     ),
                                   ),
@@ -398,8 +398,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
                                   ],
                                 ),
                               ),
@@ -444,8 +444,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                         colors: [
-                                          globals.buttoncolor1,
-                                          globals.buttoncolor2,
+                                          globals.iconButtonColor1,
+                                          globals.iconButtonColor2,
                                         ],
                                       ),
                                     ),
@@ -490,8 +490,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
                                   ],
                                 ),
                               ),
@@ -536,8 +536,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
                                   ],
                                 ),
                               ),
@@ -627,8 +627,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       width: width / 3,
       color: Colors.transparent,
       child: Icon(
-        Icons.card_travel,
-        color: isSelect1 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
+        Icons.home,
+        color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
       ),
     );
   }
@@ -640,7 +640,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       color: Colors.transparent,
       child: Icon(
         FontAwesomeIcons.coins,
-        color: isSelect2 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
+        color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
       ),
     );
   }
@@ -652,7 +652,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       color: Colors.transparent,
       child: Icon(
         Icons.add_circle,
-        color: isSelect3 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
+        color: isSelect3 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
       ),
     );
   }
@@ -664,7 +664,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       color: Colors.transparent,
       child: Icon(
         FontAwesomeIcons.handshake,
-        color: isSelect4 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
+        color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
       ),
     );
   }
@@ -677,7 +677,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       color: Colors.transparent,
       child: Icon(
         FontAwesomeIcons.globe,
-        color: isSelect5 ? AllCoustomTheme.getTextThemeColors() : AllCoustomTheme.getsecoundTextThemeColor(),
+        color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
       ),
     );
   }
@@ -1281,17 +1281,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   // second screen section start
 
-  Widget secondScreen() {
-    int _currentPage;
-
-    final List<String> areaChartDataList = ['1','2','3','4'];
-    final List<String> pieChartDataList = ['1','2','3'];
-
-    final List<ChartData> chartData = [
-      ChartData('David', 25, Color.fromRGBO(9,0,136,1)),
-      ChartData('Steve', 38, Color.fromRGBO(147,0,119,1)),
-      ChartData('Jack', 34, Color.fromRGBO(228,0,124,1)),
-      ChartData('Others', 52, Color.fromRGBO(255,189,57,1))
+  Widget getAreaChartView()
+  {
+    final List<NewSalesData> newSalesData = [
+      NewSalesData(2010, 35),
+      NewSalesData(2011, 28),
+      NewSalesData(2012, 34),
+      NewSalesData(2013, 32),
+      NewSalesData(2014, 40)
     ];
 
     final List<Color> color = <Color>[];
@@ -1307,73 +1304,141 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final LinearGradient gradientColors =
     LinearGradient(colors: color, stops: stops);
 
-    final List<NewSalesData> newSalesData = [
-      NewSalesData(2010, 35),
-      NewSalesData(2011, 28),
-      NewSalesData(2012, 34),
-      NewSalesData(2013, 32),
-      NewSalesData(2014, 40)
-    ];
-
-    final List<Widget> areaChartSlider = areaChartDataList.map((item) =>
-        Container(
+    return ListView.builder(
+      itemCount: 3,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                  height: MediaQuery.of(context).size.height*0.33,
+                  height: MediaQuery.of(context).size.height*0.36,
+                  width: MediaQuery.of(context).size.width*0.95,
                   child: Container(
+                    margin: EdgeInsets.only(left: 10,right: 10),
                     decoration: new BoxDecoration(
-                      color: Color(0xFFFFFFFF),
-                      border: Border.all(
-                        color: Color(0xff696969),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(2.0),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.0),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.05,
+                          height: MediaQuery.of(context).size.height*0.10,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left:5.0,top: 5.0),
-                                child: new Image(
-                                    width: 80.0,
-                                    fit: BoxFit.fill,
-                                    image: new AssetImage('assets/logo.png')),
+                                  padding: EdgeInsets.only(top: 5.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "APPLE",
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                          fontSize: ConstanceData.SIZE_TITLE18,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                      Text(
+                                        "2.20 (1.61%)",
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                                          fontSize: ConstanceData.SIZE_TITLE8,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                      Text(
+                                        '\$'+" 390.00",
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                          fontSize: ConstanceData.SIZE_TITLE18,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                              ),
+                              SizedBox(
+                                width: 50,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left:20.0,top: 5.0),
-                                child: Text(
-                                  'Title',
-                                  style: new TextStyle(
-                                      fontFamily: "Poppins",
-                                      color: Color(0xFF000000), fontSize: 18.0,
-                                      letterSpacing: 0.2
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left:40.0,top: 5.0),
-                                child: new Icon(
-                                  Icons.menu,
-                                  color: Colors.black,
-                                  size: 20,
-                                ),
+                                  padding: EdgeInsets.only(top: 5.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "HIGH",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme.getNewTextThemeColors(),
+                                              fontSize: ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          Icon(
+                                            FontAwesomeIcons.arrowUp,
+                                            color: Colors.green,
+                                            size: 10,
+                                          ),
+                                          Text(
+                                            "139.00",
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "LOW",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme.getNewTextThemeColors(),
+                                              fontSize: ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          Icon(
+                                            FontAwesomeIcons.arrowDown,
+                                            color: Colors.red,
+                                            size: 10,
+                                          ),
+                                          Text(
+                                            "139.00",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
                               ),
                             ],
                           ),
                         ),
                         SizedBox(
-                            width: MediaQuery.of(context).size.width*0.58,
-                            height: MediaQuery.of(context).size.height*0.12,
+                            width: MediaQuery.of(context).size.width*0.88,
+                            height: MediaQuery.of(context).size.height*0.15,
                             child: Container(
+                              margin: EdgeInsets.only(left: 10.0),
                               child: SfCartesianChart(
                                   primaryXAxis: NumericAxis(
                                     isVisible: false,
@@ -1393,134 +1458,137 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             )
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.10,
+                          // height: MediaQuery.of(context).size.height*0.10,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.26,
-                                height: MediaQuery.of(context).size.height*0.10,
+                                width: 5,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.22,
+                                height: MediaQuery.of(context).size.height*0.038,
                                 child: Container(
-                                  margin: EdgeInsets.only(top: 5.0,left: 10.0),
-                                  decoration: new BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xff696969),
-                                      width: 1,
-                                    ),
-                                    color: Color(0xFFFFFFFF),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.5),
+                                    color: AllCoustomTheme.getChartBoxThemeColor(),
                                   ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.33,
-                                        height: MediaQuery.of(context).size.height*0.038,
-                                        child: Container(
-                                            decoration: new BoxDecoration(
-                                              color: Color(0xff696969),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 5.0),
-                                              child: Text(
-                                                'SELL',
-                                                style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    color: Color(0xFF000000),
-                                                    fontFamily: "WorkSansBold"),
-                                              ),
-                                            )
-                                        ),
+                                  child: MaterialButton(
+                                    splashColor: Colors.grey,
+                                    child: Text(
+                                      "BUY",
+                                      style: TextStyle(
+                                        color: AllCoustomTheme.getButtonTextThemeColors(),
+                                        fontSize: ConstanceData.SIZE_TITLE13,
+                                        fontFamily: "Roboto",
                                       ),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.33,
-                                        height: MediaQuery.of(context).size.height*0.038,
-                                        child: Container(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 20.0,top: 5.0),
-                                              child: Text(
-                                                '80.42',
-                                                style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    color: Color(0xFF000000),
-                                                    fontFamily: "WorkSansBold"),
-                                              ),
-                                            )
-                                        ),
-                                      )
-                                    ],
+                                    ),
+                                    onPressed: () async
+                                    {
+                                      Navigator.of(context).push(new MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                                    },
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.29,
-                                height: MediaQuery.of(context).size.height*0.10,
+                                width: MediaQuery.of(context).size.width*0.23,
+                                height: MediaQuery.of(context).size.height*0.038,
                                 child: Container(
-                                  margin: EdgeInsets.only(top: 5.0,left: 15.0),
-                                  decoration: new BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xff696969),
-                                      width: 1,
-                                    ),
-                                    color: Color(0xFFFFFFFF),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.5),
+                                    // color: AllCoustomTheme.getChartBoxThemeColor(),
                                   ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.33,
-                                        height: MediaQuery.of(context).size.height*0.038,
-                                        child: Container(
-                                            decoration: new BoxDecoration(
-                                              color: Color(0xff696969),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 5.0),
-                                              child: Text(
-                                                'BUY',
-                                                style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    color: Color(0xFF000000),
-                                                    fontFamily: "WorkSansBold"),
-                                              ),
-                                            )
-                                        ),
+                                  child: MaterialButton(
+                                    splashColor: Colors.grey,
+                                    child: Text(
+                                      "SELL",
+                                      style: TextStyle(
+                                        color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE13,
+                                        fontFamily: "Roboto",
                                       ),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.33,
-                                        height: MediaQuery.of(context).size.height*0.038,
-                                        child: Container(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 20.0,top: 5.0),
-                                              child: Text(
-                                                '80.42',
-                                                style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    color: Color(0xFF000000),
-                                                    fontFamily: "WorkSansBold"),
-                                              ),
-                                            )
-                                        ),
-                                      )
-                                    ],
+                                    ),
+                                    onPressed: () async
+                                    {
+                                      Navigator.of(context).push(new MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                                    },
                                   ),
                                 ),
-                              )
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.27,
+                                height: MediaQuery.of(context).size.height*0.038,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.5),
+                                    // color: AllCoustomTheme.getChartBoxThemeColor(),
+                                  ),
+                                  child: MaterialButton(
+                                    splashColor: Colors.grey,
+                                    child: Text(
+                                      "WATCH",
+                                      style: TextStyle(
+                                        color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE13,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
+                                    onPressed: () async
+                                    {
+                                      Navigator.of(context).push(new MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 3,
+                        )
                       ],
                     ),
                   )
               ),
             ],
           ),
-        )
-      ,).toList();
+        );
+      },
+    );
+  }
+
+  Widget secondScreen() {
+    int _currentPage;
+
+    final List<String> areaChartDataList = ['1','2','3','4'];
+    final List<String> pieChartDataList = ['1','2','3'];
+
+    final List<ChartData> chartData = [
+      ChartData('David', 25, Color.fromRGBO(9,0,136,1)),
+      ChartData('Steve', 38, Color.fromRGBO(147,0,119,1)),
+      ChartData('Jack', 34, Color.fromRGBO(228,0,124,1)),
+      ChartData('Others', 52, Color.fromRGBO(255,189,57,1))
+    ];
 
     final List<Widget> pieChartSlider = pieChartDataList.map((item) =>
         Container(
             margin: EdgeInsets.only(left: 5.0),
             height: MediaQuery.of(context).size.height*0.42,
             child: Container(
-              decoration: new BoxDecoration(
+/*              decoration: new BoxDecoration(
                 color: Color(0xFFFFFFFF),
                 border: Border.all(
                   color: Color(0xff696969),
@@ -1529,7 +1597,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 borderRadius: BorderRadius.all(
                   Radius.circular(2.0),
                 ),
-              ),
+              ),*/
               child: SfCircularChart(
                   series: <CircularSeries>[
                     // Renders doughnut chart
@@ -1589,7 +1657,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             width: 1.5,
                           ),
                           borderRadius: BorderRadius.all(
-                            Radius.circular(5.0),
+                            Radius.circular(15.0),
                           ),
                         ),
                         child: Row(
@@ -1605,19 +1673,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  suffixIcon: Icon(
-                                    Icons.settings_applications,
-                                    color: Colors.black,
-                                    size: 15,
-                                  ),
                                   prefixIcon: Icon(
                                     FontAwesomeIcons.search,
-                                    color: Colors.black,
+                                    color: AllCoustomTheme.getNewSecondTextThemeColor(),
                                     size: 15,
                                   ),
                                   hintText: "Search",
                                   hintStyle: TextStyle(
-                                      color: AllCoustomTheme.boxColor(),
+                                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE14,
                                   ),
                                 ),
@@ -1653,7 +1716,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 20,
           ),
           // handshake image box
-          SizedBox(
+/*          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.25,
             child:  Container(
@@ -1663,14 +1726,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   image: new AssetImage('assets/handShake.png')
               ),
             ),
-          ),
+          ),*/
           // auro paper box
           SizedBox(
             height: 10,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.65,
+            height: MediaQuery.of(context).size.height*0.55,
             child:  Container(
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 child: ListView(
@@ -1679,32 +1742,32 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     Container(
                         margin: EdgeInsets.only(left: 120.0,right: 5.0),
                         child: Text(
-                          'Auro Paper',
+                          'AURO PAPER',
                           style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE20,
-                            fontWeight: FontWeight.bold,
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Rosarivo",
+                            // decoration: TextDecoration.underline,
                           ),
                         )
-                    ),
-                    SizedBox(
-                      height: 15,
                     ),
                     Container(
-                        margin: EdgeInsets.only(left: 15.0,right: 5.0),
-                        child: Text(
-                          "Voila! We've created a paper portfolio for you that can help "
-                              "you start engaging and learning about how to invest. Please note that this is NOT our recommended investment portfolio for"
-                              " which you need to complete additional risk-onboarding: Go Pro",
-                          style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                          ),
-                        )
+                        margin: EdgeInsets.only(left: 120.0,right: 120.0),
+                        padding: EdgeInsets.only(
+                          bottom: 3, // space between underline and text
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                  color: AllCoustomTheme.getHeadingThemeColors(),
+                                  width: 1.0, // Underline width
+                                )
+                            )
+                        ),
                     ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height*0.35,
+                        height: MediaQuery.of(context).size.height*0.25,
                         child: Container(
                           margin: EdgeInsets.only(left: 20.0,right: 20.0),
                           child: CarouselSlider(
@@ -1718,6 +1781,22 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                         )
                     ),
+                    Container(
+                        margin: EdgeInsets.only(left: 15.0,right: 5.0),
+                        child: Text(
+                          "Voila! We've created a paper portfolio for you that can help "
+                              "you start engaging and learning about how to invest. Please note that this is NOT our recommended investment portfolio for"
+                              " which you need to complete additional risk-onboarding: Go Pro",
+                          style: TextStyle(
+                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "Roboto",
+                          ),
+                        )
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 14, right: 10),
                       child: Row(
@@ -1727,26 +1806,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             height: 35,
                             child: Container(
                               height: 35,
-                              width: 290,
+                              width: 215,
                               decoration: BoxDecoration(
-                                border: new Border.all(color: Colors.white, width: 1.5),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
-                                  ],
-                                ),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                  color: AllCoustomTheme.getButtonBoxColor()
                               ),
                               child: MaterialButton(
                                 splashColor: Colors.grey,
                                 child: Text(
                                   "Initiate First Name Portfolio",
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                    fontWeight: FontWeight.bold,
+                                    color: AllCoustomTheme.getButtonTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE13,
+                                    fontFamily: "Roboto",
                                   ),
                                 ),
                                 onPressed: () async {
@@ -1765,14 +1838,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
           ),
           // go pro button
-          SizedBox(
-            height: 5,
-          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.only(left: 60),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -1780,25 +1850,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       height: 35,
                       child: Container(
                         height: 35,
-                        width: 120,
+                        width: 100,
                         decoration: BoxDecoration(
-                          border: new Border.all(color: Colors.white, width: 1.5),
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              globals.buttoncolor1,
-                              globals.buttoncolor2,
-                            ],
-                          ),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                            color: AllCoustomTheme.getButtonBoxColor()
                         ),
                         child: MaterialButton(
                           splashColor: Colors.grey,
                           child: Text(
                             "GO PRO",
                             style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
+                              color: AllCoustomTheme.getButtonTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE13,
+                              fontFamily: "Roboto",
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -1814,11 +1879,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   ],
                 ),
               ),
-              SizedBox(
-                width: 40,
-              ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                padding: const EdgeInsets.only(bottom: 20, left: 50),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -1826,25 +1888,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       height: 35,
                       child: Container(
                         height: 35,
-                        width: 120,
+                        width: 100,
                         decoration: BoxDecoration(
-                          border: new Border.all(color: Colors.white, width: 1.5),
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              globals.buttoncolor1,
-                              globals.buttoncolor2,
-                            ],
-                          ),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                            color: AllCoustomTheme.getButtonBoxColor()
                         ),
                         child: MaterialButton(
                           splashColor: Colors.grey,
                           child: Text(
                             "GO LIVE",
                             style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
+                              color: AllCoustomTheme.getButtonTextThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE13,
+                              fontFamily: "Roboto",
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -1868,10 +1925,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.70,
+            height: MediaQuery.of(context).size.height*0.73,
             child:  Container(
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                decoration: new BoxDecoration(
+                /*decoration: new BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFfec20f),
                     width: 1,
@@ -1879,7 +1936,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   borderRadius: BorderRadius.all(
                     Radius.circular(2.0),
                   ),
-                ),
+                ),*/
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
@@ -1889,9 +1946,24 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           child: Text(
                             'PORTFOLIO COMPONENTS',
                             style: new TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
+                              color: AllCoustomTheme.getHeadingThemeColors(),
                               fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Rosarivo",
                             ),
+                          )
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 50.0,right: 50.0),
+                      padding: EdgeInsets.only(
+                        bottom: 3, // space between underline and text
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              )
                           )
                       ),
                     ),
@@ -1901,23 +1973,24 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                                padding: EdgeInsets.only(left:90.0,bottom: 5.0),
+                                padding: EdgeInsets.only(left:95.0,bottom: 5.0),
                                 child: Text(
                                   'Auro Portfolio',
                                   style: new TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    color: AllCoustomTheme.getSubHeadingThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
                                   ),
                                 )
                             ),
                             Padding(
                                 padding: EdgeInsets.only(left:30.0,top: 3.0),
                                 child: Text(
-                                  'See More',
+                                  'SEE ALL',
                                   style: new TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE14,
-                                    decoration: TextDecoration.underline,
+                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
                                   ),
                                 )
                             )
@@ -1926,38 +1999,28 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height*0.34,
+                        height: MediaQuery.of(context).size.height*0.37,
                         child: Container(
                             margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
-                            child: CarouselSlider(
-                              options: CarouselOptions(
-                                  aspectRatio: 2.0,
-                                  enlargeCenterPage: false,
-                                  scrollDirection: Axis.horizontal,
-                                  autoPlay: false,
-                                  onPageChanged: (index, reason) {
-                                    print("_currentPage: $_currentPage");
-                                    setState(() {
-                                      _currentPage = index;
-                                    });
-                                  }
-                              ),
-                              items: areaChartSlider,
-                            )
+                            child: getAreaChartView()
                         )
                     ),
-                    Divider(color: Color(0xFFfec20f),thickness: 1.5,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                                padding: EdgeInsets.only(left:50.0,bottom: 5.0),
+                                padding: EdgeInsets.only(left:70.0,bottom: 5.0),
                                 child: Text(
                                   "First Name's Portfolio",
+                                  textAlign: TextAlign.center,
                                   style: new TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    color: AllCoustomTheme.getSubHeadingThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
                                   ),
                                 )
                             ),
@@ -1966,9 +2029,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 child: Text(
                                   'See More',
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE14,
-                                    decoration: TextDecoration.underline,
+                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
                                   ),
                                 )
                             ),
@@ -1980,8 +2043,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       child: Text(
                         'You can also invest in individual securities that you like and create your own portfolio!! ',
                         style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                          fontSize: ConstanceData.SIZE_TITLE15,
+                          fontFamily: "Roboto",
                         ),
                       ),
                     ),
@@ -1997,25 +2061,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             height: 35,
                             child: Container(
                               height: 35,
-                              width: 180,
+                              width: 150,
                               decoration: BoxDecoration(
-                                border: new Border.all(color: Colors.white, width: 1.5),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
-                                  ],
-                                ),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                  color: AllCoustomTheme.getButtonBoxColor()
                               ),
                               child: MaterialButton(
                                 splashColor: Colors.grey,
                                 child: Text(
                                   "START NOW",
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    color: AllCoustomTheme.getButtonTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE13,
+                                    fontFamily: "Roboto",
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -2032,14 +2091,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           // go live button
           // investment guru component box
           SizedBox(
-            height: 20,
-          ),
-          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.57,
             child:  Container(
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                decoration: new BoxDecoration(
+                /*decoration: new BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFfec20f),
                     width: 1,
@@ -2047,7 +2103,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   borderRadius: BorderRadius.all(
                     Radius.circular(2.0),
                   ),
-                ),
+                ),*/
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
@@ -2057,9 +2113,24 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           child: Text(
                             'INVESTMENT GURUS',
                             style: new TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
+                              color: AllCoustomTheme.getHeadingThemeColors(),
                               fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Rosarivo",
                             ),
+                          )
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                      padding: EdgeInsets.only(
+                        bottom: 3, // space between underline and text
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              )
                           )
                       ),
                     ),
@@ -2067,22 +2138,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height*0.34,
                         child: Container(
-                            margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
-                            child: CarouselSlider(
-                              options: CarouselOptions(
-                                  aspectRatio: 2.0,
-                                  enlargeCenterPage: false,
-                                  scrollDirection: Axis.horizontal,
-                                  autoPlay: false,
-                                  onPageChanged: (index, reason) {
-                                    print("_currentPage: $_currentPage");
-                                    setState(() {
-                                      _currentPage = index;
-                                    });
-                                  }
-                              ),
-                              items: areaChartSlider,
-                            )
+                            margin: EdgeInsets.only(top: 15.0,left: 5.0,right: 5.0,bottom: 5.0),
+                            child: getAreaChartView(),
                         )
                     ),
                     Container(
@@ -2094,9 +2151,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 child: Text(
                                   'See More',
                                   style: new TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE14,
-                                    decoration: TextDecoration.underline,
+                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
                                   ),
                                 )
                             ),
@@ -2115,25 +2172,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             height: 35,
                             child: Container(
                               height: 35,
-                              width: 180,
+                              width: 150,
                               decoration: BoxDecoration(
-                                border: new Border.all(color: Colors.white, width: 1.5),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
-                                  ],
-                                ),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                  color: AllCoustomTheme.getButtonBoxColor()
                               ),
                               child: MaterialButton(
                                 splashColor: Colors.grey,
                                 child: Text(
                                   "START NOW",
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    color: AllCoustomTheme.getButtonTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE13,
+                                    fontFamily: "Roboto",
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -2170,14 +2222,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(top:15.0),
+                      padding: EdgeInsets.only(top:5.0),
                       child: Center(
                           child: Text(
                             'PE/VC/RE/ESG',
                             style: new TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
+                              color: AllCoustomTheme.getHeadingThemeColors(),
                               fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Rosarivo",
                             ),
+                          )
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 90.0,right: 90.0),
+                      padding: EdgeInsets.only(
+                        bottom: 3, // space between underline and text
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              )
                           )
                       ),
                     ),
@@ -2193,25 +2260,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             height: 35,
                             child: Container(
                               height: 35,
-                              width: 180,
+                              width: 150,
                               decoration: BoxDecoration(
-                                border: new Border.all(color: Colors.white, width: 1.5),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
-                                  ],
-                                ),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                  color: AllCoustomTheme.getButtonBoxColor()
                               ),
                               child: MaterialButton(
                                 splashColor: Colors.grey,
                                 child: Text(
                                   "START NOW",
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    color: AllCoustomTheme.getButtonTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE13,
+                                    fontFamily: "Roboto",
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -2226,9 +2288,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         child: Text(
                           'See More',
                           style: new TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            decoration: TextDecoration.underline,
+                            color: AllCoustomTheme.getSeeMoreThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "Roboto",
                           ),
                         )
                     ),
@@ -2250,14 +2312,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(top:15.0),
+                      padding: EdgeInsets.only(top:5.0),
                       child: Center(
                           child: Text(
-                            'Student',
+                            'STUDENT',
                             style: new TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
+                              color: AllCoustomTheme.getHeadingThemeColors(),
                               fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Rosarivo",
                             ),
+                          )
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 110.0,right: 110.0),
+                      padding: EdgeInsets.only(
+                        bottom: 3, // space between underline and text
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              )
                           )
                       ),
                     ),
@@ -2273,25 +2350,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             height: 35,
                             child: Container(
                               height: 35,
-                              width: 180,
+                              width: 150,
                               decoration: BoxDecoration(
-                                border: new Border.all(color: Colors.white, width: 1.5),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.buttoncolor1,
-                                    globals.buttoncolor2,
-                                  ],
-                                ),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                  color: AllCoustomTheme.getButtonBoxColor()
                               ),
                               child: MaterialButton(
                                 splashColor: Colors.grey,
                                 child: Text(
                                   "START NOW",
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    color: AllCoustomTheme.getButtonTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE13,
+                                    fontFamily: "Roboto",
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

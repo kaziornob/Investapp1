@@ -129,7 +129,7 @@ class _MyAppState extends State<MyApp> {
     }
     else
       {
-        return new IntroductionScreen();
+        return new HomeScreen();
       }
   }
 
@@ -151,7 +151,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Auro',
         home: _decideMainPage(context),
         // routes: routes,
-        theme: AllCoustomTheme.getThemeData(),
+        theme: AllCoustomTheme.getInternalThemeData(),
       ),
     );
   }

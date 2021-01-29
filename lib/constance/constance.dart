@@ -17,6 +17,7 @@ class ConstanceData {
   static const SIZE_TITLE12 = 12.0;
   static const SIZE_TITLE13 = 13.0;
   static const SIZE_TITLE14 = 14.0;
+  static const SIZE_TITLE15 = 15.0;
   static const SIZE_TITLE16 = 16.0;
   static const SIZE_TITLE18 = 18.0;
   static const SIZE_TITLE20 = 20.0;
