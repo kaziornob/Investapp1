@@ -168,7 +168,7 @@ class _EmpStatusState extends State<EmpStatus> {
       builder: (FormFieldState state) {
         return InputDecorator(
           decoration: InputDecoration(
-            labelText: 'Nature of employer business',
+            labelText: 'Nature of Employer Business',
             labelStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: ConstanceData.SIZE_TITLE20,
@@ -235,7 +235,7 @@ class _EmpStatusState extends State<EmpStatus> {
                             margin: EdgeInsets.only(bottom: 10.0),
                             child: Center(
                               child: new Image(
-                                  width: 270.0,
+                                  width: 200.0,
                                   fit: BoxFit.fill,
                                   image: new AssetImage('assets/logo.png')
                               ),
@@ -322,6 +322,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                                   ),
                                                 ),
                                                 controller: empStatusOccpController,
+                                                validator: _validateOccupation,
                                               ),
                                             ),
                                           ),
@@ -349,7 +350,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                                   fillColor: AllCoustomTheme.getTextThemeColors(),
                                                   hintText: 'Enter Name here...',
                                                   hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Name',
+                                                  labelText: 'Name Of Employer',
                                                   labelStyle: TextStyle(
                                                     fontSize: ConstanceData.SIZE_TITLE16,
                                                     color: AllCoustomTheme.getTextThemeColors(),
@@ -547,16 +548,20 @@ class _EmpStatusState extends State<EmpStatus> {
   {
     Pattern pattern = r'^[A-Za-z _]*[A-Za-z][A-Za-z _]*$';
     RegExp regex = new RegExp(pattern);
-
-    if (value.isEmpty) {
-      return "Name cannot be empty";
-    }
-    else if(value!='' && value!=null)
+   if(value!='' && value!=null)
     {
       if (!regex.hasMatch(value))
         return 'Name Consist Only Alphabets';
       else
         return null;
+    }
+  }
+
+  // ignore: missing_return
+  String _validateOccupation(String value)
+  {
+    if (value.isEmpty) {
+      return "Occupation Cannot Be Empty";
     }
   }
 }

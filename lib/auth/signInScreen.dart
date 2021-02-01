@@ -443,6 +443,11 @@ class _SignInScreenState extends State<SignInScreen> {
     var password = passwordController.text.trim();
     // set up POST request arguments
 
+/*    var tempJsonReq = {"email":"$email","password":"$password"};
+    String jsonReq = json.encode(tempJsonReq);
+
+    var response = await request.login('users/authenticate/me',tempJsonReq);*/
+
     String jsonReq = 'users/authenticate/me?email=$email&password=$password';
 
     var response = await request.login(jsonReq);

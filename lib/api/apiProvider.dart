@@ -20,6 +20,17 @@ class ApiProvider {
 
     try
     {
+
+/*      final queryParameters = {
+        "email": "amar1@gmail.com",
+        "password": "pwd_amar1"
+      };
+      final uri = Uri.http('54.212.199.127', '/users/authenticate/me', queryParameters);
+      print("uri: $uri");
+      final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
+      final response = await http.get(uri, headers: headers);*/
+
+
       var response = await http.get(url, headers: headers);
       print("req statusCode: ${response.statusCode}");
 

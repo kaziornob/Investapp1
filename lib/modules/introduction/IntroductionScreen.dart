@@ -28,7 +28,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
     {
       "logoBottomLine": "YOUR PERSONAL ASSET MANAGER",
       "firstPara": "",
-      "image": "assets/handShake.png",
+      "image": "assets/personalizedPortfolio.png",
       "lastPara": ""
     },
     {
@@ -92,6 +92,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Container(
+      color: Color(0xFFE5E5E5),
       height: height,
       child: Stack(
         children: <Widget>[
@@ -110,9 +111,9 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
             ),
           ),
           Scaffold(
-            backgroundColor: Colors.transparent,
             body: SingleChildScrollView(
               child: Container(
+                color: Colors.white,
                 constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height, minWidth: MediaQuery.of(context).size.width),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +129,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                               itemCount: listPaths.length,
                               options: CarouselOptions(
                                   height: MediaQuery.of(context).size.height*0.85,
-                                  autoPlay: true,
+                                  autoPlay: false,
                                   onPageChanged: (index, reason) {
                                     setState(() {
                                       _current = index;
@@ -150,12 +151,13 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                           return Container(
                             width: 10.0,
                             height: 8.0,
-                            margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
+                            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: _current == index
-                                  ? Color(0xFFFFFFFF)
-                                  : Color(0xff696969),
+                                  // ? Color(0xFFFFFFFF)
+                                  ? Color(0xFFD8AF4F)
+                                  : Color(0xffCBB4B4),
                             ),
                           );
                         }).toList(),
@@ -166,101 +168,88 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SizedBox(
-                                height: 35,
-                                child: Container(
-                                  height: 35,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                    border: new Border.all(color: Colors.white, width: 1.5),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.buttoncolor1,
-                                        globals.buttoncolor2,
-                                      ],
-                                    ),
-                                  ),
-                                  child: MaterialButton(
-                                    splashColor: Colors.grey,
-                                    child: Text(
-                                      "Login",
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE14,
-                                      ),
-                                    ),
-                                    onPressed: () async
-                                    {
-                                      Navigator.of(context, rootNavigator: true)
-                                          .push(
-                                        CupertinoPageRoute<void>(
-                                          builder: (BuildContext context) => SignInScreen(),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         SizedBox(
                           width: 40,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SizedBox(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 35,
+                              child: Container(
                                 height: 35,
-                                child: Container(
-                                  height: 35,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                    border: new Border.all(color: Colors.white, width: 1.5),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.buttoncolor1,
-                                        globals.buttoncolor2,
-                                      ],
+                                width: 130,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                    color: Color(0xFFD8AF4F)
+                                ),
+                                child: MaterialButton(
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      // color: AllCoustomTheme.getTextThemeColors(),
+                                      color: Color(0xFFD9E4E9),
+                                      fontSize: ConstanceData.SIZE_TITLE14,
                                     ),
                                   ),
-                                  child: MaterialButton(
-                                    splashColor: Colors.grey,
-                                    child: Text(
-                                      "Try For Free",
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE14,
+                                  onPressed: () async
+                                  {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(
+                                      CupertinoPageRoute<void>(
+                                        builder: (BuildContext context) => SignInScreen(),
                                       ),
-                                    ),
-                                    onPressed: () async
-                                    {
-                                      Navigator.of(context,
-                                          rootNavigator: true)
-                                          .push(
-                                        CupertinoPageRoute<void>(
-                                          builder: (BuildContext context) =>
-                                              SignUpScreen(),
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                    );
+                                  },
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 35,
+                              child: Container(
+                                height: 35,
+                                width: 130,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                  // color: Color(0xFFD8AF4F)
+                                ),
+                                child: MaterialButton(
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "Try For Free",
+                                    style: TextStyle(
+                                      color: Color(0xFFD8AF4F),
+                                      fontSize: ConstanceData.SIZE_TITLE14,
+                                    ),
+                                  ),
+                                  onPressed: () async
+                                  {
+                                    Navigator.of(context,
+                                        rootNavigator: true)
+                                        .push(
+                                      CupertinoPageRoute<void>(
+                                        builder: (BuildContext context) =>
+                                            SignUpScreen(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 40,
                         ),
                       ],
                     ),
@@ -305,44 +294,57 @@ class MySliderView extends StatelessWidget{
         child: Column(
           children: [
             Container(
+                margin: EdgeInsets.only(top:30.0),
                 height: MediaQuery.of(context).size.height * 0.09,
-                margin: EdgeInsets.only(top:50.0),
                 child: Center(
                   child: new Image(
-                      width: 200.0,
+                      width: 150.0,
                       fit: BoxFit.fill,
                       image: new AssetImage('assets/logo.png')
                   ),
                 )
             ),
-            SizedBox(
-              height: 5,
-              child: Divider(
-                color: Colors.yellow,
+            Container(
+              padding: EdgeInsets.only(
+                bottom: 1, // space between underline and text
+              ),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xFFD8AF4F),
+                        width: 1.5, // Underline width
+                      )
+                  )
               ),
             ),
             Container(
-                margin: EdgeInsets.only(top:10.0),
+                margin: EdgeInsets.only(top:7.0),
                 child:  Text(
                   '${allFields["logoBottomLine"]}',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: ConstanceData.SIZE_TITLE16,
-                      color: AllCoustomTheme.getTextThemeColors(),
+                      color: Color(0xFF060513),
+                      fontFamily: "Rasa",
+                      fontStyle: FontStyle.normal,
                       letterSpacing: 0.2
                   ),
                 )
             ),
             SizedBox(
-              height: 20,
+              height: 12,
             ),
             Expanded(
                 flex: 1,
                 child: Text(
                   "${allFields["firstPara"]}",
                   style: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE13,
-                      color: AllCoustomTheme.getTextThemeColors(),
-                      letterSpacing: 0.2
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: Color(0xFF060513),
+                      letterSpacing: 0.2,
+                      fontFamily: "Rasa",
+                      fontStyle: FontStyle.normal,
+
                   ),
                 )
             ),
@@ -358,16 +360,19 @@ class MySliderView extends StatelessWidget{
               ),
             ),
             SizedBox(
-              height: 15,
+              height: 5,
             ),
             Expanded(
                 flex: 1,
                 child: Text(
                   "${allFields["lastPara"]}",
                   style: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE13,
-                      color: AllCoustomTheme.getTextThemeColors(),
-                      letterSpacing: 0.2
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: Color(0xFF060513),
+                      fontFamily: "Rasa",
+                      letterSpacing: 0.2,
+                      fontStyle: FontStyle.normal,
+
                   ),
                 )
             ),

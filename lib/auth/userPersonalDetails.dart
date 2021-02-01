@@ -51,7 +51,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     ),
     dropdownColor: Colors.black,
     // dateHint: DateHint(day: 'day',year: 'year', month: 'month'),
-    dateHint: DateHint(year: 'year', month: 'month', day: 'day'),
+    dateHint: DateHint(year: 'Year', month: 'Month', day: 'Day'),
     ascending: false,
   );
 
@@ -319,7 +319,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                           Padding(
                                             padding: EdgeInsets.only(left: 14, top: 4),
                                             child: Text(
-                                              "DOB :",
+                                              "Date Of Birth :",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: ConstanceData.SIZE_TITLE16,
@@ -395,7 +395,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                 builder: (FormFieldState state) {
                                                   return InputDecorator(
                                                     decoration: InputDecoration(
-                                                      labelText: 'Country Residency',
+                                                      labelText: 'Country Of Residency',
                                                       labelStyle: TextStyle(
                                                           fontWeight: FontWeight.bold,
                                                           fontSize: ConstanceData.SIZE_TITLE20,

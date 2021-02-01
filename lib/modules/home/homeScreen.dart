@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
@@ -296,6 +297,99 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     });
   }
 
+  Widget _buildAppBar(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 4.0),
+              child: CircleAvatar(
+                radius: 20.0,
+                backgroundImage: new AssetImage('assets/download.jpeg'),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            Positioned(
+              top: 22,
+              left: 22,
+              child:  GestureDetector(
+                onTap: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 12.0,
+                  child: Icon(
+                    Icons.sort,
+                    size: 20,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        //search box area
+        Container(
+          width: MediaQuery.of(context).size.width*0.61,
+          height: MediaQuery.of(context).size.height*0.053,
+          decoration: new BoxDecoration(
+            color: Color(0xFFFFFFFF),
+            border: Border.all(
+              color: Color(0xff696969),
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15.0),
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width*0.58,
+                height: MediaQuery.of(context).size.height*0.05,
+                child: TextFormField(
+                  style: TextStyle(
+                    color: AllCoustomTheme.getTextThemeColors(),
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.search,
+                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                      size: 15,
+                    ),
+                    hintText: "Search",
+                    hintStyle: TextStyle(
+                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        //globe icon
+        Image(
+            height: 50,
+            width: 50,
+            image: new AssetImage('assets/appIcon.png')
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar();
@@ -323,6 +417,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           bottom: true,
           child: Scaffold(
             key: _scaffoldKey,
+            appBar: isSelect2 ? AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: AllCoustomTheme.getAppBarBackgroundThemeColors(),
+              title: _buildAppBar(context),
+            ) : null,
             bottomNavigationBar: Container(
               height: 42,
               child: Row(
@@ -366,15 +465,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   cycles: 1,
                                   builder: (anim) => Transform.scale(
                                     scale: anim.value,
-                                    child: Container(
-                                      height: 40,
-                                      width: width / 3,
-                                      color: Colors.transparent,
-                                      child: Icon(
-                                        Icons.home,
-                                        color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                                      ),
-                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 20,
+                                          width: width / 3,
+                                          color: Colors.transparent,
+                                          child: Icon(
+                                            Icons.home,
+                                            color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 20,
+                                          width: width / 3,
+                                            color: Color(0xFF060513),
+                                            child: Text(
+                                            "Home",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                                color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                                                fontFamily: "Rasa",
+                                                fontStyle: FontStyle.normal,
+                                                letterSpacing: 0.2
+                                            ),
+                                          )
+                                        ),
+                                      ],
+                                    )
                                   ),
                                 )
                               : firstAnimation(),
@@ -598,11 +717,24 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               opacity: 0,
               progressIndicator: SizedBox(),
               child: Container(
+                color: isSelect2 ? AllCoustomTheme.getPageBackgroundThemeColor() : AllCoustomTheme.getThemeData().primaryColor,
                 height: height,
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: MediaQuery.of(context).padding.top,
+                      height: isSelect2 ? 2 : MediaQuery.of(context).padding.top,
+                      child: Visibility(
+                        visible: isSelect2,
+                        child: Container(
+                          decoration: new BoxDecoration(
+                            color: Color(0xFFFFFFFF),
+                            border: Border.all(
+                              color: Color(0xFFFFFFFF),
+                              width: 1.5,
+                            ),
+                          ),
+                        ),
+                      )
                     ),
                     Expanded(
                       child: isSelect1
@@ -622,26 +754,66 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   Widget firstAnimation() {
-    return Container(
-      height: 40,
-      width: width / 3,
-      color: Colors.transparent,
-      child: Icon(
-        Icons.home,
-        color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-      ),
+    return Column(
+      children: [
+        Container(
+          height: 20,
+          width: width / 3,
+          color: Colors.transparent,
+          child: Icon(
+            Icons.home,
+            color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+          ),
+        ),
+        Container(
+            height: 20,
+            width: width / 3,
+            color: Color(0xFF060513),
+            child: Text(
+              "Home",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
+        ),
+      ],
     );
   }
 
   Widget secondAnimation() {
-    return Container(
-      height: 40,
-      width: width / 3,
-      color: Colors.transparent,
-      child: Icon(
-        FontAwesomeIcons.coins,
-        color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-      ),
+    return Column(
+      children: [
+        Container(
+          height: 20,
+          width: width / 3,
+          color: Colors.transparent,
+          child: Icon(
+            FontAwesomeIcons.coins,
+            color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+          ),
+        ),
+        Container(
+            height: 20,
+            width: width / 3,
+            color: Color(0xFF060513),
+            child: Text(
+              "Invest",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
+        ),
+      ],
     );
   }
 
@@ -658,27 +830,67 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   Widget fourthAnimation() {
-    return Container(
-      height: 40,
-      width: width / 3,
-      color: Colors.transparent,
-      child: Icon(
-        FontAwesomeIcons.handshake,
-        color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-      ),
+    return Column(
+      children: [
+        Container(
+          height: 20,
+          width: width / 3,
+          color: Colors.transparent,
+          child: Icon(
+            FontAwesomeIcons.handshake,
+            color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+          ),
+        ),
+        Container(
+            height: 20,
+            width: width / 3,
+            color: Color(0xFF060513),
+            child: Text(
+              "Exchange",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
+        ),
+      ],
     );
   }
 
 
   Widget fifthAnimation() {
-    return Container(
-      height: 40,
-      width: width / 3,
-      color: Colors.transparent,
-      child: Icon(
-        FontAwesomeIcons.globe,
-        color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-      ),
+    return Column(
+      children: [
+        Container(
+          height: 20,
+          width: width / 3,
+          color: Colors.transparent,
+          child: Icon(
+            FontAwesomeIcons.globe,
+            color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+          ),
+        ),
+        Container(
+            height: 20,
+            width: width / 3,
+            color: Color(0xFF060513),
+            child: Text(
+              "Learn",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
+        ),
+      ],
     );
   }
 
@@ -1571,9 +1783,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   Widget secondScreen() {
-    int _currentPage;
 
-    final List<String> areaChartDataList = ['1','2','3','4'];
     final List<String> pieChartDataList = ['1','2','3'];
 
     final List<ChartData> chartData = [
@@ -1617,7 +1827,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       physics: BouncingScrollPhysics(),
       child: Column(
         children: <Widget>[
-          Padding(
+/*          Padding(
             padding: EdgeInsets.only(left:16.0,right:16.0),
             child: Row(
               children: <Widget>[
@@ -1644,7 +1854,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         ),
                       ),
                       SizedBox(
-                        width:10.0
+                          width:10.0
                       ),
                       //search box area
                       Container(
@@ -1668,8 +1878,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               height: MediaQuery.of(context).size.height*0.05,
                               child: TextFormField(
                                 style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE14,
+                                  color: AllCoustomTheme.getTextThemeColors(),
+                                  fontSize: ConstanceData.SIZE_TITLE14,
                                 ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -1680,8 +1890,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   ),
                                   hintText: "Search",
                                   hintStyle: TextStyle(
-                                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE14,
+                                    color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE14,
                                   ),
                                 ),
                               ),
@@ -1711,10 +1921,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 )
               ],
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
+          ),*/
+
           // handshake image box
 /*          SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -1727,15 +1935,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ),
           ),*/
-          // auro paper box
-          SizedBox(
-            height: 10,
-          ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.55,
             child:  Container(
-                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                margin: EdgeInsets.only(left: 5.0,right: 5.0,top:15.0),
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
@@ -1759,7 +1963,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
-                                  color: AllCoustomTheme.getHeadingThemeColors(),
+                                  color: Color(0xFFD8AF4F),
                                   width: 1.0, // Underline width
                                 )
                             )

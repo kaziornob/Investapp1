@@ -132,7 +132,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                           margin: EdgeInsets.only(bottom: 10.0),
                           child: Center(
                             child: new Image(
-                                width: 270.0,
+                                width: 200.0,
                                 fit: BoxFit.fill,
                                 image: new AssetImage('assets/logo.png')
                             ),

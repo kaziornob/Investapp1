@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
         widget.prefs.containsKey('Session_token') &&
         widget.prefs.getString('Session_token') != null &&
         widget.prefs.containsKey('DateTime') &&
-        widget.prefs.getString('DateTime').isNotEmpty) {
+        widget.prefs.getString('DateTime').isNotEmpty ) {
 
       /*var now = new DateTime.now();
       var strTodayDateTime = new DateFormat("yyyy-MM-dd HH:mm").format(now);
@@ -151,7 +151,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Auro',
         home: _decideMainPage(context),
         // routes: routes,
-        theme: AllCoustomTheme.getInternalThemeData(),
+        theme: AllCoustomTheme.getThemeData(),
       ),
     );
   }

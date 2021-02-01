@@ -18,6 +18,14 @@ class AllCoustomTheme {
     }
   }
 
+  static Color getPageBackgroundThemeColor() {
+    if (globals.isGoldBlack) {
+      return Color(0xFF060513);
+    } else {
+      return Color(0xFFD9E4E9);
+    }
+  }
+
   static Color getTextThemeColors() {
     if (globals.isLight) {
       return Colors.white;
@@ -28,6 +36,14 @@ class AllCoustomTheme {
 
   static Color getsecoundTextThemeColor() {
     return Color(0xFF525a6d);
+  }
+
+  static Color getAppBarBackgroundThemeColors() {
+    if (globals.isGoldBlack) {
+      return Colors.black;
+    } else {
+      return Color(0xFF7499C6);
+    }
   }
 
   static Color getNewTextThemeColors() {
@@ -82,7 +98,7 @@ class AllCoustomTheme {
     if (globals.isGoldBlack) {
       return Color(0xFFF5564E);
     } else {
-      return Color(0xFF7499C6);
+      return Color(0xFF423EAF);
     }
   }
 
@@ -90,7 +106,7 @@ class AllCoustomTheme {
     if (globals.isGoldBlack) {
       return Color(0xFFF5564E);
     } else {
-      return Color(0xFF7499C6);
+      return Color(0xFF423EAF);
     }
   }
 
@@ -113,6 +129,8 @@ class AllCoustomTheme {
 
   static Color getSecondIconThemeColor() {
     return Colors.grey;
+    // return Color.fromRGBO(0, 0, 0, 0.5);
+
   }
 
 
