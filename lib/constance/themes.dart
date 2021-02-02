@@ -1,3 +1,4 @@
+import 'package:auroim/constance/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
@@ -38,6 +39,14 @@ class AllCoustomTheme {
     return Color(0xFF525a6d);
   }
 
+  static Color getBodyContainerThemeColor() {
+    return Colors.white;
+  }
+
+  static Color getTextThemeColor() {
+    return Colors.black;
+  }
+
   static Color getAppBarBackgroundThemeColors() {
     if (globals.isGoldBlack) {
       return Colors.black;
@@ -58,11 +67,64 @@ class AllCoustomTheme {
     return Color(0xFF525a6d);
   }
 
+  static getDropDownFieldLabelStyleTheme() {
+    return TextStyle(
+      fontSize: ConstanceData.SIZE_TITLE20,
+      fontFamily: "Roboto",
+      color: AllCoustomTheme.getTextThemeColor(),
+    );
+  }
+
+  static getDropDownMenuItemStyleTheme() {
+    return TextStyle(
+      color: AllCoustomTheme.getTextThemeColor(),
+      fontSize: ConstanceData.SIZE_TITLE14,
+      fontFamily: "Roboto",
+    );
+  }
+
+  static getTextFormFieldLabelStyleTheme() {
+    return TextStyle(
+      fontSize: ConstanceData.SIZE_TITLE16,
+      fontFamily: "Roboto",
+      color: AllCoustomTheme.getTextThemeColor(),
+    );
+  }
+
+  static getTextFormFieldBaseStyleTheme() {
+    return TextStyle(
+      fontSize: ConstanceData.SIZE_TITLE14,
+      fontFamily: "Roboto",
+      color: AllCoustomTheme.getTextThemeColor(),
+    );
+  }
+
+  static getButtonSelectedTextStyleTheme() {
+    return TextStyle(
+        color: globals.isGoldBlack ? Colors.black : Colors.white,
+        fontSize: ConstanceData.SIZE_TITLE13,
+      fontFamily: "Roboto",
+      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal
+    );
+  }
+
+  static getButtonNonSelectedTextStyleTheme() {
+      return TextStyle(
+          color: globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF7499C6),
+          fontSize: ConstanceData.SIZE_TITLE13,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal
+      );
+  }
+
   static Color getButtonTextThemeColors() {
     if (globals.isGoldBlack) {
       return Colors.black;
     } else {
       return Colors.white;
+      // return Color(0xFF7499C6);
+
     }
   }
 

@@ -52,22 +52,8 @@ class _SignInScreenState extends State<SignInScreen> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
@@ -75,6 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
+                color: AllCoustomTheme.getBodyContainerThemeColor(),
                 height: MediaQuery.of(context).size.height*1.0,
                 child: GestureDetector(
                   onTap: () {
@@ -102,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 translation: anim.value,
                                 child: Icon(
                                   Icons.arrow_back_ios,
-                                  color: AllCoustomTheme.getTextThemeColors(),
+                                  color: AllCoustomTheme.getTextThemeColor(),
                                 ),
                               ),
                             ),
@@ -138,9 +125,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                   child: Text(
                                     'Sign up',
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE18,
-                                      fontWeight: FontWeight.bold,
+                                      color: AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE20,
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.bold
                                     ),
                                   ),
                                 ),
@@ -173,9 +161,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 child: Text(
                                   'Sign In',
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.bold,
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE20,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ),
@@ -190,10 +179,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         padding: const EdgeInsets.only(left: 16),
                         child: _visible
                             ? Container(
-                          decoration: BoxDecoration(
+/*                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
                             color: AllCoustomTheme.boxColor(),
-                          ),
+                          ),*/
                           child: Form(
                             key: _formKey,
                             child: Column(
@@ -202,18 +191,15 @@ class _SignInScreenState extends State<SignInScreen> {
                                   height: 0.5,
                                 ),
                                 Container(
-                                  height: 5,
+                                  height: 3,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.buttoncolor1,
-                                        globals.buttoncolor2,
-                                      ],
-                                    ),
+                                      border: Border(
+                                          bottom: BorderSide(
+                                            color: Color(0xFFD8AF4F),
+                                            width: 1.6, // Underline width
+                                          )
+                                      )
                                   ),
                                 ),
                                 Row(
@@ -224,23 +210,16 @@ class _SignInScreenState extends State<SignInScreen> {
                                         child: TextFormField(
                                           validator: _validateEmail,
                                           controller: emailController,
-                                          cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: ConstanceData.SIZE_TITLE16,
-                                            color: AllCoustomTheme.getTextThemeColors(),
-                                          ),
+                                          cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                          style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                           keyboardType: TextInputType.emailAddress,
                                           decoration: new InputDecoration(
-                                            focusColor: AllCoustomTheme.getTextThemeColors(),
-                                            fillColor: AllCoustomTheme.getTextThemeColors(),
+                                            focusColor: AllCoustomTheme.getTextThemeColor(),
+                                            fillColor: AllCoustomTheme.getTextThemeColor(),
                                             hintText: 'Enter email here...',
                                             hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                             labelText: 'E-mail',
-                                            labelStyle: TextStyle(
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                            ),
+                                            labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                           ),
                                           //controller: lastnameController,
                                           onSaved: (value) {
@@ -263,24 +242,17 @@ class _SignInScreenState extends State<SignInScreen> {
                                         padding: EdgeInsets.only(left: 14, bottom: 10),
                                         child: TextFormField(
                                           controller: passwordController,
-                                          cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: ConstanceData.SIZE_TITLE16,
-                                            color: AllCoustomTheme.getTextThemeColors(),
-                                          ),
+                                          cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                          style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                           keyboardType: TextInputType.text,
                                           obscureText: true,
                                           decoration: new InputDecoration(
-                                            focusColor: AllCoustomTheme.getTextThemeColors(),
-                                            fillColor: AllCoustomTheme.getTextThemeColors(),
+                                            focusColor: AllCoustomTheme.getTextThemeColor(),
+                                            fillColor: AllCoustomTheme.getTextThemeColor(),
                                             hintText: 'Enter password here...',
                                             hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                             labelText: 'Password',
-                                            labelStyle: TextStyle(
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                            ),
+                                            labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                           ),
                                           validator: _validatePassword,
                                           //controller: lastnameController,
@@ -326,7 +298,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                           'Forgot Password?',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            fontFamily: "Roboto",
+                                            color: AllCoustomTheme.getTextThemeColor(),
                                           ),
                                         ),
                                       )
@@ -355,14 +328,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                                 decoration: BoxDecoration(
                                                   border: new Border.all(color: Colors.white, width: 1.5),
                                                   shape: BoxShape.circle,
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      globals.buttoncolor1,
-                                                      globals.buttoncolor2,
-                                                    ],
-                                                  ),
+                                                  color: Color(0xFFD8AF4F)
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(left: 3),
@@ -392,24 +358,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         )
                             : SizedBox(),
                       ),
-                      _visible
-                          ? Expanded(
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: Text(
-                                'Terms & Privacy Policy',
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                          : SizedBox()
                     ],
                   ),
                 ),

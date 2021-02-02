@@ -52,22 +52,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
@@ -75,7 +61,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
-                height: MediaQuery.of(context).size.height*1.30,
+                color: AllCoustomTheme.getBodyContainerThemeColor(),
+                height: MediaQuery.of(context).size.height*1.32,
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).requestFocus(new FocusNode());
@@ -104,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       translation: anim.value,
                                       child: Icon(
                                         Icons.arrow_back_ios,
-                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        color: AllCoustomTheme.getTextThemeColor(),
                                       ),
                                     ),
                                   ),
@@ -140,9 +127,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         child: Text(
                                           'Sign In',
                                           style: TextStyle(
-                                            color: AllCoustomTheme.getTextThemeColors(),
-                                            fontSize: ConstanceData.SIZE_TITLE18,
-                                            fontWeight: FontWeight.bold,
+                                              color: AllCoustomTheme.getTextThemeColor(),
+                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                              fontFamily: "Roboto",
+                                              fontWeight: FontWeight.bold
                                           ),
                                         ),
                                       ),
@@ -173,9 +161,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: Text(
                                       'Sign Up',
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: 36,
-                                        fontWeight: FontWeight.bold,
+                                          color: AllCoustomTheme.getTextThemeColor(),
+                                          fontSize: ConstanceData.SIZE_TITLE20,
+                                          fontFamily: "Roboto",
+                                          fontWeight: FontWeight.bold
                                       ),
                                     ),
                                   ),
@@ -187,10 +176,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             _visible
                                 ? Container(
-                              decoration: BoxDecoration(
+/*                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
                                 color: AllCoustomTheme.boxColor(),
-                              ),
+                              ),*/
                               child: Form(
                                 key: _formKey,
                                 child: Column(
@@ -199,18 +188,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       height: 0.5,
                                     ),
                                     Container(
-                                      height: 5,
+                                      height: 3,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            globals.buttoncolor1,
-                                            globals.buttoncolor2,
-                                          ],
-                                        ),
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                color: Color(0xFFD8AF4F),
+                                                width: 1.6, // Underline width
+                                              )
+                                          )
                                       ),
                                     ),
                                     /* Container(
@@ -281,23 +267,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             child: TextFormField(
                                               controller: emailController,
                                               validator: _validateEmail,
-                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                              ),
+                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                               keyboardType: TextInputType.emailAddress,
                                               decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                fillColor: AllCoustomTheme.getTextThemeColor(),
                                                 hintText: 'Enter email here...',
                                                 hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                 labelText: 'E-mail',
-                                                labelStyle: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                               ),
                                               //controller: lastnameController,
                                               onSaved: (value) {
@@ -319,24 +298,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           child: Padding(
                                             padding: EdgeInsets.only(left: 14, bottom: 10),
                                             child: TextFormField(
-                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                              ),
+                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                               keyboardType: TextInputType.text,
                                               obscureText: true,
                                               decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                fillColor: AllCoustomTheme.getTextThemeColor(),
                                                 hintText: 'Enter password here...',
                                                 hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                 labelText: 'Password',
-                                                labelStyle: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                               ),
                                               validator: _validatePassword,
                                               controller: signUpPasswordController,
@@ -359,24 +331,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           child: Padding(
                                             padding: EdgeInsets.only(left: 14, bottom: 10),
                                             child: TextFormField(
-                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                              ),
+                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                               keyboardType: TextInputType.text,
                                               obscureText: true,
                                               decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                fillColor: AllCoustomTheme.getTextThemeColor(),
                                                 hintText: 'Re-Enter password here...',
                                                 hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                 labelText: 'Confirm Password',
-                                                labelStyle: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                               ),
                                               validator: _validatePassword,
                                               controller: signUpConfirmPasswordController,
@@ -400,24 +365,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             padding: EdgeInsets.only(left: 14, bottom: 10),
                                             child: TextFormField(
                                               controller: phoneController,
-                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                              ),
+                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                               keyboardType: TextInputType.number,
                                               validator: _validatePhone,
                                               decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                fillColor: AllCoustomTheme.getTextThemeColor(),
                                                 hintText: 'Enter Phone here...',
                                                 hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                 labelText: 'Phone',
-                                                labelStyle: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                               ),
                                               // validator: _validatePassword,
                                               onSaved: (value) {
@@ -454,16 +412,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       height: 50,
                                                       width: 50,
                                                       decoration: BoxDecoration(
-                                                        border: new Border.all(color: Colors.white, width: 1.5),
-                                                        shape: BoxShape.circle,
-                                                        gradient: LinearGradient(
-                                                          begin: Alignment.topLeft,
-                                                          end: Alignment.bottomRight,
-                                                          colors: [
-                                                            globals.buttoncolor1,
-                                                            globals.buttoncolor2,
-                                                          ],
-                                                        ),
+                                                          border: new Border.all(color: Colors.white, width: 1.5),
+                                                          shape: BoxShape.circle,
+                                                          color: Color(0xFFD8AF4F)
                                                       ),
                                                       child: Padding(
                                                         padding: const EdgeInsets.only(left: 3),
@@ -496,9 +447,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text(
                           "OR",
                           style: TextStyle(
-                            color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                            color: AllCoustomTheme.getTextThemeColor(),
                             letterSpacing: 0.3,
                             fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
@@ -514,14 +467,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white, width: 1.5),
                               borderRadius: BorderRadius.circular(30),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  globals.buttoncolor1,
-                                  globals.buttoncolor2,
-                                ],
-                              ),
+                                color: Color(0xFFD8AF4F)
                             ),
                             child: Text(
                               "Sign Up With E-Mail",
@@ -558,14 +504,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white, width: 1.5),
                               borderRadius: BorderRadius.circular(30),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  globals.buttoncolor1,
-                                  globals.buttoncolor2,
-                                ],
-                              ),
+                                color: Color(0xFFD8AF4F)
                             ),
                             child: Text(
                               "Facebook",
@@ -598,14 +537,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white, width: 1.5),
                               borderRadius: BorderRadius.circular(30),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  globals.buttoncolor1,
-                                  globals.buttoncolor2,
-                                ],
-                              ),
+                                color: Color(0xFFD8AF4F)
                             ),
                             child: Text(
                               "Apple",

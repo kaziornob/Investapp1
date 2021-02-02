@@ -305,6 +305,7 @@ class MySliderView extends StatelessWidget{
                 )
             ),
             Container(
+              margin: EdgeInsets.only(left: 10.0,right: 10.0),
               padding: EdgeInsets.only(
                 bottom: 1, // space between underline and text
               ),

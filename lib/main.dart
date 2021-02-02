@@ -129,7 +129,7 @@ class _MyAppState extends State<MyApp> {
     }
     else
       {
-        return new HomeScreen();
+        return new IntroductionScreen();
       }
   }
 

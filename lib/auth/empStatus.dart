@@ -65,7 +65,7 @@ class _EmpStatusState extends State<EmpStatus> {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedEmpStatus,
-          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+          dropdownColor: Colors.white,
           isExpanded: true,
           onChanged: (String newValue) {
             setState(() {
@@ -77,10 +77,7 @@ class _EmpStatusState extends State<EmpStatus> {
               value: value,
               child: new Text(
                   value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                ),
+                style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
               ),
             );
           }).toList(),
@@ -104,11 +101,7 @@ class _EmpStatusState extends State<EmpStatus> {
         return InputDecorator(
           decoration: InputDecoration(
             labelText: 'Employment Status',
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE20,
-                color: AllCoustomTheme.getTextThemeColors()
-            ),
+            labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
             errorText: state.hasError ? state.errorText : null,
           ),
           isEmpty: selectedEmpStatus == '',
@@ -129,7 +122,7 @@ class _EmpStatusState extends State<EmpStatus> {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedEmpBuss,
-          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+          dropdownColor: Colors.white,
           isExpanded: true,
           onChanged: (String newValue) {
             setState(() {
@@ -141,10 +134,7 @@ class _EmpStatusState extends State<EmpStatus> {
               value: value,
               child: new Text(
                   value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                ),
+                style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
               ),
             );
           }).toList(),
@@ -169,12 +159,7 @@ class _EmpStatusState extends State<EmpStatus> {
         return InputDecorator(
           decoration: InputDecoration(
             labelText: 'Nature of Employer Business',
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE20,
-                color: AllCoustomTheme.getTextThemeColors()
-            ),
-
+            labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
             errorText: state.hasError ? state.errorText : null,
           ),
           isEmpty: selectedEmpBuss == '',
@@ -195,22 +180,8 @@ class _EmpStatusState extends State<EmpStatus> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           body: ModalProgressHUD(
             inAsyncCall: _isEmpStatusInProgress,
             opacity: 0,
@@ -218,6 +189,7 @@ class _EmpStatusState extends State<EmpStatus> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
+                color: AllCoustomTheme.getBodyContainerThemeColor(),
                 height: MediaQuery.of(context).size.height *1.02,
                 child: GestureDetector(
                   onTap: () {
@@ -231,43 +203,37 @@ class _EmpStatusState extends State<EmpStatus> {
                           height: 40,
                         ),
                         Container(
-                            height: MediaQuery.of(context).size.height * 0.12,
-                            margin: EdgeInsets.only(bottom: 10.0),
+                            height: MediaQuery.of(context).size.height * 0.09,
                             child: Center(
                               child: new Image(
-                                  width: 200.0,
+                                  width: 150.0,
                                   fit: BoxFit.fill,
                                   image: new AssetImage('assets/logo.png')
                               ),
                             )
                         ),
+                        Container(
+                          margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                          padding: EdgeInsets.only(
+                            bottom: 1, // space between underline and text
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                    color: Color(0xFFD8AF4F),
+                                    width: 1.5, // Underline width
+                                  )
+                              )
+                          ),
+                        ),
                         _visibleEmpStatus
                             ? Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
-                                  color: AllCoustomTheme.boxColor(),
-                                ),
                                 child: Form(
                                   key: _empStatusFormKey,
                                   child: Column(
                                     children: <Widget>[
                                       SizedBox(
-                                        height: 0.5,
-                                      ),
-                                      Container(
-                                        height: 5,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
-                                        ),
+                                        height: 15,
                                       ),
                                       Row(
                                         children: <Widget>[
@@ -303,23 +269,16 @@ class _EmpStatusState extends State<EmpStatus> {
                                             child: Padding(
                                               padding: EdgeInsets.only(left: 14, bottom: 10),
                                               child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 keyboardType: TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
                                                   hintText: 'Enter Occupation here...',
                                                   hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                   labelText: 'Occupation',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                                 ),
                                                 controller: empStatusOccpController,
                                                 validator: _validateOccupation,
@@ -338,23 +297,16 @@ class _EmpStatusState extends State<EmpStatus> {
                                             child: Padding(
                                               padding: EdgeInsets.only(left: 14, bottom: 10),
                                               child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 keyboardType: TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
                                                   hintText: 'Enter Name here...',
                                                   hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                   labelText: 'Name Of Employer',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                                 ),
                                                 validator: _validateName,
                                                 controller: empStatusNameController,
@@ -390,14 +342,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                                       decoration: BoxDecoration(
                                                         border: new Border.all(color: Colors.white, width: 1.5),
                                                         shape: BoxShape.circle,
-                                                        gradient: LinearGradient(
-                                                          begin: Alignment.topLeft,
-                                                          end: Alignment.bottomRight,
-                                                          colors: [
-                                                            globals.buttoncolor1,
-                                                            globals.buttoncolor2,
-                                                          ],
-                                                        ),
+                                                        color: Color(0xFFD8AF4F),
                                                       ),
                                                       child: Padding(
                                                         padding: const EdgeInsets.only(left: 3),

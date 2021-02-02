@@ -12,7 +12,7 @@ import 'constance.dart';
 
 var deviceId = '';
 var isLight = true;
-var isGoldBlack = false;
+var isGoldBlack = true;
 
 var isOnLocation = true;
 var isNotification = true;

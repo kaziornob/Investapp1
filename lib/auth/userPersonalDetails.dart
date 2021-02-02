@@ -44,12 +44,8 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     dateFormat: DateFormat.ymd,
     firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
     lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
-    textStyle: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: ConstanceData.SIZE_TITLE16,
-      color: AllCoustomTheme.getTextThemeColors(),
-    ),
-    dropdownColor: Colors.black,
+    textStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+    dropdownColor: Colors.white,
     // dateHint: DateHint(day: 'day',year: 'year', month: 'month'),
     dateHint: DateHint(year: 'Year', month: 'Month', day: 'Day'),
     ascending: false,
@@ -75,22 +71,8 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           body: ModalProgressHUD(
             inAsyncCall: _isDetailInProgress,
             opacity: 0,
@@ -98,6 +80,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
+                color: AllCoustomTheme.getBodyContainerThemeColor(),
                 height: MediaQuery.of(context).size.height,
                 child: GestureDetector(
                   onTap: () {
@@ -125,7 +108,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
-                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    color: AllCoustomTheme.getTextThemeColor(),
                                   ),
                                 ),
                               ),
@@ -161,9 +144,10 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                           child: Text(
                                             'Sign In',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                                color: AllCoustomTheme.getTextThemeColor(),
+                                                fontSize: ConstanceData.SIZE_TITLE20,
+                                                fontFamily: "Roboto",
+                                                fontWeight: FontWeight.bold
                                             ),
                                           ),
                                         ),
@@ -194,9 +178,10 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                 child: Text(
                                   'User Personal Details',
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
+                                      color: AllCoustomTheme.getTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE20,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ),
@@ -208,10 +193,10 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                         ),
                         _visible
                             ? Container(
-                                decoration: BoxDecoration(
+/*                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
                                   color: AllCoustomTheme.boxColor(),
-                                ),
+                                ),*/
                                 child: Form(
                                   key: _detailFormKey,
                                   child: Column(
@@ -220,18 +205,15 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                         height: 0.5,
                                       ),
                                       Container(
-                                        height: 5,
+                                        height: 3,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(2)),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                  color: Color(0xFFD8AF4F),
+                                                  width: 1.6, // Underline width
+                                                )
+                                            )
                                         ),
                                       ),
                                       Row(
@@ -242,23 +224,16 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                               child: TextFormField(
                                                 validator: _validateName,
                                                 controller: firstNameController,
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 keyboardType: TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
                                                   hintText: 'Enter First name here...',
                                                   hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                   labelText: 'First Name',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                                 ),
                                                 //controller: lastnameController,
                                                 onSaved: (value) {
@@ -282,23 +257,16 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                               child: TextFormField(
                                                 validator: _validateName,
                                                 controller: lastNameController,
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
+                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 keyboardType: TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
+                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
                                                   hintText: 'Enter Last name here...',
                                                   hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                   labelText: 'Last Name',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                                 ),
                                                 //controller: lastnameController,
                                                 onSaved: (value) {
@@ -320,11 +288,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                             padding: EdgeInsets.only(left: 14, top: 4),
                                             child: Text(
                                               "Date Of Birth :",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                              ),
+                                              style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                             ),
                                           ),
                                           Expanded(
@@ -333,37 +297,6 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                 child: datePicker,
                                               )
                                           ),
-/*                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 14, top: 4),
-                                              child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
-                                                keyboardType: TextInputType.text,
-                                                decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
-                                                  hintText: 'Enter DOB here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Date Of Birth',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                                //controller: lastnameController,
-                                                onSaved: (value) {
-                                                  setState(() {
-                                                    //lastnamesearchText = value;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ),*/
                                         ],
                                       ),
                                       Visibility(
@@ -396,18 +329,14 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                   return InputDecorator(
                                                     decoration: InputDecoration(
                                                       labelText: 'Country Of Residency',
-                                                      labelStyle: TextStyle(
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: ConstanceData.SIZE_TITLE20,
-                                                          color: AllCoustomTheme.getTextThemeColors()
-                                                      ),
+                                                      labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
                                                       errorText: state.hasError ? state.errorText : null,
                                                     ),
                                                     isEmpty: selectedCountry == '',
                                                     child: new DropdownButtonHideUnderline(
                                                       child: new DropdownButton(
                                                         value: selectedCountry,
-                                                        dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                                        dropdownColor: Colors.white,
                                                         isExpanded: true,
                                                         onChanged: (String newValue) {
                                                           setState(() {
@@ -419,10 +348,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                             value: value,
                                                             child: new Text(
                                                               value,
-                                                              style: TextStyle(
-                                                                color: Colors.white,
-                                                                fontSize: ConstanceData.SIZE_TITLE14,
-                                                              ),
+                                                              style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
                                                             ),
                                                           );
                                                         }).toList(),
@@ -493,14 +419,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                             decoration: BoxDecoration(
                                                               border: new Border.all(color: Colors.white, width: 1.5),
                                                               shape: BoxShape.circle,
-                                                              gradient: LinearGradient(
-                                                                begin: Alignment.topLeft,
-                                                                end: Alignment.bottomRight,
-                                                                colors: [
-                                                                  globals.buttoncolor1,
-                                                                  globals.buttoncolor2,
-                                                                ],
-                                                              ),
+                                                              color: Color(0xFFD8AF4F),
                                                             ),
                                                             child: Padding(
                                                               padding: const EdgeInsets.only(left: 3),
