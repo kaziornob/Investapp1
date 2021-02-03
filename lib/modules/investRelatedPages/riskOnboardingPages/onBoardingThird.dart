@@ -115,7 +115,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedCountry,
-          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+          dropdownColor: Colors.white,
           isExpanded: true,
           onChanged: (String newValue) {
             setState(() {
@@ -127,10 +127,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
               value: value,
               child: new Text(
                   value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                ),
+                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
               ),
             );
           }).toList(),
@@ -153,8 +150,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedSector,
-          dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-
+          dropdownColor: Colors.white,
           isExpanded: true,
           onChanged: (String newValue) {
             setState(() {
@@ -166,10 +162,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
               value: value,
               child: new Text(
                   value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                ),
+                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
               ),
             );
           }).toList(),
@@ -194,7 +187,8 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
         SafeArea(
             bottom: true,
             child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
               body: ModalProgressHUD(
                 inAsyncCall: _isInProgress,
                 opacity: 0,
@@ -230,35 +224,55 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                     child: Icon(
                                       Icons.arrow_back_ios,
                                       color:
-                                      AllCoustomTheme.getTextThemeColors(),
+                                      AllCoustomTheme.getTextThemeColor(),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 60,
-                              ),
                               Container(
-                                  height: MediaQuery.of(context).size.height * 0.12,
-                                  margin: EdgeInsets.only(bottom: 10.0),
-                                  child: Center(
-                                    child: new Image(
-                                        width: 200.0,
-                                        fit: BoxFit.fill,
-                                        image: new AssetImage('assets/logo.png')
+                                height: MediaQuery.of(context).size.height * 0.09,
+                                width: MediaQuery.of(context).size.width * 0.90,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        child: Center(
+                                          child: new Image(
+                                              width: 150.0,
+                                              fit: BoxFit.fill,
+                                              image: new AssetImage('assets/logo.png')
+                                          ),
+                                        )
                                     ),
-                                  )
-                              ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                                      padding: EdgeInsets.only(
+                                        bottom: 1, // space between underline and text
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                color: Color(0xFFD8AF4F),
+                                                width: 1.5, // Underline width
+                                              )
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
-
+                          SizedBox(
+                            height: 20,
+                          ),
                           Container(
                             margin: EdgeInsets.only(left: 15.0,right: 3.0),
                             child: Text(
                               "Which sector and geography pair do you definitely want in your portfolio for equities?",
                               style: new TextStyle(
-                                  fontFamily: "WorkSansSemiBold",
-                                  color: Color(0xFFFFFFFF), fontSize: 16.0,
+                                  color: Colors.black,
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  fontFamily: "Rosarivo",
                                   letterSpacing: 0.1
                               ),
                             ),
@@ -275,9 +289,10 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                   child: Text(
                                     'Country',
                                     style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                      fontSize: 16.0,
+                                      // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                      color: Colors.black,
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Rosarivo",
                                     ),
                                   ),
                                 ),
@@ -287,7 +302,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 Container(
                                   margin: EdgeInsets.only(left: 20.0,right: 20.0),
                                   decoration: new BoxDecoration(
-                                    color: AllCoustomTheme.boxColor(),
+                                    color: Colors.white54,
                                   ),
                                   child: getCountryDropDownList(),
                                 ),
@@ -302,9 +317,12 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                             child: Text(
                               'AND/OR',
                               style: new TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                fontSize: ConstanceData.SIZE_TITLE18,
+                                // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                  color: AllCoustomTheme.getTextThemeColor(),
+                                  letterSpacing: 0.3,
+                                  fontSize: ConstanceData.SIZE_TITLE18,
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.bold
                               ),
                             ),
                           ),
@@ -320,9 +338,10 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                   child: Text(
                                     'Sector',
                                     style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                      fontSize: 16.0,
+                                      // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                      color: Colors.black,
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Rosarivo",
                                     ),
                                   ),
                                 ),
@@ -332,7 +351,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 Container(
                                   margin: EdgeInsets.only(left: 20.0,right: 20.0),
                                   decoration: new BoxDecoration(
-                                    color: AllCoustomTheme.boxColor(),
+                                    color: Colors.white54,
                                   ),
                                   child: getSectorDropDownList(),
                                 ),
@@ -347,17 +366,17 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                             height: 30,
                             width: 100,
                             decoration: BoxDecoration(
-                              color: AllCoustomTheme.getThemeData().textSelectionColor,
-                              border: new Border.all(color: Colors.white, width: 1.5),
+                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                color: Color(0xFFD8AF4F)
                             ),
                             child: MaterialButton(
                               splashColor: Colors.grey,
                               child: Text(
                                 "ADD",
                                 style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
+                                  color: Colors.white,
                                   fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               onPressed: () async {
@@ -378,11 +397,12 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                             child: Text(
                               "Example of pairs: Indian Pharma, China biotech, Usa, Technology,Usa technology, Japan hardware tech",
                               style: new TextStyle(
-                                  fontFamily: "WorkSansSemiBold",
                                   // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                  color: Colors.grey,
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.1
+                                color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE15,
+                                fontFamily: "Roboto",
+                                fontStyle: FontStyle.normal,
+                                letterSpacing: 0.2
                               ),
                             ),
                           ),
@@ -398,9 +418,10 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                   child: Text(
                                     'Selections',
                                     style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                      fontSize: 16.0,
+                                      // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                      color: Colors.black,
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Rosarivo",
                                     ),
                                   ),
                                 ),
@@ -431,7 +452,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                                 child: Text(
                                                   '${selectionList[index]}',
                                                   style: TextStyle(
-                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      color: AllCoustomTheme.getTextThemeColor(),
                                                       fontSize: ConstanceData.SIZE_TITLE12,
                                                       fontStyle: FontStyle.normal,
                                                       fontWeight: FontWeight.normal,
@@ -520,7 +541,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.15,
+                            height: MediaQuery.of(context).size.height*0.16,
                             child: Container(
                                 margin: EdgeInsets.only(left: 10.0,right: 10.0,top: 10.0),
                                 child: ListView(
@@ -531,9 +552,10 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                       child: Text(
                                         "Don't worry if this question sounds like greek or latin to you. You can skip this question and change it later in settings whenever you want!!",
                                         style: new TextStyle(
-                                            fontFamily: "WorkSansSemiBold",
-                                            color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
-                                            fontSize: 16.0,
+                                            // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
+                                            color: Colors.black,
+                                            fontSize: ConstanceData.SIZE_TITLE16,
+                                            fontFamily: "Rosarivo",
                                             letterSpacing: 0.1
                                         ),
                                       ),
@@ -559,24 +581,17 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                         height: 35,
                                         width: 120,
                                         decoration: BoxDecoration(
-                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
                                         ),
                                         child: MaterialButton(
                                           splashColor: Colors.grey,
                                           child: Text(
                                             "SKIP",
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
                                           onPressed: () async
@@ -603,24 +618,17 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                         height: 35,
                                         width: 120,
                                         decoration: BoxDecoration(
-                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
                                         ),
                                         child: MaterialButton(
                                           splashColor: Colors.grey,
                                           child: Text(
                                             "NEXT",
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
                                           onPressed: () async

@@ -182,6 +182,7 @@ class _EmpStatusState extends State<EmpStatus> {
       children: <Widget>[
         Scaffold(
           // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isEmpStatusInProgress,
             opacity: 0,
@@ -189,7 +190,6 @@ class _EmpStatusState extends State<EmpStatus> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
-                color: AllCoustomTheme.getBodyContainerThemeColor(),
                 height: MediaQuery.of(context).size.height *1.02,
                 child: GestureDetector(
                   onTap: () {

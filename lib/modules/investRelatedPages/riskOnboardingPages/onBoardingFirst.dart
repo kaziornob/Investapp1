@@ -41,7 +41,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
   Widget getOptionList() {
     return Theme(
         data: Theme.of(context).copyWith(
-          unselectedWidgetColor: Colors.white,
+          unselectedWidgetColor: Colors.black,
         ),
         child:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,12 +51,13 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
               title: Text(
                 "Exchange Traded Fund's",
                 style: TextStyle(
-                    fontSize: 16.5,
-                    color: Color(0xFFFFFFFF),
-                    fontFamily: "Poppins"),
+                  color: Colors.black,
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                  fontFamily: "Roboto",
+                ),
               ),
               value: true,
-              activeColor: Color(0xFFffffff),
+              activeColor: Color(0xFFD8AF4F),
               onChanged: (value) {
                 print("Radio Tile pressed $value");
               },
@@ -66,12 +67,13 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
               title: Text(
                 "Mutual Fund's",
                 style: TextStyle(
-                    fontSize: 16.5,
-                    color: Color(0xFFFFFFFF),
-                    fontFamily: "Poppins"),
+                  color: Colors.black,
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                  fontFamily: "Roboto",
+                ),
               ),
               value: true,
-              activeColor: Color(0xFFffffff),
+              activeColor: Color(0xFFD8AF4F),
               onChanged: (value) {
                 print("Radio Tile pressed $value");
               },
@@ -81,12 +83,13 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
               title: Text(
                 "Individual Securities",
                 style: TextStyle(
-                    fontSize: 16.5,
-                    color: Color(0xFFFFFFFF),
-                    fontFamily: "Poppins"),
+                  color: Colors.black,
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                  fontFamily: "Roboto",
+                ),
               ),
               value: true,
-              activeColor: Color(0xFFffffff),
+              activeColor: Color(0xFFD8AF4F),
               onChanged: (value) {
                 print("Radio Tile pressed $value");
               },
@@ -105,7 +108,8 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
         SafeArea(
             bottom: true,
             child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
               body: ModalProgressHUD(
                 inAsyncCall: _isInProgress,
                 opacity: 0,
@@ -141,30 +145,47 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                     child: Icon(
                                       Icons.arrow_back_ios,
                                       color:
-                                      AllCoustomTheme.getTextThemeColors(),
+                                      AllCoustomTheme.getTextThemeColor(),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 60,
-                              ),
                               Container(
-                                  height: MediaQuery.of(context).size.height * 0.12,
-                                  margin: EdgeInsets.only(bottom: 10.0),
-                                  child: Center(
-                                    child: new Image(
-                                        width: 200.0,
-                                        fit: BoxFit.fill,
-                                        image: new AssetImage('assets/logo.png')
+                                height: MediaQuery.of(context).size.height * 0.09,
+                                width: MediaQuery.of(context).size.width * 0.90,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        child: Center(
+                                          child: new Image(
+                                              width: 150.0,
+                                              fit: BoxFit.fill,
+                                              image: new AssetImage('assets/logo.png')
+                                          ),
+                                        )
                                     ),
-                                  )
-                              ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                                      padding: EdgeInsets.only(
+                                        bottom: 1, // space between underline and text
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                color: Color(0xFFD8AF4F),
+                                                width: 1.5, // Underline width
+                                              )
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height*1.1,
+                            height: MediaQuery.of(context).size.height*1.17,
                             child: Column(
                               children: <Widget>[
                                 Container(
@@ -173,9 +194,10 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                     "In order to further personalize your Auro Light portfolio to a Pro version, we need a bit more information about your "
                                         "specific preferences and risk behaviour",
                                     style: new TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
-                                        color: Color(0xFFFFFFFF), fontSize: 16.0,
-                                        letterSpacing: 0.1
+                                      color: Colors.black,
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Rosarivo",
+                                      letterSpacing: 0.1
                                     ),
                                   ),
                                 ),
@@ -190,8 +212,9 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                               child: Text(
                                                 "Auro has the ability of investing in ETF's, MF's and individual securities!",
                                                 style: new TextStyle(
-                                                    fontFamily: "WorkSansSemiBold",
-                                                    color: Color(0xFFFFFFFF), fontSize: 16.0,
+                                                    color: Colors.black,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                                    fontFamily: "Rosarivo",
                                                     letterSpacing: 0.1
                                                 ),
                                               ),
@@ -201,8 +224,9 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                               child: Text(
                                                 "While we suggest you include all of these in your portfolio, if you specifically want to exclude any of these please uncheck the respective box?",
                                                 style: new TextStyle(
-                                                    fontFamily: "WorkSansSemiBold",
-                                                    color: Color(0xFFFFFFFF), fontSize: 16.0,
+                                                    color: Colors.black,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                                    fontFamily: "Rosarivo",
                                                     letterSpacing: 0.1
                                                 ),
                                               ),
@@ -218,19 +242,9 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                     )
                                 ),
                                 SizedBox(
-                                    height: MediaQuery.of(context).size.height*0.25,
+                                    height: MediaQuery.of(context).size.height*0.30,
                                     child: Container(
                                         margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                        /*decoration: new BoxDecoration(
-                                          color: widget.callingFrom=="Accredited Investor" ?  Color(0xFF000000) : Color(0xFFCD853F),
-                                          border: Border.all(
-                                            color: Color(0xFFfec20f),
-                                            width: 1,
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(2.0),
-                                          ),
-                                        ),*/
                                         child: ListView(
                                           physics: NeverScrollableScrollPhysics(),
                                           children: <Widget>[
@@ -239,9 +253,10 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                               child: Text(
                                                 "Don't worry if this question sounds like greek or latin to you. You can skip this question and change it later in settings whenever you want!!",
                                                 style: new TextStyle(
-                                                    fontFamily: "WorkSansSemiBold",
-                                                    color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
-                                                    fontSize: 16.0,
+                                                    // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
+                                                    color: Colors.black,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                                    fontFamily: "Rosarivo",
                                                     letterSpacing: 0.1
                                                 ),
                                               ),
@@ -264,24 +279,17 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                               height: 35,
                                               width: 120,
                                               decoration: BoxDecoration(
-                                                border: new Border.all(color: Colors.white, width: 1.5),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    globals.buttoncolor1,
-                                                    globals.buttoncolor2,
-                                                  ],
-                                                ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                  border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                                  color: Color(0xFFD8AF4F)
                                               ),
                                               child: MaterialButton(
                                                 splashColor: Colors.grey,
                                                 child: Text(
                                                   "SKIP",
                                                   style: TextStyle(
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
                                                   ),
                                                 ),
                                                 onPressed: () async
@@ -308,24 +316,17 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                               height: 35,
                                               width: 120,
                                               decoration: BoxDecoration(
-                                                border: new Border.all(color: Colors.white, width: 1.5),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    globals.buttoncolor1,
-                                                    globals.buttoncolor2,
-                                                  ],
-                                                ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                  border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                                  color: Color(0xFFD8AF4F)
                                               ),
                                               child: MaterialButton(
                                                 splashColor: Colors.grey,
                                                 child: Text(
                                                   "NEXT",
                                                   style: TextStyle(
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
                                                   ),
                                                 ),
                                                 onPressed: () async

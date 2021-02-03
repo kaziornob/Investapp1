@@ -36,7 +36,9 @@ class _InvestorTypeState extends State<InvestorType> {
     return Stack(
       children: <Widget>[
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+
           body: ModalProgressHUD(
             inAsyncCall: _isInvestorInProgress,
             opacity: 0,

@@ -92,14 +92,6 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-#    - family: RasaLight
-#      - fonts:
-#          - asset: fonts/Rasa-Light.ttf
-#
-#    - family: RosarivoRegular
-#                - fonts:
-#                - asset: fonts/Rosarivo-Regular.ttf
-
     - family: Ubuntu
       fonts:
         - asset: fonts/Ubuntu-Bold.ttf
@@ -110,12 +102,16 @@ flutter:
         - asset: fonts/Ubuntu-Medium.ttf
         - asset: fonts/Ubuntu-MediumItalic.ttf
         - asset: fonts/Ubuntu-Regular.ttf
-
+    - family: Rosarivo
+      fonts:
+          - asset: fonts/Rosarivo-Regular.ttf
+    - family: Rasa
+      fonts:
+        - asset: fonts/Rasa-Light.ttf
     - family: Roboto
       fonts:
         - asset: fonts/Roboto-Regular.ttf
-        - asset: fonts/Rosarivo-Regular.ttf
-        - asset: fonts/Rasa-Light.ttf
+          weight: 700
 
   #
   # For details regarding fonts from package dependencies,

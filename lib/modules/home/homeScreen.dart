@@ -302,7 +302,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Stack(
-          children: [
+          alignment: Alignment.bottomRight,
+          children: <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 4.0),
               child: CircleAvatar(
@@ -311,19 +312,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 backgroundColor: Colors.transparent,
               ),
             ),
-            Positioned(
-              top: 22,
-              left: 22,
-              child:  GestureDetector(
+            FractionalTranslation(
+              translation: Offset(0.4, 0.2),
+              child: GestureDetector(
                 onTap: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
-                  radius: 12.0,
+                  radius: 11.0,
                   child: Icon(
-                    Icons.sort,
-                    size: 20,
+                    Icons.sort_outlined,
+                    size: 16,
                     color: Colors.black,
                   ),
                 ),
@@ -381,10 +381,27 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           width: 5,
         ),
         //globe icon
-        Image(
-            height: 50,
-            width: 50,
-            image: new AssetImage('assets/appIcon.png')
+        Stack(
+          alignment: Alignment.bottomRight,
+          children: <Widget>[
+            Image(
+                height: 50,
+                width: 50,
+                image: new AssetImage('assets/appIcon.png')
+            ),
+            FractionalTranslation(
+              translation: Offset(-0.5, 0.0),
+              child: GestureDetector(
+                onTap: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.red,
+                  radius: 6.0,
+                ),
+              ),
+            )
+          ],
         ),
       ],
     );
@@ -417,53 +434,66 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           bottom: true,
           child: Scaffold(
             key: _scaffoldKey,
-            appBar: isSelect2 ? AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: AllCoustomTheme.getAppBarBackgroundThemeColors(),
-              title: _buildAppBar(context),
+            appBar: isSelect2 || isSelect4 || isSelect5 ?
+            PreferredSize(
+                preferredSize: Size.fromHeight(65.0),
+                child: AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: AllCoustomTheme.getAppBarBackgroundThemeColors(),
+                  title: _buildAppBar(context),
+                ),
             ) : null,
             bottomNavigationBar: Container(
-              height: 42,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        isSelect1
-                            ? Animator(
-                                duration: Duration(milliseconds: 500),
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: Container(
-                                    height: 2,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.iconButtonColor1,
-                                          globals.iconButtonColor2,
-                                        ],
-                                      ),
+              decoration: new BoxDecoration(
+                color: AllCoustomTheme.getBodyContainerThemeColor(),
+                border: Border.all(
+                  color: AllCoustomTheme.getSecondIconThemeColor(),
+                  width: 1.0,
+                ),
+              ),
+              height: 52,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            isSelect1
+                                ? Animator(
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Container(
+                                  height: 2.5,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        globals.iconButtonColor1,
+                                        globals.iconButtonColor2,
+                                      ],
                                     ),
                                   ),
                                 ),
-                              )
-                            : SizedBox(
-                                height: 2,
                               ),
-                        GestureDetector(
-                          onTap: () {
-                            selectFirst();
-                          },
-                          child: isSelect1
-                              ? Animator(
-                                  tween: Tween<double>(begin: 0.8, end: 1.1),
-                                  curve: Curves.decelerate,
-                                  cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                            )
+                                : SizedBox(
+                              height: 2,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                selectFirst();
+                              },
+                              child: isSelect1
+                                  ? Animator(
+                                tween: Tween<double>(begin: 0.8, end: 1.1),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
                                     scale: anim.value,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -473,156 +503,160 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                           alignment: Alignment.topCenter,
                                           child: Icon(
                                             Icons.home,
+                                            size: 23,
                                             color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
                                           ),
                                         ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
                                         Align(
-                                          alignment: Alignment.topCenter,
-                                          child: Text(
-                                            "Home",
-                                            style: TextStyle(
-                                                fontSize: ConstanceData.SIZE_TITLE14,
-                                                color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                                                fontFamily: "RasaLight",
-                                                fontStyle: FontStyle.normal,
-                                                letterSpacing: 0.2
-                                            ),
-                                          )
+                                            alignment: Alignment.topCenter,
+                                            child: Text(
+                                              "Home",
+                                              style: TextStyle(
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+                                                  color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                                                  fontFamily: "Rasa",
+                                                  fontStyle: FontStyle.normal,
+                                                  letterSpacing: 0.2
+                                              ),
+                                            )
                                         ),
                                       ],
                                     )
-                                  ),
-                                )
-                              : firstAnimation(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        isSelect2
-                            ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
-                              height: 2,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
                                 ),
-                              ),
+                              )
+                                  : firstAnimation(),
                             ),
-                          ),
-                        )
-                            : SizedBox(
-                          height: 2,
+                          ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            selectSecond();
-                          },
-                          child: isSelect2
-                              ? Animator(
-                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: secondAnimation(),
-                            ),
-                          )
-                              : secondAnimation(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        isSelect3
-                            ? Animator(
-                                duration: Duration(milliseconds: 500),
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: Container(
-                                    height: 2,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.iconButtonColor1,
-                                          globals.iconButtonColor2,
-                                        ],
-                                      ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            isSelect2
+                                ? Animator(
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Container(
+                                  height: 2.5,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        globals.iconButtonColor1,
+                                        globals.iconButtonColor2,
+                                      ],
                                     ),
                                   ),
                                 ),
-                              )
-                            : SizedBox(
-                                height: 2,
                               ),
-                        GestureDetector(
-                          onTap: () {
-                            selectThird();
-                          },
-                          child: isSelect3
-                              ? Animator(
-                                  tween: Tween<double>(begin: 0.8, end: 1.1),
-                                  curve: Curves.decelerate,
-                                  cycles: 1,
-                                  builder: (anim) => Transform.scale(
-                                    scale: anim.value,
-                                    child: thirdAnimation(),
-                                  ),
-                                )
-                              : thirdAnimation(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        isSelect5
-                            ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
+                            )
+                                : SizedBox(
                               height: 2,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                selectSecond();
+                              },
+                              child: isSelect2
+                                  ? Animator(
+                                tween: Tween<double>(begin: 0.8, end: 1.1),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: secondAnimation(),
+                                ),
+                              )
+                                  : secondAnimation(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            isSelect3
+                                ? Animator(
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Container(
+                                  height: 2.5,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        globals.iconButtonColor1,
+                                        globals.iconButtonColor2,
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
+                            )
+                                : SizedBox(
+                              height: 2,
                             ),
-                          ),
-                        )
-                            : SizedBox(
-                          height: 2,
+                            GestureDetector(
+                              onTap: () {
+                                selectThird();
+                              },
+                              child: isSelect3
+                                  ? Animator(
+                                tween: Tween<double>(begin: 0.8, end: 1.1),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: thirdAnimation(),
+                                ),
+                              )
+                                  : thirdAnimation(),
+                            ),
+                          ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            selectFive();
-                          },
-                          child: isSelect5
-                              ? Animator(
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            isSelect5
+                                ? Animator(
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Container(
+                                  height: 2.5,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        globals.iconButtonColor1,
+                                        globals.iconButtonColor2,
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                                : SizedBox(
+                              height: 2,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                selectFive();
+                              },
+                              child: isSelect5
+                                  ? Animator(
                                 tween: Tween<double>(begin: 0.8, end: 1.1),
                                 curve: Curves.decelerate,
                                 cycles: 1,
@@ -631,59 +665,64 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   child: fifthAnimation(),
                                 ),
                               )
-                              : fifthAnimation(),
+                                  : fifthAnimation(),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        isSelect4
-                            ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
-                              height: 2,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            isSelect4
+                                ? Animator(
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Container(
+                                  height: 2.5,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        globals.iconButtonColor1,
+                                        globals.iconButtonColor2,
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
+                            )
+                                : SizedBox(
+                              height: 2,
                             ),
-                          ),
-                        )
-                            : SizedBox(
-                          height: 2,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            selectFourth();
-                          },
-                          child: isSelect4
-                              ? Animator(
-                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: fourthAnimation(),
+                            GestureDetector(
+                              onTap: () {
+                                selectFourth();
+                              },
+                              child: isSelect4
+                                  ? Animator(
+                                tween: Tween<double>(begin: 0.8, end: 1.1),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: fourthAnimation(),
+                                ),
+                              )
+                                  : fourthAnimation(),
                             ),
-                          )
-                              : fourthAnimation(),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  SizedBox(
+                    height: 5,
+                  )
                 ],
-              ),
+              )
             ),
             drawer: SizedBox(
               width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
@@ -714,20 +753,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               opacity: 0,
               progressIndicator: SizedBox(),
               child: Container(
-                color: isSelect2 ? AllCoustomTheme.getPageBackgroundThemeColor() : AllCoustomTheme.getThemeData().primaryColor,
+                // color: isSelect2 || isSelect5 ? AllCoustomTheme.getPageBackgroundThemeColor() : AllCoustomTheme.getThemeData().primaryColor,
+                color: isSelect2 ? AllCoustomTheme.getPageBackgroundThemeColor() :
+                (isSelect5 || isSelect4 ? AllCoustomTheme.getBodyContainerThemeColor() : AllCoustomTheme.getThemeData().primaryColor
+                ),
                 height: height,
                 child: Column(
                   children: <Widget>[
-                    Visibility(
-                      visible: isSelect2,
-                      child: SizedBox(
-                          height: 6,
-                        ),
-                    ),
                     SizedBox(
-                      height: isSelect2 ? 2 : MediaQuery.of(context).padding.top,
+                      height: isSelect2 || isSelect5 || isSelect4 ? 2 : MediaQuery.of(context).padding.top,
                       child: Visibility(
-                        visible: isSelect2,
+                        visible: isSelect2 || isSelect5 || isSelect4,
                         child: Container(
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
@@ -765,8 +801,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           alignment: Alignment.topCenter,
           child: Icon(
             Icons.home,
+            size: 23,
             color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
           ),
+        ),
+        SizedBox(
+          height: 2,
         ),
         Align(
           alignment: Alignment.topCenter,
@@ -775,7 +815,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             style: TextStyle(
                 fontSize: ConstanceData.SIZE_TITLE14,
                 color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "RasaLight",
+                fontFamily: "Rasa",
                 fontStyle: FontStyle.normal,
                 letterSpacing: 0.2
             ),
@@ -794,8 +834,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           alignment: Alignment.topCenter,
           child: Icon(
             FontAwesomeIcons.coins,
+            size: 20,
             color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
           ),
+        ),
+        SizedBox(
+          height: 2,
         ),
         Align(
           alignment: Alignment.topCenter,
@@ -804,7 +848,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             style: TextStyle(
                 fontSize: ConstanceData.SIZE_TITLE14,
                 color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "RasaLight",
+                fontFamily: "Rasa",
                 fontStyle: FontStyle.normal,
                 letterSpacing: 0.2
             ),
@@ -836,8 +880,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           alignment: Alignment.topCenter,
           child: Icon(
             FontAwesomeIcons.handshake,
+            size: 20,
             color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
           ),
+        ),
+        SizedBox(
+          height: 2,
         ),
         Align(
           alignment: Alignment.topCenter,
@@ -846,7 +894,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             style: TextStyle(
                 fontSize: ConstanceData.SIZE_TITLE14,
                 color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "RasaLight",
+                fontFamily: "Rasa",
                 fontStyle: FontStyle.normal,
                 letterSpacing: 0.2
             ),
@@ -866,8 +914,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           alignment: Alignment.topCenter,
           child: Icon(
             FontAwesomeIcons.globe,
+            size: 20,
             color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
           ),
+        ),
+        SizedBox(
+          height: 2,
         ),
         Align(
           alignment: Alignment.topCenter,
@@ -876,7 +928,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             style: TextStyle(
                 fontSize: ConstanceData.SIZE_TITLE14,
                 color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "RasaLight",
+                fontFamily: "Rasa",
                 fontStyle: FontStyle.normal,
                 letterSpacing: 0.2
             ),
@@ -2128,7 +2180,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 50.0,right: 50.0),
+                      margin: EdgeInsets.only(left: 30.0,right: 30.0),
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
@@ -2296,7 +2348,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                      margin: EdgeInsets.only(left: 50.0,right: 50.0),
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
@@ -2574,7 +2626,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             padding: const EdgeInsets.only(right: 16, left: 16),
             child: Row(
               children: <Widget>[
-                GestureDetector(
+                Padding(
+                    padding: EdgeInsets.only(left: 230),
+                    child: Text(
+                      "Ask question",
+                      style: TextStyle(
+                        color: AllCoustomTheme.getSeeMoreThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    )
+                ),
+/*                GestureDetector(
                   onTap: () {
                     _scaffoldKey.currentState.openDrawer();
                   },
@@ -2582,8 +2645,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     Icons.sort,
                     color: AllCoustomTheme.getsecoundTextThemeColor(),
                   ),
-                ),
-                Container(
+                ),*/
+/*                Container(
                   margin: EdgeInsets.only(left: 150),
                   height: 30,
                   width: 150,
@@ -2609,14 +2672,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       );
                     },
                   ),
-                ),
+                ),*/
               ],
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
-          Padding(
+/*          Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2663,25 +2726,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                 ),
-/*                SizedBox(
-                  width: 4,
-                ),
-                Container(
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: AllCoustomTheme.boxColor(),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Q&A',
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                      ),
-                    ),
-                  )
-                ),*/
                 SizedBox(
                   width: 4,
                 ),
@@ -2697,7 +2741,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           SizedBox(
             height: 4,
-          ),
+          ),*/
           Container(
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(left: 10.0,right: 3.0),
@@ -2712,9 +2756,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   {
                     selectedTabIndex = index;
                   },
-                  // labelColor: StyleTheme.Colors.AppBarTabTextColor,
+                  labelColor: AllCoustomTheme.getTextThemeColor(),
                   labelStyle: TextStyle(fontSize: 14.0,letterSpacing: 0.2),
-                  // indicatorColor: StyleTheme.Colors.AppBarSelectedTabLineColor,
+                  indicatorColor: AllCoustomTheme.getTextThemeColor(),
                   indicatorWeight: 4.0,
                   // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
                   tabs: <Widget>[
@@ -2869,8 +2913,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 child: Text(
                   'Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ',
                   style: TextStyle(
-                    color: AllCoustomTheme.getTextThemeColors(),
-                    fontSize: ConstanceData.SIZE_TITLE18,
+                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: 0.2
                   ),
                 ),
               )
@@ -2896,7 +2943,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               child: new Text(
                 "10K",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: ConstanceData.SIZE_TITLE14,
                 ),
               ),
@@ -2908,14 +2955,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               margin: EdgeInsets.only(left: 20.0),
               child: Icon(
                 Icons.comment_bank_sharp,
-                color: AllCoustomTheme.getTextThemeColors(),
+                color: AllCoustomTheme.getTextThemeColor(),
               ),
             ),
             Container(
               child: new Text(
                 "10",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: ConstanceData.SIZE_TITLE14,
                 ),
               ),
@@ -2927,14 +2974,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               margin: EdgeInsets.only(left: 20.0),
               child: Icon(
                 Icons.remove_red_eye_outlined,
-                color: AllCoustomTheme.getTextThemeColors(),
+                color: AllCoustomTheme.getTextThemeColor(),
               ),
             ),
             Container(
               child: new Text(
                 "10",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: ConstanceData.SIZE_TITLE14,
                 ),
               ),
@@ -2946,14 +2993,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               margin: EdgeInsets.only(left: 20.0),
               child: Icon(
                 Icons.add,
-                color: AllCoustomTheme.getTextThemeColors(),
+                color: AllCoustomTheme.getTextThemeColor(),
               ),
             ),
             Container(
               child: new Text(
                 "100",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: ConstanceData.SIZE_TITLE14,
                 ),
               ),
@@ -2973,7 +3020,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               child: new Text(
                 "7",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: ConstanceData.SIZE_TITLE14,
                 ),
               ),
@@ -3009,7 +3056,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         child: Text(
                           '${tagItemList[index]}',
                           style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
+                              color: AllCoustomTheme.getTextThemeColor(),
                               fontSize: ConstanceData.SIZE_TITLE16,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.normal,
@@ -3036,7 +3083,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             'Coming Soon... ',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
+              color: AllCoustomTheme.getTextThemeColor(),
               fontSize: ConstanceData.SIZE_TITLE18,
             ),
           ),
@@ -3053,7 +3100,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             'Coming Soon... ',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
+              color: AllCoustomTheme.getTextThemeColor(),
               fontSize: ConstanceData.SIZE_TITLE18,
             ),
           ),
@@ -3070,7 +3117,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             'Coming Soon... ',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
+              color: AllCoustomTheme.getTextThemeColor(),
               fontSize: ConstanceData.SIZE_TITLE18,
             ),
           ),
@@ -3765,8 +3812,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   Text(
                     titleCase(data[index]['name']),
                     style: new TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
+                      color: AllCoustomTheme.getTextThemeColors(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      package: 'Roboto-Regular',
                     ),
                   ),
                   GestureDetector(
@@ -3898,7 +3947,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.only(right: 16, left: 16),
             child: Row(
               children: <Widget>[
@@ -3922,9 +3971,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         'Track Record',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontWeight: FontWeight.bold,
-                          fontSize: ConstanceData.SIZE_TITLE20,
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE20,
+                            fontFamily: "Rosarivo",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.normal,
+                            letterSpacing: 0.1
                         ),
                       ),
                     ),
@@ -3935,10 +3987,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           SizedBox(
             height: 40,
-          ),
+          ),*/
 
           //search box
-          Padding(
+/*          Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -3977,36 +4029,40 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
               ],
             ),
-          ),
+          ),*/
           SizedBox(
             height: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16,right: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: 30,
+          Container(
+              height: 30,
 /*                    decoration: BoxDecoration(
                       color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
                     ),*/
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        'SCOREBOARD',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          // color: AllCoustomTheme.getsecoundTextThemeColor(),
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE18,
-                        ),
-                      ),
-                    )
+              child: Padding(
+                padding: EdgeInsets.only(top: 5.0),
+                child: Text(
+                  'SCOREBOARD',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AllCoustomTheme.getHeadingThemeColors(),
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                    fontFamily: "Rosarivo",
                   ),
                 ),
-              ],
+              )
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 110.0,right: 110.0),
+            padding: EdgeInsets.only(
+              bottom: 3, // space between underline and text
+            ),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                      color: AllCoustomTheme.getHeadingThemeColors(),
+                      width: 1.0, // Underline width
+                    )
+                )
             ),
           ),
           SizedBox(
@@ -4051,8 +4107,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               '150',
                               textAlign: TextAlign.center,
                               style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColor(),
                                 fontSize: ConstanceData.SIZE_TITLE16,
-                                color: AllCoustomTheme.getTextThemeColors(),
+                                fontFamily: "Roboto",
+                                package: 'Roboto-Regular',
                               ),
                             ),
                           ),
@@ -4061,8 +4119,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               'coins',
                               textAlign: TextAlign.center,
                               style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColor(),
                                 fontSize: ConstanceData.SIZE_TITLE16,
-                                color: AllCoustomTheme.getTextThemeColors(),
+                                fontFamily: "Roboto",
+                                package: 'Roboto-Regular',
                               ),
                             ),
                           )
@@ -4093,8 +4153,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             child: Text(
                               'EASY',
                               style: TextStyle(
-                                fontSize: ConstanceData.SIZE_TITLE16,
                                 color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                fontFamily: "Roboto",
+                                package: 'Roboto-Regular',
                               ),
                             ),
                           )
@@ -4125,9 +4187,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           child: Text(
                             'INTERMEDIATE',
                             style: TextStyle(
-                              fontSize: ConstanceData.SIZE_TITLE14,
-                              fontWeight: FontWeight.bold,
                               color: AllCoustomTheme.getsecoundTextThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE15,
+                              fontFamily: "Roboto",
+                              package: 'Roboto-Regular',
                             ),
                           ),
                         )
@@ -4153,9 +4216,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           child: Text(
                             'HARD',
                             style: TextStyle(
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                              fontWeight: FontWeight.bold,
                               color: AllCoustomTheme.getsecoundTextThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE16,
+                              fontFamily: "Roboto",
+                              package: 'Roboto-Regular',
                             ),
                           ),
                         )
@@ -4188,13 +4252,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.only(top: 2.0),
+                        padding: EdgeInsets.only(top: 4.0),
                         child: Text(
                           "Today's progress: 1 concept",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE18,
+                            color: AllCoustomTheme.getSubHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
                           ),
                         ),
                       )
@@ -4232,7 +4298,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     child: Container(
                         height: 30,
                         decoration: BoxDecoration(
-                          color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                          color: AllCoustomTheme.getSeeMoreThemeColor(),
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(top: 5.0),
@@ -4240,8 +4306,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             'INCREASE YOUR SCORE',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: AllCoustomTheme.getsecoundTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
+                              color: AllCoustomTheme.getTextThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE15,
+                              fontFamily: "Roboto",
                             ),
                           ),
                         )
@@ -4256,27 +4323,42 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16,right: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                      height: 30,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 5.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height*0.06,
+              child: ListView(
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Center(
                         child: Text(
                           'Ankur’s Investment Track Record',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
+                            color: Color(0xFFD8AF4F),
                             fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
                           ),
                         ),
                       )
                   ),
-                ),
-              ],
-            ),
+                  Container(
+                    margin: EdgeInsets.only(left: 30.0,right: 30.0),
+                    padding: EdgeInsets.only(
+                      bottom: 3, // space between underline and text
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                              color: AllCoustomTheme.getHeadingThemeColors(),
+                              width: 1.0, // Underline width
+                            )
+                        )
+                    ),
+                  ),
+                ],
+              ),
+            )
           ),
           SizedBox(
             height: 10,
@@ -4338,13 +4420,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           {
                             selectedTabIndex = index;
                           },
-                          // labelColor: StyleTheme.Colors.AppBarTabTextColor,
-                          labelStyle: TextStyle(fontSize: 14.0,letterSpacing: 0.2),
-                          // indicatorColor: StyleTheme.Colors.AppBarSelectedTabLineColor,
+                          labelColor: AllCoustomTheme.getTextThemeColor(),
+                          labelStyle: TextStyle(
+                              fontSize: 16.0,letterSpacing: 0.2
+                          ),
+                          indicatorColor: AllCoustomTheme.getTextThemeColor(),
                           indicatorWeight: 4.0,
                           // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
                           tabs: <Widget>[
-                            new Tab(text: "Overall"),
+                            new Tab(
+                                text: "Overall",
+                            ),
                             new Tab(text: "Weekly"),
                             new Tab(text: ""),
                             new Tab(text: ""),
@@ -4367,7 +4453,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 SfCircularChart(
                                     legend: Legend(
                                         isVisible: true,
-                                        textStyle: TextStyle(color: AllCoustomTheme.getTextThemeColors()),
+                                        textStyle: TextStyle(color: AllCoustomTheme.getTextThemeColor()),
                                         alignment: ChartAlignment.center,
                                         position: LegendPosition.bottom,
                                         overflowMode: LegendItemOverflowMode.wrap,
@@ -4406,8 +4492,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                                 '800',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
                                                   fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                  fontFamily: "Roboto",
+                                                  package: 'Roboto-Regular',
                                                 ),
                                               ),
                                             ),
@@ -4416,8 +4504,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                                 'coins',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
                                                   fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                  fontFamily: "Roboto",
+                                                  package: 'Roboto-Regular',
                                                 ),
                                               ),
                                             )
@@ -4551,26 +4641,53 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 20,
           ),
           Padding(
+              padding: const EdgeInsets.only(left: 16,right: 5.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.06,
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Inception-To-Date League',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFFD8AF4F),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Roboto",
+                              package: 'Roboto-Regular',
+                            ),
+                          ),
+                        )
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 130.0),
+                      padding: EdgeInsets.only(
+                        bottom: 3, // space between underline and text
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              )
+                          )
+                      ),
+                    ),
+                  ],
+                ),
+              )
+          ),
+          Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        'Inception-To-Date League',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE18,
-                        ),
-                      ),
-                    ),
-                  ),
                   SizedBox(
-                    width: 50,
+                    width: 160,
                   ),
                   Expanded(
                       child: new FormField(
@@ -4578,14 +4695,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           return InputDecorator(
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
                               ),
-                              labelStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: ConstanceData.SIZE_TITLE20,
-                                  color: AllCoustomTheme.getTextThemeColors()
-                              ),
-
+                              labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
                               errorText: state.hasError ? state.errorText : null,
                             ),
                             isEmpty: selectedInceptionLeague == '',
@@ -4596,7 +4708,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     height: 16.0,
                                     child: new DropdownButton(
                                       value: selectedInceptionLeague,
-                                      dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                      dropdownColor: Colors.white,
                                       isExpanded: true,
                                       onChanged: (String newValue) {
                                         setState(() {
@@ -4610,10 +4722,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                           value: value,
                                           child: new Text(
                                             value,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-                                            ),
+                                              style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
                                           ),
                                         );
                                       }).toList(),
@@ -4624,12 +4733,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           );
                         },
                       )
-                  )
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
                 ],
               ),
           ),
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),
@@ -4655,27 +4767,43 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16,right: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                      height: 30,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 5.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height*0.06,
+              child: ListView(
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
                         child: Text(
                           'Weekly Auro Streak',
-                          textAlign: TextAlign.left,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
+                            color: Color(0xFFD8AF4F),
                             fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
                           ),
                         ),
                       )
                   ),
-                ),
-              ],
-            ),
+                  Container(
+                    margin: EdgeInsets.only(right: 180.0),
+                    padding: EdgeInsets.only(
+                      bottom: 3, // space between underline and text
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                              color: AllCoustomTheme.getHeadingThemeColors(),
+                              width: 1.0, // Underline width
+                            )
+                        )
+                    ),
+                  ),
+                ],
+              ),
+            )
           ),
           SizedBox(
             height: 15,
@@ -4730,9 +4858,50 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ],
             ),
           ),
+
           //weekly league
           SizedBox(
-            height: 30,
+            height: 15,
+          ),
+          Padding(
+              padding: const EdgeInsets.only(left: 16,right: 5.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.06,
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Weekly League',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFFD8AF4F),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Roboto",
+                              package: 'Roboto-Regular',
+                            ),
+                          ),
+                        )
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 210.0),
+                      padding: EdgeInsets.only(
+                        bottom: 3, // space between underline and text
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              )
+                          )
+                      ),
+                    ),
+                  ],
+                ),
+              )
           ),
           Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),
@@ -4740,21 +4909,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 5.0),
-                    child: Text(
-                      'Weekly League',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: ConstanceData.SIZE_TITLE18,
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(
-                  width: 50,
+                  width: 110,
                 ),
                 Expanded(
                     child: new FormField(
@@ -4762,13 +4918,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         return InputDecorator(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
                             ),
-                            labelStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: ConstanceData.SIZE_TITLE20,
-                                color: AllCoustomTheme.getTextThemeColors()
-                            ),
+                            labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
 
                             errorText: state.hasError ? state.errorText : null,
                           ),
@@ -4780,7 +4932,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   height: 16.0,
                                   child: new DropdownButton(
                                     value: selectedWeeklyLeague,
-                                    dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                    dropdownColor: Colors.white,
                                     isExpanded: true,
                                     onChanged: (String newValue) {
                                       setState(() {
@@ -4795,10 +4947,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                         value: value,
                                         child: new Text(
                                           value,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ConstanceData.SIZE_TITLE14,
-                                          ),
+                                          style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
                                         ),
                                       );
                                     }).toList(),
@@ -4809,12 +4958,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         );
                       },
                     )
-                )
+                ),
+                SizedBox(
+                  width: 5,
+                ),
               ],
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),

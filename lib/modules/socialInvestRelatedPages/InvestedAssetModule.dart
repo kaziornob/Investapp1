@@ -129,7 +129,38 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                             ),
                           ),
                         ),
-                        Expanded(
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          width: MediaQuery.of(context).size.width * 0.80,
+                          child: Column(
+                            children: [
+                              Container(
+                                  child: Center(
+                                    child: new Image(
+                                        width: 150.0,
+                                        fit: BoxFit.fill,
+                                        image: new AssetImage('assets/logo.png')
+                                    ),
+                                  )
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 60.0,right: 60.0),
+                                padding: EdgeInsets.only(
+                                  bottom: 1, // space between underline and text
+                                ),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                          color: Color(0xFFD8AF4F),
+                                          width: 1.5, // Underline width
+                                        )
+                                    )
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        /*Expanded(
                           child: Animator(
                             duration: Duration(milliseconds: 500),
                             curve: Curves.decelerate,
@@ -149,7 +180,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                               ),
                             ),
                           ),
-                        )
+                        )*/
                       ],
                     ),
                     SizedBox(

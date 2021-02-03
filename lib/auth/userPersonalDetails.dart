@@ -73,6 +73,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
       children: <Widget>[
         Scaffold(
           // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isDetailInProgress,
             opacity: 0,
@@ -80,7 +81,6 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
-                color: AllCoustomTheme.getBodyContainerThemeColor(),
                 height: MediaQuery.of(context).size.height,
                 child: GestureDetector(
                   onTap: () {

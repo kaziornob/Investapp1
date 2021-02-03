@@ -47,7 +47,7 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
         SafeArea(
             bottom: true,
             child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
               body: ModalProgressHUD(
                 inAsyncCall: _isInProgress,
                 opacity: 0,
@@ -83,25 +83,42 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                     child: Icon(
                                       Icons.arrow_back_ios,
                                       color:
-                                      AllCoustomTheme.getTextThemeColors(),
+                                      AllCoustomTheme.getTextThemeColor(),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 60,
-                              ),
                               Container(
-                                  height: MediaQuery.of(context).size.height * 0.12,
-                                  margin: EdgeInsets.only(bottom: 10.0),
-                                  child: Center(
-                                    child: new Image(
-                                        width: 200.0,
-                                        fit: BoxFit.fill,
-                                        image: new AssetImage('assets/logo.png')
+                                height: MediaQuery.of(context).size.height * 0.09,
+                                width: MediaQuery.of(context).size.width * 0.90,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        child: Center(
+                                          child: new Image(
+                                              width: 150.0,
+                                              fit: BoxFit.fill,
+                                              image: new AssetImage('assets/logo.png')
+                                          ),
+                                        )
                                     ),
-                                  )
-                              ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                                      padding: EdgeInsets.only(
+                                        bottom: 1, // space between underline and text
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                color: Color(0xFFD8AF4F),
+                                                width: 1.5, // Underline width
+                                              )
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                           Container(
@@ -112,9 +129,10 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                 child: Text(
                                   "What will be your first deposit in to your Auro account?",
                                   style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                      fontSize: 16,
+                                      // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                      color: Colors.black,
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Rosarivo",
                                       letterSpacing: 0.1
                                   ),
                                 ),
@@ -139,9 +157,10 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                         child: Text(
                                           "One Off Deposit",
                                           style: new TextStyle(
-                                              fontFamily: "WorkSansSemiBold",
-                                              color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                              fontSize: 16.0,
+                                              // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                              color: Colors.black,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontFamily: "Rosarivo",
                                               letterSpacing: 0.1
                                           ),
                                         ),
@@ -151,11 +170,11 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                         height: MediaQuery.of(context).size.height*0.05,
                                         width: MediaQuery.of(context).size.width*0.44,
                                         decoration: new BoxDecoration(
-                                          color: AllCoustomTheme.boxColor(),
+                                          color: AllCoustomTheme.getTextThemeColors(),
                                         ),
                                         child: TextFormField(
                                           style: TextStyle(
-                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            color: AllCoustomTheme.getTextThemeColor(),
                                             fontSize: ConstanceData.SIZE_TITLE14,
                                           ),
                                           initialValue: "",
@@ -172,9 +191,9 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                   width: MediaQuery.of(context).size.width*0.15,
                                   margin: EdgeInsets.only(left: 35.0,right: 5.0,bottom: 10.0),
                                   decoration: new BoxDecoration(
-                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
                                     border: Border.all(
-                                      color: Color(0xFFFFFFFF),
+                                      color: AllCoustomTheme.getSeeMoreThemeColor(),
                                       width: 1.2,
                                     ),
                                     borderRadius: BorderRadius.all(
@@ -184,7 +203,7 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                   child: Icon(
                                     Icons.add,
                                     size: 30.0,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Container(
@@ -200,9 +219,10 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                         child: Text(
                                           "Monthly Deposit",
                                           style: new TextStyle(
-                                              fontFamily: "WorkSansSemiBold",
-                                              color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                              fontSize: 16.0,
+                                              // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                              color: Colors.black,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontFamily: "Rosarivo",
                                               letterSpacing: 0.1
                                           ),
                                         ),
@@ -212,11 +232,11 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                         height: MediaQuery.of(context).size.height*0.05,
                                         width: MediaQuery.of(context).size.width*0.44,
                                         decoration: new BoxDecoration(
-                                          color: AllCoustomTheme.boxColor(),
+                                          color: AllCoustomTheme.getTextThemeColors(),
                                         ),
                                         child: TextFormField(
                                           style: TextStyle(
-                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            color: AllCoustomTheme.getTextThemeColor(),
                                             fontSize: ConstanceData.SIZE_TITLE14,
                                           ),
                                           initialValue: "",
@@ -236,24 +256,14 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                               height: MediaQuery.of(context).size.height*0.13,
                               width: MediaQuery.of(context).size.width,
                               margin: EdgeInsets.only(top: 20.0,bottom: 14.0,left: 10.0,right: 10.0),
-                              /*decoration: new BoxDecoration(
-                                color: Color(0xFFFFFFFF),
-                                border: Border.all(
-                                  color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                  width: 1.2,
-                                ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(2.0),
-                                ),
-                              ),*/
                               child: Padding(
                                 padding: EdgeInsets.only(top: 10.0,left: 10.0,right: 10.0),
                                 child: Text(
                                   "If you make a monthly deposit of X in addition to your initial deposit, you retums will increase by Y%!",
                                   style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: 16.0,
+                                      color: Colors.black,
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Rosarivo",
                                       letterSpacing: 0.1
                                   ),
                                 ),
@@ -274,24 +284,14 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                               height: MediaQuery.of(context).size.height*0.15,
                               width: MediaQuery.of(context).size.width,
                               margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                              /*decoration: new BoxDecoration(
-                                color: Color(0xFFFFFFFF),
-                                border: Border.all(
-                                  color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                  width: 1.2,
-                                ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(2.0),
-                                ),
-                              ),*/
                               child: Padding(
                                 padding: EdgeInsets.only(left: 10.0,right: 10.0),
                                 child: Text(
                                   "Solid line: Retum with regular monthly investments Dotted Line: Return with only initial investment Y-axis: Years of investment",
                                   style: new TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Rosarivo",
                                       letterSpacing: 0.1
                                   ),
                                 ),
@@ -314,24 +314,17 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                         height: 35,
                                         width: 120,
                                         decoration: BoxDecoration(
-                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
                                         ),
                                         child: MaterialButton(
                                           splashColor: Colors.grey,
                                           child: Text(
                                             "SKIP",
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
                                           onPressed: () async
@@ -358,24 +351,17 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                         height: 35,
                                         width: 120,
                                         decoration: BoxDecoration(
-                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
                                         ),
                                         child: MaterialButton(
                                           splashColor: Colors.grey,
                                           child: Text(
                                             "NEXT",
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
                                           onPressed: () async

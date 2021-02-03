@@ -54,6 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       children: <Widget>[
         Scaffold(
           // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
@@ -61,7 +62,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
-                color: AllCoustomTheme.getBodyContainerThemeColor(),
                 height: MediaQuery.of(context).size.height*1.32,
                 child: GestureDetector(
                   onTap: () {

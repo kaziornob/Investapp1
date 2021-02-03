@@ -98,21 +98,8 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isRadioQusInProgress,
             opacity: 0,
@@ -206,7 +193,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     SizedBox(
-                                      height: 35,
+                                      height: 37,
                                       child: Animator(
                                         tween: Tween<double>(begin: 0.8, end: 1.1),
                                         curve: Curves.easeInToLinear,
@@ -214,7 +201,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
                                         builder: (anim) => Transform.scale(
                                           scale: anim.value,
                                           child: Container(
-                                            height: 35,
+                                            height: 37,
                                             width: 130,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.all(Radius.circular(20)),

@@ -48,7 +48,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
   Widget getOptionList() {
     return Theme(
         data: Theme.of(context).copyWith(
-          unselectedWidgetColor: Colors.white,
+          unselectedWidgetColor: Colors.black,
         ),
         child:  Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +60,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
 
               child: Checkbox(
                 value: option["checked"],
-                activeColor: Color(0xff696969),
+                activeColor: Color(0xFFD8AF4F),
                 onChanged: (newValue) {
                   setState(() {
                     option["checked"] = newValue;
@@ -83,7 +83,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
         SafeArea(
             bottom: true,
             child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
               body: ModalProgressHUD(
                 inAsyncCall: _isInProgress,
                 opacity: 0,
@@ -119,25 +119,42 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                     child: Icon(
                                       Icons.arrow_back_ios,
                                       color:
-                                      AllCoustomTheme.getTextThemeColors(),
+                                      AllCoustomTheme.getTextThemeColor(),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 60,
-                              ),
                               Container(
-                                  height: MediaQuery.of(context).size.height * 0.12,
-                                  margin: EdgeInsets.only(bottom: 10.0),
-                                  child: Center(
-                                    child: new Image(
-                                        width: 200.0,
-                                        fit: BoxFit.fill,
-                                        image: new AssetImage('assets/logo.png')
+                                height: MediaQuery.of(context).size.height * 0.09,
+                                width: MediaQuery.of(context).size.width * 0.90,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        child: Center(
+                                          child: new Image(
+                                              width: 150.0,
+                                              fit: BoxFit.fill,
+                                              image: new AssetImage('assets/logo.png')
+                                          ),
+                                        )
                                     ),
-                                  )
-                              ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                                      padding: EdgeInsets.only(
+                                        bottom: 1, // space between underline and text
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                color: Color(0xFFD8AF4F),
+                                                width: 1.5, // Underline width
+                                              )
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
 
@@ -147,7 +164,8 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                               margin: EdgeInsets.only(top: 20.0,bottom: 14.0,left: 20.0,right: 20.0),
                               decoration: new BoxDecoration(
                                 border: Border.all(
-                                  color: widget.callingFrom=="Accredited Investor" ?  Color(0xff696969) : Color(0xFFFFFFFF),
+                                  // color: widget.callingFrom=="Accredited Investor" ?  Color(0xff696969) : Color(0xFFFFFFFF),
+                                  color: Color(0xff696969),
                                   width: 1.2,
                                 ),
                                 borderRadius: BorderRadius.all(
@@ -162,9 +180,10 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                         child: Text(
                                           "Your Attitude To Risk",
                                           style: new TextStyle(
-                                              fontFamily: "WorkSansSemiBold",
-                                              color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                              fontSize: 18.0,
+                                              // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                              color: Colors.black,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontFamily: "Rosarivo",
                                               letterSpacing: 0.1
                                           ),
                                         ),
@@ -176,9 +195,10 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                         child: Text(
                                           "Which of the following option describe your expectation for annual returns?",
                                           style: new TextStyle(
-                                              fontFamily: "WorkSansSemiBold",
-                                              color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                              fontSize: 16.0,
+                                              // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                              color: Colors.black,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontFamily: "Rosarivo",
                                               letterSpacing: 0.1
                                           ),
                                         ),
@@ -230,11 +250,12 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                         child: Text(
                                           "Potential gain",
                                           style: TextStyle(
-                                              fontSize: 17.0,
-                                              color: Color(0xFF000000),
-                                              fontFamily: "WorkSansBold"),
+                                              color: Colors.black,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontFamily: "Rosarivo",
+                                              letterSpacing: 0.1
+                                          )
                                         ),
-
                                       )
                                     ],
                                   ),
@@ -265,11 +286,11 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                         child: Text(
                                           "Potential loss",
                                           style: TextStyle(
-                                              fontSize: 17.0,
-                                              color: Color(0xFF000000),
-                                              fontFamily: "WorkSansBold"),
+                                              color: Colors.black,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontFamily: "Rosarivo",
+                                              letterSpacing: 0.1)
                                         ),
-
                                       )
                                     ],
                                   ),
@@ -308,24 +329,17 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                         height: 35,
                                         width: 120,
                                         decoration: BoxDecoration(
-                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
                                         ),
                                         child: MaterialButton(
                                           splashColor: Colors.grey,
                                           child: Text(
                                             "SKIP",
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
                                           onPressed: () async
@@ -352,24 +366,17 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                         height: 35,
                                         width: 120,
                                         decoration: BoxDecoration(
-                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
-                                          ),
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
                                         ),
                                         child: MaterialButton(
                                           splashColor: Colors.grey,
                                           child: Text(
                                             "NEXT",
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
                                           onPressed: () async

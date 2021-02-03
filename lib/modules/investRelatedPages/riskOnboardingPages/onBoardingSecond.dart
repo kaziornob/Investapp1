@@ -58,9 +58,11 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
               child:  Text(
                 "${data[index]["text"]}",
                 style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFFFFFFFF),
-                    fontFamily: "WorkSansBold"),
+                    color: Colors.black,
+                    fontSize: ConstanceData.SIZE_TITLE16,
+                    fontFamily: "Rosarivo",
+                    letterSpacing: 0.1
+                ),
               ),
             ),
             Container(
@@ -71,8 +73,10 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                   value: data[index]["value"].toDouble(),
                   min: 1.0,
                   max: 20.0,
-                  activeColor: widget.callingFrom=="Accredited Investor" ?  Color(0xfffec20f) : Color(0xFF00BFFF),
-                  inactiveColor: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xff696969),
+                  activeColor: Color(0xfffec20f),
+                  inactiveColor: Color(0xFF060513),
+                  // activeColor: widget.callingFrom=="Accredited Investor" ?  Color(0xfffec20f) : Color(0xFF00BFFF),
+                  // inactiveColor: widget.callingFrom=="Accredited Investor" ?  Color(0xFF060513) : Color(0xff696969),
                   label: 'Set volume value',
                   onChanged: (double newValue) {
                     setState(() {
@@ -99,7 +103,8 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
         SafeArea(
             bottom: true,
             child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
               body: ModalProgressHUD(
                 inAsyncCall: _isInProgress,
                 opacity: 0,
@@ -135,25 +140,42 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                     child: Icon(
                                       Icons.arrow_back_ios,
                                       color:
-                                      AllCoustomTheme.getTextThemeColors(),
+                                      AllCoustomTheme.getTextThemeColor(),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 60,
-                              ),
                               Container(
-                                  height: MediaQuery.of(context).size.height * 0.12,
-                                  margin: EdgeInsets.only(bottom: 10.0),
-                                  child: Center(
-                                    child: new Image(
-                                        width: 200.0,
-                                        fit: BoxFit.fill,
-                                        image: new AssetImage('assets/logo.png')
+                                height: MediaQuery.of(context).size.height * 0.09,
+                                width: MediaQuery.of(context).size.width * 0.90,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        child: Center(
+                                          child: new Image(
+                                              width: 150.0,
+                                              fit: BoxFit.fill,
+                                              image: new AssetImage('assets/logo.png')
+                                          ),
+                                        )
                                     ),
-                                  )
-                              ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                                      padding: EdgeInsets.only(
+                                        bottom: 1, // space between underline and text
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                color: Color(0xFFD8AF4F),
+                                                width: 1.5, // Underline width
+                                              )
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                           Container(
@@ -170,8 +192,9 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                   child: Text(
                                     "A well-diversified portfolio should have all of below!!",
                                     style: new TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
-                                        color: Color(0xFFFFFFFF), fontSize: 16.0,
+                                        color: Colors.black,
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Rosarivo",
                                         letterSpacing: 0.1
                                     ),
                                   ),
@@ -181,8 +204,9 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                   child: Text(
                                     "However, let us know if you want Auro to exclude or definitely include any one",
                                     style: new TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
-                                        color: Color(0xFFFFFFFF), fontSize: 16.0,
+                                        color: Colors.black,
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Rosarivo",
                                         letterSpacing: 0.1
                                     ),
                                   ),
@@ -209,8 +233,9 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                           child: Text(
                                             "EXCLUDE",
                                             style: new TextStyle(
-                                                fontFamily: "WorkSansSemiBold",
-                                                color: Color(0xFF000000), fontSize: 17.0,
+                                                color: Colors.black,
+                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                fontFamily: "Rosarivo",
                                                 letterSpacing: 0.1
                                             ),
                                           ),
@@ -230,8 +255,9 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                           child: Text(
                                             "INCLUDE",
                                             style: new TextStyle(
-                                                fontFamily: "WorkSansSemiBold",
-                                                color: Color(0xFF000000), fontSize: 17.0,
+                                                color: Colors.black,
+                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                fontFamily: "Rosarivo",
                                                 letterSpacing: 0.1
                                             ),
                                           ),
@@ -264,9 +290,10 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                               child: Text(
                                                 "Don't worry if this question sounds like greek or latin to you. You can skip this question and change it later in settings whenever you want!!",
                                                 style: new TextStyle(
-                                                    fontFamily: "WorkSansSemiBold",
-                                                    color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
-                                                    fontSize: 16.0,
+                                                    // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
+                                                    color: Colors.black,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                                    fontFamily: "Rosarivo",
                                                     letterSpacing: 0.1
                                                 ),
                                               ),
@@ -289,24 +316,17 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                               height: 35,
                                               width: 120,
                                               decoration: BoxDecoration(
-                                                border: new Border.all(color: Colors.white, width: 1.5),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    globals.buttoncolor1,
-                                                    globals.buttoncolor2,
-                                                  ],
-                                                ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                  border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                                  color: Color(0xFFD8AF4F)
                                               ),
                                               child: MaterialButton(
                                                 splashColor: Colors.grey,
                                                 child: Text(
                                                   "SKIP",
                                                   style: TextStyle(
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
                                                   ),
                                                 ),
                                                 onPressed: () async
@@ -333,24 +353,17 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                               height: 35,
                                               width: 120,
                                               decoration: BoxDecoration(
-                                                border: new Border.all(color: Colors.white, width: 1.5),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    globals.buttoncolor1,
-                                                    globals.buttoncolor2,
-                                                  ],
-                                                ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                  border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                                  color: Color(0xFFD8AF4F)
                                               ),
                                               child: MaterialButton(
                                                 splashColor: Colors.grey,
                                                 child: Text(
                                                   "NEXT",
                                                   style: TextStyle(
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: ConstanceData.SIZE_TITLE16,
                                                   ),
                                                 ),
                                                 onPressed: () async
