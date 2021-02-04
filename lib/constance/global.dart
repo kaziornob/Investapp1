@@ -381,6 +381,134 @@ class GlobalInstance {
   static String deviceToken;
   static List riskInfoQusAns = [];
 
+  static List riskAptOptionsValue = [
+    {
+      "riskAptType": "Cautious",
+      "optionValue":
+      [
+        {
+          "checked":false,
+          "potentialLoss": "-3%",
+          "potentialGain": "5%"
+        },
+        {
+          "checked":false,
+          "potentialLoss": "-4%",
+          "potentialGain": "6%"
+        },
+        {
+          "checked":false,
+          "potentialLoss": "-5%",
+          "potentialGain": "8%"
+        },
+        {
+          "checked":false,
+          "potentialLoss": "-6%",
+          "potentialGain": "10%"
+        },
+        {
+          "checked":false,
+          "potentialLoss": "-7%",
+          "potentialGain": "12%"
+        }
+      ]
+    },
+    {
+      "riskAptType": "Modest",
+      "optionValue":
+          [
+            {
+              "checked":false,
+              "potentialLoss": "-6%",
+              "potentialGain": "10%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-7%",
+              "potentialGain": "12%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-9%",
+              "potentialGain": "14%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-10%",
+              "potentialGain": "17%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-12%",
+              "potentialGain": "21%"
+            }
+          ]
+    },
+    {
+      "riskAptType": "Aggressive",
+      "optionValue":
+          [
+            {
+              "checked":false,
+              "potentialLoss": "-6%",
+              "potentialGain": "10%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-8%",
+              "potentialGain": "13%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-11%",
+              "potentialGain": "18%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-14%",
+              "potentialGain": "24%"
+            },
+            {
+              "checked":false,
+              "potentialLoss": "-19%",
+              "potentialGain": "31%"
+            }
+          ]
+    },
+    {
+      "riskAptType": "Extremely Aggressive",
+      "optionValue":
+        [
+          {
+            "checked":false,
+            "potentialLoss": "-12%",
+            "potentialGain": "21"
+          },
+          {
+            "checked":false,
+            "potentialLoss": "-16%",
+            "potentialGain": "28%"
+          },
+          {
+            "checked":false,
+            "potentialLoss": "-21%",
+            "potentialGain": "37%"
+          },
+          {
+            "checked":false,
+            "potentialLoss": "-28%",
+            "potentialGain": "49%"
+          },
+          {
+            "checked":false,
+            "potentialLoss": "-38%",
+            "potentialGain": "66%"
+          }
+        ]
+    }
+  ];
+
+
   // static int fileChunkSize = 50000; //in bytes i.e 50kb
 
   factory GlobalInstance() {

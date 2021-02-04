@@ -306,10 +306,10 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                             Padding(
                                                 padding: EdgeInsets.only(left: 14, top: 4),
                                                 child: Text(
-                                                  "Please Fill DOB",
+                                                  "Please Fill Date Of Birth",
                                                   style: TextStyle(
                                                     fontSize: ConstanceData.SIZE_TITLE12,
-                                                    color: Colors.red,
+                                                    color: Color(0xFFC70039),
                                                   ),
                                                 )
                                             ),

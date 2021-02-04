@@ -448,7 +448,7 @@ class _OtpState extends State<Otp> {
             // backgroundColor: Colors.orange,
             backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             title: Text(
-                "Success",
+                "",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AllCoustomTheme.getTextThemeColors(),
@@ -495,7 +495,7 @@ class _OtpState extends State<Otp> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-                "Success",
+                "",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -504,7 +504,7 @@ class _OtpState extends State<Otp> {
               ),
             ),
             content: Text(
-                "Otp sent to your entered email.",
+                "OTP sent to your email",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,

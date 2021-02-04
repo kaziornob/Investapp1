@@ -32,7 +32,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
       "lastPara": ""
     },
     {
-      "logoBottomLine": "PERSONALIZED PORTFOLIO",
+      "logoBottomLine": "PERSONALIZED PORTFOLIOS",
       "firstPara": "Let globally licensed (SEC, SEC, SEBIFPI) asset manager build a personalized portfolio for you based on your risk appetite and goals",
       "image": "assets/personalizedPortfolio.png",
       "lastPara": "...hire professional money managers with a great track record to build an institutional grade portfolio for you."
@@ -92,44 +92,43 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Container(
-      color: Color(0xFFE5E5E5),
       height: height,
       child: Stack(
         children: <Widget>[
-          Container(
-            foregroundDecoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                ],
-              ),
-            ),
-          ),
           Scaffold(
+            backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
             body: SingleChildScrollView(
               child: Container(
-                color: Colors.white,
-                constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height, minWidth: MediaQuery.of(context).size.width),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                   /* Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height*0.85,
+                      child: ListView.builder(
+                        itemCount: listPaths.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height*0.85,
+                              child: MySliderView(listPaths[index])
+                          );
+                        },
+                      ),
+                    ),*/
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height*0.85,
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CarouselSlider.builder(
                               itemCount: listPaths.length,
                               options: CarouselOptions(
                                   height: MediaQuery.of(context).size.height*0.85,
                                   autoPlay: false,
+                                  viewportFraction: 0.95,
                                   onPageChanged: (index, reason) {
                                     setState(() {
                                       _current = index;
@@ -191,8 +190,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                                   child: Text(
                                     "Login",
                                     style: TextStyle(
-                                      // color: AllCoustomTheme.getTextThemeColors(),
-                                      color: Color(0xFFD9E4E9),
+                                      color: AllCoustomTheme.getTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE14,
                                     ),
                                   ),
@@ -290,7 +288,7 @@ class MySliderView extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      margin: EdgeInsets.only(left: 10.0,right: 10.0),
+      // margin: EdgeInsets.only(left: 10.0,right: 10.0),
         child: Column(
           children: [
             Container(
@@ -305,7 +303,7 @@ class MySliderView extends StatelessWidget{
                 )
             ),
             Container(
-              margin: EdgeInsets.only(left: 10.0,right: 10.0),
+              margin: EdgeInsets.only(left: 50.0,right: 50.0),
               padding: EdgeInsets.only(
                 bottom: 1, // space between underline and text
               ),
@@ -324,7 +322,7 @@ class MySliderView extends StatelessWidget{
                   '${allFields["logoBottomLine"]}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontSize: ConstanceData.SIZE_TITLE18,
                       color: Color(0xFF060513),
                       fontFamily: "Rasa",
                       fontStyle: FontStyle.normal,
@@ -337,15 +335,18 @@ class MySliderView extends StatelessWidget{
             ),
             Expanded(
                 flex: 1,
-                child: Text(
-                  "${allFields["firstPara"]}",
-                  style: TextStyle(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 53),
+                  child: Text(
+                    "${allFields["firstPara"]}",
+                    style: TextStyle(
                       fontSize: ConstanceData.SIZE_TITLE14,
                       color: Color(0xFF060513),
                       letterSpacing: 0.2,
                       fontFamily: "Rasa",
                       fontStyle: FontStyle.normal,
 
+                    ),
                   ),
                 )
             ),
@@ -365,15 +366,18 @@ class MySliderView extends StatelessWidget{
             ),
             Expanded(
                 flex: 1,
-                child: Text(
-                  "${allFields["lastPara"]}",
-                  style: TextStyle(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 53),
+                  child: Text(
+                    "${allFields["lastPara"]}",
+                    style: TextStyle(
                       fontSize: ConstanceData.SIZE_TITLE14,
                       color: Color(0xFF060513),
                       fontFamily: "Rasa",
                       letterSpacing: 0.2,
                       fontStyle: FontStyle.normal,
 
+                    ),
                   ),
                 )
             ),

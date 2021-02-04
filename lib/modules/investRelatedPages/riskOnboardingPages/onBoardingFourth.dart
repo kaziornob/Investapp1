@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSix.dart';
+import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -10,10 +13,10 @@ import 'package:toast/toast.dart';
 
 
 class OnBoardingFourth extends StatefulWidget {
-  final String callingFrom;
-  final String logo;
+  final String riskAptType;
+  final List<dynamic> optionData;
 
-  const OnBoardingFourth({Key key, @required this.callingFrom,this.logo}) : super(key: key);
+  const OnBoardingFourth({Key key, @required this.riskAptType,this.optionData}) : super(key: key);
 
   @override
   _OnBoardingFourthState createState() => _OnBoardingFourthState();
@@ -21,13 +24,15 @@ class OnBoardingFourth extends StatefulWidget {
 
 class _OnBoardingFourthState extends State<OnBoardingFourth> {
   bool _isInProgress = false;
-  List<dynamic> options = <dynamic>[
-    {"checked":false,"option_value": ""},
-    {"checked":false,"option_value": ""},
-    {"checked":false,"option_value": ""},
-    {"checked":false,"option_value": ""},
-    {"checked":false,"option_value": ""}
-  ];
+  ApiProvider request = new ApiProvider();
+
+  /*List<dynamic> options = <dynamic>[
+    {"checked":false,"potential_gain": "","potential_loss": ""},
+    {"checked":false,"potential_gain": "","potential_loss": ""},
+    {"checked":false,"potential_gain": "","potential_loss": ""},
+    {"checked":false,"potential_gain": "","potential_loss": ""},
+    {"checked":false,"potential_gain": "","potential_loss": ""}
+  ];*/
 
   @override
   void initState() {
@@ -45,6 +50,76 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
     });
   }
 
+  Widget getRiskApetiteView()
+  {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        ...widget.optionData.map((option) {
+            var index = widget.optionData.indexOf(option);
+            return Container(
+                height: MediaQuery.of(context).size.height*0.35,
+                // width: MediaQuery.of(context).size.width*0.175,
+                margin: EdgeInsets.only(top: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: index==0 ? MediaQuery.of(context).size.height*0.10
+                          : (index==1 ? MediaQuery.of(context).size.height*0.09
+                            : (index==2 ? MediaQuery.of(context).size.height*0.08
+                              : (index==3 ? MediaQuery.of(context).size.height*0.07
+                                  : (index==4 ? MediaQuery.of(context).size.height*0.06 : MediaQuery.of(context).size.height*0.10)))),
+                      width: MediaQuery.of(context).size.width*0.09,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF32CD32),
+                      ),
+                      child:Center(
+                        child: Text(
+                          '${option["potentialGain"]}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: index==0 ? MediaQuery.of(context).size.height*0.10
+                          : (index==1 ? MediaQuery.of(context).size.height*0.09
+                            : (index==2 ? MediaQuery.of(context).size.height*0.08
+                              : (index==3 ? MediaQuery.of(context).size.height*0.07
+                                  : (index==4 ? MediaQuery.of(context).size.height*0.06 : MediaQuery.of(context).size.height*0.10)))),
+                      width: MediaQuery.of(context).size.width*0.09,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFe70b31),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${option["potentialLoss"]}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            );
+          }
+        ),
+      ],
+    );
+  }
+
   Widget getOptionList() {
     return Theme(
         data: Theme.of(context).copyWith(
@@ -53,15 +128,15 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
         child:  Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            ...options.map((option) =>  Container(
+            ...widget.optionData.map((option) =>  Container(
               height: MediaQuery.of(context).size.height*0.01,
               width: MediaQuery.of(context).size.width*0.18,
               margin: EdgeInsets.only(left: 5.0),
-
               child: Checkbox(
                 value: option["checked"],
                 activeColor: Color(0xFFD8AF4F),
                 onChanged: (newValue) {
+                  print("newValue: $newValue");
                   setState(() {
                     option["checked"] = newValue;
                   });
@@ -159,7 +234,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                           ),
 
                           Container(
-                              height: MediaQuery.of(context).size.height*0.15,
+                              height: MediaQuery.of(context).size.height*0.17,
                               width: MediaQuery.of(context).size.width,
                               margin: EdgeInsets.only(top: 20.0,bottom: 14.0,left: 20.0,right: 20.0),
                               decoration: new BoxDecoration(
@@ -302,13 +377,19 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                             height: MediaQuery.of(context).size.height*0.30,
                             width: MediaQuery.of(context).size.width,
                             margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 20.0,right: 20.0),
+                            child: getRiskApetiteView(),
+                          ),
+/*                          Container(
+                            height: MediaQuery.of(context).size.height*0.30,
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 20.0,right: 20.0),
                             decoration: new BoxDecoration(
                               image: new DecorationImage(
                                 image: new AssetImage('assets/risk_onboarding_4-_pi_version.png'),
                                 fit: BoxFit.contain,
                               ),
                             ),
-                          ),
+                          ),*/
                           Container(
                             child: getOptionList(),
                           ),
@@ -316,45 +397,8 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                             height: 60,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20, right: 20),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 35,
-                                      child: Container(
-                                        height: 35,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                            color: Color(0xFFD8AF4F)
-                                        ),
-                                        child: MaterialButton(
-                                          splashColor: Colors.grey,
-                                          child: Text(
-                                            "SKIP",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                            ),
-                                          ),
-                                          onPressed: () async
-                                          {
-                                            submit();
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
                                 child: Row(
@@ -373,7 +417,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                         child: MaterialButton(
                                           splashColor: Colors.grey,
                                           child: Text(
-                                            "NEXT",
+                                            "DONE",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: ConstanceData.SIZE_TITLE16,
@@ -404,8 +448,67 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
   }
 
   Future submit() async {
-    Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) =>
-        new OnBoardingSix(logo: widget.logo,callingFrom: widget.callingFrom,)));
+
+    print("optionData: ${widget.optionData}");
+
+    var finalOptionData;
+    for(var i=0 ; i < widget.optionData.length;i++)
+    {
+      if(widget.optionData[i]["checked"]==true)
+      {
+        finalOptionData.add(widget.optionData[i]);
+      }
+    }
+
+    var tempJsonReq = {"riskApetite_type": "${widget.riskAptType}","answers": finalOptionData};
+
+    print("final risk payload: $tempJsonReq");
+
+    String jsonReq = json.encode(tempJsonReq);
+
+    var jsonReqResp = await request.postSubmit('users/add_risk', jsonReq);
+
+    var result = json.decode(jsonReqResp.body);
+    print("post submit response: $result");
+
+
+    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+    {
+
+      if (result!=null && result.containsKey('auth') && result['auth']==true)
+      {
+
+        Toast.show("${result['message']}", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen()
+            ),
+            ModalRoute.withName("/Home")
+        );
+      }
+    }
+    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+    {
+
+      Toast.show("${result['message']}", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+
+      setState(() {
+        _isInProgress = false;
+      });
+    }
+    else{
+      setState(() {
+        _isInProgress = false;
+      });
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
   }
 }

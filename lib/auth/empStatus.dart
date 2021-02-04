@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/radioQusModel.dart';
@@ -417,12 +418,12 @@ class _EmpStatusState extends State<EmpStatus> {
             duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
 
-        List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'empStatus');
+        List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'piVersion');
 
         Navigator.of(context, rootNavigator: true).push(
           CupertinoPageRoute<void>(
             builder: (BuildContext context) =>
-                RadioQusTemplate(optionData: questions),
+                RiskAptForm(optionData: questions),
           ),
         ).then((onValue) {
           setState(() {

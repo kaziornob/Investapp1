@@ -634,7 +634,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return AlertDialog(
             backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             title: Text(
-                "Success",
+                "",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AllCoustomTheme.getTextThemeColors(),
@@ -643,7 +643,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             content: Text(
-                "Otp sent to your entered email.",
+                "OTP sent to your email",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AllCoustomTheme.getTextThemeColors(),
@@ -688,7 +688,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return AlertDialog(
           backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           title: Text(
-              'Incorrect Password',
+              "Confirm password didn't match",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AllCoustomTheme.getTextThemeColors(),
@@ -744,13 +744,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       RegExp regExp = new RegExp(pattern);
       if(!regExp.hasMatch(value))
         {
-          return "Minimum 6 char";
+          return "Minimum 6 character";
         }
       return null;*/
 
       if(value.length!=6)
         {
-          return "Min 6 length char";
+          return "Min 6 length character";
         }
       return null;
 

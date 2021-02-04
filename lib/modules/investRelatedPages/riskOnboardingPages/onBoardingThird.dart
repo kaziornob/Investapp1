@@ -2,6 +2,7 @@ import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFourth.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSix.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -658,6 +659,6 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
   Future submit() async {
     Navigator.of(context).push(new MaterialPageRoute(
         builder: (BuildContext context) =>
-        new OnBoardingFourth(logo: widget.logo,callingFrom: widget.callingFrom,)));
+        new OnBoardingSix(logo: widget.logo,callingFrom: widget.callingFrom,)));
   }
 }
