@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/auth/riskApetitePages/annualReturnForm.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/radioQusModel.dart';
-import 'package:auroim/modules/home/homeScreen.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFourth.dart';
-import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -58,7 +56,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
                 "${option['title']}",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE16,
+                  fontSize: ConstanceData.SIZE_TITLE15,
                   fontFamily: "Roboto",
                 ),
               ),
@@ -68,7 +66,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
                   "${option['subTitle']}",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: ConstanceData.SIZE_TITLE15,
+                    fontSize: ConstanceData.SIZE_TITLE14,
                     fontFamily: "Roboto",
                   ),
                 ),
@@ -158,7 +156,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
                                           '${widget.optionData[0].qusHeadline}',
                                           style: new TextStyle(
                                             color: Colors.black,
-                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                            fontSize: ConstanceData.SIZE_TITLE16,
                                             fontFamily: "Roboto",
                                           ),
                                         ),
@@ -212,7 +210,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
                                                   "NEXT",
                                                   style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                                    fontSize: ConstanceData.SIZE_TITLE18,
                                                   ),
                                                 ),
                                                 onPressed: () async {
@@ -329,7 +327,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
     Navigator.of(context, rootNavigator: true).push(
       CupertinoPageRoute<void>(
         builder: (BuildContext context) =>
-            OnBoardingFourth(riskAptType: selectedValue,optionData: optionData),
+            AnnualReturnForm(riskAptType: selectedValue,optionData: optionData),
       ),
     ).then((onValue) {
       setState(() {

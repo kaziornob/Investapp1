@@ -1,7 +1,6 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFourth.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSix.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -556,7 +555,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                             // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
                                             color: Colors.black,
                                             fontSize: ConstanceData.SIZE_TITLE16,
-                                            fontFamily: "Rosarivo",
+                                            fontFamily: "RobotoLight",
                                             letterSpacing: 0.1
                                         ),
                                       ),

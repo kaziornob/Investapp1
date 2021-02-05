@@ -240,7 +240,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10),
+                                              padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
                                               child: getEmpStatusField(),
                                             ),
                                           ),
@@ -254,7 +254,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10),
+                                              padding: EdgeInsets.only(left: 14, bottom: 10,right:20),
                                               child: getEmpBusinessField(),
                                             ),
                                           ),
@@ -268,7 +268,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10),
+                                              padding: EdgeInsets.only(left: 14, bottom: 10,right:20),
                                               child: TextFormField(
                                                 cursorColor: AllCoustomTheme.getTextThemeColor(),
                                                 style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
@@ -296,7 +296,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10),
+                                              padding: EdgeInsets.only(left: 14, bottom: 10,right:20),
                                               child: TextFormField(
                                                 cursorColor: AllCoustomTheme.getTextThemeColor(),
                                                 style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
@@ -327,7 +327,8 @@ class _EmpStatusState extends State<EmpStatus> {
                                           children: <Widget>[
                                             SizedBox(
                                               height: 50,
-                                              child: GestureDetector(
+                                              child: !_isEmpStatusInProgress
+                                                    ? GestureDetector(
                                                 onTap: () {
                                                   _submit();
                                                 },
@@ -357,6 +358,12 @@ class _EmpStatusState extends State<EmpStatus> {
                                                   ),
                                                 ),
                                               )
+                                                    : Padding(
+                                                      padding: EdgeInsets.only(right: 14),
+                                                        child: CupertinoActivityIndicator(
+                                                          radius: 12,
+                                                        ),
+                                                    ),
                                             ),
                                           ],
                                         ),

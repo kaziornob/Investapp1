@@ -160,7 +160,7 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                               // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
                                               color: Colors.black,
                                               fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "Rosarivo",
+                                              fontFamily: "RobotoLight",
                                               letterSpacing: 0.1
                                           ),
                                         ),
@@ -222,7 +222,7 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                               // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
                                               color: Colors.black,
                                               fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "Rosarivo",
+                                              fontFamily: "RobotoLight",
                                               letterSpacing: 0.1
                                           ),
                                         ),
@@ -263,7 +263,7 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: ConstanceData.SIZE_TITLE16,
-                                      fontFamily: "Rosarivo",
+                                      fontFamily: "RobotoLight",
                                       letterSpacing: 0.1
                                   ),
                                 ),
@@ -291,7 +291,7 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: ConstanceData.SIZE_TITLE16,
-                                      fontFamily: "Rosarivo",
+                                      fontFamily: "RobotoLight",
                                       letterSpacing: 0.1
                                   ),
                                 ),

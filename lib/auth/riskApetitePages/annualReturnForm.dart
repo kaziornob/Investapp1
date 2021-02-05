@@ -12,19 +12,20 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
 
-class OnBoardingFourth extends StatefulWidget {
+class AnnualReturnForm extends StatefulWidget {
   final String riskAptType;
   final List<dynamic> optionData;
 
-  const OnBoardingFourth({Key key, @required this.riskAptType,this.optionData}) : super(key: key);
+  const AnnualReturnForm({Key key, @required this.riskAptType,this.optionData}) : super(key: key);
 
   @override
-  _OnBoardingFourthState createState() => _OnBoardingFourthState();
+  _AnnualReturnFormState createState() => _AnnualReturnFormState();
 }
 
-class _OnBoardingFourthState extends State<OnBoardingFourth> {
+class _AnnualReturnFormState extends State<AnnualReturnForm> {
   bool _isInProgress = false;
   ApiProvider request = new ApiProvider();
+  String annualReturnValue;
 
   /*List<dynamic> options = <dynamic>[
     {"checked":false,"potential_gain": "","potential_loss": ""},
@@ -36,6 +37,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
 
   @override
   void initState() {
+    annualReturnValue = '';
     super.initState();
     loadDetails();
   }
@@ -53,6 +55,69 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
   Widget getRiskApetiteView()
   {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        ...widget.optionData.map((option) {
+          var index = widget.optionData.indexOf(option);
+          return Container(
+            height: MediaQuery.of(context).size.height*0.22,
+            width: MediaQuery.of(context).size.width*0.177,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: index==0 ? 0 : (index==1 ? 7 : (index==2 ? 14 : (index==3 ? 21 : (index==4 ? 28 : 0)))),
+                  child:  Container(
+                    height: MediaQuery.of(context).size.height*0.11,
+                    width: MediaQuery.of(context).size.width*0.09,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF32CD32),
+                    ),
+                    child:Center(
+                      child: Text(
+                        '${option["potentialGain"]}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AllCoustomTheme.getTextThemeColors(),
+                          fontSize: ConstanceData.SIZE_TITLE15,
+                          fontFamily: "RobotoLight",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 70,
+                  right: 31,
+                  bottom: index==0 ? 0 : (index==1 ? 15 : (index==2 ? 20 : (index==3 ? 25 : (index==4 ? 30 : 0)))),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height*0.11,
+                    width: MediaQuery.of(context).size.width*0.09,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFe70b31),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${option["potentialLoss"]}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AllCoustomTheme.getTextThemeColors(),
+                          fontSize: ConstanceData.SIZE_TITLE15,
+                          fontFamily: "RobotoLight",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+         }
+        ),
+      ],
+    );
+
+/*    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -81,9 +146,8 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "RobotoLight",
                           ),
                         ),
                       ),
@@ -104,9 +168,8 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "RobotoLight",
                           ),
                         ),
                       ),
@@ -117,7 +180,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
           }
         ),
       ],
-    );
+    );*/
   }
 
   Widget getOptionList() {
@@ -131,8 +194,17 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
             ...widget.optionData.map((option) =>  Container(
               height: MediaQuery.of(context).size.height*0.01,
               width: MediaQuery.of(context).size.width*0.18,
-              margin: EdgeInsets.only(left: 5.0),
-              child: Checkbox(
+              // margin: EdgeInsets.only(left: 3.0),
+              child: Radio(
+                value: option["potentialGain"],
+                groupValue: annualReturnValue,
+                activeColor: Color(0xFFD8AF4F),
+                onChanged: (newValue) {
+                  print("newValue: $newValue");
+                  annualReturnValue = newValue;
+                },
+              ),
+/*              Checkbox(
                 value: option["checked"],
                 activeColor: Color(0xFFD8AF4F),
                 onChanged: (newValue) {
@@ -141,7 +213,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                     option["checked"] = newValue;
                   });
                 },
-              ),
+              ),*/
             )
             ),
           ],
@@ -273,7 +345,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                               // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
                                               color: Colors.black,
                                               fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "Rosarivo",
+                                              fontFamily: "RobotoLight",
                                               letterSpacing: 0.1
                                           ),
                                         ),
@@ -327,7 +399,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "Rosarivo",
+                                              fontFamily: "RobotoLight",
                                               letterSpacing: 0.1
                                           )
                                         ),
@@ -363,7 +435,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "Rosarivo",
+                                              fontFamily: "RobotoLight",
                                               letterSpacing: 0.1)
                                         ),
                                       )
@@ -374,7 +446,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                             ),
                           ),
                           Container(
-                            height: MediaQuery.of(context).size.height*0.30,
+                            height: MediaQuery.of(context).size.height*0.25,
                             width: MediaQuery.of(context).size.width,
                             margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 20.0,right: 20.0),
                             child: getRiskApetiteView(),
@@ -405,10 +477,10 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     SizedBox(
-                                      height: 35,
+                                      height: 37,
                                       child: Container(
-                                        height: 35,
-                                        width: 120,
+                                        height: 37,
+                                        width: 130,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(20)),
                                             border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
@@ -420,7 +492,7 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
                                             "DONE",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontSize: ConstanceData.SIZE_TITLE18,
                                             ),
                                           ),
                                           onPressed: () async
@@ -449,7 +521,15 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
 
   Future submit() async {
 
-    print("optionData: ${widget.optionData}");
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeScreen()
+        ),
+        ModalRoute.withName("/Home")
+    );
+
+/*    print("optionData: ${widget.optionData}");
 
     var finalOptionData;
     for(var i=0 ; i < widget.optionData.length;i++)
@@ -509,6 +589,6 @@ class _OnBoardingFourthState extends State<OnBoardingFourth> {
       Toast.show("Something went wrong!", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
-    }
+    }*/
   }
 }

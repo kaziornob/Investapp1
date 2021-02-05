@@ -187,16 +187,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     SizedBox(
                                       height: 0.5,
                                     ),
-                                    Container(
-                                      height: 3,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                color: Color(0xFFD8AF4F),
-                                                width: 1.6, // Underline width
-                                              )
-                                          )
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 20),
+                                      child: Container(
+                                        height: 3,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                  color: Color(0xFFD8AF4F),
+                                                  width: 1.6, // Underline width
+                                                )
+                                            )
+                                        ),
                                       ),
                                     ),
                                     /* Container(
@@ -263,7 +266,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 14, top: 4),
+                                            padding: EdgeInsets.only(left: 14, top: 4,right: 20),
                                             child: TextFormField(
                                               controller: emailController,
                                               validator: _validateEmail,
@@ -296,7 +299,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 14, bottom: 10),
+                                            padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
                                             child: TextFormField(
                                               cursorColor: AllCoustomTheme.getTextThemeColor(),
                                               style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
@@ -329,7 +332,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 14, bottom: 10),
+                                            padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
                                             child: TextFormField(
                                               cursorColor: AllCoustomTheme.getTextThemeColor(),
                                               style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
@@ -362,7 +365,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 14, bottom: 10),
+                                            padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
                                             child: TextFormField(
                                               controller: phoneController,
                                               cursorColor: AllCoustomTheme.getTextThemeColor(),
@@ -398,7 +401,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         children: <Widget>[
                                           SizedBox(
                                               height: 50,
-                                              child: GestureDetector(
+                                              child: !_isInProgress
+                                                  ? GestureDetector(
                                                 onTap: () {
                                                   _submit();
                                                 },
@@ -428,6 +432,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   ),
                                                 ),
                                               )
+                                                  : Padding(
+                                                    padding: EdgeInsets.only(right: 14),
+                                                    child: CupertinoActivityIndicator(
+                                                      radius: 12,
+                                                    ),
+                                                  ),
                                           ),
                                         ],
                                       ),
@@ -604,6 +614,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               getDialog("$email");
             }
+            else if(response.containsKey('auth') && response['auth']==false)
+              {
+                setState(() {
+                  _isInProgress = false;
+                });
+                Toast.show("${response['message']['code']}", context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity: Toast.BOTTOM);
+              }
             else
               {
                 setState(() {
@@ -728,29 +747,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   String _validatePhone(value) {
-    if (value.isEmpty) {
-      return "Phone cannot be empty";
-    } else {
-      return null;
+    // String pattern = r'(^(?:[+0]9)?[0-9]{7,10}$)';
+    // RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return 'Phone cannot be empty';
     }
+    /*else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid phone number';
+    }*/
+    return null;
   }
 
   String _validatePassword(value) {
     if (value.isEmpty) {
       return "Password cannot be empty";
     } else {
-
-/*      String  pattern = '/^[A-Za-z]{6}/';
+      String pattern = r'(^(?:[A-Za-z])?[A-Za-z]{6,12}$)';
       RegExp regExp = new RegExp(pattern);
       if(!regExp.hasMatch(value))
         {
           return "Minimum 6 character";
-        }
-      return null;*/
-
-      if(value.length!=6)
-        {
-          return "Min 6 length character";
         }
       return null;
 

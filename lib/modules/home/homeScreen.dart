@@ -2915,7 +2915,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   style: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE16,
-                      fontFamily: "Roboto",
+                      fontFamily: "Rosarivo",
                       fontStyle: FontStyle.normal,
                       letterSpacing: 0.2
                   ),

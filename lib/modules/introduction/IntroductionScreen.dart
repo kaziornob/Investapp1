@@ -28,8 +28,8 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
     {
       "logoBottomLine": "YOUR PERSONAL ASSET MANAGER",
       "firstPara": "",
-      "image": "assets/personalizedPortfolio.png",
-      "lastPara": ""
+      "image": "assets/logInSlider1.png",
+      "lastPara": "Invest with confidence on world’s leading Robo and Social Investment App"
     },
     {
       "logoBottomLine": "PERSONALIZED PORTFOLIOS",
@@ -70,7 +70,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
   void initState() {
     super.initState();
     animationText();
-    secoundAnimation();
+    secondAnimation();
   }
 
   animationText() async {
@@ -80,7 +80,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
     });
   }
 
-  secoundAnimation() {
+  secondAnimation() {
     controller = AnimationController(vsync: this, duration: Duration(seconds: 1));
 
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1)).animate(controller);
@@ -95,29 +95,23 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
       height: height,
       child: Stack(
         children: <Widget>[
+          Visibility(
+            visible: _current==0 ? true : false,
+            child: Image.asset(
+              "assets/LogInSliderBackground.png",
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
+          ),
           Scaffold(
-            backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+            backgroundColor: _current==0 ? Colors.transparent : AllCoustomTheme.getBodyContainerThemeColor(),
             body: SingleChildScrollView(
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                   /* Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.85,
-                      child: ListView.builder(
-                        itemCount: listPaths.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height*0.85,
-                              child: MySliderView(listPaths[index])
-                          );
-                        },
-                      ),
-                    ),*/
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height*0.85,
@@ -136,7 +130,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                                   }
                               ),
                               itemBuilder: (context,index){
-                                return MySliderView(listPaths[index]);
+                                return MySliderView(listPaths[index],_current);
                               },
                             ),
                           ]
@@ -183,14 +177,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(20)),
                                     border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                    color: Color(0xFFD8AF4F)
+                                    color: _current!=0 ? Color(0xFFD8AF4F) : Colors.transparent,
                                 ),
                                 child: MaterialButton(
                                   splashColor: Colors.grey,
                                   child: Text(
                                     "Login",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      color: _current!=0 ? AllCoustomTheme.getTextThemeColors() : Color(0xFFD8AF4F),
                                       fontSize: ConstanceData.SIZE_TITLE14,
                                     ),
                                   ),
@@ -219,14 +213,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                  // color: Color(0xFFD8AF4F)
+                                  color: _current==0 ? Color(0xFFFFB300) : Colors.transparent
                                 ),
                                 child: MaterialButton(
                                   splashColor: Colors.grey,
                                   child: Text(
                                     "Try For Free",
                                     style: TextStyle(
-                                      color: Color(0xFFD8AF4F),
+                                      color: _current!=0 ? Color(0xFFD8AF4F) : Colors.black,
                                       fontSize: ConstanceData.SIZE_TITLE14,
                                     ),
                                   ),
@@ -281,14 +275,13 @@ class _IntroductionScreenState extends State<IntroductionScreen> with SingleTick
 
 
 class MySliderView extends StatelessWidget{
-
+  final currentIndex;
   final allFields;
-  MySliderView(this.allFields);
+  MySliderView(this.allFields,this.currentIndex);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      // margin: EdgeInsets.only(left: 10.0,right: 10.0),
         child: Column(
           children: [
             Container(
@@ -323,7 +316,7 @@ class MySliderView extends StatelessWidget{
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: ConstanceData.SIZE_TITLE18,
-                      color: Color(0xFF060513),
+                      color: currentIndex==0 ? Color(0xFFFFFFFF) : Color(0xFF060513),
                       fontFamily: "Rasa",
                       fontStyle: FontStyle.normal,
                       letterSpacing: 0.2
@@ -331,44 +324,77 @@ class MySliderView extends StatelessWidget{
                 )
             ),
             SizedBox(
-              height: 12,
+              height: currentIndex!=0 ? 12 : 22,
             ),
-            Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 53),
-                  child: Text(
-                    "${allFields["firstPara"]}",
-                    style: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE14,
-                      color: Color(0xFF060513),
-                      letterSpacing: 0.2,
-                      fontFamily: "Rasa",
-                      fontStyle: FontStyle.normal,
+            Visibility(
+              visible: currentIndex!=0,
+              child: Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 53),
+                    child: Text(
+                      "${allFields["firstPara"]}",
+                      style: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        color: Color(0xFF060513),
+                        letterSpacing: 0.2,
+                        fontFamily: "Rasa",
+                        fontStyle: FontStyle.normal,
 
+                      ),
                     ),
-                  ),
-                )
+                  )
+              ),
             ),
             SizedBox(
               height: 5,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.32,
+              height: MediaQuery.of(context).size.height * 0.42,
               width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.only(left: currentIndex==0 ? 10.0 : 0.0),
               child: Image(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                   image: new AssetImage('${allFields["image"]}')
               ),
             ),
             SizedBox(
               height: 5,
             ),
+            Visibility(
+              visible: currentIndex==0,
+              child:  Container(
+                height: MediaQuery.of(context).size.height * 0.10,
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  "AI",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 56,
+                    color: Color(0xFFD8AF4F),
+                    fontFamily: "Scheherazade",
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                  ),
+                ),
+              ),
+            ),
             Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 53),
-                  child: Text(
+                  padding: EdgeInsets.only(left: currentIndex!=0 ? 53 : 28),
+                  child: currentIndex==0 ? Text(
+                    "${allFields["lastPara"]}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      color: Color(0xFFFFFFFF),
+                      fontFamily: "RedHatDisplay",
+                      letterSpacing: 0.2,
+                      fontStyle: FontStyle.normal,
+                    ),
+                  ) : Text(
                     "${allFields["lastPara"]}",
                     style: TextStyle(
                       fontSize: ConstanceData.SIZE_TITLE14,
@@ -376,7 +402,6 @@ class MySliderView extends StatelessWidget{
                       fontFamily: "Rasa",
                       letterSpacing: 0.2,
                       fontStyle: FontStyle.normal,
-
                     ),
                   ),
                 )

@@ -52,8 +52,8 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                 "Exchange Traded Fund's",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE16,
-                  fontFamily: "Roboto",
+                  fontSize: ConstanceData.SIZE_TITLE15,
+                  fontFamily: "RobotoLight",
                 ),
               ),
               value: true,
@@ -68,8 +68,8 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                 "Mutual Fund's",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE16,
-                  fontFamily: "Roboto",
+                  fontSize: ConstanceData.SIZE_TITLE15,
+                  fontFamily: "RobotoLight",
                 ),
               ),
               value: true,
@@ -84,8 +84,8 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                 "Individual Securities",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE16,
-                  fontFamily: "Roboto",
+                  fontSize: ConstanceData.SIZE_TITLE15,
+                  fontFamily: "RobotoLight",
                 ),
               ),
               value: true,
@@ -214,7 +214,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                                 style: new TextStyle(
                                                     color: Colors.black,
                                                     fontSize: ConstanceData.SIZE_TITLE16,
-                                                    fontFamily: "Rosarivo",
+                                                    fontFamily: "RobotoLight",
                                                     letterSpacing: 0.1
                                                 ),
                                               ),
@@ -226,7 +226,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                                 style: new TextStyle(
                                                     color: Colors.black,
                                                     fontSize: ConstanceData.SIZE_TITLE16,
-                                                    fontFamily: "Rosarivo",
+                                                    fontFamily: "RobotoLight",
                                                     letterSpacing: 0.1
                                                 ),
                                               ),
@@ -256,7 +256,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                                     // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
                                                     color: Colors.black,
                                                     fontSize: ConstanceData.SIZE_TITLE16,
-                                                    fontFamily: "Rosarivo",
+                                                    fontFamily: "RobotoLight",
                                                     letterSpacing: 0.1
                                                 ),
                                               ),

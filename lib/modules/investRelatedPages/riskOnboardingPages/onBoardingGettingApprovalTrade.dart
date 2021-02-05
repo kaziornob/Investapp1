@@ -60,7 +60,7 @@ class _OnBoardingGettingApprovalTradeState extends State<OnBoardingGettingApprov
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: ConstanceData.SIZE_TITLE16,
-                  fontFamily: "Roboto",
+                  fontFamily: "RobotoLight",
                 ),
               ),
               value: option["checked"],
@@ -194,7 +194,7 @@ class _OnBoardingGettingApprovalTradeState extends State<OnBoardingGettingApprov
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 SizedBox(
-                                  height: 50,
+                                  height: 35,
                                   child: Animator(
                                     tween: Tween<double>(begin: 0.8, end: 1.1),
                                     curve: Curves.easeInToLinear,
@@ -202,8 +202,8 @@ class _OnBoardingGettingApprovalTradeState extends State<OnBoardingGettingApprov
                                     builder: (anim) => Transform.scale(
                                       scale: anim.value,
                                       child: Container(
-                                        height: 50,
-                                        width: 100,
+                                        height: 35,
+                                        width: 120,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(20)),
                                             border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
@@ -215,7 +215,7 @@ class _OnBoardingGettingApprovalTradeState extends State<OnBoardingGettingApprov
                                             "Done",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                              fontSize: ConstanceData.SIZE_TITLE18,
                                             ),
                                           ),
                                           onPressed: () async {

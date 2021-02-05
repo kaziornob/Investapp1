@@ -190,23 +190,26 @@ class _SignInScreenState extends State<SignInScreen> {
                                 SizedBox(
                                   height: 0.5,
                                 ),
-                                Container(
-                                  height: 3,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                            color: Color(0xFFD8AF4F),
-                                            width: 1.6, // Underline width
-                                          )
-                                      )
+                                Padding(
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Container(
+                                    height: 3,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                              color: Color(0xFFD8AF4F),
+                                              width: 1.6, // Underline width
+                                            )
+                                        )
+                                    ),
                                   ),
                                 ),
                                 Row(
                                   children: <Widget>[
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsets.only(left: 14, top: 4),
+                                        padding: EdgeInsets.only(left: 14, top: 4,right: 20),
                                         child: TextFormField(
                                           validator: _validateEmail,
                                           controller: emailController,
@@ -239,7 +242,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   children: <Widget>[
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsets.only(left: 14, bottom: 10),
+                                        padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
                                         child: TextFormField(
                                           controller: passwordController,
                                           cursorColor: AllCoustomTheme.getTextThemeColor(),
