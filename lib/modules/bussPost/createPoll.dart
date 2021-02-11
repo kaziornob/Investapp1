@@ -488,7 +488,7 @@ class _CreatePollState extends State<CreatePoll> {
                       ),
                     ),
                     new FlatButton(
-                      padding: EdgeInsets.fromLTRB(120, 0.0, 20, 0.0),
+                      // padding: EdgeInsets.fromLTRB(120, 0.0, 20, 0.0),
                       onPressed: () async {
                         if(from=='option')
                         {

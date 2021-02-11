@@ -222,7 +222,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 20.0),
+                                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05),
                                       height: MediaQuery.of(context).size.height*0.05,
                                       width: MediaQuery.of(context).size.width*0.44,
                                       decoration: new BoxDecoration(
@@ -265,7 +265,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 20.0),
+                                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05),
                                       height: MediaQuery.of(context).size.height*0.07,
                                       width: MediaQuery.of(context).size.width*0.44,
                                       child: FormField(
@@ -534,9 +534,11 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                             child: Row(
                                               children: <Widget>[
                                                 Container(
-                                                  height: 60,
-                                                  width: MediaQuery.of(context).size.width *0.44,
-                                                  margin: EdgeInsets.only(left: 5.0),
+/*                                                  height: 60,
+                                                  width: MediaQuery.of(context).size.width *0.44,*/
+                                                  height: MediaQuery.of(context).size.height * 0.11,
+                                                  width: MediaQuery.of(context).size.width * 0.45,
+                                                  // margin: EdgeInsets.only(left: 5.0),
                                                   child: TextFormField(
                                                     onChanged: (text) {
                                                       takeSecurityNumber(text,'security' ,securityList[index].id);
@@ -576,9 +578,11 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  height: 52,
-                                                  width: MediaQuery.of(context).size.width *0.44,
-                                                  margin: EdgeInsets.only(left: 5.0),
+/*                                                  height: 52,
+                                                  width: MediaQuery.of(context).size.width *0.44,*/
+                                                  height: MediaQuery.of(context).size.height * 0.11,
+                                                  width: MediaQuery.of(context).size.width * 0.45,
+                                                  // margin: EdgeInsets.only(left: 5.0),
                                                   child: TextFormField(
                                                     onChanged: (text) {
                                                       takeSecurityNumber(text,'weight' ,securityList[index].id);
@@ -651,8 +655,8 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                height: 30,
-                                width: 150,
+                                height: MediaQuery.of(context).size.height * 0.11,
+                                width: MediaQuery.of(context).size.width * 0.45,
                                 decoration: BoxDecoration(
                                   color: AllCoustomTheme.getThemeData().textSelectionColor,
                                   border: new Border.all(color: Colors.white, width: 1.5),
@@ -689,8 +693,8 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                 ),
                               ),*/
                               Container(
-                                height: 30,
-                                width: 150,
+                                height: MediaQuery.of(context).size.height * 0.11,
+                                width: MediaQuery.of(context).size.width * 0.45,
                                 child: TextFormField(
                                   initialValue: '\$' + '100,000',
                                   decoration: InputDecoration(
@@ -815,7 +819,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                       ),
                     ),
                     new FlatButton(
-                      padding: EdgeInsets.fromLTRB(120, 0.0, 20, 0.0),
+                      // padding: EdgeInsets.fromLTRB(120, 0.0, 20, 0.0),
                       onPressed: () async {
                         if(from=='option')
                         {

@@ -130,7 +130,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                           ),
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
+                          height: MediaQuery.of(context).size.height * 0.098,
                           width: MediaQuery.of(context).size.width * 0.80,
                           child: Column(
                             children: [
@@ -144,7 +144,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                   )
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 60.0,right: 60.0),
+                                margin: EdgeInsets.only(left: 50.0,right: 50.0),
                                 padding: EdgeInsets.only(
                                   bottom: 1, // space between underline and text
                                 ),

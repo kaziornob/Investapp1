@@ -144,9 +144,9 @@ class _WishListState extends State<WishList> {
                               ),
                               Expanded(
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 71.0),
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.15),
                                     child: Text(
-                                      "BUY",
+                                      "SELL",
                                       style: new TextStyle(
                                         color: AllCoustomTheme.getTextThemeColors(),
                                         fontSize: ConstanceData.SIZE_TITLE18,
@@ -156,9 +156,9 @@ class _WishListState extends State<WishList> {
                               ),
                               Expanded(
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 60.0),
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.15),
                                     child: Text(
-                                      "SELL",
+                                      "BUY",
                                       style: new TextStyle(
                                         color: AllCoustomTheme.getTextThemeColors(),
                                         fontSize: ConstanceData.SIZE_TITLE18,
@@ -234,8 +234,10 @@ class _WishListState extends State<WishList> {
                                                       width: 30,
                                                     ),
                                                     Container(
-                                                      height: 40.0,
-                                                      width: 50.0,
+/*                                                      height: 40.0,
+                                                      width: 50.0,*/
+                                                      width: MediaQuery.of(context).size.width*0.10,
+                                                      height: MediaQuery.of(context).size.height*0.05,
                                                       color: AllCoustomTheme.boxColor(),
                                                       child:  TextFormField(
                                                         readOnly: true,
@@ -249,8 +251,10 @@ class _WishListState extends State<WishList> {
                                                       ),
                                                     ),
                                                     Container(
-                                                      height: 40.0,
-                                                      width: 50.0,
+/*                                                      height: 40.0,
+                                                      width: 50.0,*/
+                                                      width: MediaQuery.of(context).size.width*0.10,
+                                                      height: MediaQuery.of(context).size.height*0.05,
                                                       color: AllCoustomTheme.boxColor(),
                                                       child:  TextFormField(
                                                         textAlign: TextAlign.center,

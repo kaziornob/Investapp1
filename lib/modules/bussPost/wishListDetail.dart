@@ -225,7 +225,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                   ),
                 ),
                 SizedBox(
-                  width: 200,
+                  width: MediaQuery.of(context).size.width*0.50,
                 ),
                 Icon(
                   FontAwesomeIcons.gripVertical,
@@ -823,7 +823,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                   child: !_isInProgress
                       ? Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.2,
+                      height: MediaQuery.of(context).size.height*1.5,
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -967,16 +967,10 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                                 fontSize: ConstanceData.SIZE_TITLE12,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
                                             Icon(
                                               FontAwesomeIcons.timesCircle,
                                               size: 10,
                                               color: Colors.grey,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
                                             ),
                                             Text(
                                               "MARKET CLOSED",

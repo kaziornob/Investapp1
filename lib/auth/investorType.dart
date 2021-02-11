@@ -37,8 +37,7 @@ class _InvestorTypeState extends State<InvestorType> {
       children: <Widget>[
         Scaffold(
           // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
-
+          backgroundColor: AllCoustomTheme.boxColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isInvestorInProgress,
             opacity: 0,
@@ -46,10 +45,10 @@ class _InvestorTypeState extends State<InvestorType> {
             child: SingleChildScrollView(
               // physics: BouncingScrollPhysics(),
               child: Container(
-                height: MediaQuery.of(context).size.height*1.1,
+                // height: MediaQuery.of(context).size.height*1.1,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
-                  color: AllCoustomTheme.boxColor(),
+                  // borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
+                  // color: AllCoustomTheme.boxColor(),
                 ),
                 child: Column(
                   children: <Widget>[
@@ -82,7 +81,7 @@ class _InvestorTypeState extends State<InvestorType> {
                     ),
                     Container(
                         width: MediaQuery.of(context).size.width,
-                        height: descTextShowFlag ? MediaQuery.of(context).size.height * 0.34 : MediaQuery.of(context).size.height * 0.23,
+                        height: descTextShowFlag ? MediaQuery.of(context).size.height * 0.36 : MediaQuery.of(context).size.height * 0.26,
                         margin: EdgeInsets.only(top: 30.0),
                         child: Column(
                           children: <Widget>[
@@ -204,7 +203,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                       bottom: 5.0,
                                       right: 5.0),
                                   child: Text(
-                                    '(select this option if you do not meet the criterion of Accredited Investor defined above And are not a student)',
+                                    '"select this option" if you do not meet the criterion of Accredited Investor defined above And are not a student',
                                     style: TextStyle(
                                       fontSize: ConstanceData.SIZE_TITLE14,
                                       color: Colors.white,

@@ -144,8 +144,8 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
           ),
           //video sliders
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.15,
+            // width: MediaQuery.of(context).size.width,
+            // height: MediaQuery.of(context).size.height*0.15,
             margin: EdgeInsets.all(7.0),
             decoration: new BoxDecoration(
               border: Border.all(
@@ -289,11 +289,12 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.06,
-            margin: EdgeInsets.all(7.0),
+/*            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.06,*/
+            margin: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
                     width: MediaQuery.of(context).size.width*0.48,
@@ -368,13 +369,14 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.07,
-            margin: EdgeInsets.only(left:7.0,right:7.0),
+            // width: MediaQuery.of(context).size.width,
+            // height: MediaQuery.of(context).size.height*0.07,
+            margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.02),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
+                  height: MediaQuery.of(context).size.height*0.07,
                   width: MediaQuery.of(context).size.width*0.48,
                   decoration: new BoxDecoration(
                     border: Border.all(
@@ -396,6 +398,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
                   ),
                 ),
                 Container(
+                  height: MediaQuery.of(context).size.height*0.07,
                   width: MediaQuery.of(context).size.width*0.48,
                   decoration: new BoxDecoration(
                     border: Border.all(
@@ -420,13 +423,16 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
+/*            width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.07,
-            margin: EdgeInsets.only(left:7.0,right:7.0),
+            margin: EdgeInsets.only(left:7.0,right:7.0),*/
+            margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.02),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
+                  height: MediaQuery.of(context).size.height*0.07,
                   width: MediaQuery.of(context).size.width*0.48,
                   decoration: new BoxDecoration(
                     border: Border.all(
@@ -448,6 +454,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
                   ),
                 ),
                 Container(
+                  height: MediaQuery.of(context).size.height*0.07,
                   width: MediaQuery.of(context).size.width*0.48,
                   decoration: new BoxDecoration(
                     border: Border.all(
@@ -618,7 +625,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
                   child: !_isInProgress
                       ? Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.8,
+                      height: MediaQuery.of(context).size.height*1.9,
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -675,10 +682,13 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
                             margin: EdgeInsets.only(top: 20.0,bottom: 10.0,left: 5.0,right: 3.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 new Container(
-                                    width: 60.0,
-                                    height: 60.0,
+/*                                    width: 60.0,
+                                    height: 60.0,*/
+                                    width: MediaQuery.of(context).size.width*0.16,
+                                    height: MediaQuery.of(context).size.height*0.13,
                                     decoration: new BoxDecoration(
                                         color: Color(0xFFfec20f),
                                         shape: BoxShape.circle,
@@ -703,6 +713,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
                                   ),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Padding(
                                         padding: EdgeInsets.only(left: 5.0,top: 10.0),
@@ -731,14 +742,14 @@ class _SecurityPageFirstState extends State<SecurityPageFirst> with SingleTicker
                                 ),
                                 new Container(
                                   margin: EdgeInsets.only(left: 5.0),
-                                  width: MediaQuery.of(context).size.width*0.28,
-                                  height: MediaQuery.of(context).size.height*0.13,
+/*                                  width: MediaQuery.of(context).size.width*0.28,
+                                  height: MediaQuery.of(context).size.height*0.13,*/
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Container(
                                         margin: EdgeInsets.only(top: 3.0),
-
                                         height: MediaQuery.of(context).size.height*0.06,
                                         width: MediaQuery.of(context).size.width*0.28,
                                         decoration: new BoxDecoration(

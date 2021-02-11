@@ -10,6 +10,7 @@ import 'package:auroim/modules/bussPost/stockPitch.dart';
 import 'package:auroim/modules/bussPost/wishList.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/investRelatedPages/searchFirstPage.dart';
+import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
@@ -299,7 +300,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   Widget _buildAppBar(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Stack(
           alignment: Alignment.bottomRight,
@@ -331,13 +333,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             )
           ],
         ),
-        SizedBox(
+/*        SizedBox(
           width: 10,
-        ),
+        ),*/
         //search box area
         Container(
-          width: MediaQuery.of(context).size.width*0.61,
-          height: MediaQuery.of(context).size.height*0.053,
+          // width: MediaQuery.of(context).size.width*0.60,
+          // height: MediaQuery.of(context).size.height*0.053,
+          margin: EdgeInsets.only(top: 10.0,left: 13.0),
           decoration: new BoxDecoration(
             color: Color(0xFFFFFFFF),
             border: Border.all(
@@ -385,8 +388,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           alignment: Alignment.bottomRight,
           children: <Widget>[
             Image(
-                height: 50,
-                width: 50,
+                height: 40,
+                width: 40,
                 image: new AssetImage('assets/appIcon.png')
             ),
             FractionalTranslation(
@@ -1570,7 +1573,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             children: <Widget>[
               SizedBox(
                   height: MediaQuery.of(context).size.height*0.36,
-                  width: MediaQuery.of(context).size.width*0.95,
+                  width: MediaQuery.of(context).size.width*0.96,
                   child: Container(
                     margin: EdgeInsets.only(left: 10,right: 10),
                     decoration: new BoxDecoration(
@@ -1587,106 +1590,102 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "APPLE",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme.getChartBoxTextThemeColor(),
-                                          fontSize: ConstanceData.SIZE_TITLE18,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                      Text(
-                                        "2.20 (1.61%)",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                                          fontSize: ConstanceData.SIZE_TITLE8,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                      Text(
-                                        '\$'+" 390.00",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme.getChartBoxTextThemeColor(),
-                                          fontSize: ConstanceData.SIZE_TITLE18,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                    ],
-                                  )
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "APPLE",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                  Text(
+                                    "2.20 (1.61%)",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE8,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                  Text(
+                                    '\$'+" 390.00",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(
                                 width: 50,
                               ),
-                              Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Column(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "HIGH",
-                                            style: TextStyle(
-                                              color: AllCoustomTheme.getNewTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE10,
-                                              fontFamily: "Roboto",
-                                            ),
-                                          ),
-                                          Icon(
-                                            FontAwesomeIcons.arrowUp,
-                                            color: Colors.green,
-                                            size: 10,
-                                          ),
-                                          Text(
-                                            "139.00",
-                                            style: TextStyle(
-                                              color: Colors.green,
-                                              fontSize: ConstanceData.SIZE_TITLE10,
-                                              fontFamily: "Roboto",
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        "HIGH",
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getNewTextThemeColors(),
+                                          fontSize: ConstanceData.SIZE_TITLE10,
+                                          fontFamily: "Roboto",
+                                        ),
                                       ),
-                                      SizedBox(
-                                        height: 8,
+                                      Icon(
+                                        FontAwesomeIcons.arrowUp,
+                                        color: Colors.green,
+                                        size: 10,
                                       ),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "LOW",
-                                            style: TextStyle(
-                                              color: AllCoustomTheme.getNewTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE10,
-                                              fontFamily: "Roboto",
-                                            ),
-                                          ),
-                                          Icon(
-                                            FontAwesomeIcons.arrowDown,
-                                            color: Colors.red,
-                                            size: 10,
-                                          ),
-                                          Text(
-                                            "139.00",
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: ConstanceData.SIZE_TITLE10,
-                                              fontFamily: "Roboto",
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        "139.00",
+                                        style: TextStyle(
+                                          color: Colors.green,
+                                          fontSize: ConstanceData.SIZE_TITLE10,
+                                          fontFamily: "Roboto",
+                                        ),
                                       ),
                                     ],
-                                  )
-                              ),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "LOW",
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getNewTextThemeColors(),
+                                          fontSize: ConstanceData.SIZE_TITLE10,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                      Icon(
+                                        FontAwesomeIcons.arrowDown,
+                                        color: Colors.red,
+                                        size: 10,
+                                      ),
+                                      Text(
+                                        "139.00",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: ConstanceData.SIZE_TITLE10,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -1723,7 +1722,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 width: 5,
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.22,
+                                width: MediaQuery.of(context).size.width*0.25,
                                 height: MediaQuery.of(context).size.height*0.038,
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -1743,15 +1742,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     ),
                                     onPressed: () async
                                     {
+/*                                      Navigator.of(context).push(new MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));*/
                                       Navigator.of(context).push(new MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                                          new SecurityPageFirst(logo: "logo.png",callingFrom: "Accredited Investor")));
                                     },
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.23,
+                                width: MediaQuery.of(context).size.width*0.26,
                                 height: MediaQuery.of(context).size.height*0.038,
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -1771,15 +1773,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     ),
                                     onPressed: () async
                                     {
+/*                                      Navigator.of(context).push(new MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));*/
                                       Navigator.of(context).push(new MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                                          new SecurityPageFirst(logo: "logo.png",callingFrom: "Accredited Investor")));
                                     },
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.27,
+                                width: MediaQuery.of(context).size.width*0.32,
                                 height: MediaQuery.of(context).size.height*0.038,
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -1827,7 +1832,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
 
-  Widget getDonutChartView()
+/*  Widget getDonutChartView()
   {
     final List<ChartData> chartData = [
       ChartData('David', 25, globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
@@ -1841,7 +1846,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Container(
-          margin: EdgeInsets.only(left: 20.0,right: 20.0),
+          // margin: EdgeInsets.only(left: 20.0,right: 20.0),
+          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.048,right: MediaQuery.of(context).size.width*0.048),
+          // alignment: Alignment.centerLeft,
           child: SfCircularChart(
               series: <CircularSeries>[
                 // Renders doughnut chart
@@ -1856,9 +1863,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         );
       },
     );
-  }
+  }*/
 
   Widget secondScreen() {
+
+    int donutCurrentIndex = 0;
+
+    final List donutArray = [1,2,3];
+
+    final List<ChartData> chartData = [
+      ChartData('David', 25, globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
+      ChartData('Steve', 38, globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF000000)),
+      ChartData('Jack', 34, globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
+      ChartData('Others', 52, Color(0xFFFAB95B))
+    ];
+
 
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
@@ -1974,16 +1993,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),*/
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.53,
+            height: MediaQuery.of(context).size.height*0.60,
             child:  Container(
-                margin: EdgeInsets.only(left: 5.0,right: 5.0,top:15.0),
+                margin: EdgeInsets.only(left: 5.0,right: 5.0,top:10.0),
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     Container(
+                        alignment: Alignment.center,
                         child: Text(
                           'AURO PAPER',
-                          textAlign: TextAlign.center,
+                          // textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AllCoustomTheme.getHeadingThemeColors(),
                             fontSize: ConstanceData.SIZE_TITLE20,
@@ -1995,7 +2015,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                     ),
                     Container(
-                        margin: EdgeInsets.only(left: 100.0,right: 100.0),
+                        // margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
+                      alignment: Alignment.center,
                         padding: EdgeInsets.only(
                           bottom: 3, // space between underline and text
                         ),
@@ -2011,17 +2033,66 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height*0.27,
-                        child: getDonutChartView(),
+                        // child: getDonutChartView(),
+                        child: CarouselSlider.builder(
+                          itemCount: donutArray.length,
+                          options: CarouselOptions(
+                              autoPlay: false,
+                              viewportFraction: 0.95,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  donutCurrentIndex = index;
+                                });
+                              }
+                          ),
+                          itemBuilder: (context,index){
+                            return Container(
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.048,right: MediaQuery.of(context).size.width*0.048),
+                              child: SfCircularChart(
+                                  series: <CircularSeries>[
+                                    // Renders doughnut chart
+                                    DoughnutSeries<ChartData, String>(
+                                        dataSource: chartData,
+                                        pointColorMapper:(ChartData data,  _) => data.color,
+                                        xValueMapper: (ChartData data, _) => data.x,
+                                        yValueMapper: (ChartData data, _) => data.y
+                                    )
+                                  ]
+                              ),
+                            );
+                          },
+                        ),
                     ),
                     Container(
-                        margin: EdgeInsets.only(left: 35.0,right: 20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: donutArray.map((url) {
+                          int index = donutArray.indexOf(url);
+                          return Container(
+                            width: 10.0,
+                            height: 8.0,
+                            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: donutCurrentIndex == index
+                              // ? Color(0xFFFFFFFF)
+                                  ? Color(0xFFD8AF4F)
+                                  : Color(0xffCBB4B4),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Container(
+                        // margin: EdgeInsets.only(left: 35.0,right: 20.0),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.07,right: MediaQuery.of(context).size.width*0.03),
                         child: Text(
                           "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
                               "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontSize: 14.5,
                             fontFamily: "Roboto",
                             fontStyle: FontStyle.normal,
                             letterSpacing: 0.2
@@ -2038,10 +2109,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: 32,
+                  // height: 32,
+                  height: MediaQuery.of(context).size.height*0.06,
                   child: Container(
-                    height: 32,
-                    width: 234,
+                    /*height: 32,
+                    width: 234,*/
+                    height: MediaQuery.of(context).size.height*0.06,
+                    width: MediaQuery.of(context).size.width*0.72,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
@@ -2083,10 +2157,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 32,
+                    // height: 32,
+                    height: MediaQuery.of(context).size.height*0.06,
                     child: Container(
-                      height: 32,
-                      width: 110,
+                      /*height: 32,
+                      width: 110,*/
+                      height: MediaQuery.of(context).size.height*0.06,
+                      width: MediaQuery.of(context).size.width*0.32,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
@@ -2113,10 +2190,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 32,
+                    // height: 32,
+                    height: MediaQuery.of(context).size.height*0.06,
                     child: Container(
-                      height: 32,
-                      width: 110,
+                      /*height: 32,
+                      width: 110,*/
+                      height: MediaQuery.of(context).size.height*0.06,
+                      width: MediaQuery.of(context).size.width*0.32,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
@@ -2180,7 +2260,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 30.0,right: 30.0),
+                      // margin: EdgeInsets.only(left: 30.0,right: 30.0),
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.06,right: MediaQuery.of(context).size.width*0.06),
+
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
@@ -2238,9 +2320,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Padding(
-                                padding: EdgeInsets.only(left:70.0,bottom: 5.0),
+                                padding: EdgeInsets.only(left:70.0),
                                 child: Text(
                                   "First Name's Portfolio",
                                   textAlign: TextAlign.center,
@@ -2252,7 +2335,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 )
                             ),
                             Padding(
-                                padding: EdgeInsets.only(left:15.0,bottom: 5.0,top: 3.0),
+                                padding: EdgeInsets.only(left:15.0),
                                 child: Text(
                                   'See More',
                                   style: TextStyle(
@@ -2277,18 +2360,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: 35,
+                            // height: 35,
+                            height: MediaQuery.of(context).size.height*0.065,
                             child: Container(
-                              height: 35,
-                              width: 150,
+                              /*height: 35,
+                              width: 150,*/
+                              height: MediaQuery.of(context).size.height*0.065,
+                              width: MediaQuery.of(context).size.width*0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
@@ -2348,7 +2434,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 50.0,right: 50.0),
+                      // margin: EdgeInsets.only(left: 50.0,right: 50.0),
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.12,right: MediaQuery.of(context).size.width*0.12),
+
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
@@ -2388,7 +2476,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
@@ -2396,10 +2484,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: 35,
+                            // height: 35,
+                            height: MediaQuery.of(context).size.height*0.065,
                             child: Container(
-                              height: 35,
-                              width: 150,
+                              /*height: 35,
+                              width: 150,*/
+                              height: MediaQuery.of(context).size.height*0.065,
+                              width: MediaQuery.of(context).size.width*0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
@@ -2462,7 +2553,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 90.0,right: 90.0),
+                      // margin: EdgeInsets.only(left: 90.0,right: 90.0),
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
+
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
@@ -2484,10 +2577,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: 35,
+                            height: MediaQuery.of(context).size.height*0.065,
                             child: Container(
-                              height: 35,
-                              width: 150,
+                              height: MediaQuery.of(context).size.height*0.065,
+                              width: MediaQuery.of(context).size.width*0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
@@ -2552,7 +2645,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 110.0,right: 110.0),
+                      // margin: EdgeInsets.only(left: 110.0,right: 110.0),
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.30,right: MediaQuery.of(context).size.width*0.30),
+
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
@@ -2574,10 +2669,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: 35,
+                            height: MediaQuery.of(context).size.height*0.065,
                             child: Container(
-                              height: 35,
-                              width: 150,
+                              height: MediaQuery.of(context).size.height*0.065,
+                              width: MediaQuery.of(context).size.width*0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
@@ -2615,10 +2710,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   // fourth screen section start
 
   Widget fourthScreen() {
-    print(lstCryptoCoinDetail[0]);
-    graphHeight = height - appBarheight - 42;
     return Container(
-      height: graphHeight,
+      // height: graphHeight,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -2626,17 +2719,27 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             padding: const EdgeInsets.only(right: 16, left: 16),
             child: Row(
               children: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(left: 230),
-                    child: Text(
-                      "Ask question",
-                      style: TextStyle(
-                        color: AllCoustomTheme.getSeeMoreThemeColor(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        fontFamily: "Roboto",
+                GestureDetector(
+                  onTap: ()
+                  {
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (BuildContext context) => AddEditQus(),
                       ),
-                    )
-                ),
+                    );
+                  },
+                  child: Padding(
+                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.60),
+                      child: Text(
+                        "Ask question",
+                        style: TextStyle(
+                          color: AllCoustomTheme.getSeeMoreThemeColor(),
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          fontFamily: "Roboto",
+                        ),
+                      )
+                  ),
+                )
 /*                GestureDetector(
                   onTap: () {
                     _scaffoldKey.currentState.openDrawer();
@@ -2793,284 +2896,291 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   Widget recommended()
   {
-    return Column(
-      crossAxisAlignment:  CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 8.0,
-        ),
-        // random images
-        Row(
-          crossAxisAlignment:  CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 15.0),
-              child: new Image(
-                  height: 115,
-                  width: 150.0,
-                  fit: BoxFit.fill,
-                  image: new AssetImage('assets/stackOverflow.png')
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment:  CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            height: 8.0,
+          ),
+          // random images
+          Row(
+            crossAxisAlignment:  CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: new Image(
+                    height: 115,
+                    width: 150.0,
+                    fit: BoxFit.fill,
+                    image: new AssetImage('assets/stackOverflow.png')
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+              Container(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      new Image(
-                          height: 70,
-                          width: 85.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/language.png')
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      new Image(
-                          height: 40,
-                          width: 40.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/android.png')
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          new Image(
+                              height: 70,
+                              width: 85.0,
+                              fit: BoxFit.fill,
+                              image: new AssetImage('assets/language.png')
+                          ),
+                        ],
                       ),
                       SizedBox(
-                        width: 5,
+                        height: 4,
                       ),
-                      new Image(
-                          height: 40,
-                          width: 40.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/askUbuntu.png')
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          new Image(
+                              height: 40,
+                              width: 40.0,
+                              fit: BoxFit.fill,
+                              image: new AssetImage('assets/android.png')
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          new Image(
+                              height: 40,
+                              width: 40.0,
+                              fit: BoxFit.fill,
+                              image: new AssetImage('assets/askUbuntu.png')
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+              ),
+              Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          new Image(
+                              height: 40,
+                              width: 40.0,
+                              fit: BoxFit.fill,
+                              image: new AssetImage('assets/askUbuntu.png')
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          new Image(
+                              height: 40,
+                              width: 40.0,
+                              fit: BoxFit.fill,
+                              image: new AssetImage('assets/android.png')
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          new Image(
+                              height: 70,
+                              width: 85.0,
+                              fit: BoxFit.fill,
+                              image: new AssetImage('assets/arqade.jpeg')
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4,
                       ),
                     ],
                   )
-                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          // question section
+          Row(
+            children: [
+              Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 15.0),
+                    child: Text(
+                      'Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ',
+                      style: TextStyle(
+                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          fontFamily: "Rosarivo",
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: 0.2
+                      ),
+                    ),
+                  )
               )
-            ),
-            Container(
-                margin: EdgeInsets.only(left: 5.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        new Image(
-                            height: 40,
-                            width: 40.0,
-                            fit: BoxFit.fill,
-                            image: new AssetImage('assets/askUbuntu.png')
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        new Image(
-                            height: 40,
-                            width: 40.0,
-                            fit: BoxFit.fill,
-                            image: new AssetImage('assets/android.png')
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        new Image(
-                            height: 70,
-                            width: 85.0,
-                            fit: BoxFit.fill,
-                            image: new AssetImage('assets/arqade.jpeg')
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                  ],
-                )
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        // question section
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.0),
-                child: Text(
-                  'Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ',
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          // question attributes section
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: 10.0,
+              ),
+              Container(
+                child: CircleAvatar(
+                  radius: 13.5,
+                  backgroundImage: new AssetImage('assets/download.jpeg'),
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+              Container(
+                child: new Text(
+                  "10K",
                   style: TextStyle(
-                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      fontFamily: "Rosarivo",
-                      fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2
+                    color: Colors.black,
+                    fontSize: ConstanceData.SIZE_TITLE14,
                   ),
                 ),
-              )
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        // question attributes section
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 15.0),
-              child: CircleAvatar(
-                radius: 15.0,
-                backgroundImage: new AssetImage('assets/download.jpeg'),
-                backgroundColor: Colors.transparent,
               ),
-            ),
-            Container(
-              child: new Text(
-                "10K",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE14,
+              SizedBox(
+                width: 20,
+              ),
+              Container(
+                child: Icon(
+                  Icons.comment_bank_sharp,
+                  color: AllCoustomTheme.getTextThemeColor(),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Icon(
-                Icons.comment_bank_sharp,
-                color: AllCoustomTheme.getTextThemeColor(),
-              ),
-            ),
-            Container(
-              child: new Text(
-                "10",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE14,
+              Container(
+                child: new Text(
+                  "10",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Icon(
-                Icons.remove_red_eye_outlined,
-                color: AllCoustomTheme.getTextThemeColor(),
+              SizedBox(
+                width: 20,
               ),
-            ),
-            Container(
-              child: new Text(
-                "10",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE14,
+              Container(
+                child: Icon(
+                  Icons.remove_red_eye_outlined,
+                  color: AllCoustomTheme.getTextThemeColor(),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Icon(
-                Icons.add,
-                color: AllCoustomTheme.getTextThemeColor(),
-              ),
-            ),
-            Container(
-              child: new Text(
-                "100",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE14,
+              Container(
+                child: new Text(
+                  "10",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                  ),
                 ),
               ),
-            ),
+              SizedBox(
+                width: 15,
+              ),
+              Container(
+                child: Icon(
+                  Icons.add,
+                  color: AllCoustomTheme.getTextThemeColor(),
+                ),
+              ),
+              Container(
+                child: new Text(
+                  "100",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                  ),
+                ),
+              ),
 
-            SizedBox(
-              width: 8,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Icon(
-                Icons.arrow_upward,
-                color: AllCoustomTheme.getThemeData().textSelectionColor,
+              SizedBox(
+                width: 20,
               ),
-            ),
-            Container(
-              child: new Text(
-                "7",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: ConstanceData.SIZE_TITLE14,
+              Container(
+                child: Icon(
+                  Icons.arrow_upward,
+                  color: AllCoustomTheme.getThemeData().textSelectionColor,
                 ),
               ),
-            ),
+              Container(
+                child: new Text(
+                  "7",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                  ),
+                ),
+              ),
 
-          ],
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        //tags section
-        Container(
-          margin: EdgeInsets.only(left: 15.0),
-          child: StaggeredGridView.countBuilder(
-            itemCount: tagItemList != null ? tagItemList.length : 0,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-            shrinkWrap: true,
-            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-            itemBuilder: (context, index){
-              return Container(
-                  decoration: BoxDecoration(
-                      color: AllCoustomTheme.getThemeData().textSelectionColor,
-                      borderRadius: BorderRadius.circular(4.0),
-                      border: Border.all(color: AllCoustomTheme.getThemeData().textSelectionColor, width: 1.0)),
-                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          '${tagItemList[index]}',
-                          style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.normal,
-                              height: 1.3
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          //tags section
+          Container(
+            margin: EdgeInsets.only(left: 10.0),
+            child: StaggeredGridView.countBuilder(
+              itemCount: tagItemList != null ? tagItemList.length : 0,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              shrinkWrap: true,
+              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              itemBuilder: (context, index){
+                return Container(
+                    decoration: BoxDecoration(
+                        color: AllCoustomTheme.getThemeData().textSelectionColor,
+                        borderRadius: BorderRadius.circular(4.0),
+                        border: Border.all(color: AllCoustomTheme.getThemeData().textSelectionColor, width: 1.0)),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            '${tagItemList[index]}',
+                            style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal,
+                                height: 1.3
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-              );
-            },
+                      ],
+                    )
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -4052,7 +4162,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               )
           ),
           Container(
-            margin: EdgeInsets.only(left: 110.0,right: 110.0),
+            // margin: EdgeInsets.only(left: 110.0,right: 110.0),
+            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
             padding: EdgeInsets.only(
               bottom: 3, // space between underline and text
             ),
@@ -4099,7 +4210,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   new Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      margin: EdgeInsets.only(top:75),
+                      margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.11),
                       child: Column(
                         children: [
                           Center(
@@ -4343,7 +4454,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       )
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 30.0,right: 30.0),
+                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right: MediaQuery.of(context).size.width*0.03),
                     padding: EdgeInsets.only(
                       bottom: 3, // space between underline and text
                     ),
@@ -4484,7 +4595,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                         );
                                       },
                                       child: Container(
-                                        margin: EdgeInsets.only(top:115),
+                                        // margin: EdgeInsets.only(top:115),
+                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.16),
                                         child: Column(
                                           children: [
                                             Center(
@@ -4663,7 +4775,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                     ),
                     Container(
-                      margin: EdgeInsets.only(right: 130.0),
+                      // margin: EdgeInsets.only(right: 130.0),
+                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.28),
+
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
@@ -4788,7 +4902,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       )
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: 180.0),
+                    // margin: EdgeInsets.only(right: 180.0),
+                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.42),
                     padding: EdgeInsets.only(
                       bottom: 3, // space between underline and text
                     ),
@@ -4886,7 +5001,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                     ),
                     Container(
-                      margin: EdgeInsets.only(right: 210.0),
+                      // margin: EdgeInsets.only(right: 210.0),
+                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.55),
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),

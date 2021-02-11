@@ -393,8 +393,7 @@ class _OtpState extends State<Otp> {
                                             child: Icon(
                                               Icons.check,
                                               size: 30,
-                                              color: AllCoustomTheme
-                                                  .getsecoundTextThemeColor(),
+                                              color: Colors.white,
                                             ),
                                           ),
                                       ),
@@ -420,8 +419,8 @@ class _OtpState extends State<Otp> {
                                           child: Icon(
                                             Icons.keyboard_arrow_left,
                                             size: 30,
-                                            color: AllCoustomTheme
-                                                .getsecoundTextThemeColor(),
+                                            // color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: Colors.white,
                                           ),
                                         ),
                                       ),

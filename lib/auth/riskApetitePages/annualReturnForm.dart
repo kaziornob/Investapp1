@@ -73,22 +73,21 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                     decoration: BoxDecoration(
                       color: Color(0xFF32CD32),
                     ),
-                    child:Center(
-                      child: Text(
-                        '${option["potentialGain"]}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE15,
-                          fontFamily: "RobotoLight",
-                        ),
+                    child:Text(
+                      '${option["potentialGain"]}',
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontSize: ConstanceData.SIZE_TITLE15,
+                        fontFamily: "RobotoLight",
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 70,
-                  right: 31,
+/*                  top: 70,
+                  right: 31,*/
+                  top: MediaQuery.of(context).size.height*0.11,
+                  right: MediaQuery.of(context).size.width*0.086,
                   bottom: index==0 ? 0 : (index==1 ? 15 : (index==2 ? 20 : (index==3 ? 25 : (index==4 ? 30 : 0)))),
                   child: Container(
                     height: MediaQuery.of(context).size.height*0.11,
@@ -241,14 +240,38 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.7,
+                      // width: MediaQuery.of(context).size.width,
+                      // height: MediaQuery.of(context).size.height*1.7,
                       child: Column(
                         children: <Widget>[
                           SizedBox(
                             height: 20,
                           ),
-                          Row(
+                          Container(
+                              height: MediaQuery.of(context).size.height * 0.09,
+                              child: Center(
+                                child: new Image(
+                                    width: 150.0,
+                                    fit: BoxFit.fill,
+                                    image: new AssetImage('assets/logo.png')
+                                ),
+                              )
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                            padding: EdgeInsets.only(
+                              bottom: 1, // space between underline and text
+                            ),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                      color: Color(0xFFD8AF4F),
+                                      width: 1.5, // Underline width
+                                    )
+                                )
+                            ),
+                          ),
+/*                          Row(
                             children: <Widget>[
                               InkWell(
                                 highlightColor: Colors.transparent,
@@ -271,9 +294,12 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                width: 60,
+                              ),
                               Container(
-                                height: MediaQuery.of(context).size.height * 0.09,
-                                width: MediaQuery.of(context).size.width * 0.90,
+                                // height: MediaQuery.of(context).size.height * 0.09,
+                                // width: MediaQuery.of(context).size.width * 0.90,
                                 child: Column(
                                   children: [
                                     Container(
@@ -303,10 +329,10 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                                 ),
                               )
                             ],
-                          ),
+                          ),*/
 
                           Container(
-                              height: MediaQuery.of(context).size.height*0.17,
+                              height: MediaQuery.of(context).size.height*0.19,
                               width: MediaQuery.of(context).size.width,
                               margin: EdgeInsets.only(top: 20.0,bottom: 14.0,left: 20.0,right: 20.0),
                               decoration: new BoxDecoration(
@@ -370,9 +396,10 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Container(
-                                  margin: EdgeInsets.only(top: 5.0,left: 4.0),
+                                  margin: EdgeInsets.only(left: 4.0),
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
@@ -408,7 +435,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 5.4,left: 4.0),
+                                  margin: EdgeInsets.only(left: 4.0),
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
@@ -448,7 +475,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                           Container(
                             height: MediaQuery.of(context).size.height*0.25,
                             width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 20.0,right: 20.0),
+                            margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 16.0,right: 20.0),
                             child: getRiskApetiteView(),
                           ),
 /*                          Container(

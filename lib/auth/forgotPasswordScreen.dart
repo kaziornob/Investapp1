@@ -37,22 +37,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
@@ -90,7 +76,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
-                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    color: AllCoustomTheme.getTextThemeColor(),
                                   ),
                                 ),
                               ),
@@ -116,9 +102,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 child: Text(
                                   'Forgot password',
                                   style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
+                                      color: AllCoustomTheme.getTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE20,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ),
@@ -136,11 +123,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         child: _visible
                             ? Container(
                                 padding: EdgeInsets.only(bottom: 30),
-                                decoration: BoxDecoration(
+                                /*decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(20)),
                                   color: AllCoustomTheme.boxColor(),
-                                ),
+                                ),*/
                                 child: Form(
                                   key: _formKey,
                                   child: Column(
@@ -148,19 +135,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                       SizedBox(
                                         height: 0.5,
                                       ),
-                                      Container(
-                                        height: 5,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(2)),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              globals.buttoncolor1,
-                                              globals.buttoncolor2,
-                                            ],
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 20),
+                                        child: Container(
+                                          height: 3,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                    color: Color(0xFFD8AF4F),
+                                                    width: 1.6, // Underline width
+                                                  )
+                                              )
                                           ),
                                         ),
                                       ),
@@ -169,38 +155,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                  left: 14, top: 4),
+                                                  left: 14, top: 4,right: 20),
                                               child: TextFormField(
                                                 validator: _validateEmail,
                                                 cursorColor: AllCoustomTheme
-                                                    .getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData
-                                                      .SIZE_TITLE16,
-                                                  color: AllCoustomTheme
-                                                      .getTextThemeColors(),
-                                                ),
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 keyboardType:
                                                     TextInputType.text,
                                                 decoration: new InputDecoration(
                                                   focusColor: AllCoustomTheme
-                                                      .getTextThemeColors(),
+                                                      .getTextThemeColor(),
                                                   fillColor: AllCoustomTheme
-                                                      .getTextThemeColors(),
+                                                      .getTextThemeColor(),
                                                   hintText:
                                                       'Enter email here...',
-                                                  hintStyle: TextStyle(
-                                                      color: Colors.grey[600],
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE14),
+                                                    hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
                                                   labelText: 'E-mail',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData
-                                                        .SIZE_TITLE16,
-                                                    color: AllCoustomTheme
-                                                        .getTextThemeColors(),
-                                                  ),
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                                 ),
                                                 //controller: lastnameController,
                                                 onSaved: (value) {
@@ -223,32 +195,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                               child: FlatButton(
                                                 padding: EdgeInsets.all(0),
                                                 child: new Container(
-                                                  height: 45.0,
+                                                  height: 35.0,
+                                                  width: 150,
                                                   alignment:
                                                       FractionalOffset.center,
                                                   decoration: BoxDecoration(
-                                                    border: new Border.all(
-                                                        color: Colors.white,
-                                                        width: 1.5),
-                                                    borderRadius:
-                                                        new BorderRadius
-                                                            .circular(30),
-                                                    gradient: LinearGradient(
-                                                      begin: Alignment.topLeft,
-                                                      end:
-                                                          Alignment.bottomRight,
-                                                      colors: [
-                                                        globals.buttoncolor1,
-                                                        globals.buttoncolor2,
-                                                      ],
-                                                    ),
+                                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                    border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                                    color: Color(0xFFD8AF4F),
                                                   ),
                                                   child: new Text(
                                                     "Send Email",
-                                                    style: new TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getReBlackAndWhiteThemeColors(),
-                                                      letterSpacing: 0.3,
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE14,
                                                     ),
                                                   ),
                                                 ),

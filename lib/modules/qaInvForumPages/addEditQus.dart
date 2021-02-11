@@ -934,13 +934,12 @@ class Toolbar extends StatelessWidget {
                     onSelected(SmartTextType.ITALIC);
                   },
                   child: Container(
-                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
                     child: Icon(
                       FontAwesomeIcons.italic,
                       color: selectedType == SmartTextType.ITALIC
                           ? Colors.teal
                           : Colors.grey,
-                      size: 20,
+                      size: MediaQuery.of(context).size.width * 0.05,
                     ),
                   ),
                 ),
@@ -950,7 +949,7 @@ class Toolbar extends StatelessWidget {
                       color: selectedType == SmartTextType.BOLD
                           ? Colors.teal
                           : Colors.grey,
-                      size: 20,
+                      size: MediaQuery.of(context).size.width * 0.05,
                     ),
                     onPressed: () => onSelected(SmartTextType.BOLD)
                 ),
@@ -958,35 +957,40 @@ class Toolbar extends StatelessWidget {
                     icon: Icon(
                       FontAwesomeIcons.link,
                       color: Colors.grey,
-                      size: 20,
+                      size: MediaQuery.of(context).size.width * 0.05,
+
                     ),
                 ),
                 IconButton(
                     icon: Icon(
                       FontAwesomeIcons.virus,
                       color: Colors.grey,
-                      size: 20,
+                      size: MediaQuery.of(context).size.width * 0.05,
+
                     ),
                 ),
                 IconButton(
                     icon: Icon(
                       FontAwesomeIcons.book,
                       color:  Colors.grey,
-                      size: 20,
+                      size: MediaQuery.of(context).size.width * 0.05,
+
                     ),
                 ),
                 IconButton(
                     icon: Icon(
                       FontAwesomeIcons.fileVideo,
                       color: Colors.grey,
-                      size: 20,
+                      size: MediaQuery.of(context).size.width * 0.05,
+
                     ),
                 ),
                 IconButton(
                     icon: Icon(
                       FontAwesomeIcons.image,
                       color: Colors.grey,
-                      size: 20,
+                      size: MediaQuery.of(context).size.width * 0.05,
+
                     ),
                 )
               ]

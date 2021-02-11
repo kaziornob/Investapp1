@@ -53,8 +53,8 @@ class _TradeFormState extends State<TradeForm> {
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.2,
+/*                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height*1.4,*/
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -198,16 +198,10 @@ class _TradeFormState extends State<TradeForm> {
                                                     fontSize: ConstanceData.SIZE_TITLE12,
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
                                                 Icon(
                                                   FontAwesomeIcons.timesCircle,
                                                   size: 10,
                                                   color: Colors.grey,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
                                                 ),
                                                 Text(
                                                   "MARKET CLOSED",
@@ -244,7 +238,7 @@ class _TradeFormState extends State<TradeForm> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 185,
+                                  width: MediaQuery.of(context).size.width*0.50
                                 ),
                                 Icon(
                                   FontAwesomeIcons.arrowsAlt,
@@ -274,9 +268,11 @@ class _TradeFormState extends State<TradeForm> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: 40.0,
-                                  width: 330.0,
-                                  color: AllCoustomTheme.boxColor(),
+/*                                  height: 40.0,
+                                  width: 330.0,*/
+                                height: MediaQuery.of(context).size.height*0.05,
+                                width: MediaQuery.of(context).size.width*0.90,
+                                color: AllCoustomTheme.boxColor(),
                                   child:  TextFormField(
                                     readOnly: true,
                                     textAlign: TextAlign.center,
@@ -307,7 +303,9 @@ class _TradeFormState extends State<TradeForm> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 185,
+                                  // width: 185,
+                                  width: MediaQuery.of(context).size.width*0.50,
+
                                 ),
                                 Icon(
                                   FontAwesomeIcons.arrowsAlt,
@@ -337,14 +335,15 @@ class _TradeFormState extends State<TradeForm> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: 32,
-                                  width: 40,
+/*                                  height: 32,
+                                  width: 40,*/
+                                  height: MediaQuery.of(context).size.height*0.06,
+                                  width: MediaQuery.of(context).size.width*0.09,
                                   decoration: BoxDecoration(
                                     color: AllCoustomTheme.getThemeData().textSelectionColor,
                                     border: new Border.all(color: Colors.white, width: 1.0),
                                   ),
                                   child: IconButton(
-                                    padding: EdgeInsets.only(left: 5.0),
                                     icon: Icon(
                                       FontAwesomeIcons.minus,
                                       size: 15,
@@ -359,8 +358,10 @@ class _TradeFormState extends State<TradeForm> {
                                   width: 10,
                                 ),
                                 Container(
-                                  height: 35.0,
-                                  width: 225.0,
+/*                                  height: 35.0,
+                                  width: 225.0,*/
+                                  height: MediaQuery.of(context).size.height*0.06,
+                                  width: MediaQuery.of(context).size.width*0.70,
                                   color: AllCoustomTheme.boxColor(),
                                   child:  TextFormField(
                                     readOnly: true,
@@ -376,15 +377,14 @@ class _TradeFormState extends State<TradeForm> {
                                   width: 10,
                                 ),
                                 Container(
-                                  height: 32,
-                                  width: 40,
+                                  height: MediaQuery.of(context).size.height*0.06,
+                                  width: MediaQuery.of(context).size.width*0.09,
                                   decoration: BoxDecoration(
                                     color: AllCoustomTheme.getThemeData().textSelectionColor,
                                     border: new Border.all(color: Colors.white, width: 1.0),
                                   ),
                                   child: IconButton(
                                     // splashColor: Colors.grey,
-                                    padding: EdgeInsets.only(left: 5.0),
                                     icon: Icon(
                                       FontAwesomeIcons.plus,
                                       size: 15,
@@ -459,10 +459,13 @@ class _TradeFormState extends State<TradeForm> {
                                   ),
                                   Container(
                                     child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          margin: EdgeInsets.only(left: 5.0),
                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 "NO Sl",
@@ -482,10 +485,12 @@ class _TradeFormState extends State<TradeForm> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 40,
+                                          width: MediaQuery.of(context).size.width*0.05,
                                         ),
                                         Container(
                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 "X1",
@@ -505,10 +510,12 @@ class _TradeFormState extends State<TradeForm> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 40,
+                                          width: MediaQuery.of(context).size.width*0.05,
                                         ),
                                         Container(
                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 '\$' + "49,999.85",

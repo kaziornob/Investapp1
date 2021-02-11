@@ -81,7 +81,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
-                height: MediaQuery.of(context).size.height,
+                // height: MediaQuery.of(context).size.height,
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).requestFocus(new FocusNode());

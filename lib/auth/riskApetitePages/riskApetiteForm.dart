@@ -104,7 +104,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
               physics: BouncingScrollPhysics(),
               child: Container(
                   color: AllCoustomTheme.getBodyContainerThemeColor(),
-                  height: MediaQuery.of(context).size.height *1.03,
+                  // height: MediaQuery.of(context).size.height *1.03,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(

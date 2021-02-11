@@ -9,6 +9,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -22,13 +23,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isInProgress = false;
   bool _isClickonSignIn = false;
   bool _visible = false;
-
+  bool phoneError = true;
   ApiProvider request = new ApiProvider();
+
+
+  String phoneNumber;
+  String phoneIsoCode;
+  bool visible = false;
+  String confirmedNumber = '';
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController signUpPasswordController = new TextEditingController();
   TextEditingController signUpConfirmPasswordController = new TextEditingController();
-  TextEditingController phoneController = new TextEditingController();
 
 
   animation() async {
@@ -40,6 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
+    phoneIsoCode = '+852';
     super.initState();
     animation();
   }
@@ -62,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
-                height: MediaQuery.of(context).size.height*1.32,
+                // height: MediaQuery.of(context).size.height*1.37,
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).requestFocus(new FocusNode());
@@ -365,7 +372,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
+                                            padding: EdgeInsets.only(left: 10, bottom: 0,right: 20),
+                                            child: InternationalPhoneInput(
+                                              labelText: 'Phone',
+                                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                              onPhoneNumberChange: onPhoneNumberChange,
+                                              initialPhoneNumber: phoneNumber,
+                                              initialSelection: phoneIsoCode,
+                                              enabledCountries: ['+852', '+1', '+233', '+91'],
+                                              showCountryCodes: true,
+                                              showCountryFlags: true,
+                                            ),
+                                          )
+                                        ),
+/*                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 0, bottom: 0,right: 20),
                                             child: TextFormField(
                                               controller: phoneController,
                                               cursorColor: AllCoustomTheme.getTextThemeColor(),
@@ -388,8 +411,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               },
                                             ),
                                           ),
-                                        ),
+                                        ),*/
                                       ],
+                                    ),
+                                    Visibility(
+                                      visible: phoneError==false  ? true : false,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Padding(
+                                              padding: EdgeInsets.only(left: 14, top: 4),
+                                              child: Text(
+                                                "Phone cannot be empty",
+                                                style: TextStyle(
+                                                  fontSize: ConstanceData.SIZE_TITLE12,
+                                                  color: Color(0xFFC70039),
+                                                ),
+                                              )
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 10,
@@ -480,7 +520,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Color(0xFFD8AF4F)
                             ),
                             child: Text(
-                              "Sign Up With E-Mail",
+                              "Sign Up With Gmail",
                               style: TextStyle(
                                 color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
                                 letterSpacing: 0.3,
@@ -576,6 +616,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  void onPhoneNumberChange(
+      String number, String internationalizedPhoneNumber, String isoCode) {
+    print(number);
+    setState(() {
+      phoneError = true;
+      phoneNumber = number;
+      phoneIsoCode = isoCode;
+      confirmedNumber = internationalizedPhoneNumber;
+      print("internationalNum $confirmedNumber");
+
+    });
+  }
+
+  onValidPhoneNumber(
+      String number, String internationalizedPhoneNumber, String isoCode) {
+    setState(() {
+      visible = true;
+      confirmedNumber = internationalizedPhoneNumber;
+    });
+  }
+
   var myScreenFocusNode = FocusNode();
 
   _submit() async {
@@ -587,16 +648,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
         await Future.delayed(const Duration(milliseconds: 700));
         FocusScope.of(context).requestFocus(myScreenFocusNode);
-        if (_formKey.currentState.validate() == false) {
+        print("phone number: $phoneNumber");
+        print("phoneIsoCode: $phoneIsoCode");
+
+        // || phoneNumber=="" || phoneNumber==null || phoneIsoCode=="" || phoneIsoCode==null
+        if (_formKey.currentState.validate() == false ) {
           setState(() {
             _isInProgress = false;
+            // phoneError = false;
           });
           return;
         }
 
         var email = emailController.text.trim();
         var password = signUpPasswordController.text.trim();
-        var phone = phoneController.text.trim();
+        var phone = confirmedNumber;
 
         // String jsonReq = "users/authenticate/new?email=$email&password=$password&phone=$phone";
 
@@ -762,21 +828,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (value.isEmpty) {
       return "Password cannot be empty";
     } else {
-      String pattern = r'(^(?:[A-Za-z])?[A-Za-z]{6,12}$)';
+      /*String pattern = r'(^(?:[A-Za-z])?[A-Za-z]{6,12}$)';
       RegExp regExp = new RegExp(pattern);
       if(!regExp.hasMatch(value))
         {
-          return "Minimum 6 character";
-        }
-      return null;
-
-/*      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-      RegExp regExp = new RegExp(pattern);
-      if(!regExp.hasMatch(value))
-        {
-          return "Minimum 1 UC, LC, Num, spl. character(! @ # '\$' & * ~)";
+          return "Only six character";
         }
       return null;*/
+
+      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$';
+      RegExp regExp = new RegExp(pattern);
+      if(!regExp.hasMatch(value))
+        {
+          return "Minimum six characters, at least one upper,lower and number";
+        }
+      return null;
     }
   }
 }

@@ -58,8 +58,8 @@ class _OnBoardingSevenMarginApprovedState extends State<OnBoardingSevenMarginApp
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.7,
+/*                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height*0.7,*/
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -89,7 +89,7 @@ class _OnBoardingSevenMarginApprovedState extends State<OnBoardingSevenMarginApp
                                 ),
                               ),
                               Container(
-                                height: MediaQuery.of(context).size.height * 0.09,
+                                height: MediaQuery.of(context).size.height * 0.094,
                                 width: MediaQuery.of(context).size.width * 0.90,
                                 child: Column(
                                   children: [
@@ -103,7 +103,7 @@ class _OnBoardingSevenMarginApprovedState extends State<OnBoardingSevenMarginApp
                                         )
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                                      margin: EdgeInsets.only(left: 70.0,right: 70.0),
                                       padding: EdgeInsets.only(
                                         bottom: 1, // space between underline and text
                                       ),

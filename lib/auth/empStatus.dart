@@ -191,7 +191,7 @@ class _EmpStatusState extends State<EmpStatus> {
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
-                height: MediaQuery.of(context).size.height *1.02,
+                // height: MediaQuery.of(context).size.height *1.02,
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).requestFocus(new FocusNode());
@@ -278,7 +278,7 @@ class _EmpStatusState extends State<EmpStatus> {
                                                   fillColor: AllCoustomTheme.getTextThemeColor(),
                                                   hintText: 'Enter Occupation here...',
                                                   hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Occupation',
+                                                  labelText: 'Function/Role',
                                                   labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                                 ),
                                                 controller: empStatusOccpController,
@@ -306,7 +306,14 @@ class _EmpStatusState extends State<EmpStatus> {
                                                   fillColor: AllCoustomTheme.getTextThemeColor(),
                                                   hintText: 'Enter Name here...',
                                                   hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Name Of Employer',
+                                                  labelText: 'Name of Employer',
+                                                  /*suffixText: "(can skip if not comfortable sharing",
+                                                  suffixStyle: TextStyle(
+                                                    fontSize: ConstanceData.SIZE_TITLE10,
+                                                    color: Colors.black,
+                                                    fontFamily: "Rasa",
+                                                    fontStyle: FontStyle.normal,
+                                                  ),*/
                                                   labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                                 ),
                                                 validator: _validateName,
@@ -367,7 +374,31 @@ class _EmpStatusState extends State<EmpStatus> {
                                             ),
                                           ],
                                         ),
-                                      )
+                                      ),
+                                      SizedBox(
+                                          height: MediaQuery.of(context).size.height*0.30,
+                                          child: Container(
+                                              margin: EdgeInsets.only(left: 10.0,right: 10.0),
+                                              child: ListView(
+                                                physics: NeverScrollableScrollPhysics(),
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.only(left: 10.0,right: 3.0),
+                                                    child: Text(
+                                                      "Note: we will never share your information with a 3rd-party.it's only to make our AI customize",
+                                                      style: new TextStyle(
+                                                        // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
+                                                          color: Colors.black,
+                                                          fontSize: ConstanceData.SIZE_TITLE14,
+                                                          fontFamily: "RobotoLight",
+                                                          letterSpacing: 0.1
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                          )
+                                      ),
                                     ],
                                   ),
                                 ),

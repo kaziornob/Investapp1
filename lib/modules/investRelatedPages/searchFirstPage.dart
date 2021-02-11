@@ -89,21 +89,29 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10.0,left: 10.0,right: 10.0),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.40,
+              margin: EdgeInsets.only(top: 5.0,bottom:5.0),
+/*            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.40,*/
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                SizedBox(
+                    width: 0.5
+                ),
                 Container(
-                  width: MediaQuery.of(context).size.width*0.45,
-                  height: MediaQuery.of(context).size.height*0.41,
+/*                  width: MediaQuery.of(context).size.width*0.45,
+                  height: MediaQuery.of(context).size.height*0.41,*/
+                  margin: EdgeInsets.only(top: 5.0,bottom:5.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       //first row of small box
                       Container(
                         child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             //first box of first row
                             InkWell(
@@ -113,9 +121,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                     new SecurityPageFirst(logo: widget.logo,callingFrom: widget.callingFrom,)));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                                margin: EdgeInsets.only(left: 5.0,top: 5.0),
                                 width: MediaQuery.of(context).size.width*0.21,
-                                height: MediaQuery.of(context).size.height*0.19,
+                                height: MediaQuery.of(context).size.height*0.19,*/
                                 decoration: new BoxDecoration(
                                   color: Color(0xFFFFFFFF),
                                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -128,8 +136,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
-                                      margin: EdgeInsets.only(left: 3.5),
-                                      width: MediaQuery.of(context).size.width*0.21,
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
                                       height: MediaQuery.of(context).size.height*0.05,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,8 +172,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 3.5),
-                                      width: MediaQuery.of(context).size.width*0.21,
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
                                       height: MediaQuery.of(context).size.height*0.01,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,7 +204,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                       ),
                                     ),
                                     Container(
-                                      width: MediaQuery.of(context).size.width*0.21,
+                                      width: MediaQuery.of(context).size.width*0.22,
                                       height: MediaQuery.of(context).size.height*0.09,
                                       child: SfCartesianChart(
                                           primaryXAxis: NumericAxis(
@@ -218,12 +226,15 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                     Container(
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
+                                          SizedBox(
+                                              width:3.0
+                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context).size.width*0.09,
                                             height: MediaQuery.of(context).size.height*0.036,
                                             child: Container(
-                                              margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
                                               decoration: new BoxDecoration(
                                                 border: Border.all(
                                                   color: Color(0xff696969),
@@ -232,6 +243,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                 color: Color(0xFFFFFFFF),
                                               ),
                                               child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
                                                   SizedBox(
                                                     width: MediaQuery.of(context).size.width*0.10,
@@ -241,9 +254,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                           color: Color(0xff696969),
                                                         ),
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 3.0),
+                                                          padding: EdgeInsets.only(left: 0.0),
                                                           child: Text(
                                                             'SELL',
+                                                            textAlign: TextAlign.center,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -257,9 +271,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     height: MediaQuery.of(context).size.height*0.015,
                                                     child: Container(
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                           child: Text(
                                                             '80.42',
+                                                            textAlign: TextAlign.right,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -273,10 +288,12 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                             ),
                                           ),
                                           SizedBox(
+                                              width:3.0
+                                          ),
+                                          SizedBox(
                                             width: MediaQuery.of(context).size.width*0.09,
                                             height: MediaQuery.of(context).size.height*0.036,
                                             child: Container(
-                                              margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
                                               decoration: new BoxDecoration(
                                                 border: Border.all(
                                                   color: Color(0xff696969),
@@ -285,6 +302,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                 color: Color(0xFFFFFFFF),
                                               ),
                                               child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
                                                   SizedBox(
                                                     width: MediaQuery.of(context).size.width*0.10,
@@ -294,9 +313,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                           color: Color(0xff696969),
                                                         ),
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 3.0),
+                                                          padding: EdgeInsets.only(left: 0.0),
                                                           child: Text(
                                                             'BUY',
+                                                            textAlign: TextAlign.center,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -310,9 +330,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     height: MediaQuery.of(context).size.height*0.015,
                                                     child: Container(
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                           child: Text(
                                                             '80.42',
+                                                            textAlign: TextAlign.right,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -324,6 +345,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                 ],
                                               ),
                                             ),
+                                          ),
+                                          SizedBox(
+                                              width:3.0
                                           ),
                                         ],
                                       ),
@@ -332,252 +356,276 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                             ),
+                            SizedBox(
+                                width:4.0,
+                            ),
                             //second  box of first row
                             InkWell(
-                                onTap: (){
-/*                                  Navigator.of(context).push(new MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                      new SecurityPageFirst(logo: widget.logo,callingFrom: widget.callingFrom,)));*/
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                                  width: MediaQuery.of(context).size.width*0.21,
-                                  height: MediaQuery.of(context).size.height*0.19,
-                                  decoration: new BoxDecoration(
-                                    color: Color(0xFFFFFFFF),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    border: Border.all(
-                                      color: Color(0xff696969),
-                                      width: 1,
+                              onTap: (){
+                                Navigator.of(context).push(new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                    new SecurityPageFirst(logo: widget.logo,callingFrom: widget.callingFrom,)));
+                              },
+                              child: Container(
+/*                                margin: EdgeInsets.only(left: 5.0,top: 5.0),
+                                width: MediaQuery.of(context).size.width*0.21,
+                                height: MediaQuery.of(context).size.height*0.19,*/
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFFFFFFFF),
+                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                  border: Border.all(
+                                    color: Color(0xff696969),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
+                                      height: MediaQuery.of(context).size.height*0.05,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                            child: new Image(
+                                                width: 35.0,
+                                                fit: BoxFit.fill,
+                                                image: new AssetImage('assets/logo.png')),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                            child: Text(
+                                              'Title',
+                                              style: new TextStyle(
+                                                  fontFamily: "Poppins",
+                                                  color: Color(0xFF000000), fontSize: 12.0,
+                                                  letterSpacing: 0.2
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                            child: new Icon(
+                                              Icons.menu,
+                                              color: Colors.black,
+                                              size: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(left: 3.5),
-                                        width: MediaQuery.of(context).size.width*0.21,
-                                        height: MediaQuery.of(context).size.height*0.05,
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 10.0),
-                                              child: new Image(
-                                                  width: 35.0,
-                                                  fit: BoxFit.fill,
-                                                  image: new AssetImage('assets/logo.png')),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 10.0),
-                                              child: Text(
-                                                'Title',
-                                                style: new TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    color: Color(0xFF000000), fontSize: 12.0,
-                                                    letterSpacing: 0.2
-                                                ),
+                                    Container(
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
+                                      height: MediaQuery.of(context).size.height*0.01,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 0.0),
+                                            child: Text(
+                                              'CHANGE(1D)',
+                                              style: new TextStyle(
+                                                  fontFamily: "Poppins",
+                                                  color: Color(0xFF000000), fontSize: 7.0,
+                                                  letterSpacing: 0.2
                                               ),
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 10.0),
-                                              child: new Icon(
-                                                Icons.menu,
-                                                color: Colors.black,
-                                                size: 10,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 0.0),
+                                            child: Text(
+                                              '27.18',
+                                              style: new TextStyle(
+                                                  fontFamily: "Poppins",
+                                                  color: Color(0xFFe70b31), fontSize: 8.0,
+                                                  letterSpacing: 0.2
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 3.5),
-                                        width: MediaQuery.of(context).size.width*0.21,
-                                        height: MediaQuery.of(context).size.height*0.01,
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 0.0),
-                                              child: Text(
-                                                'CHANGE(1D)',
-                                                style: new TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    color: Color(0xFF000000), fontSize: 7.0,
-                                                    letterSpacing: 0.2
-                                                ),
-                                              ),
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width*0.22,
+                                      height: MediaQuery.of(context).size.height*0.09,
+                                      child: SfCartesianChart(
+                                          primaryXAxis: NumericAxis(
+                                            isVisible: false,
+                                          ),
+                                          primaryYAxis: NumericAxis(
+                                              isVisible: false
+                                          ),
+                                          series: <ChartSeries>[
+                                            StackedAreaSeries<NewSalesData, double>(
+                                              dataSource: newSalesData,
+                                              xValueMapper: (NewSalesData data, _) => data.year,
+                                              yValueMapper: (NewSalesData data, _) => data.sales,
+                                              gradient: gradientColors,
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 0.0),
-                                              child: Text(
-                                                '27.18',
-                                                style: new TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    color: Color(0xFFe70b31), fontSize: 8.0,
-                                                    letterSpacing: 0.2
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ]
                                       ),
-                                      Container(
-                                        width: MediaQuery.of(context).size.width*0.21,
-                                        height: MediaQuery.of(context).size.height*0.09,
-                                        child: SfCartesianChart(
-                                            primaryXAxis: NumericAxis(
-                                              isVisible: false,
-                                            ),
-                                            primaryYAxis: NumericAxis(
-                                                isVisible: false
-                                            ),
-                                            series: <ChartSeries>[
-                                              StackedAreaSeries<NewSalesData, double>(
-                                                dataSource: newSalesData,
-                                                xValueMapper: (NewSalesData data, _) => data.year,
-                                                yValueMapper: (NewSalesData data, _) => data.sales,
-                                                gradient: gradientColors,
-                                              ),
-                                            ]
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.09,
-                                              height: MediaQuery.of(context).size.height*0.036,
-                                              child: Container(
-                                                margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                                decoration: new BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Color(0xff696969),
-                                                    width: 1,
-                                                  ),
-                                                  color: Color(0xFFFFFFFF),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          SizedBox(
+                                              width:3.0
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width*0.09,
+                                            height: MediaQuery.of(context).size.height*0.036,
+                                            child: Container(
+                                              decoration: new BoxDecoration(
+                                                border: Border.all(
+                                                  color: Color(0xff696969),
+                                                  width: 1,
                                                 ),
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          decoration: new BoxDecoration(
-                                                            color: Color(0xff696969),
+                                                color: Color(0xFFFFFFFF),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        decoration: new BoxDecoration(
+                                                          color: Color(0xff696969),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0),
+                                                          child: Text(
+                                                            'SELL',
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
                                                           ),
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 3.0),
-                                                            child: Text(
-                                                              'SELL',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
+                                                        )
                                                     ),
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 5.0,top: 5.0),
-                                                            child: Text(
-                                                              '80.42',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.09,
-                                              height: MediaQuery.of(context).size.height*0.036,
-                                              child: Container(
-                                                margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                                decoration: new BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Color(0xff696969),
-                                                    width: 1,
                                                   ),
-                                                  color: Color(0xFFFFFFFF),
-                                                ),
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          decoration: new BoxDecoration(
-                                                            color: Color(0xff696969),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
+                                                          child: Text(
+                                                            '80.42',
+                                                            textAlign: TextAlign.right,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
                                                           ),
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 3.0),
-                                                            child: Text(
-                                                              'BUY',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
+                                                        )
                                                     ),
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 5.0,top: 5.0),
-                                                            child: Text(
-                                                              '80.42',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
+                                                  )
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(
+                                              width:3.0
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width*0.09,
+                                            height: MediaQuery.of(context).size.height*0.036,
+                                            child: Container(
+                                              decoration: new BoxDecoration(
+                                                border: Border.all(
+                                                  color: Color(0xff696969),
+                                                  width: 1,
+                                                ),
+                                                color: Color(0xFFFFFFFF),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        decoration: new BoxDecoration(
+                                                          color: Color(0xff696969),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0),
+                                                          child: Text(
+                                                            'BUY',
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
+                                                          ),
+                                                        )
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
+                                                          child: Text(
+                                                            '80.42',
+                                                            textAlign: TextAlign.right,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
+                                                          ),
+                                                        )
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width:3.0
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                )
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
 
                           ],
                         ),
                       ),
+                      SizedBox(
+                          height:4.0
+                      ),
                       //second row of small box
                       Container(
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             //first box of first row
                             InkWell(
                               onTap: (){
-/*                                Navigator.of(context).push(new MaterialPageRoute(
+                                Navigator.of(context).push(new MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                    new SecurityPageFirst(logo: widget.logo,callingFrom: widget.callingFrom,)));*/
+                                    new SecurityPageFirst(logo: widget.logo,callingFrom: widget.callingFrom,)));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                                margin: EdgeInsets.only(left: 5.0,top: 5.0),
                                 width: MediaQuery.of(context).size.width*0.21,
-                                height: MediaQuery.of(context).size.height*0.19,
+                                height: MediaQuery.of(context).size.height*0.19,*/
                                 decoration: new BoxDecoration(
                                   color: Color(0xFFFFFFFF),
                                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -590,8 +638,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
-                                      margin: EdgeInsets.only(left: 3.5),
-                                      width: MediaQuery.of(context).size.width*0.21,
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
                                       height: MediaQuery.of(context).size.height*0.05,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -626,8 +674,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 3.5),
-                                      width: MediaQuery.of(context).size.width*0.21,
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
                                       height: MediaQuery.of(context).size.height*0.01,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -658,7 +706,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                       ),
                                     ),
                                     Container(
-                                      width: MediaQuery.of(context).size.width*0.21,
+                                      width: MediaQuery.of(context).size.width*0.22,
                                       height: MediaQuery.of(context).size.height*0.09,
                                       child: SfCartesianChart(
                                           primaryXAxis: NumericAxis(
@@ -680,12 +728,15 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                     Container(
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
+                                          SizedBox(
+                                              width:3.0
+                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context).size.width*0.09,
                                             height: MediaQuery.of(context).size.height*0.036,
                                             child: Container(
-                                              margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
                                               decoration: new BoxDecoration(
                                                 border: Border.all(
                                                   color: Color(0xff696969),
@@ -694,6 +745,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                 color: Color(0xFFFFFFFF),
                                               ),
                                               child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
                                                   SizedBox(
                                                     width: MediaQuery.of(context).size.width*0.10,
@@ -703,9 +756,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                           color: Color(0xff696969),
                                                         ),
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 3.0),
+                                                          padding: EdgeInsets.only(left: 0.0),
                                                           child: Text(
                                                             'SELL',
+                                                            textAlign: TextAlign.center,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -719,9 +773,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     height: MediaQuery.of(context).size.height*0.015,
                                                     child: Container(
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                           child: Text(
                                                             '80.42',
+                                                            textAlign: TextAlign.right,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -735,10 +790,12 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                             ),
                                           ),
                                           SizedBox(
+                                              width:3.0
+                                          ),
+                                          SizedBox(
                                             width: MediaQuery.of(context).size.width*0.09,
                                             height: MediaQuery.of(context).size.height*0.036,
                                             child: Container(
-                                              margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
                                               decoration: new BoxDecoration(
                                                 border: Border.all(
                                                   color: Color(0xff696969),
@@ -747,6 +804,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                 color: Color(0xFFFFFFFF),
                                               ),
                                               child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
                                                   SizedBox(
                                                     width: MediaQuery.of(context).size.width*0.10,
@@ -756,9 +815,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                           color: Color(0xff696969),
                                                         ),
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 3.0),
+                                                          padding: EdgeInsets.only(left: 0.0),
                                                           child: Text(
                                                             'BUY',
+                                                            textAlign: TextAlign.center,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -772,9 +832,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     height: MediaQuery.of(context).size.height*0.015,
                                                     child: Container(
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                           child: Text(
                                                             '80.42',
+                                                            textAlign: TextAlign.right,
                                                             style: TextStyle(
                                                                 fontSize: 7.0,
                                                                 color: Color(0xFF000000),
@@ -786,6 +847,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                 ],
                                               ),
                                             ),
+                                          ),
+                                          SizedBox(
+                                              width:3.0
                                           ),
                                         ],
                                       ),
@@ -794,233 +858,253 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                             ),
-                            //second box of first row
+                            SizedBox(
+                              width:4.0,
+                            ),
+                            //second  box of first row
                             InkWell(
-                                onTap: (){
-/*                                  Navigator.of(context).push(new MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                      new SecurityPageFirst(logo: widget.logo,callingFrom: widget.callingFrom,)));*/
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                                  width: MediaQuery.of(context).size.width*0.21,
-                                  height: MediaQuery.of(context).size.height*0.19,
-                                  decoration: new BoxDecoration(
-                                    color: Color(0xFFFFFFFF),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    border: Border.all(
-                                      color: Color(0xff696969),
-                                      width: 1,
+                              onTap: (){
+                                Navigator.of(context).push(new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                    new SecurityPageFirst(logo: widget.logo,callingFrom: widget.callingFrom,)));
+                              },
+                              child: Container(
+/*                                margin: EdgeInsets.only(left: 5.0,top: 5.0),
+                                width: MediaQuery.of(context).size.width*0.21,
+                                height: MediaQuery.of(context).size.height*0.19,*/
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFFFFFFFF),
+                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                  border: Border.all(
+                                    color: Color(0xff696969),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
+                                      height: MediaQuery.of(context).size.height*0.05,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                            child: new Image(
+                                                width: 35.0,
+                                                fit: BoxFit.fill,
+                                                image: new AssetImage('assets/logo.png')),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                            child: Text(
+                                              'Title',
+                                              style: new TextStyle(
+                                                  fontFamily: "Poppins",
+                                                  color: Color(0xFF000000), fontSize: 12.0,
+                                                  letterSpacing: 0.2
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                            child: new Icon(
+                                              Icons.menu,
+                                              color: Colors.black,
+                                              size: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(left: 3.5),
-                                        width: MediaQuery.of(context).size.width*0.21,
-                                        height: MediaQuery.of(context).size.height*0.05,
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 10.0),
-                                              child: new Image(
-                                                  width: 35.0,
-                                                  fit: BoxFit.fill,
-                                                  image: new AssetImage('assets/logo.png')),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 10.0),
-                                              child: Text(
-                                                'Title',
-                                                style: new TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    color: Color(0xFF000000), fontSize: 12.0,
-                                                    letterSpacing: 0.2
-                                                ),
+                                    Container(
+                                      // margin: EdgeInsets.only(left: 3.5),
+                                      width: MediaQuery.of(context).size.width*0.22,
+                                      height: MediaQuery.of(context).size.height*0.01,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 0.0),
+                                            child: Text(
+                                              'CHANGE(1D)',
+                                              style: new TextStyle(
+                                                  fontFamily: "Poppins",
+                                                  color: Color(0xFF000000), fontSize: 7.0,
+                                                  letterSpacing: 0.2
                                               ),
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 10.0),
-                                              child: new Icon(
-                                                Icons.menu,
-                                                color: Colors.black,
-                                                size: 10,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 0.0),
+                                            child: Text(
+                                              '27.18',
+                                              style: new TextStyle(
+                                                  fontFamily: "Poppins",
+                                                  color: Color(0xFFe70b31), fontSize: 8.0,
+                                                  letterSpacing: 0.2
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 3.5),
-                                        width: MediaQuery.of(context).size.width*0.21,
-                                        height: MediaQuery.of(context).size.height*0.01,
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 0.0),
-                                              child: Text(
-                                                'CHANGE(1D)',
-                                                style: new TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    color: Color(0xFF000000), fontSize: 7.0,
-                                                    letterSpacing: 0.2
-                                                ),
-                                              ),
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width*0.22,
+                                      height: MediaQuery.of(context).size.height*0.09,
+                                      child: SfCartesianChart(
+                                          primaryXAxis: NumericAxis(
+                                            isVisible: false,
+                                          ),
+                                          primaryYAxis: NumericAxis(
+                                              isVisible: false
+                                          ),
+                                          series: <ChartSeries>[
+                                            StackedAreaSeries<NewSalesData, double>(
+                                              dataSource: newSalesData,
+                                              xValueMapper: (NewSalesData data, _) => data.year,
+                                              yValueMapper: (NewSalesData data, _) => data.sales,
+                                              gradient: gradientColors,
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 0.0),
-                                              child: Text(
-                                                '27.18',
-                                                style: new TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    color: Color(0xFFe70b31), fontSize: 8.0,
-                                                    letterSpacing: 0.2
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ]
                                       ),
-                                      Container(
-                                        width: MediaQuery.of(context).size.width*0.21,
-                                        height: MediaQuery.of(context).size.height*0.09,
-                                        child: SfCartesianChart(
-                                            primaryXAxis: NumericAxis(
-                                              isVisible: false,
-                                            ),
-                                            primaryYAxis: NumericAxis(
-                                                isVisible: false
-                                            ),
-                                            series: <ChartSeries>[
-                                              StackedAreaSeries<NewSalesData, double>(
-                                                dataSource: newSalesData,
-                                                xValueMapper: (NewSalesData data, _) => data.year,
-                                                yValueMapper: (NewSalesData data, _) => data.sales,
-                                                gradient: gradientColors,
-                                              ),
-                                            ]
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.09,
-                                              height: MediaQuery.of(context).size.height*0.036,
-                                              child: Container(
-                                                margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                                decoration: new BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Color(0xff696969),
-                                                    width: 1,
-                                                  ),
-                                                  color: Color(0xFFFFFFFF),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          SizedBox(
+                                              width:3.0
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width*0.09,
+                                            height: MediaQuery.of(context).size.height*0.036,
+                                            child: Container(
+                                              decoration: new BoxDecoration(
+                                                border: Border.all(
+                                                  color: Color(0xff696969),
+                                                  width: 1,
                                                 ),
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          decoration: new BoxDecoration(
-                                                            color: Color(0xff696969),
+                                                color: Color(0xFFFFFFFF),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        decoration: new BoxDecoration(
+                                                          color: Color(0xff696969),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0),
+                                                          child: Text(
+                                                            'SELL',
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
                                                           ),
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 3.0),
-                                                            child: Text(
-                                                              'SELL',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
+                                                        )
                                                     ),
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 5.0,top: 5.0),
-                                                            child: Text(
-                                                              '80.42',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.09,
-                                              height: MediaQuery.of(context).size.height*0.036,
-                                              child: Container(
-                                                margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                                decoration: new BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Color(0xff696969),
-                                                    width: 1,
                                                   ),
-                                                  color: Color(0xFFFFFFFF),
-                                                ),
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          decoration: new BoxDecoration(
-                                                            color: Color(0xff696969),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
+                                                          child: Text(
+                                                            '80.42',
+                                                            textAlign: TextAlign.right,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
                                                           ),
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 3.0),
-                                                            child: Text(
-                                                              'BUY',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
+                                                        )
                                                     ),
-                                                    SizedBox(
-                                                      width: MediaQuery.of(context).size.width*0.10,
-                                                      height: MediaQuery.of(context).size.height*0.015,
-                                                      child: Container(
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(left: 5.0,top: 5.0),
-                                                            child: Text(
-                                                              '80.42',
-                                                              style: TextStyle(
-                                                                  fontSize: 7.0,
-                                                                  color: Color(0xFF000000),
-                                                                  fontFamily: "WorkSansBold"),
-                                                            ),
-                                                          )
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
+                                                  )
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(
+                                              width:3.0
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width*0.09,
+                                            height: MediaQuery.of(context).size.height*0.036,
+                                            child: Container(
+                                              decoration: new BoxDecoration(
+                                                border: Border.all(
+                                                  color: Color(0xff696969),
+                                                  width: 1,
+                                                ),
+                                                color: Color(0xFFFFFFFF),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        decoration: new BoxDecoration(
+                                                          color: Color(0xff696969),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0),
+                                                          child: Text(
+                                                            'BUY',
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
+                                                          ),
+                                                        )
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.10,
+                                                    height: MediaQuery.of(context).size.height*0.015,
+                                                    child: Container(
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(left: 0.0,top: 0.0),
+                                                          child: Text(
+                                                            '80.42',
+                                                            textAlign: TextAlign.right,
+                                                            style: TextStyle(
+                                                                fontSize: 7.0,
+                                                                color: Color(0xFF000000),
+                                                                fontFamily: "WorkSansBold"),
+                                                          ),
+                                                        )
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width:3.0
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                )
-                            )
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
                           ],
                         ),
                       ),
@@ -1031,9 +1115,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                 ),
                 //Big Box
                 Container(
-                  margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
-                  width: MediaQuery.of(context).size.width*0.45,
-                  height: MediaQuery.of(context).size.height*0.41,
+                  margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+/*                  width: MediaQuery.of(context).size.width*0.45,
+                  height: MediaQuery.of(context).size.height*0.41,*/
                   decoration: new BoxDecoration(
                     color: Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -1046,20 +1130,20 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        width: MediaQuery.of(context).size.width*0.44,
+                        width: MediaQuery.of(context).size.width*0.454,
                         height: MediaQuery.of(context).size.height*0.10,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top: 10.0,left: 5.0),
+                              padding: EdgeInsets.only(top: 10.0),
                               child: new Image(
                                   width: 80.0,
                                   fit: BoxFit.fill,
                                   image: new AssetImage('assets/logo.png')),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 10.0,left: 5.0),
+                              padding: EdgeInsets.only(top: 10.0),
                               child: Text(
                                 'Title',
                                 style: new TextStyle(
@@ -1070,7 +1154,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 10.0,left: 5.0),
+                              padding: EdgeInsets.only(top: 10.0),
                               child: new Icon(
                                 Icons.menu,
                                 color: Colors.black,
@@ -1081,7 +1165,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width*0.44,
+                        width: MediaQuery.of(context).size.width*0.454,
                         height: MediaQuery.of(context).size.height*0.03,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1112,7 +1196,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                         ),
                       ),
                       Container(
-                          width: MediaQuery.of(context).size.width*0.44,
+                          width: MediaQuery.of(context).size.width*0.454,
                           height: MediaQuery.of(context).size.height*0.12,
                           child: Container(
                             child: SfCartesianChart(
@@ -1134,17 +1218,21 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           )
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width*0.44,
-                        height: MediaQuery.of(context).size.height*0.10,
+                        width: MediaQuery.of(context).size.width*0.454,
+                        height: MediaQuery.of(context).size.height*0.11,
                         margin: EdgeInsets.only(top: 10.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
+                            SizedBox(
+                                width: 3.0
+                            ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width*0.20,
                               height: MediaQuery.of(context).size.height*0.10,
                               child: Container(
-                                margin: EdgeInsets.only(top: 5.0,left: 10.0),
+                                margin: EdgeInsets.only(top: 2.0),
                                 decoration: new BoxDecoration(
                                   border: Border.all(
                                     color: Color(0xff696969),
@@ -1155,16 +1243,17 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 child: Column(
                                   children: <Widget>[
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.33,
+                                      width: MediaQuery.of(context).size.width*0.34,
                                       height: MediaQuery.of(context).size.height*0.038,
                                       child: Container(
                                           decoration: new BoxDecoration(
                                             color: Color(0xff696969),
                                           ),
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 5.0),
+                                            padding: EdgeInsets.only(left: 0.0),
                                             child: Text(
                                               'SELL',
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: 18.0,
                                                   color: Color(0xFF000000),
@@ -1174,15 +1263,16 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                       ),
                                     ),
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.33,
-                                      height: MediaQuery.of(context).size.height*0.038,
+                                      width: MediaQuery.of(context).size.width*0.34,
+                                      height: MediaQuery.of(context).size.height*0.0385,
                                       child: Container(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 20.0,top: 5.0),
+                                            padding: EdgeInsets.only(top: 5.0),
                                             child: Text(
                                               '80.42',
+                                              textAlign: TextAlign.right,
                                               style: TextStyle(
-                                                  fontSize: 18.0,
+                                                  fontSize: 17.0,
                                                   color: Color(0xFF000000),
                                                   fontFamily: "WorkSansBold"),
                                             ),
@@ -1197,7 +1287,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               width: MediaQuery.of(context).size.width*0.20,
                               height: MediaQuery.of(context).size.height*0.10,
                               child: Container(
-                                margin: EdgeInsets.only(top: 8.0,left: 15.0),
+                                margin: EdgeInsets.only(top: 2.0),
                                 decoration: new BoxDecoration(
                                   border: Border.all(
                                     color: Color(0xff696969),
@@ -1208,16 +1298,17 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 child: Column(
                                   children: <Widget>[
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.33,
+                                      width: MediaQuery.of(context).size.width*0.34,
                                       height: MediaQuery.of(context).size.height*0.038,
                                       child: Container(
                                           decoration: new BoxDecoration(
                                             color: Color(0xff696969),
                                           ),
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 5.0),
+                                            padding: EdgeInsets.only(left: 0.0),
                                             child: Text(
                                               'BUY',
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: 18.0,
                                                   color: Color(0xFF000000),
@@ -1227,15 +1318,16 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                       ),
                                     ),
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.33,
-                                      height: MediaQuery.of(context).size.height*0.038,
+                                      width: MediaQuery.of(context).size.width*0.34,
+                                      height: MediaQuery.of(context).size.height*0.0385,
                                       child: Container(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 20.0,top: 5.0),
+                                            padding: EdgeInsets.only(top: 5.0),
                                             child: Text(
                                               '80.42',
+                                              textAlign: TextAlign.right,
                                               style: TextStyle(
-                                                  fontSize: 18.0,
+                                                  fontSize: 17.0,
                                                   color: Color(0xFF000000),
                                                   fontFamily: "WorkSansBold"),
                                             ),
@@ -1245,7 +1337,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                   ],
                                 ),
                               ),
-                            )
+                            ),
+                            SizedBox(
+                                width: 3.0
+                            ),
                           ],
                         ),
                       ),
@@ -1289,16 +1384,17 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
+/*                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.20,
+                    height: MediaQuery.of(context).size.height*0.20,*/
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
                           width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
+                          height: MediaQuery.of(context).size.height*0.19,*/
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -1309,228 +1405,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            color: AllCoustomTheme.getTextThemeColors(),
-                                            fontSize: ConstanceData.SIZE_TITLE12,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.21,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.05,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1565,8 +1444,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.01,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1597,7 +1476,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.21,
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.09,
                                 child: SfCartesianChart(
                                     primaryXAxis: NumericAxis(
@@ -1619,7 +1498,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               Container(
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width*0.09,
                                       height: MediaQuery.of(context).size.height*0.036,
@@ -1633,6 +1516,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -1642,9 +1527,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'SELL',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1658,9 +1544,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1686,6 +1573,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -1695,9 +1584,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'BUY',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1711,9 +1601,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1725,6 +1616,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           ],
                                         ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
                                     ),
                                   ],
                                 ),
@@ -1733,9 +1627,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
                           width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
+                          height: MediaQuery.of(context).size.height*0.19,*/
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -1746,10 +1640,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.05,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1784,8 +1679,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.01,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1816,7 +1711,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.21,
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.09,
                                 child: SfCartesianChart(
                                     primaryXAxis: NumericAxis(
@@ -1838,7 +1733,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               Container(
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width*0.09,
                                       height: MediaQuery.of(context).size.height*0.036,
@@ -1852,6 +1751,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -1861,9 +1762,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'SELL',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1877,9 +1779,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1905,6 +1808,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -1914,9 +1819,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'BUY',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1930,9 +1836,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -1944,6 +1851,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           ],
                                         ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
                                     ),
                                   ],
                                 ),
@@ -1952,9 +1862,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
                           width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
+                          height: MediaQuery.of(context).size.height*0.19,*/
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -1965,10 +1875,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.05,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2003,8 +1914,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.01,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2035,7 +1946,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.21,
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.09,
                                 child: SfCartesianChart(
                                     primaryXAxis: NumericAxis(
@@ -2057,7 +1968,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               Container(
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width*0.09,
                                       height: MediaQuery.of(context).size.height*0.036,
@@ -2071,6 +1986,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2080,9 +1997,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'SELL',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2096,9 +2014,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2124,6 +2043,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2133,9 +2054,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'BUY',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2149,9 +2071,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2163,6 +2086,244 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           ],
                                         ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+                          width: MediaQuery.of(context).size.width*0.21,
+                          height: MediaQuery.of(context).size.height*0.19,*/
+                          decoration: new BoxDecoration(
+                            color: Color(0xFFFFFFFF),
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            border: Border.all(
+                              color: Color(0xff696969),
+                              width: 1,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
+                                height: MediaQuery.of(context).size.height*0.05,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10.0),
+                                      child: new Image(
+                                          width: 35.0,
+                                          fit: BoxFit.fill,
+                                          image: new AssetImage('assets/logo.png')),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10.0),
+                                      child: Text(
+                                        'Title',
+                                        style: new TextStyle(
+                                            fontFamily: "Poppins",
+                                            color: Color(0xFF000000), fontSize: 12.0,
+                                            letterSpacing: 0.2
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10.0),
+                                      child: new Icon(
+                                        Icons.menu,
+                                        color: Colors.black,
+                                        size: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
+                                height: MediaQuery.of(context).size.height*0.01,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 0.0),
+                                      child: Text(
+                                        'CHANGE(1D)',
+                                        style: new TextStyle(
+                                            fontFamily: "Poppins",
+                                            color: Color(0xFF000000), fontSize: 7.0,
+                                            letterSpacing: 0.2
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 0.0),
+                                      child: Text(
+                                        '27.18',
+                                        style: new TextStyle(
+                                            fontFamily: "Poppins",
+                                            color: Color(0xFFe70b31), fontSize: 8.0,
+                                            letterSpacing: 0.2
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.22,
+                                height: MediaQuery.of(context).size.height*0.09,
+                                child: SfCartesianChart(
+                                    primaryXAxis: NumericAxis(
+                                      isVisible: false,
+                                    ),
+                                    primaryYAxis: NumericAxis(
+                                        isVisible: false
+                                    ),
+                                    series: <ChartSeries>[
+                                      StackedAreaSeries<NewSalesData, double>(
+                                        dataSource: newSalesData,
+                                        xValueMapper: (NewSalesData data, _) => data.year,
+                                        yValueMapper: (NewSalesData data, _) => data.sales,
+                                        gradient: gradientColors,
+                                      ),
+                                    ]
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width*0.09,
+                                      height: MediaQuery.of(context).size.height*0.036,
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+                                        decoration: new BoxDecoration(
+                                          border: Border.all(
+                                            color: Color(0xff696969),
+                                            width: 1,
+                                          ),
+                                          color: Color(0xFFFFFFFF),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: MediaQuery.of(context).size.width*0.10,
+                                              height: MediaQuery.of(context).size.height*0.015,
+                                              child: Container(
+                                                  decoration: new BoxDecoration(
+                                                    color: Color(0xff696969),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(left: 0.0),
+                                                    child: Text(
+                                                      'SELL',
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontSize: 7.0,
+                                                          color: Color(0xFF000000),
+                                                          fontFamily: "WorkSansBold"),
+                                                    ),
+                                                  )
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context).size.width*0.10,
+                                              height: MediaQuery.of(context).size.height*0.015,
+                                              child: Container(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
+                                                    child: Text(
+                                                      '80.42',
+                                                      textAlign: TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 7.0,
+                                                          color: Color(0xFF000000),
+                                                          fontFamily: "WorkSansBold"),
+                                                    ),
+                                                  )
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width*0.09,
+                                      height: MediaQuery.of(context).size.height*0.036,
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+                                        decoration: new BoxDecoration(
+                                          border: Border.all(
+                                            color: Color(0xff696969),
+                                            width: 1,
+                                          ),
+                                          color: Color(0xFFFFFFFF),
+                                        ),
+                                        child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: MediaQuery.of(context).size.width*0.10,
+                                              height: MediaQuery.of(context).size.height*0.015,
+                                              child: Container(
+                                                  decoration: new BoxDecoration(
+                                                    color: Color(0xff696969),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(left: 0.0),
+                                                    child: Text(
+                                                      'BUY',
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontSize: 7.0,
+                                                          color: Color(0xFF000000),
+                                                          fontFamily: "WorkSansBold"),
+                                                    ),
+                                                  )
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context).size.width*0.10,
+                                              height: MediaQuery.of(context).size.height*0.015,
+                                              child: Container(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
+                                                    child: Text(
+                                                      '80.42',
+                                                      textAlign: TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 7.0,
+                                                          color: Color(0xFF000000),
+                                                          fontFamily: "WorkSansBold"),
+                                                    ),
+                                                  )
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
                                     ),
                                   ],
                                 ),
@@ -2176,16 +2337,17 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                   ),
                   Divider(color: Color(0xff696969),thickness: 1.5,),
                   Container(
-                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
+/*                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.20,
+                    height: MediaQuery.of(context).size.height*0.20,*/
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
                           width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
+                          height: MediaQuery.of(context).size.height*0.19,*/
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -2196,10 +2358,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.05,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2234,8 +2397,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.01,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2266,7 +2429,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.21,
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.09,
                                 child: SfCartesianChart(
                                     primaryXAxis: NumericAxis(
@@ -2288,7 +2451,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               Container(
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width*0.09,
                                       height: MediaQuery.of(context).size.height*0.036,
@@ -2302,6 +2469,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2311,9 +2480,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'SELL',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2327,9 +2497,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2355,6 +2526,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2364,9 +2537,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'BUY',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2380,9 +2554,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2394,6 +2569,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           ],
                                         ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
                                     ),
                                   ],
                                 ),
@@ -2402,9 +2580,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
                           width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
+                          height: MediaQuery.of(context).size.height*0.19,*/
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -2415,10 +2593,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.05,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2453,8 +2632,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.01,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2485,7 +2664,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.21,
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.09,
                                 child: SfCartesianChart(
                                     primaryXAxis: NumericAxis(
@@ -2507,7 +2686,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               Container(
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width*0.09,
                                       height: MediaQuery.of(context).size.height*0.036,
@@ -2521,6 +2704,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2530,9 +2715,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'SELL',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2546,9 +2732,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2574,6 +2761,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2583,9 +2772,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'BUY',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2599,9 +2789,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2613,6 +2804,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           ],
                                         ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
                                     ),
                                   ],
                                 ),
@@ -2621,9 +2815,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
                           width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
+                          height: MediaQuery.of(context).size.height*0.19,*/
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -2634,10 +2828,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.05,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2672,8 +2867,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.01,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2704,7 +2899,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.21,
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.09,
                                 child: SfCartesianChart(
                                     primaryXAxis: NumericAxis(
@@ -2726,7 +2921,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               Container(
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width*0.09,
                                       height: MediaQuery.of(context).size.height*0.036,
@@ -2740,6 +2939,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2749,9 +2950,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'SELL',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2765,9 +2967,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2793,6 +2996,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2802,9 +3007,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'BUY',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2818,9 +3024,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2832,6 +3039,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           ],
                                         ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
                                     ),
                                   ],
                                 ),
@@ -2840,9 +3050,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
                           width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,
+                          height: MediaQuery.of(context).size.height*0.19,*/
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -2853,10 +3063,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.05,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2891,8 +3102,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.21,
+                                // margin: EdgeInsets.only(left: 3.5),
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.01,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2923,7 +3134,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.21,
+                                width: MediaQuery.of(context).size.width*0.22,
                                 height: MediaQuery.of(context).size.height*0.09,
                                 child: SfCartesianChart(
                                     primaryXAxis: NumericAxis(
@@ -2945,7 +3156,11 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                               Container(
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    SizedBox(
+                                        width: 2.0
+                                    ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width*0.09,
                                       height: MediaQuery.of(context).size.height*0.036,
@@ -2959,6 +3174,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -2968,9 +3185,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'SELL',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -2984,9 +3202,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -3012,6 +3231,8 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           color: Color(0xFFFFFFFF),
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             SizedBox(
                                               width: MediaQuery.of(context).size.width*0.10,
@@ -3021,9 +3242,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                                     color: Color(0xff696969),
                                                   ),
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 3.0),
+                                                    padding: EdgeInsets.only(left: 0.0),
                                                     child: Text(
                                                       'BUY',
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -3037,9 +3259,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                               height: MediaQuery.of(context).size.height*0.015,
                                               child: Container(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 5.0,top: 5.0),
+                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
                                                     child: Text(
                                                       '80.42',
+                                                      textAlign: TextAlign.right,
                                                       style: TextStyle(
                                                           fontSize: 7.0,
                                                           color: Color(0xFF000000),
@@ -3051,6 +3274,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                           ],
                                         ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                        width: 2.0
                                     ),
                                   ],
                                 ),

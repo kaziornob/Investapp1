@@ -120,8 +120,8 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.3,
+                      // width: MediaQuery.of(context).size.width,
+                      // height: MediaQuery.of(context).size.height*1.3,
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -151,7 +151,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                 ),
                               ),
                               Container(
-                                height: MediaQuery.of(context).size.height * 0.09,
+                                height: MediaQuery.of(context).size.height * 0.099,
                                 width: MediaQuery.of(context).size.width * 0.90,
                                 child: Column(
                                   children: [
@@ -165,7 +165,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                         )
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                                      margin: EdgeInsets.only(left: 70.0,right: 70.0),
                                       padding: EdgeInsets.only(
                                         bottom: 1, // space between underline and text
                                       ),
@@ -185,7 +185,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height*1.17,
+                            // height: MediaQuery.of(context).size.height*1.17,
                             child: Column(
                               children: <Widget>[
                                 Container(
@@ -201,7 +201,37 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                     ),
                                   ),
                                 ),
-                                Expanded(
+                                Container(
+                                  margin: EdgeInsets.only(top:15.0,left: 15.0,right: 3.0),
+                                  child: Text(
+                                    "Auro has the ability of investing in ETF's, MF's and individual securities!",
+                                    style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "RobotoLight",
+                                        letterSpacing: 0.1
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 15.0,bottom: 10.0,left: 15.0,right: 3.0),
+                                  child: Text(
+                                    "While we suggest you include all of these in your portfolio, if you specifically want to exclude any of these please uncheck the respective box?",
+                                    style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "RobotoLight",
+                                        letterSpacing: 0.1
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                                    child: getOptionList(),
+                                  ),
+                                ),
+/*                                Expanded(
                                     child: Container(
                                         margin: EdgeInsets.only(left: 20.0,right: 20.0),
                                         child: ListView(
@@ -240,6 +270,9 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                           ],
                                         )
                                     )
+                                ),*/
+                                SizedBox(
+                                  height: 10,
                                 ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height*0.30,
@@ -267,77 +300,68 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 20, right: 20),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          SizedBox(
-                                            height: 35,
-                                            child: Container(
-                                              height: 35,
-                                              width: 120,
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                                  border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                                  color: Color(0xFFD8AF4F)
-                                              ),
-                                              child: MaterialButton(
-                                                splashColor: Colors.grey,
-                                                child: Text(
-                                                  "SKIP",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                  ),
-                                                ),
-                                                onPressed: () async
-                                                {
-                                                  submit();
-                                                },
-                                              ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      height: 35,
+                                      child: Container(
+                                        height: 35,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
+                                        ),
+                                        child: MaterialButton(
+                                          splashColor: Colors.grey,
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
-                                        ],
+                                          onPressed: () async
+                                          {
+                                            submit();
+                                          },
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
                                       width: 40,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          SizedBox(
-                                            height: 35,
-                                            child: Container(
-                                              height: 35,
-                                              width: 120,
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                                  border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                                  color: Color(0xFFD8AF4F)
-                                              ),
-                                              child: MaterialButton(
-                                                splashColor: Colors.grey,
-                                                child: Text(
-                                                  "NEXT",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                  ),
-                                                ),
-                                                onPressed: () async
-                                                {
-                                                  submit();
-                                                },
-                                              ),
+                                    SizedBox(
+                                      height: 35,
+                                      child: Container(
+                                        height: 35,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                            color: Color(0xFFD8AF4F)
+                                        ),
+                                        child: MaterialButton(
+                                          splashColor: Colors.grey,
+                                          child: Text(
+                                            "NEXT",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: ConstanceData.SIZE_TITLE16,
                                             ),
                                           ),
-                                        ],
+                                          onPressed: () async
+                                          {
+                                            submit();
+                                          },
+                                        ),
                                       ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
                                     ),
                                   ],
                                 ),
