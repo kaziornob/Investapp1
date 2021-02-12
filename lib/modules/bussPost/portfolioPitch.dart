@@ -201,12 +201,14 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                           width: MediaQuery.of(context).size.width,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                height: MediaQuery.of(context).size.height*0.05,
-                                width: MediaQuery.of(context).size.width,
+/*                                height: MediaQuery.of(context).size.height*0.05,
+                                width: MediaQuery.of(context).size.width,*/
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       height: MediaQuery.of(context).size.height*0.05,
@@ -246,10 +248,11 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                 height: 20,
                               ),
                               Container(
-                                height: MediaQuery.of(context).size.height*0.07,
-                                width: MediaQuery.of(context).size.width,
+/*                                height: MediaQuery.of(context).size.height*0.07,
+                                width: MediaQuery.of(context).size.width,*/
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       height: MediaQuery.of(context).size.height*0.05,
@@ -655,7 +658,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                height: MediaQuery.of(context).size.height * 0.11,
+                                height: MediaQuery.of(context).size.height * 0.09,
                                 width: MediaQuery.of(context).size.width * 0.45,
                                 decoration: BoxDecoration(
                                   color: AllCoustomTheme.getThemeData().textSelectionColor,

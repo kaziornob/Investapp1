@@ -127,6 +127,8 @@ class _AddEditQusState extends State<AddEditQus> {
               height: 15,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   child: CircleAvatar(
@@ -134,9 +136,6 @@ class _AddEditQusState extends State<AddEditQus> {
                     backgroundImage: new AssetImage('assets/download.jpeg'),
                     backgroundColor: Colors.transparent,
                   ),
-                ),
-                SizedBox(
-                  width: 4,
                 ),
                 Container(
                   child: new Text(
@@ -146,9 +145,6 @@ class _AddEditQusState extends State<AddEditQus> {
                       fontSize: ConstanceData.SIZE_TITLE14,
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 8,
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20.0),
@@ -165,9 +161,6 @@ class _AddEditQusState extends State<AddEditQus> {
                       fontSize: ConstanceData.SIZE_TITLE14,
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 50,
                 ),
                 Container(
                   child: new Text(

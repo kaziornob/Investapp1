@@ -26,6 +26,8 @@ class _StockPitchState extends State<StockPitch> {
 
 
   List<String> pollDurationList = <String>['7 days','14 days','21 days'];
+  List<String> stockNameList = <String>['Apple','Google','Redmi'];
+
   List<String> longShortList = <String>['Long','Short'];
 
 
@@ -115,7 +117,7 @@ class _StockPitchState extends State<StockPitch> {
 
   Widget getStockDropDownList()
   {
-    if (pollDurationList != null && pollDurationList.length != 0)
+    if (stockNameList != null && stockNameList.length != 0)
     {
       return new DropdownButtonHideUnderline(
         child: ButtonTheme(
@@ -131,7 +133,7 @@ class _StockPitchState extends State<StockPitch> {
                   selectedStock = newValue;
                 });
               },
-              items: pollDurationList.map((String value) {
+              items: stockNameList.map((String value) {
                 return new DropdownMenuItem(
                   value: value,
                   child: new Text(
@@ -787,7 +789,7 @@ class _StockPitchState extends State<StockPitch> {
                               child: new RaisedButton(
                                 onPressed: () => _openFileExplorer(),
                                 child: new Text(
-                                  "Upload doc",
+                                  "Investment Thesis doc",
                                   style: TextStyle(
                                     color: AllCoustomTheme.getTextThemeColors(),
                                     fontSize: ConstanceData.SIZE_TITLE18,
@@ -879,7 +881,7 @@ class _StockPitchState extends State<StockPitch> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               SizedBox(
-                                height: 50,
+                                height: MediaQuery.of(context).size.height * 0.06,
                                 child: Animator(
                                   tween: Tween<double>(begin: 0.8, end: 1.1),
                                   curve: Curves.easeInToLinear,
@@ -887,8 +889,10 @@ class _StockPitchState extends State<StockPitch> {
                                   builder: (anim) => Transform.scale(
                                     scale: anim.value,
                                     child: Container(
-                                      height: 50,
-                                      width: 100,
+                                      /*height: 50,
+                                      width: 100,*/
+                                      height: MediaQuery.of(context).size.height * 0.06,
+                                      width: MediaQuery.of(context).size.width * 0.27,
                                       decoration: BoxDecoration(
                                         border: new Border.all(color: Colors.white, width: 1.5),
                                         gradient: LinearGradient(

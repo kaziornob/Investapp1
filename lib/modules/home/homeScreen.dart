@@ -12,6 +12,8 @@ import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoarding
 import 'package:auroim/modules/investRelatedPages/searchFirstPage.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
+import 'package:auroim/modules/qaInvForumPages/qusDetail.dart';
+import 'package:auroim/modules/qaInvForumPages/qusView.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
@@ -387,10 +389,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         Stack(
           alignment: Alignment.bottomRight,
           children: <Widget>[
-            Image(
-                height: 40,
-                width: 40,
-                image: new AssetImage('assets/appIcon.png')
+            Padding(
+              padding: EdgeInsets.only(top:3.0),
+              child: Image(
+                  height: 40,
+                  width: 40,
+                  image: new AssetImage('assets/appIcon.png')
+              ),
             ),
             FractionalTranslation(
               translation: Offset(-0.5, 0.0),
@@ -454,278 +459,283 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   width: 1.0,
                 ),
               ),
-              height: 52,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            isSelect1
-                                ? Animator(
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Container(
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.iconButtonColor1,
-                                        globals.iconButtonColor2,
-                                      ],
-                                    ),
-                                  ),
+              // height: 52,
+              height: MediaQuery.of(context).size.height*0.088,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        isSelect1
+                            ? Animator(
+                          duration: Duration(milliseconds: 500),
+                          cycles: 1,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Container(
+                              height: 2.5,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
+                                  ],
                                 ),
                               ),
-                            )
-                                : SizedBox(
-                              height: 2,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                selectFirst();
-                              },
-                              child: isSelect1
-                                  ? Animator(
-                                tween: Tween<double>(begin: 0.8, end: 1.1),
-                                curve: Curves.decelerate,
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                    scale: anim.value,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topCenter,
-                                          child: Icon(
-                                            Icons.home,
-                                            size: 23,
-                                            color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                          ),
+                        )
+                            : SizedBox(
+                          height: 2,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            selectFirst();
+                          },
+                          child: isSelect1
+                              ? Animator(
+                            tween: Tween<double>(begin: 0.8, end: 1.1),
+                            curve: Curves.decelerate,
+                            cycles: 1,
+                            builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Icon(
+                                        Icons.home,
+                                        size: 23,
+                                        color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          "Home",
+                                          style: TextStyle(
+                                              fontSize: ConstanceData.SIZE_TITLE14,
+                                              color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                                              fontFamily: "Rasa",
+                                              fontStyle: FontStyle.normal,
+                                              letterSpacing: 0.2
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Text(
-                                              "Home",
-                                              style: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-                                                  color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                                                  fontFamily: "Rasa",
-                                                  fontStyle: FontStyle.normal,
-                                                  letterSpacing: 0.2
-                                              ),
-                                            )
-                                        ),
-                                      ],
-                                    )
-                                ),
-                              )
-                                  : firstAnimation(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            isSelect2
-                                ? Animator(
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Container(
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.iconButtonColor1,
-                                        globals.iconButtonColor2,
-                                      ],
+                                        )
                                     ),
-                                  ),
-                                ),
-                              ),
-                            )
-                                : SizedBox(
-                              height: 2,
+                                  ],
+                                )
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                selectSecond();
-                              },
-                              child: isSelect2
-                                  ? Animator(
-                                tween: Tween<double>(begin: 0.8, end: 1.1),
-                                curve: Curves.decelerate,
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: secondAnimation(),
-                                ),
-                              )
-                                  : secondAnimation(),
-                            ),
-                          ],
+                          )
+                              : firstAnimation(),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            isSelect3
-                                ? Animator(
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Container(
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.iconButtonColor1,
-                                        globals.iconButtonColor2,
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                                : SizedBox(
-                              height: 2,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectThird();
-                              },
-                              child: isSelect3
-                                  ? Animator(
-                                tween: Tween<double>(begin: 0.8, end: 1.1),
-                                curve: Curves.decelerate,
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: thirdAnimation(),
-                                ),
-                              )
-                                  : thirdAnimation(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            isSelect5
-                                ? Animator(
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Container(
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.iconButtonColor1,
-                                        globals.iconButtonColor2,
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                                : SizedBox(
-                              height: 2,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectFive();
-                              },
-                              child: isSelect5
-                                  ? Animator(
-                                tween: Tween<double>(begin: 0.8, end: 1.1),
-                                curve: Curves.decelerate,
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: fifthAnimation(),
-                                ),
-                              )
-                                  : fifthAnimation(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            isSelect4
-                                ? Animator(
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Container(
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        globals.iconButtonColor1,
-                                        globals.iconButtonColor2,
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                                : SizedBox(
-                              height: 2,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectFourth();
-                              },
-                              child: isSelect4
-                                  ? Animator(
-                                tween: Tween<double>(begin: 0.8, end: 1.1),
-                                curve: Curves.decelerate,
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: fourthAnimation(),
-                                ),
-                              )
-                                  : fourthAnimation(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  )
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        isSelect2
+                            ? Animator(
+                          duration: Duration(milliseconds: 500),
+                          cycles: 1,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Container(
+                              height: 2.5,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                            : SizedBox(
+                          height: 2,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            selectSecond();
+                          },
+                          child: isSelect2
+                              ? Animator(
+                            tween: Tween<double>(begin: 0.8, end: 1.1),
+                            curve: Curves.decelerate,
+                            cycles: 1,
+                            builder: (anim) => Transform.scale(
+                              scale: anim.value,
+                              child: secondAnimation(),
+                            ),
+                          )
+                              : secondAnimation(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        isSelect3
+                            ? Animator(
+                          duration: Duration(milliseconds: 500),
+                          cycles: 1,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Container(
+                              height: 2.5,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                            : SizedBox(
+                          height: 2,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            selectThird();
+                          },
+                          child: isSelect3
+                              ? Animator(
+                            tween: Tween<double>(begin: 0.8, end: 1.1),
+                            curve: Curves.decelerate,
+                            cycles: 1,
+                            builder: (anim) => Transform.scale(
+                              scale: anim.value,
+                              child: thirdAnimation(),
+                            ),
+                          )
+                              : thirdAnimation(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        isSelect5
+                            ? Animator(
+                          duration: Duration(milliseconds: 500),
+                          cycles: 1,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Container(
+                              height: 2.5,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                            : SizedBox(
+                          height: 2,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            selectFive();
+                          },
+                          child: isSelect5
+                              ? Animator(
+                            tween: Tween<double>(begin: 0.8, end: 1.1),
+                            curve: Curves.decelerate,
+                            cycles: 1,
+                            builder: (anim) => Transform.scale(
+                              scale: anim.value,
+                              child: fifthAnimation(),
+                            ),
+                          )
+                              : fifthAnimation(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        isSelect4
+                            ? Animator(
+                          duration: Duration(milliseconds: 500),
+                          cycles: 1,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Container(
+                              height: 2.5,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    globals.iconButtonColor1,
+                                    globals.iconButtonColor2,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                            : SizedBox(
+                          height: 2,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            selectFourth();
+                          },
+                          child: isSelect4
+                              ? Animator(
+                            tween: Tween<double>(begin: 0.8, end: 1.1),
+                            curve: Curves.decelerate,
+                            cycles: 1,
+                            builder: (anim) => Transform.scale(
+                              scale: anim.value,
+                              child: fourthAnimation(),
+                            ),
+                          )
+                              : fourthAnimation(),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-              )
+              ),
             ),
             drawer: SizedBox(
               width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
@@ -2716,8 +2726,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 16, left: 16),
+            padding: const EdgeInsets.only(right: 5),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 GestureDetector(
                   onTap: ()
@@ -2728,17 +2739,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     );
                   },
-                  child: Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.60),
-                      child: Text(
-                        "Ask question",
-                        style: TextStyle(
-                          color: AllCoustomTheme.getSeeMoreThemeColor(),
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          fontFamily: "Roboto",
-                        ),
-                      )
-                  ),
+                  child: Text(
+                    "Ask question",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AllCoustomTheme.getSeeMoreThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                    ),
+                  )
                 )
 /*                GestureDetector(
                   onTap: () {
@@ -3015,24 +3024,45 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 20,
           ),
           // question section
-          Row(
-            children: [
-              Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      'Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ',
-                      style: TextStyle(
-                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          fontFamily: "Rosarivo",
-                          fontStyle: FontStyle.normal,
-                          letterSpacing: 0.2
+          GestureDetector(
+            onTap: ()
+            {
+              List<TagData> itemList = List();
+
+              itemList.add(TagData("1","native"));
+              itemList.add(TagData("2","fixed"));
+
+              var tempField = {
+                "title": "",
+                "body": "Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently?",
+                "tags": itemList,
+              };
+              Navigator.of(context).push(
+                CupertinoPageRoute(
+                  builder: (BuildContext context) =>
+                      QusDetail(allParams : tempField),
+                ),
+              );
+            },
+            child: Row(
+              children: [
+                Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Text(
+                        'Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ',
+                        style: TextStyle(
+                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Rosarivo",
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: 0.2
+                        ),
                       ),
-                    ),
-                  )
-              )
-            ],
+                    )
+                )
+              ],
+            ),
           ),
           SizedBox(
             height: 20.0,
@@ -3907,9 +3937,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return new ListView.builder(
       itemCount: data.length,
+      // physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Card(
-          color: AllCoustomTheme.getsecoundTextThemeColor(),
+          // color: AllCoustomTheme.getsecoundTextThemeColor(),
           child: ListTile(
               leading: CircleAvatar(
                 radius: 15.0,
@@ -3922,7 +3953,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   Text(
                     titleCase(data[index]['name']),
                     style: new TextStyle(
-                      color: AllCoustomTheme.getTextThemeColors(),
+                      color: AllCoustomTheme.getTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE16,
                       fontFamily: "Roboto",
                       package: 'Roboto-Regular',
@@ -3973,7 +4004,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       itemCount: data.length,
       itemBuilder: (context, index) {
         return Card(
-          color: AllCoustomTheme.getsecoundTextThemeColor(),
+          // color: AllCoustomTheme.getsecoundTextThemeColor(),
           child: ListTile(
               leading: CircleAvatar(
                 radius: 15.0,
@@ -3999,7 +4030,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   Text(
                     titleCase(data[index]['name']),
                     style: new TextStyle(
-                      color: AllCoustomTheme.getTextThemeColors(),
+                      color: AllCoustomTheme.getTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE16,
                     ),
                   ),
@@ -4433,43 +4464,33 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 4,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16,right: 5.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height*0.06,
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Center(
-                        child: Text(
-                          'Ankur’s Investment Track Record',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFD8AF4F),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                          ),
-                        ),
-                      )
+              padding: EdgeInsets.only(top: 0.0),
+              child: Center(
+                child: Text(
+                  'Ankur’s Investment Track Record',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFFD8AF4F),
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                    fontFamily: "Roboto",
+                    package: 'Roboto-Regular',
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right: MediaQuery.of(context).size.width*0.03),
-                    padding: EdgeInsets.only(
-                      bottom: 3, // space between underline and text
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              width: 1.0, // Underline width
-                            )
-                        )
-                    ),
-                  ),
-                ],
-              ),
-            )
+                ),
+              )
+          ),
+          Container(
+            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.10,right: MediaQuery.of(context).size.width*0.10),
+            padding: EdgeInsets.only(
+              bottom: 3, // space between underline and text
+            ),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                      color: AllCoustomTheme.getHeadingThemeColors(),
+                      width: 1.0, // Underline width
+                    )
+                )
+            ),
           ),
           SizedBox(
             height: 10,
@@ -4953,10 +4974,49 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               child: Container(
                                   child: Row(
                                     children: [
-                                      CircleAvatar(
-                                        radius: 25.0,
-                                        backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
-                                        backgroundColor: Colors.transparent,
+                                      Stack(
+                                        alignment: Alignment.topLeft,
+                                        children: <Widget>[
+                                          CircleAvatar(
+                                            radius: 25.0,
+                                            backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
+                                            backgroundColor: Colors.transparent,
+                                          ),
+                                          Positioned(
+                                            bottom: 25,
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.blue,
+                                              radius: 12.0,
+                                              child: Text(
+                                                "${index + 1}",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Color(0xFFD8AF4F),
+                                                  fontSize: ConstanceData.SIZE_TITLE18,
+                                                  fontFamily: "Roboto",
+                                                  package: 'Roboto-Regular',
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+/*                                          FractionalTranslation(
+                                            translation: Offset(0.0, -0.99),
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.blue,
+                                              radius: 12.0,
+                                              child: Text(
+                                                "${index + 1}",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Color(0xFFD8AF4F),
+                                                  fontSize: ConstanceData.SIZE_TITLE18,
+                                                  fontFamily: "Roboto",
+                                                  package: 'Roboto-Regular',
+                                                ),
+                                              ),
+                                            ),
+                                          )*/
+                                        ],
                                       ),
                                       SizedBox(
                                         width: 10,
