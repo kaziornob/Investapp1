@@ -1,10 +1,13 @@
+import 'dart:convert';
+
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/empStatus.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:toast/toast.dart';
 
 class InvestorType extends StatefulWidget {
   @override
@@ -13,6 +16,8 @@ class InvestorType extends StatefulWidget {
 
 class _InvestorTypeState extends State<InvestorType> {
   bool _isInvestorInProgress = false;
+  ApiProvider request = new ApiProvider();
+
 
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -29,10 +34,6 @@ class _InvestorTypeState extends State<InvestorType> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
-
-
     return Stack(
       children: <Widget>[
         Scaffold(
@@ -103,17 +104,8 @@ class _InvestorTypeState extends State<InvestorType> {
                                     fontSize: ConstanceData.SIZE_TITLE18,
                                   ),
                                 ),
-                                onPressed: () async {
-                                  Navigator.of(context, rootNavigator: true).push(
-                                    CupertinoPageRoute<void>(
-                                      builder: (BuildContext context) =>
-                                          EmpStatus(parentFrom: 'Accredited Investor'),
-                                    ),
-                                  ).then((onValue) {
-                                    setState(() {
-                                      _isInvestorInProgress = false;
-                                    });
-                                  });
+                                onPressed: () {
+                                  _submit('Accredited Investor');
                                 },
                               ),
                             ),
@@ -283,5 +275,60 @@ class _InvestorTypeState extends State<InvestorType> {
         )
       ],
     );
+  }
+
+  _submit(status) async {
+    var tempJsonReq = {"status": "$status"};
+
+    print("final inv type payload: $tempJsonReq");
+
+    String jsonReq = json.encode(tempJsonReq);
+
+    var jsonReqResp = await request.postSubmit('users/add_invtype', jsonReq);
+
+    var result = json.decode(jsonReqResp.body);
+    print("post submit response: $result");
+
+    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+    {
+
+      if (result!=null && result.containsKey('auth') && result['auth']==true)
+      {
+
+        Toast.show("${result['message']}", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+
+        Navigator.of(context, rootNavigator: true).push(
+          CupertinoPageRoute<void>(
+            builder: (BuildContext context) =>
+                EmpStatus(parentFrom: 'Accredited Investor'),
+          ),
+        ).then((onValue) {
+          setState(() {
+            _isInvestorInProgress = false;
+          });
+        });
+      }
+    }
+    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+    {
+
+      Toast.show("${result['message']}", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+
+      setState(() {
+        _isInvestorInProgress = false;
+      });
+    }
+    else{
+      setState(() {
+        _isInvestorInProgress = false;
+      });
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
@@ -6,13 +9,15 @@ import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class Otp extends StatefulWidget {
 
-  final String encodedOtp;
-  const Otp({Key key, this.encodedOtp}) : super(key: key);
+  final allParams;
+  const Otp({Key key, this.allParams}) : super(key: key);
 
   @override
   _OtpState createState() => _OtpState();
@@ -20,9 +25,21 @@ class Otp extends StatefulWidget {
 
 class _OtpState extends State<Otp> {
   bool _isInProgress = false;
+  ApiProvider request = new ApiProvider();
+
 
   var height = 0.0;
   var width = 0.0;
+
+  TextEditingController controller1 = new TextEditingController();
+  TextEditingController controller2 = new TextEditingController();
+  TextEditingController controller3 = new TextEditingController();
+  TextEditingController controller4 = new TextEditingController();
+  TextEditingController controller5 = new TextEditingController();
+
+
+  TextEditingController currController = new TextEditingController();
+
 
   @override
   void initState() {
@@ -37,6 +54,7 @@ class _OtpState extends State<Otp> {
     await Future.delayed(const Duration(milliseconds: 700));
     setState(() {
       _isInProgress = false;
+      currController = controller1;
     });
   }
 
@@ -183,19 +201,141 @@ class _OtpState extends State<Otp> {
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  isSelectbutton1 ? PinEnable() : PinDisable(),
+                                  isSelectbutton1 ? Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [globals.buttoncolor1, globals.buttoncolor2],
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Center(
+                                          child: CircleAvatar(
+                                            radius: 4,
+                                            backgroundColor: AllCoustomTheme.getTextThemeColors(),
+                                            child:  new TextField(
+                                              controller: controller1,
+                                            ),
+                                          ),
+                                        )
+                                      )
+/*                                      child: Center(
+                                        child: CircleAvatar(
+                                          radius: 4,
+                                          backgroundColor: AllCoustomTheme.getTextThemeColors(),
+                                        ),
+                                      ),*/
+                                    ),
+                                  ) : PinDisable(),
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  isSelectbutton2 ? PinEnable() : PinDisable(),
+                                  isSelectbutton2 ? Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [globals.buttoncolor1, globals.buttoncolor2],
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: Center(
+                                            child: Center(
+                                              child: CircleAvatar(
+                                                radius: 4,
+                                                backgroundColor: AllCoustomTheme.getTextThemeColors(),
+                                                child:  new TextField(
+                                                  controller: controller2,
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                    ),
+                                  ) : PinDisable(),
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  isSelectbutton3 ? PinEnable() : PinDisable(),
+                                  isSelectbutton3 ? Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [globals.buttoncolor1, globals.buttoncolor2],
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: Center(
+                                            child: Center(
+                                              child: CircleAvatar(
+                                                radius: 4,
+                                                backgroundColor: AllCoustomTheme.getTextThemeColors(),
+                                                child:  new TextField(
+                                                  controller: controller3,
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                    ),
+                                  ) : PinDisable(),
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  isSelectbutton4 ? PinEnable() : PinDisable(),
+                                  isSelectbutton4 ? Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [globals.buttoncolor1, globals.buttoncolor2],
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: Center(
+                                            child: Center(
+                                              child: CircleAvatar(
+                                                radius: 4,
+                                                backgroundColor: AllCoustomTheme.getTextThemeColors(),
+                                                child:  new TextField(
+                                                  controller: controller4,
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                    ),
+                                  ) : PinDisable(),
                                 ],
                               ),
                         SizedBox(
@@ -239,7 +379,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('1');
                                           },
                                           child: PinNumberStyle(
                                             digit: '1',
@@ -251,7 +391,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('2');
                                           },
                                           child: PinNumberStyle(
                                             digit: '2',
@@ -263,7 +403,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('3');
                                           },
                                           child: PinNumberStyle(
                                             digit: '3',
@@ -282,7 +422,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('4');
                                           },
                                           child: PinNumberStyle(
                                             digit: '4',
@@ -294,7 +434,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('5');
                                           },
                                           child: PinNumberStyle(
                                             digit: '5',
@@ -306,7 +446,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('6');
                                           },
                                           child: PinNumberStyle(
                                             digit: '6',
@@ -325,7 +465,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('7');
                                           },
                                           child: PinNumberStyle(
                                             digit: '7',
@@ -337,7 +477,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('8');
                                           },
                                           child: PinNumberStyle(
                                             digit: '8',
@@ -349,7 +489,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('9');
                                           },
                                           child: PinNumberStyle(
                                             digit: '9',
@@ -370,7 +510,11 @@ class _OtpState extends State<Otp> {
                                             onTap: () async {
                                               print("total number: $totalPinNumber");
                                               if(totalPinNumber==4) {
-                                                matchOtp();
+                                                var finalOtp = controller1.text + controller2.text + controller3.text + controller4.text;
+                                                print("final otp: $finalOtp");
+
+                                                submit(finalOtp);
+                                                // matchOtp();
                                                 /*var value = await submit(finalOtp);
 
                                                 if (value == 'OTP Matched') {
@@ -402,7 +546,7 @@ class _OtpState extends State<Otp> {
                                           highlightColor: Colors.transparent,
                                           splashColor: Colors.transparent,
                                           onTap: () {
-                                            isPressNumberButton1();
+                                            isPressNumberButton1('0');
                                           },
                                           child: PinNumberStyle(
                                             digit: '0',
@@ -441,7 +585,7 @@ class _OtpState extends State<Otp> {
     );
   }
 
-  void matchOtp() {
+  void matchOtp(msg) {
     showDialog(context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -457,7 +601,7 @@ class _OtpState extends State<Otp> {
               ),
             ),
             content: Text(
-                "Otp matched successfully.",
+                "$msg",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AllCoustomTheme.getTextThemeColors(),
@@ -526,14 +670,50 @@ class _OtpState extends State<Otp> {
 
 
   // otp verify process
-  /*Future submit(otpVal) async {
+   submit(otp) async {
 
-    var email = widget.email;
-    // set up POST request arguments
-    String json = '{"email":"$email","otp":"$otpVal"}';
-    var response = await request.otpRequest('verify_OTP',json,OtpPage.reqEncodedOtp);
-    return response;
-  }*/
+    var tempJsonReq = {
+        "email":"${widget.allParams['email']}",
+        "password":"${widget.allParams['password']}",
+        "phone":"${widget.allParams['phone']}",
+        "otp":"$otp"
+    };
+    String jsonReq = json.encode(tempJsonReq);
+
+    var jsonReqResp = await request.postSubmit('users/otp',jsonReq);
+    var result = json.decode(jsonReqResp.body);
+
+    print("otp  response: $result");
+
+    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+    {
+
+      if (result!=null && result.containsKey('auth') && result['auth']==true)
+      {
+        var now = new DateTime.now();
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('Session_token', result['token']);
+        prefs.setString('DateTime', new DateFormat("yyyy-MM-dd HH:mm").format(now));
+        matchOtp(result["message"]);
+      }
+    }
+    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+    {
+
+      Toast.show("${result['message']}", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
+    else{
+
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+    }
+
+/*    var response = await request.postSubmit('verify_OTP',jsonReq);
+    return response;*/
+  }
 
   // email verify process
   Future getOtp() async {
@@ -572,25 +752,33 @@ class _OtpState extends State<Otp> {
   bool isSelectbutton3 = false;
   bool isSelectbutton4 = false;
 
-  isPressNumberButton1() {
+  isPressNumberButton1(String str) {
     if (!isSelectbutton1) {
       setState(() {
         isSelectbutton1 = true;
+        controller1.text = str;
+        currController = controller2;
       });
       totalPinNumber++;
     } else if (!isSelectbutton2) {
       setState(() {
         isSelectbutton2 = true;
+        controller2.text = str;
+        currController = controller3;
       });
       totalPinNumber++;
     } else if (!isSelectbutton3) {
       setState(() {
         isSelectbutton3 = true;
+        controller3.text = str;
+        currController = controller4;
       });
       totalPinNumber++;
     } else if (!isSelectbutton4) {
       setState(() {
         isSelectbutton4 = true;
+        controller4.text = str;
+        currController = controller5;
       });
       totalPinNumber++;
     }
@@ -608,21 +796,28 @@ class _OtpState extends State<Otp> {
     isSelectbutton4
         ? setState(() {
             isSelectbutton4 = false;
+            controller4.text = "";
+            currController = controller3;
             totalPinNumber--;
           })
         : isSelectbutton3
             ? setState(() {
                 isSelectbutton3 = false;
+                controller3.text = "";
+                currController = controller2;
                 totalPinNumber--;
               })
             : isSelectbutton2
                 ? setState(() {
                     isSelectbutton2 = false;
+                    controller2.text = "";
+                    currController = controller1;
                     totalPinNumber--;
                   })
                 : isSelectbutton1
                     ? setState(() {
                         isSelectbutton1 = false;
+                        controller1.text = "";
                         totalPinNumber--;
                       })
                     : setState(() {

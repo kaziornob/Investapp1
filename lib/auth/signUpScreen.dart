@@ -8,10 +8,8 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -25,6 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _visible = false;
   bool phoneError = true;
   ApiProvider request = new ApiProvider();
+  final internationalPhoneInput = InternationalPhoneInput();
 
 
   String phoneNumber;
@@ -51,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     animation();
   }
 
-  final _formKey = new GlobalKey<FormState>();
+  final _signUpFormKey = new GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +187,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: AllCoustomTheme.boxColor(),
                               ),*/
                               child: Form(
-                                key: _formKey,
+                                key: _signUpFormKey,
                                 child: Column(
                                   children: <Widget>[
                                     SizedBox(
@@ -652,9 +651,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print("phoneIsoCode: $phoneIsoCode");
 
         // || phoneNumber=="" || phoneNumber==null || phoneIsoCode=="" || phoneIsoCode==null
-        if (_formKey.currentState.validate() == false ) {
+        if (_signUpFormKey.currentState.validate() == false || phoneNumber=="" || phoneNumber==null) {
           setState(() {
             _isInProgress = false;
+/*            internationalPhoneInput.hasError = true;
+            internationalPhoneInput.errorText = "Phone can not be empty";*/
+            // internationalPhoneInput.onValidatePhoneNumber();
+            print("form or phone no not valid");
             // phoneError = false;
           });
           return;
@@ -663,15 +666,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
         var email = emailController.text.trim();
         var password = signUpPasswordController.text.trim();
         var phone = confirmedNumber;
-
-        // String jsonReq = "users/authenticate/new?email=$email&password=$password&phone=$phone";
-
         var tempJsonReq = {"email":"$email","password":"$password","phone":"$phone"};
         String jsonReq = json.encode(tempJsonReq);
 
-        var response = await request.signUp('users/authenticate/new',jsonReq);
-        print("signup response: $response");
-        if (response!=null)
+        var jsonReqResp = await request.signUp('users/authenticate/new',jsonReq);
+
+        var result = json.decode(jsonReqResp.body);
+        print("signup response: $result");
+
+        if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+        {
+
+          if (result!=null && result.containsKey('auth') && result['auth']==true)
+          {
+            setState(() {
+              _isInProgress = false;
+            });
+            getDialog("$email","$password","$phone");
+
+/*            Toast.show("${result['message']}", context,
+                duration: Toast.LENGTH_LONG,
+                gravity: Toast.BOTTOM);*/
+
+/*            final SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString('Session_token', response['token']);
+
+            getDialog("$email");*/
+          }
+        }
+        else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+        {
+
+          Toast.show("${result['message']}", context,
+              duration: Toast.LENGTH_LONG,
+              gravity: Toast.BOTTOM);
+
+          setState(() {
+            _isInProgress = false;
+          });
+        }
+        else{
+          setState(() {
+            _isInProgress = false;
+          });
+          Toast.show("Something went wrong!", context,
+              duration: Toast.LENGTH_LONG,
+              gravity: Toast.BOTTOM);
+        }
+
+
+        /*if (response!=null)
         {
             if(response.containsKey('auth') && response['auth']==true)
             {
@@ -706,14 +750,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Toast.show("Something went wrong!", context,
               duration: Toast.LENGTH_LONG,
               gravity: Toast.BOTTOM);
-        }
+        }*/
       }
     else {
       PasswordNotMatched(context);
     }
   }
 
-  void getDialog(otp) {
+  void getDialog(email,password,phone) {
     showDialog(context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -747,11 +791,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 onPressed: () {
+
+                  var tempField = {
+                    "email": "$email",
+                    "password": "$password",
+                    "phone": "$phone"
+                  };
+
                   Navigator.of(context).pop();
                   Navigator.of(context, rootNavigator: true).push(
                     CupertinoPageRoute<void>(
                       builder: (BuildContext context) =>
-                          Otp(encodedOtp: "$otp"),
+                          Otp(allParams: tempField),
                     ),
                   ).then((onValue) {
                     setState(() {
@@ -836,7 +887,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       return null;*/
 
-      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$';
+      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
       RegExp regExp = new RegExp(pattern);
       if(!regExp.hasMatch(value))
         {

@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
@@ -195,12 +193,14 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
               width: MediaQuery.of(context).size.width*0.18,
               // margin: EdgeInsets.only(left: 3.0),
               child: Radio(
-                value: option["potentialGain"],
+                value: option["potentialLoss"],
                 groupValue: annualReturnValue,
                 activeColor: Color(0xFFD8AF4F),
                 onChanged: (newValue) {
                   print("newValue: $newValue");
-                  annualReturnValue = newValue;
+                  setState(() {
+                    annualReturnValue = newValue;
+                  });
                 },
               ),
 /*              Checkbox(
@@ -222,8 +222,6 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(
@@ -478,17 +476,6 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                             margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 16.0,right: 20.0),
                             child: getRiskApetiteView(),
                           ),
-/*                          Container(
-                            height: MediaQuery.of(context).size.height*0.30,
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 20.0,right: 20.0),
-                            decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                                image: new AssetImage('assets/risk_onboarding_4-_pi_version.png'),
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),*/
                           Container(
                             child: getOptionList(),
                           ),
@@ -546,28 +533,41 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
     );
   }
 
+  getDrawDownConvertedValue()
+  {
+    var tempDrawDown;
+    var tempPerDrawDownValue = annualReturnValue.split('%');
+    print("tempDrawDownValue: $tempPerDrawDownValue");
+
+    if(tempPerDrawDownValue[0].contains('-')) {
+      var temp = tempPerDrawDownValue[0].split('-');
+      print("temp: $temp");
+      tempDrawDown = int.parse(temp[1]);
+    }
+    else
+      {
+        tempDrawDown = int.parse(tempPerDrawDownValue[0]);
+      }
+
+    print("tempDrawDown: $tempDrawDown");
+    var drawDown = tempDrawDown/100;
+    print("drawDown: $drawDown");
+    return drawDown;
+  }
+
   Future submit() async {
 
-    Navigator.pushAndRemoveUntil(
+/*    Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
             builder: (context) => HomeScreen()
         ),
         ModalRoute.withName("/Home")
-    );
+    );*/
 
-/*    print("optionData: ${widget.optionData}");
+    var drawDown = getDrawDownConvertedValue();
 
-    var finalOptionData;
-    for(var i=0 ; i < widget.optionData.length;i++)
-    {
-      if(widget.optionData[i]["checked"]==true)
-      {
-        finalOptionData.add(widget.optionData[i]);
-      }
-    }
-
-    var tempJsonReq = {"riskApetite_type": "${widget.riskAptType}","answers": finalOptionData};
+    var tempJsonReq = {"riskApetite_type": "${widget.riskAptType}","drawdown": drawDown};
 
     print("final risk payload: $tempJsonReq");
 
@@ -616,6 +616,6 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
       Toast.show("Something went wrong!", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
-    }*/
+    }
   }
 }

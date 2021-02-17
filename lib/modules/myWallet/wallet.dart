@@ -19,7 +19,7 @@ class MyWallet extends StatefulWidget {
 
 class _MyWalletState extends State<MyWallet> {
   var appBarheight = 0.0;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _walletScaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool _isInProgress = false;
 
@@ -60,7 +60,7 @@ class _MyWalletState extends State<MyWallet> {
           ),
         ),
         Scaffold(
-          key: _scaffoldKey,
+          key: _walletScaffoldKey,
           drawer: SizedBox(
             width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
             child: Drawer(
@@ -92,7 +92,7 @@ class _MyWalletState extends State<MyWallet> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                _scaffoldKey.currentState.openDrawer();
+                                _walletScaffoldKey.currentState.openDrawer();
                               },
                               child: Icon(
                                 Icons.sort,

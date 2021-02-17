@@ -60,13 +60,14 @@ class ApiProvider {
     print("signup submit response: ${response.statusCode}");
 
     try{
-      if (response.statusCode == 200 || response.statusCode == 201)
+      responseData = response;
+      /*if (response.statusCode == 200 || response.statusCode == 201)
       {
         var result = json.decode(response.body);
         responseData = result;
       } else {
         responseData = null;
-      }
+      }*/
     } catch (e) {
       print("exception");
       print(e);
@@ -82,6 +83,8 @@ class ApiProvider {
 
     String url = GlobalInstance.apiBaseUrl+funName;
     print("post req url: $url");
+    print("session token: $sessionToken");
+
 
     Map<String, String> headers = {"Content-type": "application/json",
       'Authorization': 'Token $sessionToken',};
@@ -96,6 +99,28 @@ class ApiProvider {
       print(e);
     }
     return response;
+  }
+
+
+  Future getRequest(funName) async
+  {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+
+    // set up Get request arguments
+    final String url = GlobalInstance.apiBaseUrl+funName;
+    Map<String, String> headers = {"Content-type": "application/json",
+      'Authorization': 'Token $sessionToken',};
+
+    // make get request
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON.
+      return json.decode(response.body);
+    } else {
+      return false;
+    }
   }
 
   Future<List<TradingPair>> getTradingPairsDetail() async {

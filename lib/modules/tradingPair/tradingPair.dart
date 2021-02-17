@@ -23,7 +23,7 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
   bool _isInProgress = false;
 
   var appBarheight = 0.0;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _tradingPairScaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<TradingPair> tradingPair;
   List<TradingPair> searchTradingPair = [];
@@ -55,7 +55,7 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
 
   Future showInSnackBar(String value, {bool isGreeen = false}) async {
     await Future.delayed(const Duration(milliseconds: 700));
-    _scaffoldKey.currentState.showSnackBar(
+    _tradingPairScaffoldKey.currentState.showSnackBar(
       SnackBar(
         duration: Duration(seconds: 2),
         content: Text(
@@ -108,7 +108,7 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
           ),
         ),
         Scaffold(
-          key: _scaffoldKey,
+          key: _tradingPairScaffoldKey,
           drawer: SizedBox(
             width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
             child: Drawer(
@@ -138,7 +138,7 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                          _scaffoldKey.currentState.openDrawer();
+                          _tradingPairScaffoldKey.currentState.openDrawer();
                         },
                         child: Icon(
                           Icons.sort,

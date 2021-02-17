@@ -4,7 +4,6 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -29,7 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     animation();
   }
 
-  final _formKey = new GlobalKey<FormState>();
+  final _forgotFormKey = new GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +128,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   color: AllCoustomTheme.boxColor(),
                                 ),*/
                                 child: Form(
-                                  key: _formKey,
+                                  key: _forgotFormKey,
                                   child: Column(
                                     children: <Widget>[
                                       SizedBox(
@@ -250,13 +249,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     await Future.delayed(const Duration(milliseconds: 700));
 
     FocusScope.of(context).requestFocus(myScreenFocusNode);
-    if (_formKey.currentState.validate() == false) {
+    if (_forgotFormKey.currentState.validate() == false) {
       setState(() {
         _isInProgress = false;
       });
       return;
     }
-    _formKey.currentState.save();
+    _forgotFormKey.currentState.save();
 
     await Future.delayed(const Duration(seconds: 1));
     Navigator.of(context)

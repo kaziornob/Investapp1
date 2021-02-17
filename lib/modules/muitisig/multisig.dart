@@ -22,7 +22,7 @@ class MultisigWallet extends StatefulWidget {
 
 class _MultisigWalletState extends State<MultisigWallet> {
   var appBarheight = 0.0;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _multiSigScaffoldKey = new GlobalKey<ScaffoldState>();
   var height = 0.0;
 
   bool _isInProgress = false;
@@ -117,7 +117,7 @@ class _MultisigWalletState extends State<MultisigWallet> {
           ),
         ),
         Scaffold(
-          key: _scaffoldKey,
+          key: _multiSigScaffoldKey,
           drawer: SizedBox(
             width: MediaQuery.of(context).size.width * 0.75 < 400
                 ? MediaQuery.of(context).size.width * 0.75
@@ -151,7 +151,7 @@ class _MultisigWalletState extends State<MultisigWallet> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                _scaffoldKey.currentState.openDrawer();
+                                _multiSigScaffoldKey.currentState.openDrawer();
                               },
                               child: Icon(
                                 Icons.sort,

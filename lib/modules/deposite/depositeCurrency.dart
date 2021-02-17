@@ -18,8 +18,8 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
 
   var appBarheight = 0.0;
 
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final _formKey = new GlobalKey<FormState>();
+  var _currScaffoldKey = new GlobalKey<ScaffoldState>();
+  final _depositeCurrFormKey = new GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
           ),
         ),
         Scaffold(
-          key: _scaffoldKey,
+          key: _currScaffoldKey,
           drawer: SizedBox(
             width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
             child: Drawer(
@@ -79,7 +79,7 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
                     child: Form(
-                      key: _formKey,
+                      key: _depositeCurrFormKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +97,7 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                               children: <Widget>[
                                 GestureDetector(
                                   onTap: () {
-                                    _scaffoldKey.currentState.openDrawer();
+                                    _currScaffoldKey.currentState.openDrawer();
                                   },
                                   child: Icon(
                                     Icons.sort,
@@ -400,7 +400,7 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
     setState(() {
       isShowingPopup = false;
     });
-    _formKey.currentState.save();
+    _depositeCurrFormKey.currentState.save();
     showDialog(
       context: context,
       builder: (_) => AlertDialog(

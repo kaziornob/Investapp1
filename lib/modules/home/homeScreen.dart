@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
@@ -52,7 +53,9 @@ class HomeScreen extends StatefulWidget {
 const String testDevice = 'YOUR_DEVICE_ID';
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _homeScaffoldKey = new GlobalKey<ScaffoldState>();
+  ApiProvider request = new ApiProvider();
+
 
   bool _isInProgress = false;
   bool isSelect1 = false;
@@ -156,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   Future showInSnackBar(String value, {bool isGreeen = false}) async {
     await Future.delayed(const Duration(milliseconds: 700));
-    _scaffoldKey.currentState.showSnackBar(
+    _homeScaffoldKey.currentState.showSnackBar(
       new SnackBar(
         duration: Duration(seconds: 2),
         content: new Text(
@@ -320,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               translation: Offset(0.4, 0.2),
               child: GestureDetector(
                 onTap: () {
-                  _scaffoldKey.currentState.openDrawer();
+                  _homeScaffoldKey.currentState.openDrawer();
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -401,7 +404,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               translation: Offset(-0.5, 0.0),
               child: GestureDetector(
                 onTap: () {
-                  _scaffoldKey.currentState.openDrawer();
+                  _homeScaffoldKey.currentState.openDrawer();
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.red,
@@ -441,7 +444,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         SafeArea(
           bottom: true,
           child: Scaffold(
-            key: _scaffoldKey,
+            key: _homeScaffoldKey,
             appBar: isSelect2 || isSelect4 || isSelect5 ?
             PreferredSize(
                 preferredSize: Size.fromHeight(65.0),
@@ -965,7 +968,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    _scaffoldKey.currentState.openDrawer();
+                    _homeScaffoldKey.currentState.openDrawer();
                   },
                   child: Icon(
                     Icons.sort,
@@ -2903,6 +2906,239 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
+  Widget getQuestionsList(data) {
+    if(data!=null && data.length!=0)
+    {
+      return new ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment:  CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // question section
+              GestureDetector(
+                onTap: ()
+                {
+                  List<TagData> itemList = List();
+
+                  itemList.add(TagData("1","native"));
+                  itemList.add(TagData("2","fixed"));
+
+                  var tempField = {
+                    "id":"${data[index]['id']}",
+                    "title": "${data[index]['title']}",
+                    "body": "${data[index]['question']}",
+                    "vote" : "${data[index]['vote']}",
+                    "totalAns" : "${data[index]['no. of answer']}",
+                    "tags": itemList,
+                  };
+
+                  print("QusDetail tempField: $tempField");
+                  // data[index]
+                  Navigator.of(context).push(
+                    CupertinoPageRoute(
+                      builder: (BuildContext context) =>
+                          QusDetail(allParams : tempField),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 15.0),
+                          child: Text(
+                            "${data[index]['question']}",
+                            style: TextStyle(
+                                color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                fontFamily: "Rosarivo",
+                                fontStyle: FontStyle.normal,
+                                letterSpacing: 0.2
+                            ),
+                          ),
+                        )
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              // question attributes section
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Container(
+                    child: CircleAvatar(
+                      radius: 13.5,
+                      backgroundImage: new AssetImage('assets/download.jpeg'),
+                      backgroundColor: Colors.transparent,
+                    ),
+                  ),
+                  Container(
+                    child: new Text(
+                      "10K",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Container(
+                    child: Icon(
+                      Icons.comment_bank_sharp,
+                      color: AllCoustomTheme.getTextThemeColor(),
+                    ),
+                  ),
+                  Container(
+                    child: new Text(
+                      "${data[index]['no. of answer']}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Container(
+                    child: Icon(
+                      Icons.remove_red_eye_outlined,
+                      color: AllCoustomTheme.getTextThemeColor(),
+                    ),
+                  ),
+                  Container(
+                    child: new Text(
+                      "0",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Container(
+                    child: Icon(
+                      Icons.add,
+                      color: AllCoustomTheme.getTextThemeColor(),
+                    ),
+                  ),
+                  Container(
+                    child: new Text(
+                      "100",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Container(
+                    child: Icon(
+                      Icons.arrow_upward,
+                      color: AllCoustomTheme.getThemeData().textSelectionColor,
+                    ),
+                  ),
+                  Container(
+                    child: new Text(
+                      "${data[index]['vote']}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Container(
+                    child: Icon(
+                      Icons.arrow_downward,
+                      color: AllCoustomTheme.getTextThemeColor(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              //tags section
+              Container(
+                margin: EdgeInsets.only(left: 10.0),
+                child: StaggeredGridView.countBuilder(
+                  itemCount: tagItemList != null ? tagItemList.length : 0,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                  shrinkWrap: true,
+                  staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                  itemBuilder: (context, index){
+                    return Container(
+                        decoration: BoxDecoration(
+                            color: AllCoustomTheme.getThemeData().textSelectionColor,
+                            borderRadius: BorderRadius.circular(4.0),
+                            border: Border.all(color: AllCoustomTheme.getThemeData().textSelectionColor, width: 1.0)),
+                        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                '${tagItemList[index]}',
+                                // data[index]['tags']
+                                style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1.3
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    else
+    {
+      return Center(
+          child: Text(
+            "No data available yet",
+            textAlign: TextAlign.center,
+            style: new TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE18,
+              fontFamily: "Rasa",
+            ),
+          )
+      );
+    }
+  }
+
   Widget recommended()
   {
     return SingleChildScrollView(
@@ -3023,191 +3259,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           SizedBox(
             height: 20,
           ),
-          // question section
-          GestureDetector(
-            onTap: ()
-            {
-              List<TagData> itemList = List();
-
-              itemList.add(TagData("1","native"));
-              itemList.add(TagData("2","fixed"));
-
-              var tempField = {
-                "title": "",
-                "body": "Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently?",
-                "tags": itemList,
-              };
-              Navigator.of(context).push(
-                CupertinoPageRoute(
-                  builder: (BuildContext context) =>
-                      QusDetail(allParams : tempField),
-                ),
-              );
-            },
-            child: Row(
-              children: [
-                Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        'Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ',
-                        style: TextStyle(
-                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Rosarivo",
-                            fontStyle: FontStyle.normal,
-                            letterSpacing: 0.2
-                        ),
-                      ),
-                    )
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          // question attributes section
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                width: 10.0,
-              ),
-              Container(
-                child: CircleAvatar(
-                  radius: 13.5,
-                  backgroundImage: new AssetImage('assets/download.jpeg'),
-                  backgroundColor: Colors.transparent,
-                ),
-              ),
-              Container(
-                child: new Text(
-                  "10K",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                child: Icon(
-                  Icons.comment_bank_sharp,
-                  color: AllCoustomTheme.getTextThemeColor(),
-                ),
-              ),
-              Container(
-                child: new Text(
-                  "10",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                child: Icon(
-                  Icons.remove_red_eye_outlined,
-                  color: AllCoustomTheme.getTextThemeColor(),
-                ),
-              ),
-              Container(
-                child: new Text(
-                  "10",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Container(
-                child: Icon(
-                  Icons.add,
-                  color: AllCoustomTheme.getTextThemeColor(),
-                ),
-              ),
-              Container(
-                child: new Text(
-                  "100",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                  ),
-                ),
-              ),
-
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                child: Icon(
-                  Icons.arrow_upward,
-                  color: AllCoustomTheme.getThemeData().textSelectionColor,
-                ),
-              ),
-              Container(
-                child: new Text(
-                  "7",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                  ),
-                ),
-              ),
-
-            ],
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          //tags section
-          Container(
-            margin: EdgeInsets.only(left: 10.0),
-            child: StaggeredGridView.countBuilder(
-              itemCount: tagItemList != null ? tagItemList.length : 0,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 4,
-              crossAxisSpacing: 8.0,
-              mainAxisSpacing: 8.0,
-              shrinkWrap: true,
-              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-              itemBuilder: (context, index){
-                return Container(
-                    decoration: BoxDecoration(
-                        color: AllCoustomTheme.getThemeData().textSelectionColor,
-                        borderRadius: BorderRadius.circular(4.0),
-                        border: Border.all(color: AllCoustomTheme.getThemeData().textSelectionColor, width: 1.0)),
-                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            '${tagItemList[index]}',
-                            style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.normal,
-                                height: 1.3
-                            ),
-                          ),
-                        ),
-                      ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.35,
+                    child: Scrollbar(
+                      child: getQuestionsList(questionsList),
                     )
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -3414,7 +3479,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    _scaffoldKey.currentState.openDrawer();
+                    _homeScaffoldKey.currentState.openDrawer();
                   },
                   child: Icon(
                     Icons.sort,
@@ -5209,6 +5274,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
+  List <dynamic> questionsList;
+
+
+  // api calls section start
+  Future <void> getQuestionsData() async {
+    questionsList = [];
+    var response = await request.getRequest('forum/get_questions');
+    print("qus list: $response");
+    if(response!=null && response!=false)
+    {
+      setState(() {
+        // _AnswerList = response['answers'];
+        questionsList = response['message'];
+      });
+    }
+  }
+
+
+  // api calls section end
+
   selectFirst() async {
     if (!isSelect1) {
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -5267,6 +5352,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         isSelect4 = true;
         isSelect5 = false;
       });
+      getQuestionsData();
     }
   }
 

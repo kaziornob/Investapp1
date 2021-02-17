@@ -27,6 +27,22 @@ Future<List<Question>> getQuestions() async {
   else
     GlobalInstance.assessmentTotalTime = '0';*/
 
+/*  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String sessionToken = prefs.getString('Session_token');
+
+  String url = GlobalInstance.apiBaseUrl+'qa/question';
+
+  print("post req url: $url");
+  print("session token: $sessionToken");
+
+  Map<String, String> headers = {
+    "Content-type": "application/json",
+    "session-token": sessionToken,
+  };
+
+  http.Response res = await http.get(url, headers: headers);
+  print("response body: ${json.decode(res.body)}");*/
+
   var tempQuestions =
   [
       {

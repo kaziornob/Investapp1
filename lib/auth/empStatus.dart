@@ -6,11 +6,9 @@ import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/radioQusModel.dart';
-import 'package:auroim/radioQusTemplate.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
@@ -177,8 +175,6 @@ class _EmpStatusState extends State<EmpStatus> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         Scaffold(

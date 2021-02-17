@@ -60,21 +60,28 @@ Future<List<RadioQusModel>> getRadioQusTempData(parentFrom,childFrom) async {
               "title": "Cautious (Low risk appetite, expected returns higher than saving accounts, ideal for individuals at a late stage in their carrer)",
               "subTitle": "",
               "option_value": "Cautious",
+              "num_value": "0.07"
             },
             {
               "title": "Modest (Medium risk appetite,looking for average returns, with slight ability to sustain losses)",
               "subTitle": "",
               "option_value": "Modest",
+              "num_value": "0.15"
+
             },
             {
               "title": "Aggressive (High-risk appetite seeking significant returns with the ability to sustain losses, investing with long-term goals)",
               "subTitle": "",
               "option_value": "Aggressive",
+              "num_value": "0.25"
+
             },
             {
               "title": "Extremely Aggressive (Extremely high-risk appetite, seeking great returns willing to take on the risk)",
               "subTitle": "",
               "option_value": "Extremely Aggressive",
+              "num_value": "0.35"
+
             },
           ]
         }

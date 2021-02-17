@@ -383,7 +383,7 @@ class GlobalInstance {
 
   static List riskAptOptionsValue = [
     {
-      "riskAptType": "Cautious",
+      "riskAptType": "0.07",
       "optionValue":
       [
         {
@@ -414,7 +414,7 @@ class GlobalInstance {
       ]
     },
     {
-      "riskAptType": "Modest",
+      "riskAptType": "0.15",
       "optionValue":
           [
             {
@@ -445,7 +445,7 @@ class GlobalInstance {
           ]
     },
     {
-      "riskAptType": "Aggressive",
+      "riskAptType": "0.25",
       "optionValue":
           [
             {
@@ -476,7 +476,7 @@ class GlobalInstance {
           ]
     },
     {
-      "riskAptType": "Extremely Aggressive",
+      "riskAptType": "0.35",
       "optionValue":
         [
           {
@@ -516,4 +516,72 @@ class GlobalInstance {
   }
 
   GlobalInstance._internal();
+}
+
+
+class HelperClass {
+
+  // Minimum eight characters, at least one letter, one number and one special character:
+  static bool validatePassword(String value) {
+    return RegExp(
+        r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&^=+-])[A-Za-z\d@$!%*#?&^=+-]{6,}$")
+        .hasMatch(value)
+        ? true
+        : false;
+  }
+
+  static bool validateString(String value)
+  {
+    Pattern pattern =
+        r'^[A-Za-z _]*[A-Za-z][A-Za-z _]*$';
+    RegExp regex = new RegExp(pattern);
+
+    if(value!='' && value!=null)
+    {
+      if (!regex.hasMatch(value))
+        return false;
+      else
+        return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  static void showLoading(context) {
+    // var sLoadingContext;
+    print("show loading call");
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext loadingContext) {
+        // sLoadingContext = loadingContext;
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.05,
+          margin: EdgeInsets.only(top: 50, bottom: 30),
+          child: Dialog(
+            backgroundColor: Color(0xFF7499C6),
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 15.0,bottom: 8.0),
+                      child: new CircularProgressIndicator(),
+                    )
+                ),
+                Padding(padding: EdgeInsets.only(left: 110.0,bottom: 10.0,top: 5.0),
+                  child: new Text(
+                    "Please wait...",
+                    style: TextStyle(color: const Color(0xFFD9E4E9)),
+                  ),)
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

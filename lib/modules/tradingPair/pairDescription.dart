@@ -31,7 +31,7 @@ class _PairDescriptionState extends State<PairDescription> {
   var appBarheight = 0.0;
   var height = 0.0;
   var subscription;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _pairDescScaffoldKey = new GlobalKey<ScaffoldState>();
 
   PairDetailInfo pairDetailInfo;
   List<TransactionDetail> transactionDetail = [];
@@ -56,7 +56,7 @@ class _PairDescriptionState extends State<PairDescription> {
 
   Future showInSnackBar(String value, {bool isGreeen = false}) async {
     await Future.delayed(const Duration(milliseconds: 700));
-    _scaffoldKey.currentState.showSnackBar(
+    _pairDescScaffoldKey.currentState.showSnackBar(
       SnackBar(
         duration: Duration(seconds: 2),
         content: Text(
@@ -135,7 +135,7 @@ class _PairDescriptionState extends State<PairDescription> {
         SafeArea(
           bottom: true,
           child: Scaffold(
-            key: _scaffoldKey,
+            key: _pairDescScaffoldKey,
             backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             body: ModalProgressHUD(
               inAsyncCall: _isInProgress,

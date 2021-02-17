@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/riskApetitePages/annualReturnForm.dart';
@@ -71,7 +70,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
                   ),
                 ),
               ),
-              value: option["option_value"],
+              value: option["num_value"],
               groupValue: selectedValue,
               activeColor: Color(0xFFD8AF4F),
               onChanged: (value) {
@@ -87,7 +86,6 @@ class _RiskAptFormState extends State<RiskAptForm> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
 
     RadioQusModel question = widget.optionData[0];
     final List<dynamic> options = question.qusOptions;
@@ -299,6 +297,7 @@ class _RiskAptFormState extends State<RiskAptForm> {
 
   getRiskAptOptions()
   {
+    print("selectedValue: $selectedValue");
     var data = GlobalInstance.riskAptOptionsValue;
     for(var i=0; i<data.length;i++)
       {
@@ -308,6 +307,8 @@ class _RiskAptFormState extends State<RiskAptForm> {
             return options;
           }
       }
+    print("data: $data");
+
   }
 
   _submit() async {
@@ -320,7 +321,8 @@ class _RiskAptFormState extends State<RiskAptForm> {
 
     var optionData = getRiskAptOptions();
 
-    print("risk payload: ${GlobalInstance.riskInfoQusAns}");
+    print("risk options: $optionData");
+
 
     await Future.delayed(const Duration(milliseconds: 700));
 

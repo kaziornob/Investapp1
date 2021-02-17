@@ -1,8 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/auth/empStatus.dart';
+import 'package:auroim/auth/investorType.dart';
+import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
+import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/model/listingsModel.dart';
+import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
+import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,7 +58,7 @@ void main() async {
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   ).then(
-    (_) => runApp(
+        (_) => runApp(
       MyApp(prefs: prefs),
     ),
   );
@@ -68,6 +75,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool allCoin = false;
+  ApiProvider request = new ApiProvider();
+
 
   @override
   void initState() {
@@ -101,6 +110,45 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  setScreen() async {
+    print("call set screen");
+    var response = await request.getRequest('users/get_details');
+    print("user detail: $response");
+    if(response!=null && response!=false)
+    {
+      var userDetail = response['data'];
+
+      if(userDetail['f_name']!=null && userDetail['l_name']!=null && userDetail['dob']!=null
+          && userDetail['inv_status']!=null
+          && userDetail['emp_status']!=null && userDetail['occupation']!=null && userDetail['business_area']!=null
+          && userDetail['risk_appetite']!=null && userDetail['drawdown']!=null )
+      {
+        return new HomeScreen();
+      }
+      else if(userDetail['f_name']==null && userDetail['l_name']==null && userDetail['dob']==null)
+      {
+        return new UserPersonalDetails();
+      }
+      else if(userDetail['inv_status']==null)
+      {
+        return  new InvestorType();
+      }
+      else if(userDetail['emp_status']==null && userDetail['occupation']==null && userDetail['business_area']==null)
+      {
+        return new EmpStatus(parentFrom: "${userDetail['inv_status']}");
+      }
+      else if(userDetail['risk_appetite']==null && userDetail['drawdown']==null)
+      {
+        List<RadioQusModel> questions = await getRadioQusTempData(userDetail['inv_status'],'piVersion');
+        return new RiskAptForm(optionData: questions);
+      }
+    }
+
+    else
+    {
+      return new HomeScreen();
+    }
+  }
 
   _decideMainPage(context) {
     if (widget.prefs != null &&
@@ -125,12 +173,14 @@ class _MyAppState extends State<MyApp> {
         return new MyHomePage();
       }*/
 
+      // setScreen();
       return new HomeScreen();
+
     }
     else
-      {
-        return new IntroductionScreen();
-      }
+    {
+      return new IntroductionScreen();
+    }
   }
 
 
