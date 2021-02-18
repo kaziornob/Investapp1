@@ -561,7 +561,7 @@ class HelperClass {
           height: MediaQuery.of(context).size.height * 0.05,
           margin: EdgeInsets.only(top: 50, bottom: 30),
           child: Dialog(
-            backgroundColor: Color(0xFF7499C6),
+            backgroundColor: Color(0xff161946),
             child: new Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

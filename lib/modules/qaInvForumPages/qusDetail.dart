@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
+import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditAnswer.dart';
 import 'package:auroim/modules/qaInvForumPages/ansDetail.dart';
@@ -16,6 +17,7 @@ import 'package:toast/toast.dart';
 class QusDetail extends StatefulWidget {
 
   final allParams;
+  static var qusInfo;
 
   const QusDetail({Key key, @required this.allParams}) : super(key: key);
 
@@ -29,17 +31,11 @@ class _QusDetailState extends State<QusDetail> {
 
   List <dynamic> answerList = [];
 
-/*  List<dynamic> answerList = <dynamic>[
-    {"ans": "Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ", "measure": "741 XP"},
-    {"ans": "Apple stocks over Microsoft given the current market situation?", "measure": "716 XP"},
-    {"ans": "tat 1 anna", "measure": "488 XP"}
-  ];*/
-
   @override
   void initState() {
     super.initState();
-    loadDetails();
     getData();
+    loadDetails();
   }
 
   loadDetails() async {
@@ -58,8 +54,8 @@ class _QusDetailState extends State<QusDetail> {
     if(response!=null && response!=false)
     {
       setState(() {
-        // _AnswerList = response['answers'];
         answerList = response['message']['answer'];
+        QusDetail.qusInfo = response['message'];
       });
     }
   }
@@ -290,7 +286,7 @@ class _QusDetailState extends State<QusDetail> {
                               children: <Widget>[
                                 Expanded(
                                   child: Text(
-                                    "${widget.allParams['body']}",
+                                    "${QusDetail.qusInfo['question']}",
                                     style: new TextStyle(
                                       color: AllCoustomTheme.getTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE16,
@@ -332,7 +328,7 @@ class _QusDetailState extends State<QusDetail> {
                                 ),
                                 Container(
                                   child: new Text(
-                                    "${widget.allParams['totalAns']}",
+                                    "${QusDetail.qusInfo['no. of answer']}",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: ConstanceData.SIZE_TITLE14,
@@ -376,7 +372,7 @@ class _QusDetailState extends State<QusDetail> {
                                 GestureDetector(
                                   onTap: ()
                                   {
-                                    _updateQusVote('upward');
+                                    _updateQusVote('upward',context);
                                   },
                                   child: Container(
                                     margin: EdgeInsets.only(left: 20.0),
@@ -388,7 +384,7 @@ class _QusDetailState extends State<QusDetail> {
                                 ),
                                 Container(
                                   child: new Text(
-                                    widget.allParams['vote']!=null ? "${widget.allParams['vote']}" : 0,
+                                    QusDetail.qusInfo['vote']!=null ? "${QusDetail.qusInfo['vote']}" : 0,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: ConstanceData.SIZE_TITLE14,
@@ -398,7 +394,7 @@ class _QusDetailState extends State<QusDetail> {
                                 GestureDetector(
                                   onTap: ()
                                   {
-                                    _updateQusVote('downward');
+                                    _updateQusVote('downward',context);
                                   },
                                   child: Container(
                                     margin: EdgeInsets.only(left: 20.0),
@@ -428,7 +424,7 @@ class _QusDetailState extends State<QusDetail> {
                           ),
                         ),
                         //tags section
-                        Container(
+/*                        Container(
                           // margin: EdgeInsets.only(left: 15.0),
                           child: StaggeredGridView.countBuilder(
                             itemCount: widget.allParams['tags'] != null ? widget.allParams['tags'].length : 0,
@@ -465,7 +461,7 @@ class _QusDetailState extends State<QusDetail> {
                               );
                             },
                           ),
-                        ),
+                        ),*/
                         SizedBox(
                           height: 10,
                         ),
@@ -484,7 +480,7 @@ class _QusDetailState extends State<QusDetail> {
                                 child: MaterialButton(
                                   onPressed: () {
                                     var tempField = {
-                                      "id": widget.allParams['id'],
+                                      "id": QusDetail.qusInfo['id'],
                                     };
                                     Navigator.of(context).push(
                                       CupertinoPageRoute(
@@ -601,11 +597,12 @@ class _QusDetailState extends State<QusDetail> {
     );
   }
 
-  _updateQusVote (from) async
+  _updateQusVote (from,context) async
   {
+    HelperClass.showLoading(context);
     var tempIdData = [
       "question",
-      widget.allParams['id']
+      QusDetail.qusInfo['id']
     ];
     var tempJsonReq = {"id": tempIdData,"vote": from=='upward' ? 1 : -1};
 
@@ -622,23 +619,52 @@ class _QusDetailState extends State<QusDetail> {
 
       if (result!=null && result.containsKey('auth') && result['auth']==true)
       {
-        // ${result['message']}
+        var tempVote;
+        if(QusDetail.qusInfo['vote']!=null && QusDetail.qusInfo['vote']!=""
+            && QusDetail.qusInfo['vote'] is String )
+        {
+          tempVote = int.parse('${QusDetail.qusInfo['vote']}');
+        }
+        else if(QusDetail.qusInfo['vote']!=null && QusDetail.qusInfo['vote'] is int)
+        {
+          tempVote = QusDetail.qusInfo['vote'];
+        }
+
+        if(from=='upward')
+        {
+          setState(() {
+            var intVote = tempVote + 1;
+            QusDetail.qusInfo['vote'] = intVote.toString();
+          });
+        }
+        else
+        {
+          setState(() {
+            var intVote = tempVote - 1;
+            QusDetail.qusInfo['vote'] = intVote.toString();
+          });
+        }
+        Navigator.pop(context);
         Toast.show("Vote updated successfully", context,
             duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
+        // instantUpdate(from,result['message']);
       }
     }
     else if(result!=null && result.containsKey('auth') && result['auth']!=true)
     {
 
+      Navigator.pop(context);
       Toast.show("oops! vote not updated", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
     else{
+      Navigator.pop(context);
       Toast.show("Something went wrong!", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
   }
+
 }

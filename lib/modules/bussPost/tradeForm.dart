@@ -35,8 +35,6 @@ class _TradeFormState extends State<TradeForm> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(

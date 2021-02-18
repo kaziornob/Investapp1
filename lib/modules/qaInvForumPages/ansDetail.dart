@@ -292,7 +292,7 @@ class _AnsDetailState extends State<AnsDetail> {
                                 GestureDetector(
                                   onTap: ()
                                   {
-                                    _updateAnsVote('upward');
+                                    _updateAnsVote('upward',context);
 
 /*                                    var tempIdData = [
                                       "answer",
@@ -324,7 +324,7 @@ class _AnsDetailState extends State<AnsDetail> {
                                 GestureDetector(
                                   onTap: ()
                                   {
-                                    _updateAnsVote('downward');
+                                    _updateAnsVote('downward',context);
 /*                                    var tempIdData = [
                                       "answer",
                                       widget.allParams['id']
@@ -608,8 +608,10 @@ class _AnsDetailState extends State<AnsDetail> {
     });
   }*/
 
-  _updateAnsVote (from) async
+  _updateAnsVote (from,context) async
   {
+    HelperClass.showLoading(context);
+
     var tempIdData = [
       "answer",
       widget.allParams['id']
@@ -629,56 +631,50 @@ class _AnsDetailState extends State<AnsDetail> {
 
       if (result!=null && result.containsKey('auth') && result['auth']==true)
       {
-        instantUpdate(from,result['message']);
+        var tempVote;
+        if(widget.allParams['vote']!=null && widget.allParams['vote']!=""
+            && widget.allParams['vote'] is String )
+        {
+          tempVote = int.parse('${widget.allParams['vote']}');
+        }
+        else if(widget.allParams['vote']!=null && widget.allParams['vote'] is int)
+        {
+          tempVote = widget.allParams['vote'];
+        }
+
+        if(from=='upward')
+        {
+          setState(() {
+            var intVote = tempVote + 1;
+            widget.allParams['vote'] = intVote.toString();
+          });
+        }
+        else
+        {
+          setState(() {
+            var intVote = tempVote - 1;
+            widget.allParams['vote'] = intVote.toString();
+          });
+        }
+        Navigator.pop(context);
+        Toast.show("Vote updated successfully", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
       }
     }
     else if(result!=null && result.containsKey('auth') && result['auth']!=true)
     {
 
-      Navigator.of(context).pop();
+      Navigator.pop(context);
       Toast.show("oops! vote not updated", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
     else{
-      Navigator.of(context).pop();
+      Navigator.pop(context);
       Toast.show("Something went wrong!", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
-  }
-
-  instantUpdate(from,msg)
-  {
-    HelperClass.showLoading(context);
-    var tempVote;
-    if(widget.allParams['vote']!=null && widget.allParams['vote']!=""
-        && widget.allParams['vote'] is String )
-    {
-      tempVote = int.parse('${widget.allParams['vote']}');
-    }
-    else if(widget.allParams['vote']!=null && widget.allParams['vote'] is int)
-    {
-      tempVote = widget.allParams['vote'];
-    }
-
-    if(from=='upward')
-    {
-      setState(() {
-        var intVote = tempVote + 1;
-        widget.allParams['vote'] = intVote.toString();
-      });
-    }
-    else
-    {
-      setState(() {
-        var intVote = tempVote - 1;
-        widget.allParams['vote'] = intVote.toString();
-      });
-    }
-    Navigator.pop(context);
-    Toast.show("Vote updated successfully", context,
-        duration: Toast.LENGTH_LONG,
-        gravity: Toast.BOTTOM);
   }
 }

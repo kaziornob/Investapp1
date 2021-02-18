@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
+import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/qaInvForumPages/qusDetail.dart';
 import 'package:flutter/cupertino.dart';
@@ -124,7 +125,7 @@ class _AnsViewState extends State<AnsView> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    _submit();
+                                    _submit(context);
                                   },
                                 ),
                               ),
@@ -249,8 +250,10 @@ class _AnsViewState extends State<AnsView> {
     );
   }
 
-  _submit () async
+  _submit (context) async
   {
+    HelperClass.showLoading(context);
+
     var tempJsonReq = {"question_id":"${widget.allParams['qusID']}","answer":"${widget.allParams['body']}"};
     print("create answer tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
@@ -265,6 +268,7 @@ class _AnsViewState extends State<AnsView> {
 
       if (result!=null && result.containsKey('auth') && result['auth']==true)
       {
+        Navigator.pop(context);
         // ${result['message']}
         Toast.show("Answer added successfully", context,
             duration: Toast.LENGTH_LONG,
@@ -274,11 +278,15 @@ class _AnsViewState extends State<AnsView> {
           _isAnsViewClickOnSubmit = false;
         });
 
-/*        var tempField = {
-          "id":"31",
-          "title": "",
-          "body": "Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently?",
-          "tags": [],
+/*        var backData = {
+          "ans": "${widget.allParams['body']}",
+          "votes": 0,
+          "id": 0
+        };
+        setDataBack(backData);*/
+
+        var tempField = {
+          "id":"${widget.allParams['qusID']}",
         };
 
         Navigator.of(context).push(
@@ -286,12 +294,13 @@ class _AnsViewState extends State<AnsView> {
             builder: (BuildContext context) =>
                 QusDetail(allParams : tempField),
           ),
-        );*/
+        );
       }
     }
     else if(result!=null && result.containsKey('auth') && result['auth']!=true)
     {
 
+      Navigator.pop(context);
       Toast.show("oops! answer not added", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
@@ -301,6 +310,7 @@ class _AnsViewState extends State<AnsView> {
       });
     }
     else{
+      Navigator.pop(context);
       setState(() {
         _isAnsViewClickOnSubmit = false;
       });
@@ -308,5 +318,10 @@ class _AnsViewState extends State<AnsView> {
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
+  }
+
+  void setDataBack(requestParameter) {
+    var reportList = requestParameter;
+    Navigator.of(context).pop({"result": reportList, "updated": true});
   }
 }

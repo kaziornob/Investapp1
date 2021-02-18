@@ -106,6 +106,7 @@ class ApiProvider {
   {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
+    print("session token: $sessionToken");
 
     // set up Get request arguments
     final String url = GlobalInstance.apiBaseUrl+funName;

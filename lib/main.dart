@@ -13,6 +13,7 @@ import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screen/screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,7 +76,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool allCoin = false;
+
   ApiProvider request = new ApiProvider();
+  var userAllDetail;
 
 
   @override
@@ -110,43 +113,14 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  setScreen() async {
+
+  getUserDetails() async {
     print("call set screen");
     var response = await request.getRequest('users/get_details');
     print("user detail: $response");
     if(response!=null && response!=false)
     {
-      var userDetail = response['data'];
-
-      if(userDetail['f_name']!=null && userDetail['l_name']!=null && userDetail['dob']!=null
-          && userDetail['inv_status']!=null
-          && userDetail['emp_status']!=null && userDetail['occupation']!=null && userDetail['business_area']!=null
-          && userDetail['risk_appetite']!=null && userDetail['drawdown']!=null )
-      {
-        return new HomeScreen();
-      }
-      else if(userDetail['f_name']==null && userDetail['l_name']==null && userDetail['dob']==null)
-      {
-        return new UserPersonalDetails();
-      }
-      else if(userDetail['inv_status']==null)
-      {
-        return  new InvestorType();
-      }
-      else if(userDetail['emp_status']==null && userDetail['occupation']==null && userDetail['business_area']==null)
-      {
-        return new EmpStatus(parentFrom: "${userDetail['inv_status']}");
-      }
-      else if(userDetail['risk_appetite']==null && userDetail['drawdown']==null)
-      {
-        List<RadioQusModel> questions = await getRadioQusTempData(userDetail['inv_status'],'piVersion');
-        return new RiskAptForm(optionData: questions);
-      }
-    }
-
-    else
-    {
-      return new HomeScreen();
+      userAllDetail = response['data'];
     }
   }
 
@@ -173,9 +147,60 @@ class _MyAppState extends State<MyApp> {
         return new MyHomePage();
       }*/
 
-      // setScreen();
       return new HomeScreen();
+    }
+    else
+    {
+      return new IntroductionScreen();
+    }
+  }
 
+
+
+  setScreen()  {
+    if (widget.prefs != null &&
+        widget.prefs.containsKey('Session_token') &&
+        widget.prefs.getString('Session_token') != null &&
+        widget.prefs.containsKey('DateTime') &&
+        widget.prefs.getString('DateTime').isNotEmpty ) {
+
+      if(userAllDetail!=null && userAllDetail!=false)
+      {
+
+        if(userAllDetail['f_name']!=null && userAllDetail['l_name']!=null && userAllDetail['dob']!=null
+            && userAllDetail['inv_status']!=null
+            && userAllDetail['emp_status']!=null && userAllDetail['occupation']!=null && userAllDetail['business_area']!=null
+            && userAllDetail['risk_appetite']!=null && userAllDetail['drawdown']!=null )
+        {
+          return new HomeScreen();
+        }
+        else if(userAllDetail['f_name']==null && userAllDetail['l_name']==null && userAllDetail['dob']==null)
+        {
+          return new UserPersonalDetails();
+        }
+        else if(userAllDetail['inv_status']==null)
+        {
+          return  new InvestorType();
+        }
+        else if(userAllDetail['emp_status']==null && userAllDetail['occupation']==null && userAllDetail['business_area']==null)
+        {
+          return new EmpStatus(parentFrom: "${userAllDetail['inv_status']}");
+        }
+/*      else if(userAllDetail['risk_appetite']==null && userAllDetail['drawdown']==null)
+      {
+        List<RadioQusModel> questions = await getRadioQusTempData(userAllDetail['inv_status'],'piVersion');
+        return new RiskAptForm(optionData: questions);
+      }*/
+        else
+        {
+          return new HomeScreen();
+        }
+      }
+
+      else
+      {
+        return new HomeScreen();
+      }
     }
     else
     {
@@ -194,11 +219,41 @@ class _MyAppState extends State<MyApp> {
       systemNavigationBarColor: AllCoustomTheme.getThemeData().primaryColor,
       systemNavigationBarIconBrightness: Brightness.light,
     ));
+
     return Container(
       color: AllCoustomTheme.getThemeData().primaryColor,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Auro',
+/*        home: FutureBuilder<dynamic>(
+          future: getUserDetails(), // async work
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting: return ModalProgressHUD(
+                inAsyncCall: false,
+                opacity: 0,
+                progressIndicator: SizedBox(),
+                child: Text(""),
+              );
+              default:
+                if (snapshot.hasError)
+                  {
+                    return Container(
+                      child: Text(
+                        'Error: ${snapshot.error}',
+                        textAlign: TextAlign.center,
+                        style: new TextStyle(
+                          fontSize: 18,
+                          fontFamily: "Rasa",
+                        ),
+                      ),
+                    );
+                  }
+                else
+                  return HomeScreen();
+            }
+          },
+        ),*/
         home: _decideMainPage(context),
         // routes: routes,
         theme: AllCoustomTheme.getThemeData(),
