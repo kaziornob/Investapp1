@@ -9,6 +9,8 @@ import 'package:auroim/modules/deposite/depositeCurrency.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/modules/muitisig/multisig.dart';
 import 'package:auroim/modules/myWallet/wallet.dart';
+import 'package:auroim/modules/settings/myAccount.dart';
+import 'package:auroim/modules/settings/setting.dart';
 import 'package:auroim/modules/tradingPair/tradingPair.dart';
 import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:auroim/modules/withdraw/withdrawCurrency.dart';
@@ -112,25 +114,25 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                     ],
                   ),
-                  InkWell(
-                    onTap: ()
-                    {
-                      Navigator.pop(context);
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          builder: (BuildContext context) =>
-                              UserProfile(),
-                        ),
-                      );
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Animator(
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      InkWell(
+                        onTap: ()
+                        {
+                          Navigator.pop(context);
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (BuildContext context) =>
+                                  MyAccount(),
+                            ),
+                          );
+                        },
+                        child: Animator(
                           tween: Tween<double>(begin: 0, end: 1),
                           duration: Duration(milliseconds: 500),
                           cycles: 1,
@@ -148,21 +150,33 @@ class _AppDrawerState extends State<AppDrawer> {
                               )
                           ),
                         ),
-                        SizedBox(
-                          width: 8,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top:7.0),
+                        child: Icon(
+                          Icons.circle,
+                          size: 7,
+                          color: AllCoustomTheme.getSeeMoreThemeColor(),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top:7.0),
-                          child: Icon(
-                            Icons.circle,
-                            size: 7,
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Animator(
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      InkWell(
+                        onTap: ()
+                        {
+                          Navigator.pop(context);
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (BuildContext context) =>
+                                  Setting(),
+                            ),
+                          );
+                        },
+                        child: Animator(
                           tween: Tween<double>(begin: 0, end: 1),
                           duration: Duration(milliseconds: 500),
                           cycles: 1,
@@ -180,8 +194,8 @@ class _AppDrawerState extends State<AppDrawer> {
                               )
                           ),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ],
               )

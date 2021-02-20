@@ -22,6 +22,7 @@ import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
 import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
+import 'package:auroim/modules/stripePayment/stripePaymentServer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
@@ -2394,6 +2395,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   color: AllCoustomTheme.getButtonBoxColor()
                               ),
                               child: MaterialButton(
+                                /*onPressed: () async {
+                                  final sessionId = await Server().createCheckout();
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('sessionID: $sessionId'),
+                                    ),
+                                  );
+                                },*/
                                 splashColor: Colors.grey,
                                 child: Text(
                                   "START NOW",
