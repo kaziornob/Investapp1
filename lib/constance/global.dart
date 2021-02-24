@@ -388,27 +388,27 @@ class GlobalInstance {
       [
         {
           "checked":false,
-          "potentialLoss": "-3%",
+          "potentialLoss": "-6%",
           "potentialGain": "5%"
         },
         {
           "checked":false,
-          "potentialLoss": "-4%",
+          "potentialLoss": "-7%",
           "potentialGain": "6%"
         },
         {
           "checked":false,
-          "potentialLoss": "-5%",
+          "potentialLoss": "-8%",
           "potentialGain": "8%"
         },
         {
           "checked":false,
-          "potentialLoss": "-6%",
+          "potentialLoss": "-9%",
           "potentialGain": "10%"
         },
         {
           "checked":false,
-          "potentialLoss": "-7%",
+          "potentialLoss": "-10%",
           "potentialGain": "12%"
         }
       ]
@@ -419,27 +419,27 @@ class GlobalInstance {
           [
             {
               "checked":false,
-              "potentialLoss": "-6%",
+              "potentialLoss": "-12%",
               "potentialGain": "10%"
             },
             {
               "checked":false,
-              "potentialLoss": "-7%",
+              "potentialLoss": "-13%",
               "potentialGain": "12%"
             },
             {
               "checked":false,
-              "potentialLoss": "-9%",
+              "potentialLoss": "-14%",
               "potentialGain": "14%"
             },
             {
               "checked":false,
-              "potentialLoss": "-10%",
+              "potentialLoss": "-15%",
               "potentialGain": "17%"
             },
             {
               "checked":false,
-              "potentialLoss": "-12%",
+              "potentialLoss": "-16%",
               "potentialGain": "21%"
             }
           ]
@@ -450,27 +450,27 @@ class GlobalInstance {
           [
             {
               "checked":false,
-              "potentialLoss": "-6%",
+              "potentialLoss": "-22%",
               "potentialGain": "10%"
             },
             {
               "checked":false,
-              "potentialLoss": "-8%",
+              "potentialLoss": "-23%",
               "potentialGain": "13%"
             },
             {
               "checked":false,
-              "potentialLoss": "-11%",
+              "potentialLoss": "-24%",
               "potentialGain": "18%"
             },
             {
               "checked":false,
-              "potentialLoss": "-14%",
+              "potentialLoss": "-25%",
               "potentialGain": "24%"
             },
             {
               "checked":false,
-              "potentialLoss": "-19%",
+              "potentialLoss": "-26%",
               "potentialGain": "31%"
             }
           ]
@@ -481,27 +481,27 @@ class GlobalInstance {
         [
           {
             "checked":false,
-            "potentialLoss": "-12%",
+            "potentialLoss": "-25%",
             "potentialGain": "21"
           },
           {
             "checked":false,
-            "potentialLoss": "-16%",
+            "potentialLoss": "-28%",
             "potentialGain": "28%"
           },
           {
             "checked":false,
-            "potentialLoss": "-21%",
+            "potentialLoss": "-31%",
             "potentialGain": "37%"
           },
           {
             "checked":false,
-            "potentialLoss": "-28%",
+            "potentialLoss": "-34%",
             "potentialGain": "49%"
           },
           {
             "checked":false,
-            "potentialLoss": "-38%",
+            "potentialLoss": "-37%",
             "potentialGain": "66%"
           }
         ]
@@ -582,6 +582,48 @@ class HelperClass {
           ),
         );
       },
+    );
+  }
+
+  static void showAlert(context,msg) {
+    showDialog(context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.blueGrey,
+            title: Text(
+              "",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            content: Text(
+              "$msg",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                color: Colors.blueGrey,
+                textColor: Colors.white,
+                child: Text(
+                  'Ok',
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE12,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],);
+        }
     );
   }
 }

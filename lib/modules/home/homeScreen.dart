@@ -301,6 +301,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       isSelect3 = false;
       isSelect4 = false;
       isSelect5 = false;
+      getDoughnutPortfolioData();
     });
   }
 
@@ -320,12 +321,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 backgroundColor: Colors.transparent,
               ),
             ),
-            FractionalTranslation(
-              translation: Offset(0.4, 0.2),
-              child: GestureDetector(
-                onTap: () {
-                  _homeScaffoldKey.currentState.openDrawer();
-                },
+            InkWell(
+              onTap: () {
+                _homeScaffoldKey.currentState.openDrawer();
+              },
+              child: FractionalTranslation(
+                translation: Offset(0.4, 0.2),
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 11.0,
@@ -446,7 +447,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           bottom: true,
           child: Scaffold(
             key: _homeScaffoldKey,
-            appBar: isSelect2 || isSelect4 || isSelect5 ?
+            appBar: isSelect1 || isSelect2 || isSelect4 || isSelect5 ?
             PreferredSize(
                 preferredSize: Size.fromHeight(65.0),
                 child: AppBar(
@@ -778,9 +779,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: isSelect2 || isSelect5 || isSelect4 ? 2 : MediaQuery.of(context).padding.top,
+                      height: isSelect1 || isSelect2 || isSelect5 || isSelect4 ? 2 : MediaQuery.of(context).padding.top,
                       child: Visibility(
-                        visible: isSelect2 || isSelect5 || isSelect4,
+                        visible: isSelect1 || isSelect2 || isSelect5 || isSelect4,
                         child: Container(
                           decoration: new BoxDecoration(
                             color: Color(0xFFFFFFFF),
@@ -955,7 +956,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  Widget firstScreen() {
+  Widget oldFirstScreen() {
     graphHeight = height - appBarheight - 42;
     return Container(
       height: graphHeight,
@@ -1168,6 +1169,573 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
         ],
       ),
+    );
+  }
+
+  int homeDonutCurrentIndex = 0;
+
+  final List homeDonutArray = [1,2,3];
+
+  List<ChartData> homeChartData = [
+    ChartData('David', 25, globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
+    ChartData('Steve', 38, globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF000000)),
+    ChartData('Jack', 34, globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
+    ChartData('Others', 52, Color(0xFFFAB95B))
+  ];
+
+  setHomeDoughnutChartData()
+  {
+    print("portfolioChartData: $portfolioChartData");
+    print("homeDonutCurrentIndex: $homeDonutCurrentIndex");
+
+    if(portfolioChartData!=null && portfolioChartData!=false)
+      {
+        if(homeDonutCurrentIndex==0 && portfolioChartData['weights_assetclass']!=null && portfolioChartData['weights_assetclass']['weights']!=null)
+        {
+          var tempWeightsData = portfolioChartData['weights_assetclass']['weights'];
+          homeChartData = [
+            ChartData('Crypto', tempWeightsData['Crypto'], globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
+            ChartData('Currency', tempWeightsData['Currency'], globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF000000)),
+            ChartData('Equity', tempWeightsData['Equity'], globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
+            ChartData('Fixed Income', tempWeightsData['Fixed Income'], globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
+            ChartData('Hedge_Fund', tempWeightsData['Hedge_Fund'], Color(0xFFFAB95B))
+          ];
+        }
+
+        else if(homeDonutCurrentIndex==1 && portfolioChartData['weights_assetcountry']!=null && portfolioChartData['weights_assetcountry']['weights']!=null)
+        {
+          var tempWeightsData = portfolioChartData['weights_assetcountry']['weights'];
+          homeChartData = [
+            ChartData('crypto-global', tempWeightsData['crypto-global'], globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
+            ChartData('currency-united states', tempWeightsData['currency-united states'], globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF000000)),
+            ChartData('equity-china', tempWeightsData['equity-china'], globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
+            ChartData('equity-japan', tempWeightsData['equity-japan'], Color(0xFFFAB95B)),
+            ChartData('fixed income-asia', tempWeightsData['fixed income-asia'], Color(0xFF525a6d)),
+            ChartData('fixed income-united states', tempWeightsData['fixed income-united states'], Color(0xFFF5564E)),
+            ChartData('hedge_fund-global', tempWeightsData['hedge_fund-global'], Color(0xFFE8E2DB))
+          ];
+        }
+
+        else if(homeDonutCurrentIndex==2 && portfolioChartData['weights_foliotickers']!=null && portfolioChartData['weights_foliotickers']['sector']!=null)
+        {
+          // var tempWeightsData = portfolioChartData['weights_foliotickers']['sector'];
+          homeChartData = [
+            ChartData('David', 25, globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
+            ChartData('Steve', 38, globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF000000)),
+            ChartData('Jack', 34, globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
+            ChartData('Others', 52, Color(0xFFFAB95B))
+          ];
+        }
+      }
+    else
+      {
+        homeChartData = [
+          ChartData('David', 25, globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
+          ChartData('Steve', 38, globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF000000)),
+          ChartData('Jack', 34, globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
+          ChartData('Others', 52, Color(0xFFFAB95B))
+        ];
+      }
+  }
+
+  Widget firstScreen()
+  {
+    return SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.60,
+              child:  Container(
+                  margin: EdgeInsets.only(left: 5.0,right: 5.0,top:10.0),
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'AURO PAPER',
+                            // textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                fontSize: ConstanceData.SIZE_TITLE20,
+                                fontFamily: "Rosarivo",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal,
+                                letterSpacing: 0.1
+                            ),
+                          )
+                      ),
+                      Container(
+                        // margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(
+                          bottom: 3, // space between underline and text
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                  color: Color(0xFFD8AF4F),
+                                  width: 1.6, // Underline width
+                                )
+                            )
+                        ),
+                      ),
+/*                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height*0.27,
+                        child: FutureBuilder<dynamic>(
+                          future: getDountPortfolioData(), // async work
+                          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting: return ModalProgressHUD(
+                                inAsyncCall: false,
+                                opacity: 0,
+                                progressIndicator: SizedBox(height: 10),
+                                child: Text(""),
+                              );
+                              default:
+                                if (snapshot.hasError)
+                                {
+                                  return Container(
+                                    child: Text(
+                                      'Error: ${snapshot.error}',
+                                      textAlign: TextAlign.center,
+                                      style: new TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: "Rasa",
+                                      ),
+                                    ),
+                                  );
+                                }
+                                // if(snapshot.hasData)
+                                else
+                                {
+                                  print("slider called");
+                                  return CarouselSlider.builder(
+                                    itemCount: homeDonutArray.length,
+                                    options: CarouselOptions(
+                                        autoPlay: false,
+                                        viewportFraction: 0.95,
+                                        onPageChanged: (index, reason) {
+                                          setState(() {
+                                            homeDonutCurrentIndex = index;
+                                            setHomeDoughnutChartData();
+                                          });
+                                        }
+                                    ),
+                                    itemBuilder: (context,index){
+                                      return Container(
+                                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.048,right: MediaQuery.of(context).size.width*0.048),
+                                        child: SfCircularChart(
+                                            series: <CircularSeries>[
+                                              // Renders doughnut chart
+                                              DoughnutSeries<ChartData, String>(
+                                                dataSource: homeChartData,
+                                                pointColorMapper:(ChartData data,  _) => data.color,
+                                                xValueMapper: (ChartData data, _) => data.x,
+                                                yValueMapper: (ChartData data, _) => data.y,
+                                                dataLabelSettings:DataLabelSettings(
+                                                  isVisible : true,
+                                                ),
+                                              )
+                                            ]
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                            }
+                          },
+                        ),
+                      ),*/
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height*0.27,
+                        // child: getDonutChartView(),
+                        child: CarouselSlider.builder(
+                          itemCount: homeDonutArray.length,
+                          options: CarouselOptions(
+                              autoPlay: false,
+                              viewportFraction: 0.95,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  homeDonutCurrentIndex = index;
+                                  setHomeDoughnutChartData();
+                                });
+                              }
+                          ),
+                          itemBuilder: (context,index){
+                            return Container(
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.048,right: MediaQuery.of(context).size.width*0.048),
+                              child: SfCircularChart(
+                                  series: <CircularSeries>[
+                                    DoughnutSeries<ChartData, String>(
+                                      dataSource: homeChartData,
+                                      pointColorMapper:(ChartData data,  _) => data.color,
+                                      xValueMapper: (ChartData data, _) => data.x,
+                                      yValueMapper: (ChartData data, _) => data.y,
+                                      dataLabelSettings:DataLabelSettings(
+                                        isVisible : true,
+                                      ),
+                                    )
+                                  ]
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: homeDonutArray.map((url) {
+                            int index = homeDonutArray.indexOf(url);
+                            return Container(
+                              width: 10.0,
+                              height: 8.0,
+                              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: homeDonutCurrentIndex == index
+                                // ? Color(0xFFFFFFFF)
+                                    ? Color(0xFFD8AF4F)
+                                    : Color(0xffCBB4B4),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Container(
+                        // margin: EdgeInsets.only(left: 35.0,right: 20.0),
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.07,right: MediaQuery.of(context).size.width*0.03),
+                          child: Text(
+                            "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
+                                "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                                fontSize: 14.5,
+                                fontFamily: "Roboto",
+                                fontStyle: FontStyle.normal,
+                                letterSpacing: 0.2
+                            ),
+                          )
+                      ),
+                    ],
+                  )
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 14, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    // height: 32,
+                    height: MediaQuery.of(context).size.height*0.06,
+                    child: Container(
+                      /*height: 32,
+                    width: 234,*/
+                      height: MediaQuery.of(context).size.height*0.06,
+                      width: MediaQuery.of(context).size.width*0.72,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                          color: AllCoustomTheme.getButtonBoxColor()
+                      ),
+                      child: MaterialButton(
+                        splashColor: Colors.grey,
+                        child: Text(
+                          "Initiate First Name Portfolio",
+                          style: TextStyle(
+                            color: AllCoustomTheme.getButtonTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE13,
+                            fontFamily: "Roboto",
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                              new SearchFirstPage(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            // go pro,live button
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                SizedBox(
+                  width: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      // height: 32,
+                      height: MediaQuery.of(context).size.height*0.06,
+                      child: Container(
+                        /*height: 32,
+                      width: 110,*/
+                        height: MediaQuery.of(context).size.height*0.06,
+                        width: MediaQuery.of(context).size.width*0.32,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                            color: AllCoustomTheme.getButtonBoxColor()
+                        ),
+                        child: MaterialButton(
+                          splashColor: Colors.grey,
+                          child: Text(
+                              "GO PRO",
+                              style: AllCoustomTheme.getButtonSelectedTextStyleTheme()
+                          ),
+                          onPressed: () async
+                          {
+                            Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      // height: 32,
+                      height: MediaQuery.of(context).size.height*0.06,
+                      child: Container(
+                        /*height: 32,
+                      width: 110,*/
+                        height: MediaQuery.of(context).size.height*0.06,
+                        width: MediaQuery.of(context).size.width*0.32,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                          // color: AllCoustomTheme.getButtonBoxColor()
+                        ),
+                        child: MaterialButton(
+                          splashColor: Colors.grey,
+                          child: Text(
+                              "GO LIVE",
+                              style: AllCoustomTheme.getButtonNonSelectedTextStyleTheme()
+                          ),
+                          onPressed: () async
+                          {
+                            Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                new WishList()));
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+              ],
+            ),
+
+            // portfolio component box
+            SizedBox(
+              height: 30,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.73,
+              child:  Container(
+                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                  /*decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xFFfec20f),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),*/
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top:5.0),
+                        child: Center(
+                            child: Text(
+                              'PORTFOLIO COMPONENTS',
+                              style: new TextStyle(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                fontSize: ConstanceData.SIZE_TITLE18,
+                                fontFamily: "Rosarivo",
+                              ),
+                            )
+                        ),
+                      ),
+                      Container(
+                        // margin: EdgeInsets.only(left: 30.0,right: 30.0),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.06,right: MediaQuery.of(context).size.width*0.06),
+
+                        padding: EdgeInsets.only(
+                          bottom: 3, // space between underline and text
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                  color: AllCoustomTheme.getHeadingThemeColors(),
+                                  width: 1.0, // Underline width
+                                )
+                            )
+                        ),
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(top:10.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.only(left:95.0,bottom: 5.0),
+                                  child: Text(
+                                    'Auro Portfolio',
+                                    style: new TextStyle(
+                                      color: AllCoustomTheme.getSubHeadingThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE15,
+                                      fontFamily: "Roboto",
+                                      package: 'Roboto-Regular',
+                                    ),
+                                  )
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.only(left:30.0,top: 3.0),
+                                  child: Text(
+                                    'SEE ALL',
+                                    style: new TextStyle(
+                                      color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE15,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  )
+                              )
+                            ],
+                          )
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height*0.37,
+                          child: Container(
+                              margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
+                              child: getAreaChartView()
+                          )
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                              ),
+                              Text(
+                                "First Name's Portfolio",
+                                textAlign: TextAlign.center,
+                                style: new TextStyle(
+                                  color: AllCoustomTheme.getSubHeadingThemeColors(),
+                                  fontSize: ConstanceData.SIZE_TITLE15,
+                                  fontFamily: "Roboto",
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.10,
+                              ),
+                              Text(
+                                'See More',
+                                style: TextStyle(
+                                  color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                  fontSize: ConstanceData.SIZE_TITLE15,
+                                  fontFamily: "Roboto",
+                                ),
+                              )
+                            ],
+                          )
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left:15.0,bottom: 5.0,top: 5.0),
+                        child: Text(
+                          'You can also invest in individual securities that you like and create your own portfolio!! ',
+                          style: TextStyle(
+                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "Roboto",
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              // height: 35,
+                              height: MediaQuery.of(context).size.height*0.065,
+                              child: Container(
+                                /*height: 35,
+                              width: 150,*/
+                                height: MediaQuery.of(context).size.height*0.065,
+                                width: MediaQuery.of(context).size.width*0.45,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()
+                                ),
+                                child: MaterialButton(
+                                  /*onPressed: () async {
+                                  final sessionId = await Server().createCheckout();
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('sessionID: $sessionId'),
+                                    ),
+                                  );
+                                },*/
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "START NOW",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE13,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+              ),
+            ),
+            // go live button
+          ],
+        )
     );
   }
 
@@ -2005,7 +2573,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ),
           ),*/
-          SizedBox(
+/*          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.60,
             child:  Container(
@@ -2017,7 +2585,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         alignment: Alignment.center,
                         child: Text(
                           'AURO PAPER',
-                          // textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AllCoustomTheme.getHeadingThemeColors(),
                             fontSize: ConstanceData.SIZE_TITLE20,
@@ -2029,7 +2596,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                     ),
                     Container(
-                        // margin: EdgeInsets.only(left: 80.0,right: 80.0),
                       margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
                       alignment: Alignment.center,
                         padding: EdgeInsets.only(
@@ -2098,7 +2664,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                        // margin: EdgeInsets.only(left: 35.0,right: 20.0),
                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.07,right: MediaQuery.of(context).size.width*0.03),
                         child: Text(
                           "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
@@ -2123,11 +2688,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  // height: 32,
                   height: MediaQuery.of(context).size.height*0.06,
                   child: Container(
-                    /*height: 32,
-                    width: 234,*/
                     height: MediaQuery.of(context).size.height*0.06,
                     width: MediaQuery.of(context).size.width*0.72,
                     decoration: BoxDecoration(
@@ -2171,11 +2733,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    // height: 32,
                     height: MediaQuery.of(context).size.height*0.06,
                     child: Container(
-                      /*height: 32,
-                      width: 110,*/
                       height: MediaQuery.of(context).size.height*0.06,
                       width: MediaQuery.of(context).size.width*0.32,
                       decoration: BoxDecoration(
@@ -2204,17 +2763,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    // height: 32,
                     height: MediaQuery.of(context).size.height*0.06,
                     child: Container(
-                      /*height: 32,
-                      width: 110,*/
                       height: MediaQuery.of(context).size.height*0.06,
                       width: MediaQuery.of(context).size.width*0.32,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                          // color: AllCoustomTheme.getButtonBoxColor()
                       ),
                       child: MaterialButton(
                         splashColor: Colors.grey,
@@ -2237,26 +2792,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 width: 30,
               ),
             ],
-          ),
+          ),*/
 
           // portfolio component box
           SizedBox(
             height: 30,
           ),
-          SizedBox(
+/*          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.73,
             child:  Container(
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                /*decoration: new BoxDecoration(
-                  border: Border.all(
-                    color: Color(0xFFfec20f),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(2.0),
-                  ),
-                ),*/
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
@@ -2334,31 +2880,31 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.only(left:70.0),
-                                child: Text(
-                                  "First Name's Portfolio",
-                                  textAlign: TextAlign.center,
-                                  style: new TextStyle(
-                                    color: AllCoustomTheme.getSubHeadingThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                  ),
-                                )
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.25,
                             ),
-                            Padding(
-                                padding: EdgeInsets.only(left:15.0),
-                                child: Text(
-                                  'See More',
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                  ),
-                                )
+                            Text(
+                              "First Name's Portfolio",
+                              textAlign: TextAlign.center,
+                              style: new TextStyle(
+                                color: AllCoustomTheme.getSubHeadingThemeColors(),
+                                fontSize: ConstanceData.SIZE_TITLE15,
+                                fontFamily: "Roboto",
+                              ),
                             ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.10,
+                            ),
+                            Text(
+                              'See More',
+                              style: TextStyle(
+                                color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE15,
+                                fontFamily: "Roboto",
+                              ),
+                            )
                           ],
                         )
                     ),
@@ -2382,11 +2928,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(
-                            // height: 35,
                             height: MediaQuery.of(context).size.height*0.065,
                             child: Container(
-                              /*height: 35,
-                              width: 150,*/
                               height: MediaQuery.of(context).size.height*0.065,
                               width: MediaQuery.of(context).size.width*0.45,
                               decoration: BoxDecoration(
@@ -2395,14 +2938,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   color: AllCoustomTheme.getButtonBoxColor()
                               ),
                               child: MaterialButton(
-                                /*onPressed: () async {
-                                  final sessionId = await Server().createCheckout();
-                                  Scaffold.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('sessionID: $sessionId'),
-                                    ),
-                                  );
-                                },*/
                                 splashColor: Colors.grey,
                                 child: Text(
                                   "START NOW",
@@ -2422,7 +2957,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   ],
                 )
             ),
-          ),
+          ),*/
           // go live button
           // investment guru component box
           SizedBox(
@@ -4495,7 +5030,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               children: <Widget>[
                 Expanded(
                   child: InkWell(
-                    onTap: () async {
+                   /* onTap: () async {
                       List<Question> questions = await getQuestions();
                       if (questions.length < 1) {
                         Navigator.of(context).push(CupertinoPageRoute(
@@ -4506,6 +5041,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         );
                         return;
                       }
+                      Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (BuildContext context) => QuestionTemplate(questions: questions),
+                      ),
+                      );
+                    },*/
+                    onTap: () async {
+                      HelperClass.showLoading(context);
+                      Question questions = await getQuestions();
+                      if (questions==null) {
+                        Navigator.pop(context);
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (_) => ErrorPage(
+                              message: "There are not enough questions yet.",
+                            )
+                        )
+                        );
+                        return;
+                      }
+                      Navigator.pop(context);
                       Navigator.of(context).push(CupertinoPageRoute(
                         builder: (BuildContext context) => QuestionTemplate(questions: questions),
                       ),
@@ -5284,6 +5838,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   List <dynamic> questionsList;
+  var portfolioChartData;
+
 
 
   // api calls section start
@@ -5299,6 +5855,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       });
     }
   }
+
+  Future <void> getDoughnutPortfolioData() async {
+    print("getDoughnutPortfolioData called");
+    var response = await request.getRequest('users/run_algo');
+    print("portfolio chart list: $response");
+    if(response!=null && response!=false && response.containsKey('auth') && response['auth']==true)
+    {
+      setState(() {
+        portfolioChartData = response['message']!=null && response['message']['algo_result']!=null ? response['message']['algo_result'] : null;
+      });
+    }
+  }
+
+
 
 
   // api calls section end
@@ -5317,6 +5887,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         isSelect4 = false;
         isSelect5 = false;
       });
+      // getDountPortfolioData();
     }
   }
 

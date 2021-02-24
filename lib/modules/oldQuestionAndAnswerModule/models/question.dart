@@ -18,11 +18,18 @@ class Question {
   final String questionType;
   final String videoLink;
   final String questionId;
+
+
   final List<dynamic> qusImages;
+
+
   List<dynamic> userAnswer;
+  List<dynamic> defaultAnswer;
+
+
   final List<dynamic> qusOptions;
 
-  Question({this.type,this.qusImages, this.question,this.videoLink,this.questionType,this.questionId,this.qusOptions,this.userAnswer});
+  Question({this.type,this.qusImages, this.question,this.videoLink,this.questionType,this.questionId,this.qusOptions,this.userAnswer,this.defaultAnswer});
 
   Question.fromMap(Map<String, dynamic> data):
         type = data["question_type"] == "mcq" ? Type.multiple : Type.boolean,
@@ -32,18 +39,11 @@ class Question {
         questionId = data["question_id"],
         qusImages = data.containsKey('image') && data["image"]!=null && data["image"].length!=0 ? data["image"]: null,
         userAnswer = [],
+        defaultAnswer = data["answer"],
         qusOptions = data["option"];
 
-  /*factory Question.fromData(Map<String, dynamic> json) {
-    return Question(
-      email: json['email'],
-      id: json['id'],
-    );
-  }*/
-
-/*  static fromData(Map<String,dynamic> data){
-    print("question model data: $data");
-    return data;
-  }*/
+  static List<Question> fromData(List<Map<String,dynamic>> data){
+    return data.map((question) => Question.fromMap(question)).toList();
+  }
 
 }

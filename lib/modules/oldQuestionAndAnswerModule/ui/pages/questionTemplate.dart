@@ -2,23 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:animator/animator.dart';
-import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/oldQuestionAndAnswerModule/ui/pages/error.dart';
-import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
-import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
+import 'package:auroim/modules/oldQuestionAndAnswerModule/models/question.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
-import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:video_player/video_player.dart';
 
 class QuestionTemplate extends StatefulWidget {
-  final Question questions;
+  final List<Question> questions;
 
   const QuestionTemplate({Key key, @required this.questions}) : super(key: key);
 
@@ -29,68 +25,83 @@ class QuestionTemplate extends StatefulWidget {
 class _QuestionTemplateState extends State<QuestionTemplate> {
 
   bool _isInProgress = false;
-  ApiProvider request = new ApiProvider();
-  bool answerRequest = false;
-  YoutubePlayerController _controller;
-  bool fullScreenModeActive = false;
-
-  int _currentIndex = 0;
-  String videoUrl = '';
-  Map<int, dynamic> _answers = {};
-
-/*  VideoPlayerController videoPlayerController;
-  Future<void> _initializeVideoPlayerFuture;
-  ChewieController _chewieController;*/
-
 
   @override
   void initState() {
     super.initState();
     _answers = {};
 
-/*    videoUrl = widget.questions.videoLink;
+    videoUrl = widget.questions[_currentIndex].videoLink;
+    //video player
     videoPlayerController = VideoPlayerController.network(videoUrl)
-    _initializeVideoPlayerFuture = videoPlayerController.initialize();*/
+    //..initialize().then((_) async {});
+        ;
+    _initializeVideoPlayerFuture = videoPlayerController.initialize();
+    // loadDetails();
   }
+
+
+/*  loadDetails() async {
+    setState(() {
+      _isInProgress = true;
+    });
+    await Future.delayed(const Duration(milliseconds: 700));
+    setState(() {
+      _isInProgress = false;
+    });
+  }*/
+
+  int _currentIndex = 0;
+  int _previousIndex = 0;
+
+  String videoUrl = '';
+
+  Map<int, dynamic> _answers = {};
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  // AllHttpRequest request = new AllHttpRequest();
+
+  VideoPlayerController videoPlayerController;
+  Future<void> _initializeVideoPlayerFuture;
+  ChewieController _chewieController;
 
 
   @override
   void dispose() {
-/*    videoPlayerController.pause();
+    videoPlayerController.pause();
     videoPlayerController.dispose();
-    _chewieController.dispose();*/
-
-    if(_controller.value.isFullScreen)
-      {
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.landscapeRight,
-          DeviceOrientation.landscapeLeft,
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]);
-      }
-    _controller.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
   @override
   void deactivate() {
-/*    videoPlayerController.pause();
+    videoPlayerController.pause();
     videoPlayerController.dispose();
-    _chewieController.dispose();*/
-
-    if(_controller.value.isFullScreen)
-    {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    }
-
-    _controller.pause();
+    _chewieController.dispose();
     super.deactivate();
+  }
+
+  Future submitAssessment(requestedData) async {
+    var tempJsonReq = {"status": "done", "questions": requestedData};
+
+    String jsonReq = json.encode(tempJsonReq);
+    var test = {'localDbStatus': false, 'serverStatus': false};
+    return test;
+
+    /*var response = await request.postSubmit('submit-assessment', jsonReq);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // If the call to the server was successful, parse the JSON.
+      var test = json.decode(response.body);
+      return test;
+    } else if (response.statusCode == 403) {
+      // If the call to the server was successful, parse the JSON.
+      var test = json.decode(response.body);
+      return test;
+    } else {
+      var test = {'localDbStatus': false, 'serverStatus': false};
+      return test;
+    }*/
   }
 
   Widget getOptionList(qusType, options) {
@@ -123,12 +134,12 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                   value: option["option_value"],
                   onChanged: (value) {
                     setState(() {
-                      widget.questions.userAnswer = [];
+                      widget.questions[_currentIndex].userAnswer = [];
                       var temp = {
                         "value": "${option["option_value"]}",
                       };
-                      widget.questions.userAnswer.add(temp);
-                      // _answers[_currentIndex] = option["option_value"];
+                      widget.questions[_currentIndex].userAnswer.add(temp);
+                      _answers[_currentIndex] = option["option_value"];
                     });
                   },
                 ),
@@ -150,7 +161,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                     style: TextStyle(
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontWeight: FontWeight.w400,
-                        color: answerRequest== false ? Colors.white : (items["checked"]==true ? Colors.green : Colors.red)
+                        color: Colors.white
                     ),
                   ),
                   value: items["checked"],
@@ -173,14 +184,14 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
   }
 
   getCheckboxItems(optionsData) {
-    widget.questions.userAnswer = [];
+    widget.questions[_currentIndex].userAnswer = [];
     for (int i = 0; i < optionsData.length; i++) {
       if (optionsData[i]['checked'] == true) {
-        var temp = optionsData[i];
-       /* var temp = {
+        var temp = {
           "value": "${optionsData[i]["option_value"]}",
-        };*/
-        widget.questions.userAnswer.add(temp);
+        };
+        widget.questions[_currentIndex].userAnswer.add(temp);
+        _answers[_currentIndex] = optionsData[i]["option_value"];
       }
     }
   }
@@ -202,70 +213,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     }
   }
 
-  Widget getVideos(link)
-  {
-    var appBar = AppBar();
-
-    if(link!='' && link!=null)
-    {
-        var videoId = YoutubePlayer.convertUrlToId("$link");
-        _controller = YoutubePlayerController(
-          initialVideoId: '$videoId',
-          flags: YoutubePlayerFlags(
-            autoPlay: true,
-            mute: false,
-            loop: false,
-          ),
-        );
-
-      return Container(
-          height: fullScreenModeActive==false ? (MediaQuery.of(context).size.height -
-              appBar.preferredSize.height) /
-              2.5 : MediaQuery.of(context).size.height,
-
-          child: Stack(
-            children: <Widget>[
-              YoutubePlayer(
-                controller: _controller,
-                showVideoProgressIndicator: true,
-                onReady: () {
-                  _controller.addListener(() {
-                    if(_controller.value.isFullScreen)
-                    {
-                      fullScreenModeActive = true;
-                    }
-                    else
-                    {
-                      fullScreenModeActive = false;
-                      SystemChrome.setPreferredOrientations([
-                        DeviceOrientation.landscapeRight,
-                        DeviceOrientation.landscapeLeft,
-                        DeviceOrientation.portraitUp,
-                        DeviceOrientation.portraitDown,
-                      ]);
-                    }
-                  });
-                },
-                onEnded: (YoutubeMetaData metaData) {
-                  _controller.pause();
-                },
-              ),
-            ],
-          )
-      );
-    }
-    else
-    {
-
-      return Container(
-        height: (MediaQuery.of(context).size.height -
-            appBar.preferredSize.height) /
-            2.5,
-      );
-    }
-  }
-
-/*  Widget getS3Videos(link) {
+  Widget getS3Videos(link) {
     var appBar = AppBar();
     if (link != '') {
       _chewieController = ChewieController(
@@ -287,17 +235,17 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
             2.5,
       );
     }
-  }*/
+  }
 
   checkAnswer() {
     var wrongAnsStatus = false;
     var rightAnsStatus = false;
 
-    if (widget.questions.questionType == "singleanswermcq") {
-      var findValue = widget.questions.userAnswer[0]["value"]
+    if (widget.questions[_currentIndex].questionType == "singleanswermcq") {
+      var findValue = widget.questions[_currentIndex].userAnswer[0]["value"]
           .toLowerCase()
           .trim();
-      var temp = widget.questions.qusOptions[0]["option_value"]
+      var temp = widget.questions[_currentIndex].defaultAnswer[0]['value']
           .toLowerCase()
           .trim()
           .contains(findValue);
@@ -306,22 +254,22 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
       } else {
         wrongAnsStatus = true;
       }
-    } else if (widget.questions.questionType ==
+    } else if (widget.questions[_currentIndex].questionType ==
         "multianswermcq") {
       var newArray = [];
 
       for (var i = 0;
-      i < widget.questions.qusOptions.length;
+      i < widget.questions[_currentIndex].defaultAnswer.length;
       i++) {
         var rightValue = widget
-            .questions.qusOptions[i]['value']
+            .questions[_currentIndex].defaultAnswer[i]['value']
             .toLowerCase()
             .trim();
 
         for (var j = 0;
-        j < widget.questions.userAnswer.length;
+        j < widget.questions[_currentIndex].userAnswer.length;
         j++) {
-          var userValue = widget.questions.userAnswer[j]['value']
+          var userValue = widget.questions[_currentIndex].userAnswer[j]['value']
               .toLowerCase()
               .trim();
 
@@ -331,10 +279,10 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
         }
       }
 
-      if (widget.questions.qusOptions.length ==
+      if (widget.questions[_currentIndex].defaultAnswer.length ==
           newArray.length &&
-          widget.questions.userAnswer.length ==
-              widget.questions.qusOptions.length) {
+          widget.questions[_currentIndex].userAnswer.length ==
+              widget.questions[_currentIndex].defaultAnswer.length) {
         rightAnsStatus = true;
       } else {
         wrongAnsStatus = true;
@@ -349,8 +297,8 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
   }
 
   Widget getAnswerList(data) {
-    if (widget.questions.userAnswer != null &&
-        widget.questions.userAnswer.length != 0) {
+    if (widget.questions[_currentIndex].userAnswer != null &&
+        widget.questions[_currentIndex].userAnswer.length != 0) {
       var respData = checkAnswer();
 
       var wrongAns = respData['wrongAnsStatus'];
@@ -429,11 +377,25 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     AppBar appBar = AppBar();
     double appBarheight = appBar.preferredSize.height;
 
-    Question question = widget.questions;
+    Question question = widget.questions[_currentIndex];
     final List<dynamic> options = question.qusOptions;
 
     return Stack(
       children: <Widget>[
+        Container(
+          foregroundDecoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                HexColor(globals.primaryColorString).withOpacity(0.6),
+                HexColor(globals.primaryColorString).withOpacity(0.6),
+                HexColor(globals.primaryColorString).withOpacity(0.6),
+                HexColor(globals.primaryColorString).withOpacity(0.6),
+              ],
+            ),
+          ),
+        ),
         Scaffold(
           backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           floatingActionButton: Padding(
@@ -445,14 +407,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                     height: 50,
                     child: GestureDetector(
                       onTap: () {
-                        if(widget.questions.userAnswer.length==0)
-                          {
-                            HelperClass.showAlert(context, "Choose option first");
-                          }
-                        else
-                          {
-                            _submit();
-                          }
+                        _nextSubmit();
                       },
                       child: Animator(
                         tween: Tween<double>(begin: 0.8, end: 1.1),
@@ -528,8 +483,31 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                             ),
                           ),
                         ),
+/*                        Expanded(
+                          child: Animator(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.decelerate,
+                            cycles: 1,
+                            builder: (anim) => Transform.scale(
+                              scale: anim.value,
+                              child: Container(
+                                  height: MediaQuery.of(context).size.height * 0.07,
+                                  margin: EdgeInsets.only(bottom: 10.0),
+                                  child: Center(
+                                    child: new Image(
+                                        width: 270.0,
+                                        fit: BoxFit.fill,
+                                        image: new AssetImage('assets/logo.png')
+                                    ),
+                                  )
+                              ),
+                            ),
+                          ),
+                        )*/
                       ],
                     ),
+
+                    // nitin sir you have to start your code from there.
                     Container(
                         margin: EdgeInsets.only(
                             top: 15.0, left: 10.0, right: 10.0, bottom: 20.0),
@@ -544,32 +522,51 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                               ),
                               softWrap: true,
                               child: Text(
-                                '${widget.questions.question}',
+                                '${widget.questions[_currentIndex].question}',
                               )),
                         )),
                     Divider(),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.30,
-                      child: getVideos(widget.questions.videoLink),
-/*                      child: getS3Videos(
-                          "${widget.questions.videoLink}"),*/
+                      child: getS3Videos(
+                          "${widget.questions[_currentIndex].videoLink}"),
                     ),
                     Divider(),
                     Container(
                       child: Padding(
                         padding: EdgeInsets.only(left: 16.0, right: 16.0),
                         child: getOptionList(
-                            widget.questions.questionType,
+                            widget.questions[_currentIndex].questionType,
                             options),
                       ),
                     ),
-/*                    Visibility(
-                        visible: widget.questions.userAnswer.length!=0,
+                    Visibility(
+                        visible: widget.questions[_currentIndex].userAnswer.length!=0,
                         child: Container(
                           height: MediaQuery.of(context).size.height*0.33,
                           width: MediaQuery.of(context).size.width,
-                          child: getAnswerList(widget.questions.qusOptions),
+                          child: getAnswerList(widget.questions[_currentIndex].defaultAnswer),
+                        )
+                    ),
+/*                    Container(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                            padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 50.0, bottom: 16.0),
+                            child: RaisedButton(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              child: Text(
+                                "Next",
+                                style: TextStyle(
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "WorkSansBold"),
+                              ),
+                              onPressed: ()
+                              {
+                                _nextSubmit();
+                              },
+                            )
                         )
                     ),*/
 
@@ -584,106 +581,72 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     );
   }
 
-
-  Future _submit() async {
-    HelperClass.showLoading(context);
-
-    var questionJson;
-
-    if (widget.questions.questionType == "multianswermcq") {
-
-      var optionsResult = [];
-
-      for (var i = 0; i < widget.questions.qusOptions.length; i++) {
-        optionsResult.add(widget.questions.qusOptions[i]['is_correct']);
-      }
-
-      var answerId = [];
-
-      for (var j = 0; j < widget.questions.userAnswer.length; j++) {
-        answerId.add(widget.questions.userAnswer[j]['answer_id']);
-      }
-
-      print("answerid: $answerId");
-
-      questionJson = {
-        "result": optionsResult,
-        "master_id": "${widget.questions.questionId}",
-        "diff": 1,
-        "answer_id": answerId,
-      };
-
-    }
-
-
-    print("questionJson: $questionJson");
-
-    String jsonReq = json.encode(questionJson);
-
-    var jsonReqResp = await request.postSubmit('qa/user_answer',jsonReq);
-
-    var result = json.decode(jsonReqResp.body);
-    print("question and answers response: $result");
-
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
-      Navigator.pop(context);
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
-        Toast.show("${result['message']['result']}", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
-
+  void _nextSubmit() {
+    if (_currentIndex < (widget.questions.length - 1)) {
+      if (this.mounted) {
         setState(() {
-          answerRequest = true;
+          _previousIndex = _currentIndex;
+
+          if (_answers[_currentIndex] == null) {
+            _answers[_currentIndex] = null;
+          }
+          _currentIndex++;
+          videoUrl = widget.questions[_currentIndex].videoLink;
+          // videoPlayerController.dispose();
+
+          videoPlayerController = VideoPlayerController.network(
+            videoUrl,
+          );
+          _initializeVideoPlayerFuture = videoPlayerController.initialize();
+          print("changing video");
         });
-        await Future.delayed(const Duration(seconds: 4));
-        setNextQus();
-
       }
-    }
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
-
-      Navigator.pop(context);
-      Toast.show("${result['message']['result']}", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
-    }
-    else{
-      Navigator.pop(context);
-      Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+    } else {
+      if ((widget.questions[_currentIndex].userAnswer != null &&
+          widget.questions[_currentIndex].userAnswer.length == 0) ||
+          (widget.questions[_currentIndex].userAnswer == null)) {
+        _answers[_currentIndex] = null;
+      }
     }
   }
 
-  setNextQus() async {
-    HelperClass.showLoading(context);
-    Question questions = await getQuestions();
-    if (questions==null) {
-      Navigator.pop(context);
-      Navigator.of(context).push(CupertinoPageRoute(
-          builder: (_) => ErrorPage(
-            message: "There are not enough questions yet.",
-          )
-      )
-      );
-      return;
+  Future<void> getSubmittedData() async {
+    var questionJson = [];
+
+    for (var i = 0; i < widget.questions.length; i++) {
+      if (widget.questions[i].questionType == "singleanswermcq" ||
+          widget.questions[i].questionType == "multianswermcq") {
+        var tempOptions = [];
+
+        for (var j = 0; j < widget.questions[i].qusOptions.length; j++) {
+          var optionData = {
+            "option_value":
+            "${widget.questions[i].qusOptions[j]['option_value']}"
+          };
+          tempOptions.add(optionData);
+        }
+
+        var tempRow = {
+          "question_id": "${widget.questions[i].questionId}",
+          "question_text": "${widget.questions[i].question}",
+          "question_type": "${widget.questions[i].questionType}",
+          "answer": widget.questions[i].userAnswer == null
+              ? []
+              : widget.questions[i].userAnswer,
+          "option": tempOptions
+        };
+
+        questionJson.add(tempRow);
+      }
     }
+
+    var value = await submitAssessment(questionJson);
     Navigator.pop(context);
 
-/*    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => QuestionTemplate(questions: questions)
-        ),
-        ModalRoute.withName("/qusAnsTemplate")
-    );*/
-
-    Navigator.of(context).push(CupertinoPageRoute(
-      builder: (BuildContext context) => QuestionTemplate(questions: questions),
-    ),
-    );
+    if (value.containsKey('message') && value['message'] != "") {
+      Toast.show("${value['message']}!", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      Navigator.pop(context);
+    }
   }
 }

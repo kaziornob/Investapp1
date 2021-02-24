@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter/painting.dart';
+import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Setting extends StatefulWidget {
@@ -17,6 +18,10 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
   bool _isSettingInProgress = false;
   int selectedTabIndex;
   var globalContext;
+  TextEditingController _passwordTextFieldController = TextEditingController();
+  TextEditingController _confirmPasswordTextFieldController = TextEditingController();
+
+
   TextEditingController _newEmailTextFieldController = TextEditingController();
   TextEditingController _confirmEmailTextFieldController = TextEditingController();
 
@@ -28,6 +33,17 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
   ];
 
   TabController _tabController;
+
+  final internationalPhoneInput = InternationalPhoneInput();
+
+
+  String phoneNumber;
+  String phoneIsoCode;
+  String confirmedNumber = '';
+  bool phoneError = true;
+  bool visible = false;
+
+
 
 
   @override
@@ -104,81 +120,94 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
           Divider(
             color: Colors.grey,
           ),
-          Container(
-            margin: EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  "Phone numbers",
-                  style: TextStyle(
-                      color: AllCoustomTheme.getTextThemeColor(),
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      fontFamily: "Roboto",
-                      fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2
+          InkWell(
+            onTap: ()
+            {
+              _addPhoneDialogBox(globalContext);
+            },
+            child:  Container(
+              margin: EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 5.0,
                   ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  "Add a phone number to help keep your account secure",
-                  style: TextStyle(
+                  Text(
+                    "Phone numbers",
+                    style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        letterSpacing: 0.2
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Add a phone number to help keep your account secure",
+                    style: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE14,
                       fontFamily: "Roboto",
                       fontStyle: FontStyle.normal,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-              ],
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                ],
+              ),
             ),
           ),
+
           Divider(
             color: Colors.grey,
           ),
-          Container(
-            margin: EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  "Change password",
-                  style: TextStyle(
-                      color: AllCoustomTheme.getTextThemeColor(),
-                      fontSize: ConstanceData.SIZE_TITLE16,
+          InkWell(
+            onTap: ()
+            {
+              _changePasswordDialogBox(globalContext);
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Change password",
+                    style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        letterSpacing: 0.2
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Choose a unique password to protect your account",
+                    style: TextStyle(
+                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE14,
                       fontFamily: "Roboto",
                       fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  "Choose a unique password to protect your account",
-                  style: TextStyle(
-                    color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                    fontFamily: "Roboto",
-                    fontStyle: FontStyle.normal,
+                  SizedBox(
+                    height: 5.0,
                   ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Divider(
@@ -461,6 +490,202 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                   ),
                   decoration: InputDecoration(
                     hintText: "Confirm Email Address",
+                    hintStyle: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        color: AllCoustomTheme.getTextThemeColor()),
+                    labelStyle: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        color: AllCoustomTheme.getTextThemeColor()),
+                  ),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                color: Colors.red,
+                textColor: Colors.white,
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE12,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              FlatButton(
+                color: Color(0xFF7499C6),
+                textColor: Colors.white,
+                child: Text(
+                  'Change',
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE12,
+                  ),
+                ),
+                onPressed: () {
+                  // _submitEmail();
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> _addPhoneDialogBox (BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: ListTile(
+              title: Text(
+                'Your Phone Number',
+                style: new TextStyle(
+                  color: AllCoustomTheme.getTextThemeColor(),
+                  fontSize: ConstanceData.SIZE_TITLE18,
+                  fontFamily: "Roboto",
+                ),
+              ),
+              subtitle: Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'You can add more phone numbers later',
+                  style: new TextStyle(
+                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                    fontSize: ConstanceData.SIZE_TITLE16,
+                    fontFamily: "Roboto",
+                  ),
+                ),
+              )
+            ),
+/*            content:  TextField(
+              controller: _phoneTextFieldController,
+              style: TextStyle(
+                fontSize: ConstanceData.SIZE_TITLE14,
+                color: AllCoustomTheme.getTextThemeColor(),
+              ),
+              decoration: InputDecoration(
+                labelStyle: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                    color: AllCoustomTheme.getTextThemeColor()),
+              ),
+            ),*/
+            content: InternationalPhoneInput(
+              labelText: 'Phone',
+              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+              onPhoneNumberChange: onPhoneNumberChange,
+              initialPhoneNumber: phoneNumber,
+              initialSelection: phoneIsoCode,
+              enabledCountries: ['+852', '+1', '+233', '+91'],
+              showCountryCodes: true,
+              showCountryFlags: true,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                color: Colors.red,
+                textColor: Colors.white,
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE12,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              FlatButton(
+                color: Color(0xFF7499C6),
+                textColor: Colors.white,
+                child: Text(
+                  'Change',
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE12,
+                  ),
+                ),
+                onPressed: () {
+                  // _submitEmail();
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void onPhoneNumberChange(
+      String number, String internationalizedPhoneNumber, String isoCode) {
+    print(number);
+    setState(() {
+      phoneError = true;
+      phoneNumber = number;
+      phoneIsoCode = isoCode;
+      confirmedNumber = internationalizedPhoneNumber;
+      print("internationalNum $confirmedNumber");
+
+    });
+  }
+
+  onValidPhoneNumber(
+      String number, String internationalizedPhoneNumber, String isoCode) {
+    setState(() {
+      visible = true;
+      confirmedNumber = internationalizedPhoneNumber;
+    });
+  }
+
+
+  Future<void> _changePasswordDialogBox (BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Change password',
+              style: new TextStyle(
+                color: AllCoustomTheme.getTextThemeColor(),
+                fontSize: ConstanceData.SIZE_TITLE18,
+                fontFamily: "Roboto",
+              ),
+            ),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _passwordTextFieldController,
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                    color: AllCoustomTheme.getTextThemeColor(),
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Type your current password",
+                    hintStyle: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        color: AllCoustomTheme.getTextThemeColor()),
+                    labelStyle: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        color: AllCoustomTheme.getTextThemeColor()),
+                  ),
+                ),
+                TextField(
+                  controller: _confirmPasswordTextFieldController,
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE14,
+                    color: AllCoustomTheme.getTextThemeColor(),
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Re-type new password",
                     hintStyle: TextStyle(
                         fontSize: ConstanceData.SIZE_TITLE16,
                         color: AllCoustomTheme.getTextThemeColor()),

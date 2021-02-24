@@ -91,13 +91,6 @@ class ApiProvider {
 
     var response = await http.post(url, headers: headers,body: body);
     print("post submit response: ${response.statusCode}");
-
-    try{
-
-    } catch (e) {
-      print("exception");
-      print(e);
-    }
     return response;
   }
 

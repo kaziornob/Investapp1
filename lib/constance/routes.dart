@@ -4,4 +4,6 @@ class Routes {
   static const String SwipeIntrodution = "/introduction/swipeIndtroduction";
   static const String Auth = "/authenticationScreen";
   static const String Home = "/home/homeScreen";
+  // static const String qusAnsTemplate = "/QuestionTemplate";
+
 }

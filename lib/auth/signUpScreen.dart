@@ -863,17 +863,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return null;
   }
 
-  String _validatePhone(value) {
+  /*String _validatePhone(value) {
     // String pattern = r'(^(?:[+0]9)?[0-9]{7,10}$)';
     // RegExp regExp = new RegExp(pattern);
     if (value.length == 0) {
       return 'Phone cannot be empty';
     }
-    /*else if (!regExp.hasMatch(value)) {
+    *//*else if (!regExp.hasMatch(value)) {
       return 'Please enter valid phone number';
-    }*/
+    }*//*
     return null;
-  }
+  }*/
 
   String _validatePassword(value) {
     if (value.isEmpty) {
