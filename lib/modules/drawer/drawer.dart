@@ -684,7 +684,8 @@ class _AppDrawerState extends State<AppDrawer> {
                           height: 20,
                         ),
                         // my prifle
-                        Container(
+                        ListTileTheme(
+                          contentPadding: EdgeInsets.only(right:10.0),
                           child: ExpansionTile(
                             title: Text(
                               "My profile",
@@ -695,7 +696,7 @@ class _AppDrawerState extends State<AppDrawer> {
                             ),
                             children: <Widget>[
                               ExpansionTile(
-                                childrenPadding: EdgeInsets.only(left: 25.0),
+                                childrenPadding: EdgeInsets.only(left: 20.0),
                                 title: Text(
                                   'My Investment Track Record',
                                   style: TextStyle(

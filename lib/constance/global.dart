@@ -12,7 +12,7 @@ import 'constance.dart';
 
 var deviceId = '';
 var isLight = true;
-var isGoldBlack = true;
+var isGoldBlack = false;
 
 var isOnLocation = true;
 var isNotification = true;
@@ -377,7 +377,7 @@ String getConvertTime(String utcTime) {
 
 class GlobalInstance {
   static final GlobalInstance _singleton = GlobalInstance._internal();
-  static String apiBaseUrl = 'http://54.212.199.127/';
+  static String apiBaseUrl = 'http://44.240.12.174/';
   static String deviceToken;
   static List riskInfoQusAns = [];
 

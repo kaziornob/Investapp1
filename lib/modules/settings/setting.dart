@@ -213,41 +213,47 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
           Divider(
             color: Colors.grey,
           ),
-          Container(
-            margin: EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  "Showing profile photos",
-                  style: TextStyle(
-                      color: AllCoustomTheme.getTextThemeColor(),
-                      fontSize: ConstanceData.SIZE_TITLE16,
+          InkWell(
+            onTap: ()
+            {
+              _profileDialogBox(context);
+            },
+            child:  Container(
+              margin: EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Showing profile photos",
+                    style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        letterSpacing: 0.2
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    "Choose whether to show or hide profile photos of other members",
+                    style: TextStyle(
+                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE14,
                       fontFamily: "Roboto",
                       fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  "Choose whether to show or hide profile photos of other members",
-                  style: TextStyle(
-                    color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                    fontFamily: "Roboto",
-                    fontStyle: FontStyle.normal,
+                  SizedBox(
+                    height: 5.0,
                   ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Divider(
@@ -404,9 +410,9 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                             {
                               selectedTabIndex = index;
                             },
-                            labelColor: Color(0xFF7499C6),
+                            labelColor: Color(0xFF5CA2F4),
                             labelStyle: TextStyle(fontSize: 18.0,letterSpacing: 0.2),
-                            indicatorColor: Color(0xFF7499C6),
+                            indicatorColor: Color(0xFF5CA2F4),
                             indicatorWeight: 4.0,
                             // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
                             tabs: <Widget>[
@@ -463,42 +469,41 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
               ),
             ),
             content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: _newEmailTextFieldController,
-                  style: TextStyle(
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                    color: AllCoustomTheme.getTextThemeColor(),
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  TextField(
+                    controller: _newEmailTextFieldController,
+                    style: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: AllCoustomTheme.getTextThemeColor(),
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "New Email Address",
+                      hintStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: AllCoustomTheme.getTextThemeColor()),
+                      labelStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE14,
+                          color: AllCoustomTheme.getTextThemeColor()),
+                    ),
                   ),
-                  decoration: InputDecoration(
-                    hintText: "New Email Address",
-                    hintStyle: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColor()),
-                    labelStyle: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                        color: AllCoustomTheme.getTextThemeColor()),
+                  TextField(
+                    controller: _confirmEmailTextFieldController,
+                    style: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: AllCoustomTheme.getTextThemeColor(),
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "Confirm Email Address",
+                      hintStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: AllCoustomTheme.getTextThemeColor()),
+                      labelStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE14,
+                          color: AllCoustomTheme.getTextThemeColor()),
+                    ),
                   ),
-                ),
-                TextField(
-                  controller: _confirmEmailTextFieldController,
-                  style: TextStyle(
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                    color: AllCoustomTheme.getTextThemeColor(),
-                  ),
-                  decoration: InputDecoration(
-                    hintText: "Confirm Email Address",
-                    hintStyle: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColor()),
-                    labelStyle: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                        color: AllCoustomTheme.getTextThemeColor()),
-                  ),
-                ),
-              ],
+                ]
             ),
             actions: <Widget>[
               FlatButton(
@@ -563,28 +568,21 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                 ),
               )
             ),
-/*            content:  TextField(
-              controller: _phoneTextFieldController,
-              style: TextStyle(
-                fontSize: ConstanceData.SIZE_TITLE14,
-                color: AllCoustomTheme.getTextThemeColor(),
-              ),
-              decoration: InputDecoration(
-                labelStyle: TextStyle(
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                    color: AllCoustomTheme.getTextThemeColor()),
-              ),
-            ),*/
-            content: InternationalPhoneInput(
-              labelText: 'Phone',
-              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-              onPhoneNumberChange: onPhoneNumberChange,
-              initialPhoneNumber: phoneNumber,
-              initialSelection: phoneIsoCode,
-              enabledCountries: ['+852', '+1', '+233', '+91'],
-              showCountryCodes: true,
-              showCountryFlags: true,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InternationalPhoneInput(
+                  labelText: 'Phone',
+                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                  style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                  onPhoneNumberChange: onPhoneNumberChange,
+                  initialPhoneNumber: phoneNumber,
+                  initialSelection: phoneIsoCode,
+                  enabledCountries: ['+852', '+1', '+233', '+91'],
+                  showCountryCodes: true,
+                  showCountryFlags: true,
+                ),
+              ],
             ),
             actions: <Widget>[
               FlatButton(
@@ -659,8 +657,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
               ),
             ),
             content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _passwordTextFieldController,
@@ -717,6 +714,132 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                 textColor: Colors.white,
                 child: Text(
                   'Change',
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE12,
+                  ),
+                ),
+                onPressed: () {
+                  // _submitEmail();
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+
+  Future<void> _profileDialogBox (BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Set your profile picture',
+              style: new TextStyle(
+                color: AllCoustomTheme.getTextThemeColor(),
+                fontSize: ConstanceData.SIZE_TITLE18,
+                fontFamily: "Roboto",
+              ),
+            ),
+            content: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        radius: 40.0,
+                        backgroundImage: new AssetImage('assets/download.jpeg'),
+                        backgroundColor: Colors.transparent,
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Upload a Photo',
+                      style: new TextStyle(
+                        color: Color(0xFF5CA2F4),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                    Text(
+                      'From your computer',
+                      style: new TextStyle(
+                        color: Color(0xFF525a6d),
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      'OR',
+                      style: new TextStyle(
+                        color: Color(0xFF525a6d),
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      'Take a Photo',
+                      style: new TextStyle(
+                        color: Color(0xFF5CA2F4),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                    Text(
+                      'With your webcam',
+                      style: new TextStyle(
+                        color: Color(0xFF525a6d),
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+
+                  ],
+                )
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                color: Color(0xFF7499C6),
+                textColor: Colors.white,
+                child: Text(
+                  'Skip',
+                  style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE12,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              FlatButton(
+                color: Color(0xFF7499C6),
+                textColor: Colors.white,
+                child: Text(
+                  'Save & Continue',
                   style: TextStyle(
                     fontSize: ConstanceData.SIZE_TITLE12,
                   ),

@@ -29,6 +29,7 @@ dependencies:
   dio: ^3.0.10
   webview_flutter: ^1.0.7
   cupertino_icons: ^1.0.0
+  flutter_facebook_login: ^1.2.0
   animator: ^1.0.0+3
   flutter_page_indicator: ^0.0.3
   gradient_text: ^1.0.2

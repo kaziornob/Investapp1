@@ -6,9 +6,9 @@ import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/oldQuestionAndAnswerModule/ui/pages/error.dart';
 import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
 import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
+import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -447,10 +447,12 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                       onTap: () {
                         if(widget.questions.userAnswer.length==0)
                           {
+                            _controller.pause();
                             HelperClass.showAlert(context, "Choose option first");
                           }
                         else
                           {
+                            _controller.pause();
                             _submit();
                           }
                       },

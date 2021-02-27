@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/otp.dart';
@@ -8,9 +7,11 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -24,6 +25,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool phoneError = true;
   ApiProvider request = new ApiProvider();
   final internationalPhoneInput = InternationalPhoneInput();
+  //  //facebook sign in
+  FacebookLogin fbLogin   =  new FacebookLogin();
 
 
   String phoneNumber;
@@ -34,6 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController signUpPasswordController = new TextEditingController();
   TextEditingController signUpConfirmPasswordController = new TextEditingController();
+  TextEditingController loginProviderController = new TextEditingController();
+  TextEditingController loginAccessTokenController = new TextEditingController();
 
 
   animation() async {
@@ -280,12 +285,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                               keyboardType: TextInputType.emailAddress,
                                               decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                hintText: 'Enter email here...',
-                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                labelText: 'E-mail',
-                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
+                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
+                                                  hintText: 'Enter email here...',
+                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                                  labelText: 'E-mail',
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                               ),
                                               //controller: lastnameController,
                                               onSaved: (value) {
@@ -312,12 +317,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               keyboardType: TextInputType.text,
                                               obscureText: true,
                                               decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                hintText: 'Enter password here...',
-                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                labelText: 'Password',
-                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
+                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
+                                                  hintText: 'Enter password here...',
+                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                                  labelText: 'Password',
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                               ),
                                               validator: _validatePassword,
                                               controller: signUpPasswordController,
@@ -345,12 +350,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               keyboardType: TextInputType.text,
                                               obscureText: true,
                                               decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                hintText: 'Re-Enter password here...',
-                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                labelText: 'Confirm Password',
-                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
+                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
+                                                  hintText: 'Re-Enter password here...',
+                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                                  labelText: 'Confirm Password',
+                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                               ),
                                               validator: _validatePassword,
                                               controller: signUpConfirmPasswordController,
@@ -370,20 +375,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     Row(
                                       children: <Widget>[
                                         Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 10, bottom: 0,right: 20),
-                                            child: InternationalPhoneInput(
-                                              labelText: 'Phone',
-                                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                              onPhoneNumberChange: onPhoneNumberChange,
-                                              initialPhoneNumber: phoneNumber,
-                                              initialSelection: phoneIsoCode,
-                                              enabledCountries: ['+852', '+1', '+233', '+91'],
-                                              showCountryCodes: true,
-                                              showCountryFlags: true,
-                                            ),
-                                          )
+                                            child: Padding(
+                                              padding: EdgeInsets.only(left: 10, bottom: 0,right: 20),
+                                              child: InternationalPhoneInput(
+                                                labelText: 'Phone',
+                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                                onPhoneNumberChange: onPhoneNumberChange,
+                                                initialPhoneNumber: phoneNumber,
+                                                initialSelection: phoneIsoCode,
+                                                enabledCountries: ['+852', '+1', '+233', '+91'],
+                                                showCountryCodes: true,
+                                                showCountryFlags: true,
+                                              ),
+                                            )
                                         ),
 /*                                        Expanded(
                                           child: Padding(
@@ -439,44 +444,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: <Widget>[
                                           SizedBox(
-                                              height: 50,
-                                              child: !_isInProgress
-                                                  ? GestureDetector(
-                                                onTap: () {
-                                                  _submit();
-                                                },
-                                                child: Animator(
-                                                  tween: Tween<double>(begin: 0.8, end: 1.1),
-                                                  curve: Curves.easeInToLinear,
-                                                  cycles: 0,
-                                                  builder: (anim) => Transform.scale(
-                                                    scale: anim.value,
-                                                    child: Container(
-                                                      height: 50,
-                                                      width: 50,
-                                                      decoration: BoxDecoration(
-                                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                                          shape: BoxShape.circle,
-                                                          color: Color(0xFFD8AF4F)
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(left: 3),
-                                                        child: Icon(
-                                                          Icons.arrow_forward_ios,
-                                                          size: 20,
-                                                          color: AllCoustomTheme.getTextThemeColors(),
-                                                        ),
+                                            height: 50,
+                                            child: !_isInProgress
+                                                ? GestureDetector(
+                                              onTap: () {
+                                                _submit('');
+                                              },
+                                              child: Animator(
+                                                tween: Tween<double>(begin: 0.8, end: 1.1),
+                                                curve: Curves.easeInToLinear,
+                                                cycles: 0,
+                                                builder: (anim) => Transform.scale(
+                                                  scale: anim.value,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                        border: new Border.all(color: Colors.white, width: 1.5),
+                                                        shape: BoxShape.circle,
+                                                        color: Color(0xFFD8AF4F)
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(left: 3),
+                                                      child: Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        size: 20,
+                                                        color: AllCoustomTheme.getTextThemeColors(),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                              )
-                                                  : Padding(
-                                                    padding: EdgeInsets.only(right: 14),
-                                                    child: CupertinoActivityIndicator(
-                                                      radius: 12,
-                                                    ),
-                                                  ),
+                                              ),
+                                            )
+                                                : Padding(
+                                              padding: EdgeInsets.only(right: 14),
+                                              child: CupertinoActivityIndicator(
+                                                radius: 12,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -496,11 +501,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text(
                           "OR",
                           style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColor(),
-                            letterSpacing: 0.3,
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            fontWeight: FontWeight.bold
+                              color: AllCoustomTheme.getTextThemeColor(),
+                              letterSpacing: 0.3,
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
@@ -514,8 +519,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 320.0,
                             alignment: FractionalOffset.center,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 1.5),
-                              borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.white, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
                                 color: Color(0xFFD8AF4F)
                             ),
                             child: Text(
@@ -551,8 +556,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                             alignment: FractionalOffset.center,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 1.5),
-                              borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.white, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
                                 color: Color(0xFFD8AF4F)
                             ),
                             child: Text(
@@ -568,6 +573,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 _isInProgress = true;
                               });
                               await Future.delayed(const Duration(milliseconds: 500));*/
+
+                            fbLogin.logInWithReadPermissions(['email', 'public_profile']).then((result) async {
+                              switch(result.status) {
+                                case FacebookLoginStatus.loggedIn:
+                                  final token = result.accessToken.token;
+                                  final graphResponse = await http.get(
+                                      'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
+                                  final profile = json.decode(graphResponse.body);
+
+
+                                  setState(() {
+                                    loginProviderController.text = 'facebook';
+                                    loginAccessTokenController.text = token;
+                                  });
+
+                                  if (loginProviderController.text != '' &&
+                                       loginAccessTokenController.text != '') {
+                                     _submit('facebook');
+                                   }
+                                  break;
+                                case FacebookLoginStatus.cancelledByUser:
+                                // TODO: Handle this case.
+                                  break;
+                                case FacebookLoginStatus.error:
+                                // TODO: Handle this case.
+                                  break;
+                              }
+                            })
+                                .catchError((e) {
+                            });
                           },
                         ),
                       ),
@@ -584,8 +619,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 320.0,
                             alignment: FractionalOffset.center,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 1.5),
-                              borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.white, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
                                 color: Color(0xFFD8AF4F)
                             ),
                             child: Text(
@@ -638,132 +673,105 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   var myScreenFocusNode = FocusNode();
 
-  _submit() async {
+  _submit(from) async {
 
     if(signUpPasswordController.text.trim() == signUpConfirmPasswordController.text.trim())
-      {
-        setState(() {
-          _isInProgress = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 700));
-        FocusScope.of(context).requestFocus(myScreenFocusNode);
-        print("phone number: $phoneNumber");
-        print("phoneIsoCode: $phoneIsoCode");
+    {
+      setState(() {
+        _isInProgress = true;
+      });
+      await Future.delayed(const Duration(milliseconds: 700));
+      FocusScope.of(context).requestFocus(myScreenFocusNode);
+      print("phone number: $phoneNumber");
+      print("phoneIsoCode: $phoneIsoCode");
 
-        // || phoneNumber=="" || phoneNumber==null || phoneIsoCode=="" || phoneIsoCode==null
-        if (_signUpFormKey.currentState.validate() == false || phoneNumber=="" || phoneNumber==null) {
-          setState(() {
-            _isInProgress = false;
+      // || phoneNumber=="" || phoneNumber==null || phoneIsoCode=="" || phoneIsoCode==null
+      if (_signUpFormKey.currentState.validate() == false || phoneNumber=="" || phoneNumber==null) {
+        setState(() {
+          _isInProgress = false;
 /*            internationalPhoneInput.hasError = true;
             internationalPhoneInput.errorText = "Phone can not be empty";*/
-            // internationalPhoneInput.onValidatePhoneNumber();
-            print("form or phone no not valid");
-            // phoneError = false;
-          });
-          return;
-        }
-
-        var email = emailController.text.trim();
-        var password = signUpPasswordController.text.trim();
-        var phone = confirmedNumber;
-        var tempJsonReq = {"email":"$email","password":"$password","phone":"$phone"};
-        String jsonReq = json.encode(tempJsonReq);
-
-        var jsonReqResp = await request.signUp('users/authenticate/new',jsonReq);
-
-        var result = json.decode(jsonReqResp.body);
-        print("signup response: $result");
-
-        if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-        {
-
-          if (result!=null && result.containsKey('auth') && result['auth']==true)
-          {
-            setState(() {
-              _isInProgress = false;
-            });
-            getDialog("$email","$password","$phone");
-
-/*            Toast.show("${result['message']}", context,
-                duration: Toast.LENGTH_LONG,
-                gravity: Toast.BOTTOM);*/
-
-/*            final SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs.setString('Session_token', response['token']);
-
-            getDialog("$email");*/
-          }
-        }
-        else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-        {
-
-          Toast.show("${result['message']}", context,
-              duration: Toast.LENGTH_LONG,
-              gravity: Toast.BOTTOM);
-
-          setState(() {
-            _isInProgress = false;
-          });
-        }
-        else{
-          setState(() {
-            _isInProgress = false;
-          });
-          Toast.show("Something went wrong!", context,
-              duration: Toast.LENGTH_LONG,
-              gravity: Toast.BOTTOM);
-        }
-
-
-        /*if (response!=null)
-        {
-            if(response.containsKey('auth') && response['auth']==true)
-            {
-              final SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setString('Session_token', response['token']);
-
-              getDialog("$email");
-            }
-            else if(response.containsKey('auth') && response['auth']==false)
-              {
-                setState(() {
-                  _isInProgress = false;
-                });
-                Toast.show("${response['message']['code']}", context,
-                    duration: Toast.LENGTH_LONG,
-                    gravity: Toast.BOTTOM);
-              }
-            else
-              {
-                setState(() {
-                  _isInProgress = false;
-                });
-                Toast.show("Already Exist!", context,
-                    duration: Toast.LENGTH_LONG,
-                    gravity: Toast.BOTTOM);
-              }
-        }
-        else{
-          setState(() {
-            _isInProgress = false;
-          });
-          Toast.show("Something went wrong!", context,
-              duration: Toast.LENGTH_LONG,
-              gravity: Toast.BOTTOM);
-        }*/
+          // internationalPhoneInput.onValidatePhoneNumber();
+          print("form or phone no not valid");
+          // phoneError = false;
+        });
+        return;
       }
+
+      var email = emailController.text.trim();
+      var password = signUpPasswordController.text.trim();
+      var phone = confirmedNumber;
+      var tempJsonReq ;var provider ;var token;
+      if(from == 'facebook' || from == 'google')
+       {
+         provider = loginProviderController.text;
+         token = loginAccessTokenController.text;
+         tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"$provider","access_token":"$token"};
+       }
+       else
+       {
+         tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"","access_token":""};
+       }
+
+
+      String jsonReq = json.encode(tempJsonReq);
+
+      var jsonReqResp = await request.signUp('users/authenticate/new',jsonReq);
+
+      var result = json.decode(jsonReqResp.body);
+      print("signup response: $result");
+
+      if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
+      {
+
+        if (result!=null && result.containsKey('auth') && result['auth']==true)
+        {
+          setState(() {
+            _isInProgress = false;
+          });
+
+          var tempField = {
+            "email": "$email",
+            "password": "$password",
+            "phone": "$phone",
+            "provider":"$provider",
+            "access_token":"$token"
+          };
+          getDialog(tempField);
+        }
+      }
+      else if(result!=null && result.containsKey('auth') && result['auth']!=true)
+      {
+
+        Toast.show("${result['message']}", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+
+        setState(() {
+          _isInProgress = false;
+        });
+      }
+      else{
+        setState(() {
+          _isInProgress = false;
+        });
+        Toast.show("Something went wrong!", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    }
     else {
       PasswordNotMatched(context);
     }
   }
 
-  void getDialog(email,password,phone) {
+  void getDialog(tempField) {
     showDialog(context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             title: Text(
-                "",
+              "",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AllCoustomTheme.getTextThemeColors(),
@@ -772,7 +780,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             content: Text(
-                "OTP sent to your email",
+              "OTP sent to your email",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AllCoustomTheme.getTextThemeColors(),
@@ -783,7 +791,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             actions: <Widget>[
               FlatButton(
                 child: Text(
-                    'Ok',
+                  'Ok',
                   style: TextStyle(
                     color: AllCoustomTheme.getTextThemeColors(),
                     fontWeight: FontWeight.bold,
@@ -792,11 +800,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 onPressed: () {
 
-                  var tempField = {
+/*                  var tempField = {
                     "email": "$email",
                     "password": "$password",
                     "phone": "$phone"
-                  };
+                  };*/
 
                   Navigator.of(context).pop();
                   Navigator.of(context, rootNavigator: true).push(
@@ -824,7 +832,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return AlertDialog(
           backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           title: Text(
-              "Confirm password didn't match",
+            "Confirm password didn't match",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AllCoustomTheme.getTextThemeColors(),
@@ -835,7 +843,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           actions: <Widget>[
             FlatButton(
               child: Text(
-                  'Ok',
+                'Ok',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AllCoustomTheme.getTextThemeColors(),
@@ -890,9 +898,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
       RegExp regExp = new RegExp(pattern);
       if(!regExp.hasMatch(value))
-        {
-          return "Minimum six characters, at least one upper,lower and number";
-        }
+      {
+        return "Minimum six characters, at least one upper,lower and number";
+      }
       return null;
     }
   }

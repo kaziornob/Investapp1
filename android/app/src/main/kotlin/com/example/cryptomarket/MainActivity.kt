@@ -1,4 +1,4 @@
-package com.example.cryptomarket
+package com.example.auroim
 
 import io.flutter.embedding.android.FlutterActivity
 

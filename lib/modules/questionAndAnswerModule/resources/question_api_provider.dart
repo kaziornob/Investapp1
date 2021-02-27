@@ -21,10 +21,11 @@ Future<Question> getQuestions() async {
   var response = await http.get(url, headers: headers);
   // http.Response res = await http.get(url, headers: headers);
   print("response statusCode: ${response.statusCode}");
-  print("response body: ${json.decode(response.body)}");
 
 
-  if (response.statusCode == 200) {
+  if (response!=null && response.statusCode == 200) {
+
+    print("response body: ${json.decode(response.body)}");
 
     var tempBody = json.decode(response.body);
     var tempQusData = tempBody['message'];
@@ -43,8 +44,6 @@ Future<Question> getQuestions() async {
               optionData.add({"option_value": value[0],"checked": false,"is_correct": value[1],"answer_id" : name});
             }
         }
-        print("optionData: $optionData");
-
 
         tempQuestions = {
           "question_type": "multianswermcq",
