@@ -108,7 +108,7 @@ class _ClubDetailState extends State<ClubDetail> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: Color(0xfffec20f),
-                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Roboto",
                                   fontSize: ConstanceData.SIZE_TITLE20,
                                 ),
                               ),
@@ -150,6 +150,7 @@ class _ClubDetailState extends State<ClubDetail> {
                                     style: TextStyle(
                                       color: AllCoustomTheme.getTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontFamily: "Rasa",
                                     ),
                                   ),
                                 )
@@ -176,6 +177,8 @@ class _ClubDetailState extends State<ClubDetail> {
                                     style: TextStyle(
                                       color: AllCoustomTheme.getTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontFamily: "Rasa",
+
                                     ),
                                   ),
                                 )

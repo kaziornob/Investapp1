@@ -7,6 +7,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class InvestorType extends StatefulWidget {
@@ -294,6 +295,9 @@ class _InvestorTypeState extends State<InvestorType> {
 
       if (result!=null && result.containsKey('auth') && result['auth']==true)
       {
+
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('InvestorType', '$status');
 
         Toast.show("${result['message']}", context,
             duration: Toast.LENGTH_LONG,

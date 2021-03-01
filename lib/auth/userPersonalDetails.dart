@@ -5,6 +5,7 @@ import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/investorType.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/constance/constance.dart';
+import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:dropdown_date_picker/dropdown_date_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,14 +26,6 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   ApiProvider request = new ApiProvider();
 
   String selectedCountry;
-
-  List<String> countryList = <String>['Afghanistan','Algeria','Andorra','Angola',
-    'Antigua and Barbuda','Argentina','Armenia','Australia, Austria','Azerbaijan',
-    'Bahamas','Bahrain','Bangladesh, Barbados','Belarus','Belgium, Belize','Benin',
-    'Bhutan, Bolivia, Bosnia and Herzegovina','Botswana','Brazil','Brunei Darussalam','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Canada','Cape Verde',
-    'Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Croatia','Cuba','Cyprus','Czech Republic','Democratic Peoples Republic of Korea (North Korea]',
-    'Democratic Republic of the Congo','Denmark','Djibouti','Dominica'
-  ];
 
   TextEditingController firstNameController = new TextEditingController();
   TextEditingController lastNameController = new TextEditingController();
@@ -345,7 +338,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                             selectedCountry = newValue;
                                                           });
                                                         },
-                                                        items: countryList.map((String value) {
+                                                        items: GlobalInstance.countryList.map((String value) {
                                                           return new DropdownMenuItem(
                                                             value: value,
                                                             child: new Text(

@@ -671,8 +671,9 @@ class _OtpState extends State<Otp> {
 
   // otp verify process
    submit(otp) async {
+     HelperClass.showLoading(context);
 
-    var tempJsonReq = {
+     var tempJsonReq = {
         "email":"${widget.allParams['email']}",
         "password":"${widget.allParams['password']}",
         "phone":"${widget.allParams['phone']}",
@@ -694,18 +695,33 @@ class _OtpState extends State<Otp> {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('Session_token', result['token']);
         prefs.setString('DateTime', new DateFormat("yyyy-MM-dd HH:mm").format(now));
-        matchOtp(result["message"]);
+        Navigator.pop(context);
+
+        Toast.show("${result['message']}", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+
+        await Future.delayed(const Duration(milliseconds: 700));
+
+        Navigator.of(context, rootNavigator: true).push(
+          CupertinoPageRoute<void>(
+            builder: (BuildContext context) =>
+                UserPersonalDetails(),
+          ),
+        );
+        // matchOtp(result["message"]);
       }
     }
     else if(result!=null && result.containsKey('auth') && result['auth']!=true)
     {
 
+      Navigator.pop(context);
       Toast.show("${result['message']}", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
     else{
-
+      Navigator.pop(context);
       Toast.show("Something went wrong!", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);

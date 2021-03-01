@@ -63,6 +63,31 @@ class AllCoustomTheme {
     }
   }
 
+  static Color getHorTableHeadingThemeColors() {
+    if (globals.isGoldBlack) {
+      return Color(0xFFD8AF4F);
+    } else {
+      return Color(0xFF7499C6);
+    }
+  }
+
+
+  static Color getInvestTableTextThemeColors() {
+    if (globals.isGoldBlack) {
+      return Colors.black;
+    } else {
+      return Colors.white;
+    }
+  }
+
+  static Color getInvestTableColumnTextThemeColors() {
+    if (globals.isGoldBlack) {
+      return Colors.white;
+    } else {
+      return Colors.black;
+    }
+  }
+
   static Color getNewSecondTextThemeColor() {
     return Color(0xFF525a6d);
   }

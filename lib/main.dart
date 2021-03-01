@@ -21,6 +21,8 @@ import 'constance/global.dart';
 import 'constance/routes.dart';
 import 'constance/themes.dart';
 import 'modules/home/homeScreen.dart';
+import 'package:auroim/constance/global.dart' as globals;
+
 
 Map portfolioMap;
 List marketListData = [];
@@ -84,7 +86,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getApiAllData(1);
+    globals.isGoldBlack = widget.prefs != null &&
+        widget.prefs.containsKey('InvestorType') &&
+        widget.prefs.getString('InvestorType') != null && widget.prefs.getString('InvestorType')=='Accredited Investor' ? true : false;
+    // getApiAllData(1);
   }
 
   Future<Null> getApiAllData(int index) async {

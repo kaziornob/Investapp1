@@ -180,7 +180,7 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: AllCoustomTheme.getTextThemeColors(),
-                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Roboto",
                                   fontSize: ConstanceData.SIZE_TITLE20,
                                 ),
                               ),
@@ -209,6 +209,7 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
                                     style: TextStyle(
                                       color: AllCoustomTheme.getTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontFamily: "Rasa",
                                     ),
                                   ),
                                 )
