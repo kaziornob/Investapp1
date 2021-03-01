@@ -1,7 +1,10 @@
+import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';
 import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:auroim/constance/global.dart' as globals;
 
 class PrivateDealsIntro extends StatefulWidget {
   final VoidCallback goToMarketplaceCallback;
@@ -97,7 +100,7 @@ class _PrivateDealsIntroState extends State<PrivateDealsIntro> {
                       ),
                     ],
                   ),
-                  SampleFeaturedCompaniesList(),
+                  globals.isGoldBlack ? SampleFeaturedCompaniesList() : FeaturedCompaniesList(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(

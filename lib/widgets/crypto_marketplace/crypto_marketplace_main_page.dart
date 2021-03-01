@@ -1,8 +1,10 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/widgets/crypto_marketplace/all_crypto_list.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/crypto_marketplace/all_cryptocurrencies_list.dart';
 import 'package:flutter/material.dart';
+import 'package:auroim/constance/global.dart' as globals;
 
 class CryptoMarketplace extends StatefulWidget {
   @override
@@ -10,6 +12,9 @@ class CryptoMarketplace extends StatefulWidget {
 }
 
 class _CryptoMarketplaceState extends State<CryptoMarketplace> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -72,7 +77,7 @@ class _CryptoMarketplaceState extends State<CryptoMarketplace> {
               ),
             ),
           ),
-          AllCryptocurrenciesList(),
+          globals.isGoldBlack ? AllCryptoListBlack() : AllCryptocurrenciesList(),
         ],
       ),
     );

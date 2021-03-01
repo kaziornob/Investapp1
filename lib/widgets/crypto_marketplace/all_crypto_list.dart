@@ -9,15 +9,16 @@ import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
-class AllCryptocurrenciesList extends StatefulWidget {
+
+class AllCryptoListBlack extends StatefulWidget {
   @override
-  _AllCryptocurrenciesListState createState() =>
-      _AllCryptocurrenciesListState();
+  _AllCryptoListBlackState createState() => _AllCryptoListBlackState();
 }
 
-class _AllCryptocurrenciesListState extends State<AllCryptocurrenciesList> {
+class _AllCryptoListBlackState extends State<AllCryptoListBlack> {
+
   FeaturedCompaniesProvider _featuredCompaniesProvider =
-      FeaturedCompaniesProvider();
+  FeaturedCompaniesProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +38,10 @@ class _AllCryptocurrenciesListState extends State<AllCryptocurrenciesList> {
               }
             },
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10,),
           GoToMarketplaceButton(
-            buttonColor: AllCoustomTheme.getButtonBoxColor(),
-            textColor: Colors.white,
+            buttonColor:AllCoustomTheme.getButtonBoxColor(),
+            textColor: Colors.black,
             callback: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -110,7 +109,7 @@ class CryptocurrencyItem extends StatelessWidget {
   // ApiProvider request = new ApiProvider();
   // var userAllDetail;
   FeaturedCompaniesProvider _featuredCompaniesProvider =
-      FeaturedCompaniesProvider();
+  FeaturedCompaniesProvider();
 
   final coinDetails;
 
@@ -126,15 +125,14 @@ class CryptocurrencyItem extends StatelessWidget {
         // print(boxConstraints.maxHeight);
         // print(boxConstraints.maxWidth);
         return Container(
-
           height: boxConstraints.maxHeight,
           width: MediaQuery.of(context).size.width / 2,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Color(0xff5A56B9),
+              color: Color(0xffFF4544),
             ),
-            color: Colors.white,
+            // color: Colors.white,
             // color: AllCoustomTheme.getNewSecondTextThemeColor(),
           ),
           child: Column(
@@ -150,7 +148,7 @@ class CryptocurrencyItem extends StatelessWidget {
                       child: Text(
                         coinDetails["name"],
                         style: TextStyle(
-                          color: Color(0xff5A56B9),
+                          color: Color(0xffFF4544),
                           fontWeight: FontWeight.bold,
                         ),
                         overflow: TextOverflow.clip,
@@ -162,7 +160,7 @@ class CryptocurrencyItem extends StatelessWidget {
                       width: boxConstraints.maxHeight / 4,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color(0xff5A56B9),
+                          color: Color(0xffFF4544),
                         ),
                       ),
                       // child: Image.network(companyData["logo_link"]),
@@ -186,16 +184,16 @@ class CryptocurrencyItem extends StatelessWidget {
               FutureBuilder(
                 future: getCoinData(context),
                 builder: (context, snapshot) {
+
                   if (snapshot.hasData) {
                     var metrics = jsonDecode(snapshot.data["metrics"]);
-                    var percentageChange =
-                        jsonDecode(snapshot.data["percentage_change"]);
+                    var percentageChange= jsonDecode(snapshot.data["percentage_change"]);
                     return Column(
                       children: [
                         Text(
                           "Price : ${getPriceOfCoin(metrics)}",
                           style: TextStyle(
-                              color: Color(0xff5A56B9),
+                              color: Colors.green,
                               fontSize: 16,
                               fontFamily: "Roboto",
                               fontStyle: FontStyle.normal,
@@ -208,7 +206,7 @@ class CryptocurrencyItem extends StatelessWidget {
                         Text(
                           "24h Change : ${get24hChange(percentageChange)}",
                           style: TextStyle(
-                              color: Color(0xff5A56B9),
+                              color: Colors.green,
                               fontSize: 16,
                               fontFamily: "Roboto",
                               fontStyle: FontStyle.normal,
@@ -221,7 +219,7 @@ class CryptocurrencyItem extends StatelessWidget {
                         Text(
                           "Market Cap Rank : ${getMarketCapRank(metrics)}",
                           style: TextStyle(
-                              color: Color(0xff5A56B9),
+                              color: Colors.green,
                               fontSize: 16,
                               fontFamily: "Roboto",
                               fontStyle: FontStyle.normal,
@@ -237,7 +235,7 @@ class CryptocurrencyItem extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
+                child: FlatButton(
                   onPressed: () {
                     // getUserDetails();
                     Navigator.of(context).push(
@@ -248,15 +246,10 @@ class CryptocurrencyItem extends StatelessWidget {
                       ),
                     );
                   },
-                  shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide( color: Color(0xff7499C6),)
-                  ),
-                  color: Color(0xff7499C6),
                   child: Text(
                     "Buy",
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Color(0xffFF4544),
                         fontSize: 20,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,

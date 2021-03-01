@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:auroim/api/featured_companies_provider.dart';
+import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/private_deals_marketplace/all_companies_widget.dart';
 import 'package:auroim/widgets/private_deals_marketplace/appbar_widget.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/private_deals_marketplace/get_single_company_details.dart';
 import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';
+import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 
 // import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 import 'package:flutter/material.dart';
@@ -67,9 +69,9 @@ class _PrivateDealsMarketplaceMainPageState
       ),
       body: SafeArea(
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
             print("toucjed kckjsbcs");
-            if(_focusNode.hasFocus){
+            if (_focusNode.hasFocus) {
               _focusNode.unfocus();
             }
           },
@@ -149,7 +151,6 @@ class _PrivateDealsMarketplaceMainPageState
     return SingleChildScrollView(
       child: Column(
         children: [
-
           Container(
             width: MediaQuery.of(context).size.width - 100,
             padding: const EdgeInsets.only(
@@ -236,7 +237,9 @@ class _PrivateDealsMarketplaceMainPageState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),
                 SizedBox(height: 5),
-                FeaturedCompaniesList(),
+                isGoldBlack
+                    ? SampleFeaturedCompaniesListItem()
+                    : FeaturedCompaniesList(),
                 // PrivateDealsGraphs(),
                 AllCompanies(),
                 // CryptoMarketplace(),

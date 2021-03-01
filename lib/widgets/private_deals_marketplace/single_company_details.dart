@@ -1,6 +1,7 @@
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/private_deals_marketplace/buy_company_stocks.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -187,18 +188,20 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                     height: 40,
                                     // decoration:
                                     //     BoxDecoration(border: Border.all()),
-                                    child: Text(
-                                      widget.companyDetails["location"],
-                                      style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getNewSecondTextThemeColor(),
-                                          fontFamily: "Roboto",
-                                          fontSize: 14.5,
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.normal,
-                                          letterSpacing: 0.1),
-                                      overflow: TextOverflow.clip,
-                                      textAlign: TextAlign.center,
+                                    child: SingleChildScrollView(
+                                      child: Text(
+                                        widget.companyDetails["location"],
+                                        style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getNewSecondTextThemeColor(),
+                                            fontFamily: "Roboto",
+                                            fontSize: 14.5,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.normal,
+                                            letterSpacing: 0.1),
+                                        overflow: TextOverflow.clip,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   )
                                 ],
@@ -220,7 +223,7 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                       ),
                                     ),
                                     Text(
-                                      "${DateTime.now().year - int.parse(widget.companyDetails["founded_date"])} Years",
+                                      "${date(widget.companyDetails["founded_date"])} Years",
                                       style: TextStyle(
                                           color: AllCoustomTheme
                                               .getNewSecondTextThemeColor(),
@@ -287,73 +290,78 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.white,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Deal Type:",
-                              style: TextStyle(
-                                  fontFamily: "Roboto",
-                                  fontSize: 14.5,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.1),
-                            ),
-                            Text(
-                              widget.companyDetails["deal_type"],
-                              style: TextStyle(
-                                  color: Color(0xff7499C6),
-                                  fontFamily: "Roboto",
-                                  fontSize: 30,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.1),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Most Recent Valuations",
-                              style: TextStyle(
-                                  fontFamily: "Roboto",
-                                  fontSize: 14.5,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.1),
-                            ),
-                            Stack(
+                        child: Center(
+                          child: SingleChildScrollView(
+
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
-                                  child: Text(
-                                    widget.companyDetails["valuation"],
-                                    style: TextStyle(
-                                        color: Color(0xff7499C6),
-                                        fontFamily: "Roboto",
-                                        fontSize: 30,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 0.1),
-                                  ),
-                                  width: 120,
-                                  // decoration:
-                                  //     BoxDecoration(border: Border.all()),
+                                Text(
+                                  "Deal Type:",
+                                  style: TextStyle(
+                                      fontFamily: "Roboto",
+                                      fontSize: 14.5,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.1),
                                 ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Tooltip(
-                                    message:
-                                        "Last Funding Round Date \n ${widget.companyDetails["founded_date"]}",
-                                    child: Icon(
-                                      Icons.help,
+                                Text(
+                                  widget.companyDetails["deal_type"],
+                                  style: TextStyle(
                                       color: Color(0xff7499C6),
-                                      size: 20,
+                                      fontFamily: "Roboto",
+                                      fontSize: 30,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.1),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Most Recent Valuations",
+                                  style: TextStyle(
+                                      fontFamily: "Roboto",
+                                      fontSize: 14.5,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.1),
+                                ),
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        widget.companyDetails["valuation"],
+                                        style: TextStyle(
+                                            color: Color(0xff7499C6),
+                                            fontFamily: "Roboto",
+                                            fontSize: 30,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 0.1),
+                                      ),
+                                      width: 120,
+                                      // decoration:
+                                      //     BoxDecoration(border: Border.all()),
                                     ),
-                                  ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Tooltip(
+                                        message:
+                                            "Last Funding Round Date \n ${widget.companyDetails["founded_date"]}",
+                                        child: Icon(
+                                          Icons.help,
+                                          color: Color(0xff7499C6),
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                       Padding(
@@ -469,6 +477,17 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
     );
 
     tooltip.show(context);
+  }
+
+  date(date) {
+    int now = DateTime.now().year;
+    int companyYears;
+    if (date.length == 4) {
+      companyYears = int.parse(date);
+    } else {
+      companyYears = DateFormat("dd-MM-yyy").parse(date).year;
+    }
+    return companyYears;
   }
 
   List<Widget> lisOfFounders() {

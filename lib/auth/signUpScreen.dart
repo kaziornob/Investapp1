@@ -380,7 +380,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               child: InternationalPhoneInput(
                                                 labelText: 'Phone',
                                                 labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                                // style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 onPhoneNumberChange: onPhoneNumberChange,
                                                 initialPhoneNumber: phoneNumber,
                                                 initialSelection: phoneIsoCode,

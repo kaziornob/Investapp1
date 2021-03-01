@@ -59,17 +59,17 @@ class HomeScreen extends StatefulWidget {
 
 const String testDevice = 'YOUR_DEVICE_ID';
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   var _homeScaffoldKey = new GlobalKey<ScaffoldState>();
   ApiProvider request = new ApiProvider();
 
   TextEditingController _appbarTextController = TextEditingController();
   FocusNode _focusNode = FocusNode();
   FeaturedCompaniesProvider _featuredCompaniesProvider =
-  FeaturedCompaniesProvider();
+      FeaturedCompaniesProvider();
 
   bool searching = false;
-
 
   bool _isInProgress = false;
   bool isSelect1 = false;
@@ -77,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   bool isSelect3 = false;
   bool isSelect4 = false;
   bool isSelect5 = false;
-
 
   bool _isSearch = false;
   bool allCoin = false;
@@ -111,10 +110,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   AdmobBannerController admobBannerController;
 
   // third screen params
-  List<String> userList = <String>['Pooja','Ritika'];
+  List<String> userList = <String>['Pooja', 'Ritika'];
 
   String selectedUser;
-  List<String> tagItemList = <String>['native','fixed'];
+  List<String> tagItemList = <String>['native', 'fixed'];
 
   //fifth screen params
   String selectedInceptionLeague;
@@ -139,7 +138,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   TabController _tabController;
 
-
   @override
   void initState() {
     super.initState();
@@ -159,7 +157,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     setFirstTab();
     callItself();
-    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
       print(result.index); // 0=wifi, 1=mobile, 2=none
       if (result.index != 2) {
         setFirstTab();
@@ -173,6 +173,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   SharedPreferences prefs;
+
   getSharedPrefData() async {
     prefs = await SharedPreferences.getInstance();
     print("investor type : ${prefs.getString('InvestorType')}");
@@ -200,7 +201,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
           ),
         ),
-        backgroundColor: isGreeen ? AllCoustomTheme.getThemeData().primaryColor : Colors.red,
+        backgroundColor:
+            isGreeen ? AllCoustomTheme.getThemeData().primaryColor : Colors.red,
       ),
     );
   }
@@ -230,18 +232,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         } else {
           allCoinList.addAll(coindata);
           setState(() {
-            allCoinList.removeWhere((length) => length.quote.uSD.marketCap == null);
+            allCoinList
+                .removeWhere((length) => length.quote.uSD.marketCap == null);
             if (allCoin == true) {
               getApiAllData(index);
             }
             lstCryptoCoinDetail.clear();
             lstCryptoCoinDetail.addAll(allCoinList);
-            lstCryptoCoinDetail.sort((a, b) => b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
+            lstCryptoCoinDetail.sort((a, b) =>
+                b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
             print(lstCryptoCoinDetail[0].quote.uSD);
 
             marketListData.clear();
             marketListData.addAll(allCoinList);
-            marketListData.sort((a, b) => b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
+            marketListData.sort((a, b) =>
+                b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
           });
         }
       }
@@ -255,7 +260,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     callItself();
   }
 
-  Future<Null> changeHistory(String type, String amt, String total, String agg) async {
+  Future<Null> changeHistory(
+      String type, String amt, String total, String agg) async {
     setState(() {
       _high = "0";
       _low = "0";
@@ -313,9 +319,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             "?fsym=" +
             symbol +
             "&tsym=USD&limit=" +
-            (ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][1] - 1).toString() +
+            (ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][1] - 1)
+                .toString() +
             "&aggregate=" +
-            ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][2].toString()),
+            ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][2]
+                .toString()),
         headers: {"Accept": "application/json"});
     setState(() {
       historyOHLCV = new JsonDecoder().convert(response.body)["Data"];
@@ -373,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ),
         //search box area
         Container(
-          margin: EdgeInsets.only(top: 10.0,left: 13.0),
+          margin: EdgeInsets.only(top: 10.0, left: 13.0),
           decoration: new BoxDecoration(
             color: Color(0xFFFFFFFF),
             border: Border.all(
@@ -388,13 +396,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width*0.58,
-                height: MediaQuery.of(context).size.height*0.05,
+                width: MediaQuery.of(context).size.width * 0.58,
+                height: MediaQuery.of(context).size.height * 0.05,
                 child: TextFormField(
                   controller: _appbarTextController,
                   focusNode: _focusNode,
                   style: TextStyle(
-                    color: AllCoustomTheme.getTextThemeColors(),
+                    color: Colors.black,
                     fontSize: ConstanceData.SIZE_TITLE14,
                   ),
                   decoration: InputDecoration(
@@ -423,18 +431,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           alignment: Alignment.bottomRight,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top:3.0),
+              padding: EdgeInsets.only(top: 3.0),
               child: Image(
                   height: 40,
                   width: 40,
-                  image: new AssetImage('assets/appIcon.png')
-              ),
+                  image: new AssetImage('assets/appIcon.png')),
             ),
             FractionalTranslation(
               translation: Offset(-0.5, 0.0),
               child: GestureDetector(
-                onTap: () {
-                },
+                onTap: () {},
                 child: CircleAvatar(
                   backgroundColor: Colors.red,
                   radius: 6.0,
@@ -474,15 +480,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           bottom: true,
           child: Scaffold(
             key: _homeScaffoldKey,
-            appBar: isSelect1 || isSelect2 || isSelect4 || isSelect5 ?
-            PreferredSize(
-              preferredSize: Size.fromHeight(65.0),
-              child: AppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: AllCoustomTheme.getAppBarBackgroundThemeColors(),
-                title: _buildAppBar(context),
-              ),
-            ) : null,
+            appBar: isSelect1 || isSelect2 || isSelect4 || isSelect5
+                ? PreferredSize(
+                    preferredSize: Size.fromHeight(65.0),
+                    child: AppBar(
+                      automaticallyImplyLeading: false,
+                      backgroundColor:
+                          AllCoustomTheme.getAppBarBackgroundThemeColors(),
+                      title: _buildAppBar(context),
+                    ),
+                  )
+                : null,
             bottomNavigationBar: Container(
               decoration: new BoxDecoration(
                 color: AllCoustomTheme.getBodyContainerThemeColor(),
@@ -492,7 +500,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
               ),
               // height: 52,
-              height: MediaQuery.of(context).size.height*0.088,
+              height: MediaQuery.of(context).size.height * 0.088,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -504,71 +512,79 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       children: <Widget>[
                         isSelect1
                             ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Container(
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          globals.iconButtonColor1,
+                                          globals.iconButtonColor2,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
+                              )
                             : SizedBox(
-                          height: 2,
-                        ),
+                                height: 2,
+                              ),
                         GestureDetector(
                           onTap: () {
                             selectFirst();
                           },
                           child: isSelect1
                               ? Animator(
-                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Icon(
-                                        Icons.home,
-                                        size: 23,
-                                        color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Text(
-                                          "Home",
-                                          style: TextStyle(
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-                                              color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                                              fontFamily: "Rasa",
-                                              fontStyle: FontStyle.normal,
-                                              letterSpacing: 0.2
+                                  tween: Tween<double>(begin: 0.8, end: 1.1),
+                                  curve: Curves.decelerate,
+                                  cycles: 1,
+                                  builder: (anim) => Transform.scale(
+                                      scale: anim.value,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Icon(
+                                              Icons.home,
+                                              size: 23,
+                                              color: isSelect1
+                                                  ? AllCoustomTheme
+                                                      .getIconThemeColors()
+                                                  : AllCoustomTheme
+                                                      .getSecondIconThemeColor(),
+                                            ),
                                           ),
-                                        )
-                                    ),
-                                  ],
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Text(
+                                                "Home",
+                                                style: TextStyle(
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE14,
+                                                    color: isSelect1
+                                                        ? AllCoustomTheme
+                                                            .getIconThemeColors()
+                                                        : AllCoustomTheme
+                                                            .getSecondIconThemeColor(),
+                                                    fontFamily: "Rasa",
+                                                    fontStyle: FontStyle.normal,
+                                                    letterSpacing: 0.2),
+                                              )),
+                                        ],
+                                      )),
                                 )
-                            ),
-                          )
                               : firstAnimation(),
                         ),
                       ],
@@ -581,42 +597,42 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       children: <Widget>[
                         isSelect2
                             ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Container(
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          globals.iconButtonColor1,
+                                          globals.iconButtonColor2,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
+                              )
                             : SizedBox(
-                          height: 2,
-                        ),
+                                height: 2,
+                              ),
                         GestureDetector(
                           onTap: () {
                             selectSecond();
                           },
                           child: isSelect2
                               ? Animator(
-                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: secondAnimation(),
-                            ),
-                          )
+                                  tween: Tween<double>(begin: 0.8, end: 1.1),
+                                  curve: Curves.decelerate,
+                                  cycles: 1,
+                                  builder: (anim) => Transform.scale(
+                                    scale: anim.value,
+                                    child: secondAnimation(),
+                                  ),
+                                )
                               : secondAnimation(),
                         ),
                       ],
@@ -629,42 +645,42 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       children: <Widget>[
                         isSelect3
                             ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Container(
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          globals.iconButtonColor1,
+                                          globals.iconButtonColor2,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
+                              )
                             : SizedBox(
-                          height: 2,
-                        ),
+                                height: 2,
+                              ),
                         GestureDetector(
                           onTap: () {
                             selectThird();
                           },
                           child: isSelect3
                               ? Animator(
-                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: thirdAnimation(),
-                            ),
-                          )
+                                  tween: Tween<double>(begin: 0.8, end: 1.1),
+                                  curve: Curves.decelerate,
+                                  cycles: 1,
+                                  builder: (anim) => Transform.scale(
+                                    scale: anim.value,
+                                    child: thirdAnimation(),
+                                  ),
+                                )
                               : thirdAnimation(),
                         ),
                       ],
@@ -677,42 +693,42 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       children: <Widget>[
                         isSelect5
                             ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Container(
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          globals.iconButtonColor1,
+                                          globals.iconButtonColor2,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
+                              )
                             : SizedBox(
-                          height: 2,
-                        ),
+                                height: 2,
+                              ),
                         GestureDetector(
                           onTap: () {
                             selectFive();
                           },
                           child: isSelect5
                               ? Animator(
-                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: fifthAnimation(),
-                            ),
-                          )
+                                  tween: Tween<double>(begin: 0.8, end: 1.1),
+                                  curve: Curves.decelerate,
+                                  cycles: 1,
+                                  builder: (anim) => Transform.scale(
+                                    scale: anim.value,
+                                    child: fifthAnimation(),
+                                  ),
+                                )
                               : fifthAnimation(),
                         ),
                       ],
@@ -725,42 +741,42 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       children: <Widget>[
                         isSelect4
                             ? Animator(
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => Transform.scale(
-                            scale: anim.value,
-                            child: Container(
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    globals.iconButtonColor1,
-                                    globals.iconButtonColor2,
-                                  ],
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Container(
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          globals.iconButtonColor1,
+                                          globals.iconButtonColor2,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
+                              )
                             : SizedBox(
-                          height: 2,
-                        ),
+                                height: 2,
+                              ),
                         GestureDetector(
                           onTap: () {
                             selectFourth();
                           },
                           child: isSelect4
                               ? Animator(
-                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: fourthAnimation(),
-                            ),
-                          )
+                                  tween: Tween<double>(begin: 0.8, end: 1.1),
+                                  curve: Curves.decelerate,
+                                  cycles: 1,
+                                  builder: (anim) => Transform.scale(
+                                    scale: anim.value,
+                                    child: fourthAnimation(),
+                                  ),
+                                )
                               : fourthAnimation(),
                         ),
                       ],
@@ -770,7 +786,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ),
             drawer: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
+              width: MediaQuery.of(context).size.width * 0.75 < 400
+                  ? MediaQuery.of(context).size.width * 0.75
+                  : 350,
               child: Drawer(
                 elevation: 0,
                 child: AppDrawer(
@@ -795,100 +813,121 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
             body: searching
                 ? Container(
-              color: Colors.black,
-              height: MediaQuery.of(context).size.height - 65,
-              child: FutureBuilder(
-                future: _featuredCompaniesProvider
-                    .searchPublicCompanyList(_appbarTextController.text),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    if (snapshot.data.length == 0) {
-                      return ListTile(
-                        onTap: () {
-                          setState(() {
-                            _appbarTextController.clear();
-                          });
-                        },
-                        title: Text(
-                          "No Results",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        trailing: Icon(Icons.close_rounded),
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            onTap: () {
-                              _appbarTextController.text = "";
-                              FocusScope.of(context).unfocus();
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => SecurityPageFirst(
-                                    companyTicker: snapshot.data[index]
-                                    ["ticker"],
+                    color: globals.isGoldBlack ? Colors.black : Colors.white,
+                    height: MediaQuery.of(context).size.height - 65,
+                    child: FutureBuilder(
+                      future: _featuredCompaniesProvider
+                          .searchPublicCompanyList(_appbarTextController.text),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          if (snapshot.data.length == 0) {
+                            return ListTile(
+                              onTap: () {
+                                setState(() {
+                                  _appbarTextController.clear();
+                                });
+                              },
+                              title: Text(
+                                "No Results",
+                                style: TextStyle(
+                                  color: globals.isGoldBlack
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                              ),
+                              trailing: Icon(Icons.close_rounded,
+                                  color: globals.isGoldBlack
+                                      ? Colors.white
+                                      : Colors.black),
+                            );
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  onTap: () {
+                                    _appbarTextController.text = "";
+                                    FocusScope.of(context).unfocus();
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => SecurityPageFirst(
+                                          companyTicker: snapshot.data[index]
+                                              ["ticker"],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  title: Text(
+                                    snapshot.data[index]["company_name"],
+                                    style: TextStyle(
+                                      color: globals.isGoldBlack
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  )
+                : ModalProgressHUD(
+                    inAsyncCall: _isInProgress,
+                    opacity: 0,
+                    progressIndicator: SizedBox(),
+                    child: Container(
+                      // color: isSelect2 || isSelect5 ? AllCoustomTheme.getPageBackgroundThemeColor() : AllCoustomTheme.getThemeData().primaryColor,
+                      color: isSelect2 || isSelect1
+                          ? AllCoustomTheme.getPageBackgroundThemeColor()
+                          : (isSelect5 || isSelect4
+                              ? AllCoustomTheme.getBodyContainerThemeColor()
+                              : AllCoustomTheme.getThemeData().primaryColor),
+                      height: height,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                              height: isSelect1 ||
+                                      isSelect2 ||
+                                      isSelect5 ||
+                                      isSelect4
+                                  ? 2
+                                  : MediaQuery.of(context).padding.top,
+                              child: Visibility(
+                                visible: isSelect1 ||
+                                    isSelect2 ||
+                                    isSelect5 ||
+                                    isSelect4,
+                                child: Container(
+                                  decoration: new BoxDecoration(
+                                    color: Color(0xFFFFFFFF),
+                                    border: Border.all(
+                                      color: Color(0xFFFFFFFF),
+                                      width: 1.5,
+                                    ),
                                   ),
                                 ),
-                              );
-                            },
-                            title: Text(
-                              snapshot.data[index]["company_name"],
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  }
-                },
-              ),
-            ) : ModalProgressHUD(
-              inAsyncCall: _isInProgress,
-              opacity: 0,
-              progressIndicator: SizedBox(),
-              child: Container(
-                // color: isSelect2 || isSelect5 ? AllCoustomTheme.getPageBackgroundThemeColor() : AllCoustomTheme.getThemeData().primaryColor,
-                color: isSelect2 || isSelect1 ? AllCoustomTheme.getPageBackgroundThemeColor() :
-                (isSelect5 || isSelect4 ? AllCoustomTheme.getBodyContainerThemeColor() : AllCoustomTheme.getThemeData().primaryColor
-                ),
-                height: height,
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                        height: isSelect1 || isSelect2 || isSelect5 || isSelect4 ? 2 : MediaQuery.of(context).padding.top,
-                        child: Visibility(
-                          visible: isSelect1 || isSelect2 || isSelect5 || isSelect4,
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              border: Border.all(
-                                color: Color(0xFFFFFFFF),
-                                width: 1.5,
-                              ),
-                            ),
+                              )),
+                          Expanded(
+                            child: isSelect1
+                                ? firstScreen()
+                                : isSelect2
+                                    ? secondScreen()
+                                    : (isSelect3
+                                        ? thirdScreen()
+                                        : (isSelect4
+                                            ? fourthScreen()
+                                            : fifthScreen())),
                           ),
-                        )
+                        ],
+                      ),
                     ),
-                    Expanded(
-                      child: isSelect1
-                          ? firstScreen()
-                          : isSelect2
-                          ? secondScreen()
-                          : (isSelect3 ? thirdScreen() : (isSelect4 ? fourthScreen() : fifthScreen() )),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ),
         )
       ],
@@ -905,7 +944,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           child: Icon(
             Icons.home,
             size: 23,
-            color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+            color: isSelect1
+                ? AllCoustomTheme.getIconThemeColors()
+                : AllCoustomTheme.getSecondIconThemeColor(),
           ),
         ),
         SizedBox(
@@ -917,13 +958,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               "Home",
               style: TextStyle(
                   fontSize: ConstanceData.SIZE_TITLE14,
-                  color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  color: isSelect1
+                      ? AllCoustomTheme.getIconThemeColors()
+                      : AllCoustomTheme.getSecondIconThemeColor(),
                   fontFamily: "Rasa",
                   fontStyle: FontStyle.normal,
-                  letterSpacing: 0.2
-              ),
-            )
-        ),
+                  letterSpacing: 0.2),
+            )),
       ],
     );
   }
@@ -938,7 +979,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           child: Icon(
             FontAwesomeIcons.coins,
             size: 20,
-            color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+            color: isSelect2
+                ? AllCoustomTheme.getIconThemeColors()
+                : AllCoustomTheme.getSecondIconThemeColor(),
           ),
         ),
         SizedBox(
@@ -950,13 +993,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               "Invest",
               style: TextStyle(
                   fontSize: ConstanceData.SIZE_TITLE14,
-                  color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  color: isSelect2
+                      ? AllCoustomTheme.getIconThemeColors()
+                      : AllCoustomTheme.getSecondIconThemeColor(),
                   fontFamily: "Rasa",
                   fontStyle: FontStyle.normal,
-                  letterSpacing: 0.2
-              ),
-            )
-        ),
+                  letterSpacing: 0.2),
+            )),
       ],
     );
   }
@@ -969,7 +1012,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Icon(
         Icons.add_circle,
         size: 30,
-        color: isSelect3 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+        color: isSelect3
+            ? AllCoustomTheme.getIconThemeColors()
+            : AllCoustomTheme.getSecondIconThemeColor(),
       ),
     );
   }
@@ -984,7 +1029,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           child: Icon(
             FontAwesomeIcons.handshake,
             size: 20,
-            color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+            color: isSelect4
+                ? AllCoustomTheme.getIconThemeColors()
+                : AllCoustomTheme.getSecondIconThemeColor(),
           ),
         ),
         SizedBox(
@@ -996,17 +1043,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               "Exchange",
               style: TextStyle(
                   fontSize: ConstanceData.SIZE_TITLE14,
-                  color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  color: isSelect4
+                      ? AllCoustomTheme.getIconThemeColors()
+                      : AllCoustomTheme.getSecondIconThemeColor(),
                   fontFamily: "Rasa",
                   fontStyle: FontStyle.normal,
-                  letterSpacing: 0.2
-              ),
-            )
-        ),
+                  letterSpacing: 0.2),
+            )),
       ],
     );
   }
-
 
   Widget fifthAnimation() {
     return Column(
@@ -1018,7 +1064,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           child: Icon(
             FontAwesomeIcons.globe,
             size: 20,
-            color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+            color: isSelect5
+                ? AllCoustomTheme.getIconThemeColors()
+                : AllCoustomTheme.getSecondIconThemeColor(),
           ),
         ),
         SizedBox(
@@ -1028,18 +1076,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             alignment: Alignment.topCenter,
             child: Text(
               // "Learn",
-              prefs!=null && prefs.containsKey('InvestorType') &&
-                  prefs.getString('InvestorType') != null && prefs.getString('InvestorType') == 'Accredited Investor'
-                  ? 'MarketPlace' : 'Learn',
+              prefs != null &&
+                      prefs.containsKey('InvestorType') &&
+                      prefs.getString('InvestorType') != null &&
+                      prefs.getString('InvestorType') == 'Accredited Investor'
+                  ? 'MarketPlace'
+                  : 'Learn',
               style: TextStyle(
                   fontSize: ConstanceData.SIZE_TITLE14,
-                  color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  color: isSelect5
+                      ? AllCoustomTheme.getIconThemeColors()
+                      : AllCoustomTheme.getSecondIconThemeColor(),
                   fontFamily: "Rasa",
                   fontStyle: FontStyle.normal,
-                  letterSpacing: 0.2
-              ),
-            )
-        ),
+                  letterSpacing: 0.2),
+            )),
       ],
     );
   }
@@ -1067,17 +1118,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 historyOHLCV != null
                     ? Animator(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.decelerate,
-                  cycles: 1,
-                  builder: (anim) => Transform.scale(
-                    scale: anim.value,
-                    child: Text(
-                      'Bitcoin, BTC Live',
-                      style: TextStyle(color: AllCoustomTheme.getTextThemeColors(), fontSize: ConstanceData.SIZE_TITLE18),
-                    ),
-                  ),
-                )
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: Text(
+                            'Bitcoin, BTC Live',
+                            style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColors(),
+                                fontSize: ConstanceData.SIZE_TITLE18),
+                          ),
+                        ),
+                      )
                     : SizedBox(),
                 Animator(
                   duration: Duration(milliseconds: 500),
@@ -1102,50 +1155,50 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             padding: const EdgeInsets.only(right: 16, left: 16),
             child: historyOHLCV != null
                 ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Animator(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.decelerate,
-                  cycles: 1,
-                  builder: (anim) => Transform.scale(
-                    scale: anim.value,
-                    child: Text(
-                      '\$',
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontWeight: FontWeight.bold,
-                        fontSize: ConstanceData.SIZE_TITLE18,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Animator(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: Text(
+                            '\$',
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontWeight: FontWeight.bold,
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 2,
-                ),
-                Animator(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.decelerate,
-                  cycles: 1,
-                  builder: (anim) => Transform.scale(
-                    scale: anim.value,
-                    child: Text(
-                      generalStats != null
-                          ? normalizeNumNoCommas(
-                        generalStats.price,
-                      )
-                          : "0",
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: 2,
                       ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SizedBox(),
-                ),
+                      Animator(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: Text(
+                            generalStats != null
+                                ? normalizeNumNoCommas(
+                                    generalStats.price,
+                                  )
+                                : "0",
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(),
+                      ),
 /*                      Row(
                         children: <Widget>[
                           Animator(
@@ -1197,8 +1250,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                         ],
                       )*/
-              ],
-            )
+                    ],
+                  )
                 : SizedBox(),
           ),
           SizedBox(
@@ -1207,54 +1260,56 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           Expanded(
             child: historyOHLCV != null
                 ? historyOHLCV.isEmpty != true
-                ? Animator(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.decelerate,
-              cycles: 1,
-              builder: (anim) => Transform.scale(
-                scale: anim.value,
-                child: OHLCVGraph(
-                  data: historyOHLCV,
-                  enableGridLines: true,
-                  gridLineColor: globals.buttoncolor1,
-                  gridLineLabelColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                  gridLineAmount: 4,
-                  volumeProp: 0.3,
-                  lineWidth: 1,
-                  gridLineWidth: 0.5,
-                  decreaseColor: Colors.red,
-                ),
-              ),
-            )
+                    ? Animator(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: OHLCVGraph(
+                            data: historyOHLCV,
+                            enableGridLines: true,
+                            gridLineColor: globals.buttoncolor1,
+                            gridLineLabelColor:
+                                AllCoustomTheme.getsecoundTextThemeColor(),
+                            gridLineAmount: 4,
+                            volumeProp: 0.3,
+                            lineWidth: 1,
+                            gridLineWidth: 0.5,
+                            decreaseColor: Colors.red,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        alignment: Alignment.topCenter,
+                        child: Text("No OHLCV data found :(",
+                            style: Theme.of(context).textTheme.caption),
+                      )
                 : Container(
-              alignment: Alignment.topCenter,
-              child: Text("No OHLCV data found :(", style: Theme.of(context).textTheme.caption),
-            )
-                : Container(
-              child: Center(
-                child: CupertinoActivityIndicator(
-                  radius: 12,
-                ),
-              ),
-            ),
+                    child: Center(
+                      child: CupertinoActivityIndicator(
+                        radius: 12,
+                      ),
+                    ),
+                  ),
           ),
           generalStats != null
               ? historyOHLCV != null
-              ? Animator(
-            duration: Duration(milliseconds: 500),
-            curve: Curves.decelerate,
-            cycles: 1,
-            builder: (anim) => Transform.scale(
-              scale: anim.value,
-              child: QuickPercentChangeBar(
-                snapshot: generalStats,
-              ),
-            ),
-          )
-              : SizedBox()
+                  ? Animator(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.decelerate,
+                      cycles: 1,
+                      builder: (anim) => Transform.scale(
+                        scale: anim.value,
+                        child: QuickPercentChangeBar(
+                          snapshot: generalStats,
+                        ),
+                      ),
+                    )
+                  : SizedBox()
               : Container(
-            height: 0.0,
-          ),
+                  height: 0.0,
+                ),
         ],
       ),
     );
@@ -1271,43 +1326,49 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     ChartData('', 25, Color(0xFFFAB95B))*/
   ];
 
-  setHomeDoughnutChartData()
-  {
+  setHomeDoughnutChartData() {
     print("portfolioChartData: $portfolioChartData");
     print("homeDonutCurrentIndex: $homeDonutCurrentIndex");
 
-    if(portfolioChartData!=null && portfolioChartData!=false)
-    {
-      if(homeDonutCurrentIndex==0 && portfolioChartData['weights_assetclass']!=null && portfolioChartData['weights_assetclass']['weights']!=null)
-      {
-        var tempWeightsData = portfolioChartData['weights_assetclass']['weights'];
+    if (portfolioChartData != null && portfolioChartData != false) {
+      if (homeDonutCurrentIndex == 0 &&
+          portfolioChartData['weights_assetclass'] != null &&
+          portfolioChartData['weights_assetclass']['weights'] != null) {
+        var tempWeightsData =
+            portfolioChartData['weights_assetclass']['weights'];
 
         homeChartData = [];
         final data1 = tempWeightsData as Map;
         for (final name in data1.keys) {
           final value = data1[name];
           var tempDouble = value.toDouble();
-          homeChartData.add(ChartData('$name', double.parse(tempDouble.toStringAsFixed(4)), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
+          homeChartData.add(ChartData(
+              '$name',
+              double.parse(tempDouble.toStringAsFixed(4)),
+              globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         }
-      }
-
-      else if(homeDonutCurrentIndex==1 && portfolioChartData['weights_assetcountry']!=null && portfolioChartData['weights_assetcountry']['weights']!=null)
-      {
+      } else if (homeDonutCurrentIndex == 1 &&
+          portfolioChartData['weights_assetcountry'] != null &&
+          portfolioChartData['weights_assetcountry']['weights'] != null) {
         homeChartData = [];
-        var tempWeightsData = portfolioChartData['weights_assetcountry']['weights'];
+        var tempWeightsData =
+            portfolioChartData['weights_assetcountry']['weights'];
         final data1 = tempWeightsData as Map;
         for (final name in data1.keys) {
           final value = data1[name];
           var tempDouble = value.toDouble();
-          homeChartData.add(ChartData('$name', double.parse(tempDouble.toStringAsFixed(5)), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
+          homeChartData.add(ChartData(
+              '$name',
+              double.parse(tempDouble.toStringAsFixed(5)),
+              globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         }
-      }
-
-      else if(homeDonutCurrentIndex==2 && portfolioChartData['weights_foliotickers']!=null && portfolioChartData['weights_foliotickers']['sector']!=null)
-      {
+      } else if (homeDonutCurrentIndex == 2 &&
+          portfolioChartData['weights_foliotickers'] != null &&
+          portfolioChartData['weights_foliotickers']['sector'] != null) {
         homeChartData = [];
 
-        var tempWeightsData = portfolioChartData['weights_foliotickers']['sector'];
+        var tempWeightsData =
+            portfolioChartData['weights_foliotickers']['sector'];
         var allSectorKeys = [];
         final data = tempWeightsData as Map;
         for (final name in data.keys) {
@@ -1317,10 +1378,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
         var finalSectorData = Map();
         allSectorKeys.forEach((element) {
-          if(!finalSectorData.containsKey(element)) {
+          if (!finalSectorData.containsKey(element)) {
             finalSectorData[element] = 1;
           } else {
-            finalSectorData[element] +=1;
+            finalSectorData[element] += 1;
           }
         });
 
@@ -1329,15 +1390,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         for (final name in finalSectorData.keys) {
           final value = finalSectorData[name];
 
-          homeChartData.add(ChartData('$name', value.toDouble(), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
+          homeChartData.add(ChartData('$name', value.toDouble(),
+              globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         }
       }
     }
   }
 
-
-  Widget firstScreen()
-  {
+  Widget firstScreen() {
     return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -1356,13 +1416,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       fontFamily: "Rosarivo",
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.normal,
-                      letterSpacing: 0.1
-                  ),
-                )
-            ),
+                      letterSpacing: 0.1),
+                )),
             Container(
               // margin: EdgeInsets.only(left: 80.0,right: 80.0),
-              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
+              margin: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.25,
+                  right: MediaQuery.of(context).size.width * 0.25),
               alignment: Alignment.center,
               padding: EdgeInsets.only(
                 bottom: 3, // space between underline and text
@@ -1370,78 +1430,74 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
-                        color: Color(0xFFD8AF4F),
-                        width: 1.6, // Underline width
-                      )
-                  )
-              ),
+                color: Color(0xFFD8AF4F),
+                width: 1.6, // Underline width
+              ))),
             ),
             // handshake image box
             Visibility(
-              visible: homeDonutArray==null  || homeDonutArray.length==0 ? true : false,
+              visible: homeDonutArray == null || homeDonutArray.length == 0
+                  ? true
+                  : false,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height*0.25,
-                child:  Container(
-                  margin: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0),
+                height: MediaQuery.of(context).size.height * 0.25,
+                child: Container(
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
                   child: Image(
                       fit: BoxFit.fill,
-                      image: new AssetImage('assets/handShake.png')
-                  ),
+                      image: new AssetImage('assets/handShake.png')),
                 ),
               ),
             ),
             Visibility(
-              visible: homeDonutArray.length!=0 ? true : false,
+              visible: homeDonutArray.length != 0 ? true : false,
               // visible: true,
               child: Container(
                 child: CarouselSlider.builder(
                   itemCount: homeDonutArray.length,
                   options: CarouselOptions(
                       autoPlay: false,
-                      viewportFraction: homeDonutCurrentIndex==1 ? 1.1 : 1,
+                      viewportFraction: homeDonutCurrentIndex == 1 ? 1.1 : 1,
                       onPageChanged: (index, reason) {
                         setState(() {
                           homeDonutCurrentIndex = index;
                           setHomeDoughnutChartData();
                         });
-                      }
-                  ),
-                  itemBuilder: (context,index){
+                      }),
+                  itemBuilder: (context, index) {
                     return Container(
                       // margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.048,right: MediaQuery.of(context).size.width*0.048),
                       child: SfCircularChart(
                           legend: Legend(
                               isVisible: true,
-                              textStyle: TextStyle(color: AllCoustomTheme.getTextThemeColors()),
+                              textStyle: TextStyle(
+                                  color: AllCoustomTheme.getTextThemeColors()),
                               // alignment: ChartAlignment.center,
                               // position: LegendPosition.bottom,
                               overflowMode: LegendItemOverflowMode.wrap,
-                              itemPadding: 5.0
-                          ),
+                              itemPadding: 5.0),
                           series: <CircularSeries>[
                             DoughnutSeries<ChartData, String>(
                               dataSource: homeChartData,
                               // pointColorMapper:(ChartData data,  _) => data.color,
                               xValueMapper: (ChartData data, _) => data.x,
                               yValueMapper: (ChartData data, _) => data.y,
-                              dataLabelSettings:DataLabelSettings(
-                                  isVisible : true,
+                              dataLabelSettings: DataLabelSettings(
+                                  isVisible: true,
                                   // labelPosition: ChartDataLabelPosition.outside,
                                   useSeriesColor: true,
                                   showCumulativeValues: true,
-                                  showZeroValue: true
-                              ),
+                                  showZeroValue: true),
                             )
-                          ]
-                      ),
+                          ]),
                     );
                   },
                 ),
               ),
             ),
             Visibility(
-              visible: homeDonutArray.length!=0 ? true : false,
+              visible: homeDonutArray.length != 0 ? true : false,
               // visible: true,
               child: Container(
                 child: Row(
@@ -1451,11 +1507,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     return Container(
                       width: 10.0,
                       height: 8.0,
-                      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: homeDonutCurrentIndex == index
-                        // ? Color(0xFFFFFFFF)
+                            // ? Color(0xFFFFFFFF)
                             ? Color(0xFFD8AF4F)
                             : Color(0xffCBB4B4),
                       ),
@@ -1465,21 +1522,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ),
             Container(
-              // margin: EdgeInsets.only(left: 35.0,right: 20.0),
-                margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.07,right: MediaQuery.of(context).size.width*0.03),
+                // margin: EdgeInsets.only(left: 35.0,right: 20.0),
+                margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.07,
+                    right: MediaQuery.of(context).size.width * 0.03),
                 child: Text(
                   "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
-                      "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
+                  "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: 14.5,
                       fontFamily: "Roboto",
                       fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2
-                  ),
-                )
-            ),
+                      letterSpacing: 0.2),
+                )),
             SizedBox(
               height: 10.0,
             ),
@@ -1536,28 +1593,30 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   children: <Widget>[
                     SizedBox(
                       // height: 32,
-                      height: MediaQuery.of(context).size.height*0.06,
+                      height: MediaQuery.of(context).size.height * 0.06,
                       child: Container(
                         /*height: 32,
                       width: 110,*/
-                        height: MediaQuery.of(context).size.height*0.06,
-                        width: MediaQuery.of(context).size.width*0.32,
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.32,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
-                            border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                            color: AllCoustomTheme.getButtonBoxColor()
-                        ),
+                            border: new Border.all(
+                                color: AllCoustomTheme.getButtonBoxColor(),
+                                width: 1.5),
+                            color: AllCoustomTheme.getButtonBoxColor()),
                         child: MaterialButton(
                           splashColor: Colors.grey,
-                          child: Text(
-                              "GO PRO",
-                              style: AllCoustomTheme.getButtonSelectedTextStyleTheme()
-                          ),
-                          onPressed: () async
-                          {
+                          child: Text("GO PRO",
+                              style: AllCoustomTheme
+                                  .getButtonSelectedTextStyleTheme()),
+                          onPressed: () async {
                             Navigator.of(context).push(new MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                                    new OnBoardingFirst(
+                                      logo: "logo.png",
+                                      callingFrom: "Accredited Investor",
+                                    )));
                           },
                         ),
                       ),
@@ -1569,28 +1628,28 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   children: <Widget>[
                     SizedBox(
                       // height: 32,
-                      height: MediaQuery.of(context).size.height*0.06,
+                      height: MediaQuery.of(context).size.height * 0.06,
                       child: Container(
                         /*height: 32,
                       width: 110,*/
-                        height: MediaQuery.of(context).size.height*0.06,
-                        width: MediaQuery.of(context).size.width*0.32,
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.32,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                          border: new Border.all(
+                              color: AllCoustomTheme.getButtonBoxColor(),
+                              width: 1.5),
                           // color: AllCoustomTheme.getButtonBoxColor()
                         ),
                         child: MaterialButton(
                           splashColor: Colors.grey,
-                          child: Text(
-                              "GO LIVE",
-                              style: AllCoustomTheme.getButtonNonSelectedTextStyleTheme()
-                          ),
-                          onPressed: () async
-                          {
+                          child: Text("GO LIVE",
+                              style: AllCoustomTheme
+                                  .getButtonNonSelectedTextStyleTheme()),
+                          onPressed: () async {
                             Navigator.of(context).push(new MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                new WishList()));
+                                    new WishList()));
                           },
                         ),
                       ),
@@ -1609,9 +1668,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.73,
-              child:  Container(
-                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+              height: MediaQuery.of(context).size.height * 0.73,
+              child: Container(
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0),
                   /*decoration: new BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFfec20f),
@@ -1625,21 +1684,22 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top:5.0),
+                        padding: EdgeInsets.only(top: 5.0),
                         child: Center(
                             child: Text(
-                              'PORTFOLIO COMPONENTS',
-                              style: new TextStyle(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE18,
-                                fontFamily: "Rosarivo",
-                              ),
-                            )
-                        ),
+                          'PORTFOLIO COMPONENTS',
+                          style: new TextStyle(
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Rosarivo",
+                          ),
+                        )),
                       ),
                       Container(
                         // margin: EdgeInsets.only(left: 30.0,right: 30.0),
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.06,right: MediaQuery.of(context).size.width*0.06),
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.06,
+                            right: MediaQuery.of(context).size.width * 0.06),
 
                         padding: EdgeInsets.only(
                           bottom: 3, // space between underline and text
@@ -1647,87 +1707,85 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
-                                  color: AllCoustomTheme.getHeadingThemeColors(),
-                                  width: 1.0, // Underline width
-                                )
-                            )
-                        ),
+                          color: AllCoustomTheme.getHeadingThemeColors(),
+                          width: 1.0, // Underline width
+                        ))),
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top:10.0),
+                          padding: EdgeInsets.only(top: 10.0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Padding(
-                                  padding: EdgeInsets.only(left:95.0,bottom: 5.0),
+                                  padding:
+                                      EdgeInsets.only(left: 95.0, bottom: 5.0),
                                   child: Text(
                                     'Auro Portfolio',
                                     style: new TextStyle(
-                                      color: AllCoustomTheme.getSubHeadingThemeColors(),
+                                      color: AllCoustomTheme
+                                          .getSubHeadingThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE15,
                                       fontFamily: "Roboto",
                                       package: 'Roboto-Regular',
                                     ),
-                                  )
-                              ),
+                                  )),
                               Padding(
-                                  padding: EdgeInsets.only(left:30.0,top: 3.0),
+                                  padding:
+                                      EdgeInsets.only(left: 30.0, top: 3.0),
                                   child: Text(
                                     'SEE ALL',
                                     style: new TextStyle(
-                                      color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                      color: AllCoustomTheme
+                                          .getSeeMoreThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE15,
                                       fontFamily: "Roboto",
                                     ),
-                                  )
-                              )
+                                  ))
                             ],
-                          )
-                      ),
+                          )),
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*0.37,
+                          height: MediaQuery.of(context).size.height * 0.37,
                           child: Container(
-                              margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
-                              child: getAreaChartView()
-                          )
-                      ),
+                              margin: EdgeInsets.only(
+                                  top: 5.0, left: 5.0, right: 5.0, bottom: 5.0),
+                              child: getAreaChartView())),
                       SizedBox(
                         height: 10,
                       ),
                       Container(
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.25,
-                              ),
-                              Text(
-                                "First Name's Portfolio",
-                                textAlign: TextAlign.center,
-                                style: new TextStyle(
-                                  color: AllCoustomTheme.getSubHeadingThemeColors(),
-                                  fontSize: ConstanceData.SIZE_TITLE15,
-                                  fontFamily: "Roboto",
-                                ),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.10,
-                              ),
-                              Text(
-                                'See More',
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE15,
-                                  fontFamily: "Roboto",
-                                ),
-                              )
-                            ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                          ),
+                          Text(
+                            "First Name's Portfolio",
+                            textAlign: TextAlign.center,
+                            style: new TextStyle(
+                              color: AllCoustomTheme.getSubHeadingThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE15,
+                              fontFamily: "Roboto",
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.10,
+                          ),
+                          Text(
+                            'See More',
+                            style: TextStyle(
+                              color: AllCoustomTheme.getSeeMoreThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE15,
+                              fontFamily: "Roboto",
+                            ),
                           )
-                      ),
+                        ],
+                      )),
                       Container(
-                        margin: EdgeInsets.only(left:15.0,bottom: 5.0,top: 5.0),
+                        margin:
+                            EdgeInsets.only(left: 15.0, bottom: 5.0, top: 5.0),
                         child: Text(
                           'You can also invest in individual securities that you like and create your own portfolio!! ',
                           style: TextStyle(
@@ -1747,17 +1805,22 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           children: <Widget>[
                             SizedBox(
                               // height: 35,
-                              height: MediaQuery.of(context).size.height*0.065,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.065,
                               child: Container(
                                 /*height: 35,
                               width: 150,*/
-                                height: MediaQuery.of(context).size.height*0.065,
-                                width: MediaQuery.of(context).size.width*0.45,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.065,
+                                width: MediaQuery.of(context).size.width * 0.45,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                    color: AllCoustomTheme.getButtonBoxColor()
-                                ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                        color:
+                                            AllCoustomTheme.getButtonBoxColor(),
+                                        width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()),
                                 child: MaterialButton(
                                   /*onPressed: () async {
                                   final sessionId = await Server().createCheckout();
@@ -1771,7 +1834,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   child: Text(
                                     "START NOW",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      color: AllCoustomTheme
+                                          .getButtonTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE13,
                                       fontFamily: "Roboto",
                                       fontWeight: FontWeight.bold,
@@ -1784,13 +1848,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
             ),
             // go live button
           ],
-        )
-    );
+        ));
   }
 
 /*  Widget oldSecoundScreen() {
@@ -2176,8 +2238,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   // second screen section start
 
-  Widget getAreaChartView()
-  {
+  Widget getAreaChartView() {
     final List<NewSalesData> newSalesData = [
       NewSalesData(2010, 35),
       NewSalesData(2011, 28),
@@ -2197,7 +2258,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     stops.add(1.0);
 
     final LinearGradient gradientColors =
-    LinearGradient(colors: color, stops: stops);
+        LinearGradient(colors: color, stops: stops);
 
     return ListView.builder(
       itemCount: 3,
@@ -2208,32 +2269,36 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                  height: MediaQuery.of(context).size.height*0.36,
-                  width: MediaQuery.of(context).size.width*0.96,
+                  height: MediaQuery.of(context).size.height * 0.36,
+                  width: MediaQuery.of(context).size.width * 0.96,
                   child: Container(
-                    margin: EdgeInsets.only(left: 10,right: 10),
+                    margin: EdgeInsets.only(left: 10, right: 10),
                     decoration: new BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.0),
+                      border: new Border.all(
+                          color: AllCoustomTheme.getChartBoxThemeColor(),
+                          width: 1.0),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.10,
+                          height: MediaQuery.of(context).size.height * 0.10,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "APPLE",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                      color: AllCoustomTheme
+                                          .getChartBoxTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
                                       fontFamily: "Roboto",
                                     ),
@@ -2241,15 +2306,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   Text(
                                     "2.20 (1.61%)",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                                      color: AllCoustomTheme
+                                          .getNewSecondTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE8,
                                       fontFamily: "Roboto",
                                     ),
                                   ),
                                   Text(
-                                    '\$'+" 390.00",
+                                    '\$' + " 390.00",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                      color: AllCoustomTheme
+                                          .getChartBoxTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
                                       fontFamily: "Roboto",
                                     ),
@@ -2264,13 +2331,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "HIGH",
                                         style: TextStyle(
-                                          color: AllCoustomTheme.getNewTextThemeColors(),
+                                          color: AllCoustomTheme
+                                              .getNewTextThemeColors(),
                                           fontSize: ConstanceData.SIZE_TITLE10,
                                           fontFamily: "Roboto",
                                         ),
@@ -2294,13 +2364,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     height: 8,
                                   ),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "LOW",
                                         style: TextStyle(
-                                          color: AllCoustomTheme.getNewTextThemeColors(),
+                                          color: AllCoustomTheme
+                                              .getNewTextThemeColors(),
                                           fontSize: ConstanceData.SIZE_TITLE10,
                                           fontFamily: "Roboto",
                                         ),
@@ -2326,28 +2399,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                         ),
                         SizedBox(
-                            width: MediaQuery.of(context).size.width*0.88,
-                            height: MediaQuery.of(context).size.height*0.15,
+                            width: MediaQuery.of(context).size.width * 0.88,
+                            height: MediaQuery.of(context).size.height * 0.15,
                             child: Container(
                               margin: EdgeInsets.only(left: 10.0),
                               child: SfCartesianChart(
                                   primaryXAxis: NumericAxis(
                                     isVisible: false,
                                   ),
-                                  primaryYAxis: NumericAxis(
-                                      isVisible: false
-                                  ),
+                                  primaryYAxis: NumericAxis(isVisible: false),
                                   series: <ChartSeries>[
                                     StackedAreaSeries<NewSalesData, double>(
                                       dataSource: newSalesData,
-                                      xValueMapper: (NewSalesData data, _) => data.year,
-                                      yValueMapper: (NewSalesData data, _) => data.sales,
+                                      xValueMapper: (NewSalesData data, _) =>
+                                          data.year,
+                                      yValueMapper: (NewSalesData data, _) =>
+                                          data.sales,
                                       gradient: gradientColors,
                                     ),
-                                  ]
-                              ),
-                            )
-                        ),
+                                  ]),
+                            )),
                         SizedBox(
                           // height: MediaQuery.of(context).size.height*0.10,
                           child: Row(
@@ -2358,43 +2429,58 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 width: 5,
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.25,
-                                height: MediaQuery.of(context).size.height*0.038,
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.038,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.5),
-                                    color: AllCoustomTheme.getChartBoxThemeColor(),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                        color: AllCoustomTheme
+                                            .getChartBoxThemeColor(),
+                                        width: 1.5),
+                                    color:
+                                        AllCoustomTheme.getChartBoxThemeColor(),
                                   ),
                                   child: MaterialButton(
                                     splashColor: Colors.grey,
                                     child: Text(
                                       "BUY",
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getButtonTextThemeColors(),
+                                        color: AllCoustomTheme
+                                            .getButtonTextThemeColors(),
                                         fontSize: ConstanceData.SIZE_TITLE13,
                                         fontFamily: "Roboto",
                                       ),
                                     ),
-                                    onPressed: () async
-                                    {
+                                    onPressed: () async {
 /*                                      Navigator.of(context).push(new MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                           new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));*/
-                                      Navigator.of(context).push(new MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                          new SecurityPageFirst(logo: "logo.png",callingFrom: "Accredited Investor")));
+                                      Navigator.of(context).push(
+                                          new MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  new SecurityPageFirst(
+                                                      logo: "logo.png",
+                                                      callingFrom:
+                                                          "Accredited Investor")));
                                     },
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.26,
-                                height: MediaQuery.of(context).size.height*0.038,
+                                width: MediaQuery.of(context).size.width * 0.26,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.038,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.5),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                        color: AllCoustomTheme
+                                            .getChartBoxThemeColor(),
+                                        width: 1.5),
                                     // color: AllCoustomTheme.getChartBoxThemeColor(),
                                   ),
                                   child: MaterialButton(
@@ -2402,30 +2488,39 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     child: Text(
                                       "SELL",
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getChartBoxTextThemeColor(),
                                         fontSize: ConstanceData.SIZE_TITLE13,
                                         fontFamily: "Roboto",
                                       ),
                                     ),
-                                    onPressed: () async
-                                    {
+                                    onPressed: () async {
 /*                                      Navigator.of(context).push(new MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                           new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));*/
-                                      Navigator.of(context).push(new MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                          new SecurityPageFirst(logo: "logo.png",callingFrom: "Accredited Investor")));
+                                      Navigator.of(context).push(
+                                          new MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  new SecurityPageFirst(
+                                                      logo: "logo.png",
+                                                      callingFrom:
+                                                          "Accredited Investor")));
                                     },
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width*0.32,
-                                height: MediaQuery.of(context).size.height*0.038,
+                                width: MediaQuery.of(context).size.width * 0.32,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.038,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(color: AllCoustomTheme.getChartBoxThemeColor(), width: 1.5),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                        color: AllCoustomTheme
+                                            .getChartBoxThemeColor(),
+                                        width: 1.5),
                                     // color: AllCoustomTheme.getChartBoxThemeColor(),
                                   ),
                                   child: MaterialButton(
@@ -2433,16 +2528,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     child: Text(
                                       "WATCH",
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getChartBoxTextThemeColor(),
                                         fontSize: ConstanceData.SIZE_TITLE13,
                                         fontFamily: "Roboto",
                                       ),
                                     ),
-                                    onPressed: () async
-                                    {
-                                      Navigator.of(context).push(new MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                          new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
+                                    onPressed: () async {
+                                      Navigator.of(context).push(
+                                          new MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  new OnBoardingFirst(
+                                                    logo: "logo.png",
+                                                    callingFrom:
+                                                        "Accredited Investor",
+                                                  )));
                                     },
                                   ),
                                 ),
@@ -2458,8 +2558,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )
                       ],
                     ),
-                  )
-              ),
+                  )),
             ],
           ),
         );
@@ -2467,23 +2566,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-
   Widget secondScreen() {
-
     return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: <Widget>[
-            CryptoMarketplace(),
-            PrivateDealsIntro(
-              goToMarketplaceCallback: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => PrivateDealsMarketplaceMainPage(),
+            globals.isGoldBlack
+                ? PrivateDealsIntro(
+                    goToMarketplaceCallback: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PrivateDealsMarketplaceMainPage(),
+                        ),
+                      );
+                    },
+                  )
+                : CryptoMarketplace(),
+            globals.isGoldBlack
+                ? CryptoMarketplace()
+                : PrivateDealsIntro(
+                    goToMarketplaceCallback: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PrivateDealsMarketplaceMainPage(),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
             // portfolio component box
             SizedBox(
               height: 20,
@@ -2491,16 +2602,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             // personal sleeve section
             PersonalSleeve(
               goToPersonalSleeveCallback: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PersonalSleeve()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => PersonalSleeve()));
               },
             ),
             // investment guru component box
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.57,
-              child:  Container(
-                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+              height: MediaQuery.of(context).size.height * 0.57,
+              child: Container(
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0),
                   /*decoration: new BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFfec20f),
@@ -2514,21 +2625,22 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top:10.0),
+                        padding: EdgeInsets.only(top: 10.0),
                         child: Center(
                             child: Text(
-                              'INVESTMENT GURUS',
-                              style: new TextStyle(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE18,
-                                fontFamily: "Rosarivo",
-                              ),
-                            )
-                        ),
+                          'INVESTMENT GURUS',
+                          style: new TextStyle(
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Rosarivo",
+                          ),
+                        )),
                       ),
                       Container(
                         // margin: EdgeInsets.only(left: 50.0,right: 50.0),
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.12,right: MediaQuery.of(context).size.width*0.12),
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.12,
+                            right: MediaQuery.of(context).size.width * 0.12),
 
                         padding: EdgeInsets.only(
                           bottom: 3, // space between underline and text
@@ -2536,65 +2648,69 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
-                                  color: AllCoustomTheme.getHeadingThemeColors(),
-                                  width: 1.0, // Underline width
-                                )
-                            )
-                        ),
+                          color: AllCoustomTheme.getHeadingThemeColors(),
+                          width: 1.0, // Underline width
+                        ))),
                       ),
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*0.34,
+                          height: MediaQuery.of(context).size.height * 0.34,
                           child: Container(
-                            margin: EdgeInsets.only(top: 15.0,left: 5.0,right: 5.0,bottom: 5.0),
+                            margin: EdgeInsets.only(
+                                top: 15.0, left: 5.0, right: 5.0, bottom: 5.0),
                             child: getAreaChartView(),
-                          )
-                      ),
+                          )),
                       Container(
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                  padding: EdgeInsets.only(left:230.0,bottom: 5.0,top: 3.0),
-                                  child: Text(
-                                    'See More',
-                                    style: new TextStyle(
-                                      color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE15,
-                                      fontFamily: "Roboto",
-                                    ),
-                                  )
-                              ),
-                            ],
-                          )
-                      ),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 230.0, bottom: 5.0, top: 3.0),
+                              child: Text(
+                                'See More',
+                                style: new TextStyle(
+                                  color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                  fontSize: ConstanceData.SIZE_TITLE15,
+                                  fontFamily: "Roboto",
+                                ),
+                              )),
+                        ],
+                      )),
                       SizedBox(
                         height: 20,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        padding: const EdgeInsets.only(
+                            bottom: 20, left: 20, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(
                               // height: 35,
-                              height: MediaQuery.of(context).size.height*0.065,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.065,
                               child: Container(
                                 /*height: 35,
                               width: 150,*/
-                                height: MediaQuery.of(context).size.height*0.065,
-                                width: MediaQuery.of(context).size.width*0.45,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.065,
+                                width: MediaQuery.of(context).size.width * 0.45,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                    color: AllCoustomTheme.getButtonBoxColor()
-                                ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                        color:
+                                            AllCoustomTheme.getButtonBoxColor(),
+                                        width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()),
                                 child: MaterialButton(
                                   splashColor: Colors.grey,
                                   child: Text(
                                     "START NOW",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      color: AllCoustomTheme
+                                          .getButtonTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE13,
                                       fontFamily: "Roboto",
                                       fontWeight: FontWeight.bold,
@@ -2606,10 +2722,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ],
                         ),
                       ),
-
                     ],
-                  )
-              ),
+                  )),
             ),
             // pe/vc/re component box
             SizedBox(
@@ -2617,9 +2731,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.27,
-              child:  Container(
-                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+              height: MediaQuery.of(context).size.height * 0.27,
+              child: Container(
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0),
 /*                decoration: new BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFfec20f),
@@ -2633,21 +2747,22 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top:5.0),
+                        padding: EdgeInsets.only(top: 5.0),
                         child: Center(
                             child: Text(
-                              'PE/VC/RE/ESG',
-                              style: new TextStyle(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE18,
-                                fontFamily: "Rosarivo",
-                              ),
-                            )
-                        ),
+                          'PE/VC/RE/ESG',
+                          style: new TextStyle(
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Rosarivo",
+                          ),
+                        )),
                       ),
                       Container(
                         // margin: EdgeInsets.only(left: 90.0,right: 90.0),
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.25,
+                            right: MediaQuery.of(context).size.width * 0.25),
 
                         padding: EdgeInsets.only(
                           bottom: 3, // space between underline and text
@@ -2655,36 +2770,41 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
-                                  color: AllCoustomTheme.getHeadingThemeColors(),
-                                  width: 1.0, // Underline width
-                                )
-                            )
-                        ),
+                          color: AllCoustomTheme.getHeadingThemeColors(),
+                          width: 1.0, // Underline width
+                        ))),
                       ),
                       SizedBox(
                         height: 30,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        padding: const EdgeInsets.only(
+                            bottom: 20, left: 20, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(
-                              height: MediaQuery.of(context).size.height*0.065,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.065,
                               child: Container(
-                                height: MediaQuery.of(context).size.height*0.065,
-                                width: MediaQuery.of(context).size.width*0.45,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.065,
+                                width: MediaQuery.of(context).size.width * 0.45,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                    color: AllCoustomTheme.getButtonBoxColor()
-                                ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                        color:
+                                            AllCoustomTheme.getButtonBoxColor(),
+                                        width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()),
                                 child: MaterialButton(
                                   splashColor: Colors.grey,
                                   child: Text(
                                     "START NOW",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      color: AllCoustomTheme
+                                          .getButtonTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE13,
                                       fontFamily: "Roboto",
                                       fontWeight: FontWeight.bold,
@@ -2697,7 +2817,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.only(left:235.0),
+                          padding: EdgeInsets.only(left: 235.0),
                           child: Text(
                             'See More',
                             style: new TextStyle(
@@ -2705,12 +2825,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               fontSize: ConstanceData.SIZE_TITLE15,
                               fontFamily: "Roboto",
                             ),
-                          )
-                      ),
-
+                          )),
                     ],
-                  )
-              ),
+                  )),
             ),
             // last start now component box
             SizedBox(
@@ -2718,28 +2835,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.27,
-              child:  Container(
-                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+              height: MediaQuery.of(context).size.height * 0.27,
+              child: Container(
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0),
                   child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top:5.0),
+                        padding: EdgeInsets.only(top: 5.0),
                         child: Center(
                             child: Text(
-                              'STUDENT',
-                              style: new TextStyle(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE18,
-                                fontFamily: "Rosarivo",
-                              ),
-                            )
-                        ),
+                          'STUDENT',
+                          style: new TextStyle(
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Rosarivo",
+                          ),
+                        )),
                       ),
                       Container(
                         // margin: EdgeInsets.only(left: 110.0,right: 110.0),
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.30,right: MediaQuery.of(context).size.width*0.30),
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.30,
+                            right: MediaQuery.of(context).size.width * 0.30),
 
                         padding: EdgeInsets.only(
                           bottom: 3, // space between underline and text
@@ -2747,36 +2865,41 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
-                                  color: AllCoustomTheme.getHeadingThemeColors(),
-                                  width: 1.0, // Underline width
-                                )
-                            )
-                        ),
+                          color: AllCoustomTheme.getHeadingThemeColors(),
+                          width: 1.0, // Underline width
+                        ))),
                       ),
                       SizedBox(
                         height: 30,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        padding: const EdgeInsets.only(
+                            bottom: 20, left: 20, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(
-                              height: MediaQuery.of(context).size.height*0.065,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.065,
                               child: Container(
-                                height: MediaQuery.of(context).size.height*0.065,
-                                width: MediaQuery.of(context).size.width*0.45,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.065,
+                                width: MediaQuery.of(context).size.width * 0.45,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                    color: AllCoustomTheme.getButtonBoxColor()
-                                ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                        color:
+                                            AllCoustomTheme.getButtonBoxColor(),
+                                        width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()),
                                 child: MaterialButton(
                                   splashColor: Colors.grey,
                                   child: Text(
                                     "START NOW",
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      color: AllCoustomTheme
+                                          .getButtonTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE13,
                                       fontFamily: "Roboto",
                                       fontWeight: FontWeight.bold,
@@ -2789,16 +2912,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
             ),
           ],
-        )
-    );
+        ));
   }
 
   // second screen section end
-
 
   // fourth screen section start
 
@@ -2814,8 +2934,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 GestureDetector(
-                    onTap: ()
-                    {
+                    onTap: () {
                       Navigator.of(context).push(
                         CupertinoPageRoute(
                           builder: (BuildContext context) => AddEditQus(),
@@ -2830,8 +2949,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontFamily: "Roboto",
                       ),
-                    )
-                )
+                    ))
 /*                GestureDetector(
                   onTap: () {
                     _scaffoldKey.currentState.openDrawer();
@@ -2939,7 +3057,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),*/
           Container(
             width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(left: 10.0,right: 3.0),
+            margin: EdgeInsets.only(left: 10.0, right: 3.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -2947,12 +3065,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 TabBar(
                   controller: _tabController,
                   isScrollable: true,
-                  onTap: (index)
-                  {
+                  onTap: (index) {
                     selectedTabIndex = index;
                   },
                   labelColor: AllCoustomTheme.getTextThemeColor(),
-                  labelStyle: TextStyle(fontSize: 14.0,letterSpacing: 0.2),
+                  labelStyle: TextStyle(fontSize: 14.0, letterSpacing: 0.2),
                   indicatorColor: AllCoustomTheme.getTextThemeColor(),
                   indicatorWeight: 4.0,
                   // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
@@ -2962,7 +3079,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     new Tab(text: "Week"),
                     new Tab(text: "Month"),
                     // new Tab(text: "Ask Question"),
-
                   ],
                 ),
               ],
@@ -2987,31 +3103,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   Widget getQuestionsList(data) {
-    if(data!=null && data.length!=0)
-    {
+    if (data != null && data.length != 0) {
       return new ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: data.length,
         itemBuilder: (context, index) {
           return Column(
-            crossAxisAlignment:  CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // question section
               GestureDetector(
-                onTap: ()
-                {
+                onTap: () {
                   List<TagData> itemList = List();
 
-                  itemList.add(TagData("1","native"));
-                  itemList.add(TagData("2","fixed"));
+                  itemList.add(TagData("1", "native"));
+                  itemList.add(TagData("2", "fixed"));
 
                   var tempField = {
-                    "id":"${data[index]['id']}",
+                    "id": "${data[index]['id']}",
                     "title": "${data[index]['title']}",
                     "body": "${data[index]['question']}",
-                    "vote" : "${data[index]['vote']}",
-                    "totalAns" : "${data[index]['no. of answer']}",
+                    "vote": "${data[index]['vote']}",
+                    "totalAns": "${data[index]['no. of answer']}",
                     "tags": itemList,
                   };
 
@@ -3020,7 +3134,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (BuildContext context) =>
-                          QusDetail(allParams : tempField),
+                          QusDetail(allParams: tempField),
                     ),
                   );
                 },
@@ -3028,19 +3142,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   children: [
                     Expanded(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 15.0),
-                          child: Text(
-                            "${data[index]['question']}",
-                            style: TextStyle(
-                                color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontFamily: "Rosarivo",
-                                fontStyle: FontStyle.normal,
-                                letterSpacing: 0.2
-                            ),
-                          ),
-                        )
-                    )
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Text(
+                        "${data[index]['question']}",
+                        style: TextStyle(
+                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Rosarivo",
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: 0.2),
+                      ),
+                    ))
                   ],
                 ),
               ),
@@ -3125,7 +3237,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                   ),
-
                   SizedBox(
                     width: 15,
                   ),
@@ -3169,13 +3280,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   mainAxisSpacing: 8.0,
                   shrinkWrap: true,
                   staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                  itemBuilder: (context, index){
+                  itemBuilder: (context, index) {
                     return Container(
                         decoration: BoxDecoration(
-                            color: AllCoustomTheme.getThemeData().textSelectionColor,
+                            color: AllCoustomTheme.getThemeData()
+                                .textSelectionColor,
                             borderRadius: BorderRadius.circular(4.0),
-                            border: Border.all(color: AllCoustomTheme.getThemeData().textSelectionColor, width: 1.0)),
-                        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                            border: Border.all(
+                                color: AllCoustomTheme.getThemeData()
+                                    .textSelectionColor,
+                                width: 1.0)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 8.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -3188,13 +3304,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     fontSize: ConstanceData.SIZE_TITLE16,
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.normal,
-                                    height: 1.3
-                                ),
+                                    height: 1.3),
                               ),
                             ),
                           ],
-                        )
-                    );
+                        ));
                   },
                 ),
               ),
@@ -3202,29 +3316,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           );
         },
       );
-    }
-    else
-    {
+    } else {
       return Center(
           child: Text(
-            "No data available yet",
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-              fontFamily: "Rasa",
-            ),
-          )
-      );
+        "No data available yet",
+        textAlign: TextAlign.center,
+        style: new TextStyle(
+          color: AllCoustomTheme.getTextThemeColors(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+          fontFamily: "Rasa",
+        ),
+      ));
     }
   }
 
-  Widget recommended()
-  {
+  Widget recommended() {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
-        crossAxisAlignment:  CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
@@ -3232,7 +3342,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           // random images
           Row(
-            crossAxisAlignment:  CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
@@ -3240,100 +3350,91 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     height: 115,
                     width: 150.0,
                     fit: BoxFit.fill,
-                    image: new AssetImage('assets/stackOverflow.png')
-                ),
+                    image: new AssetImage('assets/stackOverflow.png')),
               ),
               Container(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 70,
-                              width: 85.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/language.png')
-                          ),
-                        ],
-                      ),
+                      new Image(
+                          height: 70,
+                          width: 85.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/language.png')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/android.png')),
                       SizedBox(
-                        height: 4,
+                        width: 5,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/android.png')
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/askUbuntu.png')
-                          ),
-                        ],
-                      )
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/askUbuntu.png')),
                     ],
                   )
-              ),
+                ],
+              )),
               Container(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/askUbuntu.png')
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/android.png')
-                          ),
-                        ],
-                      ),
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/askUbuntu.png')),
                       SizedBox(
-                        height: 4,
+                        width: 5,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 70,
-                              width: 85.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/arqade.jpeg')
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/android.png')),
                     ],
-                  )
-              ),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      new Image(
+                          height: 70,
+                          width: 85.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/arqade.jpeg')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                ],
+              )),
             ],
           ),
           SizedBox(
@@ -3346,11 +3447,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               Expanded(
                 child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.35,
+                    height: MediaQuery.of(context).size.height * 0.35,
                     child: Scrollbar(
                       child: getQuestionsList(questionsList),
-                    )
-                ),
+                    )),
               ),
             ],
           ),
@@ -3359,125 +3459,115 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  Widget trending()
-  {
+  Widget trending() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.only(left: 20.0),
+      child: Text(
+        'Coming Soon... ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AllCoustomTheme.getTextThemeColor(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+        ),
+      ),
+    ));
   }
 
-  Widget week()
-  {
+  Widget week() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.only(left: 20.0),
+      child: Text(
+        'Coming Soon... ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AllCoustomTheme.getTextThemeColor(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+        ),
+      ),
+    ));
   }
 
-  Widget month()
-  {
+  Widget month() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.only(left: 20.0),
+      child: Text(
+        'Coming Soon... ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AllCoustomTheme.getTextThemeColor(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+        ),
+      ),
+    ));
   }
 
-  Widget askQus()
-  {
+  Widget askQus() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.only(left: 20.0),
+      child: Text(
+        'Coming Soon... ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AllCoustomTheme.getTextThemeColors(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+        ),
+      ),
+    ));
   }
 
-  Widget overall()
-  {
+  Widget overall() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.only(left: 20.0),
+      child: Text(
+        'Coming Soon... ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AllCoustomTheme.getTextThemeColors(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+        ),
+      ),
+    ));
   }
 
-  Widget weekly()
-  {
+  Widget weekly() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.only(left: 20.0),
+      child: Text(
+        'Coming Soon... ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AllCoustomTheme.getTextThemeColors(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+        ),
+      ),
+    ));
   }
+
   // ignore: missing_return
-  Widget _getPage(Tab tab){
-    switch(tab.text){
-      case 'Recommended': return recommended();
-      case 'Trending': return trending();
-      case 'Week': return week();
-      case 'Month': return month();
-    // case 'Ask Question': return askQus();
+  Widget _getPage(Tab tab) {
+    switch (tab.text) {
+      case 'Recommended':
+        return recommended();
+      case 'Trending':
+        return trending();
+      case 'Week':
+        return week();
+      case 'Month':
+        return month();
+      // case 'Ask Question': return askQus();
     }
   }
 
   // fourth screen section end
 
-
-  Widget getUserDropDownList()
-  {
-    if (userList != null && userList.length != 0)
-    {
+  Widget getUserDropDownList() {
+    if (userList != null && userList.length != 0) {
       return new DropdownButtonHideUnderline(
         child: ButtonTheme(
             alignedDropdown: true,
@@ -3505,12 +3595,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   );
                 }).toList(),
               ),
-            )
-        ),
+            )),
       );
-    }
-    else
-    {
+    } else {
       return Container(
         height: 0.0,
         width: 0.0,
@@ -3518,8 +3605,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
-  Widget getUserField()
-  {
+  Widget getUserField() {
     return new FormField(
       builder: (FormFieldState state) {
         return InputDecorator(
@@ -3530,9 +3616,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             labelStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: ConstanceData.SIZE_TITLE20,
-                color: AllCoustomTheme.getTextThemeColors()
-            ),
-
+                color: AllCoustomTheme.getTextThemeColors()),
             errorText: state.hasError ? state.errorText : null,
           ),
           isEmpty: selectedUser == '',
@@ -3540,7 +3624,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         );
       },
       validator: (val) {
-        return ((val != null && val!='') || (selectedUser!=null && selectedUser!='')) ? null : 'choose One';
+        return ((val != null && val != '') ||
+                (selectedUser != null && selectedUser != ''))
+            ? null
+            : 'choose One';
       },
     );
   }
@@ -3615,12 +3702,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     hintText: 'What do you want to talk about?',
                     hintStyle: TextStyle(
                         fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColors()
-                    ),
+                        color: AllCoustomTheme.getTextThemeColors()),
                     labelStyle: TextStyle(
                         fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColors()
-                    ),
+                        color: AllCoustomTheme.getTextThemeColors()),
                   ),
                 ),
               ),
@@ -3628,11 +3713,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               child: displayModalBottomSheet(context),
             ),*/
             ],
-          )
-      ),
+          )),
     );
   }
-
 
   displayModalBottomSheet(context) {
     showModalBottomSheet(
@@ -3650,7 +3733,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       width: 40.0,
                     ),
                     CircleAvatar(
-                      backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                      backgroundColor:
+                          AllCoustomTheme.getsecoundTextThemeColor(),
                       radius: 20,
                       child: Icon(
                         Icons.camera_alt_rounded,
@@ -3661,7 +3745,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       width: 40.0,
                     ),
                     CircleAvatar(
-                      backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                      backgroundColor:
+                          AllCoustomTheme.getsecoundTextThemeColor(),
                       radius: 20,
                       child: Icon(
                         Icons.video_call,
@@ -3672,7 +3757,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       width: 40.0,
                     ),
                     CircleAvatar(
-                      backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                      backgroundColor:
+                          AllCoustomTheme.getsecoundTextThemeColor(),
                       radius: 20,
                       child: Icon(
                         Icons.image,
@@ -3689,7 +3775,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 InkWell(
                   child: Padding(
-                    padding: EdgeInsets.only(top:10.0),
+                    padding: EdgeInsets.only(top: 10.0),
                     child: Center(
                       child: Text(
                         'Upload stock pitch',
@@ -3700,8 +3786,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                   ),
-                  onTap: ()
-                  {
+                  onTap: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(
                       CupertinoPageRoute(
@@ -3715,7 +3800,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 InkWell(
                   child: Padding(
-                    padding: EdgeInsets.only(top:10.0),
+                    padding: EdgeInsets.only(top: 10.0),
                     child: Center(
                       child: Text(
                         'Upload portfolio pitch',
@@ -3726,8 +3811,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ),
                   ),
-                  onTap: ()
-                  {
+                  onTap: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(
                       CupertinoPageRoute(
@@ -3740,7 +3824,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   color: AllCoustomTheme.getsecoundTextThemeColor(),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top:10.0),
+                  padding: EdgeInsets.only(top: 10.0),
                   child: Center(
                     child: Text(
                       'Ask a question',
@@ -3755,7 +3839,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   color: AllCoustomTheme.getsecoundTextThemeColor(),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top:10.0),
+                  padding: EdgeInsets.only(top: 10.0),
                   child: Center(
                     child: Text(
                       'Add a document',
@@ -3781,7 +3865,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       );
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(top:10.0,bottom: 20.0),
+                      padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
                       child: Center(
                         child: Text(
                           'Create a poll',
@@ -3791,8 +3875,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                         ),
                       ),
-                    )
-                )
+                    ))
               ],
             ),
           );
@@ -4077,9 +4160,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-
-  Widget getInceptionMemberView(data){
-
+  Widget getInceptionMemberView(data) {
     return new ListView.builder(
       itemCount: data.length,
       // physics: NeverScrollableScrollPhysics(),
@@ -4105,9 +4186,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-
-                    },
+                    onTap: () {},
 /*                    child: Icon(
                       Icons.badge,
                       color: Colors.yellow,
@@ -4119,11 +4198,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       width: 30,
                     ),
                   ),
-
                   GestureDetector(
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                     child: Image(
                       image: AssetImage('assets/badgeStar.jpg'),
                       fit: BoxFit.fill,
@@ -4133,18 +4209,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   ),
                 ],
               ),
-              onTap: () {
-
-              }
-
-          ),
+              onTap: () {}),
         );
       },
     );
   }
 
-  Widget getWeeklyLeagueMemberView(data){
-
+  Widget getWeeklyLeagueMemberView(data) {
     return new ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {
@@ -4180,9 +4251,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                     child: Image(
                       image: AssetImage('assets/buttonBadge.png'),
                       fit: BoxFit.fill,
@@ -4192,24 +4261,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   ),
                 ],
               ),
-              onTap: () {
-
-              }
-
-          ),
+              onTap: () {}),
         );
       },
     );
   }
 
   Widget fifthScreen() {
-
     final List<ChartData> chartData = [
       ChartData('David', 35, Color(0xFFFF8C00)),
       ChartData('Steve', 38, Color(0xFF008080)),
       ChartData('Jack', 34, Color(0xFFc7ebdf)),
     ];
-
 
     final List<ChartData> trackChartData = [
       ChartData('Total', 35, Color(0xFFFF8C00)),
@@ -4218,15 +4281,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ChartData('Stock Pitch', 38, Color(0xFFe70b31)),
       ChartData('Invest Q&A', 38, Color(0xFFfec20f)),
       ChartData('Social Invest', 38, Color(0xFFCD853F)),
-
     ];
 
     List<dynamic> inceptionMemberList = <dynamic>[
-      {"name": "green","measure": "741 XP"},
-      {"name": "alena","measure": "716 XP"},
-      {"name": "tat 1 anna","measure": "488 XP"},
-      {"name": "kristie","measure": "413 XP"},
-      {"name": "piotr","measure": "304 XP"},
+      {"name": "green", "measure": "741 XP"},
+      {"name": "alena", "measure": "716 XP"},
+      {"name": "tat 1 anna", "measure": "488 XP"},
+      {"name": "kristie", "measure": "413 XP"},
+      {"name": "piotr", "measure": "304 XP"},
     ];
 
     return SingleChildScrollView(
@@ -4335,22 +4397,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     fontFamily: "Rosarivo",
                   ),
                 ),
-              )
-          ),
+              )),
           Container(
             // margin: EdgeInsets.only(left: 110.0,right: 110.0),
-            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
+            margin: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.25,
+                right: MediaQuery.of(context).size.width * 0.25),
             padding: EdgeInsets.only(
               bottom: 3, // space between underline and text
             ),
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
-                      width: 1.0, // Underline width
-                    )
-                )
-            ),
+              color: AllCoustomTheme.getHeadingThemeColors(),
+              width: 1.0, // Underline width
+            ))),
           ),
           SizedBox(
             height: 4,
@@ -4358,8 +4419,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           //donut chart box
           Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.30,
-              margin: EdgeInsets.only(left: 15.0,right: 5.0),
+              height: MediaQuery.of(context).size.height * 0.30,
+              margin: EdgeInsets.only(left: 15.0, right: 5.0),
               /*decoration: new BoxDecoration(
                 color: AllCoustomTheme.getTextThemeColors(),
                 border: Border.all(
@@ -4372,21 +4433,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),*/
               child: Stack(
                 children: [
-                  SfCircularChart(
-                      series: <CircularSeries>[
-                        // Renders doughnut chart
-                        DoughnutSeries<ChartData, String>(
-                            dataSource: chartData,
-                            pointColorMapper:(ChartData data,  _) => data.color,
-                            xValueMapper: (ChartData data, _) => data.x,
-                            yValueMapper: (ChartData data, _) => data.y
-                        )
-                      ]
-                  ),
+                  SfCircularChart(series: <CircularSeries>[
+                    // Renders doughnut chart
+                    DoughnutSeries<ChartData, String>(
+                        dataSource: chartData,
+                        pointColorMapper: (ChartData data, _) => data.color,
+                        xValueMapper: (ChartData data, _) => data.x,
+                        yValueMapper: (ChartData data, _) => data.y)
+                  ]),
                   new Align(
                       alignment: Alignment.topCenter,
                       child: Container(
-                        margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.11),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.11),
                         child: Column(
                           children: [
                             Center(
@@ -4415,15 +4474,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             )
                           ],
                         ),
-                      )
-                  ),
+                      )),
                   InkWell(
                     child: new Align(
                       alignment: Alignment.topLeft,
                       child: Container(
                           height: 30,
                           width: 70,
-                          margin: EdgeInsets.only(top:20.0,bottom: 20.0),
+                          margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
                           decoration: new BoxDecoration(
                             // color: Color(0xFF1E90FF),
                             color: Color(0xFFc7ebdf),
@@ -4440,17 +4498,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             child: Text(
                               'EASY',
                               style: TextStyle(
-                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                color:
+                                    AllCoustomTheme.getsecoundTextThemeColor(),
                                 fontSize: ConstanceData.SIZE_TITLE16,
                                 fontFamily: "Roboto",
                                 package: 'Roboto-Regular',
                               ),
                             ),
-                          )
-                      ),
+                          )),
                     ),
-                    onTap: ()
-                    {
+                    onTap: () {
                       // goToQuestionTemp();
                     },
                   ),
@@ -4459,7 +4516,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     child: Container(
                         height: 30,
                         width: 110,
-                        margin: EdgeInsets.only(top:20.0,bottom: 20.0),
+                        margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
                         decoration: new BoxDecoration(
                           color: Color(0xFF008080),
                           border: Border.all(
@@ -4480,15 +4537,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               package: 'Roboto-Regular',
                             ),
                           ),
-                        )
-                    ),
+                        )),
                   ),
                   new Align(
                     alignment: Alignment.topRight,
                     child: Container(
                         height: 30,
                         width: 70,
-                        margin: EdgeInsets.only(top:60.0,bottom: 40.0),
+                        margin: EdgeInsets.only(top: 60.0, bottom: 40.0),
                         decoration: new BoxDecoration(
                           color: Color(0xFFFF8C00),
                           border: Border.all(
@@ -4509,17 +4565,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               package: 'Roboto-Regular',
                             ),
                           ),
-                        )
-                    ),
+                        )),
                   )
                 ],
-              )
-          ),
+              )),
           SizedBox(
             height: 4,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            padding: const EdgeInsets.only(left: 16, right: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -4550,8 +4604,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             package: 'Roboto-Regular',
                           ),
                         ),
-                      )
-                  ),
+                      )),
                 ),
               ],
             ),
@@ -4560,13 +4613,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 4,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16,right: 5.0),
+            padding: const EdgeInsets.only(left: 16, right: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Expanded(
                     child: InkWell(
-                      /* onTap: () async {
+                  /* onTap: () async {
                       List<Question> questions = await getQuestions();
                       if (questions.length < 1) {
                         Navigator.of(context).push(CupertinoPageRoute(
@@ -4582,45 +4635,43 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                       );
                     },*/
-                      onTap: () async {
-                        HelperClass.showLoading(context);
-                        Question questions = await getQuestions();
-                        if (questions==null) {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(CupertinoPageRoute(
-                              builder: (_) => ErrorPage(
+                  onTap: () async {
+                    HelperClass.showLoading(context);
+                    Question questions = await getQuestions();
+                    if (questions == null) {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (_) => ErrorPage(
                                 message: "There are not enough questions yet.",
-                              )
-                          )
-                          );
-                          return;
-                        }
-                        Navigator.pop(context);
-                        Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (BuildContext context) => QuestionTemplate(questions: questions),
-                        ),
-                        );
-                      },
-                      child: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 5.0),
-                            child: Text(
-                              'INCREASE YOUR SCORE',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE15,
-                                fontFamily: "Roboto",
-                              ),
-                            ),
-                          )
+                              )));
+                      return;
+                    }
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (BuildContext context) =>
+                            QuestionTemplate(questions: questions),
                       ),
-                    )
-                ),
+                    );
+                  },
+                  child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: AllCoustomTheme.getSeeMoreThemeColor(),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          'INCREASE YOUR SCORE',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "Roboto",
+                          ),
+                        ),
+                      )),
+                )),
               ],
             ),
           ),
@@ -4640,21 +4691,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     package: 'Roboto-Regular',
                   ),
                 ),
-              )
-          ),
+              )),
           Container(
-            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.10,right: MediaQuery.of(context).size.width*0.10),
+            margin: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.10,
+                right: MediaQuery.of(context).size.width * 0.10),
             padding: EdgeInsets.only(
               bottom: 3, // space between underline and text
             ),
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
-                      width: 1.0, // Underline width
-                    )
-                )
-            ),
+              color: AllCoustomTheme.getHeadingThemeColors(),
+              width: 1.0, // Underline width
+            ))),
           ),
           SizedBox(
             height: 10,
@@ -4662,20 +4712,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           //pie chart with tabs
           SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.65,
+              height: MediaQuery.of(context).size.height * 0.65,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 5.0),
+                    padding: const EdgeInsets.only(left: 16, right: 5.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         GestureDetector(
-                          onTap: ()
-                          {
+                          onTap: () {
                             Navigator.of(context).push(
                               CupertinoPageRoute(
-                                builder: (BuildContext context) => AuroStrikeBadges(),
+                                builder: (BuildContext context) =>
+                                    AuroStrikeBadges(),
                               ),
                             );
                           },
@@ -4703,8 +4753,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width*0.4,
-                    margin: EdgeInsets.only(left: 180.0,right: 3.0),
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    margin: EdgeInsets.only(left: 180.0, right: 3.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -4712,14 +4762,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         TabBar(
                           controller: _tabController,
                           isScrollable: true,
-                          onTap: (index)
-                          {
+                          onTap: (index) {
                             selectedTabIndex = index;
                           },
                           labelColor: AllCoustomTheme.getTextThemeColor(),
-                          labelStyle: TextStyle(
-                              fontSize: 16.0,letterSpacing: 0.2
-                          ),
+                          labelStyle:
+                              TextStyle(fontSize: 16.0, letterSpacing: 0.2),
                           indicatorColor: AllCoustomTheme.getTextThemeColor(),
                           indicatorWeight: 4.0,
                           // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
@@ -4749,39 +4797,47 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 SfCircularChart(
                                     legend: Legend(
                                         isVisible: true,
-                                        textStyle: TextStyle(color: AllCoustomTheme.getTextThemeColor()),
+                                        textStyle: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor()),
                                         alignment: ChartAlignment.center,
                                         position: LegendPosition.bottom,
-                                        overflowMode: LegendItemOverflowMode.wrap,
-                                        itemPadding: 10.0
-                                    ),
+                                        overflowMode:
+                                            LegendItemOverflowMode.wrap,
+                                        itemPadding: 10.0),
                                     series: <CircularSeries>[
                                       // Render pie chart
                                       DoughnutSeries<ChartData, String>(
                                         dataSource: trackChartData,
-                                        pointColorMapper:(ChartData data,  _) => data.color,
-                                        xValueMapper: (ChartData data, _) => data.x,
-                                        yValueMapper: (ChartData data, _) => data.y,
-                                        dataLabelSettings:DataLabelSettings(
-                                          isVisible : true,
+                                        pointColorMapper: (ChartData data, _) =>
+                                            data.color,
+                                        xValueMapper: (ChartData data, _) =>
+                                            data.x,
+                                        yValueMapper: (ChartData data, _) =>
+                                            data.y,
+                                        dataLabelSettings: DataLabelSettings(
+                                          isVisible: true,
                                         ),
                                       )
-                                    ]
-                                ),
+                                    ]),
                                 new Align(
                                     alignment: Alignment.topCenter,
                                     child: GestureDetector(
-                                      onTap: ()
-                                      {
+                                      onTap: () {
                                         Navigator.of(context).push(
                                           CupertinoPageRoute(
-                                            builder: (BuildContext context) => InvestedAssetModule(),
+                                            builder: (BuildContext context) =>
+                                                InvestedAssetModule(),
                                           ),
                                         );
                                       },
                                       child: Container(
                                         // margin: EdgeInsets.only(top:115),
-                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.16),
+                                        margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.16),
                                         child: Column(
                                           children: [
                                             Center(
@@ -4789,8 +4845,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                                 '800',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
                                                   fontFamily: "Roboto",
                                                   package: 'Roboto-Regular',
                                                 ),
@@ -4801,8 +4859,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                                 'coins',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
                                                   fontFamily: "Roboto",
                                                   package: 'Roboto-Regular',
                                                 ),
@@ -4811,8 +4871,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                           ],
                                         ),
                                       ),
-                                    )
-                                ),
+                                    )),
                               ],
                             ),
                           );
@@ -4822,8 +4881,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                 ],
-              )
-          ),
+              )),
 /*          Padding(
             padding: const EdgeInsets.only(left: 16,right: 5.0),
             child: Row(
@@ -4938,9 +4996,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 20,
           ),
           Padding(
-              padding: const EdgeInsets.only(left: 16,right: 5.0),
+              padding: const EdgeInsets.only(left: 16, right: 5.0),
               child: Container(
-                height: MediaQuery.of(context).size.height*0.06,
+                height: MediaQuery.of(context).size.height * 0.06,
                 child: ListView(
                   children: <Widget>[
                     Padding(
@@ -4957,11 +5015,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               package: 'Roboto-Regular',
                             ),
                           ),
-                        )
-                    ),
+                        )),
                     Container(
                       // margin: EdgeInsets.only(right: 130.0),
-                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.28),
+                      margin: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.28),
 
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
@@ -4969,18 +5027,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              )
-                          )
-                      ),
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ))),
                     ),
                   ],
                 ),
-              )
-          ),
+              )),
           Padding(
-            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            padding: const EdgeInsets.only(left: 13, right: 5.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -4988,51 +5043,54 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 SizedBox(
                   width: 160,
                 ),
-                Expanded(
-                    child: new FormField(
-                      builder: (FormFieldState state) {
-                        return InputDecorator(
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
-                            ),
-                            labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
-                            errorText: state.hasError ? state.errorText : null,
+                Expanded(child: new FormField(
+                  builder: (FormFieldState state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey, width: 1.0),
+                        ),
+                        labelStyle:
+                            AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
+                        errorText: state.hasError ? state.errorText : null,
+                      ),
+                      isEmpty: selectedInceptionLeague == '',
+                      child: new DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                        alignedDropdown: true,
+                        child: Container(
+                          height: 16.0,
+                          child: new DropdownButton(
+                            value: selectedInceptionLeague,
+                            dropdownColor: Colors.white,
+                            isExpanded: true,
+                            onChanged: (String newValue) {
+                              setState(() {
+                                selectedInceptionLeague = newValue;
+                              });
+                            },
+                            items: <String>[
+                              'Total Coins',
+                              'Invest Edu coins',
+                              'Track Record coins',
+                              'Stock Pitch coins',
+                              'Invest Q&A coins',
+                              'Social Invest coins'
+                            ].map((String value) {
+                              return new DropdownMenuItem(
+                                value: value,
+                                child: new Text(value,
+                                    style: AllCoustomTheme
+                                        .getDropDownMenuItemStyleTheme()),
+                              );
+                            }).toList(),
                           ),
-                          isEmpty: selectedInceptionLeague == '',
-                          child: new DropdownButtonHideUnderline(
-                              child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: Container(
-                                  height: 16.0,
-                                  child: new DropdownButton(
-                                    value: selectedInceptionLeague,
-                                    dropdownColor: Colors.white,
-                                    isExpanded: true,
-                                    onChanged: (String newValue) {
-                                      setState(() {
-                                        selectedInceptionLeague = newValue;
-                                      });
-                                    },
-                                    items: <String>['Total Coins', 'Invest Edu coins', 'Track Record coins', 'Stock Pitch coins','Invest Q&A coins',
-                                      'Social Invest coins']
-                                        .map((String value) {
-                                      return new DropdownMenuItem(
-                                        value: value,
-                                        child: new Text(
-                                            value,
-                                            style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                              )
-                          ),
-                        );
-                      },
-                    )
-                ),
+                        ),
+                      )),
+                    );
+                  },
+                )),
                 SizedBox(
                   width: 5,
                 ),
@@ -5043,7 +5101,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 5,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            padding: const EdgeInsets.only(left: 13, right: 5.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -5051,11 +5109,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 Expanded(
                   child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.35,
+                      height: MediaQuery.of(context).size.height * 0.35,
                       child: Scrollbar(
                         child: getInceptionMemberView(inceptionMemberList),
-                      )
-                  ),
+                      )),
                 ),
               ],
             ),
@@ -5065,9 +5122,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 25,
           ),
           Padding(
-              padding: const EdgeInsets.only(left: 16,right: 5.0),
+              padding: const EdgeInsets.only(left: 16, right: 5.0),
               child: Container(
-                height: MediaQuery.of(context).size.height*0.06,
+                height: MediaQuery.of(context).size.height * 0.06,
                 child: ListView(
                   children: <Widget>[
                     Padding(
@@ -5084,32 +5141,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               package: 'Roboto-Regular',
                             ),
                           ),
-                        )
-                    ),
+                        )),
                     Container(
                       // margin: EdgeInsets.only(right: 180.0),
-                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.42),
+                      margin: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.42),
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              )
-                          )
-                      ),
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ))),
                     ),
                   ],
                 ),
-              )
-          ),
+              )),
           SizedBox(
             height: 15,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            padding: const EdgeInsets.only(left: 13, right: 5.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -5117,52 +5171,64 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 Expanded(
                   child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.10,
+                      height: MediaQuery.of(context).size.height * 0.10,
                       child: Scrollbar(
                         child: ListView.builder(
                           itemCount: 10,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return InkWell(
-                                onTap: ()
-                                {
-                                  var tempField = {"rankingNum": "1" ,"name": "Warren Buffet","philosophy": "Buy companies at a low price, improve them via management and make long term gains",
-                                    "trackRecord": "He has a 30-year-plus track record making on average 20 percent a year" ,"image": "WarrenBuffet"};
+                                onTap: () {
+                                  var tempField = {
+                                    "rankingNum": "1",
+                                    "name": "Warren Buffet",
+                                    "philosophy":
+                                        "Buy companies at a low price, improve them via management and make long term gains",
+                                    "trackRecord":
+                                        "He has a 30-year-plus track record making on average 20 percent a year",
+                                    "image": "WarrenBuffet"
+                                  };
                                   print("tempfield: $tempField");
                                   Navigator.of(context).push(
                                     CupertinoPageRoute(
-                                      builder: (BuildContext context) => ClubDetail(allField: tempField),
+                                      builder: (BuildContext context) =>
+                                          ClubDetail(allField: tempField),
                                     ),
                                   );
                                 },
                                 child: Container(
                                     child: Row(
-                                      children: [
-                                        Stack(
-                                          alignment: Alignment.topLeft,
-                                          children: <Widget>[
-                                            CircleAvatar(
-                                              radius: 25.0,
-                                              backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
-                                              backgroundColor: Colors.transparent,
-                                            ),
-                                            Positioned(
-                                              bottom: 25,
-                                              child: CircleAvatar(
-                                                backgroundColor: Colors.blue,
-                                                radius: 12.0,
-                                                child: Text(
-                                                  "${index + 1}",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Color(0xFFD8AF4F),
-                                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                                    fontFamily: "Roboto",
-                                                    package: 'Roboto-Regular',
-                                                  ),
-                                                ),
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.topLeft,
+                                      children: <Widget>[
+                                        CircleAvatar(
+                                          radius: 25.0,
+                                          backgroundImage: index == 0
+                                              ? new AssetImage(
+                                                  'assets/filledweeklyAuroBadge.png')
+                                              : new AssetImage(
+                                                  'assets/weeklyAuroBadge.png'),
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                        Positioned(
+                                          bottom: 25,
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.blue,
+                                            radius: 12.0,
+                                            child: Text(
+                                              "${index + 1}",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color(0xFFD8AF4F),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE18,
+                                                fontFamily: "Roboto",
+                                                package: 'Roboto-Regular',
                                               ),
                                             ),
+                                          ),
+                                        ),
 /*                                          FractionalTranslation(
                                             translation: Offset(0.0, -0.99),
                                             child: CircleAvatar(
@@ -5180,19 +5246,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                               ),
                                             ),
                                           )*/
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        )
                                       ],
+                                    ),
+                                    SizedBox(
+                                      width: 10,
                                     )
-                                )
-                            );
+                                  ],
+                                )));
                           },
                         ),
-                      )
-                  ),
+                      )),
                 ),
               ],
             ),
@@ -5203,9 +5266,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 15,
           ),
           Padding(
-              padding: const EdgeInsets.only(left: 16,right: 5.0),
+              padding: const EdgeInsets.only(left: 16, right: 5.0),
               child: Container(
-                height: MediaQuery.of(context).size.height*0.06,
+                height: MediaQuery.of(context).size.height * 0.06,
                 child: ListView(
                   children: <Widget>[
                     Padding(
@@ -5222,29 +5285,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               package: 'Roboto-Regular',
                             ),
                           ),
-                        )
-                    ),
+                        )),
                     Container(
                       // margin: EdgeInsets.only(right: 210.0),
-                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.55),
+                      margin: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.55),
                       padding: EdgeInsets.only(
                         bottom: 3, // space between underline and text
                       ),
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              )
-                          )
-                      ),
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ))),
                     ),
                   ],
                 ),
-              )
-          ),
+              )),
           Padding(
-            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            padding: const EdgeInsets.only(left: 13, right: 5.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -5252,53 +5312,53 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 SizedBox(
                   width: 110,
                 ),
-                Expanded(
-                    child: new FormField(
-                      builder: (FormFieldState state) {
-                        return InputDecorator(
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
-                            ),
-                            labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
-
-                            errorText: state.hasError ? state.errorText : null,
+                Expanded(child: new FormField(
+                  builder: (FormFieldState state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey, width: 1.0),
+                        ),
+                        labelStyle:
+                            AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
+                        errorText: state.hasError ? state.errorText : null,
+                      ),
+                      isEmpty: selectedWeeklyLeague == '',
+                      child: new DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                        alignedDropdown: true,
+                        child: Container(
+                          height: 16.0,
+                          child: new DropdownButton(
+                            value: selectedWeeklyLeague,
+                            dropdownColor: Colors.white,
+                            isExpanded: true,
+                            onChanged: (String newValue) {
+                              setState(() {
+                                selectedWeeklyLeague = newValue;
+                              });
+                            },
+                            items: <String>[
+                              'Adaptive Investment Learning',
+                              'Investment Track Record',
+                              'Investment Stock Pitch',
+                              'Investment QnA',
+                              'Social Investment Score'
+                            ].map((String value) {
+                              return new DropdownMenuItem(
+                                value: value,
+                                child: new Text(value,
+                                    style: AllCoustomTheme
+                                        .getDropDownMenuItemStyleTheme()),
+                              );
+                            }).toList(),
                           ),
-                          isEmpty: selectedWeeklyLeague == '',
-                          child: new DropdownButtonHideUnderline(
-                              child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: Container(
-                                  height: 16.0,
-                                  child: new DropdownButton(
-                                    value: selectedWeeklyLeague,
-                                    dropdownColor: Colors.white,
-                                    isExpanded: true,
-                                    onChanged: (String newValue) {
-                                      setState(() {
-                                        selectedWeeklyLeague = newValue;
-                                      });
-                                    },
-                                    items: <String>['Adaptive Investment Learning', 'Investment Track Record', 'Investment Stock Pitch',
-                                      'Investment QnA',
-                                      'Social Investment Score']
-                                        .map((String value) {
-                                      return new DropdownMenuItem(
-                                        value: value,
-                                        child: new Text(
-                                            value,
-                                            style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                              )
-                          ),
-                        );
-                      },
-                    )
-                ),
+                        ),
+                      )),
+                    );
+                  },
+                )),
                 SizedBox(
                   width: 5,
                 ),
@@ -5309,7 +5369,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 5,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 13,right: 5.0),
+            padding: const EdgeInsets.only(left: 13, right: 5.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -5317,11 +5377,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 Expanded(
                   child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.35,
+                      height: MediaQuery.of(context).size.height * 0.35,
                       child: Scrollbar(
-                        child:getWeeklyLeagueMemberView(inceptionMemberList),
-                      )
-                  ),
+                        child: getWeeklyLeagueMemberView(inceptionMemberList),
+                      )),
                 ),
               ],
             ),
@@ -5339,12 +5398,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     if (marketCapUpDown == Icons.arrow_upward) {
       setState(() {
         marketCapUpDown = Icons.arrow_downward;
-        marketListData.sort((a, b) => a.quote.uSD.marketCap.compareTo(b.quote.uSD.marketCap));
+        marketListData.sort(
+            (a, b) => a.quote.uSD.marketCap.compareTo(b.quote.uSD.marketCap));
       });
     } else {
       setState(() {
         marketCapUpDown = Icons.arrow_upward;
-        marketListData.sort((a, b) => b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
+        marketListData.sort(
+            (a, b) => b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
       });
     }
   }
@@ -5373,18 +5434,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
-  List <dynamic> questionsList;
+  List<dynamic> questionsList;
   var portfolioChartData;
 
-
-
   // api calls section start
-  Future <void> getQuestionsData() async {
+  Future<void> getQuestionsData() async {
     questionsList = [];
     var response = await request.getRequest('forum/get_questions');
     print("qus list: $response");
-    if(response!=null && response!=false)
-    {
+    if (response != null && response != false) {
       setState(() {
         // _AnswerList = response['answers'];
         questionsList = response['message'];
@@ -5392,24 +5450,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
-  Future <void> getDoughnutPortfolioData() async {
+  Future<void> getDoughnutPortfolioData() async {
     print("getDoughnutPortfolioData called");
     var response = await request.getRequest('users/run_algo');
     print("portfolio chart list: $response");
-    if(response!=null && response!=false && response.containsKey('auth') && response['auth']==true)
-    {
+    if (response != null &&
+        response != false &&
+        response.containsKey('auth') &&
+        response['auth'] == true) {
       setState(() {
         homeDonutArray.add(1);
         homeDonutArray.add(2);
         homeDonutArray.add(3);
-        portfolioChartData = response['message']!=null && response['message']['algo_result']!=null ? response['message']['algo_result'] : null;
+        portfolioChartData = response['message'] != null &&
+                response['message']['algo_result'] != null
+            ? response['message']['algo_result']
+            : null;
         setHomeDoughnutChartData();
       });
     }
   }
-
-
-
 
   // api calls section end
 
@@ -5459,7 +5519,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       });
       await Future.delayed(const Duration(milliseconds: 500));
       displayModalBottomSheet(context);
-
     }
   }
 

@@ -574,7 +574,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                 InternationalPhoneInput(
                   labelText: 'Phone',
                   labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-                  style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                  // style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                   onPhoneNumberChange: onPhoneNumberChange,
                   initialPhoneNumber: phoneNumber,
                   initialSelection: phoneIsoCode,
