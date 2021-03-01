@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
@@ -23,7 +24,10 @@ import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_pr
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
 import 'package:auroim/modules/stripePayment/stripePaymentServer.dart';
+import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/goLiveInvest/personalSleeve.dart';
+import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
+import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
@@ -58,6 +62,13 @@ const String testDevice = 'YOUR_DEVICE_ID';
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   var _homeScaffoldKey = new GlobalKey<ScaffoldState>();
   ApiProvider request = new ApiProvider();
+
+  TextEditingController _appbarTextController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+  FeaturedCompaniesProvider _featuredCompaniesProvider =
+  FeaturedCompaniesProvider();
+
+  bool searching = false;
 
 
   bool _isInProgress = false;
@@ -134,7 +145,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.initState();
     getSharedPrefData();
     _tabController = new TabController(vsync: this, length: tabList.length);
-
+    _appbarTextController.addListener(() {
+      if (_appbarTextController.text.length > 0) {
+        setState(() {
+          searching = true;
+        });
+      } else {
+        setState(() {
+          searching = false;
+        });
+      }
+    });
 
     setFirstTab();
     callItself();
@@ -350,13 +371,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             )
           ],
         ),
-/*        SizedBox(
-          width: 10,
-        ),*/
         //search box area
         Container(
-          // width: MediaQuery.of(context).size.width*0.60,
-          // height: MediaQuery.of(context).size.height*0.053,
           margin: EdgeInsets.only(top: 10.0,left: 13.0),
           decoration: new BoxDecoration(
             color: Color(0xFFFFFFFF),
@@ -375,6 +391,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 width: MediaQuery.of(context).size.width*0.58,
                 height: MediaQuery.of(context).size.height*0.05,
                 child: TextFormField(
+                  controller: _appbarTextController,
+                  focusNode: _focusNode,
                   style: TextStyle(
                     color: AllCoustomTheme.getTextThemeColors(),
                     fontSize: ConstanceData.SIZE_TITLE14,
@@ -458,12 +476,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             key: _homeScaffoldKey,
             appBar: isSelect1 || isSelect2 || isSelect4 || isSelect5 ?
             PreferredSize(
-                preferredSize: Size.fromHeight(65.0),
-                child: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: AllCoustomTheme.getAppBarBackgroundThemeColors(),
-                  title: _buildAppBar(context),
-                ),
+              preferredSize: Size.fromHeight(65.0),
+              child: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: AllCoustomTheme.getAppBarBackgroundThemeColors(),
+                title: _buildAppBar(context),
+              ),
             ) : null,
             bottomNavigationBar: Container(
               decoration: new BoxDecoration(
@@ -775,7 +793,65 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
               ),
             ),
-            body: ModalProgressHUD(
+            body: searching
+                ? Container(
+              color: Colors.black,
+              height: MediaQuery.of(context).size.height - 65,
+              child: FutureBuilder(
+                future: _featuredCompaniesProvider
+                    .searchPublicCompanyList(_appbarTextController.text),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.data.length == 0) {
+                      return ListTile(
+                        onTap: () {
+                          setState(() {
+                            _appbarTextController.clear();
+                          });
+                        },
+                        title: Text(
+                          "No Results",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        trailing: Icon(Icons.close_rounded),
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            onTap: () {
+                              _appbarTextController.text = "";
+                              FocusScope.of(context).unfocus();
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SecurityPageFirst(
+                                    companyTicker: snapshot.data[index]
+                                    ["ticker"],
+                                  ),
+                                ),
+                              );
+                            },
+                            title: Text(
+                              snapshot.data[index]["company_name"],
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }
+                },
+              ),
+            ) : ModalProgressHUD(
               inAsyncCall: _isInProgress,
               opacity: 0,
               progressIndicator: SizedBox(),
@@ -788,26 +864,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: isSelect1 || isSelect2 || isSelect5 || isSelect4 ? 2 : MediaQuery.of(context).padding.top,
-                      child: Visibility(
-                        visible: isSelect1 || isSelect2 || isSelect5 || isSelect4,
-                        child: Container(
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            border: Border.all(
+                        height: isSelect1 || isSelect2 || isSelect5 || isSelect4 ? 2 : MediaQuery.of(context).padding.top,
+                        child: Visibility(
+                          visible: isSelect1 || isSelect2 || isSelect5 || isSelect4,
+                          child: Container(
+                            decoration: new BoxDecoration(
                               color: Color(0xFFFFFFFF),
-                              width: 1.5,
+                              border: Border.all(
+                                color: Color(0xFFFFFFFF),
+                                width: 1.5,
+                              ),
                             ),
                           ),
-                        ),
-                      )
+                        )
                     ),
                     Expanded(
                       child: isSelect1
                           ? firstScreen()
                           : isSelect2
-                              ? secondScreen()
-                              : (isSelect3 ? thirdScreen() : (isSelect4 ? fourthScreen() : fifthScreen() )),
+                          ? secondScreen()
+                          : (isSelect3 ? thirdScreen() : (isSelect4 ? fourthScreen() : fifthScreen() )),
                     ),
                   ],
                 ),
@@ -836,17 +912,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           height: 2,
         ),
         Align(
-          alignment: Alignment.topCenter,
-          child: Text(
-            "Home",
-            style: TextStyle(
-                fontSize: ConstanceData.SIZE_TITLE14,
-                color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "Rasa",
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0.2
-            ),
-          )
+            alignment: Alignment.topCenter,
+            child: Text(
+              "Home",
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect1 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
         ),
       ],
     );
@@ -869,17 +945,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           height: 2,
         ),
         Align(
-          alignment: Alignment.topCenter,
-          child: Text(
-            "Invest",
-            style: TextStyle(
-                fontSize: ConstanceData.SIZE_TITLE14,
-                color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "Rasa",
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0.2
-            ),
-          )
+            alignment: Alignment.topCenter,
+            child: Text(
+              "Invest",
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect2 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
         ),
       ],
     );
@@ -915,17 +991,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           height: 2,
         ),
         Align(
-          alignment: Alignment.topCenter,
-          child: Text(
-            "Exchange",
-            style: TextStyle(
-                fontSize: ConstanceData.SIZE_TITLE14,
-                color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "Rasa",
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0.2
-            ),
-          )
+            alignment: Alignment.topCenter,
+            child: Text(
+              "Exchange",
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect4 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
         ),
       ],
     );
@@ -949,20 +1025,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           height: 2,
         ),
         Align(
-          alignment: Alignment.topCenter,
-          child: Text(
-            // "Learn",
-            prefs!=null && prefs.containsKey('InvestorType') &&
-                prefs.getString('InvestorType') != null && prefs.getString('InvestorType') == 'Accredited Investor'
-                ? 'MarketPlace' : 'Learn',
-            style: TextStyle(
-                fontSize: ConstanceData.SIZE_TITLE14,
-                color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
-                fontFamily: "Rasa",
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0.2
-            ),
-          )
+            alignment: Alignment.topCenter,
+            child: Text(
+              // "Learn",
+              prefs!=null && prefs.containsKey('InvestorType') &&
+                  prefs.getString('InvestorType') != null && prefs.getString('InvestorType') == 'Accredited Investor'
+                  ? 'MarketPlace' : 'Learn',
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: isSelect5 ? AllCoustomTheme.getIconThemeColors() : AllCoustomTheme.getSecondIconThemeColor(),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2
+              ),
+            )
         ),
       ],
     );
@@ -991,17 +1067,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 historyOHLCV != null
                     ? Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: Text(
-                            'Bitcoin, BTC Live',
-                            style: TextStyle(color: AllCoustomTheme.getTextThemeColors(), fontSize: ConstanceData.SIZE_TITLE18),
-                          ),
-                        ),
-                      )
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.decelerate,
+                  cycles: 1,
+                  builder: (anim) => Transform.scale(
+                    scale: anim.value,
+                    child: Text(
+                      'Bitcoin, BTC Live',
+                      style: TextStyle(color: AllCoustomTheme.getTextThemeColors(), fontSize: ConstanceData.SIZE_TITLE18),
+                    ),
+                  ),
+                )
                     : SizedBox(),
                 Animator(
                   duration: Duration(milliseconds: 500),
@@ -1026,50 +1102,50 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             padding: const EdgeInsets.only(right: 16, left: 16),
             child: historyOHLCV != null
                 ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: Text(
-                            '\$',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontWeight: FontWeight.bold,
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                            ),
-                          ),
-                        ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Animator(
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.decelerate,
+                  cycles: 1,
+                  builder: (anim) => Transform.scale(
+                    scale: anim.value,
+                    child: Text(
+                      '\$',
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontWeight: FontWeight.bold,
+                        fontSize: ConstanceData.SIZE_TITLE18,
                       ),
-                      SizedBox(
-                        width: 2,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Animator(
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.decelerate,
+                  cycles: 1,
+                  builder: (anim) => Transform.scale(
+                    scale: anim.value,
+                    child: Text(
+                      generalStats != null
+                          ? normalizeNumNoCommas(
+                        generalStats.price,
+                      )
+                          : "0",
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: Text(
-                            generalStats != null
-                                ? normalizeNumNoCommas(
-                                    generalStats.price,
-                                  )
-                                : "0",
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: SizedBox(),
-                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(),
+                ),
 /*                      Row(
                         children: <Widget>[
                           Animator(
@@ -1121,8 +1197,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                         ],
                       )*/
-                    ],
-                  )
+              ],
+            )
                 : SizedBox(),
           ),
           SizedBox(
@@ -1131,54 +1207,54 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           Expanded(
             child: historyOHLCV != null
                 ? historyOHLCV.isEmpty != true
-                    ? Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: OHLCVGraph(
-                            data: historyOHLCV,
-                            enableGridLines: true,
-                            gridLineColor: globals.buttoncolor1,
-                            gridLineLabelColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                            gridLineAmount: 4,
-                            volumeProp: 0.3,
-                            lineWidth: 1,
-                            gridLineWidth: 0.5,
-                            decreaseColor: Colors.red,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        alignment: Alignment.topCenter,
-                        child: Text("No OHLCV data found :(", style: Theme.of(context).textTheme.caption),
-                      )
+                ? Animator(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.decelerate,
+              cycles: 1,
+              builder: (anim) => Transform.scale(
+                scale: anim.value,
+                child: OHLCVGraph(
+                  data: historyOHLCV,
+                  enableGridLines: true,
+                  gridLineColor: globals.buttoncolor1,
+                  gridLineLabelColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                  gridLineAmount: 4,
+                  volumeProp: 0.3,
+                  lineWidth: 1,
+                  gridLineWidth: 0.5,
+                  decreaseColor: Colors.red,
+                ),
+              ),
+            )
                 : Container(
-                    child: Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 12,
-                      ),
-                    ),
-                  ),
+              alignment: Alignment.topCenter,
+              child: Text("No OHLCV data found :(", style: Theme.of(context).textTheme.caption),
+            )
+                : Container(
+              child: Center(
+                child: CupertinoActivityIndicator(
+                  radius: 12,
+                ),
+              ),
+            ),
           ),
           generalStats != null
               ? historyOHLCV != null
-                  ? Animator(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.decelerate,
-                      cycles: 1,
-                      builder: (anim) => Transform.scale(
-                        scale: anim.value,
-                        child: QuickPercentChangeBar(
-                          snapshot: generalStats,
-                        ),
-                      ),
-                    )
-                  : SizedBox()
+              ? Animator(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.decelerate,
+            cycles: 1,
+            builder: (anim) => Transform.scale(
+              scale: anim.value,
+              child: QuickPercentChangeBar(
+                snapshot: generalStats,
+              ),
+            ),
+          )
+              : SizedBox()
               : Container(
-                  height: 0.0,
-                ),
+            height: 0.0,
+          ),
         ],
       ),
     );
@@ -1201,62 +1277,62 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     print("homeDonutCurrentIndex: $homeDonutCurrentIndex");
 
     if(portfolioChartData!=null && portfolioChartData!=false)
+    {
+      if(homeDonutCurrentIndex==0 && portfolioChartData['weights_assetclass']!=null && portfolioChartData['weights_assetclass']['weights']!=null)
       {
-        if(homeDonutCurrentIndex==0 && portfolioChartData['weights_assetclass']!=null && portfolioChartData['weights_assetclass']['weights']!=null)
-        {
-          var tempWeightsData = portfolioChartData['weights_assetclass']['weights'];
+        var tempWeightsData = portfolioChartData['weights_assetclass']['weights'];
 
-          homeChartData = [];
-          final data1 = tempWeightsData as Map;
-          for (final name in data1.keys) {
-            final value = data1[name];
-            var tempDouble = value.toDouble();
-            homeChartData.add(ChartData('$name', double.parse(tempDouble.toStringAsFixed(4)), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
-          }
-        }
-
-        else if(homeDonutCurrentIndex==1 && portfolioChartData['weights_assetcountry']!=null && portfolioChartData['weights_assetcountry']['weights']!=null)
-        {
-          homeChartData = [];
-          var tempWeightsData = portfolioChartData['weights_assetcountry']['weights'];
-          final data1 = tempWeightsData as Map;
-          for (final name in data1.keys) {
-            final value = data1[name];
-            var tempDouble = value.toDouble();
-            homeChartData.add(ChartData('$name', double.parse(tempDouble.toStringAsFixed(5)), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
-          }
-        }
-
-        else if(homeDonutCurrentIndex==2 && portfolioChartData['weights_foliotickers']!=null && portfolioChartData['weights_foliotickers']['sector']!=null)
-        {
-          homeChartData = [];
-
-          var tempWeightsData = portfolioChartData['weights_foliotickers']['sector'];
-          var allSectorKeys = [];
-          final data = tempWeightsData as Map;
-          for (final name in data.keys) {
-            final value = data[name];
-            allSectorKeys.add(value);
-          }
-
-          var finalSectorData = Map();
-          allSectorKeys.forEach((element) {
-            if(!finalSectorData.containsKey(element)) {
-              finalSectorData[element] = 1;
-            } else {
-              finalSectorData[element] +=1;
-            }
-          });
-
-          print(finalSectorData);
-
-          for (final name in finalSectorData.keys) {
-            final value = finalSectorData[name];
-
-            homeChartData.add(ChartData('$name', value.toDouble(), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
-          }
+        homeChartData = [];
+        final data1 = tempWeightsData as Map;
+        for (final name in data1.keys) {
+          final value = data1[name];
+          var tempDouble = value.toDouble();
+          homeChartData.add(ChartData('$name', double.parse(tempDouble.toStringAsFixed(4)), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         }
       }
+
+      else if(homeDonutCurrentIndex==1 && portfolioChartData['weights_assetcountry']!=null && portfolioChartData['weights_assetcountry']['weights']!=null)
+      {
+        homeChartData = [];
+        var tempWeightsData = portfolioChartData['weights_assetcountry']['weights'];
+        final data1 = tempWeightsData as Map;
+        for (final name in data1.keys) {
+          final value = data1[name];
+          var tempDouble = value.toDouble();
+          homeChartData.add(ChartData('$name', double.parse(tempDouble.toStringAsFixed(5)), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
+        }
+      }
+
+      else if(homeDonutCurrentIndex==2 && portfolioChartData['weights_foliotickers']!=null && portfolioChartData['weights_foliotickers']['sector']!=null)
+      {
+        homeChartData = [];
+
+        var tempWeightsData = portfolioChartData['weights_foliotickers']['sector'];
+        var allSectorKeys = [];
+        final data = tempWeightsData as Map;
+        for (final name in data.keys) {
+          final value = data[name];
+          allSectorKeys.add(value);
+        }
+
+        var finalSectorData = Map();
+        allSectorKeys.forEach((element) {
+          if(!finalSectorData.containsKey(element)) {
+            finalSectorData[element] = 1;
+          } else {
+            finalSectorData[element] +=1;
+          }
+        });
+
+        print(finalSectorData);
+
+        for (final name in finalSectorData.keys) {
+          final value = finalSectorData[name];
+
+          homeChartData.add(ChartData('$name', value.toDouble(), globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
+        }
+      }
+    }
   }
 
 
@@ -1350,11 +1426,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               xValueMapper: (ChartData data, _) => data.x,
                               yValueMapper: (ChartData data, _) => data.y,
                               dataLabelSettings:DataLabelSettings(
-                                isVisible : true,
-                                // labelPosition: ChartDataLabelPosition.outside,
-                                useSeriesColor: true,
-                                showCumulativeValues: true,
-                                showZeroValue: true
+                                  isVisible : true,
+                                  // labelPosition: ChartDataLabelPosition.outside,
+                                  useSeriesColor: true,
+                                  showCumulativeValues: true,
+                                  showZeroValue: true
                               ),
                             )
                           ]
@@ -2395,517 +2471,37 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Widget secondScreen() {
 
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(
-        children: <Widget>[
-/*          Padding(
-            padding: EdgeInsets.only(left:16.0,right:16.0),
-            child: Row(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    _scaffoldKey.currentState.openDrawer();
-                  },
-                  child: Icon(
-                    Icons.sort,
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            CryptoMarketplace(),
+            PrivateDealsIntro(
+              goToMarketplaceCallback: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PrivateDealsMarketplaceMainPage(),
                   ),
-                ),
-                InkWell(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 4.0),
-                        child: CircleAvatar(
-                          radius: 15.0,
-                          backgroundImage: new AssetImage('assets/download.jpeg'),
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
-                      SizedBox(
-                          width:10.0
-                      ),
-                      //search box area
-                      Container(
-                        width: MediaQuery.of(context).size.width*0.64,
-                        height: MediaQuery.of(context).size.height*0.06,
-                        decoration: new BoxDecoration(
-                          color: Color(0xFFFFFFFF),
-                          border: Border.all(
-                            color: Color(0xff696969),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15.0),
-                          ),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.61,
-                              height: MediaQuery.of(context).size.height*0.05,
-                              child: TextFormField(
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                  fontSize: ConstanceData.SIZE_TITLE14,
-                                ),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  prefixIcon: Icon(
-                                    FontAwesomeIcons.search,
-                                    color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                                    size: 15,
-                                  ),
-                                  hintText: "Search",
-                                  hintStyle: TextStyle(
-                                    color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE14,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      //setting icon
-                      InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 4.0),
-                            child: CircleAvatar(
-                              radius: 15.0,
-                              backgroundColor: Colors.transparent,
-                              child: Icon(
-                                Icons.settings,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            ),
-                          )
-                      ),
-
-                    ],
-                  ),
-
-                )
-              ],
+                );
+              },
             ),
-          ),*/
-
-          // handshake image box
-/*          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.25,
-            child:  Container(
-              margin: EdgeInsets.only(left: 5.0,right: 5.0),
-              child: Image(
-                  fit: BoxFit.fill,
-                  image: new AssetImage('assets/handShake.png')
-              ),
+            // portfolio component box
+            SizedBox(
+              height: 20,
             ),
-          ),*/
-        // auro paper and doughnut chart with go live and paper section
-/*          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.60,
-            child:  Container(
-                margin: EdgeInsets.only(left: 5.0,right: 5.0,top:10.0),
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'AURO PAPER',
-                          style: TextStyle(
-                            color: AllCoustomTheme.getHeadingThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE20,
-                            fontFamily: "Rosarivo",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.normal,
-                            letterSpacing: 0.1
-                          ),
-                        )
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
-                      alignment: Alignment.center,
-                        padding: EdgeInsets.only(
-                          bottom: 3, // space between underline and text
-                        ),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                  color: Color(0xFFD8AF4F),
-                                  width: 1.6, // Underline width
-                                )
-                            )
-                        ),
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height*0.27,
-                        // child: getDonutChartView(),
-                        child: CarouselSlider.builder(
-                          itemCount: donutArray.length,
-                          options: CarouselOptions(
-                              autoPlay: false,
-                              viewportFraction: 0.95,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  donutCurrentIndex = index;
-                                });
-                              }
-                          ),
-                          itemBuilder: (context,index){
-                            return Container(
-                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.048,right: MediaQuery.of(context).size.width*0.048),
-                              child: SfCircularChart(
-                                  series: <CircularSeries>[
-                                    // Renders doughnut chart
-                                    DoughnutSeries<ChartData, String>(
-                                        dataSource: chartData,
-                                        pointColorMapper:(ChartData data,  _) => data.color,
-                                        xValueMapper: (ChartData data, _) => data.x,
-                                        yValueMapper: (ChartData data, _) => data.y
-                                    )
-                                  ]
-                              ),
-                            );
-                          },
-                        ),
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: donutArray.map((url) {
-                          int index = donutArray.indexOf(url);
-                          return Container(
-                            width: 10.0,
-                            height: 8.0,
-                            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: donutCurrentIndex == index
-                              // ? Color(0xFFFFFFFF)
-                                  ? Color(0xFFD8AF4F)
-                                  : Color(0xffCBB4B4),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.07,right: MediaQuery.of(context).size.width*0.03),
-                        child: Text(
-                          "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
-                              "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                            fontSize: 14.5,
-                            fontFamily: "Roboto",
-                            fontStyle: FontStyle.normal,
-                            letterSpacing: 0.2
-                          ),
-                        )
-                    ),
-                  ],
-                )
+            // personal sleeve section
+            PersonalSleeve(
+              goToPersonalSleeveCallback: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PersonalSleeve()));
+              },
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 14, right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height*0.06,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height*0.06,
-                    width: MediaQuery.of(context).size.width*0.72,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                        color: AllCoustomTheme.getButtonBoxColor()
-                    ),
-                    child: MaterialButton(
-                      splashColor: Colors.grey,
-                      child: Text(
-                        "Initiate First Name Portfolio",
-                        style: TextStyle(
-                          color: AllCoustomTheme.getButtonTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE13,
-                          fontFamily: "Roboto",
-                        ),
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                            new SearchFirstPage(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          // go pro,live button
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              SizedBox(
-                width: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height*0.06,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height*0.06,
-                      width: MediaQuery.of(context).size.width*0.32,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                          color: AllCoustomTheme.getButtonBoxColor()
-                      ),
-                      child: MaterialButton(
-                        splashColor: Colors.grey,
-                        child: Text(
-                          "GO PRO",
-                          style: AllCoustomTheme.getButtonSelectedTextStyleTheme()
-                        ),
-                        onPressed: () async
-                        {
-                          Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                              new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height*0.06,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height*0.06,
-                      width: MediaQuery.of(context).size.width*0.32,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                      ),
-                      child: MaterialButton(
-                        splashColor: Colors.grey,
-                        child: Text(
-                          "GO LIVE",
-                          style: AllCoustomTheme.getButtonNonSelectedTextStyleTheme()
-                        ),
-                        onPressed: () async
-                        {
-                          Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                              new WishList()));
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 30,
-              ),
-            ],
-          ),*/
-
-          // portfolio component box
-          SizedBox(
-            height: 20,
-          ),
-/*          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.73,
-            child:  Container(
-                margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top:5.0),
-                      child: Center(
-                          child: Text(
-                            'PORTFOLIO COMPONENTS',
-                            style: new TextStyle(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Rosarivo",
-                            ),
-                          )
-                      ),
-                    ),
-                    Container(
-                      // margin: EdgeInsets.only(left: 30.0,right: 30.0),
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.06,right: MediaQuery.of(context).size.width*0.06),
-
-                      padding: EdgeInsets.only(
-                        bottom: 3, // space between underline and text
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              )
-                          )
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(top:10.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.only(left:95.0,bottom: 5.0),
-                                child: Text(
-                                  'Auro Portfolio',
-                                  style: new TextStyle(
-                                    color: AllCoustomTheme.getSubHeadingThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                    package: 'Roboto-Regular',
-                                  ),
-                                )
-                            ),
-                            Padding(
-                                padding: EdgeInsets.only(left:30.0,top: 3.0),
-                                child: Text(
-                                  'SEE ALL',
-                                  style: new TextStyle(
-                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                  ),
-                                )
-                            )
-                          ],
-                        )
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height*0.37,
-                        child: Container(
-                            margin: EdgeInsets.only(top: 5.0,left: 5.0,right: 5.0,bottom: 5.0),
-                            child: getAreaChartView()
-                        )
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                            ),
-                            Text(
-                              "First Name's Portfolio",
-                              textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                color: AllCoustomTheme.getSubHeadingThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE15,
-                                fontFamily: "Roboto",
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.10,
-                            ),
-                            Text(
-                              'See More',
-                              style: TextStyle(
-                                color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE15,
-                                fontFamily: "Roboto",
-                              ),
-                            )
-                          ],
-                        )
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left:15.0,bottom: 5.0,top: 5.0),
-                      child: Text(
-                        'You can also invest in individual securities that you like and create your own portfolio!! ',
-                        style: TextStyle(
-                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                          fontSize: ConstanceData.SIZE_TITLE15,
-                          fontFamily: "Roboto",
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height*0.065,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height*0.065,
-                              width: MediaQuery.of(context).size.width*0.45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                  color: AllCoustomTheme.getButtonBoxColor()
-                              ),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "START NOW",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getButtonTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE13,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-            ),
-          ),*/
-          // personal sleeve section
-          PersonalSleeve(
-            goToPersonalSleeveCallback: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PersonalSleeve()));
-            },
-          ),
-          // investment guru component box
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.57,
-            child:  Container(
-                margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                /*decoration: new BoxDecoration(
+            // investment guru component box
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.57,
+              child:  Container(
+                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                  /*decoration: new BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFfec20f),
                     width: 1,
@@ -2914,116 +2510,116 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     Radius.circular(2.0),
                   ),
                 ),*/
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top:10.0),
-                      child: Center(
-                          child: Text(
-                            'INVESTMENT GURUS',
-                            style: new TextStyle(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Rosarivo",
-                            ),
-                          )
-                      ),
-                    ),
-                    Container(
-                      // margin: EdgeInsets.only(left: 50.0,right: 50.0),
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.12,right: MediaQuery.of(context).size.width*0.12),
-
-                      padding: EdgeInsets.only(
-                        bottom: 3, // space between underline and text
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top:10.0),
+                        child: Center(
+                            child: Text(
+                              'INVESTMENT GURUS',
+                              style: new TextStyle(
                                 color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              )
-                          )
+                                fontSize: ConstanceData.SIZE_TITLE18,
+                                fontFamily: "Rosarivo",
+                              ),
+                            )
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height*0.34,
-                        child: Container(
+                      Container(
+                        // margin: EdgeInsets.only(left: 50.0,right: 50.0),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.12,right: MediaQuery.of(context).size.width*0.12),
+
+                        padding: EdgeInsets.only(
+                          bottom: 3, // space between underline and text
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                  color: AllCoustomTheme.getHeadingThemeColors(),
+                                  width: 1.0, // Underline width
+                                )
+                            )
+                        ),
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height*0.34,
+                          child: Container(
                             margin: EdgeInsets.only(top: 15.0,left: 5.0,right: 5.0,bottom: 5.0),
                             child: getAreaChartView(),
-                        )
-                    ),
-                    Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.only(left:230.0,bottom: 5.0,top: 3.0),
-                                child: Text(
-                                  'See More',
-                                  style: new TextStyle(
-                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                  ),
-                                )
-                            ),
-                          ],
-                        )
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            // height: 35,
-                            height: MediaQuery.of(context).size.height*0.065,
-                            child: Container(
-                              /*height: 35,
-                              width: 150,*/
-                              height: MediaQuery.of(context).size.height*0.065,
-                              width: MediaQuery.of(context).size.width*0.45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                  color: AllCoustomTheme.getButtonBoxColor()
+                          )
+                      ),
+                      Container(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.only(left:230.0,bottom: 5.0,top: 3.0),
+                                  child: Text(
+                                    'See More',
+                                    style: new TextStyle(
+                                      color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE15,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  )
                               ),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "START NOW",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getButtonTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE13,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.bold,
+                            ],
+                          )
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              // height: 35,
+                              height: MediaQuery.of(context).size.height*0.065,
+                              child: Container(
+                                /*height: 35,
+                              width: 150,*/
+                                height: MediaQuery.of(context).size.height*0.065,
+                                width: MediaQuery.of(context).size.width*0.45,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()
+                                ),
+                                child: MaterialButton(
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "START NOW",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE13,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
 
-                  ],
-                )
+                    ],
+                  )
+              ),
             ),
-          ),
-          // pe/vc/re component box
-          SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.27,
-            child:  Container(
-                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+            // pe/vc/re component box
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.27,
+              child:  Container(
+                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
 /*                decoration: new BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFfec20f),
@@ -3033,171 +2629,171 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     Radius.circular(2.0),
                   ),
                 ),*/
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top:5.0),
-                      child: Center(
-                          child: Text(
-                            'PE/VC/RE/ESG',
-                            style: new TextStyle(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Rosarivo",
-                            ),
-                          )
-                      ),
-                    ),
-                    Container(
-                      // margin: EdgeInsets.only(left: 90.0,right: 90.0),
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
-
-                      padding: EdgeInsets.only(
-                        bottom: 3, // space between underline and text
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top:5.0),
+                        child: Center(
+                            child: Text(
+                              'PE/VC/RE/ESG',
+                              style: new TextStyle(
                                 color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              )
-                          )
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height*0.065,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height*0.065,
-                              width: MediaQuery.of(context).size.width*0.45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                  color: AllCoustomTheme.getButtonBoxColor()
+                                fontSize: ConstanceData.SIZE_TITLE18,
+                                fontFamily: "Rosarivo",
                               ),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "START NOW",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getButtonTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE13,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.bold,
+                            )
+                        ),
+                      ),
+                      Container(
+                        // margin: EdgeInsets.only(left: 90.0,right: 90.0),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
+
+                        padding: EdgeInsets.only(
+                          bottom: 3, // space between underline and text
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                  color: AllCoustomTheme.getHeadingThemeColors(),
+                                  width: 1.0, // Underline width
+                                )
+                            )
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height*0.065,
+                              child: Container(
+                                height: MediaQuery.of(context).size.height*0.065,
+                                width: MediaQuery.of(context).size.width*0.45,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()
+                                ),
+                                child: MaterialButton(
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "START NOW",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE13,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(left:235.0),
-                        child: Text(
-                          'See More',
-                          style: new TextStyle(
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE15,
-                            fontFamily: "Roboto",
-                          ),
-                        )
-                    ),
-
-                  ],
-                )
-            ),
-          ),
-          // last start now component box
-          SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.27,
-            child:  Container(
-                margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top:5.0),
-                      child: Center(
+                      Padding(
+                          padding: EdgeInsets.only(left:235.0),
                           child: Text(
-                            'STUDENT',
+                            'See More',
                             style: new TextStyle(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Rosarivo",
+                              color: AllCoustomTheme.getSeeMoreThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE15,
+                              fontFamily: "Roboto",
                             ),
                           )
                       ),
-                    ),
-                    Container(
-                      // margin: EdgeInsets.only(left: 110.0,right: 110.0),
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.30,right: MediaQuery.of(context).size.width*0.30),
 
-                      padding: EdgeInsets.only(
-                        bottom: 3, // space between underline and text
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
+                    ],
+                  )
+              ),
+            ),
+            // last start now component box
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.27,
+              child:  Container(
+                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top:5.0),
+                        child: Center(
+                            child: Text(
+                              'STUDENT',
+                              style: new TextStyle(
                                 color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              )
-                          )
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height*0.065,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height*0.065,
-                              width: MediaQuery.of(context).size.width*0.45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                                  color: AllCoustomTheme.getButtonBoxColor()
+                                fontSize: ConstanceData.SIZE_TITLE18,
+                                fontFamily: "Rosarivo",
                               ),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "START NOW",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getButtonTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE13,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.bold,
+                            )
+                        ),
+                      ),
+                      Container(
+                        // margin: EdgeInsets.only(left: 110.0,right: 110.0),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.30,right: MediaQuery.of(context).size.width*0.30),
+
+                        padding: EdgeInsets.only(
+                          bottom: 3, // space between underline and text
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                  color: AllCoustomTheme.getHeadingThemeColors(),
+                                  width: 1.0, // Underline width
+                                )
+                            )
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height*0.065,
+                              child: Container(
+                                height: MediaQuery.of(context).size.height*0.065,
+                                width: MediaQuery.of(context).size.width*0.45,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
+                                    color: AllCoustomTheme.getButtonBoxColor()
+                                ),
+                                child: MaterialButton(
+                                  splashColor: Colors.grey,
+                                  child: Text(
+                                    "START NOW",
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getButtonTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE13,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )
+                    ],
+                  )
+              ),
             ),
-          ),
-        ],
-      )
+          ],
+        )
     );
   }
 
@@ -3218,23 +2814,23 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 GestureDetector(
-                  onTap: ()
-                  {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (BuildContext context) => AddEditQus(),
+                    onTap: ()
+                    {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (BuildContext context) => AddEditQus(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Ask question",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getSeeMoreThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
                       ),
-                    );
-                  },
-                  child: Text(
-                    "Ask question",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AllCoustomTheme.getSeeMoreThemeColor(),
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      fontFamily: "Roboto",
-                    ),
-                  )
+                    )
                 )
 /*                GestureDetector(
                   onTap: () {
@@ -3871,7 +3467,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       case 'Trending': return trending();
       case 'Week': return week();
       case 'Month': return month();
-      // case 'Ask Question': return askQus();
+    // case 'Ask Question': return askQus();
     }
   }
 
@@ -3953,86 +3549,86 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.only(right: 16, left: 16),
-        child: Column(
-          children: <Widget>[
-            /*SizedBox(
+          padding: const EdgeInsets.only(right: 16, left: 16),
+          child: Column(
+            children: <Widget>[
+              /*SizedBox(
               height: appBarheight,
             ),*/
-            Row(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    _homeScaffoldKey.currentState.openDrawer();
-                  },
-                  child: Icon(
-                    Icons.sort,
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+              Row(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      _homeScaffoldKey.currentState.openDrawer();
+                    },
+                    child: Icon(
+                      Icons.sort,
+                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Animator(
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.decelerate,
-                    cycles: 1,
-                    builder: (anim) => Transform.scale(
-                      scale: anim.value,
-                      child: Text(
-                        'Start Post',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontWeight: FontWeight.bold,
-                          fontSize: ConstanceData.SIZE_TITLE20,
+                  Expanded(
+                    child: Animator(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.decelerate,
+                      cycles: 1,
+                      builder: (anim) => Transform.scale(
+                        scale: anim.value,
+                        child: Text(
+                          'Start Post',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontWeight: FontWeight.bold,
+                            fontSize: ConstanceData.SIZE_TITLE20,
+                          ),
                         ),
                       ),
                     ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: 14,
                   ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 14,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                ),
-                Expanded(
-                  child: getUserField(),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 50,
-              child: TextField(
-                decoration: InputDecoration(
-                  // labelText: 'Employment Status',
-                  hintText: 'What do you want to talk about?',
-                  hintStyle: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      color: AllCoustomTheme.getTextThemeColors()
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                   ),
-                  labelStyle: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      color: AllCoustomTheme.getTextThemeColors()
+                  Expanded(
+                    child: getUserField(),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 50,
+                child: TextField(
+                  decoration: InputDecoration(
+                    // labelText: 'Employment Status',
+                    hintText: 'What do you want to talk about?',
+                    hintStyle: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        color: AllCoustomTheme.getTextThemeColors()
+                    ),
+                    labelStyle: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        color: AllCoustomTheme.getTextThemeColors()
+                    ),
                   ),
                 ),
               ),
-            ),
 /*            Container(
               child: displayModalBottomSheet(context),
             ),*/
-          ],
-        )
+            ],
+          )
       ),
     );
   }
@@ -4174,28 +3770,28 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   color: AllCoustomTheme.getsecoundTextThemeColor(),
                 ),
                 InkWell(
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                        Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (BuildContext context) => CreatePoll(),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(top:10.0,bottom: 20.0),
-                    child: Center(
-                      child: Text(
-                        'Create a poll',
-                        style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE18,
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (BuildContext context) => CreatePoll(),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(top:10.0,bottom: 20.0),
+                      child: Center(
+                        child: Text(
+                          'Create a poll',
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                          ),
                         ),
                       ),
-                    ),
-                  )
+                    )
                 )
               ],
             ),
@@ -4788,38 +4384,38 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ]
                   ),
                   new Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.11),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Text(
-                              '150',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontFamily: "Roboto",
-                                package: 'Roboto-Regular',
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.11),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                '150',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: AllCoustomTheme.getTextThemeColor(),
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  fontFamily: "Roboto",
+                                  package: 'Roboto-Regular',
+                                ),
                               ),
                             ),
-                          ),
-                          Center(
-                            child: Text(
-                              'coins',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontFamily: "Roboto",
-                                package: 'Roboto-Regular',
+                            Center(
+                              child: Text(
+                                'coins',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: AllCoustomTheme.getTextThemeColor(),
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  fontFamily: "Roboto",
+                                  package: 'Roboto-Regular',
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
+                            )
+                          ],
+                        ),
+                      )
                   ),
                   InkWell(
                     child: new Align(
@@ -4969,8 +4565,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Expanded(
-                  child: InkWell(
-                   /* onTap: () async {
+                    child: InkWell(
+                      /* onTap: () async {
                       List<Question> questions = await getQuestions();
                       if (questions.length < 1) {
                         Navigator.of(context).push(CupertinoPageRoute(
@@ -4986,44 +4582,44 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                       );
                     },*/
-                    onTap: () async {
-                      HelperClass.showLoading(context);
-                      Question questions = await getQuestions();
-                      if (questions==null) {
+                      onTap: () async {
+                        HelperClass.showLoading(context);
+                        Question questions = await getQuestions();
+                        if (questions==null) {
+                          Navigator.pop(context);
+                          Navigator.of(context).push(CupertinoPageRoute(
+                              builder: (_) => ErrorPage(
+                                message: "There are not enough questions yet.",
+                              )
+                          )
+                          );
+                          return;
+                        }
                         Navigator.pop(context);
                         Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (_) => ErrorPage(
-                              message: "There are not enough questions yet.",
-                            )
-                        )
-                        );
-                        return;
-                      }
-                      Navigator.pop(context);
-                      Navigator.of(context).push(CupertinoPageRoute(
-                        builder: (BuildContext context) => QuestionTemplate(questions: questions),
-                      ),
-                      );
-                    },
-                    child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: AllCoustomTheme.getSeeMoreThemeColor(),
+                          builder: (BuildContext context) => QuestionTemplate(questions: questions),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            'INCREASE YOUR SCORE',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE15,
-                              fontFamily: "Roboto",
-                            ),
+                        );
+                      },
+                      child: Container(
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: AllCoustomTheme.getSeeMoreThemeColor(),
                           ),
-                        )
-                    ),
-                  )
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              'INCREASE YOUR SCORE',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE15,
+                                fontFamily: "Roboto",
+                              ),
+                            ),
+                          )
+                      ),
+                    )
                 ),
               ],
             ),
@@ -5129,7 +4725,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
                           tabs: <Widget>[
                             new Tab(
-                                text: "Overall",
+                              text: "Overall",
                             ),
                             new Tab(text: "Weekly"),
                             new Tab(text: ""),
@@ -5386,62 +4982,62 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           Padding(
             padding: const EdgeInsets.only(left: 13,right: 5.0),
             child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 160,
-                  ),
-                  Expanded(
-                      child: new FormField(
-                        builder: (FormFieldState state) {
-                          return InputDecorator(
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
-                              ),
-                              labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
-                              errorText: state.hasError ? state.errorText : null,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: 160,
+                ),
+                Expanded(
+                    child: new FormField(
+                      builder: (FormFieldState state) {
+                        return InputDecorator(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
                             ),
-                            isEmpty: selectedInceptionLeague == '',
-                            child: new DropdownButtonHideUnderline(
-                                child: ButtonTheme(
-                                  alignedDropdown: true,
-                                  child: Container(
-                                    height: 16.0,
-                                    child: new DropdownButton(
-                                      value: selectedInceptionLeague,
-                                      dropdownColor: Colors.white,
-                                      isExpanded: true,
-                                      onChanged: (String newValue) {
-                                        setState(() {
-                                          selectedInceptionLeague = newValue;
-                                        });
-                                      },
-                                      items: <String>['Total Coins', 'Invest Edu coins', 'Track Record coins', 'Stock Pitch coins','Invest Q&A coins',
+                            labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
+                            errorText: state.hasError ? state.errorText : null,
+                          ),
+                          isEmpty: selectedInceptionLeague == '',
+                          child: new DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                                alignedDropdown: true,
+                                child: Container(
+                                  height: 16.0,
+                                  child: new DropdownButton(
+                                    value: selectedInceptionLeague,
+                                    dropdownColor: Colors.white,
+                                    isExpanded: true,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        selectedInceptionLeague = newValue;
+                                      });
+                                    },
+                                    items: <String>['Total Coins', 'Invest Edu coins', 'Track Record coins', 'Stock Pitch coins','Invest Q&A coins',
                                       'Social Invest coins']
-                                          .map((String value) {
-                                        return new DropdownMenuItem(
-                                          value: value,
-                                          child: new Text(
+                                        .map((String value) {
+                                      return new DropdownMenuItem(
+                                        value: value,
+                                        child: new Text(
                                             value,
-                                              style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
+                                            style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
-                                )
-                            ),
-                          );
-                        },
-                      )
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                ],
-              ),
+                                ),
+                              )
+                          ),
+                        );
+                      },
+                    )
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 5,
@@ -5454,11 +5050,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               children: [
                 Expanded(
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.35,
-                    child: Scrollbar(
-                      child: getInceptionMemberView(inceptionMemberList),
-                    )
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height*0.35,
+                      child: Scrollbar(
+                        child: getInceptionMemberView(inceptionMemberList),
+                      )
                   ),
                 ),
               ],
@@ -5469,45 +5065,45 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             height: 25,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16,right: 5.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height*0.06,
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Weekly Auro Streak',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFD8AF4F),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
+              padding: const EdgeInsets.only(left: 16,right: 5.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.06,
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Weekly Auro Streak',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFFD8AF4F),
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                              fontFamily: "Roboto",
+                              package: 'Roboto-Regular',
+                            ),
                           ),
-                        ),
-                      )
-                  ),
-                  Container(
-                    // margin: EdgeInsets.only(right: 180.0),
-                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.42),
-                    padding: EdgeInsets.only(
-                      bottom: 3, // space between underline and text
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              width: 1.0, // Underline width
-                            )
                         )
                     ),
-                  ),
-                ],
-              ),
-            )
+                    Container(
+                      // margin: EdgeInsets.only(right: 180.0),
+                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.42),
+                      padding: EdgeInsets.only(
+                        bottom: 3, // space between underline and text
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              )
+                          )
+                      ),
+                    ),
+                  ],
+                ),
+              )
           ),
           SizedBox(
             height: 15,
@@ -5520,53 +5116,53 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               children: [
                 Expanded(
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.10,
-                    child: Scrollbar(
-                      child: ListView.builder(
-                        itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                              onTap: ()
-                              {
-                                var tempField = {"rankingNum": "1" ,"name": "Warren Buffet","philosophy": "Buy companies at a low price, improve them via management and make long term gains",
-                                  "trackRecord": "He has a 30-year-plus track record making on average 20 percent a year" ,"image": "WarrenBuffet"};
-                                print("tempfield: $tempField");
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (BuildContext context) => ClubDetail(allField: tempField),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                  child: Row(
-                                    children: [
-                                      Stack(
-                                        alignment: Alignment.topLeft,
-                                        children: <Widget>[
-                                          CircleAvatar(
-                                            radius: 25.0,
-                                            backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
-                                            backgroundColor: Colors.transparent,
-                                          ),
-                                          Positioned(
-                                            bottom: 25,
-                                            child: CircleAvatar(
-                                              backgroundColor: Colors.blue,
-                                              radius: 12.0,
-                                              child: Text(
-                                                "${index + 1}",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Color(0xFFD8AF4F),
-                                                  fontSize: ConstanceData.SIZE_TITLE18,
-                                                  fontFamily: "Roboto",
-                                                  package: 'Roboto-Regular',
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height*0.10,
+                      child: Scrollbar(
+                        child: ListView.builder(
+                          itemCount: 10,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                                onTap: ()
+                                {
+                                  var tempField = {"rankingNum": "1" ,"name": "Warren Buffet","philosophy": "Buy companies at a low price, improve them via management and make long term gains",
+                                    "trackRecord": "He has a 30-year-plus track record making on average 20 percent a year" ,"image": "WarrenBuffet"};
+                                  print("tempfield: $tempField");
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) => ClubDetail(allField: tempField),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                    child: Row(
+                                      children: [
+                                        Stack(
+                                          alignment: Alignment.topLeft,
+                                          children: <Widget>[
+                                            CircleAvatar(
+                                              radius: 25.0,
+                                              backgroundImage: index==0 ? new AssetImage('assets/filledweeklyAuroBadge.png') : new AssetImage('assets/weeklyAuroBadge.png'),
+                                              backgroundColor: Colors.transparent,
+                                            ),
+                                            Positioned(
+                                              bottom: 25,
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.blue,
+                                                radius: 12.0,
+                                                child: Text(
+                                                  "${index + 1}",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFFD8AF4F),
+                                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                                    fontFamily: "Roboto",
+                                                    package: 'Roboto-Regular',
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
 /*                                          FractionalTranslation(
                                             translation: Offset(0.0, -0.99),
                                             child: CircleAvatar(
@@ -5584,18 +5180,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                               ),
                                             ),
                                           )*/
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      )
-                                    ],
-                                  )
-                              )
-                          );
-                        },
-                      ),
-                    )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        )
+                                      ],
+                                    )
+                                )
+                            );
+                          },
+                        ),
+                      )
                   ),
                 ),
               ],
@@ -5690,8 +5286,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                       return new DropdownMenuItem(
                                         value: value,
                                         child: new Text(
-                                          value,
-                                          style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
+                                            value,
+                                            style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
                                         ),
                                       );
                                     }).toList(),
@@ -5720,11 +5316,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               children: [
                 Expanded(
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.35,
-                    child: Scrollbar(
-                      child:getWeeklyLeagueMemberView(inceptionMemberList),
-                    )
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height*0.35,
+                      child: Scrollbar(
+                        child:getWeeklyLeagueMemberView(inceptionMemberList),
+                      )
                   ),
                 ),
               ],

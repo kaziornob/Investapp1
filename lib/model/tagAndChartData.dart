@@ -20,3 +20,12 @@ class NewSalesData {
   final double year;
   final double sales;
 }
+
+class NewCryptoPricesData {
+
+  final double year;
+  final double price;
+
+  NewCryptoPricesData(this.year, this.price);
+}
+
