@@ -84,7 +84,6 @@ class FeaturedCompaniesProvider {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
-
     String filterPath = "company_details/pvtFilter?" + filter;
 
     Map<String, String> headers = {
@@ -122,11 +121,9 @@ class FeaturedCompaniesProvider {
     }
   }
 
-
   getSingleCompanyById(companyId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
-
 
     String filterPath = "company_details/pvtInfo?p_key=$companyId";
 
@@ -163,17 +160,52 @@ class FeaturedCompaniesProvider {
       // Toast.show("Something went wrong!", context,
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
-
-
   }
 
-
-  searchCryptoCoins(text)async{
-
-
+  searchIndustry(text) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
+    String filterPath = "company_details/pvtIndustry?substr=$text";
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken'
+    };
+
+    String url = GlobalInstance.apiBaseUrl + filterPath;
+    print("get url: $url");
+    // print("session token: $sessionToken");
+
+    var response = await http.get(url, headers: headers);
+    print("get public company list response: ${response.statusCode}");
+    var result = jsonDecode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // print("ggggg");
+      print("results ${result["messsage"]}");
+      return result["message"];
+      // return result["message"];
+      // return getCompaniesList(result["message"]);
+
+      // if (result != null &&a
+      //     result.containsKey('auth') &&
+      //     result['auth'] == true) {
+      //   Toast.show("${result['message']}", context,
+      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      // }
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
+    } else {
+      // Toast.show("Something went wrong!", context,
+      //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    }
+  }
+
+  searchCryptoCoins(text) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
 
     String filterPath = "company_details/cryptoName?substr=$text";
 
@@ -210,15 +242,11 @@ class FeaturedCompaniesProvider {
       // Toast.show("Something went wrong!", context,
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
-
-
   }
 
   searchPublicCompanyList(text) async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
-
 
     String filterPath = "company_details/listedName?substr=$text";
 
@@ -255,17 +283,11 @@ class FeaturedCompaniesProvider {
       // Toast.show("Something went wrong!", context,
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
-
-
   }
 
-
-
-  getPublicCompanyList() async{
-
+  getPublicCompanyList() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
-
 
     String filterPath = "company_details/listedName?substr=";
 
@@ -302,15 +324,11 @@ class FeaturedCompaniesProvider {
       // Toast.show("Something went wrong!", context,
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
-
-
   }
 
-
-  getSinglePublicCompanyData(String ticker) async{
+  getSinglePublicCompanyData(String ticker) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
-
 
     String filterPath = "company_details/listedInfo?ticker=$ticker";
 

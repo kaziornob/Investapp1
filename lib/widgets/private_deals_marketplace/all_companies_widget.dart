@@ -7,6 +7,7 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/private_deals_marketplace/all_companies_single_item.dart';
 import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
+import 'package:auroim/widgets/search_industry.dart';
 import 'package:auroim/widgets/tab_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
@@ -29,8 +30,10 @@ class _AllCompaniesState extends State<AllCompanies> {
     "icon": false,
   };
 
-  TextEditingController _filterByIndustryController = TextEditingController();
+
   String filter = "trending";
+
+  String industry = "";
 
   final FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
@@ -62,6 +65,8 @@ class _AllCompaniesState extends State<AllCompanies> {
     },
   };
 
+
+
   Map<String, String> allOptionsForApi = {
     "Valuation": "valuation",
     "Funding": "funding",
@@ -92,18 +97,8 @@ class _AllCompaniesState extends State<AllCompanies> {
   bool onTapFilters = false;
   String filterCompaniesString = "";
 
-  @override
-  void initState() {
-    // _tabController = TabController(length: 4, vsync: this);
-    super.initState();
-  }
 
-  @override
-  void dispose() {
-    // _tabController.dispose();
-    _filterByIndustryController.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -321,50 +316,43 @@ class _AllCompaniesState extends State<AllCompanies> {
           }),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width - 50,
-              child: TextField(
-                controller: _filterByIndustryController,
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  color: Color(0xff5A56B9),
-                  fontSize: 17,
+            child: GestureDetector(
+              onTap: () {
+                print("tapped industry");
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => SearchIndustry(),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                  ),
                 ),
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    borderSide: BorderSide(
-                      color: Color(0xff5A56B9),
-                      width: 1,
-                    ),
-                  ),
-                  hintText: "Search Industry",
-                  hintStyle: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xff5A56B9),
-                    fontSize: 17,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search_rounded,
-                    color: Color(0xff5A56B9),
-                  ),
-                  // prefix: Padding(
-                  //   padding: const EdgeInsets.only(
-                  //       left: 8.0, right: 8.0, bottom: 8.0, top: 8.0),
-                  //   child: ,
-                  // ),
-                  contentPadding: EdgeInsets.all(16.0),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    borderSide: BorderSide(
-                      color: Color(0xff5A56B9),
-                      width: 1,
-                    ),
+                height: 50,
+                width: MediaQuery.of(context).size.width - 50,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search_rounded,
+                        color: Color(0xff5A56B9),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      Text(
+                        industry == "" ? "Search Industry" : industry,
+                        style: TextStyle(
+                          color: Color(0xff5A56B9),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -628,4 +616,5 @@ class _AllCompaniesState extends State<AllCompanies> {
       ),
     );
   }
+
 }
