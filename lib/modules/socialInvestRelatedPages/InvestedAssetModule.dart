@@ -21,6 +21,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
 
   @override
   void initState() {
+    selectedAssetModule = "Total Coins";
     super.initState();
     loadDetails();
   }
@@ -56,7 +57,10 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
 
   Widget _generateFirstColumnRow(BuildContext context, int index) {
     return Container(
-      child: Text(tableModule.moduleTableInfo[index].activity),
+      child: Text(tableModule.moduleTableInfo[index].activity, style: new TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE15,
+        fontFamily: "Roboto",
+      ),),
       width: 100,
       height: 52,
       padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -71,7 +75,10 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
           child: Row(
             children: <Widget>[
               GestureDetector(
-                child: Text(tableModule.moduleTableInfo[index].coinsEarned),
+                child: Text(tableModule.moduleTableInfo[index].coinsEarned, style: new TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE15,
+                  fontFamily: "Roboto",
+                ),),
               )
             ],
           ),
@@ -91,7 +98,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
     return Stack(
       children: <Widget>[
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
@@ -124,7 +131,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                               translation: anim.value,
                               child: Icon(
                                 Icons.arrow_back_ios,
-                                color: AllCoustomTheme.getTextThemeColors(),
+                                color: AllCoustomTheme.getTextThemeColor(),
                               ),
                             ),
                           ),
@@ -200,11 +207,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(color: Colors.white, width: 1.0),
                                       ),
-                                      labelStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: ConstanceData.SIZE_TITLE20,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
+                                      labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
 
                                       errorText: state.hasError ? state.errorText : null,
                                     ),
@@ -216,7 +219,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                             height: 16.0,
                                             child: new DropdownButton(
                                               value: selectedAssetModule,
-                                              dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                              dropdownColor: Colors.white,
                                               isExpanded: true,
                                               onChanged: (String newValue) {
                                                 setState(() {
@@ -224,18 +227,19 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                                   setAssetModuleData();
                                                 });
                                               },
-                                              items: <String>['Adaptive Investment Learning', 'Investment Track Record', 'Investment Stock Pitch',
-                                                'Investment QnA',
+                                              items: <String>['Total Coins','Adaptive Investment Learning', 'Investment Track Record', 'Investment Stock Pitch',
+                                                'Investment Q&A',
                                                 'Social Investment Score']
                                                   .map((String value) {
                                                 return new DropdownMenuItem(
                                                   value: value,
                                                   child: new Text(
                                                     value,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: ConstanceData.SIZE_TITLE14,
-                                                    ),
+                                                      style: TextStyle(
+                                                        color: AllCoustomTheme.getTextThemeColor(),
+                                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                                        fontFamily: "Roboto",
+                                                      )
                                                   ),
                                                 );
                                               }).toList(),
@@ -254,7 +258,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                       height: 30,
                     ),
                     Visibility(
-                      visible: selectedAssetModule==null,
+                      visible: selectedAssetModule==null || selectedAssetModule=="Total Coins",
                       child: Padding(
                           padding: const EdgeInsets.only(left: 5,right: 5.0),
                           child: Container(
@@ -264,8 +268,9 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                   "Based on that we’ve created Auro Coins to reward our best performing invest.",
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE18,
+                                color: AllCoustomTheme.getTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                fontFamily: "Roboto",
                               ),
                             ),
                           ),
@@ -273,7 +278,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                     ),
                     // module paragraph section
                     Visibility(
-                      visible: selectedAssetModule!=null && moduleParagraph!=null && moduleParagraph!="",
+                      visible: selectedAssetModule!=null && moduleParagraph!=null && moduleParagraph!="" && selectedAssetModule!="Total Coins",
                       child: Padding(
                         padding: const EdgeInsets.only(left: 5,right: 5.0),
                         child: Row(
@@ -287,8 +292,9 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                      "$moduleParagraph",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE18,
+                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Roboto",
                                       ),
                                     ),
                                   )
@@ -306,7 +312,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                     ),
                     // table content
                     Visibility(
-                      visible: selectedAssetModule!=null,
+                      visible: selectedAssetModule!=null && selectedAssetModule!="Total Coins",
                       child: Padding(
                           padding: const EdgeInsets.only(left: 5,right: 5.0),
                           child: Container(
@@ -358,8 +364,9 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
                                           "${disclaimers[index]}",
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
-                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            color: AllCoustomTheme.getTextThemeColor(),
                                             fontSize: ConstanceData.SIZE_TITLE16,
+                                            fontFamily: "Roboto",
                                           ),
                                         ),
                                       );
@@ -573,7 +580,7 @@ class _InvestedAssetModuleState extends State<InvestedAssetModule> {
         tableModule.initData(tempData);
       }
 
-      else if(selectedAssetModule=="Investment QnA")
+      else if(selectedAssetModule=="Investment Q&A")
       {
         moduleParagraph="";
         disclaimers.add("* if it is not the highest upvoted answer as given below");

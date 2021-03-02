@@ -1,3 +1,4 @@
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
@@ -21,10 +22,13 @@ class PersonalSleeve extends StatefulWidget {
 }
 
 class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProviderStateMixin {
+  ApiProvider request = new ApiProvider();
 
   var investorType;
 
   int selectedTabIndex;
+  var securityBoxChartData;
+
 
   final List<Tab> tabList = <Tab>[
     new Tab(text: 'LIVE'),
@@ -66,12 +70,11 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
 
   List<Widget> _getTitleWidget() {
     return [
-      _getTitleItemWidget('Security', 100),
-      _getTitleItemWidget('# of shares/ \$', 200),
-      _getTitleItemWidget('In-Price', 200),
-      _getTitleItemWidget('Current Price', 200),
-      _getTitleItemWidget('% Return', 200),
-      _getTitleItemWidget('', 200),
+      _getTitleItemWidget('Security', 70),
+      _getTitleItemWidget('# of shares/ \$', 70),
+      _getTitleItemWidget('In-Price', 70),
+      _getTitleItemWidget('Current Price', 70),
+      _getTitleItemWidget('% Return', 70),
     ];
   }
 
@@ -82,95 +85,124 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
             label,
             style: new TextStyle(
               color: AllCoustomTheme.getInvestTableTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
+              fontSize: ConstanceData.SIZE_TITLE15,
               fontFamily: "Roboto",
             ),
         ),
       width: width,
-      height: 56,
-      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+      height: 35,
       alignment: Alignment.centerLeft,
+      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+
     );
   }
 
   Widget _generateFirstColumnRow(BuildContext context, int index) {
+    var tempEven = (index +1) % 2;
     return Container(
+      width: 70,
+      height: 70,
+      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
+        color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
+      ),
       child: Text(
           "${investInfo.listInfo[index].security}",
         style: new TextStyle(
-          color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-          fontSize: ConstanceData.SIZE_TITLE18,
+          // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
+          color: Colors.black,
+          fontSize: ConstanceData.SIZE_TITLE15,
           fontFamily: "Roboto",
         ),
       ),
-      width: 100,
-      height: 52,
-      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-      alignment: Alignment.centerLeft,
     );
   }
 
   Widget _generateRightHandSideColumnRow(BuildContext context, int index) {
+
+    var tempEven = (index +1) % 2;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
+            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
+          ),
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           child: Text(
               investInfo.listInfo[index].share,
             style: new TextStyle(
-              color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              // color: Colors.blueGrey,
-              fontSize: ConstanceData.SIZE_TITLE18,
+              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE15,
               fontFamily: "Roboto",
             ),
           ),
-          width: 200,
-          height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          width: 70,
+          height: 70,
           alignment: Alignment.centerLeft,
         ),
         Container(
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
+            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
+          ),
           child: Text(
               investInfo.listInfo[index].inPrice,
             style: new TextStyle(
-              color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
+              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE15,
               fontFamily: "Roboto",
             ),
           ),
-          width: 200,
-          height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          width: 70,
+          height: 70,
           alignment: Alignment.centerLeft,
         ),
         Container(
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
+            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
+          ),
           child: Text(
               investInfo.listInfo[index].currentPrice,
             style: new TextStyle(
-              color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
+              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE15,
               fontFamily: "Roboto",
             ),
           ),
-          width: 200,
-          height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          width: 70,
+          height: 70,
           alignment: Alignment.centerLeft,
         ),
         Container(
+          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
+            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
+          ),
           child: Text(
               investInfo.listInfo[index].perReturn,
             style: new TextStyle(
-              color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
+              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE15,
               fontFamily: "Roboto",
             ),
           ),
-          width: 200,
-          height: 52,
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+          width: 70,
+          height: 70,
           alignment: Alignment.centerLeft,
         ),
-        Container(
+/*        Container(
           height: MediaQuery.of(context).size.height*0.06,
           width: MediaQuery.of(context).size.width*0.32,
           decoration: BoxDecoration(
@@ -194,7 +226,7 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
               );
             },
           ),
-        )
+        )*/
       ],
     );
   }
@@ -505,15 +537,22 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
                             ),
                           ),
                         ),
-
+                        // Colors.indigo[100]
                         // table section
+/*                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              singleRow(context, "Hualan Biological Engineering","5.09","7.92965","720","5%",Colors.indigo[50]),
+                            ],
+                          ),
+                        ),*/
                         Container(
-                          // color: AllCoustomTheme.getPageBackgroundThemeColor(),
                           height: MediaQuery.of(context).size.height,
                           margin: EdgeInsets.only(top:10.0),
                           child: HorizontalDataTable(
-                            leftHandSideColumnWidth: 100,
-                            rightHandSideColumnWidth: 1000,
+                            leftHandSideColumnWidth: 70,
+                            rightHandSideColumnWidth: 300,
                             isFixedHeader: true,
                             headerWidgets: _getTitleWidget(),
                             leftSideItemBuilder: _generateFirstColumnRow,
@@ -541,196 +580,43 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
     );
   }
 
-  Widget live()
-  {
-    return ListView(
-      physics: NeverScrollableScrollPhysics(),
-      children: [
-        // plus, search section
-        Container(
-          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.10,right: MediaQuery.of(context).size.width*0.10,
-              top:MediaQuery.of(context).size.height*0.04,bottom: MediaQuery.of(context).size.height*0.04),
-          decoration: new BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              color: Color(0xFF7499C6),
-              width: 1,
-              style: BorderStyle.solid,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(2.0),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 15.0,
-              ),
-              InkWell(
-                  child: Container(
-                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.25,right: MediaQuery.of(context).size.width*0.25),
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.black,
-                      size: 70,
-                    ),
-                  )
-              ),
-              SizedBox(
-                height: 25.0,
-              ),
-              Container(
-                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.07,right: MediaQuery.of(context).size.width*0.03),
-                  child: Text(
-                    "Buy your first Security. Clink on the button below to search for options",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                        fontSize: 14.5,
-                        fontFamily: "Roboto",
-                        fontStyle: FontStyle.normal,
-                        letterSpacing: 0.2
-                    ),
-                  )
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.053,
-                width: MediaQuery.of(context).size.width * 0.40,
-                margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.24,right: MediaQuery.of(context).size.width*0.24),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  border: new Border.all(color: Color(0xFF7499C6), width: 1.5),
-                  color: Color(0xFF7499C6),
-                ),
-                child: MaterialButton(
-                  splashColor: Colors.grey,
-                  child: Text(
-                    "Search",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                    ),
-                  ),
-                  onPressed: () async
-                  {
-
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-            ],
-          ),
+  singleRow(context, security , share , inPrice , currentPrice, perReturn, color) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: color),
+          color: color,
         ),
-
-        // doughnut chart section start
-        Visibility(
-          visible: true,
-          child: Container(
-            child: CarouselSlider.builder(
-              itemCount: donutArray.length,
-              options: CarouselOptions(
-                  autoPlay: false,
-                  viewportFraction: donutCurrentIndex==1 ? 1.1 : 1,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      donutCurrentIndex = index;
-                    });
-                  }
-              ),
-              itemBuilder: (context,index){
-                return Container(
-                  child: SfCircularChart(
-                      series: <CircularSeries>[
-                        DoughnutSeries<ChartData, String>(
-                          dataSource: chartData,
-                          // pointColorMapper:(ChartData data,  _) => data.color,
-                          xValueMapper: (ChartData data, _) => data.x,
-                          yValueMapper: (ChartData data, _) => data.y,
-                          dataLabelSettings:DataLabelSettings(
-                              isVisible : true,
-                              // labelPosition: ChartDataLabelPosition.outside,
-                              useSeriesColor: true,
-                              showCumulativeValues: true,
-                              showZeroValue: true
-                          ),
-                        )
-                      ]
-                  ),
-                );
-              },
+        height: 35,
+        width: MediaQuery.of(context).size.width*0.95,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 0.0),
+              child: Center(child: Text(security)),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: Center(child: Text(share)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: Center(child: Text(inPrice)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: Center(child: Text(currentPrice)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: Center(child: Text(perReturn)),
+            ),
+          ],
         ),
-        Visibility(
-          visible: true,
-          child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: donutArray.map((url) {
-                int index = donutArray.indexOf(url);
-                return Container(
-                  width: 10.0,
-                  height: 8.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: donutCurrentIndex == index
-                    // ? Color(0xFFFFFFFF)
-                        ? Color(0xFFD8AF4F)
-                        : Color(0xffCBB4B4),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-        // doughnut chart section end
-
-        // table section
-        Container(
-          // color: AllCoustomTheme.getPageBackgroundThemeColor(),
-          height: MediaQuery.of(context).size.height,
-          margin: EdgeInsets.only(top:10.0),
-          child: HorizontalDataTable(
-            leftHandSideColumnWidth: 100,
-            rightHandSideColumnWidth: 800,
-            isFixedHeader: true,
-            headerWidgets: _getTitleWidget(),
-            leftSideItemBuilder: _generateFirstColumnRow,
-            rightSideItemBuilder: _generateRightHandSideColumnRow,
-            itemCount: investInfo.listInfo.length,
-            rowSeparatorWidget: const Divider(
-              color: Colors.black54,
-              height: 1.0,
-              thickness: 0.0,
-            ),
-            leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
-            rightHandSideColBackgroundColor: AllCoustomTheme.getPageBackgroundThemeColor(),
-          ),
-        )
-      ],
+      ),
     );
-  }
-
-  Widget paper()
-  {
-    return Container(
-      child: Text("coming soon"),
-    );
-  }
-  // ignore: missing_return
-  Widget _getPage(Tab tab){
-    switch(tab.text){
-      case 'Live': return live();
-      case 'Paper': return paper();
-    }
   }
 }
 
@@ -742,14 +628,15 @@ class InvestInfo {
   void initData() {
     listInfo = [];
 
-    listInfo.add(
-        ListInfo("A","","","","")
-    );
+/*    if(securityBoxChartData!=null && securityBoxChartData['weights_assetclass'] != null &&
+        securityBoxChartData['weights_assetclass']['weights'] != null)
+      {
+
+      }*/
 
     listInfo.add(
-        ListInfo("","","","","")
+        ListInfo("Hualan Biological Engineering","5.09","7.92965","720","5")
     );
-
   }
 }
 

@@ -114,9 +114,11 @@ class _InvestorTypeState extends State<InvestorType> {
                               margin: EdgeInsets.only(top: 10.0, left: 35.0, right: 5.0, bottom: 15.0),
                                 child: Column(
                                   children: [
-                                    Text("Net worth > 1 million, either individually, or jointly with your spouse ' "
-                                        "'Net worth > 1 million, either individually, or jointly with your spouse' "
-                                        "'Net worth > 1 million, either individually, or jointly with your spouse",
+                                    Text(
+                                      "Networth of >\$1 million either individually or jointly with your spouse OR ?"
+                                          "1. Networth of >\$1 million either individually or jointly with your spouse OR"
+                                          "2. an annual income exceeding \$200,000 for the last two years OR"
+                                          "3. \$300,000 for joint income for the last two years",
                                         maxLines: descTextShowFlag ? 8 : 2,textAlign: TextAlign.start,
                                       style: const TextStyle(
                                         fontSize: ConstanceData.SIZE_TITLE14,
@@ -196,7 +198,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                       bottom: 5.0,
                                       right: 5.0),
                                   child: Text(
-                                    '"select this option" if you do not meet the criterion of Accredited Investor defined above And are not a student',
+                                    "Select the option if you do not meet the criterion of Accredited Investor above AND are not a student",
                                     style: TextStyle(
                                       fontSize: ConstanceData.SIZE_TITLE14,
                                       color: Colors.white,

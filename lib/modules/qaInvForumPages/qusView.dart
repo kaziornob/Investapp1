@@ -156,7 +156,7 @@ class _QusViewState extends State<QusView> {
                           children: <Widget>[
                             Expanded(
                               child: Text(
-                                "${widget.allParams['title']}",
+                                "Title: " +  " "+ "${widget.allParams['title']}",
                                 style: TextStyle(
                                   color: AllCoustomTheme.getTextThemeColors(),
                                   fontSize: ConstanceData.SIZE_TITLE16,
@@ -176,7 +176,7 @@ class _QusViewState extends State<QusView> {
                               children: <Widget>[
                                 Expanded(
                                   child: Text(
-                                    "${widget.allParams['body']}",
+                                    "Body: " + " " + "${widget.allParams['body']}",
                                     style: new TextStyle(
                                       color: AllCoustomTheme.getTextThemeColors(),
                                       fontSize: ConstanceData.SIZE_TITLE16,
@@ -189,7 +189,7 @@ class _QusViewState extends State<QusView> {
                               height: 15,
                             ),
                             // question attributes section
-                            Row(
+                           /* Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
@@ -290,7 +290,7 @@ class _QusViewState extends State<QusView> {
                             ),
                             Divider(
                               color: Colors.grey,
-                            ),
+                            ),*/
                           ],
                         ),
                         //tags section

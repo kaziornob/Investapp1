@@ -155,7 +155,7 @@ class _AnsViewState extends State<AnsView> {
                               height: 20,
                             ),
                             // answer attributes section
-                            Row(
+                            /*Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
@@ -235,7 +235,7 @@ class _AnsViewState extends State<AnsView> {
                             ),
                             Divider(
                               color: Colors.grey,
-                            ),
+                            ),*/
                           ],
                         ),
                       ],

@@ -43,22 +43,8 @@ class _ClubDetailState extends State<ClubDetail> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
@@ -91,7 +77,7 @@ class _ClubDetailState extends State<ClubDetail> {
                               translation: anim.value,
                               child: Icon(
                                 Icons.arrow_back_ios,
-                                color: AllCoustomTheme.getTextThemeColors(),
+                                color: AllCoustomTheme.getTextThemeColor(),
                               ),
                             ),
                           ),
@@ -148,7 +134,7 @@ class _ClubDetailState extends State<ClubDetail> {
                                     'Investment Philosophy:  ${widget.allField["name"]}, ${widget.allField["philosophy"]}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      color: AllCoustomTheme.getTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
                                       fontFamily: "Rasa",
                                     ),

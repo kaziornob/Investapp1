@@ -4,6 +4,11 @@ import 'package:auroim/widgets/get_area_chart_view.dart';
 import 'package:flutter/material.dart';
 
 class PublicCompaniesList extends StatefulWidget {
+
+  /*final Function callBack;
+
+  PublicCompaniesList ({this.callBack});
+  */
   @override
   _PublicCompaniesListState createState() => _PublicCompaniesListState();
 }

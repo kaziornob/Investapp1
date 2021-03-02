@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/listingsModel.dart';
 import 'package:http/http.dart' as http;
@@ -376,10 +377,13 @@ String getConvertTime(String utcTime) {
 
 
 class GlobalInstance {
+  ApiProvider request = new ApiProvider();
+
   static final GlobalInstance _singleton = GlobalInstance._internal();
   static String apiBaseUrl = 'http://44.240.12.174/';
   static String deviceToken;
   static List riskInfoQusAns = [];
+  static var portfolioChartData;
 
   static List riskAptOptionsValue = [
     {
@@ -507,6 +511,22 @@ class GlobalInstance {
         ]
     }
   ];
+
+  Future<void> getDoughnutPortfolioData() async {
+    print("getDoughnutPortfolioData called");
+    var response = await request.getRequest('users/run_algo');
+    print("portfolio chart list: $response");
+    if (response != null &&
+        response != false &&
+        response.containsKey('auth') &&
+        response['auth'] == true) {
+
+        portfolioChartData = response['message'] != null &&
+          response['message']['algo_result'] != null
+          ? response['message']['algo_result']
+          : null;
+    }
+  }
 
    static List<String> countryList = <String>[
         "United Kingdom",

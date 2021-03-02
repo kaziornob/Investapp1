@@ -25,8 +25,6 @@ Future<Question> getQuestions() async {
 
   if (response!=null && response.statusCode == 200) {
 
-    print("response body: ${json.decode(response.body)}");
-
     var tempBody = json.decode(response.body);
     var tempQusData = tempBody['message'];
     print("tempQusData: $tempQusData");
@@ -38,7 +36,7 @@ Future<Question> getQuestions() async {
         final data = tempQusData['answer'] as Map;
         for (final name in data.keys) {
           final value = data[name];
-          // print('$name,$value');
+          print('$name,$value');
           if(value!=null && value.length!=0)
             {
               optionData.add({"option_value": value[0],"checked": false,"is_correct": value[1],"answer_id" : name});

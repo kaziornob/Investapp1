@@ -45,7 +45,11 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
 
   Widget _getTitleItemWidget(String label, double width) {
     return Container(
-      child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+      child: Text(label, style: new TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE16,
+        fontFamily: "Roboto",
+          fontWeight: FontWeight.bold
+      ),),
       width: width,
       height: 56,
       padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -81,7 +85,16 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
                     ),
                   );
                 },
-                child: Text(user.clubInfo[index].name),
+                child: Text(
+                    user.clubInfo[index].name,
+                  style: new TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: AllCoustomTheme
+                        .getSeeMoreThemeColor(),
+                    fontSize: ConstanceData.SIZE_TITLE15,
+                    fontFamily: "Roboto",
+                  ),
+                ),
               )
             ],
           ),
@@ -91,14 +104,25 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
           alignment: Alignment.centerLeft,
         ),
         Container(
-          child: Text(user.clubInfo[index].philosophy),
+          child: Text(
+              user.clubInfo[index].philosophy,
+            style: new TextStyle(
+              fontSize: ConstanceData.SIZE_TITLE15,
+              fontFamily: "Roboto",
+            ),
+          ),
           width: 200,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          child: Text(user.clubInfo[index].trackRecord),
+          child: Text(user.clubInfo[index].trackRecord,
+            style: new TextStyle(
+              fontSize: ConstanceData.SIZE_TITLE15,
+              fontFamily: "Roboto",
+            ),
+          ),
           width: 200,
           height: 52,
           padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -115,22 +139,8 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         Scaffold(
-          backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
@@ -163,7 +173,7 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
                               translation: anim.value,
                               child: Icon(
                                 Icons.arrow_back_ios,
-                                color: AllCoustomTheme.getTextThemeColors(),
+                                color: AllCoustomTheme.getTextThemeColor(),
                               ),
                             ),
                           ),
@@ -179,7 +189,7 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
                                 'Auro Streak',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
+                                  color: AllCoustomTheme.getTextThemeColor(),
                                   fontFamily: "Roboto",
                                   fontSize: ConstanceData.SIZE_TITLE20,
                                 ),
@@ -207,7 +217,7 @@ class _AuroStrikeBadgesState extends State<AuroStrikeBadges> {
                                         'there is no substitute for practice and getting feedback from Mr. Market on a daily basis, be it through.',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      color: AllCoustomTheme.getTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
                                       fontFamily: "Rasa",
                                     ),

@@ -28,6 +28,7 @@ import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.d
 import 'package:auroim/widgets/goLiveInvest/personalSleeve.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
+import 'package:auroim/widgets/public_companies_list.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
@@ -125,16 +126,11 @@ class _HomeScreenState extends State<HomeScreen>
 
   final List<Tab> tabList = <Tab>[
     new Tab(text: 'Recommended'),
-    new Tab(text: 'Trending'),
-    new Tab(text: "Week"),
+    new Tab(text: 'Coined'),
+    new Tab(text: "Buzzing"),
     new Tab(text: "Month"),
-    // new Tab(text: "Ask Question"),
   ];
 
-  final List<Tab> socialFilterTabList = <Tab>[
-    new Tab(text: 'Overall'),
-    new Tab(text: 'Weekly'),
-  ];
 
   TabController _tabController;
 
@@ -182,6 +178,8 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   dispose() {
     super.dispose();
+    homeDonutArray = [];
+    portfolioChartData = null;
     subscription.cancel();
     admobBannerController.dispose();
   }
@@ -340,6 +338,7 @@ class _HomeScreenState extends State<HomeScreen>
       isSelect3 = false;
       isSelect4 = false;
       isSelect5 = false;
+      homeDonutArray = [];
       getDoughnutPortfolioData();
     });
   }
@@ -1095,236 +1094,12 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget oldFirstScreen() {
-    graphHeight = height - appBarheight - 42;
-    return Container(
-      height: graphHeight,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 16, left: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    _homeScaffoldKey.currentState.openDrawer();
-                  },
-                  child: Icon(
-                    Icons.sort,
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
-                  ),
-                ),
-                historyOHLCV != null
-                    ? Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: Text(
-                            'Bitcoin, BTC Live',
-                            style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColors(),
-                                fontSize: ConstanceData.SIZE_TITLE18),
-                          ),
-                        ),
-                      )
-                    : SizedBox(),
-                Animator(
-                  duration: Duration(milliseconds: 500),
-                  tween: Tween<double>(begin: -0.1, end: 0.1),
-                  curve: Curves.decelerate,
-                  cycles: 0,
-                  builder: (anim) => Transform(
-                    transform: Matrix4.skewX(anim.value),
-                    child: Icon(
-                      Icons.notifications,
-                      color: AllCoustomTheme.getsecoundTextThemeColor(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16, left: 16),
-            child: historyOHLCV != null
-                ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: Text(
-                            '\$',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontWeight: FontWeight.bold,
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: Text(
-                            generalStats != null
-                                ? normalizeNumNoCommas(
-                                    generalStats.price,
-                                  )
-                                : "0",
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: SizedBox(),
-                      ),
-/*                      Row(
-                        children: <Widget>[
-                          Animator(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: Text(
-                                '1h:',
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Animator(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: generalStats.percentChange1h != null
-                                  ? Icon(
-                                      generalStats.percentChange1h.toString().contains('-') ? Icons.arrow_downward : Icons.arrow_upward,
-                                      color: generalStats.percentChange1h.toString().contains('-') ? Colors.red : Colors.green,
-                                      size: 16,
-                                    )
-                                  : SizedBox(),
-                            ),
-                          ),
-                          Animator(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: generalStats.percentChange1h != null
-                                  ? Text(
-                                      generalStats.percentChange1h.toString() + '%',
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                        color: generalStats.percentChange1h.toString().contains('-') ? Colors.red : Colors.green,
-                                        fontSize: ConstanceData.SIZE_TITLE14,
-                                      ),
-                                    )
-                                  : SizedBox(),
-                            ),
-                          ),
-                        ],
-                      )*/
-                    ],
-                  )
-                : SizedBox(),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: historyOHLCV != null
-                ? historyOHLCV.isEmpty != true
-                    ? Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: OHLCVGraph(
-                            data: historyOHLCV,
-                            enableGridLines: true,
-                            gridLineColor: globals.buttoncolor1,
-                            gridLineLabelColor:
-                                AllCoustomTheme.getsecoundTextThemeColor(),
-                            gridLineAmount: 4,
-                            volumeProp: 0.3,
-                            lineWidth: 1,
-                            gridLineWidth: 0.5,
-                            decreaseColor: Colors.red,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        alignment: Alignment.topCenter,
-                        child: Text("No OHLCV data found :(",
-                            style: Theme.of(context).textTheme.caption),
-                      )
-                : Container(
-                    child: Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 12,
-                      ),
-                    ),
-                  ),
-          ),
-          generalStats != null
-              ? historyOHLCV != null
-                  ? Animator(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.decelerate,
-                      cycles: 1,
-                      builder: (anim) => Transform.scale(
-                        scale: anim.value,
-                        child: QuickPercentChangeBar(
-                          snapshot: generalStats,
-                        ),
-                      ),
-                    )
-                  : SizedBox()
-              : Container(
-                  height: 0.0,
-                ),
-        ],
-      ),
-    );
-  }
 
   int homeDonutCurrentIndex = 0;
 
-  final List homeDonutArray = [];
+  List homeDonutArray = [];
 
-  List<ChartData> homeChartData = [
-/*    ChartData('', 25, globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)),
-    ChartData('', 25, globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF000000)),
-    ChartData('', 25, globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
-    ChartData('', 25, Color(0xFFFAB95B))*/
-  ];
+  List<ChartData> homeChartData = [];
 
   setHomeDoughnutChartData() {
     print("portfolioChartData: $portfolioChartData");
@@ -1467,25 +1242,20 @@ class _HomeScreenState extends State<HomeScreen>
                       }),
                   itemBuilder: (context, index) {
                     return Container(
-                      // margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.048,right: MediaQuery.of(context).size.width*0.048),
                       child: SfCircularChart(
                           legend: Legend(
                               isVisible: true,
                               textStyle: TextStyle(
                                   color: AllCoustomTheme.getTextThemeColors()),
-                              // alignment: ChartAlignment.center,
-                              // position: LegendPosition.bottom,
                               overflowMode: LegendItemOverflowMode.wrap,
                               itemPadding: 5.0),
                           series: <CircularSeries>[
                             DoughnutSeries<ChartData, String>(
                               dataSource: homeChartData,
-                              // pointColorMapper:(ChartData data,  _) => data.color,
                               xValueMapper: (ChartData data, _) => data.x,
                               yValueMapper: (ChartData data, _) => data.y,
                               dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
-                                  // labelPosition: ChartDataLabelPosition.outside,
                                   useSeriesColor: true,
                                   showCumulativeValues: true,
                                   showZeroValue: true),
@@ -1498,7 +1268,6 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             Visibility(
               visible: homeDonutArray.length != 0 ? true : false,
-              // visible: true,
               child: Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1521,62 +1290,28 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
             ),
-            Container(
-                // margin: EdgeInsets.only(left: 35.0,right: 20.0),
-                margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.07,
-                    right: MediaQuery.of(context).size.width * 0.03),
-                child: Text(
-                  "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
-                  "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                      fontSize: 14.5,
-                      fontFamily: "Roboto",
-                      fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2),
-                )),
+            Visibility(
+              visible: homeDonutArray.length != 0 ? true : false,
+              child: Container(
+                  margin: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.07,
+                      right: MediaQuery.of(context).size.width * 0.03),
+                  child: Text(
+                    "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
+                        "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                        fontSize: 14.5,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        letterSpacing: 0.2),
+                  )
+              ),
+            ),
             SizedBox(
               height: 10.0,
             ),
-/*            Padding(
-              padding: const EdgeInsets.only(left: 14, right: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    // height: 32,
-                    height: MediaQuery.of(context).size.height*0.06,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height*0.06,
-                      width: MediaQuery.of(context).size.width*0.72,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-                          color: AllCoustomTheme.getButtonBoxColor()
-                      ),
-                      child: MaterialButton(
-                        splashColor: Colors.grey,
-                        child: Text(
-                          "Initiate First Name Portfolio",
-                          style: TextStyle(
-                            color: AllCoustomTheme.getButtonTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE13,
-                            fontFamily: "Roboto",
-                          ),
-                        ),
-                        onPressed: () async {
-                          Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                              new SearchFirstPage(logo: "login_logo.png",callingFrom: "Accredited Investor",)));
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),*/
             SizedBox(
               height: 15,
             ),
@@ -1592,11 +1327,8 @@ class _HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      // height: 32,
                       height: MediaQuery.of(context).size.height * 0.06,
                       child: Container(
-                        /*height: 32,
-                      width: 110,*/
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.32,
                         decoration: BoxDecoration(
@@ -1627,11 +1359,9 @@ class _HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      // height: 32,
                       height: MediaQuery.of(context).size.height * 0.06,
                       child: Container(
-                        /*height: 32,
-                      width: 110,*/
+
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.32,
                         decoration: BoxDecoration(
@@ -1639,7 +1369,6 @@ class _HomeScreenState extends State<HomeScreen>
                           border: new Border.all(
                               color: AllCoustomTheme.getButtonBoxColor(),
                               width: 1.5),
-                          // color: AllCoustomTheme.getButtonBoxColor()
                         ),
                         child: MaterialButton(
                           splashColor: Colors.grey,
@@ -1666,20 +1395,12 @@ class _HomeScreenState extends State<HomeScreen>
             SizedBox(
               height: 30,
             ),
+
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.73,
               child: Container(
                   margin: EdgeInsets.only(left: 5.0, right: 5.0),
-                  /*decoration: new BoxDecoration(
-                  border: Border.all(
-                    color: Color(0xFFfec20f),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(2.0),
-                  ),
-                ),*/
                   child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
@@ -1696,7 +1417,6 @@ class _HomeScreenState extends State<HomeScreen>
                         )),
                       ),
                       Container(
-                        // margin: EdgeInsets.only(left: 30.0,right: 30.0),
                         margin: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.06,
                             right: MediaQuery.of(context).size.width * 0.06),
@@ -1735,6 +1455,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   child: Text(
                                     'SEE ALL',
                                     style: new TextStyle(
+                                      decoration: TextDecoration.underline,
                                       color: AllCoustomTheme
                                           .getSeeMoreThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE15,
@@ -1743,109 +1464,17 @@ class _HomeScreenState extends State<HomeScreen>
                                   ))
                             ],
                           )),
-                      SizedBox(
+                        PublicCompaniesList(),
+/*                      SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.37,
                           child: Container(
                               margin: EdgeInsets.only(
                                   top: 5.0, left: 5.0, right: 5.0, bottom: 5.0),
-                              child: getAreaChartView())),
+                              child: getAreaChartView())
+                      ),*/
                       SizedBox(
                         height: 10,
-                      ),
-                      Container(
-                          child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                          ),
-                          Text(
-                            "First Name's Portfolio",
-                            textAlign: TextAlign.center,
-                            style: new TextStyle(
-                              color: AllCoustomTheme.getSubHeadingThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE15,
-                              fontFamily: "Roboto",
-                            ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.10,
-                          ),
-                          Text(
-                            'See More',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getSeeMoreThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE15,
-                              fontFamily: "Roboto",
-                            ),
-                          )
-                        ],
-                      )),
-                      Container(
-                        margin:
-                            EdgeInsets.only(left: 15.0, bottom: 5.0, top: 5.0),
-                        child: Text(
-                          'You can also invest in individual securities that you like and create your own portfolio!! ',
-                          style: TextStyle(
-                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE15,
-                            fontFamily: "Roboto",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              // height: 35,
-                              height:
-                                  MediaQuery.of(context).size.height * 0.065,
-                              child: Container(
-                                /*height: 35,
-                              width: 150,*/
-                                height:
-                                    MediaQuery.of(context).size.height * 0.065,
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    border: new Border.all(
-                                        color:
-                                            AllCoustomTheme.getButtonBoxColor(),
-                                        width: 1.5),
-                                    color: AllCoustomTheme.getButtonBoxColor()),
-                                child: MaterialButton(
-                                  /*onPressed: () async {
-                                  final sessionId = await Server().createCheckout();
-                                  Scaffold.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('sessionID: $sessionId'),
-                                    ),
-                                  );
-                                },*/
-                                  splashColor: Colors.grey,
-                                  child: Text(
-                                    "START NOW",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getButtonTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE13,
-                                      fontFamily: "Roboto",
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ],
                   )),
@@ -2595,7 +2224,6 @@ class _HomeScreenState extends State<HomeScreen>
                       );
                     },
                   ),
-            // portfolio component box
             SizedBox(
               height: 20,
             ),
@@ -3075,8 +2703,8 @@ class _HomeScreenState extends State<HomeScreen>
                   // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
                   tabs: <Widget>[
                     new Tab(text: "Recommended"),
-                    new Tab(text: "Trending"),
-                    new Tab(text: "Week"),
+                    new Tab(text: "Coined"),
+                    new Tab(text: "Buzzing"),
                     new Tab(text: "Month"),
                     // new Tab(text: "Ask Question"),
                   ],
@@ -3554,9 +3182,9 @@ class _HomeScreenState extends State<HomeScreen>
     switch (tab.text) {
       case 'Recommended':
         return recommended();
-      case 'Trending':
+      case 'Coined':
         return trending();
-      case 'Week':
+      case 'Buzzing':
         return week();
       case 'Month':
         return month();
@@ -4295,97 +3923,11 @@ class _HomeScreenState extends State<HomeScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          /*Padding(
-            padding: const EdgeInsets.only(right: 16, left: 16),
-            child: Row(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    _scaffoldKey.currentState.openDrawer();
-                  },
-                  child: Icon(
-                    Icons.sort,
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
-                  ),
-                ),
-                Expanded(
-                  child: Animator(
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.decelerate,
-                    cycles: 1,
-                    builder: (anim) => Transform.scale(
-                      scale: anim.value,
-                      child: Text(
-                        'Track Record',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: AllCoustomTheme.getHeadingThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE20,
-                            fontFamily: "Rosarivo",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.normal,
-                            letterSpacing: 0.1
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 40,
-          ),*/
-
-          //search box
-/*          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: AllCoustomTheme.boxColor(),
-                    ),
-                    child: TextFormField(
-                      style: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColors(),
-                      ),
-                      cursorColor: AllCoustomTheme.getTextThemeColors(),
-                      onChanged: (value) {
-                        filterSearchResults(value);
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        prefixIcon: Icon(
-                          Icons.search,
-                          size: 20,
-                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                        ),
-                        hintStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),*/
           SizedBox(
             height: 10,
           ),
           Container(
               height: 30,
-/*                    decoration: BoxDecoration(
-                      color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
-                    ),*/
               child: Padding(
                 padding: EdgeInsets.only(top: 5.0),
                 child: Text(
@@ -4421,16 +3963,6 @@ class _HomeScreenState extends State<HomeScreen>
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.30,
               margin: EdgeInsets.only(left: 15.0, right: 5.0),
-              /*decoration: new BoxDecoration(
-                color: AllCoustomTheme.getTextThemeColors(),
-                border: Border.all(
-                  color: AllCoustomTheme.getTextThemeColors(),
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(2.0),
-                ),
-              ),*/
               child: Stack(
                 children: [
                   SfCircularChart(series: <CircularSeries>[
@@ -4581,10 +4113,8 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Container(
                       height: 30,
                       decoration: new BoxDecoration(
-                        // color: Color(0xFF1E90FF),
                         color: AllCoustomTheme.getsecoundTextThemeColor(),
                         border: Border.all(
-                          // color: Color(0xFF1E90FF),
                           color: AllCoustomTheme.getsecoundTextThemeColor(),
                           width: 1,
                         ),
@@ -4619,57 +4149,41 @@ class _HomeScreenState extends State<HomeScreen>
               children: <Widget>[
                 Expanded(
                     child: InkWell(
-                  /* onTap: () async {
-                      List<Question> questions = await getQuestions();
-                      if (questions.length < 1) {
-                        Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (_) => ErrorPage(
-                              message: "There are not enough questions yet.",
-                            )
-                        )
-                        );
-                        return;
-                      }
-                      Navigator.of(context).push(CupertinoPageRoute(
-                        builder: (BuildContext context) => QuestionTemplate(questions: questions),
-                      ),
-                      );
-                    },*/
-                  onTap: () async {
-                    HelperClass.showLoading(context);
-                    Question questions = await getQuestions();
-                    if (questions == null) {
-                      Navigator.pop(context);
-                      Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (_) => ErrorPage(
-                                message: "There are not enough questions yet.",
-                              )));
-                      return;
-                    }
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (BuildContext context) =>
-                            QuestionTemplate(questions: questions),
-                      ),
-                    );
-                  },
-                  child: Container(
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: AllCoustomTheme.getSeeMoreThemeColor(),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          'INCREASE YOUR SCORE',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE15,
-                            fontFamily: "Roboto",
+                      onTap: () async {
+                        HelperClass.showLoading(context);
+                        Question questions = await getQuestions();
+                        if (questions == null) {
+                          Navigator.pop(context);
+                          Navigator.of(context).push(CupertinoPageRoute(
+                              builder: (_) => ErrorPage(
+                                    message: "There are not enough questions yet.",
+                                  )));
+                          return;
+                        }
+                        Navigator.pop(context);
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (BuildContext context) =>
+                                QuestionTemplate(questions: questions),
                           ),
+                        );
+                      },
+                      child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: AllCoustomTheme.getSeeMoreThemeColor(),
                         ),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            'INCREASE YOUR SCORE',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE15,
+                              fontFamily: "Roboto",
+                            ),
+                          ),
                       )),
                 )),
               ],
@@ -4678,7 +4192,8 @@ class _HomeScreenState extends State<HomeScreen>
           SizedBox(
             height: 4,
           ),
-          Padding(
+          // invesstment track record
+/*          Padding(
               padding: EdgeInsets.only(top: 0.0),
               child: Center(
                 child: Text(
@@ -4837,7 +4352,7 @@ class _HomeScreenState extends State<HomeScreen>
                                             top: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.16),
+                                                0.18),
                                         child: Column(
                                           children: [
                                             Center(
@@ -4882,115 +4397,6 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ],
               )),
-/*          Padding(
-            padding: const EdgeInsets.only(left: 16,right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: ()
-                  {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (BuildContext context) => AuroStrikeBadges(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    child: Image(
-                      image: AssetImage('assets/buttonBadge.png'),
-                      fit: BoxFit.fill,
-                      height: 30,
-                      width: 40,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 18,
-                ),
-                Container(
-                  child: Image(
-                    image: AssetImage('assets/badgeStar.jpg'),
-                    fit: BoxFit.fill,
-                    height: 30,
-                    width: 40,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          // pie chart
-          Container(
-            child: Stack(
-              children: [
-                SfCircularChart(
-                    legend: Legend(
-                        isVisible: true,
-                        textStyle: TextStyle(color: AllCoustomTheme.getTextThemeColors()),
-                        alignment: ChartAlignment.center,
-                        position: LegendPosition.bottom,
-                        overflowMode: LegendItemOverflowMode.wrap,
-                        itemPadding: 10.0
-                    ),
-                    series: <CircularSeries>[
-                      // Render pie chart
-                      DoughnutSeries<ChartData, String>(
-                        dataSource: trackChartData,
-                        pointColorMapper:(ChartData data,  _) => data.color,
-                        xValueMapper: (ChartData data, _) => data.x,
-                        yValueMapper: (ChartData data, _) => data.y,
-                        dataLabelSettings:DataLabelSettings(
-                          isVisible : true,
-                        ),
-                      )
-                    ]
-                ),
-                new Align(
-                    alignment: Alignment.topCenter,
-                    child: GestureDetector(
-                      onTap: ()
-                      {
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (BuildContext context) => InvestedAssetModule(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top:105),
-                        child: Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                '800',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                ),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                'coins',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                ),
-              ],
-            ),
-          ),*/
           // inception to data league
           SizedBox(
             height: 20,
@@ -5116,7 +4522,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ],
             ),
-          ),
+          ),*/
           // weekly auro strike
           SizedBox(
             height: 25,
@@ -5459,9 +4865,11 @@ class _HomeScreenState extends State<HomeScreen>
         response.containsKey('auth') &&
         response['auth'] == true) {
       setState(() {
+        homeDonutArray = [];
         homeDonutArray.add(1);
         homeDonutArray.add(2);
         homeDonutArray.add(3);
+        portfolioChartData = null;
         portfolioChartData = response['message'] != null &&
                 response['message']['algo_result'] != null
             ? response['message']['algo_result']
@@ -5486,6 +4894,7 @@ class _HomeScreenState extends State<HomeScreen>
         isSelect3 = false;
         isSelect4 = false;
         isSelect5 = false;
+        homeDonutArray = [];
       });
       // getDountPortfolioData();
     }

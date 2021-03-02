@@ -548,7 +548,38 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                               child: Text(
                                 '${widget.questions.question}',
                               )),
-                        )),
+                        )
+                    ),
+                    Divider(),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Text("*You may find the following video before you answer.",
+                              style: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.blueGrey
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text("*This question has multiple correct options.",
+                              style: TextStyle(
+                                  fontSize: ConstanceData.SIZE_TITLE12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.blueGrey
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Divider(),
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -597,7 +628,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
       var optionsResult = [];
 
       for (var i = 0; i < widget.questions.qusOptions.length; i++) {
-        optionsResult.add(widget.questions.qusOptions[i]['is_correct']);
+        optionsResult.add("${widget.questions.qusOptions[i]['is_correct']}");
       }
 
       var answerId = [];

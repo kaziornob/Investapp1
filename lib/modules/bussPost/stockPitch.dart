@@ -123,10 +123,10 @@ class _StockPitchState extends State<StockPitch> {
         child: ButtonTheme(
           alignedDropdown: true,
           child: Container(
-            height: 16.0,
+            height: 18.0,
             child: new DropdownButton(
               value: selectedStock,
-              dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+              dropdownColor: Colors.white,
               isExpanded: true,
               onChanged: (String newValue) {
                 setState(() {
@@ -139,8 +139,9 @@ class _StockPitchState extends State<StockPitch> {
                   child: new Text(
                     value,
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: AllCoustomTheme.getTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
                     ),
                   ),
                 );
@@ -165,24 +166,10 @@ class _StockPitchState extends State<StockPitch> {
     double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-              ],
-            ),
-          ),
-        ),
         SafeArea(
             bottom: true,
             child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
               body: ModalProgressHUD(
                 inAsyncCall: _isInProgress,
                 opacity: 0,
@@ -215,7 +202,7 @@ class _StockPitchState extends State<StockPitch> {
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
-                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    color: AllCoustomTheme.getTextThemeColor(),
                                   ),
                                 ),
                               ),
@@ -231,7 +218,7 @@ class _StockPitchState extends State<StockPitch> {
                                     'Stock Pitch',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      color: AllCoustomTheme.getTextThemeColor(),
                                       fontWeight: FontWeight.bold,
                                       fontSize: ConstanceData.SIZE_TITLE20,
                                     ),
@@ -255,11 +242,7 @@ class _StockPitchState extends State<StockPitch> {
                                     return InputDecorator(
                                       decoration: InputDecoration(
                                         labelText: 'Stock Name',
-                                        labelStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: ConstanceData.SIZE_TITLE20,
-                                            color: AllCoustomTheme.getTextThemeColors()
-                                        ),
+                                        labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(color: Colors.white, width: 1.0),
                                         ),
@@ -284,11 +267,8 @@ class _StockPitchState extends State<StockPitch> {
                                     return InputDecorator(
                                       decoration: InputDecoration(
                                         labelText: 'Long/Short',
-                                        labelStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: ConstanceData.SIZE_TITLE20,
-                                            color: AllCoustomTheme.getTextThemeColors()
-                                        ),
+                                        labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
+
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(color: Colors.white, width: 1.0),
                                         ),
@@ -300,10 +280,10 @@ class _StockPitchState extends State<StockPitch> {
                                           child: ButtonTheme(
                                               alignedDropdown: true,
                                               child: Container(
-                                                height: 16.0,
+                                                height: 18.0,
                                                 child: new DropdownButton(
                                                   value: selectedLongShort,
-                                                  dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
+                                                  dropdownColor: Colors.white,
                                                   isExpanded: true,
                                                   onChanged: (String newValue) {
                                                     setState(() {
@@ -316,8 +296,9 @@ class _StockPitchState extends State<StockPitch> {
                                                       child: new Text(
                                                         value,
                                                         style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: ConstanceData.SIZE_TITLE14,
+                                                          color: AllCoustomTheme.getTextThemeColor(),
+                                                          fontSize: ConstanceData.SIZE_TITLE16,
+                                                          fontFamily: "Roboto",
                                                         ),
                                                       ),
                                                     );
@@ -345,27 +326,20 @@ class _StockPitchState extends State<StockPitch> {
                             decoration: InputDecoration(
                               labelText: 'Stock Pitch Title',
                               hintText: 'Stock Pitch Title: ',
-                              hintStyle: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE10,
-                                  color: AllCoustomTheme.getTextThemeColors()
-                              ),
-                              labelStyle: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  color: AllCoustomTheme.getTextThemeColors()
-                              ),
-                              fillColor: Colors.white,
+                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                              focusColor: AllCoustomTheme.getTextThemeColor(),
+                              fillColor: AllCoustomTheme.getTextThemeColor(),
                               focusedBorder:OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                borderSide: const BorderSide(color: Colors.black, width: 1.0),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                borderSide: BorderSide(color: Colors.black, width: 1.0),
                               ),
                             ),
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                            ),
+                            cursorColor: AllCoustomTheme.getTextThemeColor(),
+                            style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                           ),
                         ),
 
@@ -386,7 +360,7 @@ class _StockPitchState extends State<StockPitch> {
                                     '1-year target',
                                     style: TextStyle(
                                         fontSize: ConstanceData.SIZE_TITLE18,
-                                        color: AllCoustomTheme.getTextThemeColors()
+                                        color: AllCoustomTheme.getTextThemeColor()
                                     ),
                                   ),
                                 ),
@@ -403,27 +377,20 @@ class _StockPitchState extends State<StockPitch> {
                                     decoration: InputDecoration(
                                       labelText: 'Price-Base',
                                       hintText: 'Price-Base',
-                                      hintStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE10,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      labelStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      fillColor: Colors.white,
+                                      hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                      labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                                      focusColor: AllCoustomTheme.getTextThemeColor(),
+                                      fillColor: AllCoustomTheme.getTextThemeColor(),
                                       focusedBorder:OutlineInputBorder(
-                                        borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                        borderSide: const BorderSide(color: Colors.black, width: 1.0),
                                         borderRadius: BorderRadius.circular(5.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                        borderSide: BorderSide(color: Colors.black, width: 1.0),
                                       ),
                                     ),
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                    ),
+                                    cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                    style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                   ),
                                 ),
                                 SizedBox(
@@ -436,34 +403,26 @@ class _StockPitchState extends State<StockPitch> {
                                   width: MediaQuery.of(context).size.width * 0.45,
                                   child: TextField(
                                     maxLines: 4,
-                                    decoration: InputDecoration(
-                                      labelText: 'Price-Bear',
-                                      hintText: 'Price-Bear',
-                                      hintStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE10,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      labelStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      fillColor: Colors.white,
-                                      focusedBorder:OutlineInputBorder(
-                                        borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                                        borderRadius: BorderRadius.circular(5.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                      ),
-                                    ),
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                    cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                    style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: new InputDecoration(
+                                        focusColor: AllCoustomTheme.getTextThemeColor(),
+                                        fillColor: AllCoustomTheme.getTextThemeColor(),
+                                        labelText: 'Price-Bear',
+                                        hintText: 'Price-Bear',
+                                        hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                        labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                                        focusedBorder:OutlineInputBorder(
+                                          borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                                          borderRadius: BorderRadius.circular(5.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.black, width: 1.0),
+                                        ),
                                     ),
                                   ),
                                 )
-
-
 
                               ],
                             ),
@@ -477,7 +436,7 @@ class _StockPitchState extends State<StockPitch> {
                                     '1-year fwd',
                                     style: TextStyle(
                                         fontSize: ConstanceData.SIZE_TITLE18,
-                                        color: AllCoustomTheme.getTextThemeColors()
+                                        color: AllCoustomTheme.getTextThemeColor()
                                     ),
                                   ),
                                 ),
@@ -489,29 +448,23 @@ class _StockPitchState extends State<StockPitch> {
                                   width: MediaQuery.of(context).size.width * 0.45,
                                   child: TextField(
                                     maxLines: 4,
-                                    decoration: InputDecoration(
+                                    cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                    style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: new InputDecoration(
+                                      focusColor: AllCoustomTheme.getTextThemeColor(),
+                                      fillColor: AllCoustomTheme.getTextThemeColor(),
                                       labelText: 'Revenue',
                                       hintText: 'Revenue',
-                                      hintStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE10,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      labelStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      fillColor: Colors.white,
+                                      hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                      labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
                                       focusedBorder:OutlineInputBorder(
-                                        borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                        borderSide: const BorderSide(color: Colors.black, width: 1.0),
                                         borderRadius: BorderRadius.circular(5.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                        borderSide: BorderSide(color: Colors.black, width: 1.0),
                                       ),
-                                    ),
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
                                     ),
                                   ),
                                 ),
@@ -523,29 +476,23 @@ class _StockPitchState extends State<StockPitch> {
                                   width: MediaQuery.of(context).size.width * 0.45,
                                   child: TextField(
                                     maxLines: 4,
-                                    decoration: InputDecoration(
+                                    cursorColor: AllCoustomTheme.getTextThemeColor(),
+                                    style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: new InputDecoration(
+                                      focusColor: AllCoustomTheme.getTextThemeColor(),
+                                      fillColor: AllCoustomTheme.getTextThemeColor(),
                                       labelText: 'Eps',
                                       hintText: 'Eps',
-                                      hintStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE10,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      labelStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                          color: AllCoustomTheme.getTextThemeColors()
-                                      ),
-                                      fillColor: Colors.white,
+                                      hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                                      labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
                                       focusedBorder:OutlineInputBorder(
-                                        borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                        borderSide: const BorderSide(color: Colors.black, width: 1.0),
                                         borderRadius: BorderRadius.circular(5.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                        borderSide: BorderSide(color: Colors.black, width: 1.0),
                                       ),
-                                    ),
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
                                     ),
                                   ),
                                 )
@@ -560,30 +507,25 @@ class _StockPitchState extends State<StockPitch> {
                         Container(
                           height: 120,
                           child: TextField(
+
                             maxLines: 10,
-                            decoration: InputDecoration(
+                            cursorColor: AllCoustomTheme.getTextThemeColor(),
+                            style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: new InputDecoration(
+                              focusColor: AllCoustomTheme.getTextThemeColor(),
+                              fillColor: AllCoustomTheme.getTextThemeColor(),
                               labelText: 'Investment Thesis',
                               hintText: 'Investment Thesis: ',
-                              hintStyle: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE10,
-                                  color: AllCoustomTheme.getTextThemeColors()
-                              ),
-                              labelStyle: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  color: AllCoustomTheme.getTextThemeColors()
-                              ),
-                              fillColor: Colors.white,
+                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
                               focusedBorder:OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                borderSide: const BorderSide(color: Colors.black, width: 1.0),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                borderSide: BorderSide(color: Colors.black, width: 1.0),
                               ),
-                            ),
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE16,
                             ),
                           ),
                         ),
@@ -597,7 +539,7 @@ class _StockPitchState extends State<StockPitch> {
                             Text(
                               'Search Topic Tags',
                               style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColors(),
+                                color: AllCoustomTheme.getTextThemeColor(),
                                 fontSize: ConstanceData.SIZE_TITLE16,
                               ),
                             ),
@@ -611,7 +553,8 @@ class _StockPitchState extends State<StockPitch> {
                                     keyboardType: TextInputType.text,
                                     maxLines: 1,
                                     style: TextStyle(
-                                        fontSize: 16.0
+                                        fontSize: 16.0,
+                                      color: Colors.black
                                     ),
                                     inputFormatters: [
                                       LengthLimitingTextInputFormatter(30)
@@ -621,14 +564,14 @@ class _StockPitchState extends State<StockPitch> {
                                       border: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1.0,
-                                              color: AllCoustomTheme.getTextThemeColors()
+                                              color: AllCoustomTheme.getTextThemeColor()
                                           ),
                                           borderRadius: BorderRadius.all(Radius.circular(0.0))),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(color: Colors.grey, width: 1.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                        borderSide: BorderSide(color: Colors.black, width: 1.0),
                                       ),
                                       hintStyle: TextStyle(
                                         color: Colors.grey,
@@ -683,7 +626,7 @@ class _StockPitchState extends State<StockPitch> {
                                   child: Text(
                                     'Topic Tags',
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      color: AllCoustomTheme.getTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE16,
                                     ),
                                   ),
@@ -712,7 +655,7 @@ class _StockPitchState extends State<StockPitch> {
                                             child: Text(
                                               '${itemList[index].tag}',
                                               style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                  color: AllCoustomTheme.getTextThemeColor(),
                                                   fontSize: ConstanceData.SIZE_TITLE16,
                                                   fontStyle: FontStyle.normal,
                                                   fontWeight: FontWeight.normal,
@@ -733,7 +676,7 @@ class _StockPitchState extends State<StockPitch> {
                                               },
                                               child: Icon(
                                                 Icons.close,
-                                                color: AllCoustomTheme.getTextThemeColors(),
+                                                color: AllCoustomTheme.getTextThemeColor(),
                                                 size: 15.0,
                                               ))
                                         ],
@@ -819,14 +762,14 @@ class _StockPitchState extends State<StockPitch> {
                                           title: new Text(
                                             name,
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme.getTextThemeColor(),
                                               fontSize: ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                           subtitle: new Text(
                                             filePath,
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme.getTextThemeColor(),
                                               fontSize: ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
@@ -894,7 +837,7 @@ class _StockPitchState extends State<StockPitch> {
                                       height: MediaQuery.of(context).size.height * 0.06,
                                       width: MediaQuery.of(context).size.width * 0.27,
                                       decoration: BoxDecoration(
-                                        border: new Border.all(color: Colors.white, width: 1.5),
+                                        border: new Border.all(color: Colors.black, width: 1.5),
                                         gradient: LinearGradient(
                                           begin: Alignment.topLeft,
                                           end: Alignment.bottomRight,
@@ -909,7 +852,7 @@ class _StockPitchState extends State<StockPitch> {
                                         child: Text(
                                           "Done",
                                           style: TextStyle(
-                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            color: Colors.white,
                                             fontSize: ConstanceData.SIZE_TITLE18,
                                             fontWeight: FontWeight.bold,
                                           ),
