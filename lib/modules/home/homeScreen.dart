@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -1209,8 +1210,21 @@ class _HomeScreenState extends State<HomeScreen>
                 width: 1.6, // Underline width
               ))),
             ),
-            // handshake image box
+            // handshake/loader image box
             Visibility(
+              visible: homeDonutArray == null || homeDonutArray.length == 0
+                  ? true
+                  : false,
+              child: Container(
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.10,bottom: MediaQuery.of(context).size.height * 0.10),
+                child:  CircularProgressIndicator(
+                  backgroundColor: Colors.redAccent,
+                  valueColor: AlwaysStoppedAnimation(Colors.green),
+                  strokeWidth: 10,
+                ),
+              )
+            ),
+/*            Visibility(
               visible: homeDonutArray == null || homeDonutArray.length == 0
                   ? true
                   : false,
@@ -1224,7 +1238,7 @@ class _HomeScreenState extends State<HomeScreen>
                       image: new AssetImage('assets/handShake.png')),
                 ),
               ),
-            ),
+            ),*/
             Visibility(
               visible: homeDonutArray.length != 0 ? true : false,
               // visible: true,
@@ -1241,6 +1255,20 @@ class _HomeScreenState extends State<HomeScreen>
                         });
                       }),
                   itemBuilder: (context, index) {
+                    if(index==2)
+                      {
+                        return Container(
+                          child: Column(
+                            children: [
+                              singleRow(context, "Security",'# of shares/ \$','In-Price','Current Price','% Return', Colors.indigo[100]),
+                              singleRow(context, "3SBio Inc",'0.7','70','-','-', Colors.indigo[50]),
+                              singleRow(context, "SUMCO Corp",'0.6','60','-','-', Colors.indigo[100]),
+                              singleRow(context, "Ricoh Co Ltd",'0.5','50','-','-', Colors.indigo[50]),
+
+                            ],
+                          ),
+                        );
+                      }
                     return Container(
                       child: SfCircularChart(
                           legend: Legend(
@@ -1482,6 +1510,66 @@ class _HomeScreenState extends State<HomeScreen>
             // go live button
           ],
         ));
+  }
+
+
+
+  singleRow(context, security,share,ip,cp, perReturn,color) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(security)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(share,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(ip,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(cp,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(perReturn,textAlign: TextAlign.center,)),
+        ),
+      ],
+    );
   }
 
 /*  Widget oldSecoundScreen() {
@@ -2978,7 +3066,7 @@ class _HomeScreenState extends State<HomeScreen>
                     height: 115,
                     width: 150.0,
                     fit: BoxFit.fill,
-                    image: new AssetImage('assets/stackOverflow.png')),
+                    image: new AssetImage('assets/arqade.jpeg')),
               ),
               Container(
                   child: Column(
@@ -4869,6 +4957,7 @@ class _HomeScreenState extends State<HomeScreen>
         homeDonutArray.add(1);
         homeDonutArray.add(2);
         homeDonutArray.add(3);
+        homeDonutArray.add(4);
         portfolioChartData = null;
         portfolioChartData = response['message'] != null &&
                 response['message']['algo_result'] != null

@@ -86,6 +86,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    // GlobalInstance.getDoughnutPortfolioData();
     globals.isGoldBlack = widget.prefs != null &&
         widget.prefs.containsKey('InvestorType') &&
         widget.prefs.getString('InvestorType') != null && widget.prefs.getString('InvestorType')=='Accredited Investor' ? true : false;

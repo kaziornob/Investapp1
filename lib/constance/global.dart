@@ -512,7 +512,7 @@ class GlobalInstance {
     }
   ];
 
-  Future<void> getDoughnutPortfolioData() async {
+  Future getDoughnutPortfolioData() async {
     print("getDoughnutPortfolioData called");
     var response = await request.getRequest('users/run_algo');
     print("portfolio chart list: $response");
