@@ -120,12 +120,19 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
                       ),
                       SinglePublicCompanyAppBar(
                         companyName: data["company_name"],
+                        companyImageUrl: data["logo_img_name"],
                       ),
                       // SizedBox(
                       //   height: 20,
                       // ),
                       SinglePublicCompanyHeader(
                         marketCapital: data["market_cap_usd_mn"],
+                        netDebt: data["net_debt_usd_mn"],
+                        roe3yr: data["roe_3yr"],
+                        currency: data["currency"],
+                        equityBeta: data["equity_beta"],
+                        marketCapLocal: data["market_cap_local_mn"],
+                        fixRate: data["fx_rate"],
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,

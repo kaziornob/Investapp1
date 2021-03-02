@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 class SinglePublicCompanyAppBar extends StatefulWidget {
   final companyName;
+  final companyImageUrl;
 
-  SinglePublicCompanyAppBar({this.companyName});
+  SinglePublicCompanyAppBar({this.companyName,this.companyImageUrl,});
 
   @override
   _SinglePublicCompanyAppBarState createState() =>
@@ -58,13 +59,10 @@ class _SinglePublicCompanyAppBarState extends State<SinglePublicCompanyAppBar> {
                       height: 40,
                       decoration: new BoxDecoration(
                         // border: Border.all(color: Colors.black),
-                        color: Color(0xFFfec20f),
+                        // color: Color(0xFFfec20f),
                         shape: BoxShape.rectangle,
-                        image: new DecorationImage(
-                          fit: BoxFit.contain,
-                          image: new AssetImage('assets/logo.png'),
-                        ),
                       ),
+                      child: Image.network(widget.companyImageUrl),
                     ),
                     SizedBox(width: 5,),
                     Text(

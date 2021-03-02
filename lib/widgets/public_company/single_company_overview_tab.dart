@@ -96,7 +96,15 @@ class _SinglePublicCompanyOverviewTabState
           //     ],
           //   ),
           // ),
-          SinglePublicCompanyAllStatsList(),
+          SinglePublicCompanyAllStatsList(
+            marketCapital: widget.data["market_cap_usd_mn"],
+            netDebt: widget.data["net_debt_usd_mn"],
+            roe3yr: widget.data["roe_3yr"],
+            currency: widget.data["currency"],
+            equityBeta: widget.data["equity_beta"],
+            marketCapLocal: widget.data["market_cap_local_mn"],
+            fixRate: widget.data["fx_rate"],
+          ),
           // description section
           Padding(
             padding: EdgeInsets.only(top: 5.0, left: 10.0),
