@@ -115,9 +115,9 @@ class _InvestorTypeState extends State<InvestorType> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      "Networth of >\$1 million either individually or jointly with your spouse OR ?"
-                                          "1. Networth of >\$1 million either individually or jointly with your spouse OR"
-                                          "2. an annual income exceeding \$200,000 for the last two years OR"
+                                      "Networth of >\$1 million either individually or jointly with your spouse OR ? \n"
+                                          "1. Networth of >\$1 million either individually or jointly with your spouse OR \n"
+                                          "2. an annual income exceeding \$200,000 for the last two years OR \n"
                                           "3. \$300,000 for joint income for the last two years",
                                         maxLines: descTextShowFlag ? 8 : 2,textAlign: TextAlign.start,
                                       style: const TextStyle(

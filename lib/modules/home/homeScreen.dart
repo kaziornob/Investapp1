@@ -1257,13 +1257,49 @@ class _HomeScreenState extends State<HomeScreen>
                   itemBuilder: (context, index) {
                     if(index==2)
                       {
+                        print("index: $index");
+                        final List<Map<String, dynamic>> securities = [];
+
+                        if(portfolioChartData!=null && portfolioChartData['weights_foliotickers'] != null &&
+                            portfolioChartData['weights_foliotickers']['weights'] != null) {
+
+                          print("data comes: $index");
+                          print("weights folio tickers: ${portfolioChartData['weights_foliotickers']["weights"]}");
+                          final Map<String, dynamic> weights =
+                          portfolioChartData['weights_foliotickers']["weights"];
+
+                          print("weights: $weights");
+
+                          final Map<String, dynamic> weight_values =
+                          portfolioChartData['weights_foliotickers']["weights_value"];
+                          final Map<String, dynamic> in_prices =
+                          portfolioChartData['weights_foliotickers']["in_price"];
+                          final Map<String, dynamic> security_names =
+                          portfolioChartData['weights_foliotickers']["security_name"];
+                          print("weights : $weights");
+
+                          var sortedKeys = weights.keys.toList(growable: false)
+                            ..sort((k1, k2) => weights[k1].compareTo(weights[k2]));
+                          sortedKeys = sortedKeys.getRange(0, 3).toList();
+                          sortedKeys.forEach((k) => {
+                            securities.add({
+                              "weight": weights[k],
+                              "name":security_names[k],
+                              "price": in_prices[k],
+                              "weight_value": weight_values[k],
+                              "share":   weight_values[k] / in_prices[k]
+                            })
+                          });
+                          print("securities : $securities");
+                        }
+
                         return Container(
                           child: Column(
                             children: [
                               singleRow(context, "Security",'# of shares/ \$','In-Price','Current Price','% Return', Colors.indigo[100]),
-                              singleRow(context, "3SBio Inc",'0.7','70','-','-', Colors.indigo[50]),
-                              singleRow(context, "SUMCO Corp",'0.6','60','-','-', Colors.indigo[100]),
-                              singleRow(context, "Ricoh Co Ltd",'0.5','50','-','-', Colors.indigo[50]),
+                              singleRow(context, "${securities[0]['name']}",'${securities[0]['share']}','${securities[0]['price']}','-','-', Colors.indigo[50]),
+                              singleRow(context, "${securities[1]['name']}",'${securities[1]['share']}','${securities[1]['price']}','-','-', Colors.indigo[100]),
+                              singleRow(context, "${securities[2]['name']}",'${securities[2]['share']}','${securities[2]['price']}','-','-', Colors.indigo[50]),
 
                             ],
                           ),
