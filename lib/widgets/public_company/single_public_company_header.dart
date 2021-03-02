@@ -177,7 +177,7 @@ class SinglePublicCompanyHeader extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: 4, bottom: 4.0),
           child: Container(
-            width: 200,
+            width: 300,
             child: Center(
               child: Text(
                 "Key Performance Indicators : ",
