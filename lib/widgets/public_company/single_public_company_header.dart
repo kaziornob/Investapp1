@@ -3,8 +3,22 @@ import 'package:flutter/material.dart';
 
 class SinglePublicCompanyHeader extends StatelessWidget {
   final marketCapital;
+  final netDebt;
+  final roe3yr;
+  final currency;
+  final equityBeta;
+  final marketCapLocal;
+  final fixRate;
 
-  SinglePublicCompanyHeader({this.marketCapital});
+  SinglePublicCompanyHeader({
+    this.marketCapital,
+    this.currency,
+    this.equityBeta,
+    this.netDebt,
+    this.roe3yr,
+    this.marketCapLocal,
+    this.fixRate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,103 +95,11 @@ class SinglePublicCompanyHeader extends StatelessWidget {
           //     ),
           //   ],
           // ),
-          KeySocialInvestIndicators(),
-          Padding(
-            padding: const EdgeInsets.only(left: 2.0, right: 2.0, top: 8.0),
-            child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 3.0),
-                  width: (MediaQuery.of(context).size.width/3)-10,
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xff7499C6),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                     color: Color(0xff7499C6),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Ask Auro',
-                        style: new TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 18.0,
-                          letterSpacing: 0.2,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 3.0),
-                  width: (MediaQuery.of(context).size.width/3)-10,
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xff7499C6),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                    color: Color(0xff7499C6),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Trade',
-                        style: new TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 18.0,
-                          letterSpacing: 0.2,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 3.0),
-                  width: (MediaQuery.of(context).size.width/3)-10,
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xff7499C6),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                    color: Color(0xff7499C6),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Follow',
-                        style: new TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 18.0,
-                          letterSpacing: 0.2,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+
+          KeySocialInvestIndicators(
+            fixRate: fixRate,
           ),
+          listItem1(context),
           // Padding(
           //   padding: const EdgeInsets.only(left: 2.0, right: 2.0, top: 8.0),
           //   child: Row(
@@ -244,6 +166,130 @@ class SinglePublicCompanyHeader extends StatelessWidget {
           //   ),
           // )
         ],
+      ),
+    );
+  }
+
+  listItem1(context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 4, bottom: 4.0),
+          child: Container(
+            width: 200,
+            child: Center(
+              child: Text(
+                "Key Performance Indicators : ",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Rosarivo",
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Color(0xFFfec20f),
+                  width: 2,
+                ),
+              ),
+            ),
+          ),
+        ),
+        singleRow(context, "Market Cap(USD)", Colors.indigo[50],
+            "$marketCapital" + "M"),
+        currency == "USD"
+            ? SizedBox()
+            : singleRow(context, "Market Cap($currency)", Colors.indigo[100],
+                "$marketCapLocal" + "M"),
+        singleRowWithToolTip(
+            context,
+            "Enterprise Value(USD)",
+            currency == "USD" ? Colors.indigo[100] : Colors.indigo[50],
+            "58.78"),
+        singleRowWithToolTip(
+            context,
+            "Net Debt(USD)",
+            currency == "USD" ? Colors.indigo[50] : Colors.indigo[100],
+            "$netDebt" + "M"),
+        singleRowWithToolTip(
+            context,
+            "RoE",
+            currency == "USD" ? Colors.indigo[100] : Colors.indigo[50],
+            "$roe3yr"),
+        singleRowWithToolTip(context, "Beta",
+            currency == "USD" ? Colors.indigo[50] : Colors.indigo[100], "1"),
+        singleRowWithToolTip(context, "Dividend yield",
+            currency == "USD" ? Colors.indigo[100] : Colors.indigo[50], "2%"),
+      ],
+    );
+  }
+
+  singleRowWithToolTip(context, text, color, value) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: color),
+          color: color,
+        ),
+        height: 25,
+        width: MediaQuery.of(context).size.width - 20,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Center(
+                  child: Row(
+                children: [
+                  Text(text),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Tooltip(
+                    message: "$text",
+                    child: Icon(
+                      Icons.help,
+                      size: 15,
+                    ),
+                  ),
+                ],
+              )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Center(child: Text(value)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  singleRow(context, text, color, value) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: color),
+          color: color,
+        ),
+        height: 25,
+        width: MediaQuery.of(context).size.width - 20,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Center(child: Text(text)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Center(child: Text(value)),
+            ),
+          ],
+        ),
       ),
     );
   }
