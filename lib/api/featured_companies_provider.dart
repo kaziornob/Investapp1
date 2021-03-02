@@ -262,6 +262,8 @@ class FeaturedCompaniesProvider {
     var response = await http.get(url, headers: headers);
     print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
+    print("search compaiessssss");
+    print(result.toString());
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("ggggg");
