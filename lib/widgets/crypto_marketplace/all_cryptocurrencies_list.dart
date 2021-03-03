@@ -57,15 +57,15 @@ class _AllCryptocurrenciesListState extends State<AllCryptocurrenciesList> {
   }
 
   dd(data) {
-    var dataCut = data.sublist(1);
+    // var dataCut = data.sublist(1);
     return Container(
       height: 265,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: dataCut.length,
+        itemCount: data.length,
         itemBuilder: (context, index) {
           return CryptocurrencyItem(
-            coinDetails: dataCut[index],
+            coinDetails: data[index],
           );
         },
       ),

@@ -165,6 +165,7 @@ class FeaturedCompaniesProvider {
   searchIndustry(text) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
+    print(sessionToken);
 
     String filterPath = "company_details/pvtIndustry?substr=$text";
 
@@ -178,7 +179,7 @@ class FeaturedCompaniesProvider {
     // print("session token: $sessionToken");
 
     var response = await http.get(url, headers: headers);
-    print("get public company list response: ${response.statusCode}");
+    print("get industry response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {

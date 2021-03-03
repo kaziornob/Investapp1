@@ -9,12 +9,14 @@ import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/model/listingsModel.dart';
 import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
+import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:screen/screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constance/global.dart';
@@ -227,41 +229,48 @@ class _MyAppState extends State<MyApp> {
 
     return Container(
       color: AllCoustomTheme.getThemeData().primaryColor,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Auro',
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => SelectIndustry(),
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Auro',
 /*        home: FutureBuilder<dynamic>(
-          future: getUserDetails(), // async work
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting: return ModalProgressHUD(
-                inAsyncCall: false,
-                opacity: 0,
-                progressIndicator: SizedBox(),
-                child: Text(""),
-              );
-              default:
-                if (snapshot.hasError)
-                  {
-                    return Container(
-                      child: Text(
-                        'Error: ${snapshot.error}',
-                        textAlign: TextAlign.center,
-                        style: new TextStyle(
-                          fontSize: 18,
-                          fontFamily: "Rasa",
+            future: getUserDetails(), // async work
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting: return ModalProgressHUD(
+                  inAsyncCall: false,
+                  opacity: 0,
+                  progressIndicator: SizedBox(),
+                  child: Text(""),
+                );
+                default:
+                  if (snapshot.hasError)
+                    {
+                      return Container(
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          textAlign: TextAlign.center,
+                          style: new TextStyle(
+                            fontSize: 18,
+                            fontFamily: "Rasa",
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                else
-                  return HomeScreen();
-            }
-          },
-        ),*/
-        home: _decideMainPage(context),
-        // routes: routes,
-        theme: AllCoustomTheme.getThemeData(),
+                      );
+                    }
+                  else
+                    return HomeScreen();
+              }
+            },
+          ),*/
+          home: _decideMainPage(context),
+          // routes: routes,
+          theme: AllCoustomTheme.getThemeData(),
+        ),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:auroim/api/featured_companies_provider.dart';
+import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchIndustry extends StatefulWidget {
   @override
@@ -9,7 +11,7 @@ class SearchIndustry extends StatefulWidget {
 
 class _SearchIndustryState extends State<SearchIndustry> {
   final FeaturedCompaniesProvider _featuredCompaniesProvider =
-  FeaturedCompaniesProvider();
+      FeaturedCompaniesProvider();
   TextEditingController _filterByIndustryController = TextEditingController();
   FocusNode _focusNode = FocusNode();
 
@@ -131,7 +133,14 @@ class _SearchIndustryState extends State<SearchIndustry> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                Provider.of<SelectIndustry>(context,
+                                        listen: false)
+                                    .addIndustryItem(
+                                  snapshot.data[index]["industry_name"],
+                                );
+                                Navigator.of(context).pop();
+                              },
                               title: Text(
                                 snapshot.data[index]["industry_name"],
                                 style: TextStyle(

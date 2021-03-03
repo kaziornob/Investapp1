@@ -5,11 +5,15 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/widgets/private_deals_marketplace/all_companies_single_item.dart';
 import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 import 'package:auroim/widgets/search_industry.dart';
 import 'package:auroim/widgets/tab_chip.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class AllCompanies extends StatefulWidget {
@@ -22,7 +26,10 @@ class _AllCompaniesState extends State<AllCompanies> {
   // List<Widget> allTabs = [
   //
   // ];
+  TextEditingController _filterByIndustryController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
 
+  bool searching = false;
   Map<String, bool> allTabsBool = {
     "trending": true,
     "live": false,
@@ -30,10 +37,9 @@ class _AllCompaniesState extends State<AllCompanies> {
     "icon": false,
   };
 
-
   String filter = "trending";
 
-  String industry = "";
+  // String industry = "";
 
   final FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
@@ -65,8 +71,6 @@ class _AllCompaniesState extends State<AllCompanies> {
     },
   };
 
-
-
   Map<String, String> allOptionsForApi = {
     "Valuation": "valuation",
     "Funding": "funding",
@@ -97,8 +101,21 @@ class _AllCompaniesState extends State<AllCompanies> {
   bool onTapFilters = false;
   String filterCompaniesString = "";
 
-
-
+  @override
+  void initState() {
+    _filterByIndustryController.addListener(() {
+      if (_filterByIndustryController.text.length > 0) {
+        setState(() {
+          searching = true;
+        });
+      } else {
+        setState(() {
+          searching = false;
+        });
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -314,50 +331,189 @@ class _AllCompaniesState extends State<AllCompanies> {
               ),
             );
           }),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () {
-                print("tapped industry");
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) => SearchIndustry(),
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       print("tapped industry");
+          //       showModalBottomSheet(
+          //         context: context,
+          //         builder: (context) => SearchIndustry(),
+          //       );
+          //     },
+          //     child: Container(
+          //       decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.all(
+          //           Radius.circular(20),
+          //         ),
+          //         border: Border.all(
+          //           color: Color(0xff5A56B9),
+          //         ),
+          //       ),
+          //       height: 50,
+          //       width: MediaQuery.of(context).size.width - 50,
+          //       child: TypeAheadFormField(
+          //         textFieldConfiguration: TextFieldConfiguration(
+          //           // onTap: () {
+          //           //   // print(
+          //           //   //     "this got tapped hard");
+          //           //   //
+          //           //   // .animateTo(
+          //           //   // 0.0,
+          //           //   // curve: Curves.easeOut,
+          //           //   // duration:
+          //           //   // const Duration(
+          //           //   // milliseconds: 300,
+          //           //   // ),
+          //           //   // );
+          //           // },
+          //           controller: _filterByIndustryController,
+          //           textInputAction: TextInputAction.done,
+          //           textAlign: TextAlign.start,
+          //           keyboardType: TextInputType.text,
+          //           maxLines: 1,
+          //           style: TextStyle(
+          //             fontSize: 16.0,
+          //             color: Colors.black
+          //           ),
+          //           inputFormatters: [LengthLimitingTextInputFormatter(30)],
+          //           decoration: InputDecoration(
+          //             hintText: 'Search Industry',
+          //             // border: OutlineInputBorder(
+          //             //     borderSide: BorderSide(
+          //             //         width: 1.0,
+          //             //         color: AllCoustomTheme.getTextThemeColors()),
+          //             //     borderRadius: BorderRadius.all(Radius.circular(0.0))),
+          //             focusedBorder: OutlineInputBorder(
+          //               borderSide: BorderSide(color: Colors.grey, width: 1.0),
+          //             ),
+          //             enabledBorder: OutlineInputBorder(
+          //               borderSide: BorderSide(color: Colors.white, width: 1.0),
+          //             ),
+          //             hintStyle: TextStyle(
+          //               color: Colors.grey,
+          //               fontSize: 15.0,
+          //             ),
+          //           ),
+          //           // onSubmitted: (value) {},
+          //         ),
+          //         suggestionsCallback: (pattern) async {
+          //           return await _featuredCompaniesProvider
+          //               .searchIndustry(pattern);
+          //         },
+          //         itemBuilder: (context, suggestion) {
+          //           return ListTile(
+          //             title: Text(
+          //               suggestion["industry_name"],
+          //               style: TextStyle(
+          //                 color: Colors.black,
+          //               ),
+          //             ),
+          //           );
+          //         },
+          //         // transitionBuilder: (context,
+          //         //     suggestionsBox, controller) {
+          //         //   return suggestionsBox;
+          //         // },
+          //         onSuggestionSelected: (suggestion) {
+          //           setState(() {
+          //             _filterByIndustryController.text =
+          //                 suggestion["industry_name"];
+          //           });
+          //         },
+          //       ),
+          //       // Padding(
+          //       //   padding: const EdgeInsets.only(left: 8.0),
+          //       //   child: Row(
+          //       //     children: [
+          //       //       Icon(
+          //       //         Icons.search_rounded,
+          //       //         color: Color(0xff5A56B9),
+          //       //       ),
+          //       //       SizedBox(
+          //       //         width: 8.0,
+          //       //       ),
+          //       //       Text(
+          //       //         industry == "" ? "Search Industry" : industry,
+          //       //         style: TextStyle(
+          //       //           color: Color(0xff5A56B9),
+          //       //         ),
+          //       //       ),
+          //       //     ],
+          //       //   ),
+          //       // ),
+          //     ),
+          //   ),
+          // ),
+
+          Consumer<SelectIndustry>(builder: (context, industryProvider, _) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  print("tapped industry");
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => SearchIndustry(),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    border: Border.all(
+                      color: Color(0xff5A56B9),
+                    ),
                   ),
-                  border: Border.all(
-                    color: Color(0xff5A56B9),
-                  ),
-                ),
-                height: 50,
-                width: MediaQuery.of(context).size.width - 50,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.search_rounded,
-                        color: Color(0xff5A56B9),
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      Text(
-                        industry == "" ? "Search Industry" : industry,
-                        style: TextStyle(
-                          color: Color(0xff5A56B9),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width - 50,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.search_rounded,
+                                color: Color(0xff5A56B9),
+                              ),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                industryProvider.industriesSelected.length == 0
+                                    ? "Search Industry"
+                                    : industryProvider.industriesSelected
+                                        .join(","),
+                                style: TextStyle(
+                                  color: Color(0xff5A56B9),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        industryProvider.industriesSelected.length == 0
+                            ? SizedBox()
+                            : IconButton(
+                                icon: Icon(
+                                  Icons.close_rounded,
+                                  color: Color(0xff5A56B9),
+                                ),
+                                onPressed: () {
+                                  industryProvider.clearList();
+                                },
+                              )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          }),
           Container(
             height: 40,
             width: 120,
@@ -384,8 +540,11 @@ class _AllCompaniesState extends State<AllCompanies> {
                       option;
                 });
                 filterCompaniesString = filterCompaniesString.substring(1);
+                filterCompaniesString = filterCompaniesString +
+                    "&industry_list=${Provider.of<SelectIndustry>(context, listen: false).industriesSelected.join(",")}";
                 print(filterCompaniesString);
                 setState(() {});
+
               },
               color: Color(0xff7499C6),
               child: Text(
@@ -616,5 +775,4 @@ class _AllCompaniesState extends State<AllCompanies> {
       ),
     );
   }
-
 }
