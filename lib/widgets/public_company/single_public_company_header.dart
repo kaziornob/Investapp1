@@ -199,11 +199,11 @@ class SinglePublicCompanyHeader extends StatelessWidget {
           ),
         ),
         singleRow(context, "Market Cap(USD)", Colors.indigo[50],
-            "$marketCapital" + "M"),
+            "${marketCapital.toStringAsFixed(3)}" + "M"),
         currency == "USD"
             ? SizedBox()
             : singleRow(context, "Market Cap($currency)", Colors.indigo[100],
-                "$marketCapLocal" + "M"),
+                "${double.parse(marketCapLocal).toStringAsFixed(3)}" + "M"),
         singleRowWithToolTip(
             context,
             "Enterprise Value(USD)",
@@ -213,12 +213,12 @@ class SinglePublicCompanyHeader extends StatelessWidget {
             context,
             "Net Debt(USD)",
             currency == "USD" ? Colors.indigo[50] : Colors.indigo[100],
-            "$netDebt" + "M"),
+            "${netDebt.toStringAsFixed(3)}" + "M"),
         singleRowWithToolTip(
             context,
             "RoE",
             currency == "USD" ? Colors.indigo[100] : Colors.indigo[50],
-            "$roe3yr"),
+            "${roe3yr.toStringAsFixed(3)}"),
         singleRowWithToolTip(context, "Beta",
             currency == "USD" ? Colors.indigo[50] : Colors.indigo[100], "1"),
         singleRowWithToolTip(context, "Dividend yield",

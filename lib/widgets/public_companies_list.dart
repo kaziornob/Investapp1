@@ -29,6 +29,7 @@ class _PublicCompaniesListState extends State<PublicCompaniesList> {
             // decoration: BoxDecoration(border: Border.all(color: Colors.white,)),
             height: 300,
             child: ListView.builder(
+              scrollDirection: Axis.horizontal,
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   print(snapshot.data[0]);

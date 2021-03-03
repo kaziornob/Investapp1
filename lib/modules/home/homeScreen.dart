@@ -132,7 +132,6 @@ class _HomeScreenState extends State<HomeScreen>
     new Tab(text: "Month"),
   ];
 
-
   TabController _tabController;
 
   @override
@@ -1095,7 +1094,6 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-
   int homeDonutCurrentIndex = 0;
 
   List homeDonutArray = [];
@@ -1212,18 +1210,19 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             // handshake/loader image box
             Visibility(
-              visible: homeDonutArray == null || homeDonutArray.length == 0
-                  ? true
-                  : false,
-              child: Container(
-                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.10,bottom: MediaQuery.of(context).size.height * 0.10),
-                child:  CircularProgressIndicator(
-                  backgroundColor: Colors.redAccent,
-                  valueColor: AlwaysStoppedAnimation(Colors.green),
-                  strokeWidth: 10,
-                ),
-              )
-            ),
+                visible: homeDonutArray == null || homeDonutArray.length == 0
+                    ? true
+                    : false,
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.10,
+                      bottom: MediaQuery.of(context).size.height * 0.10),
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.redAccent,
+                    valueColor: AlwaysStoppedAnimation(Colors.green),
+                    strokeWidth: 10,
+                  ),
+                )),
 /*            Visibility(
               visible: homeDonutArray == null || homeDonutArray.length == 0
                   ? true
@@ -1255,56 +1254,90 @@ class _HomeScreenState extends State<HomeScreen>
                         });
                       }),
                   itemBuilder: (context, index) {
-                    if(index==2)
-                      {
-                        print("index: $index");
-                        final List<Map<String, dynamic>> securities = [];
+                    if (index == 2) {
+                      print("index: $index");
+                      final List<Map<String, dynamic>> securities = [];
 
-                        if(portfolioChartData!=null && portfolioChartData['weights_foliotickers'] != null &&
-                            portfolioChartData['weights_foliotickers']['weights'] != null) {
+                      if (portfolioChartData != null &&
+                          portfolioChartData['weights_foliotickers'] != null &&
+                          portfolioChartData['weights_foliotickers']
+                                  ['weights'] !=
+                              null) {
+                        print("data comes: $index");
+                        print(
+                            "weights folio tickers: ${portfolioChartData['weights_foliotickers']["weights"]}");
+                        final Map<String, dynamic> weights =
+                            portfolioChartData['weights_foliotickers']
+                                ["weights"];
 
-                          print("data comes: $index");
-                          print("weights folio tickers: ${portfolioChartData['weights_foliotickers']["weights"]}");
-                          final Map<String, dynamic> weights =
-                          portfolioChartData['weights_foliotickers']["weights"];
+                        print("weights: $weights");
 
-                          print("weights: $weights");
+                        final Map<String, dynamic> weight_values =
+                            portfolioChartData['weights_foliotickers']
+                                ["weights_value"];
+                        final Map<String, dynamic> in_prices =
+                            portfolioChartData['weights_foliotickers']
+                                ["in_price"];
+                        final Map<String, dynamic> security_names =
+                            portfolioChartData['weights_foliotickers']
+                                ["security_name"];
+                        print("weights : $weights");
 
-                          final Map<String, dynamic> weight_values =
-                          portfolioChartData['weights_foliotickers']["weights_value"];
-                          final Map<String, dynamic> in_prices =
-                          portfolioChartData['weights_foliotickers']["in_price"];
-                          final Map<String, dynamic> security_names =
-                          portfolioChartData['weights_foliotickers']["security_name"];
-                          print("weights : $weights");
-
-                          var sortedKeys = weights.keys.toList(growable: false)
-                            ..sort((k1, k2) => weights[k1].compareTo(weights[k2]));
-                          sortedKeys = sortedKeys.getRange(0, 3).toList();
-                          sortedKeys.forEach((k) => {
-                            securities.add({
-                              "weight": weights[k],
-                              "name":security_names[k],
-                              "price": in_prices[k],
-                              "weight_value": weight_values[k],
-                              "share":   weight_values[k] / in_prices[k]
-                            })
-                          });
-                          print("securities : $securities");
-                        }
-
-                        return Container(
-                          child: Column(
-                            children: [
-                              singleRow(context, "Security",'# of shares/ \$','In-Price','Current Price','% Return', Colors.indigo[100]),
-                              singleRow(context, "${securities[0]['name']}",'${securities[0]['share']}','${securities[0]['price']}','-','-', Colors.indigo[50]),
-                              singleRow(context, "${securities[1]['name']}",'${securities[1]['share']}','${securities[1]['price']}','-','-', Colors.indigo[100]),
-                              singleRow(context, "${securities[2]['name']}",'${securities[2]['share']}','${securities[2]['price']}','-','-', Colors.indigo[50]),
-
-                            ],
-                          ),
-                        );
+                        var sortedKeys = weights.keys.toList(growable: false)
+                          ..sort(
+                              (k1, k2) => weights[k1].compareTo(weights[k2]));
+                        sortedKeys = sortedKeys.getRange(0, 3).toList();
+                        sortedKeys.forEach((k) => {
+                              securities.add({
+                                "weight": weights[k],
+                                "name": security_names[k],
+                                "price": in_prices[k],
+                                "weight_value": weight_values[k],
+                                "share": weight_values[k] / in_prices[k]
+                              })
+                            });
+                        print("securities : $securities");
                       }
+
+                      return Container(
+                        child: Column(
+                          children: [
+                            singleRow(
+                                context,
+                                "Security",
+                                '# of shares/ \$',
+                                'In-Price',
+                                'Current Price',
+                                '% Return',
+                                Colors.indigo[100]),
+                            singleRow(
+                                context,
+                                "${securities[0]['name']}",
+                                '${securities[0]['share']}',
+                                '${securities[0]['price']}',
+                                '-',
+                                '-',
+                                Colors.indigo[50]),
+                            singleRow(
+                                context,
+                                "${securities[1]['name']}",
+                                '${securities[1]['share']}',
+                                '${securities[1]['price']}',
+                                '-',
+                                '-',
+                                Colors.indigo[100]),
+                            singleRow(
+                                context,
+                                "${securities[2]['name']}",
+                                '${securities[2]['share']}',
+                                '${securities[2]['price']}',
+                                '-',
+                                '-',
+                                Colors.indigo[50]),
+                          ],
+                        ),
+                      );
+                    }
                     return Container(
                       child: SfCircularChart(
                           legend: Legend(
@@ -1362,7 +1395,7 @@ class _HomeScreenState extends State<HomeScreen>
                       right: MediaQuery.of(context).size.width * 0.03),
                   child: Text(
                     "Voila! We’ve created a paper  portfolio for you that can help you start engaging and learning about how to invest. "
-                        "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
+                    "Please note that this is NOT our recommended investment portfolio for which you need to complete additional risk onbording.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         color: AllCoustomTheme.getNewSecondTextThemeColor(),
@@ -1370,8 +1403,7 @@ class _HomeScreenState extends State<HomeScreen>
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
                         letterSpacing: 0.2),
-                  )
-              ),
+                  )),
             ),
             SizedBox(
               height: 10.0,
@@ -1425,7 +1457,6 @@ class _HomeScreenState extends State<HomeScreen>
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.06,
                       child: Container(
-
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.32,
                         decoration: BoxDecoration(
@@ -1484,7 +1515,6 @@ class _HomeScreenState extends State<HomeScreen>
                         margin: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.06,
                             right: MediaQuery.of(context).size.width * 0.06),
-
                         padding: EdgeInsets.only(
                           bottom: 3, // space between underline and text
                         ),
@@ -1528,7 +1558,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   ))
                             ],
                           )),
-                        PublicCompaniesList(),
+                      PublicCompaniesList(),
 /*                      SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.37,
@@ -1548,9 +1578,7 @@ class _HomeScreenState extends State<HomeScreen>
         ));
   }
 
-
-
-  singleRow(context, security,share,ip,cp, perReturn,color) {
+  singleRow(context, security, share, ip, cp, perReturn, color) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1572,7 +1600,11 @@ class _HomeScreenState extends State<HomeScreen>
             border: Border.all(color: Colors.white),
             color: color,
           ),
-          child: Center(child: Text(share,textAlign: TextAlign.center,)),
+          child: Center(
+              child: Text(
+            share,
+            textAlign: TextAlign.center,
+          )),
         ),
         Container(
           // width: (MediaQuery.of(context).size.width / 2) - 6,
@@ -1582,7 +1614,11 @@ class _HomeScreenState extends State<HomeScreen>
             border: Border.all(color: Colors.white),
             color: color,
           ),
-          child: Center(child: Text(ip,textAlign: TextAlign.center,)),
+          child: Center(
+              child: Text(
+            ip,
+            textAlign: TextAlign.center,
+          )),
         ),
         Container(
           // width: (MediaQuery.of(context).size.width / 2) - 6,
@@ -1592,7 +1628,11 @@ class _HomeScreenState extends State<HomeScreen>
             border: Border.all(color: Colors.white),
             color: color,
           ),
-          child: Center(child: Text(cp,textAlign: TextAlign.center,)),
+          child: Center(
+              child: Text(
+            cp,
+            textAlign: TextAlign.center,
+          )),
         ),
         Container(
           // width: (MediaQuery.of(context).size.width / 2) - 6,
@@ -1602,7 +1642,11 @@ class _HomeScreenState extends State<HomeScreen>
             border: Border.all(color: Colors.white),
             color: color,
           ),
-          child: Center(child: Text(perReturn,textAlign: TextAlign.center,)),
+          child: Center(
+              child: Text(
+            perReturn,
+            textAlign: TextAlign.center,
+          )),
         ),
       ],
     );
@@ -4083,148 +4127,172 @@ class _HomeScreenState extends State<HomeScreen>
             height: 4,
           ),
           //donut chart box
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.30,
-              margin: EdgeInsets.only(left: 15.0, right: 5.0),
-              child: Stack(
-                children: [
-                  SfCircularChart(series: <CircularSeries>[
-                    // Renders doughnut chart
-                    DoughnutSeries<ChartData, String>(
-                        dataSource: chartData,
-                        pointColorMapper: (ChartData data, _) => data.color,
-                        xValueMapper: (ChartData data, _) => data.x,
-                        yValueMapper: (ChartData data, _) => data.y)
-                  ]),
-                  new Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.11),
-                        child: Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                '150',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontFamily: "Roboto",
-                                  package: 'Roboto-Regular',
-                                ),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                'coins',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontFamily: "Roboto",
-                                  package: 'Roboto-Regular',
-                                ),
-                              ),
+          FutureBuilder(
+            future: _featuredCompaniesProvider.getUserCoinsScoreData(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.30,
+                    margin: EdgeInsets.only(left: 15.0, right: 5.0),
+                    child: Stack(
+                      children: [
+                        SfCircularChart(
+                          series: <CircularSeries>[
+                            // Renders doughnut chart
+                            DoughnutSeries<ChartData, String>(
+                              dataSource: chartData,
+                              pointColorMapper: (ChartData data, _) =>
+                                  data.color,
+                              xValueMapper: (ChartData data, _) => data.x,
+                              yValueMapper: (ChartData data, _) => data.y,
+                              dataLabelSettings: DataLabelSettings(
+                                  // isVisible: true,
+                                  // useSeriesColor: true,
+                                  showCumulativeValues: true,
+                                  showZeroValue: true),
                             )
                           ],
                         ),
-                      )),
-                  InkWell(
-                    child: new Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                          height: 30,
-                          width: 70,
-                          margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                          decoration: new BoxDecoration(
-                            // color: Color(0xFF1E90FF),
-                            color: Color(0xFFc7ebdf),
-                            border: Border.all(
-                              // color: Color(0xFF1E90FF),
-                              color: Color(0xFFc7ebdf),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2.0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'EASY',
-                              style: TextStyle(
-                                color:
-                                    AllCoustomTheme.getsecoundTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontFamily: "Roboto",
-                                package: 'Roboto-Regular',
+                        new Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.11),
+                              child: Column(
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      '150',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Roboto",
+                                        package: 'Roboto-Regular',
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      'coins',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Roboto",
+                                        package: 'Roboto-Regular',
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ),
-                          )),
-                    ),
-                    onTap: () {
-                      // goToQuestionTemp();
-                    },
-                  ),
-                  new Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                        height: 30,
-                        width: 110,
-                        margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                        decoration: new BoxDecoration(
-                          color: Color(0xFF008080),
-                          border: Border.all(
-                            color: Color(0xFF008080),
-                            width: 1,
+                            )),
+                        InkWell(
+                          child: new Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                                height: 30,
+                                width: 70,
+                                margin:
+                                    EdgeInsets.only(top: 20.0, bottom: 20.0),
+                                decoration: new BoxDecoration(
+                                  // color: Color(0xFF1E90FF),
+                                  color: Color(0xFFc7ebdf),
+                                  border: Border.all(
+                                    // color: Color(0xFF1E90FF),
+                                    color: Color(0xFFc7ebdf),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(2.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'EASY',
+                                    style: TextStyle(
+                                      color: AllCoustomTheme
+                                          .getsecoundTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Roboto",
+                                      package: 'Roboto-Regular',
+                                    ),
+                                  ),
+                                )),
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2.0),
-                          ),
+                          onTap: () {
+                            // goToQuestionTemp();
+                          },
                         ),
-                        child: Center(
-                          child: Text(
-                            'INTERMEDIATE',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getsecoundTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE15,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                            ),
-                          ),
-                        )),
-                  ),
-                  new Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                        height: 30,
-                        width: 70,
-                        margin: EdgeInsets.only(top: 60.0, bottom: 40.0),
-                        decoration: new BoxDecoration(
-                          color: Color(0xFFFF8C00),
-                          border: Border.all(
-                            color: Color(0xFFFF8C00),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2.0),
-                          ),
+                        new Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Container(
+                              height: 30,
+                              width: 110,
+                              margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                              decoration: new BoxDecoration(
+                                color: Color(0xFF008080),
+                                border: Border.all(
+                                  color: Color(0xFF008080),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(2.0),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'INTERMEDIATE',
+                                  style: TextStyle(
+                                    color: AllCoustomTheme
+                                        .getsecoundTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
+                                    package: 'Roboto-Regular',
+                                  ),
+                                ),
+                              )),
                         ),
-                        child: Center(
-                          child: Text(
-                            'HARD',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getsecoundTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                            ),
-                          ),
-                        )),
-                  )
-                ],
-              )),
+                        new Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                              height: 30,
+                              width: 70,
+                              margin: EdgeInsets.only(top: 60.0, bottom: 40.0),
+                              decoration: new BoxDecoration(
+                                color: Color(0xFFFF8C00),
+                                border: Border.all(
+                                  color: Color(0xFFFF8C00),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(2.0),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'HARD',
+                                  style: TextStyle(
+                                    color: AllCoustomTheme
+                                        .getsecoundTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontFamily: "Roboto",
+                                    package: 'Roboto-Regular',
+                                  ),
+                                ),
+                              )),
+                        )
+                      ],
+                    ));
+              } else {
+                return SizedBox();
+              }
+            },
+          ),
           SizedBox(
             height: 4,
           ),
@@ -4273,41 +4341,41 @@ class _HomeScreenState extends State<HomeScreen>
               children: <Widget>[
                 Expanded(
                     child: InkWell(
-                      onTap: () async {
-                        HelperClass.showLoading(context);
-                        Question questions = await getQuestions();
-                        if (questions == null) {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(CupertinoPageRoute(
-                              builder: (_) => ErrorPage(
-                                    message: "There are not enough questions yet.",
-                                  )));
-                          return;
-                        }
-                        Navigator.pop(context);
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (BuildContext context) =>
-                                QuestionTemplate(questions: questions),
+                  onTap: () async {
+                    HelperClass.showLoading(context);
+                    Question questions = await getQuestions();
+                    if (questions == null) {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (_) => ErrorPage(
+                                message: "There are not enough questions yet.",
+                              )));
+                      return;
+                    }
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (BuildContext context) =>
+                            QuestionTemplate(questions: questions),
+                      ),
+                    );
+                  },
+                  child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: AllCoustomTheme.getSeeMoreThemeColor(),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          'INCREASE YOUR SCORE',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "Roboto",
                           ),
-                        );
-                      },
-                      child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: AllCoustomTheme.getSeeMoreThemeColor(),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            'INCREASE YOUR SCORE',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE15,
-                              fontFamily: "Roboto",
-                            ),
-                          ),
                       )),
                 )),
               ],

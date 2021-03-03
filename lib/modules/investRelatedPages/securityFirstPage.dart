@@ -3,8 +3,10 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/widgets/public_company/single_company_debate_tab.dart';
 import 'package:auroim/widgets/public_company/single_company_overview_tab.dart';
 import 'package:auroim/widgets/public_company/single_public_company_appbar.dart';
+import 'package:auroim/widgets/public_company/single_public_company_fundamental_tab.dart';
 import 'package:auroim/widgets/public_company/single_public_company_header.dart';
 import 'package:auroim/widgets/single_public_company_videos.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -57,8 +59,6 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
     super.initState();
     // loadDetails();
   }
-
-
 
   // loadDetails() async {
   //   setState(() {
@@ -173,7 +173,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
                       Expanded(
                         // flex: 1,
                         child: Container(
-                          padding: EdgeInsets.only(top: 10.0),
+                          // padding: EdgeInsets.only(top: 10.0),
                           child: TabBarView(
                             controller: _tabController,
                             children: tabList.map((Tab tab) {
@@ -198,9 +198,17 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
       case 'Overview':
         return SinglePublicCompanyOverviewTab(data: data);
       case 'Debate':
-        return learnMore(data);
+        return SinglePublicCompaniesDebateTab(data: data);
       case 'Fundamental':
-        return learnMore(data);
+        return SinglePublicCompanyDetailsFundamentalTab(
+          marketCapital: data["market_cap_usd_mn"],
+          netDebt: data["net_debt_usd_mn"],
+          roe3yr: data["roe_3yr"],
+          currency: data["currency"],
+          equityBeta: data["equity_beta"],
+          marketCapLocal: data["market_cap_local_mn"],
+          fixRate: data["fx_rate"],
+        );
       case 'Technical':
         return learnMore(data);
     }

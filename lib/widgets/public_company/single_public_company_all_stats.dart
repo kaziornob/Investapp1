@@ -59,12 +59,14 @@ class _SinglePublicCompanyAllStatsListState
       child: Container(
         height: 260,
         // color: Colors.blue,
-        width: MediaQuery.of(context).size.width - 15,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            SizedBox(
+            Container(
               height: 230,
-              width: MediaQuery.of(context).size.width - 15,
+              width: MediaQuery.of(context).size.width,
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.black)),
               child: CarouselSlider.builder(
                 itemCount: slideArray.length,
                 options: CarouselOptions(
@@ -76,20 +78,23 @@ class _SinglePublicCompanyAllStatsListState
                     }),
                 itemBuilder: (context, index) {
                   return Container(
-                    // margin: EdgeInsets.only(
-                    //     left: MediaQuery.of(context).size.width * 0.048,
-                    //     right: MediaQuery.of(context).size.width * 0.048),
+                    // decoration:
+                    //     BoxDecoration(border: Border.all(color: Colors.black)),
+                    // width: MediaQuery.of(context).size.width-15,
                     child: Padding(
                       padding: const EdgeInsets.only(
                         top: 8.0,
                         bottom: 8.0,
-                        right: 8.0,
-                        left: 8.0,
+                        right: 2.0,
+                        left: 2.0,
                       ),
                       child: Material(
-                        elevation: 10,
+                        elevation: 2,
                         child: Container(
-                          width: 350,
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(color: Colors.black),
+                          // ),
+                          width: MediaQuery.of(context).size.width,
                           // color: Colors.green,
                           child: slideArray[index],
                         ),
@@ -168,7 +173,7 @@ class _SinglePublicCompanyAllStatsListState
       children: [
         Container(
           // decoration: BoxDecoration(border: Border.all()),
-          width: 330,
+          width: MediaQuery.of(context).size.width - 15,
           height: 40,
           child: Center(
             child: Row(
@@ -197,7 +202,7 @@ class _SinglePublicCompanyAllStatsListState
       children: [
         Container(
           // decoration: BoxDecoration(border: Border.all()),
-          width: 330,
+          width: MediaQuery.of(context).size.width - 15,
           height: 40,
           child: Center(
             child: Row(
@@ -253,7 +258,7 @@ class _SinglePublicCompanyAllStatsListState
       children: [
         Container(
           // decoration: BoxDecoration(border: Border.all()),
-          width: 330,
+          width: MediaQuery.of(context).size.width - 15,
           height: 40,
           child: Center(
             child: Row(
@@ -298,52 +303,91 @@ class _SinglePublicCompanyAllStatsListState
             ],
           ),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.05,
-          margin: EdgeInsets.all(7.0),
-          decoration: new BoxDecoration(
-            border: Border.all(
-              color: Color(0xFFfec20f),
-              width: 1,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(2.0),
-            ),
-          ),
-          child: SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              activeTrackColor: Colors.green,
-              inactiveTrackColor: Colors.red[100],
-              trackShape: RoundedRectSliderTrackShape(),
-              trackHeight: 4.0,
-              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-              thumbColor: Colors.green,
-              overlayColor: Colors.red.withAlpha(32),
-              overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-              tickMarkShape: RoundSliderTickMarkShape(),
-              activeTickMarkColor: Colors.green,
-              inactiveTickMarkColor: Colors.red[100],
-              valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-              valueIndicatorColor: Colors.green,
-              valueIndicatorTextStyle: TextStyle(
-                color: Colors.white,
+        StatefulBuilder(builder: (context, setVotingBarState) {
+          return Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.05,
+                margin: EdgeInsets.all(7.0),
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xFFfec20f),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    activeTrackColor: Colors.green,
+                    inactiveTrackColor: Colors.red[100],
+                    trackShape: RoundedRectSliderTrackShape(),
+                    trackHeight: 4.0,
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                    thumbColor: Colors.green,
+                    overlayColor: Colors.red.withAlpha(32),
+                    overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+                    tickMarkShape: RoundSliderTickMarkShape(),
+                    activeTickMarkColor: Colors.green,
+                    inactiveTickMarkColor: Colors.red[100],
+                    valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                    valueIndicatorColor: Colors.green,
+                    valueIndicatorTextStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  child: Slider(
+                    value: _voteValue,
+                    min: 0,
+                    max: 100,
+                    divisions: 10,
+                    label: '$_voteValue',
+                    onChanged: (value) {
+                      setVotingBarState(() {
+                        _voteValue = value;
+                      });
+                    },
+                  ),
+                ),
               ),
-            ),
-            child: Slider(
-              value: _voteValue,
-              min: 0,
-              max: 100,
-              divisions: 10,
-              label: '$_voteValue',
-              onChanged: (value) {
-                setState(() {
-                  _voteValue = value;
-                });
-              },
-            ),
-          ),
-        ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  RaisedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Long",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    color: Colors.green,
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: Colors.green),
+                    ),
+                  ),
+                  RaisedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Short",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    color: Colors.red,
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: Colors.red),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+        }),
       ],
     );
   }
@@ -353,7 +397,7 @@ class _SinglePublicCompanyAllStatsListState
       children: [
         Container(
           // decoration: BoxDecoration(border: Border.all()),
-          width: 330,
+          width: MediaQuery.of(context).size.width - 15,
           height: 40,
           child: Center(
             child: Row(
@@ -493,6 +537,12 @@ class _SinglePublicCompanyAllStatsListState
   // }
 
   listItem1() {
+    // print("list item 1");
+    // print(widget.marketCapital.runtimeType.toString());
+    // print(widget.marketCapLocal.runtimeType.toString());
+
+    // print();
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -502,11 +552,15 @@ class _SinglePublicCompanyAllStatsListState
             child: singleRow(context, "Key Stats : ", Colors.white, ""),
           ),
           singleRow(context, "Market Cap(USD)", Colors.indigo[50],
-              "${widget.marketCapital}" + "M"),
+              "${widget.marketCapital.toStringAsFixed(3)}" + "M"),
           widget.currency == "USD"
               ? SizedBox()
-              : singleRow(context, "Market Cap(${widget.currency})",
-                  Colors.indigo[100], "${widget.marketCapLocal}" + "M"),
+              : singleRow(
+                  context,
+                  "Market Cap(${widget.currency})",
+                  Colors.indigo[100],
+                  "${double.parse(widget.marketCapLocal).toStringAsFixed(3)}" +
+                      "M"),
           singleRowWithToolTip(
               context,
               "Enterprise Value(USD)",
@@ -516,7 +570,7 @@ class _SinglePublicCompanyAllStatsListState
               context,
               "Net Debt(USD)",
               widget.currency == "USD" ? Colors.indigo[50] : Colors.indigo[100],
-              "${widget.netDebt}" + "M"),
+              "${widget.netDebt.toStringAsFixed(3)}" + "M"),
           singleRowWithToolTip(
               context,
               "RoE",
@@ -545,7 +599,7 @@ class _SinglePublicCompanyAllStatsListState
           color: color,
         ),
         height: 25,
-        width: 340,
+        width: MediaQuery.of(context).size.width - 15,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

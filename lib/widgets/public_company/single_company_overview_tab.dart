@@ -1,3 +1,4 @@
+import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/public_company/single_public_company_all_stats.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,9 @@ class SinglePublicCompanyOverviewTab extends StatefulWidget {
 
 class _SinglePublicCompanyOverviewTabState
     extends State<SinglePublicCompanyOverviewTab> {
-  double _voteValue = 3.0;
+  // double _voteValue = 3.0;
+  FeaturedCompaniesProvider _featuredCompaniesProvider =
+      FeaturedCompaniesProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +148,9 @@ class _SinglePublicCompanyOverviewTabState
             ),
             child: Text(
               widget.data["company_description"],
-              style: TextStyle(color: AllCoustomTheme.getNewSecondTextThemeColor(),),
+              style: TextStyle(
+                color: AllCoustomTheme.getNewSecondTextThemeColor(),
+              ),
             ),
           ),
           //video sliders
@@ -510,49 +515,73 @@ class _SinglePublicCompanyOverviewTabState
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 13, right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    child: Scrollbar(
-                      child: ListView.builder(
-                        itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            child: Container(
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 25.0,
-                                    backgroundImage: index == 0
-                                        ? new AssetImage(
-                                            'assets/filledweeklyAuroBadge.png')
-                                        : new AssetImage(
-                                            'assets/weeklyAuroBadge.png'),
-                                    backgroundColor: Colors.transparent,
+          FutureBuilder(
+            future: _featuredCompaniesProvider
+                .getSimilarPublicCompaniesImageUrl(widget.data["ticker"]),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 13, right: 5.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(
+                          //     color: Colors.black,
+                          //   ),
+                          // ),
+                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          child: Scrollbar(
+                            child: ListView.builder(
+                              itemCount: snapshot.data.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return
+                                    // Row(
+                                    // children: [
+                                    Padding(
+                                  padding: const EdgeInsets.only(left: 4.0),
+                                  child: Container(
+                                    width: 80.0,
+                                    height: 80.0,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(snapshot.data[index]
+                                            ["logo_img_name"]),
+                                        fit: BoxFit.contain,
+                                      ),
+                                      shape: BoxShape.circle,
+                                      // borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                                      border: new Border.all(
+                                        color: Color(0xff5A56B9),
+                                        width: 2.0,
+                                      ),
+                                    ),
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  )
-                                ],
-                              ),
+                                );
+                                //     SizedBox(
+                                //       width: 10,
+                                //     )
+                                //   ],
+                                // );
+                              },
                             ),
-                          );
-                        },
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ),
+                );
+              } else {
+                return SizedBox();
+              }
+            },
+          )
         ],
       ),
     );
