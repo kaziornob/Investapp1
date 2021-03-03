@@ -326,7 +326,7 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(
                                                           color: AllCoustomTheme
-                                                              .getTextThemeColor(),
+                                                              .getSeeMoreThemeColor(),
                                                           fontSize: ConstanceData
                                                               .SIZE_TITLE16,
                                                           fontFamily: "Roboto",
@@ -340,7 +340,7 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(
                                                           color: AllCoustomTheme
-                                                              .getTextThemeColor(),
+                                                              .getSeeMoreThemeColor(),
                                                           fontSize: ConstanceData
                                                               .SIZE_TITLE16,
                                                           fontFamily: "Roboto",

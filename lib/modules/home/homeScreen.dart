@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -1209,8 +1210,21 @@ class _HomeScreenState extends State<HomeScreen>
                 width: 1.6, // Underline width
               ))),
             ),
-            // handshake image box
+            // handshake/loader image box
             Visibility(
+              visible: homeDonutArray == null || homeDonutArray.length == 0
+                  ? true
+                  : false,
+              child: Container(
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.10,bottom: MediaQuery.of(context).size.height * 0.10),
+                child:  CircularProgressIndicator(
+                  backgroundColor: Colors.redAccent,
+                  valueColor: AlwaysStoppedAnimation(Colors.green),
+                  strokeWidth: 10,
+                ),
+              )
+            ),
+/*            Visibility(
               visible: homeDonutArray == null || homeDonutArray.length == 0
                   ? true
                   : false,
@@ -1224,7 +1238,7 @@ class _HomeScreenState extends State<HomeScreen>
                       image: new AssetImage('assets/handShake.png')),
                 ),
               ),
-            ),
+            ),*/
             Visibility(
               visible: homeDonutArray.length != 0 ? true : false,
               // visible: true,
@@ -1241,6 +1255,56 @@ class _HomeScreenState extends State<HomeScreen>
                         });
                       }),
                   itemBuilder: (context, index) {
+                    if(index==2)
+                      {
+                        print("index: $index");
+                        final List<Map<String, dynamic>> securities = [];
+
+                        if(portfolioChartData!=null && portfolioChartData['weights_foliotickers'] != null &&
+                            portfolioChartData['weights_foliotickers']['weights'] != null) {
+
+                          print("data comes: $index");
+                          print("weights folio tickers: ${portfolioChartData['weights_foliotickers']["weights"]}");
+                          final Map<String, dynamic> weights =
+                          portfolioChartData['weights_foliotickers']["weights"];
+
+                          print("weights: $weights");
+
+                          final Map<String, dynamic> weight_values =
+                          portfolioChartData['weights_foliotickers']["weights_value"];
+                          final Map<String, dynamic> in_prices =
+                          portfolioChartData['weights_foliotickers']["in_price"];
+                          final Map<String, dynamic> security_names =
+                          portfolioChartData['weights_foliotickers']["security_name"];
+                          print("weights : $weights");
+
+                          var sortedKeys = weights.keys.toList(growable: false)
+                            ..sort((k1, k2) => weights[k1].compareTo(weights[k2]));
+                          sortedKeys = sortedKeys.getRange(0, 3).toList();
+                          sortedKeys.forEach((k) => {
+                            securities.add({
+                              "weight": weights[k],
+                              "name":security_names[k],
+                              "price": in_prices[k],
+                              "weight_value": weight_values[k],
+                              "share":   weight_values[k] / in_prices[k]
+                            })
+                          });
+                          print("securities : $securities");
+                        }
+
+                        return Container(
+                          child: Column(
+                            children: [
+                              singleRow(context, "Security",'# of shares/ \$','In-Price','Current Price','% Return', Colors.indigo[100]),
+                              singleRow(context, "${securities[0]['name']}",'${securities[0]['share']}','${securities[0]['price']}','-','-', Colors.indigo[50]),
+                              singleRow(context, "${securities[1]['name']}",'${securities[1]['share']}','${securities[1]['price']}','-','-', Colors.indigo[100]),
+                              singleRow(context, "${securities[2]['name']}",'${securities[2]['share']}','${securities[2]['price']}','-','-', Colors.indigo[50]),
+
+                            ],
+                          ),
+                        );
+                      }
                     return Container(
                       child: SfCircularChart(
                           legend: Legend(
@@ -1482,6 +1546,66 @@ class _HomeScreenState extends State<HomeScreen>
             // go live button
           ],
         ));
+  }
+
+
+
+  singleRow(context, security,share,ip,cp, perReturn,color) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(security)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(share,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(ip,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(cp,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(perReturn,textAlign: TextAlign.center,)),
+        ),
+      ],
+    );
   }
 
 /*  Widget oldSecoundScreen() {
@@ -2978,7 +3102,7 @@ class _HomeScreenState extends State<HomeScreen>
                     height: 115,
                     width: 150.0,
                     fit: BoxFit.fill,
-                    image: new AssetImage('assets/stackOverflow.png')),
+                    image: new AssetImage('assets/arqade.jpeg')),
               ),
               Container(
                   child: Column(
@@ -4869,6 +4993,7 @@ class _HomeScreenState extends State<HomeScreen>
         homeDonutArray.add(1);
         homeDonutArray.add(2);
         homeDonutArray.add(3);
+        homeDonutArray.add(4);
         portfolioChartData = null;
         portfolioChartData = response['message'] != null &&
                 response['message']['algo_result'] != null

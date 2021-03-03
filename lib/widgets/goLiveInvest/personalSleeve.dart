@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
@@ -11,6 +13,8 @@ import 'package:auroim/constance/global.dart' as globals;
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+var securityBoxChartData;
 
 
 class PersonalSleeve extends StatefulWidget {
@@ -27,7 +31,6 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
   var investorType;
 
   int selectedTabIndex;
-  var securityBoxChartData;
 
 
   final List<Tab> tabList = <Tab>[
@@ -42,9 +45,10 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
+    getDoughnutPortfolioData();
     getSharedPrefData();
+    // investInfo.initData();
     _tabController = new TabController(vsync: this, length: tabList.length);
-    investInfo.initData();
   }
 
   SharedPreferences prefs;
@@ -53,6 +57,25 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
     investorType = prefs!=null && prefs.containsKey('InvestorType') &&
         prefs.getString('InvestorType') != null ? prefs.getString('InvestorType') : '';
     print("investor type : ${prefs.getString('InvestorType')}");
+  }
+
+  Future<void> getDoughnutPortfolioData() async {
+    print("getDoughnutPortfolioData called");
+    var response = await request.getRequest('users/run_algo');
+    print("portfolio chart list: $response");
+    if (response != null &&
+        response != false &&
+        response.containsKey('auth') &&
+        response['auth'] == true) {
+      setState(() {
+        securityBoxChartData = null;
+        securityBoxChartData = response['message'] != null &&
+            response['message']['algo_result'] != null
+            ? response['message']['algo_result']
+            : null;
+        // investInfo.initData();
+      });
+    }
   }
 
 
@@ -539,15 +562,18 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
                         ),
                         // Colors.indigo[100]
                         // table section
-/*                        Container(
+                        Container(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              singleRow(context, "Hualan Biological Engineering","5.09","7.92965","720","5%",Colors.indigo[50]),
+                              singleRow(context, "Security",'# of shares/ \$','In-Price','Current Price','% Return', Colors.indigo[100]),
+                              singleRow(context, "3SBio Inc",'0.7','70','','-', Colors.indigo[50]),
+                              singleRow(context, "SUMCO Corp",'0.6','60','','-', Colors.indigo[100]),
+                              singleRow(context, "Ricoh Co Ltd",'0.5','50','','-', Colors.indigo[50]),
+
                             ],
                           ),
-                        ),*/
-                        Container(
+                        )
+/*                        Container(
                           height: MediaQuery.of(context).size.height,
                           margin: EdgeInsets.only(top:10.0),
                           child: HorizontalDataTable(
@@ -566,7 +592,7 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
                             leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
                             rightHandSideColBackgroundColor: AllCoustomTheme.getPageBackgroundThemeColor(),
                           ),
-                        )
+                        )*/
                       ],
                     );
                   }).toList(),
@@ -580,42 +606,61 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
     );
   }
 
-  singleRow(context, security , share , inPrice , currentPrice, perReturn, color) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: color),
-          color: color,
+  singleRow(context, security,share,ip,cp, perReturn,color) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(security)),
         ),
-        height: 35,
-        width: MediaQuery.of(context).size.width*0.95,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 0.0),
-              child: Center(child: Text(security)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: Center(child: Text(share)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: Center(child: Text(inPrice)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: Center(child: Text(currentPrice)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: Center(child: Text(perReturn)),
-            ),
-          ],
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(share,textAlign: TextAlign.center,)),
         ),
-      ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(ip,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(cp,textAlign: TextAlign.center,)),
+        ),
+        Container(
+          // width: (MediaQuery.of(context).size.width / 2) - 6,
+          width: 70,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            color: color,
+          ),
+          child: Center(child: Text(perReturn,textAlign: TextAlign.center,)),
+        ),
+      ],
     );
   }
 }
@@ -626,13 +671,41 @@ class InvestInfo {
   List<ListInfo> listInfo = [];
 
   void initData() {
+
+    print("init data called");
     listInfo = [];
 
-/*    if(securityBoxChartData!=null && securityBoxChartData['weights_assetclass'] != null &&
-        securityBoxChartData['weights_assetclass']['weights'] != null)
+    if(securityBoxChartData!=null && securityBoxChartData['weights_foliotickers'] != null &&
+        securityBoxChartData['weights_foliotickers']['weights'] != null)
       {
+        var tempWeights=  securityBoxChartData['weights_foliotickers']['weights'];
 
-      }*/
+        var tempSecurity=  securityBoxChartData['weights_foliotickers']['security_name'];
+        var tempPrice=  securityBoxChartData['weights_foliotickers']['in_price'];
+        var tempWeightsValue=  securityBoxChartData['weights_foliotickers']['weights_value'];
+
+
+        var sortedKeys = tempWeights.keys.toList(growable:false)
+          ..sort((k1, k2) => tempWeights[k1].compareTo(tempWeights[k2]));
+        LinkedHashMap sortedMap = new LinkedHashMap
+            .fromIterable(sortedKeys, key: (k) => k, value: (k) => tempWeights[k]);
+
+        var iterationCount = 0;
+        var sortedWeights = [];
+        final data = sortedMap;
+        for (final name in data.keys) {
+          final value = data[name];
+          print('$name,$value');
+          if(iterationCount > 2)
+            {
+              break;
+            }
+          sortedWeights.add({"$name": "$value"});
+          iterationCount ++;
+        }
+
+        print("sortedWeights: $sortedWeights");
+      }
 
     listInfo.add(
         ListInfo("Hualan Biological Engineering","5.09","7.92965","720","5")
