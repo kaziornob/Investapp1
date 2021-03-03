@@ -27,8 +27,6 @@ Future<Question> getQuestions() async {
 
     var tempBody = json.decode(response.body);
     var tempQusData = tempBody['message'];
-    print("tempQusData: $tempQusData");
-
     var optionData = [];
     var tempQuestions;
     if(tempQusData!=null && tempQusData.containsKey('answer') && tempQusData['answer']!=null)
@@ -36,7 +34,8 @@ Future<Question> getQuestions() async {
         final data = tempQusData['answer'] as Map;
         for (final name in data.keys) {
           final value = data[name];
-          print('$name,$value');
+          // print('$name');
+          // print('$value');
           if(value!=null && value.length!=0)
             {
               optionData.add({"option_value": value[0],"checked": false,"is_correct": value[1],"answer_id" : name});
@@ -49,13 +48,12 @@ Future<Question> getQuestions() async {
           "question_id": "${tempQusData['master_id']}",
           "image": [],
           "video_link": "${tempQusData['link']}",
+          "diff_score": tempQusData['diff_score'],
           "option": optionData
         };
       }
 
     Map<String, dynamic> questions = Map<String, dynamic>.from(tempQuestions);
-
-    print("questions: $questions");
 
     return Question.fromMap(questions);
 

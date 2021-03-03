@@ -1184,8 +1184,7 @@ class _HomeScreenState extends State<HomeScreen>
             Container(
                 alignment: Alignment.center,
                 child: Text(
-                  'AURO PAPER',
-                  // textAlign: TextAlign.center,
+                  'AURO PAPER PPORTFOLIO',
                   style: TextStyle(
                       color: AllCoustomTheme.getHeadingThemeColors(),
                       fontSize: ConstanceData.SIZE_TITLE20,
@@ -1197,8 +1196,8 @@ class _HomeScreenState extends State<HomeScreen>
             Container(
               // margin: EdgeInsets.only(left: 80.0,right: 80.0),
               margin: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.25,
-                  right: MediaQuery.of(context).size.width * 0.25),
+                  left: MediaQuery.of(context).size.width * 0.07,
+                  right: MediaQuery.of(context).size.width * 0.07),
               alignment: Alignment.center,
               padding: EdgeInsets.only(
                 bottom: 3, // space between underline and text
@@ -1472,7 +1471,7 @@ class _HomeScreenState extends State<HomeScreen>
                         padding: EdgeInsets.only(top: 5.0),
                         child: Center(
                             child: Text(
-                          'PORTFOLIO COMPONENTS',
+                          'AURO PORTFOLIO COMPONENTS',
                           style: new TextStyle(
                             color: AllCoustomTheme.getHeadingThemeColors(),
                             fontSize: ConstanceData.SIZE_TITLE18,
@@ -1482,8 +1481,8 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.06,
-                            right: MediaQuery.of(context).size.width * 0.06),
+                            left: MediaQuery.of(context).size.width * 0.02,
+                            right: MediaQuery.of(context).size.width * 0.02),
 
                         padding: EdgeInsets.only(
                           bottom: 3, // space between underline and text
@@ -1528,7 +1527,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   ))
                             ],
                           )),
-                        PublicCompaniesList(),
+                      PublicCompaniesList(),
 /*                      SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.37,
@@ -2323,34 +2322,10 @@ class _HomeScreenState extends State<HomeScreen>
     return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            globals.isGoldBlack
-                ? PrivateDealsIntro(
-                    goToMarketplaceCallback: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PrivateDealsMarketplaceMainPage(),
-                        ),
-                      );
-                    },
-                  )
-                : CryptoMarketplace(),
-            globals.isGoldBlack
-                ? CryptoMarketplace()
-                : PrivateDealsIntro(
-                    goToMarketplaceCallback: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PrivateDealsMarketplaceMainPage(),
-                        ),
-                      );
-                    },
-                  ),
-            SizedBox(
-              height: 20,
-            ),
+            SearchFirstPage(),
             // personal sleeve section
             PersonalSleeve(
               goToPersonalSleeveCallback: () {
@@ -2358,21 +2333,36 @@ class _HomeScreenState extends State<HomeScreen>
                     MaterialPageRoute(builder: (context) => PersonalSleeve()));
               },
             ),
+            // auro stars section
+
+            //public equities section
+
+            //crypto market place section
+            Visibility(
+              visible: globals.isGoldBlack==false ? true : false,
+              child: CryptoMarketplace()
+            ),
+
+            //Pvt deals section
+            Visibility(
+                visible: globals.isGoldBlack==false ? true : false,
+                child: PrivateDealsIntro(
+                  goToMarketplaceCallback: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PrivateDealsMarketplaceMainPage(),
+                      ),
+                    );
+                  },
+                )
+            ),
             // investment guru component box
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.57,
               child: Container(
                   margin: EdgeInsets.only(left: 5.0, right: 5.0),
-                  /*decoration: new BoxDecoration(
-                  border: Border.all(
-                    color: Color(0xFFfec20f),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(2.0),
-                  ),
-                ),*/
                   child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
@@ -2389,7 +2379,6 @@ class _HomeScreenState extends State<HomeScreen>
                         )),
                       ),
                       Container(
-                        // margin: EdgeInsets.only(left: 50.0,right: 50.0),
                         margin: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.12,
                             right: MediaQuery.of(context).size.width * 0.12),
@@ -2439,12 +2428,9 @@ class _HomeScreenState extends State<HomeScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(
-                              // height: 35,
                               height:
                                   MediaQuery.of(context).size.height * 0.065,
                               child: Container(
-                                /*height: 35,
-                              width: 150,*/
                                 height:
                                     MediaQuery.of(context).size.height * 0.065,
                                 width: MediaQuery.of(context).size.width * 0.45,
@@ -2479,22 +2465,10 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             // pe/vc/re component box
             SizedBox(
-              height: 20,
-            ),
-            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.27,
               child: Container(
                   margin: EdgeInsets.only(left: 5.0, right: 5.0),
-/*                decoration: new BoxDecoration(
-                  border: Border.all(
-                    color: Color(0xFFfec20f),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(2.0),
-                  ),
-                ),*/
                   child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
@@ -2582,9 +2556,6 @@ class _HomeScreenState extends State<HomeScreen>
                   )),
             ),
             // last start now component box
-            SizedBox(
-              height: 20,
-            ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.27,
@@ -4050,273 +4021,307 @@ class _HomeScreenState extends State<HomeScreen>
           SizedBox(
             height: 10,
           ),
-          Container(
-              height: 30,
-              child: Padding(
-                padding: EdgeInsets.only(top: 5.0),
-                child: Text(
-                  'SCOREBOARD',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AllCoustomTheme.getHeadingThemeColors(),
-                    fontSize: ConstanceData.SIZE_TITLE18,
-                    fontFamily: "Rosarivo",
-                  ),
-                ),
-              )),
-          Container(
-            // margin: EdgeInsets.only(left: 110.0,right: 110.0),
-            margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.25,
-                right: MediaQuery.of(context).size.width * 0.25),
-            padding: EdgeInsets.only(
-              bottom: 3, // space between underline and text
-            ),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-              color: AllCoustomTheme.getHeadingThemeColors(),
-              width: 1.0, // Underline width
-            ))),
-          ),
-          SizedBox(
-            height: 4,
-          ),
-          //donut chart box
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.30,
-              margin: EdgeInsets.only(left: 15.0, right: 5.0),
-              child: Stack(
-                children: [
-                  SfCircularChart(series: <CircularSeries>[
-                    // Renders doughnut chart
-                    DoughnutSeries<ChartData, String>(
-                        dataSource: chartData,
-                        pointColorMapper: (ChartData data, _) => data.color,
-                        xValueMapper: (ChartData data, _) => data.x,
-                        yValueMapper: (ChartData data, _) => data.y)
-                  ]),
-                  new Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.11),
-                        child: Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                '150',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontFamily: "Roboto",
-                                  package: 'Roboto-Regular',
-                                ),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                'coins',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontFamily: "Roboto",
-                                  package: 'Roboto-Regular',
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                  InkWell(
-                    child: new Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                          height: 30,
-                          width: 70,
-                          margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                          decoration: new BoxDecoration(
-                            // color: Color(0xFF1E90FF),
-                            color: Color(0xFFc7ebdf),
-                            border: Border.all(
-                              // color: Color(0xFF1E90FF),
-                              color: Color(0xFFc7ebdf),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2.0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'EASY',
-                              style: TextStyle(
-                                color:
-                                    AllCoustomTheme.getsecoundTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontFamily: "Roboto",
-                                package: 'Roboto-Regular',
-                              ),
-                            ),
-                          )),
+          // auro stars section
+
+          //Pvt deals section
+          Visibility(
+              visible: globals.isGoldBlack,
+              child: PrivateDealsIntro(
+                goToMarketplaceCallback: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PrivateDealsMarketplaceMainPage(),
                     ),
-                    onTap: () {
-                      // goToQuestionTemp();
-                    },
-                  ),
-                  new Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                        height: 30,
-                        width: 110,
-                        margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                        decoration: new BoxDecoration(
-                          color: Color(0xFF008080),
-                          border: Border.all(
-                            color: Color(0xFF008080),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2.0),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'INTERMEDIATE',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getsecoundTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE15,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                            ),
-                          ),
-                        )),
-                  ),
-                  new Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                        height: 30,
-                        width: 70,
-                        margin: EdgeInsets.only(top: 60.0, bottom: 40.0),
-                        decoration: new BoxDecoration(
-                          color: Color(0xFFFF8C00),
-                          border: Border.all(
-                            color: Color(0xFFFF8C00),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2.0),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'HARD',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getsecoundTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                            ),
-                          ),
-                        )),
-                  )
-                ],
-              )),
-          SizedBox(
-            height: 4,
+                  );
+                },
+              )
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
+
+          //crypto market place section
+          Visibility(
+              visible: globals.isGoldBlack,
+              child: CryptoMarketplace()
+          ),
+
+          // public equities section
+
+          // score board section start
+          Visibility(
+              visible: globals.isGoldBlack==false ? true : false,
+              child: Column(
+                children: [
+                  Container(
                       height: 30,
-                      decoration: new BoxDecoration(
-                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                        border: Border.all(
-                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(2.0),
-                        ),
-                      ),
                       child: Padding(
-                        padding: EdgeInsets.only(top: 4.0),
+                        padding: EdgeInsets.only(top: 5.0),
                         child: Text(
-                          "Today's progress: 1 concept",
+                          'SCOREBOARD',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AllCoustomTheme.getSubHeadingThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Rosarivo",
                           ),
                         ),
                       )),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 4,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                    child: InkWell(
-                      onTap: () async {
-                        HelperClass.showLoading(context);
-                        Question questions = await getQuestions();
-                        if (questions == null) {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(CupertinoPageRoute(
-                              builder: (_) => ErrorPage(
-                                    message: "There are not enough questions yet.",
-                                  )));
-                          return;
-                        }
-                        Navigator.pop(context);
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (BuildContext context) =>
-                                QuestionTemplate(questions: questions),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: AllCoustomTheme.getSeeMoreThemeColor(),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            'INCREASE YOUR SCORE',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE15,
-                              fontFamily: "Roboto",
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.25,
+                        right: MediaQuery.of(context).size.width * 0.25),
+                    padding: EdgeInsets.only(
+                      bottom: 3, // space between underline and text
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                              color: AllCoustomTheme.getHeadingThemeColors(),
+                              width: 1.0, // Underline width
+                            ))),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  //donut chart box
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.30,
+                      margin: EdgeInsets.only(left: 15.0, right: 5.0),
+                      child: Stack(
+                        children: [
+                          SfCircularChart(series: <CircularSeries>[
+                            // Renders doughnut chart
+                            DoughnutSeries<ChartData, String>(
+                                dataSource: chartData,
+                                pointColorMapper: (ChartData data, _) => data.color,
+                                xValueMapper: (ChartData data, _) => data.x,
+                                yValueMapper: (ChartData data, _) => data.y)
+                          ]),
+                          new Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height * 0.11),
+                                child: Column(
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        '150',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getTextThemeColor(),
+                                          fontSize: ConstanceData.SIZE_TITLE16,
+                                          fontFamily: "Roboto",
+                                          package: 'Roboto-Regular',
+                                        ),
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        'coins',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AllCoustomTheme.getTextThemeColor(),
+                                          fontSize: ConstanceData.SIZE_TITLE16,
+                                          fontFamily: "Roboto",
+                                          package: 'Roboto-Regular',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                          InkWell(
+                            child: new Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                  height: 30,
+                                  width: 70,
+                                  margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                                  decoration: new BoxDecoration(
+                                    // color: Color(0xFF1E90FF),
+                                    color: Color(0xFFc7ebdf),
+                                    border: Border.all(
+                                      // color: Color(0xFF1E90FF),
+                                      color: Color(0xFFc7ebdf),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(2.0),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'EASY',
+                                      style: TextStyle(
+                                        color:
+                                        AllCoustomTheme.getsecoundTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Roboto",
+                                        package: 'Roboto-Regular',
+                                      ),
+                                    ),
+                                  )),
                             ),
+                            onTap: () {
+                              // goToQuestionTemp();
+                            },
                           ),
+                          new Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Container(
+                                height: 30,
+                                width: 110,
+                                margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFF008080),
+                                  border: Border.all(
+                                    color: Color(0xFF008080),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(2.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'INTERMEDIATE',
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE15,
+                                      fontFamily: "Roboto",
+                                      package: 'Roboto-Regular',
+                                    ),
+                                  ),
+                                )),
+                          ),
+                          new Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                                height: 30,
+                                width: 70,
+                                margin: EdgeInsets.only(top: 60.0, bottom: 40.0),
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFFFF8C00),
+                                  border: Border.all(
+                                    color: Color(0xFFFF8C00),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(2.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'HARD',
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                      fontSize: ConstanceData.SIZE_TITLE16,
+                                      fontFamily: "Roboto",
+                                      package: 'Roboto-Regular',
+                                    ),
+                                  ),
+                                )),
+                          )
+                        ],
                       )),
-                )),
-              ],
-            ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                              height: 30,
+                              decoration: new BoxDecoration(
+                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                border: Border.all(
+                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(2.0),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 4.0),
+                                child: Text(
+                                  "Today's progress: 1 concept",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getSubHeadingThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontFamily: "Roboto",
+                                    package: 'Roboto-Regular',
+                                  ),
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                HelperClass.showLoading(context);
+                                Question questions = await getQuestions();
+                                if (questions == null) {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(CupertinoPageRoute(
+                                      builder: (_) => ErrorPage(
+                                        message: "There are not enough questions yet.",
+                                      )));
+                                  return;
+                                }
+                                Navigator.pop(context);
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (BuildContext context) =>
+                                        QuestionTemplate(questions: questions),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      'INCREASE YOUR SCORE',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE15,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
+                                  )),
+                            )),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                ],
+            )
           ),
-          SizedBox(
-            height: 4,
-          ),
-          // invesstment track record
+          // score board section end
+
+          // investment track record
 /*          Padding(
               padding: EdgeInsets.only(top: 0.0),
               child: Center(
@@ -4647,274 +4652,283 @@ class _HomeScreenState extends State<HomeScreen>
               ],
             ),
           ),*/
-          // weekly auro strike
-          SizedBox(
-            height: 25,
-          ),
-          Padding(
-              padding: const EdgeInsets.only(left: 16, right: 5.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.06,
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Weekly Auro Streak',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFFD8AF4F),
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                            ),
-                          ),
-                        )),
-                    Container(
-                      // margin: EdgeInsets.only(right: 180.0),
-                      margin: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width * 0.42),
-                      padding: EdgeInsets.only(
-                        bottom: 3, // space between underline and text
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                        color: AllCoustomTheme.getHeadingThemeColors(),
-                        width: 1.0, // Underline width
-                      ))),
-                    ),
-                  ],
-                ),
-              )),
-          SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 13, right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.10,
-                      child: Scrollbar(
-                        child: ListView.builder(
-                          itemCount: 10,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                                onTap: () {
-                                  var tempField = {
-                                    "rankingNum": "1",
-                                    "name": "Warren Buffet",
-                                    "philosophy":
-                                        "Buy companies at a low price, improve them via management and make long term gains",
-                                    "trackRecord":
-                                        "He has a 30-year-plus track record making on average 20 percent a year",
-                                    "image": "WarrenBuffet"
-                                  };
-                                  print("tempfield: $tempField");
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (BuildContext context) =>
-                                          ClubDetail(allField: tempField),
+         //Auro Streak section start
+          Visibility(
+              visible: globals.isGoldBlack==false ? true : false,
+              child: Column(
+                children: [
+                  // weekly auro strike
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 5.0),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        child: ListView(
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.only(top: 5.0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Weekly Auro Streak',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFD8AF4F),
+                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontFamily: "Roboto",
+                                      package: 'Roboto-Regular',
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                    child: Row(
-                                  children: [
-                                    Stack(
-                                      alignment: Alignment.topLeft,
-                                      children: <Widget>[
-                                        CircleAvatar(
-                                          radius: 25.0,
-                                          backgroundImage: index == 0
-                                              ? new AssetImage(
-                                                  'assets/filledweeklyAuroBadge.png')
-                                              : new AssetImage(
-                                                  'assets/weeklyAuroBadge.png'),
-                                          backgroundColor: Colors.transparent,
-                                        ),
-                                        Positioned(
-                                          bottom: 25,
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.blue,
-                                            radius: 12.0,
-                                            child: Text(
-                                              "${index + 1}",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFFD8AF4F),
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE18,
-                                                fontFamily: "Roboto",
-                                                package: 'Roboto-Regular',
-                                              ),
+                                  ),
+                                )),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  right: MediaQuery.of(context).size.width * 0.42),
+                              padding: EdgeInsets.only(
+                                bottom: 3, // space between underline and text
+                              ),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                        color: AllCoustomTheme.getHeadingThemeColors(),
+                                        width: 1.0, // Underline width
+                                      ))),
+                            ),
+                          ],
+                        ),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 13, right: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.10,
+                              child: Scrollbar(
+                                child: ListView.builder(
+                                  itemCount: 10,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {
+                                          var tempField = {
+                                            "rankingNum": "1",
+                                            "name": "Warren Buffet",
+                                            "philosophy":
+                                            "Buy companies at a low price, improve them via management and make long term gains",
+                                            "trackRecord":
+                                            "He has a 30-year-plus track record making on average 20 percent a year",
+                                            "image": "WarrenBuffet"
+                                          };
+                                          print("tempfield: $tempField");
+                                          Navigator.of(context).push(
+                                            CupertinoPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  ClubDetail(allField: tempField),
                                             ),
-                                          ),
-                                        ),
-/*                                          FractionalTranslation(
-                                            translation: Offset(0.0, -0.99),
-                                            child: CircleAvatar(
-                                              backgroundColor: Colors.blue,
-                                              radius: 12.0,
-                                              child: Text(
-                                                "${index + 1}",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Color(0xFFD8AF4F),
-                                                  fontSize: ConstanceData.SIZE_TITLE18,
-                                                  fontFamily: "Roboto",
-                                                  package: 'Roboto-Regular',
+                                          );
+                                        },
+                                        child: Container(
+                                            child: Row(
+                                              children: [
+                                                Stack(
+                                                  alignment: Alignment.topLeft,
+                                                  children: <Widget>[
+                                                    CircleAvatar(
+                                                      radius: 25.0,
+                                                      backgroundImage: index == 0
+                                                          ? new AssetImage(
+                                                          'assets/filledweeklyAuroBadge.png')
+                                                          : new AssetImage(
+                                                          'assets/weeklyAuroBadge.png'),
+                                                      backgroundColor: Colors.transparent,
+                                                    ),
+                                                    Positioned(
+                                                      bottom: 25,
+                                                      child: CircleAvatar(
+                                                        backgroundColor: Colors.blue,
+                                                        radius: 12.0,
+                                                        child: Text(
+                                                          "${index + 1}",
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Color(0xFFD8AF4F),
+                                                            fontSize:
+                                                            ConstanceData.SIZE_TITLE18,
+                                                            fontFamily: "Roboto",
+                                                            package: 'Roboto-Regular',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+  /*                                          FractionalTranslation(
+                                              translation: Offset(0.0, -0.99),
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.blue,
+                                                radius: 12.0,
+                                                child: Text(
+                                                  "${index + 1}",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFFD8AF4F),
+                                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                                    fontFamily: "Roboto",
+                                                    package: 'Roboto-Regular',
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          )*/
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    )
-                                  ],
-                                )));
-                          },
+                                            )*/
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                )
+                                              ],
+                                            )));
+                                  },
+                                ),
+                              )),
                         ),
-                      )),
-                ),
-              ],
-            ),
-          ),
-
-          //weekly league
-          SizedBox(
-            height: 15,
-          ),
-          Padding(
-              padding: const EdgeInsets.only(left: 16, right: 5.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.06,
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Weekly League',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFFD8AF4F),
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                            ),
-                          ),
-                        )),
-                    Container(
-                      // margin: EdgeInsets.only(right: 210.0),
-                      margin: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width * 0.55),
-                      padding: EdgeInsets.only(
-                        bottom: 3, // space between underline and text
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                        color: AllCoustomTheme.getHeadingThemeColors(),
-                        width: 1.0, // Underline width
-                      ))),
+                      ],
                     ),
-                  ],
-                ),
-              )),
-          Padding(
-            padding: const EdgeInsets.only(left: 13, right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 110,
-                ),
-                Expanded(child: new FormField(
-                  builder: (FormFieldState state) {
-                    return InputDecorator(
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.blueGrey, width: 1.0),
-                        ),
-                        labelStyle:
-                            AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
-                        errorText: state.hasError ? state.errorText : null,
-                      ),
-                      isEmpty: selectedWeeklyLeague == '',
-                      child: new DropdownButtonHideUnderline(
-                          child: ButtonTheme(
-                        alignedDropdown: true,
-                        child: Container(
-                          height: 16.0,
-                          child: new DropdownButton(
-                            value: selectedWeeklyLeague,
-                            dropdownColor: Colors.white,
-                            isExpanded: true,
-                            onChanged: (String newValue) {
-                              setState(() {
-                                selectedWeeklyLeague = newValue;
-                              });
-                            },
-                            items: <String>[
-                              'Adaptive Investment Learning',
-                              'Investment Track Record',
-                              'Investment Stock Pitch',
-                              'Investment QnA',
-                              'Social Investment Score'
-                            ].map((String value) {
-                              return new DropdownMenuItem(
-                                value: value,
-                                child: new Text(value,
-                                    style: AllCoustomTheme
-                                        .getDropDownMenuItemStyleTheme()),
-                              );
-                            }).toList(),
-                          ),
+                  ),
+
+                  //weekly league
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 5.0),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        child: ListView(
+                          children: <Widget>[
+                            Padding(
+                                padding: EdgeInsets.only(top: 5.0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Weekly League',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFD8AF4F),
+                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                      fontFamily: "Roboto",
+                                      package: 'Roboto-Regular',
+                                    ),
+                                  ),
+                                )),
+                            Container(
+                              // margin: EdgeInsets.only(right: 210.0),
+                              margin: EdgeInsets.only(
+                                  right: MediaQuery.of(context).size.width * 0.55),
+                              padding: EdgeInsets.only(
+                                bottom: 3, // space between underline and text
+                              ),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                        color: AllCoustomTheme.getHeadingThemeColors(),
+                                        width: 1.0, // Underline width
+                                      ))),
+                            ),
+                          ],
                         ),
                       )),
-                    );
-                  },
-                )),
-                SizedBox(
-                  width: 5,
-                ),
-              ],
-            ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 13, right: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 110,
+                        ),
+                        Expanded(child: new FormField(
+                          builder: (FormFieldState state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.blueGrey, width: 1.0),
+                                ),
+                                labelStyle:
+                                AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
+                                errorText: state.hasError ? state.errorText : null,
+                              ),
+                              isEmpty: selectedWeeklyLeague == '',
+                              child: new DropdownButtonHideUnderline(
+                                  child: ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: Container(
+                                      height: 16.0,
+                                      child: new DropdownButton(
+                                        value: selectedWeeklyLeague,
+                                        dropdownColor: Colors.white,
+                                        isExpanded: true,
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            selectedWeeklyLeague = newValue;
+                                          });
+                                        },
+                                        items: <String>[
+                                          'Adaptive Investment Learning',
+                                          'Investment Track Record',
+                                          'Investment Stock Pitch',
+                                          'Investment QnA',
+                                          'Social Investment Score'
+                                        ].map((String value) {
+                                          return new DropdownMenuItem(
+                                            value: value,
+                                            child: new Text(value,
+                                                style: AllCoustomTheme
+                                                    .getDropDownMenuItemStyleTheme()),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  )),
+                            );
+                          },
+                        )),
+                        SizedBox(
+                          width: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 13, right: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.35,
+                              child: Scrollbar(
+                                child: getWeeklyLeagueMemberView(inceptionMemberList),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+            )
           ),
-          SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 13, right: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      child: Scrollbar(
-                        child: getWeeklyLeagueMemberView(inceptionMemberList),
-                      )),
-                ),
-              ],
-            ),
-          ),
+          //Auro Streak section end
+
           SizedBox(
             height: 40,
           ),

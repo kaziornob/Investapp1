@@ -137,6 +137,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
           )
       );
     } else if (qusType == 'multianswermcq') {
+
       return Theme(
           data: Theme.of(context).copyWith(
             unselectedWidgetColor: Colors.white,
@@ -150,7 +151,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                     style: TextStyle(
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontWeight: FontWeight.w400,
-                        color: answerRequest== false ? Colors.white : (items["checked"]==true ? Colors.green : Colors.red)
+                        color: answerRequest== false ? Colors.white : (items["is_correct"]==true || items["is_correct"]=="true" ? Colors.green : Colors.red)
                     ),
                   ),
                   value: items["checked"],
@@ -559,7 +560,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                         children: [
                           Expanded(
                             flex: 3,
-                            child: Text("*You may find the following video before you answer.",
+                            child: Text("*you may find the following video useful before you answer the question",
                               style: TextStyle(
                                   fontSize: ConstanceData.SIZE_TITLE12,
                                   fontWeight: FontWeight.w400,
@@ -627,8 +628,8 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
 
       var optionsResult = [];
 
-      for (var i = 0; i < widget.questions.qusOptions.length; i++) {
-        optionsResult.add("${widget.questions.qusOptions[i]['is_correct']}");
+      for (var i = 0; i < widget.questions.userAnswer.length; i++) {
+        optionsResult.add("${widget.questions.userAnswer[i]['is_correct']}");
       }
 
       var answerId = [];
@@ -642,7 +643,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
       questionJson = {
         "result": optionsResult,
         "master_id": "${widget.questions.questionId}",
-        "diff": 1,
+        "diff": widget.questions.diffScore,
         "answer_id": answerId,
       };
 
@@ -663,16 +664,26 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
       Navigator.pop(context);
       if (result!=null && result.containsKey('auth') && result['auth']==true)
       {
-        Toast.show("${result['message']['result']}", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+        if(result['message']['result']=='correct answer')
+          {
+            setState(() {
+              answerRequest = true;
+            });
+            await Future.delayed(const Duration(seconds: 5));
+            getDialog();
+          }
+        else
+          {
+            Toast.show("${result['message']['result']}", context,
+                duration: Toast.LENGTH_LONG,
+                gravity: Toast.BOTTOM);
 
-        setState(() {
-          answerRequest = true;
-        });
-        await Future.delayed(const Duration(seconds: 4));
-        setNextQus();
-
+            setState(() {
+              answerRequest = true;
+            });
+            await Future.delayed(const Duration(seconds: 4));
+            setNextQus();
+          }
       }
     }
     else if(result!=null && result.containsKey('auth') && result['auth']!=true)
@@ -689,6 +700,41 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
+  }
+
+  void getDialog() {
+    showDialog(context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            content: Text(
+              "That is the correct answer. You have earned ${widget.questions.diffScore} coin",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setNextQus();
+                },
+              ),
+            ],);
+        }
+    );
   }
 
   setNextQus() async {

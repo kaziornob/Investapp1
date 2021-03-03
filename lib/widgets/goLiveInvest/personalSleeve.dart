@@ -47,7 +47,6 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
     super.initState();
     getDoughnutPortfolioData();
     getSharedPrefData();
-    // investInfo.initData();
     _tabController = new TabController(vsync: this, length: tabList.length);
   }
 
@@ -89,170 +88,6 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
     ChartData('Jack', 25, globals.isGoldBlack ? Color(0xFFF5564E) : Color(0xFF7499C6)),
     ChartData('Others', 25, Color(0xFFFAB95B))
   ];
-
-
-  List<Widget> _getTitleWidget() {
-    return [
-      _getTitleItemWidget('Security', 70),
-      _getTitleItemWidget('# of shares/ \$', 70),
-      _getTitleItemWidget('In-Price', 70),
-      _getTitleItemWidget('Current Price', 70),
-      _getTitleItemWidget('% Return', 70),
-    ];
-  }
-
-  Widget _getTitleItemWidget(String label, double width) {
-    return Container(
-      color: AllCoustomTheme.getHorTableHeadingThemeColors(),
-      child: Text(
-            label,
-            style: new TextStyle(
-              color: AllCoustomTheme.getInvestTableTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE15,
-              fontFamily: "Roboto",
-            ),
-        ),
-      width: width,
-      height: 35,
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-
-    );
-  }
-
-  Widget _generateFirstColumnRow(BuildContext context, int index) {
-    var tempEven = (index +1) % 2;
-    return Container(
-      width: 70,
-      height: 70,
-      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
-        color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
-      ),
-      child: Text(
-          "${investInfo.listInfo[index].security}",
-        style: new TextStyle(
-          // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-          color: Colors.black,
-          fontSize: ConstanceData.SIZE_TITLE15,
-          fontFamily: "Roboto",
-        ),
-      ),
-    );
-  }
-
-  Widget _generateRightHandSideColumnRow(BuildContext context, int index) {
-
-    var tempEven = (index +1) % 2;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
-            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
-          ),
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-          child: Text(
-              investInfo.listInfo[index].share,
-            style: new TextStyle(
-              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              color: Colors.black,
-              fontSize: ConstanceData.SIZE_TITLE15,
-              fontFamily: "Roboto",
-            ),
-          ),
-          width: 70,
-          height: 70,
-          alignment: Alignment.centerLeft,
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-          decoration: BoxDecoration(
-            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
-            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
-          ),
-          child: Text(
-              investInfo.listInfo[index].inPrice,
-            style: new TextStyle(
-              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              color: Colors.black,
-              fontSize: ConstanceData.SIZE_TITLE15,
-              fontFamily: "Roboto",
-            ),
-          ),
-          width: 70,
-          height: 70,
-          alignment: Alignment.centerLeft,
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-          decoration: BoxDecoration(
-            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
-            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
-          ),
-          child: Text(
-              investInfo.listInfo[index].currentPrice,
-            style: new TextStyle(
-              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              color: Colors.black,
-              fontSize: ConstanceData.SIZE_TITLE15,
-              fontFamily: "Roboto",
-            ),
-          ),
-          width: 70,
-          height: 70,
-          alignment: Alignment.centerLeft,
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-          decoration: BoxDecoration(
-            border: Border.all(color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50]),
-            color: tempEven==0 ? Colors.indigo[100] : Colors.indigo[50],
-          ),
-          child: Text(
-              investInfo.listInfo[index].perReturn,
-            style: new TextStyle(
-              // color: AllCoustomTheme.getInvestTableColumnTextThemeColors(),
-              color: Colors.black,
-              fontSize: ConstanceData.SIZE_TITLE15,
-              fontFamily: "Roboto",
-            ),
-          ),
-          width: 70,
-          height: 70,
-          alignment: Alignment.centerLeft,
-        ),
-/*        Container(
-          height: MediaQuery.of(context).size.height*0.06,
-          width: MediaQuery.of(context).size.width*0.32,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              border: new Border.all(color: AllCoustomTheme.getButtonBoxColor(), width: 1.5),
-              color: Colors.green,
-
-          ),
-          child: MaterialButton(
-            splashColor: Colors.grey,
-            child: Text(
-                "BUY/Sell",
-                style: AllCoustomTheme.getButtonSelectedTextStyleTheme()
-            ),
-            onPressed: () async
-            {
-              Navigator.of(context).push(
-                CupertinoPageRoute(
-                  builder: (BuildContext context) => SecurityBuySell(),
-                ),
-              );
-            },
-          ),
-        )*/
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -560,9 +395,8 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
                             ),
                           ),
                         ),
-                        // Colors.indigo[100]
                         // table section
-                        Container(
+/*                        Container(
                           child: Column(
                             children: [
                               singleRow(context, "Security",'# of shares/ \$','In-Price','Current Price','% Return', Colors.indigo[100]),
@@ -571,26 +405,6 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
                               singleRow(context, "Ricoh Co Ltd",'0.5','50','','-', Colors.indigo[50]),
 
                             ],
-                          ),
-                        )
-/*                        Container(
-                          height: MediaQuery.of(context).size.height,
-                          margin: EdgeInsets.only(top:10.0),
-                          child: HorizontalDataTable(
-                            leftHandSideColumnWidth: 70,
-                            rightHandSideColumnWidth: 300,
-                            isFixedHeader: true,
-                            headerWidgets: _getTitleWidget(),
-                            leftSideItemBuilder: _generateFirstColumnRow,
-                            rightSideItemBuilder: _generateRightHandSideColumnRow,
-                            itemCount: investInfo.listInfo.length,
-                            rowSeparatorWidget: const Divider(
-                              color: Colors.blueGrey,
-                              height: 1.0,
-                              thickness: 0.0,
-                            ),
-                            leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
-                            rightHandSideColBackgroundColor: AllCoustomTheme.getPageBackgroundThemeColor(),
                           ),
                         )*/
                       ],
@@ -663,65 +477,4 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
       ],
     );
   }
-}
-
-InvestInfo investInfo = InvestInfo();
-
-class InvestInfo {
-  List<ListInfo> listInfo = [];
-
-  void initData() {
-
-    print("init data called");
-    listInfo = [];
-
-    if(securityBoxChartData!=null && securityBoxChartData['weights_foliotickers'] != null &&
-        securityBoxChartData['weights_foliotickers']['weights'] != null)
-      {
-        var tempWeights=  securityBoxChartData['weights_foliotickers']['weights'];
-
-        var tempSecurity=  securityBoxChartData['weights_foliotickers']['security_name'];
-        var tempPrice=  securityBoxChartData['weights_foliotickers']['in_price'];
-        var tempWeightsValue=  securityBoxChartData['weights_foliotickers']['weights_value'];
-
-
-        var sortedKeys = tempWeights.keys.toList(growable:false)
-          ..sort((k1, k2) => tempWeights[k1].compareTo(tempWeights[k2]));
-        LinkedHashMap sortedMap = new LinkedHashMap
-            .fromIterable(sortedKeys, key: (k) => k, value: (k) => tempWeights[k]);
-
-        var iterationCount = 0;
-        var sortedWeights = [];
-        final data = sortedMap;
-        for (final name in data.keys) {
-          final value = data[name];
-          print('$name,$value');
-          if(iterationCount > 2)
-            {
-              break;
-            }
-          sortedWeights.add({"$name": "$value"});
-          iterationCount ++;
-        }
-
-        print("sortedWeights: $sortedWeights");
-      }
-
-    listInfo.add(
-        ListInfo("Hualan Biological Engineering","5.09","7.92965","720","5")
-    );
-  }
-}
-
-
-class ListInfo {
-  String security;
-  String share;
-  String inPrice;
-  String currentPrice;
-  String perReturn;
-
-
-
-  ListInfo(this.security, this.share, this.inPrice,this.currentPrice, this.perReturn);
 }
