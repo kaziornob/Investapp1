@@ -3323,130 +3323,57 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
-    return Stack(
-      children: <Widget>[
-        SafeArea(
-            bottom: true,
-            child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-              body: ModalProgressHUD(
-                inAsyncCall: _isInProgress,
-                opacity: 0,
-                progressIndicator: CupertinoActivityIndicator(
-                  radius: 12,
-                ),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: !_isInProgress
-                      ? Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.5,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Animator(
-                                  tween: Tween<Offset>(
-                                      begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                  duration: Duration(milliseconds: 500),
-                                  cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
-                                    translation: anim.value,
-                                    child: Icon(
-                                      Icons.arrow_back_ios,
-                                      color:
-                                      AllCoustomTheme.getTextThemeColors(),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Animator(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.decelerate,
-                                  cycles: 1,
-                                  builder: (anim) => Transform.scale(
-                                    scale: anim.value,
-                                    child: Text(
-                                      'Search',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: ConstanceData.SIZE_TITLE20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 25.0),
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                TabBar(
-                                  controller: _tabController,
-                                  onTap: (index)
-                                  {
-                                    selectedTabIndex = index;
-                                  },
-                                  labelColor: AllCoustomTheme.getTextThemeColors(),
-                                  labelStyle: TextStyle(fontSize: 17.0,letterSpacing: 0.2),
-                                  indicatorColor: AllCoustomTheme.getTextThemeColors(),
-                                  indicatorWeight: 4.0,
-                                  isScrollable: true,
-                                  unselectedLabelColor: Colors.grey,
-                                  tabs: <Widget>[
-                                    new Tab(text: "Top Trending News"),
-                                    new Tab(text: "VC/ PE/ RE/ ESG"),
-                                    new Tab(text: "Crypto"),
-                                    new Tab(text: "Equities"),
-                                  ],
-                                ),
-                              ],
-                            ),
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height*1.5,
+        child: Column(
+          children: <Widget>[
 
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: EdgeInsets.only(top: 10.0),
-                              child: new TabBarView(
-                                controller: _tabController,
-                                children: tabList.map((Tab tab) {
-                                  return _getPage(tab);
-                                }).toList(),
-                                physics: ScrollPhysics(),
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                  )
-                      : SizedBox(),
+            Container(
+              margin: EdgeInsets.only(top: 25.0),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TabBar(
+                    controller: _tabController,
+                    onTap: (index)
+                    {
+                      selectedTabIndex = index;
+                    },
+                    labelColor: AllCoustomTheme.getTextThemeColors(),
+                    labelStyle: TextStyle(fontSize: 17.0,letterSpacing: 0.2),
+                    indicatorColor: AllCoustomTheme.getTextThemeColors(),
+                    indicatorWeight: 4.0,
+                    isScrollable: true,
+                    unselectedLabelColor: Colors.grey,
+                    tabs: <Widget>[
+                      new Tab(text: "Top Trending News"),
+                      new Tab(text: "VC/ PE/ RE/ ESG"),
+                      new Tab(text: "Crypto"),
+                      new Tab(text: "Equities"),
+                    ],
+                  ),
+                ],
+              ),
+
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: EdgeInsets.only(top: 10.0),
+                child: new TabBarView(
+                  controller: _tabController,
+                  children: tabList.map((Tab tab) {
+                    return _getPage(tab);
+                  }).toList(),
+                  physics: ScrollPhysics(),
                 ),
               ),
             )
+          ],
         )
-      ],
     );
   }
 

@@ -18,15 +18,17 @@ class Question {
   final String questionType;
   final String videoLink;
   final String questionId;
+  final int diffScore;
   final List<dynamic> qusImages;
   List<dynamic> userAnswer;
   final List<dynamic> qusOptions;
 
-  Question({this.type,this.qusImages, this.question,this.videoLink,this.questionType,this.questionId,this.qusOptions,this.userAnswer});
+  Question({this.type,this.qusImages, this.question,this.videoLink,this.questionType,this.diffScore,this.questionId,this.qusOptions,this.userAnswer});
 
   Question.fromMap(Map<String, dynamic> data):
         type = data["question_type"] == "mcq" ? Type.multiple : Type.boolean,
         questionType = data["question_type"],
+        diffScore = data["diff_score"],
         question = data["question_text"],
         videoLink = data["video_link"],
         questionId = data["question_id"],

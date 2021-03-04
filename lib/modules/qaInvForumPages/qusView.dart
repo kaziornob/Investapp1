@@ -5,6 +5,8 @@ import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
+// import 'package:auroim/modules/home/homeScreen.dart';
+// import 'package:auroim/lib/modules/home/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;

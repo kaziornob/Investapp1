@@ -306,10 +306,11 @@ class FeaturedCompaniesProvider {
     var response = await http.get(url, headers: headers);
     print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
+    print(result.toString());
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("ggggg");
-      print("results ${result["messsage"]}");
+      print("results ${result["message"]}");
       return result["message"];
       // return result["message"];
       // return getCompaniesList(result["message"]);
