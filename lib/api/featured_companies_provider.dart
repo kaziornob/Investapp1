@@ -32,6 +32,30 @@ class FeaturedCompaniesProvider {
     return response;
   }
 
+  // getPortFolioData() async {
+  //   print("getDoughnutPortfolioData called");
+  //   var response = await http.getRequest('users/run_algo');
+  //   print("portfolio chart list: $response");
+  //   if (response != null &&
+  //       response != false &&
+  //       response.containsKey('auth') &&
+  //       response['auth'] == true) {
+  //     setState(() {
+  //       homeDonutArray = [];
+  //       homeDonutArray.add(1);
+  //       homeDonutArray.add(2);
+  //       homeDonutArray.add(3);
+  //       homeDonutArray.add(4);
+  //       portfolioChartData = null;
+  //       portfolioChartData = response['message'] != null &&
+  //               response['message']['algo_result'] != null
+  //           ? response['message']['algo_result']
+  //           : null;
+  //       setHomeDoughnutChartData();
+  //     });
+  //   }
+  // }
+
   coinDetails(path) async {
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -78,6 +102,53 @@ class FeaturedCompaniesProvider {
     //   print(e);
     // }
     return response;
+  }
+
+  getSingleCoinImageUrl(coinName) async {
+    print("single coin imageurl");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken',
+    };
+
+    String url = GlobalInstance.apiBaseUrl + "cryptoLogos?coin_name=$coinName";
+    print("post url: $url");
+    // print("session token: $sessionToken");
+
+    var response = await http.get(url, headers: headers);
+    var result = jsonDecode(response.body);
+    print("get image url response: ${response.statusCode}");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // print("ggggg");
+      // print("result");
+      return result;
+      // return getCompaniesList(result["message"]);
+
+      // if (result != null &&a
+      //     result.containsKey('auth') &&
+      //     result['auth'] == true) {
+      //   Toast.show("${result['message']}", context,
+      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      // }
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
+    } else {
+      // Toast.show("Something went wrong!", context,
+      //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    }
+
+    // try{
+    //
+    // } catch (e) {
+    //   print("exception");
+    //   print(e);
+    // }
+    // return result["message"];
   }
 
   getCompaniesByFilters(filter) async {
@@ -288,7 +359,7 @@ class FeaturedCompaniesProvider {
     }
   }
 
-  getUserCoinsScoreData()async{
+  getUserCoinsScoreData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 

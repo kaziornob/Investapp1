@@ -10,16 +10,13 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiProvider {
-
-  Future login(funName,body) async
-  {
-    String url = GlobalInstance.apiBaseUrl+funName;
+  Future login(funName, body) async {
+    String url = GlobalInstance.apiBaseUrl + funName;
     bool responseData = false;
 
-    try
-    {
+    try {
       Map<String, String> headers = {"Content-type": "application/json"};
-      var response = await http.post(url, headers: headers,body: body);
+      var response = await http.post(url, headers: headers, body: body);
 
       print("req statusCode: ${response.statusCode}");
 
@@ -31,13 +28,13 @@ class ApiProvider {
         var now = new DateTime.now();
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('Session_token', result['token']);
-        prefs.setString('DateTime', new DateFormat("yyyy-MM-dd HH:mm").format(now));
+        prefs.setString(
+            'DateTime', new DateFormat("yyyy-MM-dd HH:mm").format(now));
         responseData = true;
         print("req after true modify: $responseData");
       } else {
         responseData = false;
         print("req after false modify: $responseData");
-
       }
     } catch (e) {
       print("exception");
@@ -46,20 +43,19 @@ class ApiProvider {
     return responseData;
   }
 
-  Future signUp(funName,body) async
-  {
-    String url = GlobalInstance.apiBaseUrl+funName;
+  Future signUp(funName, body) async {
+    String url = GlobalInstance.apiBaseUrl + funName;
     print("signup req url: $url");
     var responseData;
 
     Map<String, String> headers = {"Content-type": "application/json"};
     print("json req Body: $body");
 
-    var response = await http.post(url, headers: headers,body: body);
+    var response = await http.post(url, headers: headers, body: body);
 
     print("signup submit response: ${response.statusCode}");
 
-    try{
+    try {
       responseData = response;
       /*if (response.statusCode == 200 || response.statusCode == 201)
       {
@@ -75,44 +71,86 @@ class ApiProvider {
     return responseData;
   }
 
-
-  Future postSubmit(funName,body) async
-  {
+  Future postSubmit(funName, body) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
-    String url = GlobalInstance.apiBaseUrl+funName;
+    String url = GlobalInstance.apiBaseUrl + funName;
     print("post req url: $url");
     print("session token: $sessionToken");
 
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken',
+    };
 
-    Map<String, String> headers = {"Content-type": "application/json",
-      'Authorization': 'Token $sessionToken',};
-
-    var response = await http.post(url, headers: headers,body: body);
+    var response = await http.post(url, headers: headers, body: body);
     print("post submit response: ${response.statusCode}");
     return response;
   }
 
-
-  Future getRequest(funName) async
-  {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String sessionToken = prefs.getString('Session_token');
-    print("session token: $sessionToken");
+  Future getRunAlgoExistingPortfolio(funName) async {
+    var token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE5MCwiaWF0IjoxNjE0NjU5NzM1fQ.ERmIJcyOT15FOX_8dh1F3JaG4-Vf6aqRgP4RO0hIo-I";
 
     // set up Get request arguments
-    final String url = GlobalInstance.apiBaseUrl+funName;
-    Map<String, String> headers = {"Content-type": "application/json",
-      'Authorization': 'Token $sessionToken',};
+    final String url = GlobalInstance.apiBaseUrl + funName;
+    print("get url : $url");
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $token',
+    };
 
     // make get request
-    var response = await http.get(url, headers: headers);
+    var response = await http
+        .get(url, headers: headers)
+        .whenComplete(() => {print("response complete")})
+        .catchError((error) {
+      print(error.toString());
+      print("Error with response");
+    });
+    // print("response of run algo : ${response.body}");
+    print("get existing portfolio: ${response.statusCode}");
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON.
       return json.decode(response.body);
     } else {
+      print("returning false");
+      return false;
+    }
+  }
+
+  Future getRequest(funName) async {
+    print("getting the portfolio algo response");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+    print("session token: $sessionToken");
+
+    // set up Get request arguments
+    final String url = GlobalInstance.apiBaseUrl + funName;
+    print("get url : $url");
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken',
+    };
+
+    // make get request
+    var response = await http
+        .get(url, headers: headers)
+        .whenComplete(() => {print("response complete")})
+        .catchError((error) {
+      print(error.toString());
+      print("Error with response");
+    });
+    // print("response of run algo : ${response.body}");
+    print("response status of run algo : ${response.statusCode}");
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON.
+      return json.decode(response.body);
+    } else {
+      print("return ning false");
       return false;
     }
   }
@@ -140,7 +178,8 @@ class ApiProvider {
     String urlString = ConstanceData.PairsDetail;
     PairDetailInfo responseData;
     try {
-      var response = await http.get(Uri.encodeFull(urlString + pairName), headers: {
+      var response =
+          await http.get(Uri.encodeFull(urlString + pairName), headers: {
         "Accept": "application/json",
       });
       if (response.statusCode == 200) {
@@ -152,11 +191,13 @@ class ApiProvider {
     return responseData;
   }
 
-  Future<List<TransactionDetail>> getPairsTransactionDetail(String pairName) async {
+  Future<List<TransactionDetail>> getPairsTransactionDetail(
+      String pairName) async {
     String urlString = ConstanceData.PairsTransaction;
     List<TransactionDetail> responseData = List<TransactionDetail>();
     try {
-      var response = await http.get(Uri.encodeFull(urlString + pairName), headers: {
+      var response =
+          await http.get(Uri.encodeFull(urlString + pairName), headers: {
         "Accept": "application/json",
       });
       if (response.statusCode == 200) {
@@ -172,7 +213,8 @@ class ApiProvider {
   }
 
   Future<CryptoNewsLive> cryptoNews(String pairName) async {
-    String urlString = 'https://newsapi.org/v2/everything?q=$pairName&apiKey=dc47f2d8143a4a24b6935f7ea7413c63';
+    String urlString =
+        'https://newsapi.org/v2/everything?q=$pairName&apiKey=dc47f2d8143a4a24b6935f7ea7413c63';
     CryptoNewsLive responseData;
     try {
       var response = await http.get(Uri.encodeFull(urlString), headers: {

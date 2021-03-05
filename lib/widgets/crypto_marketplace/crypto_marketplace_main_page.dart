@@ -13,8 +13,6 @@ class CryptoMarketplace extends StatefulWidget {
 
 class _CryptoMarketplaceState extends State<CryptoMarketplace> {
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(

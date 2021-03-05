@@ -26,10 +26,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
   int selectedTabIndex;
 
   final List<Tab> tabList = <Tab>[
-    new Tab(text: 'Top Trending News'),
-    new Tab(text: 'VC/ PE/ RE/ ESG'),
+    new Tab(text: 'Trending'),
+    new Tab(text: 'Unlisted'),
     new Tab(text: 'Crypto'),
-    new Tab(text: 'Equities')
+    new Tab(text: 'Listed'),
   ];
 
   TabController _tabController;
@@ -89,6 +89,7 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
             ),
           ),
           Container(
+            // decoration: BoxDecoration(border: Border.all()),
               margin: EdgeInsets.only(top: 5.0,bottom:5.0),
 /*            width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.40,*/
@@ -705,6 +706,26 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                                         ],
                                       ),
                                     ),
+                                    // Container(
+                                    //   width: MediaQuery.of(context).si ze.width*0.22,
+                                    //   height: MediaQuery.of(context).size.height*0.09,
+                                    //   child: SfCartesianChart(
+                                    //     primaryXAxis: NumericAxis(
+                                    //       isVisible: false,
+                                    //     ),
+                                    //     primaryYAxis: NumericAxis(
+                                    //         isVisible: false
+                                    //     ),
+                                    //     series: <ChartSeries>[
+                                    //       StackedAreaSeries<NewSalesData, double>(
+                                    //         dataSource: newSalesData,
+                                    //         xValueMapper: (NewSalesData data, _) => data.year,
+                                    //         yValueMapper: (NewSalesData data, _) => data.sales,
+                                    //         gradient: gradientColors,
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     Container(
                                       width: MediaQuery.of(context).size.width*0.22,
                                       height: MediaQuery.of(context).size.height*0.09,
@@ -1352,1945 +1373,1945 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
             ),
 
           ),
-          Container(
-              width: MediaQuery.of(context).size.width*0.70,
-              height: MediaQuery.of(context).size.height*0.05,
-              margin: EdgeInsets.only(top: 20.0,left: 10.0,right: 10.0),
-              decoration: new BoxDecoration(
-                border: Border.all(
-                  color: Color(0xfffec20f),
-                  width: 1.5,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(top: 3.5,left: 10.0,right: 10.0),
-                child: Text(
-                  "TOP TRENDING NEWS",
-                  style: new TextStyle(
-                    color: AllCoustomTheme.getTextThemeColors(),
-                    fontSize: ConstanceData.SIZE_TITLE16,
-                  ),
-                ),
-              )
-          ),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.44,
-              margin: EdgeInsets.only(top: 15.0,left: 10.0,right: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-/*                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.20,*/
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-
-                    ),
-                  ),
-                  Divider(color: Color(0xff696969),thickness: 1.5,),
-                  Container(
-/*                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.20,*/
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-/*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
-                          width: MediaQuery.of(context).size.width*0.21,
-                          height: MediaQuery.of(context).size.height*0.19,*/
-                          decoration: new BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            border: Border.all(
-                              color: Color(0xff696969),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.05,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Image(
-                                          width: 35.0,
-                                          fit: BoxFit.fill,
-                                          image: new AssetImage('assets/logo.png')),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        'Title',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 12.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
-                                      child: new Icon(
-                                        Icons.menu,
-                                        color: Colors.black,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                // margin: EdgeInsets.only(left: 3.5),
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.01,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        'CHANGE(1D)',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFF000000), fontSize: 7.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.0),
-                                      child: Text(
-                                        '27.18',
-                                        style: new TextStyle(
-                                            fontFamily: "Poppins",
-                                            color: Color(0xFFe70b31), fontSize: 8.0,
-                                            letterSpacing: 0.2
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.22,
-                                height: MediaQuery.of(context).size.height*0.09,
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false
-                                    ),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: newSalesData,
-                                        xValueMapper: (NewSalesData data, _) => data.year,
-                                        yValueMapper: (NewSalesData data, _) => data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'SELL',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width*0.09,
-                                      height: MediaQuery.of(context).size.height*0.036,
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xff696969),
-                                            width: 1,
-                                          ),
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  decoration: new BoxDecoration(
-                                                    color: Color(0xff696969),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0),
-                                                    child: Text(
-                                                      'BUY',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width*0.10,
-                                              height: MediaQuery.of(context).size.height*0.015,
-                                              child: Container(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(left: 0.0,top: 0.0),
-                                                    child: Text(
-                                                      '80.42',
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 7.0,
-                                                          color: Color(0xFF000000),
-                                                          fontFamily: "WorkSansBold"),
-                                                    ),
-                                                  )
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 2.0
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-
-                    ),
-                  ),
-                ],
-              )
-          ),
+          // Container(
+          //     width: MediaQuery.of(context).size.width*0.70,
+          //     height: MediaQuery.of(context).size.height*0.05,
+          //     margin: EdgeInsets.only(top: 20.0,left: 10.0,right: 10.0),
+          //     decoration: new BoxDecoration(
+          //       border: Border.all(
+          //         color: Color(0xfffec20f),
+          //         width: 1.5,
+          //       ),
+          //       borderRadius: BorderRadius.all(
+          //         Radius.circular(5.0),
+          //       ),
+          //     ),
+          //     child: Padding(
+          //       padding: EdgeInsets.only(top: 3.5,left: 10.0,right: 10.0),
+          //       child: Text(
+          //         "TOP TRENDING NEWS",
+          //         style: new TextStyle(
+          //           color: AllCoustomTheme.getTextThemeColors(),
+          //           fontSize: ConstanceData.SIZE_TITLE16,
+          //         ),
+          //       ),
+          //     )
+          // ),
+//           Container(
+//               width: MediaQuery.of(context).size.width,
+//               height: MediaQuery.of(context).size.height*0.44,
+//               margin: EdgeInsets.only(top: 15.0,left: 10.0,right: 10.0),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: <Widget>[
+//                   Container(
+// /*                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
+//                     width: MediaQuery.of(context).size.width,
+//                     height: MediaQuery.of(context).size.height*0.20,*/
+//                     child: Row(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: <Widget>[
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                             crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                       ],
+//
+//                     ),
+//                   ),
+//                   Divider(color: Color(0xff696969),thickness: 1.5,),
+//                   Container(
+// /*                    margin: EdgeInsets.only(left: 5.0,right: 5.0),
+//                     width: MediaQuery.of(context).size.width,
+//                     height: MediaQuery.of(context).size.height*0.20,*/
+//                     child: Row(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: <Widget>[
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         Container(
+// /*                          margin: EdgeInsets.only(left: 5.0,top: 5.0),
+//                           width: MediaQuery.of(context).size.width*0.21,
+//                           height: MediaQuery.of(context).size.height*0.19,*/
+//                           decoration: new BoxDecoration(
+//                             color: Color(0xFFFFFFFF),
+//                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                             border: Border.all(
+//                               color: Color(0xff696969),
+//                               width: 1,
+//                             ),
+//                           ),
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: <Widget>[
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.05,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Image(
+//                                           width: 35.0,
+//                                           fit: BoxFit.fill,
+//                                           image: new AssetImage('assets/logo.png')),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: Text(
+//                                         'Title',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 12.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 10.0),
+//                                       child: new Icon(
+//                                         Icons.menu,
+//                                         color: Colors.black,
+//                                         size: 10,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 // margin: EdgeInsets.only(left: 3.5),
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.01,
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: <Widget>[
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         'CHANGE(1D)',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFF000000), fontSize: 7.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     Padding(
+//                                       padding: EdgeInsets.only(top: 0.0),
+//                                       child: Text(
+//                                         '27.18',
+//                                         style: new TextStyle(
+//                                             fontFamily: "Poppins",
+//                                             color: Color(0xFFe70b31), fontSize: 8.0,
+//                                             letterSpacing: 0.2
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: MediaQuery.of(context).size.width*0.22,
+//                                 height: MediaQuery.of(context).size.height*0.09,
+//                                 child: SfCartesianChart(
+//                                     primaryXAxis: NumericAxis(
+//                                       isVisible: false,
+//                                     ),
+//                                     primaryYAxis: NumericAxis(
+//                                         isVisible: false
+//                                     ),
+//                                     series: <ChartSeries>[
+//                                       StackedAreaSeries<NewSalesData, double>(
+//                                         dataSource: newSalesData,
+//                                         xValueMapper: (NewSalesData data, _) => data.year,
+//                                         yValueMapper: (NewSalesData data, _) => data.sales,
+//                                         gradient: gradientColors,
+//                                       ),
+//                                     ]
+//                                 ),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'SELL',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: MediaQuery.of(context).size.width*0.09,
+//                                       height: MediaQuery.of(context).size.height*0.036,
+//                                       child: Container(
+//                                         margin: EdgeInsets.only(left: 5.0,bottom: 1.0),
+//                                         decoration: new BoxDecoration(
+//                                           border: Border.all(
+//                                             color: Color(0xff696969),
+//                                             width: 1,
+//                                           ),
+//                                           color: Color(0xFFFFFFFF),
+//                                         ),
+//                                         child: Column(
+//                                           crossAxisAlignment: CrossAxisAlignment.start,
+//                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   decoration: new BoxDecoration(
+//                                                     color: Color(0xff696969),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0),
+//                                                     child: Text(
+//                                                       'BUY',
+//                                                       textAlign: TextAlign.center,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             ),
+//                                             SizedBox(
+//                                               width: MediaQuery.of(context).size.width*0.10,
+//                                               height: MediaQuery.of(context).size.height*0.015,
+//                                               child: Container(
+//                                                   child: Padding(
+//                                                     padding: EdgeInsets.only(left: 0.0,top: 0.0),
+//                                                     child: Text(
+//                                                       '80.42',
+//                                                       textAlign: TextAlign.right,
+//                                                       style: TextStyle(
+//                                                           fontSize: 7.0,
+//                                                           color: Color(0xFF000000),
+//                                                           fontFamily: "WorkSansBold"),
+//                                                     ),
+//                                                   )
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                         width: 2.0
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                       ],
+//
+//                     ),
+//                   ),
+//                 ],
+//               )
+//           ),
 
         ],
       ),
@@ -3325,10 +3346,9 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height*1.5,
+        height: MediaQuery.of(context).size.height*0.6,
         child: Column(
           children: <Widget>[
-
             Container(
               margin: EdgeInsets.only(top: 25.0),
               width: MediaQuery.of(context).size.width,
@@ -3349,10 +3369,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
                     isScrollable: true,
                     unselectedLabelColor: Colors.grey,
                     tabs: <Widget>[
-                      new Tab(text: "Top Trending News"),
-                      new Tab(text: "VC/ PE/ RE/ ESG"),
-                      new Tab(text: "Crypto"),
-                      new Tab(text: "Equities"),
+                      new Tab(text: 'Trending'),
+                      new Tab(text: 'Unlisted'),
+                      new Tab(text: 'Crypto'),
+                      new Tab(text: 'Listed'),
                     ],
                   ),
                 ],
@@ -3380,10 +3400,10 @@ class _SearchFirstPageState extends State<SearchFirstPage> with SingleTickerProv
   // ignore: missing_return
   Widget _getPage(Tab tab){
     switch(tab.text){
-      case 'Top Trending News': return topTrendingNews();
-      case 'VC/ PE/ RE/ ESG': return vcPCReEsg();
+      case 'Trending': return topTrendingNews();
+      case 'Unlisted': return vcPCReEsg();
       case 'Crypto': return crypto();
-      case 'Equities': return equities();
+      case 'Listed': return equities();
 
     }
   }

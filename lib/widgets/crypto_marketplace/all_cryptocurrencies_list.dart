@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/go_to_marketplace_button.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class AllCryptocurrenciesList extends StatefulWidget {
@@ -118,6 +120,7 @@ class CryptocurrencyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CoinUrl>(context,listen: false).getImageUrl(coinDetails["name"]);
     return Padding(
       padding: const EdgeInsets.only(
         left: 10.0,
@@ -126,7 +129,6 @@ class CryptocurrencyItem extends StatelessWidget {
         // print(boxConstraints.maxHeight);
         // print(boxConstraints.maxWidth);
         return Container(
-
           height: boxConstraints.maxHeight,
           width: MediaQuery.of(context).size.width / 2,
           decoration: BoxDecoration(
@@ -157,15 +159,21 @@ class CryptocurrencyItem extends StatelessWidget {
                       ),
                       width: boxConstraints.maxHeight / 3,
                     ),
-                    Container(
-                      height: boxConstraints.maxHeight / 4,
-                      width: boxConstraints.maxHeight / 4,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xff5A56B9),
-                        ),
-                      ),
-                      // child: Image.network(companyData["logo_link"]),
+                    Consumer<CoinUrl>(
+                      builder: (context, urlProvider, _) {
+                        return Container(
+                          height: boxConstraints.maxHeight / 4,
+                          width: boxConstraints.maxHeight / 4,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xff5A56B9),
+                            ),
+                          ),
+                          child: urlProvider.imageUrl == ""
+                              ? SizedBox()
+                              : Image.network(urlProvider.imageUrl),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -249,9 +257,10 @@ class CryptocurrencyItem extends StatelessWidget {
                     );
                   },
                   shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide( color: Color(0xff7499C6),)
-                  ),
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: BorderSide(
+                        color: Color(0xff7499C6),
+                      )),
                   color: Color(0xff7499C6),
                   child: Text(
                     "Buy",

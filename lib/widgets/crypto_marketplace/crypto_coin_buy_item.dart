@@ -4,6 +4,7 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/widgets/crypto_coin_chart.dart';
+import 'package:auroim/widgets/crypto_coin_price_data.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:auroim/widgets/get_area_chart_view.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
 
   @override
   Widget build(BuildContext context) {
+    print("crypto coin buy item");
     return FutureBuilder(
       future: getCoinPrices(),
       builder: (context, snapshot) {
@@ -37,7 +39,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 220,
+              height: 350,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
@@ -53,7 +55,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 200,
+              height: 450,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
@@ -77,16 +79,16 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
         Colors.green
       ];
       List<double> stops = [0.0, 0.5, 1.0];
-      List<NewCryptoPricesData> allSalesData = [];
+      List<CryptoCoinPriceData> allPriceData = [];
 
       List prices = data["prices"];
+      print(prices.toString());
 
       prices.forEach((element) {
-        double year = DateTime.fromMillisecondsSinceEpoch(element[0] * 1000)
-            .year
-            .toDouble();
-        allSalesData.add(
-          NewCryptoPricesData(year, element[1]),
+        DateTime date = DateTime.fromMillisecondsSinceEpoch(element[0]);
+        print(element[1]);
+        allPriceData.add(
+          CryptoCoinPriceData(x: date, y: element[1]),
         );
       });
 
@@ -140,33 +142,33 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("30D CHANGE"),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.red,
-                    ),
-                    Text(
-                      "-2",
-                      style: TextStyle(
-                        color: Colors.red,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text("30D CHANGE"),
+          //       Row(
+          //         children: [
+          //           Icon(
+          //             Icons.arrow_drop_down,
+          //             color: Colors.red,
+          //           ),
+          //           Text(
+          //             "-2",
+          //             style: TextStyle(
+          //               color: Colors.red,
+          //             ),
+          //           )
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
           CryptoCoinCharts(
             color: graphColors,
             stops: stops,
-            newSalesData: allSalesData,
+            pricesData: allPriceData,
           ),
           button(
             "SELL",
@@ -246,7 +248,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
     // String jsonReq = jsonEncode(tempJsonReq);
 
     var jsonReqResp = await _featuredCompaniesProvider.coinDetails(
-        'https://api.coingecko.com/api/v3/coins/${widget.coinDetails["id"]}/market_chart?vs_currency=usd&days=10');
+        'https://api.coingecko.com/api/v3/coins/${widget.coinDetails["id"]}/market_chart?vs_currency=usd&days=30');
 
     var result = jsonDecode(jsonReqResp.body);
     print("coin prices response: $result");

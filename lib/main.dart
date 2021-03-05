@@ -9,6 +9,7 @@ import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/model/listingsModel.dart';
 import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
+import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
@@ -234,6 +235,9 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider(
             create: (_) => SelectIndustry(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => CoinUrl(),
           ),
         ],
         child: MaterialApp(

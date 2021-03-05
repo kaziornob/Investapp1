@@ -93,7 +93,7 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height*1.5,
+        height: MediaQuery.of(context).size.height*0.5,
         margin: EdgeInsets.only(left: 5.0,right: 5.0),
         child: Column(
           children: [
@@ -305,7 +305,7 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
 
                         // doughnut chart section start
                         Visibility(
-                          visible: true,
+                          visible: false,
                           child: Container(
                             child: CarouselSlider.builder(
                               itemCount: donutArray.length,
@@ -343,7 +343,7 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
                           ),
                         ),
                         Visibility(
-                          visible: true,
+                          visible: false,
                           child: Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
