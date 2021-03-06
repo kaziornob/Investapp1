@@ -1,5 +1,6 @@
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/widgets/public_company/compare_chart.dart';
 import 'package:auroim/widgets/public_company/single_public_company_all_stats.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +112,9 @@ class _SinglePublicCompanyOverviewTabState
           ),
 
           //compare section
-          CompareChartForPublicCompany(ticker: widget.data["ticker"],),
+          CompareChartForPublicCompany(
+            ticker: widget.data["ticker"],
+          ),
           // description section
           Padding(
             padding: EdgeInsets.only(top: 5.0, left: 10.0),
@@ -550,20 +553,33 @@ class _SinglePublicCompanyOverviewTabState
                                     // children: [
                                     Padding(
                                   padding: const EdgeInsets.only(left: 4.0),
-                                  child: Container(
-                                    width: 80.0,
-                                    height: 80.0,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(snapshot.data[index]
-                                            ["logo_img_name"]),
-                                        fit: BoxFit.contain,
-                                      ),
-                                      shape: BoxShape.circle,
-                                      // borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
-                                      border: new Border.all(
-                                        color: Color(0xff5A56B9),
-                                        width: 2.0,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SecurityPageFirst(
+                                            companyTicker:
+                                                widget.data["ticker"],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 80.0,
+                                      height: 80.0,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(snapshot
+                                              .data[index]["logo_img_name"]),
+                                          fit: BoxFit.fill,
+                                        ),
+                                        shape: BoxShape.circle,
+                                        // borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                                        border: new Border.all(
+                                          color: Color(0xff5A56B9),
+                                          width: 2.0,
+                                        ),
                                       ),
                                     ),
                                   ),
