@@ -120,7 +120,7 @@ class CryptocurrencyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CoinUrl>(context,listen: false).getImageUrl(coinDetails["name"]);
+    Provider.of<CoinUrl>(context, listen: false).getImageUrl(coinDetails["id"]);
     return Padding(
       padding: const EdgeInsets.only(
         left: 10.0,
@@ -145,37 +145,41 @@ class CryptocurrencyItem extends StatelessWidget {
               Container(
                 // decoration: BoxDecoration(border: Border.all()),
                 padding: EdgeInsets.all(5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      child: Text(
-                        coinDetails["name"],
-                        style: TextStyle(
-                          color: Color(0xff5A56B9),
-                          fontWeight: FontWeight.bold,
-                        ),
-                        overflow: TextOverflow.clip,
-                      ),
-                      width: boxConstraints.maxHeight / 3,
-                    ),
-                    Consumer<CoinUrl>(
-                      builder: (context, urlProvider, _) {
-                        return Container(
-                          height: boxConstraints.maxHeight / 4,
-                          width: boxConstraints.maxHeight / 4,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xff5A56B9),
+                child: Consumer<CoinUrl>(
+                  builder: (context, urlProvider, _) {
+                    return Row(
+                      mainAxisAlignment:
+                          !urlProvider.imageUrl.containsKey(coinDetails["id"])
+                              ? MainAxisAlignment.center
+                              : MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          child: Text(
+                            coinDetails["name"],
+                            style: TextStyle(
+                              color: Color(0xff1D6177),
+                              fontWeight: FontWeight.bold,
                             ),
+                            overflow: TextOverflow.clip,
                           ),
-                          child: urlProvider.imageUrl == ""
-                              ? SizedBox()
-                              : Image.network(urlProvider.imageUrl),
-                        );
-                      },
-                    ),
-                  ],
+                          width: boxConstraints.maxHeight / 3,
+                        ),
+                        !urlProvider.imageUrl.containsKey(coinDetails["id"])
+                            ? SizedBox()
+                            : Container(
+                                height: boxConstraints.maxHeight / 4,
+                                width: boxConstraints.maxHeight / 4,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xff5A56B9),
+                                  ),
+                                ),
+                                child: Image.network(
+                                    urlProvider.imageUrl[coinDetails["id"]]),
+                              ),
+                      ],
+                    );
+                  },
                 ),
               ),
               // Padding(

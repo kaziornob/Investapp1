@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/go_to_marketplace_button.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class AllCryptoListBlack extends StatefulWidget {
@@ -108,6 +110,7 @@ class _AllCryptoListBlackState extends State<AllCryptoListBlack> {
 class CryptocurrencyItem extends StatelessWidget {
   // ApiProvider request = new ApiProvider();
   // var userAllDetail;
+
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
 
@@ -117,6 +120,7 @@ class CryptocurrencyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CoinUrl>(context,listen: false).getImageUrl(coinDetails["id"]);
     return Padding(
       padding: const EdgeInsets.only(
         left: 10.0,
@@ -155,33 +159,22 @@ class CryptocurrencyItem extends StatelessWidget {
                       ),
                       width: boxConstraints.maxHeight / 3,
                     ),
-                    FutureBuilder(
-                      future: _featuredCompaniesProvider
-                          .getSingleCoinImageUrl(coinDetails["id"]),
-                      builder: (context, snapshot) {
-                        if(snapshot.hasData){
-                          return Container(
-                            height: boxConstraints.maxHeight / 4,
-                            width: boxConstraints.maxHeight / 4,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xffFF4544),
-                              ),
+                    Consumer<CoinUrl>(
+                      builder: (context, urlProvider, _) {
+                        return Container(
+                          height: boxConstraints.maxHeight / 4,
+                          width: boxConstraints.maxHeight / 4,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xff5A56B9),
                             ),
-                            child: Image.network(snapshot.data["message"]["logo_link"]),
-                          );
-                        }else{
-                          return Container(
-                            height: boxConstraints.maxHeight / 4,
-                            width: boxConstraints.maxHeight / 4,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xffFF4544),
-                              ),
-                            ),
-                            // child: Image.network(companyData["logo_link"]),
-                          );
-                        }
+                          ),
+                          child: !urlProvider.imageUrl
+                                  .containsKey(coinDetails["id"])
+                              ? SizedBox()
+                              : Image.network(
+                                  urlProvider.imageUrl[coinDetails["id"]]),
+                        );
                       },
                     ),
                   ],

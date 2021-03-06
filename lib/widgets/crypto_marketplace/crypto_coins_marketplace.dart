@@ -69,6 +69,7 @@ class _CryptoCoinsMarketplaceListState extends State<CryptoCoinsMarketplace> {
           title: AppbarWidget(
             textEditingController: _appbarTextController,
             focusNode: _focusNode,
+            hintText: "Search Crypto",
           ),
         ),
       ),

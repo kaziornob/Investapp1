@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/widgets/crypto_coin_chart.dart';
 import 'package:auroim/widgets/crypto_coin_price_data.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:auroim/widgets/get_area_chart_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class CryptoCoinBuyItem extends StatefulWidget {
@@ -32,6 +34,9 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
   @override
   Widget build(BuildContext context) {
     print("crypto coin buy item");
+    print(widget.coinDetails);
+    Provider.of<CoinUrl>(context, listen: false)
+        .getImageUrl(widget.coinDetails["id"]);
     return FutureBuilder(
       future: getCoinPrices(),
       builder: (context, snapshot) {
@@ -55,7 +60,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 450,
+              height: 350,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
@@ -100,47 +105,64 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
               top: 4.0,
               bottom: 4.0,
             ),
-            child: Container(
-              width: MediaQuery.of(context).size.width - 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 4.0),
-                      child: Container(
-                        // width: MediaQuery.of(context).size.height / 8,
-                        child: Text(
-                          widget.coinDetails["name"],
-                          style: TextStyle(
-                            color: Color(0xff5A56B9),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+            child: Consumer<CoinUrl>(builder: (context, urlProvider, _) {
+              return Container(
+                width: MediaQuery.of(context).size.width - 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      flex: !urlProvider.imageUrl
+                              .containsKey(widget.coinDetails["id"])
+                          ? 1
+                          : 3,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 4.0),
+                        child: Container(
+                          // width: MediaQuery.of(context).size.height / 8,
+                          child: Text(
+                            widget.coinDetails["name"],
+                            style: TextStyle(
+                              color: Color(0xff1D6177),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
                           ),
-                          overflow: TextOverflow.clip,
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height / 16,
-                        // width: MediaQuery.of(context).size.height / 8,
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                        ),
-                        // child: Image.network(widget.coinDetails["logo_link"]),
+                    Expanded(
+                      flex: !urlProvider.imageUrl
+                              .containsKey(widget.coinDetails["id"])
+                          ? 0
+                          : 2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: !urlProvider.imageUrl
+                                .containsKey(widget.coinDetails["id"])
+                            ? SizedBox()
+                            : Container(
+                                height: MediaQuery.of(context).size.height / 16,
+                                // width: boxConstraints.maxHeight / 4,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xff5A56B9),
+                                  ),
+                                ),
+                                child: !urlProvider.imageUrl
+                                        .containsKey(widget.coinDetails["id"])
+                                    ? SizedBox()
+                                    : Image.network(urlProvider
+                                        .imageUrl[widget.coinDetails["id"]]),
+                              ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            }),
           ),
           // Padding(
           //   padding: const EdgeInsets.only(left: 16.0, right: 16.0),

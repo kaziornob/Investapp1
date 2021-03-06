@@ -1,5 +1,6 @@
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/widgets/public_company/compare_chart.dart';
 import 'package:auroim/widgets/public_company/single_public_company_all_stats.dart';
 import 'package:flutter/material.dart';
 
@@ -108,6 +109,9 @@ class _SinglePublicCompanyOverviewTabState
             marketCapLocal: widget.data["market_cap_local_mn"],
             fixRate: widget.data["fx_rate"],
           ),
+
+          //compare section
+          CompareChartForPublicCompany(ticker: widget.data["ticker"],),
           // description section
           Padding(
             padding: EdgeInsets.only(top: 5.0, left: 10.0),

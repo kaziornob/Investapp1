@@ -84,13 +84,13 @@ class _KeySocialInvestIndicatorsState extends State<KeySocialInvestIndicators> {
                     width: (MediaQuery.of(context).size.width / 3) - 10,
                     decoration: new BoxDecoration(
                       border: Border.all(
-                        color: Color(0xff7499C6),
+                        color: Color(0xff4472C4),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(2.0),
+                        Radius.circular(8.0),
                       ),
-                      color: Color(0xff7499C6),
+                      color: Color(0xff4472C4),
                     ),
                     child: Center(
                       child: Padding(
@@ -113,13 +113,13 @@ class _KeySocialInvestIndicatorsState extends State<KeySocialInvestIndicators> {
                     width: (MediaQuery.of(context).size.width / 3) - 10,
                     decoration: new BoxDecoration(
                       border: Border.all(
-                        color: Color(0xff7499C6),
+                        color: Color(0xff4472C4),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(2.0),
+                        Radius.circular(8.0),
                       ),
-                      color: Color(0xff7499C6),
+                      color: Color(0xff4472C4),
                     ),
                     child: Center(
                       child: Padding(
@@ -142,13 +142,13 @@ class _KeySocialInvestIndicatorsState extends State<KeySocialInvestIndicators> {
                     width: (MediaQuery.of(context).size.width / 3) - 10,
                     decoration: new BoxDecoration(
                       border: Border.all(
-                        color: Color(0xff7499C6),
+                        color: Color(0xff90AADC),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(2.0),
+                        Radius.circular(8.0),
                       ),
-                      color: Color(0xff7499C6),
+                      color: Color(0xff90AADC),
                     ),
                     child: Center(
                       child: Padding(

@@ -5,8 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppbarWidgetWithDrawer extends StatefulWidget {
   final VoidCallback callback;
+  final String hintText;
 
-  AppbarWidgetWithDrawer({this.callback});
+  AppbarWidgetWithDrawer({this.callback, this.hintText});
+
   @override
   _AppbarWidgetWithDrawerState createState() => _AppbarWidgetWithDrawerState();
 }
@@ -77,7 +79,9 @@ class _AppbarWidgetWithDrawerState extends State<AppbarWidgetWithDrawer> {
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       size: 15,
                     ),
-                    hintText: "Search",
+                    hintText: widget.hintText == null
+                        ? "Search"
+                        : "${widget.hintText}",
                     hintStyle: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE14,

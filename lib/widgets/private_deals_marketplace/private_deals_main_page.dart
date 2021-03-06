@@ -64,6 +64,7 @@ class _PrivateDealsMarketplaceMainPageState
           title: AppbarWidget(
             textEditingController: _textEditingController,
             focusNode: _focusNode,
+            hintText: "Search Private Companies",
           ),
         ),
       ),

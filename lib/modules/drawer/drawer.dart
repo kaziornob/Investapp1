@@ -22,8 +22,14 @@ import 'package:auroim/constance/global.dart' as globals;
 
 class AppDrawer extends StatefulWidget {
   final String selectItemName;
+  final VoidCallback auroStreakCallback;
 
-  const AppDrawer({Key key, this.selectItemName}) : super(key: key);
+  const AppDrawer({
+    Key key,
+    this.selectItemName,
+    this.auroStreakCallback,
+  }) : super(key: key);
+
   @override
   _AppDrawerState createState() => _AppDrawerState();
 }
@@ -34,27 +40,23 @@ class _AppDrawerState extends State<AppDrawer> {
   var profileData;
   ApiProvider request = new ApiProvider();
 
-
   @override
   void initState() {
     super.initState();
     getProfileData();
   }
 
-  Future <void> getProfileData() async {
+  Future<void> getProfileData() async {
     var response = await request.getRequest('users/get_details');
     print("profile data: $response");
-    if(response!=null && response!=false)
-    {
+    if (response != null && response != false) {
       if (this.mounted) {
         setState(() {
           profileData = response['data'];
-
         });
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,139 +73,138 @@ class _AppDrawerState extends State<AppDrawer> {
               height: appBarheight + 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Animator(
-                        tween: Tween<double>(begin: 0, end: 1),
-                        duration: Duration(milliseconds: 500),
-                        cycles: 1,
-                        builder: (anim) => SizeTransition(
-                          sizeFactor: anim,
-                          axis: Axis.horizontal,
-                          axisAlignment: 1,
-                          child: CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: new AssetImage('assets/download.jpeg'),
-                            backgroundColor: Colors.transparent,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Animator(
-                        tween: Tween<double>(begin: 0, end: 1),
-                        duration: Duration(milliseconds: 500),
-                        cycles: 1,
-                        builder: (anim) => SizeTransition(
-                          sizeFactor: anim,
-                          axis: Axis.horizontal,
-                          axisAlignment: 1,
-                          child: Text(
-                            profileData!=null && profileData['f_name']!=null
-                                && profileData['l_name'] ? "${profileData['f_name']}" + "${profileData['l_name']}" : 'Not Found',
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Roboto",
-
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      InkWell(
-                        onTap: ()
-                        {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(
-                            CupertinoPageRoute(
-                              builder: (BuildContext context) =>
-                                  MyAccount(),
-                            ),
-                          );
-                        },
-                        child: Animator(
+                padding: const EdgeInsets.only(left: 16),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Animator(
                           tween: Tween<double>(begin: 0, end: 1),
                           duration: Duration(milliseconds: 500),
                           cycles: 1,
                           builder: (anim) => SizeTransition(
-                              sizeFactor: anim,
-                              axis: Axis.horizontal,
-                              axisAlignment: 1,
-                              child: Text(
-                                'My Account',
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE15,
-                                  fontFamily: "Roboto",
-                                ),
-                              )
+                            sizeFactor: anim,
+                            axis: Axis.horizontal,
+                            axisAlignment: 1,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage:
+                                  new AssetImage('assets/download.jpeg'),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top:7.0),
-                        child: Icon(
-                          Icons.circle,
-                          size: 7,
-                          color: AllCoustomTheme.getSeeMoreThemeColor(),
+                        SizedBox(
+                          width: 10,
                         ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      InkWell(
-                        onTap: ()
-                        {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(
-                            CupertinoPageRoute(
-                              builder: (BuildContext context) =>
-                                  Setting(),
-                            ),
-                          );
-                        },
-                        child: Animator(
+                        Animator(
                           tween: Tween<double>(begin: 0, end: 1),
                           duration: Duration(milliseconds: 500),
                           cycles: 1,
                           builder: (anim) => SizeTransition(
-                              sizeFactor: anim,
-                              axis: Axis.horizontal,
-                              axisAlignment: 1,
-                              child: Text(
-                                'Settings',
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE15,
-                                  fontFamily: "Roboto",
-                                ),
-                              )
+                            sizeFactor: anim,
+                            axis: Axis.horizontal,
+                            axisAlignment: 1,
+                            child: Text(
+                              profileData != null &&
+                                      profileData['f_name'] != null &&
+                                      profileData['l_name']
+                                  ? "${profileData['f_name']}" +
+                                      "${profileData['l_name']}"
+                                  : 'Not Found',
+                              style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColor(),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Roboto",
+                              ),
+                            ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ],
-              )
-            ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (BuildContext context) => MyAccount(),
+                              ),
+                            );
+                          },
+                          child: Animator(
+                            tween: Tween<double>(begin: 0, end: 1),
+                            duration: Duration(milliseconds: 500),
+                            cycles: 1,
+                            builder: (anim) => SizeTransition(
+                                sizeFactor: anim,
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Text(
+                                  'My Account',
+                                  style: TextStyle(
+                                    color:
+                                        AllCoustomTheme.getSeeMoreThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
+                                  ),
+                                )),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 7.0),
+                          child: Icon(
+                            Icons.circle,
+                            size: 7,
+                            color: AllCoustomTheme.getSeeMoreThemeColor(),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (BuildContext context) => Setting(),
+                              ),
+                            );
+                          },
+                          child: Animator(
+                            tween: Tween<double>(begin: 0, end: 1),
+                            duration: Duration(milliseconds: 500),
+                            cycles: 1,
+                            builder: (anim) => SizeTransition(
+                                sizeFactor: anim,
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Text(
+                                  'Settings',
+                                  style: TextStyle(
+                                    color:
+                                        AllCoustomTheme.getSeeMoreThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE15,
+                                    fontFamily: "Roboto",
+                                  ),
+                                )),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                )),
             SizedBox(
               height: 10,
             ),
@@ -221,11 +222,9 @@ class _AppDrawerState extends State<AppDrawer> {
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
-                            color: Color(0xFF525a6d),
-                            width: 1.6, // Underline width
-                          )
-                      )
-                  ),
+                    color: Color(0xFF525a6d),
+                    width: 1.6, // Underline width
+                  ))),
                 ),
               ),
             ),
@@ -233,24 +232,24 @@ class _AppDrawerState extends State<AppDrawer> {
               height: 10,
             ),
             Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top:7.0),
-                      child: Icon(
-                        Icons.crop_square_outlined,
-                        size: 15,
-                        color: Color(0xFFD8AF4F),
-                      ),
+              padding: const EdgeInsets.only(left: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 7.0),
+                    child: Icon(
+                      Icons.crop_square_outlined,
+                      size: 15,
+                      color: Color(0xFFD8AF4F),
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top:5.0),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(top: 5.0),
                       child: Text(
                         'Go Live with Auro Portfolio',
                         style: TextStyle(
@@ -258,10 +257,9 @@ class _AppDrawerState extends State<AppDrawer> {
                           fontSize: ConstanceData.SIZE_TITLE15,
                           fontFamily: "Roboto",
                         ),
-                      )
-                    ),
-                  ],
-                ),
+                      )),
+                ],
+              ),
             ),
             SizedBox(
               height: 10,
@@ -280,11 +278,9 @@ class _AppDrawerState extends State<AppDrawer> {
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
-                            color: Color(0xFF525a6d),
-                            width: 1.6, // Underline width
-                          )
-                      )
-                  ),
+                    color: Color(0xFF525a6d),
+                    width: 1.6, // Underline width
+                  ))),
                 ),
               ),
             ),
@@ -301,7 +297,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       children: <Widget>[
                         Container(
                           child: ExpandablePanel(
-                            header:  Row(
+                            header: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Animator(
@@ -315,8 +311,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                     child: new Image(
                                         width: 20.0,
                                         fit: BoxFit.fill,
-                                        image: new AssetImage('assets/appIcon.jpg')
-                                    ),
+                                        image: new AssetImage(
+                                            'assets/appIcon.jpg')),
                                   ),
                                 ),
                                 SizedBox(
@@ -333,7 +329,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                     child: Text(
                                       'Invest',
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getSeeMoreThemeColor(),
                                       ),
                                     ),
                                   ),
@@ -362,7 +359,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -381,9 +379,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Go pro',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -409,7 +408,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -428,9 +428,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Go live',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -447,7 +448,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         ),
                         Container(
                           child: ExpandablePanel(
-                            header:   Row(
+                            header: Row(
                               children: <Widget>[
                                 Animator(
                                   tween: Tween<double>(begin: 0, end: 1),
@@ -459,7 +460,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                     axisAlignment: 1,
                                     child: Icon(
                                       Icons.bus_alert,
-                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                      color: AllCoustomTheme
+                                          .getsecoundTextThemeColor(),
                                       size: 20,
                                     ),
                                   ),
@@ -478,7 +480,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                     child: Text(
                                       'Markets',
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getSeeMoreThemeColor(),
                                       ),
                                     ),
                                   ),
@@ -510,7 +513,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -529,9 +533,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Public Equities',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -557,7 +562,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -566,20 +572,22 @@ class _AppDrawerState extends State<AppDrawer> {
                                         width: 14,
                                       ),
                                       Expanded(
-                                        child:  Animator(
-                                          tween: Tween<double>(begin: 0, end: 1),
+                                        child: Animator(
+                                          tween:
+                                              Tween<double>(begin: 0, end: 1),
                                           duration: Duration(milliseconds: 500),
                                           cycles: 1,
                                           builder: (anim) => SizeTransition(
                                             sizeFactor: anim,
                                             axis: Axis.horizontal,
                                             axisAlignment: 1,
-                                            child:  Text(
+                                            child: Text(
                                               'Private Equity/ Venture Capital deals',
                                               style: TextStyle(
-                                                color: AllCoustomTheme.getTextThemeColor(),
-                                                fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
                                               ),
                                             ),
                                           ),
@@ -606,7 +614,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -625,9 +634,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Crypto Currencies',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -653,7 +663,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -672,9 +683,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Auro Star Funds',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -691,7 +703,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         ),
                         // my prifle
                         ListTileTheme(
-                          contentPadding: EdgeInsets.only(right:10.0),
+                          contentPadding: EdgeInsets.only(right: 10.0),
                           child: ExpansionTile(
                             title: Text(
                               "My profile",
@@ -726,7 +738,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -745,9 +758,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'My Investment Track Record',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -757,11 +771,13 @@ class _AppDrawerState extends State<AppDrawer> {
                                 ),
                               ),
                               ListTile(
+
                                 title: InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    Navigator.of(context).pop();
+                                    widget.auroStreakCallback();
                                   },
                                   child: Row(
                                     children: <Widget>[
@@ -775,7 +791,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -794,9 +811,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'My Auro Investment Club',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -844,7 +862,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -863,9 +882,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'My Questions',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -894,7 +914,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -913,9 +934,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Recommended Questions',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -944,7 +966,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -963,9 +986,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Trending Questions',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -1015,7 +1039,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -1034,9 +1059,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Refer a friend and earn coins',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -1065,7 +1091,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -1075,7 +1102,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                       ),
                                       Expanded(
                                         child: Animator(
-                                          tween: Tween<double>(begin: 0, end: 1),
+                                          tween:
+                                              Tween<double>(begin: 0, end: 1),
                                           duration: Duration(milliseconds: 500),
                                           cycles: 1,
                                           builder: (anim) => SizeTransition(
@@ -1085,9 +1113,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                             child: Text(
                                               'Register your product on one of our markets (Please send email with details to AuroLP@AuroIM.com)',
                                               style: TextStyle(
-                                                color: AllCoustomTheme.getTextThemeColor(),
-                                                fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
                                               ),
                                             ),
                                           ),
@@ -1101,7 +1130,6 @@ class _AppDrawerState extends State<AppDrawer> {
                             tapHeaderToExpand: true,
                             hasIcon: true,
                             iconColor: Colors.blueGrey,
-
                           ),
                         ),
                         SizedBox(
@@ -1139,7 +1167,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -1158,9 +1187,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Chat with us (whatsapp/Telegram)',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -1189,7 +1219,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -1208,9 +1239,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Ask a question ( aurobot -Phase)',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -1239,7 +1271,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -1258,9 +1291,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'Contact Us',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -1289,7 +1323,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           axisAlignment: 1,
                                           child: Icon(
                                             Icons.circle,
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             size: 8,
                                           ),
                                         ),
@@ -1308,9 +1343,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                           child: Text(
                                             'T & C',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE14,
-
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                           ),
                                         ),
@@ -1318,13 +1354,11 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ],
                                   ),
                                 ),
-
                               ],
                             ),
                             tapHeaderToExpand: true,
                             hasIcon: true,
                             iconColor: Colors.blueGrey,
-
                           ),
                         ),
                         SizedBox(

@@ -2,15 +2,20 @@ import 'dart:convert';
 
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/widgets/article_static.dart';
+import 'package:auroim/widgets/crypto_coin_line_chart.dart';
 import 'package:auroim/widgets/crypto_marketplace/all_crypto_metrics_data.dart';
 import 'package:auroim/widgets/investors_in_your_network.dart';
 import 'package:auroim/widgets/long_short.dart';
 import 'package:auroim/widgets/voting_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
+import '../crypto_coin_chart.dart';
+import '../crypto_coin_price_data.dart';
 import '../private_deals_marketplace/appbar_widget.dart';
 
 class SingleCryptoCurrencyDetailsById extends StatefulWidget {
@@ -26,10 +31,13 @@ class SingleCryptoCurrencyDetailsById extends StatefulWidget {
 class _SingleCryptoCurrencyDetailsByIdState
     extends State<SingleCryptoCurrencyDetailsById> {
   FeaturedCompaniesProvider _featuredCompaniesProvider =
-  FeaturedCompaniesProvider();
+      FeaturedCompaniesProvider();
+
+  bool showPriceChart = false;
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CoinUrl>(context, listen: false).getImageUrl(widget.coinId);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(65.0),
@@ -69,8 +77,8 @@ class _SingleCryptoCurrencyDetailsByIdState
     //
     // String jsonReq = jsonEncode(tempJsonReq);
 
-    var jsonReqResp = await _featuredCompaniesProvider.getSingleCoinDetails(
-        'company_details/cryptoInfo?coin_id=$coinId');
+    var jsonReqResp = await _featuredCompaniesProvider
+        .getSingleCoinDetails('company_details/cryptoInfo?coin_id=$coinId');
 
     var result = jsonDecode(jsonReqResp.body);
     print("coin details response: $result");
@@ -121,11 +129,11 @@ class _SingleCryptoCurrencyDetailsByIdState
     print("marketCapRank: $marketCapRank");
 
     list = metrics[8].split("All-Time High");
-    var allTimeHigh = list[list.length-1];
+    var allTimeHigh = list[list.length - 1];
     print("allTimeHigh: $allTimeHigh");
 
     list = metrics[10].split("All-Time Low");
-    var allTimeLow = list[list.length-1];
+    var allTimeLow = list[list.length - 1];
     print("allTimeLow: $allTimeLow");
 
     // list = metrics[10].split(" ");
@@ -154,20 +162,38 @@ class _SingleCryptoCurrencyDetailsByIdState
                   color: Colors.white,
                 ),
                 width: MediaQuery.of(context).size.width - 20,
-                height: 700,
+                height: showPriceChart ? 800 : 700,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                      ),
-                      // child:
-                      // Image.network(widget.companyDetails["logo_link"]),
+                    Consumer<CoinUrl>(
+                      builder: (context, urlProvider, _) {
+                        return !urlProvider.imageUrl
+                                .containsKey(coinData["coin_id"])
+                            ? SizedBox()
+                            : Container(
+                                width: 150,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xff5A56B9),
+                                  ),
+                                ),
+                                child: Image.network(
+                                    urlProvider.imageUrl[coinData["coin_id"]]),
+                              );
+                      },
                     ),
+                    // Container(
+                    //   width: 150,
+                    //   height: 150,
+                    //   decoration: BoxDecoration(
+                    //     border: Border.all(),
+                    //   ),
+                    //   // child:
+                    //   // Image.network(widget.companyDetails["logo_link"]),
+                    // ),
                     Text(
                       coinData["coin_id"],
                       style: TextStyle(
@@ -444,24 +470,59 @@ class _SingleCryptoCurrencyDetailsByIdState
                       ],
                     ),
                     chart(percentageChange),
-                    Container(
-                      height: 40,
-                      width: 180,
-                      decoration: BoxDecoration(
-                        color: Color(0xff7499C6),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Learn More",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              fontFamily: "Roboto",
-                              color: Colors.white),
-                        ),
-                      ),
-                    ),
+                    showPriceChart
+                        ? FutureBuilder(
+                            future: getCoinPrices(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                List<CryptoCoinPriceData> allPriceData = [];
+
+                                List prices = snapshot.data["prices"];
+                                // print(prices.toString());
+
+                                prices.forEach((element) {
+                                  DateTime date =
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          element[0]);
+                                  print(element[1]);
+                                  allPriceData.add(
+                                    CryptoCoinPriceData(x: date, y: element[1]),
+                                  );
+                                });
+                                print("dadaaa");
+                                return CryptoCoinLineCharts(
+                                  pricesData: allPriceData,
+                                );
+                              } else {
+                                return SizedBox();
+                              }
+                            },
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showPriceChart = true;
+                              });
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 180,
+                              decoration: BoxDecoration(
+                                color: Color(0xff7499C6),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Learn More",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      fontFamily: "Roboto",
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -497,6 +558,39 @@ class _SingleCryptoCurrencyDetailsByIdState
         ),
       ),
     );
+  }
+
+  getCoinPrices() async {
+    print("get coin prices");
+    var tempJsonReq = {};
+
+    // String jsonReq = jsonEncode(tempJsonReq);
+
+    var jsonReqResp = await _featuredCompaniesProvider.coinDetails(
+        'https://api.coingecko.com/api/v3/coins/${widget.coinId}/market_chart?vs_currency=usd&days=30');
+
+    var result = jsonDecode(jsonReqResp.body);
+    print("coin prices response: $result");
+
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      // print("ggggg");
+      // print("result");
+      // await getCoinData(context);
+      return result;
+      // return getCompaniesList(result["message"]);
+      // if (result != null &&a
+      //     result.containsKey('auth') &&
+      //     result['auth'] == true) {
+      //   Toast.show("${result['message']}", context,
+      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      // }
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
+    } else {
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    }
   }
 
   followRow() {

@@ -74,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   bool searching = false;
   int userAuroCoinScore;
+  ScrollController _scrollController = ScrollController();
 
   bool _isInProgress = false;
   bool isSelect1 = false;
@@ -168,6 +169,7 @@ class _HomeScreenState extends State<HomeScreen>
       }
     });
     bannerSize = AdmobBannerSize.BANNER;
+    _scrollController = ScrollController(initialScrollOffset: 50.0);
   }
 
   SharedPreferences prefs;
@@ -184,6 +186,7 @@ class _HomeScreenState extends State<HomeScreen>
     portfolioChartData = null;
     subscription.cancel();
     admobBannerController.dispose();
+    _scrollController.dispose();
   }
 
   connectionError() {
@@ -413,7 +416,7 @@ class _HomeScreenState extends State<HomeScreen>
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       size: 15,
                     ),
-                    hintText: "Search",
+                    hintText: "Search Listed Companies",
                     hintStyle: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE14,
@@ -794,6 +797,33 @@ class _HomeScreenState extends State<HomeScreen>
                 elevation: 0,
                 child: AppDrawer(
                   selectItemName: 'home',
+                  auroStreakCallback: () {
+                    print("auro streak page to go on tapped");
+                    _scrollController = ScrollController(
+                      initialScrollOffset: 500,
+                      keepScrollOffset: true,
+                    );
+                    setState(() {
+                      selectFive();
+                    });
+                    print("sfsfsfsf");
+                    // if (_scrollController.hasClients) {
+                    //   _scrollController
+                    //       .animateTo(
+                    //     500.0,
+                    //     duration: Duration(milliseconds: 500),
+                    //     curve: Curves.ease,
+                    //   )
+                    //       .whenComplete(() {
+                    //     print("the animation to auro streak finished");
+                    //   }).catchError((error) {
+                    //     print("the animation to auro streak error");
+                    //     print(error.toString());
+                    //   });
+                    // }else{
+                    //   print("no scroll client");
+                    // }
+                  },
                 ),
               ),
             ),
@@ -1164,7 +1194,7 @@ class _HomeScreenState extends State<HomeScreen>
         Map countMap = {};
 
         portfolioChartData["data"].forEach(
-              (element) {
+          (element) {
             if (countMap.containsKey(element["sector"])) {
               int earlyCount = countMap[element["sector"]];
               countMap[element["sector"]] = earlyCount + 1;
@@ -1650,7 +1680,7 @@ class _HomeScreenState extends State<HomeScreen>
                       // PublicCompaniesList(),
                       Container(
                         height: 200,
-                        width: MediaQuery.of(context).size.width-20,
+                        width: MediaQuery.of(context).size.width - 20,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
@@ -1679,9 +1709,7 @@ class _HomeScreenState extends State<HomeScreen>
         ));
   }
 
-
-  singleTableForPortFolio(){
-
+  singleTableForPortFolio() {
     // print("index: $index");
     final List<Map<String, dynamic>> securities = [
       {"name": "1", "share": "", "price": ""},
@@ -1735,14 +1763,8 @@ class _HomeScreenState extends State<HomeScreen>
       child: Container(
         child: Column(
           children: [
-            singleRow(
-                context,
-                "Security",
-                '# of shares/ \$',
-                'In-Price',
-                'Current Price',
-                '% Return',
-                Colors.indigo[100]),
+            singleRow(context, "Security", '# of shares/ \$', 'In-Price',
+                'Current Price', '% Return', Colors.indigo[100]),
             singleRow(
                 context,
                 "${securities[0]['name']}",
@@ -4330,6 +4352,7 @@ class _HomeScreenState extends State<HomeScreen>
     ];
 
     return SingleChildScrollView(
+      controller: _scrollController,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -4479,47 +4502,47 @@ class _HomeScreenState extends State<HomeScreen>
                                 SizedBox(
                                   height: 10.0,
                                 ),
-                                Container(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.053,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.40,
-                                  margin: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.24,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.24),
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                      border: new Border.all(
-                                          color: AllCoustomTheme
-                                              .getButtonBoxColor(),
-                                          width: 1.5),
-                                      color:
-                                          AllCoustomTheme.getButtonBoxColor()),
-                                  child: MaterialButton(
-                                    splashColor: Colors.grey,
-                                    child: Text(
-                                      "Earn Coins",
-                                      style: TextStyle(
-                                        color: AllCoustomTheme
-                                            .getButtonTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE13,
-                                        fontFamily: "Roboto",
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    onPressed: () async {
-                                      Navigator.of(context).push(
-                                        CupertinoPageRoute(
-                                          builder: (BuildContext context) =>
-                                              PortfolioPitch(),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
+                                // Container(
+                                //   height: MediaQuery.of(context).size.height *
+                                //       0.053,
+                                //   width:
+                                //       MediaQuery.of(context).size.width * 0.40,
+                                //   margin: EdgeInsets.only(
+                                //       left: MediaQuery.of(context).size.width *
+                                //           0.24,
+                                //       right: MediaQuery.of(context).size.width *
+                                //           0.24),
+                                //   decoration: BoxDecoration(
+                                //       borderRadius:
+                                //           BorderRadius.all(Radius.circular(20)),
+                                //       border: new Border.all(
+                                //           color: AllCoustomTheme
+                                //               .getButtonBoxColor(),
+                                //           width: 1.5),
+                                //       color:
+                                //           AllCoustomTheme.getButtonBoxColor()),
+                                //   child: MaterialButton(
+                                //     splashColor: Colors.grey,
+                                //     child: Text(
+                                //       "Earn Coins",
+                                //       style: TextStyle(
+                                //         color: AllCoustomTheme
+                                //             .getButtonTextThemeColors(),
+                                //         fontSize: ConstanceData.SIZE_TITLE13,
+                                //         fontFamily: "Roboto",
+                                //         fontWeight: FontWeight.bold,
+                                //       ),
+                                //     ),
+                                //     onPressed: () async {
+                                //       Navigator.of(context).push(
+                                //         CupertinoPageRoute(
+                                //           builder: (BuildContext context) =>
+                                //               PortfolioPitch(),
+                                //         ),
+                                //       );
+                                //     },
+                                //   ),
+                                // ),
                                 SizedBox(
                                   height: 10.0,
                                 ),

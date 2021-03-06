@@ -9,16 +9,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class AppbarWidget extends StatefulWidget {
   final TextEditingController textEditingController;
   final FocusNode focusNode;
+  final hintText;
 
-  AppbarWidget({this.textEditingController,this.focusNode,});
+  AppbarWidget({
+    this.textEditingController,
+    this.focusNode,
+    this.hintText,
+  });
 
   @override
   _AppbarWidgetState createState() => _AppbarWidgetState();
 }
 
 class _AppbarWidgetState extends State<AppbarWidget> {
-
-
   @override
   void initState() {
     super.initState();
@@ -61,14 +64,8 @@ class _AppbarWidgetState extends State<AppbarWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.58,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.05,
+                width: MediaQuery.of(context).size.width * 0.58,
+                height: MediaQuery.of(context).size.height * 0.05,
                 child: TextFormField(
                   focusNode: widget.focusNode,
                   controller: widget.textEditingController,
@@ -77,7 +74,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
                     fontSize: ConstanceData.SIZE_TITLE14,
                   ),
                   onFieldSubmitted: (value) {
-                    if (widget.textEditingController.text.isEmpty){
+                    if (widget.textEditingController.text.isEmpty) {
                       FocusScope.of(context).unfocus();
                     }
                   },
@@ -88,7 +85,7 @@ class _AppbarWidgetState extends State<AppbarWidget> {
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       size: 15,
                     ),
-                    hintText: "Search",
+                    hintText: widget.hintText == null ? "Search" : widget.hintText,
                     hintStyle: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE14,
@@ -130,6 +127,4 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       ],
     );
   }
-
-
 }
