@@ -728,7 +728,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
               Expanded(
                 child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.50,
                     child: Scrollbar(
                       child: getQuestionsList(questionsList),
                     )),
