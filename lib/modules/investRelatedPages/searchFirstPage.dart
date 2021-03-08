@@ -5,6 +5,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';
 import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
+import 'package:auroim/widgets/small_tab_chip.dart';
 import 'package:auroim/widgets/tab_chip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -182,18 +183,19 @@ class _SearchFirstPageState extends State<SearchFirstPage>
                 width: MediaQuery.of(context).size.width * 0.22,
                 height: MediaQuery.of(context).size.height * 0.09,
                 child: SfCartesianChart(
-                    primaryXAxis: NumericAxis(
-                      isVisible: false,
+                  primaryXAxis: NumericAxis(
+                    isVisible: false,
+                  ),
+                  primaryYAxis: NumericAxis(isVisible: false),
+                  series: <ChartSeries>[
+                    StackedAreaSeries<NewSalesData, double>(
+                      dataSource: newSalesData,
+                      xValueMapper: (NewSalesData data, _) => data.year,
+                      yValueMapper: (NewSalesData data, _) => data.sales,
+                      gradient: gradientColors,
                     ),
-                    primaryYAxis: NumericAxis(isVisible: false),
-                    series: <ChartSeries>[
-                      StackedAreaSeries<NewSalesData, double>(
-                        dataSource: newSalesData,
-                        xValueMapper: (NewSalesData data, _) => data.year,
-                        yValueMapper: (NewSalesData data, _) => data.sales,
-                        gradient: gradientColors,
-                      ),
-                    ]),
+                  ],
+                ),
               ),
               Container(
                 child: Row(
@@ -629,7 +631,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
   Widget unlistedTab() {
     return Container(
       height: 265,
-      decoration: BoxDecoration(border: Border.all()),
+      // decoration: BoxDecoration(border: Border.all()),
       child: globals.isGoldBlack
           ? SampleFeaturedCompaniesList()
           : FeaturedCompaniesList(),
@@ -652,155 +654,103 @@ class _SearchFirstPageState extends State<SearchFirstPage>
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(builder: (context,setWidgetState){
+    return StatefulBuilder(builder: (context, setWidgetState) {
       return Container(
-        // width: MediaQuery.of(context).size.width,
-        // height: MediaQuery.of(context).size.height * 0.6,
+          // width: MediaQuery.of(context).size.width,
+          // height: MediaQuery.of(context).size.height * 0.6,
           child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Container(
-                  height: 30,
-                  // color: Colors.green,
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                      children: [
-                        TabChip(
-                          child: Text(
-                            "Trending",
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
-                              color: allTabsBool["Trending"] == true
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          backgroundColor: allTabsBool["Trending"] == true
-                              ? Color(0xff7499C6)
-                              : Colors.white,
-                          callback: () =>
-                              selectedTab("Trending", setWidgetState),
-                        ),
-                        TabChip(
-                          child: Text(
-                            "Unlisted",
-                            style: TextStyle(
-                              color: allTabsBool["Unlisted"] == true
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          backgroundColor: allTabsBool["Unlisted"] == true
-                              ? Color(0xff7499C6)
-                              : Colors.white,
-                          callback: () => selectedTab("Unlisted", setWidgetState),
-                        ),
-                        TabChip(
-                          child: Text(
-                            "Crypto",
-                            style: TextStyle(
-                              color: allTabsBool["Crypto"] == true
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          backgroundColor: allTabsBool["Crypto"] == true
-                              ? Color(0xff7499C6)
-                              : Colors.white,
-                          callback: () => selectedTab("Crypto", setWidgetState),
-                        ),
-                        TabChip(
-                          child: Text(
-                            "Listed",
-                            style: TextStyle(
-                              color: allTabsBool["Listed"] == true
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          backgroundColor: allTabsBool["Listed"] == true
-                              ? Color(0xff7499C6)
-                              : Colors.white,
-                          callback: () => selectedTab("Listed", setWidgetState),
-                        ),
-                        TabChip(
-                          child: Text(
-                            "AuroStars",
-                            style: TextStyle(
-                              color: allTabsBool["AuroStars"] == true
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          backgroundColor: allTabsBool["AuroStars"] == true
-                              ? Color(0xff7499C6)
-                              : Colors.white,
-                          callback: () => selectedTab("AuroStars", setWidgetState),
-                        ),
-                      ],
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Container(
+              height: 30,
+              // color: Colors.green,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.only(left: 3.0, right: 8.0),
+                  children: [
+                    SmallTabChip(
+                      tabText: "Trending",
+                      selected: allTabsBool["Trending"] == true,
+                      callback: () => selectedTab("Trending", setWidgetState),
+                      width: 70.0,
                     ),
-                  ),
+                    SmallTabChip(
+                      tabText: "Unlisted",
+                      selected: allTabsBool["UnListed"] == true,
+                      callback: () => selectedTab("Unlisted", setWidgetState),
+                      width: 70.0,
+                    ),
+                    SmallTabChip(
+                      tabText: "Crypto",
+                      selected: allTabsBool["Crypto"] == true,
+                      callback: () => selectedTab("Crypto", setWidgetState),
+                      width: 70.0,
+                    ),
+                    SmallTabChip(
+                      tabText: "Listed",
+                      selected: allTabsBool["Listed"] == true,
+                      callback: () => selectedTab("Listed", setWidgetState),
+                      width: 70.0,
+                    ),
+                    SmallTabChip(
+                      tabText: "AuroStars",
+                      selected: allTabsBool["AuroStars"] == true,
+                      callback: () => selectedTab("AuroStars", setWidgetState),
+                      width: 80.0,
+                    ),
+                  ],
                 ),
               ),
-              _getPage(selectedTabString),
-              // Container(
-              //   margin: EdgeInsets.only(top: 25.0),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: <Widget>[
-              //       TabBar(
-              //         controller: _tabController,
-              //         onTap: (index) {
-              //           selectedTabIndex = index;
-              //         },
-              //         labelColor: AllCoustomTheme.getTextThemeColors(),
-              //         labelStyle: TextStyle(fontSize: 17.0, letterSpacing: 0.2),
-              //         indicatorColor: AllCoustomTheme.getTextThemeColors(),
-              //         indicatorWeight: 4.0,
-              //         isScrollable: true,
-              //         unselectedLabelColor: Colors.grey,
-              //         tabs: <Widget>[
-              //           new Tab(text: 'Trending'),
-              //           new Tab(text: 'Unlisted'),
-              //           new Tab(text: 'Crypto'),
-              //           new Tab(text: 'Listed'),
-              //           new Tab(text: 'AuroStars'),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Container(
-              //   // height: MediaQuery.of(context).size.height *0.55,
-              //   padding: EdgeInsets.only(top: 10.0),
-              //   child: new TabBarView(
-              //     controller: _tabController,
-              //     children: tabList.map((Tab tab) {
-              //       return _getPage(tab);
-              //     }).toList(),
-              //     physics: ScrollPhysics(),
-              //   ),
-              // )
-            ],
-          ));
+            ),
+          ),
+          _getPage(selectedTabString),
+          // Container(
+          //   margin: EdgeInsets.only(top: 25.0),
+          //   width: MediaQuery.of(context).size.width,
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: <Widget>[
+          //       TabBar(
+          //         controller: _tabController,
+          //         onTap: (index) {
+          //           selectedTabIndex = index;
+          //         },
+          //         labelColor: AllCoustomTheme.getTextThemeColors(),
+          //         labelStyle: TextStyle(fontSize: 17.0, letterSpacing: 0.2),
+          //         indicatorColor: AllCoustomTheme.getTextThemeColors(),
+          //         indicatorWeight: 4.0,
+          //         isScrollable: true,
+          //         unselectedLabelColor: Colors.grey,
+          //         tabs: <Widget>[
+          //           new Tab(text: 'Trending'),
+          //           new Tab(text: 'Unlisted'),
+          //           new Tab(text: 'Crypto'),
+          //           new Tab(text: 'Listed'),
+          //           new Tab(text: 'AuroStars'),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Container(
+          //   // height: MediaQuery.of(context).size.height *0.55,
+          //   padding: EdgeInsets.only(top: 10.0),
+          //   child: new TabBarView(
+          //     controller: _tabController,
+          //     children: tabList.map((Tab tab) {
+          //       return _getPage(tab);
+          //     }).toList(),
+          //     physics: ScrollPhysics(),
+          //   ),
+          // )
+        ],
+      ));
     });
   }
-
 
   // _getSelectedTab(){
   //   if(allTabsBool["Trending"] == true){

@@ -143,7 +143,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                               element.color,
                             ),
                           );
-
+                          index = index + 1;
                           // }
                         });
 
