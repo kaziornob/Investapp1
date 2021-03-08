@@ -19,88 +19,108 @@ class _MainPlusTabState extends State<MainPlusTab> {
   List<String> tagItemList = <String>['native', 'fixed'];
 
   @override
+  void initState() {
+    // displayModalBottomSheet(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Padding(
-          padding: const EdgeInsets.only(right: 16, left: 16),
-          child: Column(
-            children: <Widget>[
-              /*SizedBox(
-              height: appBarheight,
-            ),*/
-              Row(
-                children: <Widget>[
-                  GestureDetector(
-                    // onTap: () {
-                    //   _homeScaffoldKey.currentState.openDrawer();
-                    // },
-                    child: Icon(
-                      Icons.sort,
-                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          displayModalBottomSheet(context);
+        },
+        child: Icon(
+          Icons.more_vert_outlined,
+          color: AllCoustomTheme.getTextThemeColors(),
+          size: 30.0,
+        ),
+        backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+      ),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Padding(
+            padding: const EdgeInsets.only(right: 16, left: 16),
+            child: Column(
+              children: <Widget>[
+                /*SizedBox(
+            height: appBarheight,
+          ),*/
+                Row(
+                  children: <Widget>[
+                    GestureDetector(
+                      // onTap: () {
+                      //   _homeScaffoldKey.currentState.openDrawer();
+                      // },
+                      child: Icon(
+                        Icons.sort,
+                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Animator(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.decelerate,
-                      cycles: 1,
-                      builder: (anim) => Transform.scale(
-                        scale: anim.value,
-                        child: Text(
-                          'Start Post',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
-                            fontWeight: FontWeight.bold,
-                            fontSize: ConstanceData.SIZE_TITLE20,
+                    Expanded(
+                      child: Animator(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: Text(
+                            'Start Post',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontWeight: FontWeight.bold,
+                              fontSize: ConstanceData.SIZE_TITLE20,
+                            ),
                           ),
                         ),
                       ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 14,
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 14,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  Expanded(
-                    child: getUserField(),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 50,
-                child: TextField(
-                  decoration: InputDecoration(
-                    // labelText: 'Employment Status',
-                    hintText: 'What do you want to talk about?',
-                    hintStyle: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColors()),
-                    labelStyle: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColors()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                    ),
+                    Expanded(
+                      child: getUserField(),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 50,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      // labelText: 'Employment Status',
+                      hintText: 'What do you want to talk about?',
+                      hintStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: AllCoustomTheme.getTextThemeColors()),
+                      labelStyle: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: AllCoustomTheme.getTextThemeColors()),
+                    ),
                   ),
                 ),
-              ),
 /*            Container(
-              child: displayModalBottomSheet(context),
-            ),*/
-            ],
-          )),
+            child: displayModalBottomSheet(context),
+          ),*/
+              ],
+            )),
+      )
     );
   }
 

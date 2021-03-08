@@ -70,10 +70,10 @@ class _AppDrawerState extends State<AppDrawer> {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: appBarheight + 10,
+              height: appBarheight,
             ),
             Padding(
-                padding: const EdgeInsets.only(left: 16),
+                padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: [
                     Row(
@@ -129,7 +129,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          width: 40,
+                          width: 40.0,
                         ),
                         InkWell(
                           onTap: () {
@@ -140,38 +140,29 @@ class _AppDrawerState extends State<AppDrawer> {
                               ),
                             );
                           },
-                          child: Animator(
-                            tween: Tween<double>(begin: 0, end: 1),
-                            duration: Duration(milliseconds: 500),
-                            cycles: 1,
-                            builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
-                                axis: Axis.horizontal,
-                                axisAlignment: 1,
-                                child: Text(
-                                  'My Account',
-                                  style: TextStyle(
-                                    color:
-                                        AllCoustomTheme.getSeeMoreThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                  ),
-                                )),
-                          ),
+                          child: Text(
+                            'My Account',
+                            style: TextStyle(
+                              color:
+                              AllCoustomTheme.getSeeMoreThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE14,
+                              fontFamily: "Roboto",
+                            ),
+                          )
                         ),
                         SizedBox(
-                          width: 8,
+                          width: 2.0,
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 7.0),
                           child: Icon(
                             Icons.circle,
-                            size: 7,
+                            size: 6,
                             color: AllCoustomTheme.getSeeMoreThemeColor(),
                           ),
                         ),
                         SizedBox(
-                          width: 8,
+                          width: 2.0,
                         ),
                         InkWell(
                           onTap: () {
@@ -182,24 +173,48 @@ class _AppDrawerState extends State<AppDrawer> {
                               ),
                             );
                           },
-                          child: Animator(
-                            tween: Tween<double>(begin: 0, end: 1),
-                            duration: Duration(milliseconds: 500),
-                            cycles: 1,
-                            builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
-                                axis: Axis.horizontal,
-                                axisAlignment: 1,
-                                child: Text(
-                                  'Settings',
-                                  style: TextStyle(
-                                    color:
-                                        AllCoustomTheme.getSeeMoreThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                  ),
-                                )),
+                          child: Text(
+                            'Settings',
+                            style: TextStyle(
+                              color:
+                              AllCoustomTheme.getSeeMoreThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE14,
+                              fontFamily: "Roboto",
+                            ),
+                          )
+                        ),
+                        SizedBox(
+                          width: 2.0,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 7.0),
+                          child: Icon(
+                            Icons.circle,
+                            size: 6,
+                            color: AllCoustomTheme.getSeeMoreThemeColor(),
                           ),
+                        ),
+                        SizedBox(
+                          width: 2.0,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (BuildContext context) => MyProfile(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'My Profile',
+                            style: TextStyle(
+                              color:
+                              AllCoustomTheme.getSeeMoreThemeColor(),
+                              fontSize: ConstanceData.SIZE_TITLE14,
+                              fontFamily: "Roboto",
+                            ),
+                          )
                         )
                       ],
                     ),
@@ -390,6 +405,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
@@ -439,12 +457,18 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                               ],
                             ),
                             tapHeaderToExpand: true,
                             hasIcon: true,
                             iconColor: Colors.blueGrey,
                           ),
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                         Container(
                           child: ExpandablePanel(
@@ -544,6 +568,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
@@ -596,6 +623,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
@@ -645,6 +675,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
@@ -693,6 +726,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                       ),
                                     ],
                                   ),
+                                ),
+                                SizedBox(
+                                  height: 10,
                                 ),
                               ],
                             ),

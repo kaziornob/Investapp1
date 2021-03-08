@@ -250,13 +250,13 @@ class _MyAccountState extends State<MyAccount> {
 
                               ),
                             ),
-                            Divider(
-                              color: Colors.grey,
+                            SizedBox(
+                              height: 20.0,
                             ),
                             Container(
                               child: ExpansionTile(
                                 title: Text(
-                                  "",
+                                  "Commute Reference",
                                   style: TextStyle(
                                     color: AllCoustomTheme.getTextThemeColor(),
                                     fontSize: ConstanceData.SIZE_TITLE16,
@@ -321,6 +321,9 @@ class _MyAccountState extends State<MyAccount> {
                                           ],
                                         ),
                                       ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
                                       InkWell(
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
@@ -368,6 +371,9 @@ class _MyAccountState extends State<MyAccount> {
                                           ],
                                         ),
                                       ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
                                       InkWell(
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
@@ -414,6 +420,9 @@ class _MyAccountState extends State<MyAccount> {
                                             ),
                                           ],
                                         ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
                                       ),
                                       InkWell(
                                         highlightColor: Colors.transparent,
@@ -522,6 +531,9 @@ class _MyAccountState extends State<MyAccount> {
                                           ],
                                         ),
                                       ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
                                       InkWell(
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
@@ -575,8 +587,8 @@ class _MyAccountState extends State<MyAccount> {
                                 ],
                               ),
                             ),
-                            Divider(
-                              color: Colors.grey,
+                            SizedBox(
+                              height: 20.0,
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 10.0),
