@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:auroim/constance/constance.dart';
@@ -26,12 +26,12 @@ class _MultisigWalletState extends State<MultisigWallet> {
   var height = 0.0;
 
   bool _isInProgress = false;
-  AdmobBannerSize bannerSize;
+  // AdmobBannerSize bannerSize;
   @override
   void initState() {
     super.initState();
     loadUserDetails();
-    bannerSize = AdmobBannerSize.BANNER;
+    // bannerSize = AdmobBannerSize.BANNER;
   }
 
   loadUserDetails() async {
@@ -53,47 +53,47 @@ class _MultisigWalletState extends State<MultisigWallet> {
     return null;
   }
 
-  void handleEvent(
-      AdmobAdEvent event, Map<String, dynamic> args, String adType) {
-    switch (event) {
-      case AdmobAdEvent.loaded:
-        print('New Admob $adType Ad loaded!');
-        break;
-      case AdmobAdEvent.opened:
-        print('Admob $adType Ad opened!');
-        break;
-      case AdmobAdEvent.closed:
-        print('Admob $adType Ad closed!');
-        break;
-      case AdmobAdEvent.failedToLoad:
-        print('Admob $adType failed to load. :(');
-        break;
-        // case AdmobAdEvent.rewarded:
-        //   showDialog(
-        //     context: scaffoldState.currentContext,
-        //     builder: (BuildContext context) {
-        //       return WillPopScope(
-        //         child: AlertDialog(
-        //           content: Column(
-        //             mainAxisSize: MainAxisSize.min,
-        //             children: <Widget>[
-        //               Text('Reward callback fired. Thanks Andrew!'),
-        //               Text('Type: ${args['type']}'),
-        //               Text('Amount: ${args['amount']}'),
-        //             ],
-        //           ),
-        //         ),
-        //         onWillPop: () async {
-        //           scaffoldState.currentState.hideCurrentSnackBar();
-        //           return true;
-        //         },
-        //       );
-        //     },
-        //   );
-        break;
-      default:
-    }
-  }
+  // void handleEvent(
+  //     AdmobAdEvent event, Map<String, dynamic> args, String adType) {
+  //   switch (event) {
+  //     case AdmobAdEvent.loaded:
+  //       print('New Admob $adType Ad loaded!');
+  //       break;
+  //     case AdmobAdEvent.opened:
+  //       print('Admob $adType Ad opened!');
+  //       break;
+  //     case AdmobAdEvent.closed:
+  //       print('Admob $adType Ad closed!');
+  //       break;
+  //     case AdmobAdEvent.failedToLoad:
+  //       print('Admob $adType failed to load. :(');
+  //       break;
+  //       // case AdmobAdEvent.rewarded:
+  //       //   showDialog(
+  //       //     context: scaffoldState.currentContext,
+  //       //     builder: (BuildContext context) {
+  //       //       return WillPopScope(
+  //       //         child: AlertDialog(
+  //       //           content: Column(
+  //       //             mainAxisSize: MainAxisSize.min,
+  //       //             children: <Widget>[
+  //       //               Text('Reward callback fired. Thanks Andrew!'),
+  //       //               Text('Type: ${args['type']}'),
+  //       //               Text('Amount: ${args['amount']}'),
+  //       //             ],
+  //       //           ),
+  //       //         ),
+  //       //         onWillPop: () async {
+  //       //           scaffoldState.currentState.hideCurrentSnackBar();
+  //       //           return true;
+  //       //         },
+  //       //       );
+  //       //     },
+  //       //   );
+  //       break;
+  //     default:
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +119,7 @@ class _MultisigWalletState extends State<MultisigWallet> {
         Scaffold(
           key: _multiSigScaffoldKey,
           drawer: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.75 < 400
-                ? MediaQuery.of(context).size.width * 0.75
-                : 350,
+            width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
             child: Drawer(
               child: AppDrawer(
                 selectItemName: 'multisig',
@@ -155,8 +153,7 @@ class _MultisigWalletState extends State<MultisigWallet> {
                               },
                               child: Icon(
                                 Icons.sort,
-                                color:
-                                    AllCoustomTheme.getsecoundTextThemeColor(),
+                                color: AllCoustomTheme.getsecoundTextThemeColor(),
                               ),
                             ),
                             Animator(
@@ -200,8 +197,7 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                   },
                                   child: Icon(
                                     Icons.watch_later,
-                                    color: AllCoustomTheme
-                                        .getsecoundTextThemeColor(),
+                                    color: AllCoustomTheme.getsecoundTextThemeColor(),
                                   ),
                                 ),
                               ),
@@ -280,8 +276,7 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                     height: 30,
                                     width: 80,
                                     decoration: BoxDecoration(
-                                      color: AllCoustomTheme
-                                          .getsecoundTextThemeColor(),
+                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
@@ -290,8 +285,7 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                       child: Text(
                                         'Transfer',
                                         style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColors(),
+                                          color: AllCoustomTheme.getTextThemeColors(),
                                           fontSize: ConstanceData.SIZE_TITLE14,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -335,23 +329,15 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                         ),
                                         height: 80,
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 10,
-                                              right: 12),
+                                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 12),
                                           child: Row(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://static.coincap.io/assets/icons/btc@2x.png',
+                                                imageUrl: 'https://static.coincap.io/assets/icons/btc@2x.png',
                                                 height: 45,
                                                 width: 45,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
+                                                errorWidget: (context, url, error) => CircleAvatar(
+                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
                                                   child: Text(
                                                     'B',
                                                   ),
@@ -361,29 +347,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 width: 6,
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Bitcoin',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
                                                     ),
                                                   ),
                                                   Text(
                                                     'BTC',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -392,31 +371,23 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 child: SizedBox(),
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   Text(
                                                     '\$5770.50',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '1.43578',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -456,23 +427,15 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                           color: AllCoustomTheme.boxColor(),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 10,
-                                              right: 12),
+                                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 12),
                                           child: Row(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://static.coincap.io/assets/icons/bch@2x.png',
+                                                imageUrl: 'https://static.coincap.io/assets/icons/bch@2x.png',
                                                 height: 45,
                                                 width: 45,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
+                                                errorWidget: (context, url, error) => CircleAvatar(
+                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
                                                   child: Text(
                                                     'B',
                                                   ),
@@ -482,29 +445,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 width: 6,
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Bitcoin Cash',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
                                                     ),
                                                   ),
                                                   Text(
                                                     'BCH',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -513,31 +469,23 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 child: SizedBox(),
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   Text(
                                                     '\$2303.89',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '0.2568',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -577,23 +525,15 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                           color: AllCoustomTheme.boxColor(),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 10,
-                                              right: 12),
+                                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 12),
                                           child: Row(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://static.coincap.io/assets/icons/xmr@2x.png',
+                                                imageUrl: 'https://static.coincap.io/assets/icons/xmr@2x.png',
                                                 height: 45,
                                                 width: 45,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
+                                                errorWidget: (context, url, error) => CircleAvatar(
+                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
                                                   child: Text(
                                                     'M',
                                                   ),
@@ -603,29 +543,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 width: 6,
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Monero',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
                                                     ),
                                                   ),
                                                   Text(
                                                     'XMR',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -634,31 +567,23 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 child: SizedBox(),
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   Text(
                                                     '\$893.76',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '0.0001',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -672,24 +597,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 85,
-                              child: AdmobBanner(
-                                adUnitId: getBannerAdUnitId(),
-                                adSize: bannerSize,
-                                listener: (AdmobAdEvent event,
-                                    Map<String, dynamic> args) {
-                                  handleEvent(event, args, 'Banner');
-                                },
-                                onBannerCreated:
-                                    (AdmobBannerController controller) {
-                                  // Dispose is called automatically for you when Flutter removes the banner from the widget tree.
-                                  // Normally you don't need to worry about disposing this yourself, it's handled.
-                                  // If you need direct access to dispose, this is your guy!
-                                  // controller.dispose();
-                                },
-                              ),
-                            ),
+                            // Container(
+                            //   height: 85,
+                            //   child: AdmobBanner(
+                            //     adUnitId: getBannerAdUnitId(),
+                            //     adSize: bannerSize,
+                            //     listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+                            //       handleEvent(event, args, 'Banner');
+                            //     },
+                            //     onBannerCreated: (AdmobBannerController controller) {
+                            //       // Dispose is called automatically for you when Flutter removes the banner from the widget tree.
+                            //       // Normally you don't need to worry about disposing this yourself, it's handled.
+                            //       // If you need direct access to dispose, this is your guy!
+                            //       // controller.dispose();
+                            //     },
+                            //   ),
+                            // ),
                             SizedBox(
                               height: 10,
                             ),
@@ -716,23 +639,15 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                           color: AllCoustomTheme.boxColor(),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 10,
-                                              right: 12),
+                                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 12),
                                           child: Row(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://static.coincap.io/assets/icons/dash@2x.png',
+                                                imageUrl: 'https://static.coincap.io/assets/icons/dash@2x.png',
                                                 height: 45,
                                                 width: 45,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
+                                                errorWidget: (context, url, error) => CircleAvatar(
+                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
                                                   child: Text(
                                                     'D',
                                                   ),
@@ -742,29 +657,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 width: 6,
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Dash',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
                                                     ),
                                                   ),
                                                   Text(
                                                     'DASH',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -773,31 +681,23 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 child: SizedBox(),
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   Text(
                                                     '\$1725.38',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '2.3242',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -837,23 +737,15 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                           color: AllCoustomTheme.boxColor(),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 10,
-                                              right: 12),
+                                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 12),
                                           child: Row(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://static.coincap.io/assets/icons/bcn@2x.png',
+                                                imageUrl: 'https://static.coincap.io/assets/icons/bcn@2x.png',
                                                 height: 45,
                                                 width: 45,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
+                                                errorWidget: (context, url, error) => CircleAvatar(
+                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
                                                   child: Text(
                                                     'B',
                                                   ),
@@ -863,29 +755,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 width: 6,
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Bytecoin',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
                                                     ),
                                                   ),
                                                   Text(
                                                     'BCN',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -894,31 +779,23 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 child: SizedBox(),
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   Text(
                                                     '\$1874.90',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '0.8957',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -958,23 +835,15 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                           color: AllCoustomTheme.boxColor(),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 10,
-                                              right: 12),
+                                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 12),
                                           child: Row(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://static.coincap.io/assets/icons/dai@2x.png',
+                                                imageUrl: 'https://static.coincap.io/assets/icons/dai@2x.png',
                                                 height: 45,
                                                 width: 45,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
+                                                errorWidget: (context, url, error) => CircleAvatar(
+                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
                                                   child: Text(
                                                     'D',
                                                   ),
@@ -984,29 +853,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 width: 6,
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Dai',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
                                                     ),
                                                   ),
                                                   Text(
                                                     'DAI',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -1015,31 +877,23 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 child: SizedBox(),
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   Text(
                                                     '\$1.0086',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '1.0100',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -1079,23 +933,15 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                           color: AllCoustomTheme.boxColor(),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6,
-                                              bottom: 6,
-                                              left: 10,
-                                              right: 12),
+                                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 12),
                                           child: Row(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://static.coincap.io/assets/icons/lsk@2x.png',
+                                                imageUrl: 'https://static.coincap.io/assets/icons/lsk@2x.png',
                                                 height: 45,
                                                 width: 45,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
+                                                errorWidget: (context, url, error) => CircleAvatar(
+                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
                                                   child: Text(
                                                     'L',
                                                   ),
@@ -1105,29 +951,22 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 width: 6,
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Lisk',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
                                                     ),
                                                   ),
                                                   Text(
                                                     'LSK',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -1136,31 +975,23 @@ class _MultisigWalletState extends State<MultisigWallet> {
                                                 child: SizedBox(),
                                               ),
                                               Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: <Widget>[
                                                   Text(
                                                     '\$0.8143',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '0.7200',
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],

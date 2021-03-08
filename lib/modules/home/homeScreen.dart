@@ -1,61 +1,28 @@
-import 'dart:collection';
 import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
-import 'package:admob_flutter/admob_flutter.dart';
+
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/bussPost/createPoll.dart';
-import 'package:auroim/modules/bussPost/portfolioPitch.dart';
-import 'package:auroim/modules/bussPost/stockPitch.dart';
-import 'package:auroim/modules/bussPost/wishList.dart';
 import 'package:auroim/modules/home/main_exchange_tab.dart';
 import 'package:auroim/modules/home/main_learn_marketplace_tab.dart';
 import 'package:auroim/modules/home/main_plus_tab.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
-import 'package:auroim/modules/investRelatedPages/searchFirstPage.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
-import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
-import 'package:auroim/modules/qaInvForumPages/qusDetail.dart';
-import 'package:auroim/modules/qaInvForumPages/qusView.dart';
-import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
-import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
-import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
-import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
-import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
-import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
-import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
-import 'package:auroim/modules/stripePayment/stripePaymentServer.dart';
-import 'package:auroim/widgets/auro_stars.dart';
-import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
-import 'package:auroim/widgets/goLiveInvest/personalSleeve.dart';
-import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
-import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
-import 'package:auroim/widgets/public_companies_list.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/graphDetail/OHLCVGraph.dart';
-import 'package:auroim/graphDetail/QuickPercentChangeBar.dart';
 import 'package:auroim/main.dart';
 import 'package:auroim/model/listingsModel.dart';
-import 'package:auroim/modules/chagePIN/changepin.dart';
 import 'package:auroim/modules/drawer/drawer.dart';
-import 'package:auroim/modules/underGroundSlider/notificationSlider.dart';
-import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'main_home_tab.dart';
@@ -118,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   List<CryptoCoinDetail> lstCryptoCoinDetail = [];
 
-  AdmobBannerController admobBannerController;
+  // AdmobBannerController admobBannerController;
 
   List<String> tagItemList = <String>['native', 'fixed'];
 
@@ -170,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen>
         connectionError();
       }
     });
-    bannerSize = AdmobBannerSize.BANNER;
+    // bannerSize = AdmobBannerSize.BANNER;
     _scrollController = ScrollController(initialScrollOffset: 50.0);
   }
 
@@ -186,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
 
     subscription.cancel();
-    admobBannerController.dispose();
+    // admobBannerController.dispose();
     _scrollController.dispose();
   }
 

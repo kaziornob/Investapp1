@@ -29,6 +29,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
   bool _isInProgress = false;
 
   int selectedTabIndex;
+  String selectedTabString = "Trending";
 
   Map<String, bool> allTabsBool = {
     "Trending": true,
@@ -754,6 +755,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
                   ),
                 ),
               ),
+              _getPage(selectedTabString),
               // Container(
               //   margin: EdgeInsets.only(top: 25.0),
               //   width: MediaQuery.of(context).size.width,
@@ -799,12 +801,20 @@ class _SearchFirstPageState extends State<SearchFirstPage>
     });
   }
 
+
+  // _getSelectedTab(){
+  //   if(allTabsBool["Trending"] == true){
+  //     return
+  //   }
+  // }
+
   selectedTab(selectedKey, setWidgetState) {
     // print(selectedKey);
     setWidgetState(() {
       allTabsBool.forEach((key, value) {
         if (selectedKey == key) {
           allTabsBool[key] = true;
+          selectedTabString = key;
         } else {
           allTabsBool[key] = false;
         }
@@ -822,19 +832,18 @@ class _SearchFirstPageState extends State<SearchFirstPage>
     // });
   }
 
-  // ignore: missing_return
-  // Widget _getPage(Tab tab) {
-  //   switch (tab.text) {
-  //     case 'Trending':
-  //       return topTrendingNews();
-  //     case 'Unlisted':
-  //       return unlistedTab();
-  //     case 'Crypto':
-  //       return crypto();
-  //     case 'Listed':
-  //       return equities();
-  //     case 'AuroStars':
-  //       return equities();
-  //   }
-  // }
+  Widget _getPage(String tab) {
+    switch (tab) {
+      case 'Trending':
+        return topTrendingNews();
+      case 'Unlisted':
+        return unlistedTab();
+      case 'Crypto':
+        return crypto();
+      case 'Listed':
+        return equities();
+      case 'AuroStars':
+        return equities();
+    }
+  }
 }

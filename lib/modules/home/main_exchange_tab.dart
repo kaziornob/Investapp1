@@ -1,4 +1,4 @@
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
@@ -29,7 +29,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
   var appBarheight = 0.0;
   var statusBarHeight = 0.0;
   var graphHeight = 0.0;
-  AdmobBannerController admobBannerController;
+  // AdmobBannerController admobBannerController;
   List<dynamic> questionsList;
   ApiProvider request = new ApiProvider();
 
@@ -259,18 +259,18 @@ class _MainExchangeTabState extends State<MainExchangeTab>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          AdmobBanner(
-            adUnitId: getBannerAdUnitId(),
-            adSize: bannerSize,
-            listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-              handleEvent(event, args, 'Banner');
-            },
-            onBannerCreated: (AdmobBannerController controller) {
-              setState(() {
-                admobBannerController = controller;
-              });
-            },
-          ),
+          // AdmobBanner(
+          //   adUnitId: getBannerAdUnitId(),
+          //   adSize: bannerSize,
+          //   listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+          //     handleEvent(event, args, 'Banner');
+          //   },
+          //   onBannerCreated: (AdmobBannerController controller) {
+          //     setState(() {
+          //       admobBannerController = controller;
+          //     });
+          //   },
+          // ),
           SizedBox(
             height: 10,
           ),

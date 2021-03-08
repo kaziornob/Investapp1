@@ -1,4 +1,4 @@
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:auroim/api/apiProvider.dart';
@@ -22,19 +22,19 @@ class _CryptoNewsState extends State<CryptoNews> {
   bool _isInProgress = false;
 
   CryptoNewsLive cryptoNewsLive;
-  AdmobBannerController admobBannerController;
+  // AdmobBannerController admobBannerController;
 
   @override
   void initState() {
     super.initState();
     getLatestNews();
-    bannerSize = AdmobBannerSize.BANNER;
+    // bannerSize = AdmobBannerSize.BANNER;
   }
 
   @override
   dispose() {
     super.dispose();
-    admobBannerController.dispose();
+    // admobBannerController.dispose();
   }
 
   getLatestNews() async {
@@ -134,18 +134,18 @@ class _CryptoNewsState extends State<CryptoNews> {
                       SizedBox(
                         height: 30,
                       ),
-                      AdmobBanner(
-                        adUnitId: getBannerAdUnitId(),
-                        adSize: bannerSize,
-                        listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-                          handleEvent(event, args, 'Banner');
-                        },
-                        onBannerCreated: (AdmobBannerController controller) {
-                          setState(() {
-                            admobBannerController = controller;
-                          });
-                        },
-                      ),
+                      // AdmobBanner(
+                      //   adUnitId: getBannerAdUnitId(),
+                      //   adSize: bannerSize,
+                      //   listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+                      //     handleEvent(event, args, 'Banner');
+                      //   },
+                      //   onBannerCreated: (AdmobBannerController controller) {
+                      //     setState(() {
+                      //       admobBannerController = controller;
+                      //     });
+                      //   },
+                      // ),
                       SizedBox(
                         height: 16,
                       ),
@@ -231,7 +231,8 @@ class _CryptoNewsState extends State<CryptoNews> {
                                             Padding(
                                               padding: const EdgeInsets.only(left: 10, right: 10),
                                               child: Text(
-                                                cryptoNewsLive.articles[index].description != null && cryptoNewsLive.articles[index].description != ""
+                                                cryptoNewsLive.articles[index].description != null &&
+                                                        cryptoNewsLive.articles[index].description != ""
                                                     ? cryptoNewsLive.articles[index].description
                                                     : "",
                                                 textAlign: TextAlign.start,
@@ -263,7 +264,8 @@ class _CryptoNewsState extends State<CryptoNews> {
                                                         height: 2,
                                                       ),
                                                       Text(
-                                                        cryptoNewsLive.articles[index].author != null && cryptoNewsLive.articles[index].author != ""
+                                                        cryptoNewsLive.articles[index].author != null &&
+                                                                cryptoNewsLive.articles[index].author != ""
                                                             ? cryptoNewsLive.articles[index].author
                                                             : "",
                                                         style: TextStyle(

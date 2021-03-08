@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/themes.dart';
@@ -71,48 +71,48 @@ String getRewardBasedVideoAdUnitId() {
   return null;
 }
 
-AdmobBannerSize bannerSize;
+// AdmobBannerSize bannerSize;
 
-void handleEvent(AdmobAdEvent event, Map<String, dynamic> args, String adType) {
-  switch (event) {
-    case AdmobAdEvent.loaded:
-      print('New Admob $adType Ad loaded!');
-      break;
-    case AdmobAdEvent.opened:
-      print('Admob $adType Ad opened!');
-      break;
-    case AdmobAdEvent.closed:
-      print('Admob $adType Ad closed!');
-      break;
-    case AdmobAdEvent.failedToLoad:
-      print('Admob $adType failed to load. :(');
-      break;
-    // case AdmobAdEvent.rewarded:
-    //   showDialog(
-    //     context: _scaffoldKey.currentContext,
-    //     builder: (BuildContext context) {
-    //       return WillPopScope(
-    //         child: AlertDialog(
-    //           content: Column(
-    //             mainAxisSize: MainAxisSize.min,
-    //             children: <Widget>[
-    //               Text('Reward callback fired. Thanks Andrew!'),
-    //               Text('Type: ${args['type']}'),
-    //               Text('Amount: ${args['amount']}'),
-    //             ],
-    //           ),
-    //         ),
-    //         onWillPop: () async {
-    //           _scaffoldKey.currentState.hideCurrentSnackBar();
-    //           return true;
-    //         },
-    //       );
-    //     },
-    //   );
-    //break;
-    default:
-  }
-}
+// void handleEvent(AdmobAdEvent event, Map<String, dynamic> args, String adType) {
+//   switch (event) {
+//     case AdmobAdEvent.loaded:
+//       print('New Admob $adType Ad loaded!');
+//       break;
+//     case AdmobAdEvent.opened:
+//       print('Admob $adType Ad opened!');
+//       break;
+//     case AdmobAdEvent.closed:
+//       print('Admob $adType Ad closed!');
+//       break;
+//     case AdmobAdEvent.failedToLoad:
+//       print('Admob $adType failed to load. :(');
+//       break;
+//     // case AdmobAdEvent.rewarded:
+//     //   showDialog(
+//     //     context: _scaffoldKey.currentContext,
+//     //     builder: (BuildContext context) {
+//     //       return WillPopScope(
+//     //         child: AlertDialog(
+//     //           content: Column(
+//     //             mainAxisSize: MainAxisSize.min,
+//     //             children: <Widget>[
+//     //               Text('Reward callback fired. Thanks Andrew!'),
+//     //               Text('Type: ${args['type']}'),
+//     //               Text('Amount: ${args['amount']}'),
+//     //             ],
+//     //           ),
+//     //         ),
+//     //         onWillPop: () async {
+//     //           _scaffoldKey.currentState.hideCurrentSnackBar();
+//     //           return true;
+//     //         },
+//     //       );
+//     //     },
+//     //   );
+//     //break;
+//     default:
+//   }
+// }
 
 Future<List<CryptoCoinDetail>> getData1(int start) async {
   List<CryptoCoinDetail> lstCryptoCoinDetail = new List<CryptoCoinDetail>();
@@ -374,8 +374,6 @@ String getConvertTime(String utcTime) {
   return day + '-' + month + '-' + year + ' ' + hours + ':' + min;
 }
 
-
-
 class GlobalInstance {
   ApiProvider request = new ApiProvider();
 
@@ -388,127 +386,43 @@ class GlobalInstance {
   static List riskAptOptionsValue = [
     {
       "riskAptType": "0.07",
-      "optionValue":
-      [
-        {
-          "checked":false,
-          "potentialLoss": "-6%",
-          "potentialGain": "5%"
-        },
-        {
-          "checked":false,
-          "potentialLoss": "-7%",
-          "potentialGain": "6%"
-        },
-        {
-          "checked":false,
-          "potentialLoss": "-8%",
-          "potentialGain": "8%"
-        },
-        {
-          "checked":false,
-          "potentialLoss": "-9%",
-          "potentialGain": "10%"
-        },
-        {
-          "checked":false,
-          "potentialLoss": "-10%",
-          "potentialGain": "12%"
-        }
+      "optionValue": [
+        {"checked": false, "potentialLoss": "-6%", "potentialGain": "5%"},
+        {"checked": false, "potentialLoss": "-7%", "potentialGain": "6%"},
+        {"checked": false, "potentialLoss": "-8%", "potentialGain": "8%"},
+        {"checked": false, "potentialLoss": "-9%", "potentialGain": "10%"},
+        {"checked": false, "potentialLoss": "-10%", "potentialGain": "12%"}
       ]
     },
     {
       "riskAptType": "0.15",
-      "optionValue":
-          [
-            {
-              "checked":false,
-              "potentialLoss": "-12%",
-              "potentialGain": "10%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-13%",
-              "potentialGain": "12%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-14%",
-              "potentialGain": "14%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-15%",
-              "potentialGain": "17%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-16%",
-              "potentialGain": "21%"
-            }
-          ]
+      "optionValue": [
+        {"checked": false, "potentialLoss": "-12%", "potentialGain": "10%"},
+        {"checked": false, "potentialLoss": "-13%", "potentialGain": "12%"},
+        {"checked": false, "potentialLoss": "-14%", "potentialGain": "14%"},
+        {"checked": false, "potentialLoss": "-15%", "potentialGain": "17%"},
+        {"checked": false, "potentialLoss": "-16%", "potentialGain": "21%"}
+      ]
     },
     {
       "riskAptType": "0.25",
-      "optionValue":
-          [
-            {
-              "checked":false,
-              "potentialLoss": "-22%",
-              "potentialGain": "10%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-23%",
-              "potentialGain": "13%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-24%",
-              "potentialGain": "18%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-25%",
-              "potentialGain": "24%"
-            },
-            {
-              "checked":false,
-              "potentialLoss": "-26%",
-              "potentialGain": "31%"
-            }
-          ]
+      "optionValue": [
+        {"checked": false, "potentialLoss": "-22%", "potentialGain": "10%"},
+        {"checked": false, "potentialLoss": "-23%", "potentialGain": "13%"},
+        {"checked": false, "potentialLoss": "-24%", "potentialGain": "18%"},
+        {"checked": false, "potentialLoss": "-25%", "potentialGain": "24%"},
+        {"checked": false, "potentialLoss": "-26%", "potentialGain": "31%"}
+      ]
     },
     {
       "riskAptType": "0.35",
-      "optionValue":
-        [
-          {
-            "checked":false,
-            "potentialLoss": "-25%",
-            "potentialGain": "21"
-          },
-          {
-            "checked":false,
-            "potentialLoss": "-28%",
-            "potentialGain": "28%"
-          },
-          {
-            "checked":false,
-            "potentialLoss": "-31%",
-            "potentialGain": "37%"
-          },
-          {
-            "checked":false,
-            "potentialLoss": "-34%",
-            "potentialGain": "49%"
-          },
-          {
-            "checked":false,
-            "potentialLoss": "-37%",
-            "potentialGain": "66%"
-          }
-        ]
+      "optionValue": [
+        {"checked": false, "potentialLoss": "-25%", "potentialGain": "21"},
+        {"checked": false, "potentialLoss": "-28%", "potentialGain": "28%"},
+        {"checked": false, "potentialLoss": "-31%", "potentialGain": "37%"},
+        {"checked": false, "potentialLoss": "-34%", "potentialGain": "49%"},
+        {"checked": false, "potentialLoss": "-37%", "potentialGain": "66%"}
+      ]
     }
   ];
 
@@ -516,256 +430,250 @@ class GlobalInstance {
     print("getDoughnutPortfolioData called");
     var response = await request.getRequest('users/run_algo');
     print("portfolio chart list: $response");
-    if (response != null &&
-        response != false &&
-        response.containsKey('auth') &&
-        response['auth'] == true) {
-
-        portfolioChartData = response['message'] != null &&
-          response['message']['algo_result'] != null
-          ? response['message']['algo_result']
-          : null;
+    if (response != null && response != false && response.containsKey('auth') && response['auth'] == true) {
+      portfolioChartData =
+          response['message'] != null && response['message']['algo_result'] != null ? response['message']['algo_result'] : null;
     }
   }
 
-   static List<String> countryList = <String>[
-        "United Kingdom",
-         "United States",
-         "Bermuda",
-         "Australia",
-         "Canada",
-         "Afghanistan",
-          "Aland Islands"
-         "Albania",
-         "Algeria",
-         "American",
-         "Samoa",
-         "Andorra",
-         "Angola",
-         "Anguilla",
-         "Antarctica",
-         "Antigua and Barbuda",
-         "Argentina",
-         "Armenia",
-         "Aruba",
-         "Austria",
-         "Azerbaijan",
-         "Bahamas",
-         "Bahrain",
-         "Bangladesh",
-         "Barbados",
-         "Belarus",
-         "Belgium",
-         "Belize",
-         "Benin",
-         "Bhutan",
-         "Bolivia",
-         "Bosnia and Herzegovina",
-         "Botswana",
-         "Brazil",
-         "British Indian Ocean Territory",
-         "British Virgin Islands",
-         "Brunei Darussalam",
-         "Bulgaria",
-         "Burkina Faso",
-         "Burundi Cambodia",
-         "Cameroon",
-         "Cape Verde",
-         "Cayman Islands",
-         "Central African Republic",
-         "Chad",
-         "Channel Islands and Jersey",
-         "Chile",
-         "China",
-         "Colombia",
-         "Comoros",
-         "Congo",
-         "Cook Islands",
-         "Costa Rica",
-         "Cote d'Ivoire" ,
-         "Croatia",
-         "Cuba",
-         "Curacao",
-         "Cyprus",
-         "Czech Republic",
-         "Democratic Peoples Republic of Korea (North Korea]",
-         "Democratic Republic of the Congo",
-         "Denmark",
-         "Djibouti",
-         "Dominica",
-         "Dominican Republic",
-         "East Timor",
-         "Ecuador",
-         "Egypt",
-         "El Salvador",
-         "Equatorial Guinea",
-         "Eritrea",
-         "Estonia",
-         "Ethiopia",
-         "Faeroe Islands",
-         "Falkland Islands (Malvinas)",
-         "Fiji",
-         "Finland",
-         "France",
-         "French Guiana",
-         "French Polynesia",
-         "Gabon",
-         "Gambia",
-         "Georgia",
-         "Germany",
-         "Ghana",
-         "Gibraltar",
-         "Greece",
-         "Greenland",
-         "Grenada",
-         "Guadeloupe",
-         "Guam",
-         "Guatemala",
-         "Guernsey",
-         "Guinea",
-         "Guinea-Bissau",
-         "Guyana",
-         "Haiti",
-         "Holy See",
-         "Honduras",
-         "Hong Kong Special Administrative Region of China",
-         "Hungary",
-         "Iceland",
-         "India",
-         "Indonesia",
-         "Iran (Islamic Republic of)",
-         "Iraq",
-         "Ireland",
-         "Isle of Man",
-         "Israel Italy",
-         "Jamaica",
-         "Japan",
-         "Jordan",
-         "Kazakhstan",
-         "Kenya",
-         "Kiribati",
-         "Kosovo",
-         "Kuwait",
-         "Kyrgyzstan",
-         "Lao People`s Democratic Republic",
-         "Latvia",
-         "Lebanon",
-         "Lesotho",
-         "Liberia",
-         "Libyan Arab Jamahiriya",
-         "Liechtenstein",
-         "Lithuania",
-         "Luxembourg",
-         "Macao Special Administrative Region of China",
-         "Madagascar",
-         "Malawi",
-         "Malaysia",
-         "Maldives",
-         "Mali",
-         "Malta",
-         "Marshall Islands",
-         "Martinique",
-         "Mauritania",
-         "Mauritius",
-         "Mayotte",
-         "Mexico",
-         "Micronesia, Federated States of",
-         "Monaco",
-         "Mongolia",
-         "Montenegro",
-         "Montserrat",
-         "Morocco",
-         "Mozambique",
-         "Myanmar",
-         "Namibia",
-         "Nauru",
-         "Nepal",
-         "Netherlands",
-         "Netherlands Antilles",
-         "New Caledonia",
-         "New Zealand",
-         "Nicaragua",
-         "Niger",
-         "Nigeria",
-         "Niue",
-         "Norfolk Island",
-         "Northern Mariana Islands",
-         "Norway",
-         "Occupied Palestinian Territory",
-         "Oman",
-         "Pakistan",
-         "Palau",
-         "Panama",
-         "Papua New Guinea",
-         "Paraguay",
-         "Peru",
-         "Philippines",
-         "Pitcairn",
-         "Poland",
-         "Portugal",
-         "Puerto Rico",
-         "Qatar",
-         "Republic of Korea",
-         "Republic of Moldova",
-         "Reunion",
-         "Romania",
-         "Russian Federation",
-         "Rwanda",
-         "Saint Helena",
-         "Saint Kitts and Nevis",
-         "Saint Lucia",
-         "Saint Pierre and Miquelon",
-         "Saint Vincent and the Grenadines",
-         "Samoa",
-         "San Marino",
-         "Sao Tome and Principe",
-         "Saudi Arabia",
-         "Senegal",
-         "Serbia",
-         "Seychelles",
-         "Sierra Leone",
-         "Singapore",
-         "Slovakia",
-         "Slovenia",
-         "Solomon Islands",
-         "Somalia",
-         "South Africa",
-         "South Sudan",
-         "Spain",
-         "Sri Lanka",
-         "Sudan Suriname",
-         "Svalbard and Jan Mayen Islands",
-         "Swaziland",
-         "Sweden",
-         "Switzerland",
-         "Syrian Arab Republic",
-         "Taiwan (Republic of China)",
-         "Tajikistan Thailand The former Yugoslav Republic of Macedonia",
-         "Togo",
-         "Tokelau",
-         "Tonga",
-         "Trinidad and Tobago",
-         "Tunisia",
-         "Turkey",
-         "Turkmenistan",
-         "Turks and Caicos Islands",
-         "Tuvalu",
-         "Uganda",
-         "Ukraine",
-         "United Arab Emirates",
-         "United Republic of Tanzania",
-         "United States Virgin Islands",
-         "Uruguay",
-         "Uzbekistan",
-         "Vanuatu",
-         "Venezuela",
-         "Viet Nam",
-         "Wallis and Futuna Islands",
-         "Western Sahara",
-         "Yemen",
-         "Yugoslavia",
-         "Zambia",
-         "Zimbabwe"
+  static List<String> countryList = <String>[
+    "United Kingdom",
+    "United States",
+    "Bermuda",
+    "Australia",
+    "Canada",
+    "Afghanistan",
+    "Aland Islands"
+        "Albania",
+    "Algeria",
+    "American",
+    "Samoa",
+    "Andorra",
+    "Angola",
+    "Anguilla",
+    "Antarctica",
+    "Antigua and Barbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia and Herzegovina",
+    "Botswana",
+    "Brazil",
+    "British Indian Ocean Territory",
+    "British Virgin Islands",
+    "Brunei Darussalam",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi Cambodia",
+    "Cameroon",
+    "Cape Verde",
+    "Cayman Islands",
+    "Central African Republic",
+    "Chad",
+    "Channel Islands and Jersey",
+    "Chile",
+    "China",
+    "Colombia",
+    "Comoros",
+    "Congo",
+    "Cook Islands",
+    "Costa Rica",
+    "Cote d'Ivoire",
+    "Croatia",
+    "Cuba",
+    "Curacao",
+    "Cyprus",
+    "Czech Republic",
+    "Democratic Peoples Republic of Korea (North Korea]",
+    "Democratic Republic of the Congo",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Dominican Republic",
+    "East Timor",
+    "Ecuador",
+    "Egypt",
+    "El Salvador",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Ethiopia",
+    "Faeroe Islands",
+    "Falkland Islands (Malvinas)",
+    "Fiji",
+    "Finland",
+    "France",
+    "French Guiana",
+    "French Polynesia",
+    "Gabon",
+    "Gambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Gibraltar",
+    "Greece",
+    "Greenland",
+    "Grenada",
+    "Guadeloupe",
+    "Guam",
+    "Guatemala",
+    "Guernsey",
+    "Guinea",
+    "Guinea-Bissau",
+    "Guyana",
+    "Haiti",
+    "Holy See",
+    "Honduras",
+    "Hong Kong Special Administrative Region of China",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran (Islamic Republic of)",
+    "Iraq",
+    "Ireland",
+    "Isle of Man",
+    "Israel Italy",
+    "Jamaica",
+    "Japan",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "Kosovo",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Lao People`s Democratic Republic",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libyan Arab Jamahiriya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Macao Special Administrative Region of China",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Marshall Islands",
+    "Martinique",
+    "Mauritania",
+    "Mauritius",
+    "Mayotte",
+    "Mexico",
+    "Micronesia, Federated States of",
+    "Monaco",
+    "Mongolia",
+    "Montenegro",
+    "Montserrat",
+    "Morocco",
+    "Mozambique",
+    "Myanmar",
+    "Namibia",
+    "Nauru",
+    "Nepal",
+    "Netherlands",
+    "Netherlands Antilles",
+    "New Caledonia",
+    "New Zealand",
+    "Nicaragua",
+    "Niger",
+    "Nigeria",
+    "Niue",
+    "Norfolk Island",
+    "Northern Mariana Islands",
+    "Norway",
+    "Occupied Palestinian Territory",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Panama",
+    "Papua New Guinea",
+    "Paraguay",
+    "Peru",
+    "Philippines",
+    "Pitcairn",
+    "Poland",
+    "Portugal",
+    "Puerto Rico",
+    "Qatar",
+    "Republic of Korea",
+    "Republic of Moldova",
+    "Reunion",
+    "Romania",
+    "Russian Federation",
+    "Rwanda",
+    "Saint Helena",
+    "Saint Kitts and Nevis",
+    "Saint Lucia",
+    "Saint Pierre and Miquelon",
+    "Saint Vincent and the Grenadines",
+    "Samoa",
+    "San Marino",
+    "Sao Tome and Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leone",
+    "Singapore",
+    "Slovakia",
+    "Slovenia",
+    "Solomon Islands",
+    "Somalia",
+    "South Africa",
+    "South Sudan",
+    "Spain",
+    "Sri Lanka",
+    "Sudan Suriname",
+    "Svalbard and Jan Mayen Islands",
+    "Swaziland",
+    "Sweden",
+    "Switzerland",
+    "Syrian Arab Republic",
+    "Taiwan (Republic of China)",
+    "Tajikistan Thailand The former Yugoslav Republic of Macedonia",
+    "Togo",
+    "Tokelau",
+    "Tonga",
+    "Trinidad and Tobago",
+    "Tunisia",
+    "Turkey",
+    "Turkmenistan",
+    "Turks and Caicos Islands",
+    "Tuvalu",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Republic of Tanzania",
+    "United States Virgin Islands",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Venezuela",
+    "Viet Nam",
+    "Wallis and Futuna Islands",
+    "Western Sahara",
+    "Yemen",
+    "Yugoslavia",
+    "Zambia",
+    "Zimbabwe"
   ];
 
   // static int fileChunkSize = 50000; //in bytes i.e 50kb
@@ -777,33 +685,22 @@ class GlobalInstance {
   GlobalInstance._internal();
 }
 
-
 class HelperClass {
-
   // Minimum eight characters, at least one letter, one number and one special character:
   static bool validatePassword(String value) {
-    return RegExp(
-        r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&^=+-])[A-Za-z\d@$!%*#?&^=+-]{6,}$")
-        .hasMatch(value)
-        ? true
-        : false;
+    return RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&^=+-])[A-Za-z\d@$!%*#?&^=+-]{6,}$").hasMatch(value) ? true : false;
   }
 
-  static bool validateString(String value)
-  {
-    Pattern pattern =
-        r'^[A-Za-z _]*[A-Za-z][A-Za-z _]*$';
+  static bool validateString(String value) {
+    Pattern pattern = r'^[A-Za-z _]*[A-Za-z][A-Za-z _]*$';
     RegExp regex = new RegExp(pattern);
 
-    if(value!='' && value!=null)
-    {
+    if (value != '' && value != null) {
       if (!regex.hasMatch(value))
         return false;
       else
         return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
@@ -827,15 +724,16 @@ class HelperClass {
               children: [
                 Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 15.0,bottom: 8.0),
-                      child: new CircularProgressIndicator(),
-                    )
-                ),
-                Padding(padding: EdgeInsets.only(left: 110.0,bottom: 10.0,top: 5.0),
+                  padding: EdgeInsets.only(top: 15.0, bottom: 8.0),
+                  child: new CircularProgressIndicator(),
+                )),
+                Padding(
+                  padding: EdgeInsets.only(left: 110.0, bottom: 10.0, top: 5.0),
                   child: new Text(
                     "Please wait...",
                     style: TextStyle(color: const Color(0xFFD9E4E9)),
-                  ),)
+                  ),
+                )
               ],
             ),
           ),
@@ -844,8 +742,9 @@ class HelperClass {
     );
   }
 
-  static void showAlert(context,msg) {
-    showDialog(context: context,
+  static void showAlert(context, msg) {
+    showDialog(
+        context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Colors.blueGrey,
@@ -881,8 +780,8 @@ class HelperClass {
                   Navigator.pop(context);
                 },
               ),
-            ],);
-        }
-    );
+            ],
+          );
+        });
   }
 }
