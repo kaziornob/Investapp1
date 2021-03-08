@@ -4476,7 +4476,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     color: Colors.black,
                                     size: 70,
                                   ),
-                                )),
+                                ),),
                                 SizedBox(
                                   height: 25.0,
                                 ),
@@ -4498,7 +4498,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           fontFamily: "Roboto",
                                           fontStyle: FontStyle.normal,
                                           letterSpacing: 0.2),
-                                    )),
+                                    ),),
                                 SizedBox(
                                   height: 10.0,
                                 ),

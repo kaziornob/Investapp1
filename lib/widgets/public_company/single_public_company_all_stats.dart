@@ -415,7 +415,7 @@ class _SinglePublicCompanyAllStatsListState
         Container(
           // decoration: BoxDecoration(border: Border.all()),
           child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
+            padding: const EdgeInsets.only(left: 12.0),
             child: Row(
               children: [
                 CircleAvatar(
@@ -471,7 +471,7 @@ class _SinglePublicCompanyAllStatsListState
         ),
         Container(
           child: Padding(
-            padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+            padding: const EdgeInsets.only(left: 12.0, top: 8.0),
             child: Text(
               "Sky, Manuela (Ela), Lamia Lauren, Mathiues and 4 more",
               style: TextStyle(

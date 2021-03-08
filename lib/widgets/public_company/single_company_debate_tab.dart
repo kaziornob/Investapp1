@@ -4,6 +4,7 @@ class SinglePublicCompaniesDebateTab extends StatefulWidget {
   final data;
 
   SinglePublicCompaniesDebateTab({this.data});
+
   @override
   _SinglePublicCompaniesDebateTabState createState() =>
       _SinglePublicCompaniesDebateTabState();
@@ -30,7 +31,11 @@ class _SinglePublicCompaniesDebateTabState
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         "Auro Sentiment Score",
-                        style: TextStyle(fontFamily: "Rosarivo",fontSize: 20),
+                        style: TextStyle(
+                          fontFamily: "Rosarivo",
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
@@ -120,290 +125,253 @@ class _SinglePublicCompaniesDebateTabState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: 120,
-                      height: 30,
-                      child: RaisedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Vote Long",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        color: Colors.green,
-                        shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.green),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 120,
-                      height: 30,
-                      child: RaisedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Vote Short",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        color: Colors.red,
-                        shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                      ),
-                    ),
+                    button("Vote Long", Colors.green,120.0, () {}),
+                    button("Vote Short", Colors.red,120.0 ,() {}),
                   ],
                 ),
               ],
             ),
+            SizedBox(
+              height: 10.0,
+            ),
+            articleSection(),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0, left: 10.0),
+                  child: Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 2,
+                          color: Color(0xFFfec20f),
+                        ),
+                      ),
+                    ),
+                    padding: EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      'Auro News Score',
+                      style: new TextStyle(
+                        fontFamily: "Rosarivo",
+                        color: Colors.black,
+                        fontSize: 20.0,
+                        letterSpacing: 0.2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                button("Long News", Colors.green,150.0, () {}),
+                button("Short News", Colors.red, 150.0,() {}),
+              ],
+            ),
+            SizedBox(height: 10,),
+            articleSection(),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                button("Long Trending", Colors.green,150.0 ,() {}),
+                button("Short Trending", Colors.red, 150.0,() {}),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  button(text, color,width, callback) {
+    return Container(
+      width:width,
+      height: 40,
+      child: RaisedButton(
+        onPressed: () {},
+        child: Text(
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+        color: color,
+        shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: color),
+        ),
+      ),
+    );
+  }
+
+  articleSection() {
+    return Column(
+      children: [
         Container(
-/*            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.06,*/
-            margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.48,
-                    decoration: new BoxDecoration(
-                      border: Border.all(
-                        color: Color(0xFFfec20f),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(2.0),
-                      ),
-                    ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.10,
-                      margin:
-                          EdgeInsets.only(left: 27.0, top: 7.0, right: 27.0),
-                      decoration: new BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xFFfec20f),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(2.0),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Long',
-                          style: new TextStyle(
-                            fontFamily: "WorkSansSemiBold",
-                            color: Color(0xFFFFFFFF),
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                    )),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.48,
-                    decoration: new BoxDecoration(
-                      border: Border.all(
-                        color: Color(0xFFfec20f),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(2.0),
-                      ),
-                    ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.10,
-                      margin:
-                          EdgeInsets.only(left: 27.0, top: 7.0, right: 27.0),
-                      decoration: new BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xFFfec20f),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(2.0),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Short',
-                          style: new TextStyle(
-                            fontFamily: "WorkSansSemiBold",
-                            color: Color(0xFFFFFFFF),
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                    ))
-              ],
-            ),
-          ),
-          Container(
-            // width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height*0.07,
-            margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.02,
-                right: MediaQuery.of(context).size.width * 0.02),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                  width: MediaQuery.of(context).size.width * 0.48,
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xFFfec20f),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Article 1',
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Color(0xFFFFFFFF),
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                  width: MediaQuery.of(context).size.width * 0.48,
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xFFfec20f),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Article 2',
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Color(0xFFFFFFFF),
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-/*            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.07,
-            margin: EdgeInsets.only(left:7.0,right:7.0),*/
-            margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.02,
-                right: MediaQuery.of(context).size.width * 0.02),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                  width: MediaQuery.of(context).size.width * 0.48,
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xFFfec20f),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Article 3',
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Color(0xFFFFFFFF),
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                  width: MediaQuery.of(context).size.width * 0.48,
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xFFfec20f),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Article 4',
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Color(0xFFFFFFFF),
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.06,
-            margin: EdgeInsets.only(left: 7.0, right: 7.0),
-            child: Container(
+          // width: MediaQuery.of(context).size.width,
+          // height: MediaQuery.of(context).size.height*0.07,
+          margin: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.02,
+              right: MediaQuery.of(context).size.width * 0.02),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height * 0.07,
                 width: MediaQuery.of(context).size.width * 0.48,
                 decoration: new BoxDecoration(
                   border: Border.all(
-                    color: Color(0xFFfec20f),
+                    color: Color(0xff5A56B9),
                     width: 1,
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(2.0),
                   ),
                 ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.10,
-                  margin: EdgeInsets.only(
-                      left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xFFfec20f),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
+                child: Center(
+                  child: Text(
+                    'Article 1',
+                    style: new TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      color: Colors.black,
+                      fontSize: 15.0,
                     ),
                   ),
-                  child: Center(
-                    child: Text(
-                      'Explore',
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Color(0xFFFFFFFF),
-                        fontSize: 15.0,
-                      ),
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.07,
+                width: MediaQuery.of(context).size.width * 0.48,
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Article 2',
+                    style: new TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      color: Colors.black,
+                      fontSize: 15.0,
                     ),
                   ),
-                )),
+                ),
+              ),
+            ],
           ),
-          ],
-        );
-      },
+        ),
+        Container(
+/*            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.07,
+            margin: EdgeInsets.only(left:7.0,right:7.0),*/
+          margin: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.02,
+              right: MediaQuery.of(context).size.width * 0.02),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height * 0.07,
+                width: MediaQuery.of(context).size.width * 0.48,
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Article 3',
+                    style: new TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      color: Colors.black,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.07,
+                width: MediaQuery.of(context).size.width * 0.48,
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Article 4',
+                    style: new TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      color: Colors.black,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.06,
+          margin: EdgeInsets.only(left: 7.0, right: 7.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.48,
+              decoration: new BoxDecoration(
+                border: Border.all(
+                  color: Color(0xff5A56B9),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(2.0),
+                ),
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.10,
+                margin: EdgeInsets.only(
+                    left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Explore',
+                    style: new TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      color: Colors.black,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              )),
+        ),
+      ],
     );
   }
 }

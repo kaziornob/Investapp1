@@ -8,6 +8,7 @@ import 'package:auroim/widgets/public_company/single_company_overview_tab.dart';
 import 'package:auroim/widgets/public_company/single_public_company_appbar.dart';
 import 'package:auroim/widgets/public_company/single_public_company_fundamental_tab.dart';
 import 'package:auroim/widgets/public_company/single_public_company_header.dart';
+import 'package:auroim/widgets/public_company/single_public_company_technical_tab.dart';
 import 'package:auroim/widgets/single_public_company_videos.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -210,7 +211,15 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
           fixRate: data["fx_rate"],
         );
       case 'Technical':
-        return learnMore(data);
+        return SinglePublicCompanyDetailsTechnicalTab(
+          marketCapital: data["market_cap_usd_mn"],
+          netDebt: data["net_debt_usd_mn"],
+          roe3yr: data["roe_3yr"],
+          currency: data["currency"],
+          equityBeta: data["equity_beta"],
+          marketCapLocal: data["market_cap_local_mn"],
+          fixRate: data["fx_rate"],
+        );
     }
   }
 }

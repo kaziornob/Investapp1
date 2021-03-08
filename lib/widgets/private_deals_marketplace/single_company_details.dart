@@ -292,7 +292,6 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                         ),
                         child: Center(
                           child: SingleChildScrollView(
-
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -480,12 +479,14 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
   }
 
   date(date) {
+    print("date here");
+    print(date.toString());
     int now = DateTime.now().year;
     int companyYears;
     if (date.length == 4) {
-      companyYears = int.parse(date);
+      companyYears = now - int.parse(date);
     } else {
-      companyYears = DateFormat("dd-MM-yyy").parse(date).year;
+      companyYears = now - DateFormat("dd-MM-yyyy").parse(date).year;
     }
     return companyYears;
   }

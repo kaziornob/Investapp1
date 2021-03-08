@@ -559,8 +559,8 @@ class _SinglePublicCompanyOverviewTabState
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               SecurityPageFirst(
-                                            companyTicker:
-                                                widget.data["ticker"],
+                                            companyTicker: snapshot.data[index]
+                                                ["ticker"],
                                           ),
                                         ),
                                       );

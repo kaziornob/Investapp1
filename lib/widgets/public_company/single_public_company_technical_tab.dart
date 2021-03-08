@@ -1,6 +1,7 @@
+import 'package:auroim/widgets/public_company/auro_paper_portfolio_performance.dart';
 import 'package:flutter/material.dart';
 
-class SinglePublicCompanyDetailsFundamentalTab extends StatefulWidget {
+class SinglePublicCompanyDetailsTechnicalTab extends StatefulWidget {
   final marketCapital;
   final netDebt;
   final roe3yr;
@@ -9,7 +10,7 @@ class SinglePublicCompanyDetailsFundamentalTab extends StatefulWidget {
   final marketCapLocal;
   final fixRate;
 
-  SinglePublicCompanyDetailsFundamentalTab({
+  SinglePublicCompanyDetailsTechnicalTab({
     this.marketCapital,
     this.currency,
     this.equityBeta,
@@ -20,117 +21,20 @@ class SinglePublicCompanyDetailsFundamentalTab extends StatefulWidget {
   });
 
   @override
-  _SinglePublicCompanyDetailsFundamentalTabState createState() =>
-      _SinglePublicCompanyDetailsFundamentalTabState();
+  _SinglePublicCompanyDetailsTechnicalTabState createState() =>
+      _SinglePublicCompanyDetailsTechnicalTabState();
 }
 
-class _SinglePublicCompanyDetailsFundamentalTabState
-    extends State<SinglePublicCompanyDetailsFundamentalTab> {
+class _SinglePublicCompanyDetailsTechnicalTabState
+    extends State<SinglePublicCompanyDetailsTechnicalTab> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        listItem3(),
-        SizedBox(
-          height: 15,
-        ),
-        listItem2(),
-        SizedBox(
-          height: 15,
-        ),
+        SizedBox(height: 10.0,),
+        AuroPaperPortfolioPerformace(),
+        SizedBox(height: 20.0,),
         listItem1(),
-      ],
-    );
-  }
-
-  listItem3() {
-    return Column(
-      children: [
-        Container(
-          // decoration: BoxDecoration(border: Border.all()),
-          width: MediaQuery.of(context).size.width - 15,
-          height: 40,
-          child: Center(
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "Auro Stock Pitches & Research",
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          // decoration: BoxDecoration(border: Border.all()),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.green,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.green,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.green,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.green,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.white,
-                      child: Center(
-                        child: Text(
-                          "+9",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 8.0),
-            child: Text(
-              "Sky, Manuela (Ela), Lamia Lauren, Mathiues and 4 more",
-              style: TextStyle(
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -280,56 +184,6 @@ class _SinglePublicCompanyDetailsFundamentalTabState
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  listItem2() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            height: 5,
-            width: MediaQuery.of(context).size.width - 15,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(1),
-              color: Color(0xff5A56B9),
-            ),
-          ),
-          SizedBox(
-            height: 5.0,
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 8,
-                  right: 4.0,
-                  top: 4.0,
-                  bottom: 4.0,
-                ),
-                child: Text(
-                  "KEY FINANCIALS",
-                  style: TextStyle(
-                      // color: Colors.blue[800],
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Roboto"),
-                ),
-              ),
-            ],
-          ),
-          singleRow(
-              context, "Revenue Growth(3-years)", Colors.indigo[50], "3.7"),
-          singleRow(context, "Eps Growth(3-years)", Colors.indigo[100], "3.7"),
-          singleRow(context, "EBIDTA(TTM)", Colors.indigo[50], "32.78"),
-          singleRow(context, "Revenue(TTM)", Colors.indigo[100], "294,13500M"),
-          singleRow(
-              context, "Gross Profit Margin(TTM)", Colors.indigo[50], "38.78"),
-          singleRow(
-              context, "Net Profit Margin(TTM)", Colors.indigo[100], "21.73%"),
-          singleRow(
-              context, "Earnings Per Share(TTM)", Colors.indigo[50], "82.9%"),
-        ],
       ),
     );
   }
