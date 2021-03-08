@@ -269,7 +269,7 @@ class _AuroPaperPortfolioPerformaceState
       child: Container(
         width: (MediaQuery.of(context).size.width - 15) / 6,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: selected ? BorderRadius.circular(4) : BorderRadius.circular(0),
           color: selected ? Color(0xff5A56B9) : Colors.grey[200],
         ),
         child: Center(
