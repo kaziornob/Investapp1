@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/empStatus.dart';
 import 'package:auroim/auth/investorType.dart';
@@ -26,7 +26,6 @@ import 'constance/themes.dart';
 import 'modules/home/homeScreen.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
-
 Map portfolioMap;
 List marketListData = [];
 
@@ -35,7 +34,7 @@ void main() async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  Admob.initialize();
+  // Admob.initialize();
 
   Map portfolioMap;
   Screen.keepOn(true);
@@ -64,14 +63,13 @@ void main() async {
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   ).then(
-        (_) => runApp(
+    (_) => runApp(
       MyApp(prefs: prefs),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-
   final SharedPreferences prefs;
 
   MyApp({this.prefs});
@@ -85,14 +83,16 @@ class _MyAppState extends State<MyApp> {
   ApiProvider request = new ApiProvider();
   var userAllDetail;
 
-
   @override
   void initState() {
     super.initState();
     // GlobalInstance.getDoughnutPortfolioData();
     globals.isGoldBlack = widget.prefs != null &&
-        widget.prefs.containsKey('InvestorType') &&
-        widget.prefs.getString('InvestorType') != null && widget.prefs.getString('InvestorType')=='Accredited Investor' ? true : false;
+            widget.prefs.containsKey('InvestorType') &&
+            widget.prefs.getString('InvestorType') != null &&
+            widget.prefs.getString('InvestorType') == 'Accredited Investor'
+        ? true
+        : false;
     // getApiAllData(1);
   }
 
@@ -122,13 +122,11 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-
   getUserDetails() async {
     print("call set screen");
     var response = await request.getRequest('users/get_details');
     print("user detail: $response");
-    if(response!=null && response!=false)
-    {
+    if (response != null && response != false) {
       userAllDetail = response['data'];
     }
   }
@@ -138,8 +136,7 @@ class _MyAppState extends State<MyApp> {
         widget.prefs.containsKey('Session_token') &&
         widget.prefs.getString('Session_token') != null &&
         widget.prefs.containsKey('DateTime') &&
-        widget.prefs.getString('DateTime').isNotEmpty ) {
-
+        widget.prefs.getString('DateTime').isNotEmpty) {
       /*var now = new DateTime.now();
       var strTodayDateTime = new DateFormat("yyyy-MM-dd HH:mm").format(now);
       var todayDateTime = DateTime.parse("$strTodayDateTime");
@@ -157,42 +154,33 @@ class _MyAppState extends State<MyApp> {
       }*/
 
       return new HomeScreen();
-    }
-    else
-    {
+    } else {
       return new IntroductionScreen();
     }
   }
 
-
-
-  setScreen()  {
+  setScreen() {
     if (widget.prefs != null &&
         widget.prefs.containsKey('Session_token') &&
         widget.prefs.getString('Session_token') != null &&
         widget.prefs.containsKey('DateTime') &&
-        widget.prefs.getString('DateTime').isNotEmpty ) {
-
-      if(userAllDetail!=null && userAllDetail!=false)
-      {
-
-        if(userAllDetail['f_name']!=null && userAllDetail['l_name']!=null && userAllDetail['dob']!=null
-            && userAllDetail['inv_status']!=null
-            && userAllDetail['emp_status']!=null && userAllDetail['occupation']!=null && userAllDetail['business_area']!=null
-            && userAllDetail['risk_appetite']!=null && userAllDetail['drawdown']!=null )
-        {
+        widget.prefs.getString('DateTime').isNotEmpty) {
+      if (userAllDetail != null && userAllDetail != false) {
+        if (userAllDetail['f_name'] != null &&
+            userAllDetail['l_name'] != null &&
+            userAllDetail['dob'] != null &&
+            userAllDetail['inv_status'] != null &&
+            userAllDetail['emp_status'] != null &&
+            userAllDetail['occupation'] != null &&
+            userAllDetail['business_area'] != null &&
+            userAllDetail['risk_appetite'] != null &&
+            userAllDetail['drawdown'] != null) {
           return new HomeScreen();
-        }
-        else if(userAllDetail['f_name']==null && userAllDetail['l_name']==null && userAllDetail['dob']==null)
-        {
+        } else if (userAllDetail['f_name'] == null && userAllDetail['l_name'] == null && userAllDetail['dob'] == null) {
           return new UserPersonalDetails();
-        }
-        else if(userAllDetail['inv_status']==null)
-        {
-          return  new InvestorType();
-        }
-        else if(userAllDetail['emp_status']==null && userAllDetail['occupation']==null && userAllDetail['business_area']==null)
-        {
+        } else if (userAllDetail['inv_status'] == null) {
+          return new InvestorType();
+        } else if (userAllDetail['emp_status'] == null && userAllDetail['occupation'] == null && userAllDetail['business_area'] == null) {
           return new EmpStatus(parentFrom: "${userAllDetail['inv_status']}");
         }
 /*      else if(userAllDetail['risk_appetite']==null && userAllDetail['drawdown']==null)
@@ -200,23 +188,16 @@ class _MyAppState extends State<MyApp> {
         List<RadioQusModel> questions = await getRadioQusTempData(userAllDetail['inv_status'],'piVersion');
         return new RiskAptForm(optionData: questions);
       }*/
-        else
-        {
+        else {
           return new HomeScreen();
         }
-      }
-
-      else
-      {
+      } else {
         return new HomeScreen();
       }
-    }
-    else
-    {
+    } else {
       return new IntroductionScreen();
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

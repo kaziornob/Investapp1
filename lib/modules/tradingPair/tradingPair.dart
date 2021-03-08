@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/api/apiProvider.dart';
@@ -29,8 +29,8 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
   List<TradingPair> searchTradingPair = [];
 
   var subscription;
-  AdmobBannerSize bannerSize;
-  AdmobBannerController admobBannerController;
+  // AdmobBannerSize bannerSize;
+  // AdmobBannerController admobBannerController;
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
   dispose() {
     super.dispose();
     subscription.cancel();
-    admobBannerController.dispose();
+    // admobBannerController.dispose();
   }
 
   Future showInSnackBar(String value, {bool isGreeen = false}) async {
@@ -255,18 +255,18 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                 if (index % 11 == 0) {
                                   return Column(
                                     children: [
-                                      AdmobBanner(
-                                        adUnitId: getBannerAdUnitId(),
-                                        adSize: bannerSize,
-                                        listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-                                          handleEvent(event, args, 'Banner');
-                                        },
-                                        onBannerCreated: (AdmobBannerController controller) {
-                                          setState(() {
-                                            admobBannerController = controller;
-                                          });
-                                        },
-                                      ),
+                                      // AdmobBanner(
+                                      //   adUnitId: getBannerAdUnitId(),
+                                      //   adSize: bannerSize,
+                                      //   listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+                                      //     handleEvent(event, args, 'Banner');
+                                      //   },
+                                      //   onBannerCreated: (AdmobBannerController controller) {
+                                      //     setState(() {
+                                      //       admobBannerController = controller;
+                                      //     });
+                                      //   },
+                                      // ),
                                       SizedBox(
                                         height: 16,
                                       ),

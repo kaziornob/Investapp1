@@ -15,11 +15,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
 
-
 List marketListData = [];
 
 class WishListDetail extends StatefulWidget {
-
   @override
   _WishListDetailState createState() => _WishListDetailState();
 }
@@ -29,13 +27,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
 
   int selectedTabIndex;
 
-
-  final List<Tab> tabList = <Tab>[
-    new Tab(text: 'Posts'),
-    new Tab(text: 'Overview'),
-    new Tab(text: 'Graph'),
-    new Tab(text: 'Filter')
-  ];
+  final List<Tab> tabList = <Tab>[new Tab(text: 'Posts'), new Tab(text: 'Overview'), new Tab(text: 'Graph'), new Tab(text: 'Filter')];
 
   TabController _tabController;
 
@@ -49,15 +41,11 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
   String _change = "0";
   bool allCoin = false;
 
-
   List historyOHLCV;
   USD generalStats;
   int currentOHLCVWidthSetting = 0;
 
   List<CryptoCoinDetail> lstCryptoCoinDetail = [];
-
-
-
 
   @override
   void initState() {
@@ -117,7 +105,6 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
     callItself();
   }
 
-
   Future<Null> changeHistory(String type, String amt, String total, String agg) async {
     setState(() {
       _high = "0";
@@ -136,7 +123,6 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
     await getHistoryOHLCV();
     _getHL();
   }
-
 
   _makeGeneralStats() {
     for (CryptoCoinDetail coin in marketListData) {
@@ -189,8 +175,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
     });
   }
 
-  Widget postView()
-  {
+  Widget postView() {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,12 +184,10 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
             height: 10,
           ),
           Container(
-            margin: EdgeInsets.only(left: 12.0,right: 3.0),
+            margin: EdgeInsets.only(left: 12.0, right: 3.0),
             decoration: BoxDecoration(
               color: AllCoustomTheme.getsecoundTextThemeColor(),
-              border: new Border.all(
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                  width: 1.5),
+              border: new Border.all(color: AllCoustomTheme.getsecoundTextThemeColor(), width: 1.5),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +208,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width*0.50,
+                  width: MediaQuery.of(context).size.width * 0.50,
                 ),
                 Icon(
                   FontAwesomeIcons.gripVertical,
@@ -245,12 +228,12 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
               children: [
                 Container(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),//or 15.0
+                    borderRadius: BorderRadius.circular(5.0), //or 15.0
                     child: Container(
                       height: 40.0,
                       width: 50.0,
                       color: Color(0xffFF0E58),
-                      child:  Image(
+                      child: Image(
                         image: AssetImage('assets/download.jpeg'),
                         fit: BoxFit.fill,
                         height: 40,
@@ -264,63 +247,60 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                 ),
                 Container(
                     child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "@ Andy Cleaver",
-                                  style: new TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                  ),
-                                ),
-                              ],
-                            )
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "United Kingdom",
-                                  style: new TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE12,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  FontAwesomeIcons.dotCircle,
-                                  size: 10,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "6 days ago",
-                                  style: new TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: ConstanceData.SIZE_TITLE14,
-                                  ),
-                                ),
-                              ],
-                            )
+                        Text(
+                          "@ Andy Cleaver",
+                          style: new TextStyle(
+                            color: Colors.blue,
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                          ),
                         ),
                       ],
-                    )
-                ),
+                    )),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "United Kingdom",
+                          style: new TextStyle(
+                            color: AllCoustomTheme.getTextThemeColors(),
+                            fontSize: ConstanceData.SIZE_TITLE12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.dotCircle,
+                          size: 10,
+                          color: Colors.blue,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "6 days ago",
+                          style: new TextStyle(
+                            color: Colors.blue,
+                            fontSize: ConstanceData.SIZE_TITLE14,
+                          ),
+                        ),
+                      ],
+                    )),
+                  ],
+                )),
               ],
             ),
           ),
@@ -337,10 +317,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                   child: Text(
                     "Is Tesla Overvalued ? ",
                     style: new TextStyle(
-                      color: AllCoustomTheme.getTextThemeColors(),
-                      fontSize: ConstanceData.SIZE_TITLE14,
-                      fontStyle: FontStyle.italic
-                    ),
+                        color: AllCoustomTheme.getTextThemeColors(), fontSize: ConstanceData.SIZE_TITLE14, fontStyle: FontStyle.italic),
                   ),
                 ),
               ],
@@ -376,18 +353,14 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
             height: 10,
           ),
           Container(
-            child: Image(
-                fit: BoxFit.fill,
-                image: new AssetImage('assets/handShake.png')
-            ),
+            child: Image(fit: BoxFit.fill, image: new AssetImage('assets/handShake.png')),
           ),
         ],
       ),
     );
   }
 
-  Widget overView()
-  {
+  Widget overView() {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -396,7 +369,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
             height: 10.0,
           ),
           Padding(
-            padding: EdgeInsets.only(top: 10.0,left: 15.0),
+            padding: EdgeInsets.only(top: 10.0, left: 15.0),
             child: Text(
               'Overview',
               style: new TextStyle(
@@ -412,7 +385,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -432,10 +405,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -455,10 +427,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -478,10 +449,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -501,10 +471,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -524,10 +493,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -547,10 +515,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -570,10 +537,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -593,10 +559,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -616,10 +581,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -639,10 +603,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
-                  padding: EdgeInsets.only(top: 10.0,left: 15.0,right: 15.0),
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -662,8 +625,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
             ],
           )
         ],
@@ -671,10 +633,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
     );
   }
 
-  Widget graphView()
-  {
+  Widget graphView() {
     return Container(
-      height: MediaQuery.of(context).size.height*1.0,
+      height: MediaQuery.of(context).size.height * 1.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -682,52 +643,52 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
             padding: const EdgeInsets.only(right: 16, left: 16),
             child: historyOHLCV != null
                 ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Animator(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.decelerate,
-                  cycles: 1,
-                  builder: (anim) => Transform.scale(
-                    scale: anim.value,
-                    child: Text(
-                      '\$',
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontWeight: FontWeight.bold,
-                        fontSize: ConstanceData.SIZE_TITLE18,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Animator(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: Text(
+                            '\$',
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontWeight: FontWeight.bold,
+                              fontSize: ConstanceData.SIZE_TITLE18,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 2,
-                ),
-                Animator(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.decelerate,
-                  cycles: 1,
-                  builder: (anim) => Transform.scale(
-                    scale: anim.value,
-                    child: Text(
-                      generalStats != null
-                          ? normalizeNumNoCommas(
-                        generalStats.price,
-                      )
-                          : "0",
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: 2,
                       ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SizedBox(),
-                ),
-              ],
-            )
+                      Animator(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: Text(
+                            generalStats != null
+                                ? normalizeNumNoCommas(
+                                    generalStats.price,
+                                  )
+                                : "0",
+                            style: TextStyle(
+                              color: AllCoustomTheme.getTextThemeColors(),
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(),
+                      ),
+                    ],
+                  )
                 : SizedBox(),
           ),
           SizedBox(
@@ -736,68 +697,65 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
           Expanded(
             child: historyOHLCV != null
                 ? historyOHLCV.isEmpty != true
-                ? Animator(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.decelerate,
-              cycles: 1,
-              builder: (anim) => Transform.scale(
-                scale: anim.value,
-                child: OHLCVGraph(
-                  data: historyOHLCV,
-                  enableGridLines: true,
-                  gridLineColor: globals.buttoncolor1,
-                  gridLineLabelColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                  gridLineAmount: 4,
-                  volumeProp: 0.3,
-                  lineWidth: 1,
-                  gridLineWidth: 0.5,
-                  decreaseColor: Colors.red,
-                ),
-              ),
-            )
+                    ? Animator(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.decelerate,
+                        cycles: 1,
+                        builder: (anim) => Transform.scale(
+                          scale: anim.value,
+                          child: OHLCVGraph(
+                            data: historyOHLCV,
+                            enableGridLines: true,
+                            gridLineColor: globals.buttoncolor1,
+                            gridLineLabelColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                            gridLineAmount: 4,
+                            volumeProp: 0.3,
+                            lineWidth: 1,
+                            gridLineWidth: 0.5,
+                            decreaseColor: Colors.red,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        alignment: Alignment.topCenter,
+                        child: Text("No OHLCV data found :(", style: Theme.of(context).textTheme.caption),
+                      )
                 : Container(
-              alignment: Alignment.topCenter,
-              child: Text("No OHLCV data found :(", style: Theme.of(context).textTheme.caption),
-            )
-                : Container(
-              child: Center(
-                child: CupertinoActivityIndicator(
-                  radius: 12,
-                ),
-              ),
-            ),
+                    child: Center(
+                      child: CupertinoActivityIndicator(
+                        radius: 12,
+                      ),
+                    ),
+                  ),
           ),
           generalStats != null
               ? historyOHLCV != null
-              ? Animator(
-            duration: Duration(milliseconds: 500),
-            curve: Curves.decelerate,
-            cycles: 1,
-            builder: (anim) => Transform.scale(
-              scale: anim.value,
-              child: QuickPercentChangeBar(
-                snapshot: generalStats,
-              ),
-            ),
-          )
-              : SizedBox()
+                  ? Animator(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.decelerate,
+                      cycles: 1,
+                      builder: (anim) => Transform.scale(
+                        scale: anim.value,
+                        child: QuickPercentChangeBar(
+                          snapshot: generalStats,
+                        ),
+                      ),
+                    )
+                  : SizedBox()
               : Container(
-            height: 0.0,
-          ),
+                  height: 0.0,
+                ),
         ],
       ),
     );
   }
 
-  Widget filterView()
-  {
+  Widget filterView() {
     return Container(
       height: 0.0,
       width: 0.0,
       child: Center(
-        child: Text(
-          "Coming Soon..."
-        ),
+        child: Text("Coming Soon..."),
       ),
     );
   }
@@ -822,75 +780,73 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.5,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10.0),
-                            child: Row(
-                              children: <Widget>[
-                                InkWell(
-                                  highlightColor: Colors.transparent,
-                                  splashColor: Colors.transparent,
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Animator(
-                                    tween: Tween<Offset>(
-                                        begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                    duration: Duration(milliseconds: 500),
-                                    cycles: 0,
-                                    builder: (anim) => FractionalTranslation(
-                                      translation: anim.value,
-                                      child: Icon(
-                                        Icons.arrow_back_ios,
-                                        color:
-                                        AllCoustomTheme.getTextThemeColors(),
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 1.5,
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Animator(
+                                        tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 0,
+                                        builder: (anim) => FractionalTranslation(
+                                          translation: anim.value,
+                                          child: Icon(
+                                            Icons.arrow_back_ios,
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 15.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5.0),//or 15.0
-                                    child: Container(
-                                      height: 50.0,
-                                      width: 50.0,
-                                      color: Color(0xffFF0E58),
-                                      child:  Image(
-                                        image: AssetImage('assets/buttonBadge.png'),
-                                        fit: BoxFit.fill,
-                                        height: 40,
-                                        width: 50,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(5.0), //or 15.0
+                                        child: Container(
+                                          height: 50.0,
+                                          width: 50.0,
+                                          color: Color(0xffFF0E58),
+                                          child: Image(
+                                            image: AssetImage('assets/buttonBadge.png'),
+                                            fit: BoxFit.fill,
+                                            height: 40,
+                                            width: 50,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child: Row(
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Container(
+                                        child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                            child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -922,13 +878,12 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                               ),
                                             ),
                                           ],
-                                        )
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Container(
-                                        child: Row(
+                                        )),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Container(
+                                            child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -950,13 +905,12 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                               ),
                                             ),
                                           ],
-                                        )
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Container(
-                                        child: Row(
+                                        )),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Container(
+                                            child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -980,175 +934,159 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                               ),
                                             ),
                                           ],
-                                        )
-                                      )
-                                    ],
-                                  )
+                                        ))
+                                      ],
+                                    )),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                            child: Divider(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 15.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 40,
+                              ),
+                              SizedBox(
+                                height: 30,
+                                child: Divider(
+                                  color: Colors.grey,
                                 ),
-                                Container(
-                                  child: Icon(
-                                    FontAwesomeIcons.list,
-                                    size: 25,
-                                    color: Colors.grey,
-                                  )
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                Container(
-                                  height: 30,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: AllCoustomTheme.getThemeData().textSelectionColor,
-                                    border: new Border.all(color: Colors.white, width: 1.5),
-                                  ),
-                                  child: MaterialButton(
-                                    splashColor: Colors.grey,
-                                    child: Text(
-                                      "TRADE",
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    onPressed: () {
-
-                                      Navigator.of(context).push(
-                                        CupertinoPageRoute(
-                                          builder: (BuildContext context) => TradeForm(),
-                                        ),
-                                      );
-
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                            child: Divider(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5.0),
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                TabBar(
-                                  controller: _tabController,
-                                  onTap: (index)
-                                  {
-                                    selectedTabIndex = index;
-                                  },
-                                  labelColor: AllCoustomTheme.getTextThemeColors(),
-                                  labelStyle: TextStyle(fontSize: 17.0,letterSpacing: 0.2),
-                                  indicatorColor: AllCoustomTheme.getTextThemeColors(),
-                                  indicatorWeight: 4.0,
-                                  isScrollable: true,
-                                  unselectedLabelColor: Colors.grey,
-                                  tabs: <Widget>[
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: new Tab(
-                                        icon: Icon(
-                                            FontAwesomeIcons.briefcase
-                                        ),
-                                      ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 40,
                                     ),
                                     Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: new Tab(
-                                        icon: Icon(
-                                            FontAwesomeIcons.chartBar
-                                        ),
-                                      ),
+                                        child: Icon(
+                                      FontAwesomeIcons.list,
+                                      size: 25,
+                                      color: Colors.grey,
+                                    )),
+                                    SizedBox(
+                                      width: 40,
                                     ),
                                     Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: new Tab(
-                                        icon: Icon(
-                                            FontAwesomeIcons.arrowsAltV
-                                        ),
+                                      height: 30,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        color: AllCoustomTheme.getThemeData().textSelectionColor,
+                                        border: new Border.all(color: Colors.white, width: 1.5),
                                       ),
-                                    ),
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: new Tab(
-                                        icon: Icon(
-                                            FontAwesomeIcons.filter
+                                      child: MaterialButton(
+                                        splashColor: Colors.grey,
+                                        child: Text(
+                                          "TRADE",
+                                          style: TextStyle(
+                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            fontSize: ConstanceData.SIZE_TITLE16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            CupertinoPageRoute(
+                                              builder: (BuildContext context) => TradeForm(),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: EdgeInsets.only(top: 10.0),
-                              child: new TabBarView(
-                                controller: _tabController,
-                                children: tabList.map((Tab tab) {
-                                  return _getPage(tab);
-                                }).toList(),
-                                physics: ScrollPhysics(),
                               ),
-                            ),
-                          )
-                        ],
-                      )
-                  )
+                              SizedBox(
+                                height: 20,
+                                child: Divider(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 5.0),
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    TabBar(
+                                      controller: _tabController,
+                                      onTap: (index) {
+                                        selectedTabIndex = index;
+                                      },
+                                      labelColor: AllCoustomTheme.getTextThemeColors(),
+                                      labelStyle: TextStyle(fontSize: 17.0, letterSpacing: 0.2),
+                                      indicatorColor: AllCoustomTheme.getTextThemeColors(),
+                                      indicatorWeight: 4.0,
+                                      isScrollable: true,
+                                      unselectedLabelColor: Colors.grey,
+                                      tabs: <Widget>[
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          child: new Tab(
+                                            icon: Icon(FontAwesomeIcons.briefcase),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          child: new Tab(
+                                            icon: Icon(FontAwesomeIcons.chartBar),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          child: new Tab(
+                                            icon: Icon(FontAwesomeIcons.arrowsAltV),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          child: new Tab(
+                                            icon: Icon(FontAwesomeIcons.filter),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 10.0),
+                                  child: new TabBarView(
+                                    controller: _tabController,
+                                    children: tabList.map((Tab tab) {
+                                      return _getPage(tab);
+                                    }).toList(),
+                                    physics: ScrollPhysics(),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ))
                       : SizedBox(),
                 ),
               ),
-            )
-        )
+            ))
       ],
     );
   }
 
   // ignore: missing_return
-  Widget _getPage(Tab tab){
-    switch(tab.text){
-      case 'Posts': return postView();
-      case 'Overview': return overView();
-      case 'Graph': return graphView();
-      case 'Filter': return filterView();
-
+  Widget _getPage(Tab tab) {
+    switch (tab.text) {
+      case 'Posts':
+        return postView();
+      case 'Overview':
+        return overView();
+      case 'Graph':
+        return graphView();
+      case 'Filter':
+        return filterView();
     }
   }
 }
-
-
 
 enum TrimMode {
   Length,
@@ -1157,21 +1095,21 @@ enum TrimMode {
 
 class ReadMoreText extends StatefulWidget {
   const ReadMoreText(
-      this.data, {
-        Key key,
-        this.trimExpandedText = ' read less',
-        this.trimCollapsedText = ' ...read more',
-        this.colorClickableText,
-        this.trimLength = 240,
-        this.trimLines = 2,
-        this.trimMode = TrimMode.Length,
-        this.style,
-        this.textAlign,
-        this.textDirection,
-        this.locale,
-        this.textScaleFactor,
-        this.semanticsLabel,
-      })  : assert(data != null),
+    this.data, {
+    Key key,
+    this.trimExpandedText = ' read less',
+    this.trimCollapsedText = ' ...read more',
+    this.colorClickableText,
+    this.trimLength = 240,
+    this.trimLines = 2,
+    this.trimMode = TrimMode.Length,
+    this.style,
+    this.textAlign,
+    this.textDirection,
+    this.locale,
+    this.textScaleFactor,
+    this.semanticsLabel,
+  })  : assert(data != null),
         super(key: key);
 
   final String data;
@@ -1211,17 +1149,13 @@ class ReadMoreTextState extends State<ReadMoreText> {
       effectiveTextStyle = defaultTextStyle.style.merge(widget.style);
     }
 
-    final textAlign =
-        widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
+    final textAlign = widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
     final textDirection = widget.textDirection ?? Directionality.of(context);
-    final textScaleFactor =
-        widget.textScaleFactor ?? MediaQuery.textScaleFactorOf(context);
+    final textScaleFactor = widget.textScaleFactor ?? MediaQuery.textScaleFactorOf(context);
     final overflow = defaultTextStyle.overflow;
-    final locale =
-        widget.locale ?? Localizations.localeOf(context, nullOk: true);
+    final locale = widget.locale ?? Localizations.localeOf(context);
 
-    final colorClickableText =
-        widget.colorClickableText ?? Theme.of(context).accentColor;
+    final colorClickableText = widget.colorClickableText ?? Theme.of(context).accentColor;
 
     TextSpan link = TextSpan(
       text: _readMore ? widget.trimCollapsedText : widget.trimExpandedText,
@@ -1260,7 +1194,6 @@ class ReadMoreTextState extends State<ReadMoreText> {
         textPainter.layout(minWidth: constraints.minWidth, maxWidth: maxWidth);
         final textSize = textPainter.size;
 
-
         // Get the endIndex of data
         bool linkLongerThanLine = false;
         int endIndex;
@@ -1285,9 +1218,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
             if (widget.trimLength < widget.data.length) {
               textSpan = TextSpan(
                 style: effectiveTextStyle,
-                text: _readMore
-                    ? widget.data.substring(0, widget.trimLength)
-                    : widget.data,
+                text: _readMore ? widget.data.substring(0, widget.trimLength) : widget.data,
                 children: <TextSpan>[link],
               );
             } else {
@@ -1301,10 +1232,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
             if (textPainter.didExceedMaxLines) {
               textSpan = TextSpan(
                 style: effectiveTextStyle,
-                text: _readMore
-                    ? widget.data.substring(0, endIndex) +
-                    (linkLongerThanLine ? _kLineSeparator : '')
-                    : widget.data,
+                text: _readMore ? widget.data.substring(0, endIndex) + (linkLongerThanLine ? _kLineSeparator : '') : widget.data,
                 children: <TextSpan>[link],
               );
             } else {
@@ -1315,8 +1243,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
             }
             break;
           default:
-            throw Exception(
-                'TrimMode type: ${widget.trimMode} is not supported');
+            throw Exception('TrimMode type: ${widget.trimMode} is not supported');
         }
 
         return RichText(

@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen>
   var height = 0.0;
   var appBarheight = 0.0;
   var statusBarHeight = 0.0;
+  var graphHeight = 0.0;
 
 
   @override
