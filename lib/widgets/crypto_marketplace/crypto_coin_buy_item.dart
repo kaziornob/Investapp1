@@ -138,9 +138,9 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
                         height: MediaQuery.of(context).size.height / 16,
                         // width: boxConstraints.maxHeight / 4,
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xff5A56B9),
-                          ),
+                          // border: Border.all(
+                          //   color: Color(0xff5A56B9),
+                          // ),
                         ),
                         child: Image.network(widget.coinDetails["logo_link"]),
                       ),
@@ -150,29 +150,29 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
               ),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Text("30D CHANGE"),
-          //       Row(
-          //         children: [
-          //           Icon(
-          //             Icons.arrow_drop_down,
-          //             color: Colors.red,
-          //           ),
-          //           Text(
-          //             "-2",
-          //             style: TextStyle(
-          //               color: Colors.red,
-          //             ),
-          //           )
-          //         ],
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // Text("30D CHANGE"),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.red,
+                    ),
+                    Text(
+                      "-2",
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
           CryptoCoinCharts(
             color: graphColors,
             stops: stops,
