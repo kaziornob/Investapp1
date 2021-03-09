@@ -3,6 +3,8 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/widgets/crypto_marketplace/all_crypto_list.dart';
+import 'package:auroim/widgets/crypto_marketplace/all_cryptocurrencies_list.dart';
 import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';
 import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 import 'package:auroim/widgets/small_tab_chip.dart';
@@ -628,30 +630,6 @@ class _SearchFirstPageState extends State<SearchFirstPage>
     );
   }
 
-  Widget unlistedTab() {
-    return Container(
-      height: 265,
-      // decoration: BoxDecoration(border: Border.all()),
-      child: globals.isGoldBlack
-          ? SampleFeaturedCompaniesList()
-          : FeaturedCompaniesList(),
-    );
-  }
-
-  Widget crypto() {
-    return Container(
-      height: 0.0,
-      width: 0.0,
-    );
-  }
-
-  Widget equities() {
-    return Container(
-      height: 0.0,
-      width: 0.0,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, setWidgetState) {
@@ -669,7 +647,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
               child: Center(
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.only(left: 3.0, right: 8.0),
+                  padding: EdgeInsets.only(left: 3.0, right: 3.0),
                   children: [
                     SmallTabChip(
                       tabText: "Trending",
@@ -679,7 +657,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
                     ),
                     SmallTabChip(
                       tabText: "Unlisted",
-                      selected: allTabsBool["UnListed"] == true,
+                      selected: allTabsBool["Unlisted"] == true,
                       callback: () => selectedTab("Unlisted", setWidgetState),
                       width: 70.0,
                     ),
@@ -706,57 +684,14 @@ class _SearchFirstPageState extends State<SearchFirstPage>
               ),
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
           _getPage(selectedTabString),
-          // Container(
-          //   margin: EdgeInsets.only(top: 25.0),
-          //   width: MediaQuery.of(context).size.width,
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: <Widget>[
-          //       TabBar(
-          //         controller: _tabController,
-          //         onTap: (index) {
-          //           selectedTabIndex = index;
-          //         },
-          //         labelColor: AllCoustomTheme.getTextThemeColors(),
-          //         labelStyle: TextStyle(fontSize: 17.0, letterSpacing: 0.2),
-          //         indicatorColor: AllCoustomTheme.getTextThemeColors(),
-          //         indicatorWeight: 4.0,
-          //         isScrollable: true,
-          //         unselectedLabelColor: Colors.grey,
-          //         tabs: <Widget>[
-          //           new Tab(text: 'Trending'),
-          //           new Tab(text: 'Unlisted'),
-          //           new Tab(text: 'Crypto'),
-          //           new Tab(text: 'Listed'),
-          //           new Tab(text: 'AuroStars'),
-          //         ],
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // Container(
-          //   // height: MediaQuery.of(context).size.height *0.55,
-          //   padding: EdgeInsets.only(top: 10.0),
-          //   child: new TabBarView(
-          //     controller: _tabController,
-          //     children: tabList.map((Tab tab) {
-          //       return _getPage(tab);
-          //     }).toList(),
-          //     physics: ScrollPhysics(),
-          //   ),
-          // )
         ],
       ));
     });
   }
-
-  // _getSelectedTab(){
-  //   if(allTabsBool["Trending"] == true){
-  //     return
-  //   }
-  // }
 
   selectedTab(selectedKey, setWidgetState) {
     // print(selectedKey);
@@ -770,16 +705,32 @@ class _SearchFirstPageState extends State<SearchFirstPage>
         }
       });
     });
-    //   allTabsBool.forEach((value) {
-    //     if (i == index) {
-    //       allTabsBool[index] = true;
-    //       i++;
-    //     } else {
-    //       allTabsBool[i] = false;
-    //       i++;
-    //     }
-    //   });
-    // });
+  }
+
+  Widget unlistedTab() {
+    return Container(
+      height: 265,
+      // decoration: BoxDecoration(border: Border.all()),
+      child: globals.isGoldBlack
+          ? SampleFeaturedCompaniesList()
+          : FeaturedCompaniesList(),
+    );
+  }
+
+  Widget crypto() {
+    return Container(
+      height: 285,
+      child: globals.isGoldBlack
+          ? AllCryptoListBlack()
+          : AllCryptocurrenciesList(),
+    );
+  }
+
+  Widget equities() {
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
   }
 
   Widget _getPage(String tab) {

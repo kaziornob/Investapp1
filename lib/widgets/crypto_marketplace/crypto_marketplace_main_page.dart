@@ -6,6 +6,8 @@ import 'package:auroim/widgets/crypto_marketplace/all_cryptocurrencies_list.dart
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
+import '../go_to_marketplace_button.dart';
+
 class CryptoMarketplace extends StatefulWidget {
   @override
   _CryptoMarketplaceState createState() => _CryptoMarketplaceState();
@@ -76,6 +78,20 @@ class _CryptoMarketplaceState extends State<CryptoMarketplace> {
             ),
           ),
           globals.isGoldBlack ? AllCryptoListBlack() : AllCryptocurrenciesList(),
+          SizedBox(
+            height: 10,
+          ),
+          GoToMarketplaceButton(
+            buttonColor: AllCoustomTheme.getButtonBoxColor(),
+            textColor: Colors.white,
+            callback: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CryptoCoinsMarketplace(),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

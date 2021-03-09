@@ -40,7 +40,7 @@ class _FeaturedCompaniesListState extends State<FeaturedCompaniesList> {
     // allData = allData.reversed.toList();
     return Container(
       height: 265,
-      decoration: BoxDecoration(border: Border.all()),
+      // decoration: BoxDecoration(border: Border.all()),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: allData.length,

@@ -39,20 +39,8 @@ class _AllCryptocurrenciesListState extends State<AllCryptocurrenciesList> {
               }
             },
           ),
-          SizedBox(
-            height: 10,
-          ),
-          GoToMarketplaceButton(
-            buttonColor: AllCoustomTheme.getButtonBoxColor(),
-            textColor: Colors.white,
-            callback: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CryptoCoinsMarketplace(),
-                ),
-              );
-            },
-          ),
+
+
         ],
       ),
     );
