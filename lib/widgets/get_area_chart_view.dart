@@ -329,7 +329,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                 child: MaterialButton(
                                   splashColor: Colors.grey,
                                   child: Text(
-                                    "WATCH",
+                                    "FOLLOW",
                                     style: TextStyle(
                                       color: AllCoustomTheme
                                           .getChartBoxTextThemeColor(),

@@ -113,28 +113,28 @@ class _SingleCryptoCurrencyDetailsByIdState
   }
 
   ss(coinData) {
-    var metrics = jsonDecode(coinData["metrics"]);
-    var percentageChange = jsonDecode(coinData["percentage_change"]);
-    List list = [];
-    list = metrics[0].split("Price");
-    var price = list[list.length - 1];
-    print("price: $price");
-
-    list = metrics[1].split("Market Cap");
-    var marketCap = list[list.length - 1];
-    print("marketCap: $marketCap");
-
-    list = metrics[7].split("Market Cap Rank");
-    var marketCapRank = list[list.length - 1];
-    print("marketCapRank: $marketCapRank");
-
-    list = metrics[8].split("All-Time High");
-    var allTimeHigh = list[list.length - 1];
-    print("allTimeHigh: $allTimeHigh");
-
-    list = metrics[10].split("All-Time Low");
-    var allTimeLow = list[list.length - 1];
-    print("allTimeLow: $allTimeLow");
+    // var metrics = jsonDecode(coinData["metrics"]);
+    // var percentageChange = jsonDecode(coinData["percentage_change"]);
+    // List list = [];
+    // list = metrics[0].split("Price");
+    // var price = list[list.length - 1];
+    // print("price: $price");
+    //
+    // list = metrics[1].split("Market Cap");
+    // var marketCap = list[list.length - 1];
+    // print("marketCap: $marketCap");
+    //
+    // list = metrics[7].split("Market Cap Rank");
+    // var marketCapRank = list[list.length - 1];
+    // print("marketCapRank: $marketCapRank");
+    //
+    // list = metrics[8].split("All-Time High");
+    // var allTimeHigh = list[list.length - 1];
+    // print("allTimeHigh: $allTimeHigh");
+    //
+    // list = metrics[10].split("All-Time Low");
+    // var allTimeLow = list[list.length - 1];
+    // print("allTimeLow: $allTimeLow");
 
     // list = metrics[10].split(" ");
     // var allTimeLow = list[2];
@@ -167,23 +167,23 @@ class _SingleCryptoCurrencyDetailsByIdState
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Consumer<CoinUrl>(
-                      builder: (context, urlProvider, _) {
-                        return !urlProvider.imageUrl
-                                .containsKey(coinData["coin_id"])
-                            ? SizedBox()
-                            : Container(
-                                width: 150,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xff5A56B9),
-                                  ),
-                                ),
-                                child: Image.network(
-                                    urlProvider.imageUrl[coinData["coin_id"]]),
-                              );
-                      },
+                    // Consumer<CoinUrl>(
+                    //   builder: (context, urlProvider, _) {
+                    //     return !urlProvider.imageUrl
+                    //             .containsKey(coinData["coin_id"])
+                    //         ? SizedBox()
+                    //         : ;
+                    //   },
+                    // ),
+                    Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xff5A56B9),
+                        ),
+                      ),
+                      child: Image.network(coinData["logo_link"]),
                     ),
                     // Container(
                     //   width: 150,
@@ -195,7 +195,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                     //   // Image.network(widget.companyDetails["logo_link"]),
                     // ),
                     Text(
-                      coinData["coin_id"],
+                      coinData["coin_id"].toUpperCase(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 35,
@@ -210,7 +210,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                       ),
                       child: Container(
                         width: MediaQuery.of(context).size.width - 25,
-                        height: 60,
+                        height: 80,
                         // decoration: BoxDecoration(
                         //   border: Border.all(),
                         // ),
@@ -233,7 +233,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                                   ),
                                   Text(
                                     // "",
-                                    "$price",
+                                    "\$${coinData["price"]}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontFamily: 'Roboto',
@@ -269,12 +269,17 @@ class _SingleCryptoCurrencyDetailsByIdState
                                   ],
                                 ),
                                 Container(
-                                  child: Text(
-                                    // "",
-                                    "$allTimeHigh",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontFamily: 'Roboto',
+                                  width: (MediaQuery.of(context).size.width-20)/2,
+                                  height: 60,
+                                  child: Expanded(
+                                    child: Text(
+                                      // "",
+                                      "${coinData["all_time_high"]}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'Roboto',
+                                      ),
+                                      overflow: TextOverflow.clip,
                                     ),
                                   ),
                                 ),
@@ -290,7 +295,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                       ),
                       child: Container(
                         width: MediaQuery.of(context).size.width - 25,
-                        height: 60,
+                        height: 80,
                         // decoration: BoxDecoration(
                         //   border: Border.all(),
                         // ),
@@ -314,7 +319,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                                   ),
                                   Text(
                                     // "",
-                                    "$marketCap",
+                                    "\$${coinData["market_cap"]}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontFamily: 'Roboto',
@@ -339,7 +344,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                                     Positioned(
                                       right: 4,
                                       child: Tooltip(
-                                        message: "All time high",
+                                        message: "All time Low",
                                         child: Icon(
                                           Icons.help,
                                           size: 13,
@@ -349,12 +354,17 @@ class _SingleCryptoCurrencyDetailsByIdState
                                   ],
                                 ),
                                 Container(
-                                  child: Text(
-                                    // "",
-                                    "$allTimeLow",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontFamily: 'Roboto',
+                                  width: (MediaQuery.of(context).size.width-20)/2,
+                                  height: 60,
+                                  child: Expanded(
+                                    child: Text(
+                                      // "",
+                                      "${coinData["all_time_low"]}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'Roboto',
+                                      ),
+                                      overflow: TextOverflow.clip,
                                     ),
                                   ),
                                 ),
@@ -398,7 +408,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                                       Positioned(
                                         right: 4,
                                         child: Tooltip(
-                                          message: "SOPR",
+                                          message: "Market Cap Rank",
                                           child: Icon(
                                             Icons.help,
                                             size: 13,
@@ -409,7 +419,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                                   ),
                                   Text(
                                     // "",
-                                    "$marketCapRank",
+                                    "${coinData["market_cap_rank"]}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontFamily: 'Roboto',
@@ -469,7 +479,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                         ),
                       ],
                     ),
-                    chart(percentageChange),
+                    chart(coinData),
                     showPriceChart
                         ? FutureBuilder(
                             future: getCoinPrices(),
@@ -552,7 +562,7 @@ class _SingleCryptoCurrencyDetailsByIdState
               height: 10,
             ),
             AllCryptoMetricsData(
-              metrics: metrics,
+              metrics: coinData,
             ),
           ],
         ),
@@ -691,13 +701,13 @@ class _SingleCryptoCurrencyDetailsByIdState
     }
   }
 
-  chart(percentageChange) {
-    double oneHour = getDataDouble(percentageChange["1h"]);
-    double twentyFourHour = getDataDouble(percentageChange["24h"]);
-    double sevenDay = getDataDouble(percentageChange["7d"]);
-    double fourteenDay = getDataDouble(percentageChange["14d"]);
-    double thirtyThreeDay = getDataDouble(percentageChange["30d"]);
-    double oneYear = getDataDouble(percentageChange["1y"]);
+  chart(coinData) {
+    var oneHour = coinData["per_1h"];
+    var twentyFourHour = coinData["per_24h"];
+    var sevenDay = coinData["per_7d"];
+    var fourteenDay = coinData["per_14d"];
+    var thirtyThreeDay = coinData["per_30d"];
+    var oneYear = coinData["per_1y"];
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -748,18 +758,48 @@ class _SingleCryptoCurrencyDetailsByIdState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    oneValue(oneHour == 0.0 ? "?" : "$oneHour",
-                        oneHour < 0 ? Colors.red : Colors.green),
-                    oneValue(twentyFourHour == 0.0 ? "?" : "$twentyFourHour",
-                        twentyFourHour < 0 ? Colors.red : Colors.green),
-                    oneValue(sevenDay == 0.0 ? "?" : "$sevenDay",
-                        sevenDay < 0 ? Colors.red : Colors.green),
-                    oneValue(fourteenDay == 0.0 ? "?" : "$fourteenDay",
-                        fourteenDay < 0 ? Colors.red : Colors.green),
-                    oneValue(thirtyThreeDay == 0.0 ? "?" : "$thirtyThreeDay",
-                        thirtyThreeDay < 0 ? Colors.red : Colors.green),
-                    oneValue(oneYear == 0.0 ? "?" : "$oneYear",
-                        oneYear < 0 ? Colors.red : Colors.green),
+                    oneValue(
+                        oneHour == "?" ? "?" : "$oneHour",
+                        oneHour == "?"
+                            ? Colors.green
+                            : oneHour < 0
+                                ? Colors.red
+                                : Colors.green),
+                    oneValue(
+                        twentyFourHour == "?" ? "?" : "$twentyFourHour",
+                        twentyFourHour == "?"
+                            ? Colors.green
+                            : twentyFourHour < 0
+                                ? Colors.red
+                                : Colors.green),
+                    oneValue(
+                        sevenDay == 0.0 ? "?" : "$sevenDay",
+                        sevenDay == "?"
+                            ? Colors.green
+                            : sevenDay < 0
+                                ? Colors.red
+                                : Colors.green),
+                    oneValue(
+                        fourteenDay == 0.0 ? "?" : "$fourteenDay",
+                        fourteenDay == "?"
+                            ? Colors.green
+                            : fourteenDay < 0
+                                ? Colors.red
+                                : Colors.green),
+                    oneValue(
+                        thirtyThreeDay == 0.0 ? "?" : "$thirtyThreeDay",
+                        thirtyThreeDay == "?"
+                            ? Colors.green
+                            : thirtyThreeDay < 0
+                                ? Colors.red
+                                : Colors.green),
+                    oneValue(
+                        oneYear == 0.0 ? "?" : "$oneYear",
+                        oneYear == "?"
+                            ? Colors.green
+                            : oneYear < 0
+                                ? Colors.red
+                                : Colors.green),
                   ],
                 ),
               ),

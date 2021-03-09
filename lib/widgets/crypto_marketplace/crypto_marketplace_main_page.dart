@@ -14,17 +14,13 @@ class CryptoMarketplace extends StatefulWidget {
 }
 
 class _CryptoMarketplaceState extends State<CryptoMarketplace> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
           Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width - 100,
+            width: MediaQuery.of(context).size.width - 100,
             padding: const EdgeInsets.only(
               bottom: 8,
               top: 10,
@@ -55,18 +51,12 @@ class _CryptoMarketplaceState extends State<CryptoMarketplace> {
             child: Container(
               // margin: EdgeInsets.only(left: 35.0,right: 20.0),
               margin: EdgeInsets.only(
-                  left: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.07,
-                  right: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.03),
+                  left: MediaQuery.of(context).size.width * 0.07,
+                  right: MediaQuery.of(context).size.width * 0.03),
               child: Text(
                 "The Cryptocurrency marketplace is your opportunity to invest in trending cryptocurrencies,"
-                    "All you need to do is select the coin that you want to trade and press "
-                    "the buy button.",
+                "All you need to do is select the coin that you want to trade and press "
+                "the buy button.",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     color: AllCoustomTheme.getNewSecondTextThemeColor(),
@@ -77,7 +67,13 @@ class _CryptoMarketplaceState extends State<CryptoMarketplace> {
               ),
             ),
           ),
-          globals.isGoldBlack ? AllCryptoListBlack() : AllCryptocurrenciesList(),
+          globals.isGoldBlack
+              ? AllCryptoListBlack(
+                  sortingType: "market_cap",
+                )
+              : AllCryptocurrenciesList(
+                  sortingType: "market_cap",
+                ),
           SizedBox(
             height: 10,
           ),

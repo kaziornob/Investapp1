@@ -202,13 +202,14 @@ class _CryptoCoinsMarketplaceListState extends State<CryptoCoinsMarketplace> {
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
                               child: FutureBuilder(
-                                future: getData(),
+                                future: _featuredCompaniesProvider
+                                    .getCoinsListSorted("market_cap"),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    List allWidgets = [];
-                                    allWidgets = [...snapshot.data].sublist(
-                                      1,
-                                    );
+                                    // List allWidgets = [];
+                                    // allWidgets = [...snapshot.data].sublist(
+                                    //   1,
+                                    // );
 
                                     // if (allTabsBool["icon"] == true) {
                                     //   allWidgets.insert(0, filterBox());
@@ -220,17 +221,17 @@ class _CryptoCoinsMarketplaceListState extends State<CryptoCoinsMarketplace> {
                                       width: MediaQuery.of(context).size.width -
                                           40,
                                       child: ListView.builder(
-                                        itemCount: allWidgets.length,
+                                        itemCount: snapshot.data.length,
                                         itemBuilder: (context, index) {
                                           // if (allTabsBool["icon"] == true && index == 0) {
                                           //   return filterBox();
                                           // } else {
                                           print("single coin data ");
-                                          print(allWidgets[index]["id"]);
-                                          if (allWidgets[index]["id"] != null ||
-                                              allWidgets[index]["id"] != "") {
+                                          print(snapshot.data[index]["coin_id"]);
+                                          if (snapshot.data[index]["coin_id"] != null ||
+                                              snapshot.data[index]["coin_id"] != "") {
                                             return CryptoCoinBuyItem(
-                                              coinDetails: allWidgets[index],
+                                              coinDetails: snapshot.data[index],
                                             );
                                           } else {
                                             return SizedBox();
@@ -335,36 +336,36 @@ class _CryptoCoinsMarketplaceListState extends State<CryptoCoinsMarketplace> {
     );
   }
 
-  getData() async {
-    print("in get data");
-    var tempJsonReq = {};
-
-    // String jsonReq = jsonEncode(tempJsonReq);
-
-    var jsonReqResp = await _featuredCompaniesProvider
-        .coinDetails('https://api.coingecko.com/api/v3/coins/list');
-
-    var result = jsonDecode(jsonReqResp.body);
-    // print("coin details response: $result");
-
-    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
-      // print("ggggg");
-      // print("result");
-      return result;
-      // return getCompaniesList(result["message"]);
-
-      // if (result != null &&a
-      //     result.containsKey('auth') &&
-      //     result['auth'] == true) {
-      //   Toast.show("${result['message']}", context,
-      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      // }
-    } else if (result != null &&
-        result.containsKey('auth') &&
-        result['auth'] != true) {
-    } else {
-      Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-    }
-  }
+// getData() async {
+//   print("in get data");
+//   var tempJsonReq = {};
+//
+//   // String jsonReq = jsonEncode(tempJsonReq);
+//
+//   var jsonReqResp = await _featuredCompaniesProvider
+//       .coinDetails('https://api.coingecko.com/api/v3/coins/list');
+//
+//   var result = jsonDecode(jsonReqResp.body);
+//   // print("coin details response: $result");
+//
+//   if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+//     // print("ggggg");
+//     // print("result");
+//     return result;
+//     // return getCompaniesList(result["message"]);
+//
+//     // if (result != null &&a
+//     //     result.containsKey('auth') &&
+//     //     result['auth'] == true) {
+//     //   Toast.show("${result['message']}", context,
+//     //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+//     // }
+//   } else if (result != null &&
+//       result.containsKey('auth') &&
+//       result['auth'] != true) {
+//   } else {
+//     Toast.show("Something went wrong!", context,
+//         duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+//   }
+// }
 }

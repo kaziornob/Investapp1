@@ -61,16 +61,6 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
     // loadDetails();
   }
 
-  // loadDetails() async {
-  //   setState(() {
-  //     _isInProgress = true;
-  //   });
-  //   await Future.delayed(const Duration(milliseconds: 700));
-  //   setState(() {
-  //     _isInProgress = false;
-  //   });
-  // }
-
   Widget learnMore(data) {
     return Container(
       height: 0.0,
@@ -90,7 +80,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
     double appBarheight = appBar.preferredSize.height;
     return FutureBuilder(
       future: _featuredCompaniesProvider
-          .getSinglePublicCompanyData(widget.companyTicker),
+          .getSinglePublicCompanyData(widget.companyTicker,"all"),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return dd(snapshot.data);

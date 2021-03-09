@@ -7,6 +7,7 @@ import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/widgets/crypto_coin_chart.dart';
 import 'package:auroim/widgets/crypto_coin_price_data.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
+import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
 import 'package:auroim/widgets/get_area_chart_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,9 +35,9 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
   @override
   Widget build(BuildContext context) {
     print("crypto coin buy item");
-    print(widget.coinDetails);
-    Provider.of<CoinUrl>(context, listen: false)
-        .getImageUrl(widget.coinDetails["id"]);
+    // print(widget.coinDetails);
+    // Provider.of<CoinUrl>(context, listen: false)
+    //     .getImageUrl(widget.coinDetails["id"]);
     return FutureBuilder(
       future: getCoinPrices(),
       builder: (context, snapshot) {
@@ -105,64 +106,49 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
               top: 4.0,
               bottom: 4.0,
             ),
-            child: Consumer<CoinUrl>(builder: (context, urlProvider, _) {
-              return Container(
-                width: MediaQuery.of(context).size.width - 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      flex: !urlProvider.imageUrl
-                              .containsKey(widget.coinDetails["id"])
-                          ? 1
-                          : 3,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 4.0),
-                        child: Container(
-                          // width: MediaQuery.of(context).size.height / 8,
-                          child: Text(
-                            widget.coinDetails["name"],
-                            style: TextStyle(
-                              color: Color(0xff1D6177),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
+            child: Container(
+              width: MediaQuery.of(context).size.width - 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 4.0),
+                      child: Container(
+                        // width: MediaQuery.of(context).size.height / 8,
+                        child: Text(
+                          widget.coinDetails["coin_id"].toUpperCase(),
+                          style: TextStyle(
+                            color: Color(0xff1D6177),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
+                          overflow: TextOverflow.clip,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: !urlProvider.imageUrl
-                              .containsKey(widget.coinDetails["id"])
-                          ? 0
-                          : 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: !urlProvider.imageUrl
-                                .containsKey(widget.coinDetails["id"])
-                            ? SizedBox()
-                            : Container(
-                                height: MediaQuery.of(context).size.height / 16,
-                                // width: boxConstraints.maxHeight / 4,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xff5A56B9),
-                                  ),
-                                ),
-                                child: !urlProvider.imageUrl
-                                        .containsKey(widget.coinDetails["id"])
-                                    ? SizedBox()
-                                    : Image.network(urlProvider
-                                        .imageUrl[widget.coinDetails["id"]]),
-                              ),
+                  ),
+                  Expanded(
+                    flex:2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 16,
+                        // width: boxConstraints.maxHeight / 4,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xff5A56B9),
+                          ),
+                        ),
+                        child: Image.network(widget.coinDetails["logo_link"]),
                       ),
                     ),
-                  ],
-                ),
-              );
-            }),
+                  ),
+                ],
+              ),
+            ),
           ),
           // Padding(
           //   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -197,8 +183,8 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
             () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => SingleCryptoCurrencyDetails(
-                    coinDetails: coinMetrics,
+                  builder: (context) => SingleCryptoCurrencyDetailsById(
+                    coinId: widget.coinDetails["coin_id"],
                   ),
                 ),
               );
@@ -210,8 +196,8 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
             () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => SingleCryptoCurrencyDetails(
-                    coinDetails: widget.coinDetails,
+                  builder: (context) => SingleCryptoCurrencyDetailsById(
+                    coinId: widget.coinDetails["coin_id"],
                   ),
                 ),
               );
@@ -235,7 +221,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
               children: [
                 Container(
                   child: Text(
-                    widget.coinDetails["name"],
+                    widget.coinDetails["coin_id"],
                     style: TextStyle(
                         color: Color(0xff5A56B9),
                         fontWeight: FontWeight.bold,
@@ -270,10 +256,10 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
     // String jsonReq = jsonEncode(tempJsonReq);
 
     var jsonReqResp = await _featuredCompaniesProvider.coinDetails(
-        'https://api.coingecko.com/api/v3/coins/${widget.coinDetails["id"]}/market_chart?vs_currency=usd&days=30');
+        'https://api.coingecko.com/api/v3/coins/${widget.coinDetails["coin_id"]}/market_chart?vs_currency=usd&days=30');
 
     var result = jsonDecode(jsonReqResp.body);
-    print("coin prices response: $result");
+    // print("coin prices response: $result");
 
     if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
       // print("ggggg");
@@ -307,7 +293,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
         'crypto_metric/metrics?coin=${widget.coinDetails["id"]}');
 
     var result = jsonDecode(jsonReqResp.body);
-    print("coin details response: $result");
+    // print("coin details response: $result");
 
     if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
       // print("ggggg");

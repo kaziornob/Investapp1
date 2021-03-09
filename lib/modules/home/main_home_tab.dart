@@ -20,7 +20,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
   int homeDonutCurrentIndex = 0;
   List homeDonutArray = [];
   List<ChartData> homeChartData = [];
-  bool _isinit=true;
+  bool _isinit = true;
 
   @override
   void initState() {
@@ -30,12 +30,13 @@ class _MainHomeTabState extends State<MainHomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(builder: (context, setHomeTabState) {
-      if(_isinit){
-        getDoughnutPortfolioData(setHomeTabState);
-        _isinit = false;
-      }
-      return SingleChildScrollView(
+    return StatefulBuilder(
+      builder: (context, setHomeTabState) {
+        if (_isinit) {
+          getDoughnutPortfolioData(setHomeTabState);
+          _isinit = false;
+        }
+        return SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
@@ -113,8 +114,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                         itemCount: homeDonutArray.length,
                         options: CarouselOptions(
                             autoPlay: false,
-                            viewportFraction:
-                                homeDonutCurrentIndex == 1 ? 1.1 : 1,
+                            viewportFraction: 1,
                             onPageChanged: (index, reason) {
                               setHomeTabState(() {
                                 homeDonutCurrentIndex = index;
@@ -122,31 +122,76 @@ class _MainHomeTabState extends State<MainHomeTab> {
                               });
                             }),
                         itemBuilder: (context, index) {
-                          return Container(
-                            // decoration: BoxDecoration(border: Border.all()),
-                            width: MediaQuery.of(context).size.width * 0.93,
-                            child: SfCircularChart(
-                              legend: Legend(
-                                  isVisible: true,
-                                  textStyle: TextStyle(
-                                      color:
-                                          AllCoustomTheme.getTextThemeColors()),
-                                  overflowMode: LegendItemOverflowMode.wrap,
-                                  itemPadding: 5.0),
-                              series: <CircularSeries>[
-                                DoughnutSeries<ChartData, String>(
-                                  dataSource: homeChartData,
-                                  xValueMapper: (ChartData data, _) => data.x,
-                                  yValueMapper: (ChartData data, _) => data.y,
-                                  dataLabelSettings: DataLabelSettings(
-                                      isVisible: true,
-                                      useSeriesColor: true,
-                                      showCumulativeValues: true,
-                                      showZeroValue: true),
-                                )
-                              ],
-                            ),
-                          );
+                          print("itembuilder $index");
+                          if (index == 3) {
+                            return Container(
+                              // decoration: BoxDecoration(border: Border.all()),
+                              height: 200,
+                              width: MediaQuery.of(context).size.width * 0.80,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "As part of free view we only show you the three smallest securities in your " +
+                                        "auro portfolio and the % return generated on the entire portfolio to get you comfortable with our product",
+                                    style: TextStyle(
+                                        color: AllCoustomTheme
+                                            .getNewSecondTextThemeColor(),
+                                        fontSize: 14.5,
+                                        fontFamily: "Roboto",
+                                        fontStyle: FontStyle.normal,
+                                        letterSpacing: 0.2),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Color(0xFFD8AF4F),
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "Click here to see entire portfolio",
+                                      style: TextStyle(
+                                        color: Color(0xFFD8AF4F),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Container(
+                              // decoration: BoxDecoration(border: Border.all()),
+                              width: MediaQuery.of(context).size.width * 0.93,
+                              child: SfCircularChart(
+                                title: ChartTitle(text: getChartTitle()),
+                                legend: Legend(
+                                    isVisible: true,
+                                    textStyle: TextStyle(
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors()),
+                                    overflowMode: LegendItemOverflowMode.wrap,
+                                    itemPadding: 5.0),
+                                series: <CircularSeries>[
+                                  DoughnutSeries<ChartData, String>(
+                                    dataSource: homeChartData,
+                                    xValueMapper: (ChartData data, _) => data.x,
+                                    yValueMapper: (ChartData data, _) => data.y,
+                                    dataLabelSettings: DataLabelSettings(
+                                        isVisible: true,
+                                        useSeriesColor: true,
+                                        showCumulativeValues: true,
+                                        showZeroValue: true),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),
@@ -160,12 +205,15 @@ class _MainHomeTabState extends State<MainHomeTab> {
                         ),
                         onPressed: () {
                           setHomeTabState(() {
-                            if (homeDonutCurrentIndex == 2) {
+                            if (homeDonutCurrentIndex == 3) {
                               homeDonutCurrentIndex = 0;
+                              setHomeDoughnutChartData();
                             } else {
                               homeDonutCurrentIndex = homeDonutCurrentIndex + 1;
+                              if (homeDonutCurrentIndex != 3) {
+                                setHomeDoughnutChartData();
+                              }
                             }
-                            setHomeDoughnutChartData();
                           });
                         },
                       ),
@@ -181,11 +229,13 @@ class _MainHomeTabState extends State<MainHomeTab> {
                         onPressed: () {
                           setHomeTabState(() {
                             if (homeDonutCurrentIndex == 0) {
-                              homeDonutCurrentIndex = 2;
+                              homeDonutCurrentIndex = 3;
                             } else {
                               homeDonutCurrentIndex = homeDonutCurrentIndex - 1;
+                              if (homeDonutCurrentIndex != 3) {
+                                setHomeDoughnutChartData();
+                              }
                             }
-                            setHomeDoughnutChartData();
                           });
                         },
                       ),
@@ -326,98 +376,74 @@ class _MainHomeTabState extends State<MainHomeTab> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.73,
                 child: Container(
-                    margin: EdgeInsets.only(left: 5.0, right: 5.0),
-                    child: ListView(
-                      physics: NeverScrollableScrollPhysics(),
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.0),
-                          child: Center(
-                              child: Text(
-                            'AURO PORTFOLIO COMPONENTS',
-                            style: new TextStyle(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Rosarivo",
-                            ),
-                          )),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.02,
-                              right: MediaQuery.of(context).size.width * 0.02),
-                          padding: EdgeInsets.only(
-                            bottom: 3, // space between underline and text
-                          ),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0),
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Center(
+                            child: Text(
+                          'AURO PORTFOLIO COMPONENTS',
+                          style: new TextStyle(
                             color: AllCoustomTheme.getHeadingThemeColors(),
-                            width: 1.0, // Underline width
-                          ))),
-                        ),
-                        // Padding(
-                        //     padding: EdgeInsets.only(top: 10.0),
-                        //     child: Row(
-                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                        //       children: <Widget>[
-                        //         Padding(
-                        //             padding:
-                        //                 EdgeInsets.only(left: 95.0, bottom: 5.0),
-                        //             child: Text(
-                        //               'Auro Portfolio',
-                        //               style: new TextStyle(
-                        //                 color: AllCoustomTheme
-                        //                     .getSubHeadingThemeColors(),
-                        //                 fontSize: ConstanceData.SIZE_TITLE15,
-                        //                 fontFamily: "Roboto",
-                        //                 package: 'Roboto-Regular',
-                        //               ),
-                        //             )),
-                        //         Padding(
-                        //             padding:
-                        //                 EdgeInsets.only(left: 30.0, top: 3.0),
-                        //             child: Text(
-                        //               'SEE ALL',
-                        //               style: new TextStyle(
-                        //                 decoration: TextDecoration.underline,
-                        //                 color: AllCoustomTheme
-                        //                     .getSeeMoreThemeColor(),
-                        //                 fontSize: ConstanceData.SIZE_TITLE15,
-                        //                 fontFamily: "Roboto",
-                        //               ),
-                        //             ))
-                        //       ],
-                        //     )),
-                        // PublicCompaniesList(),
-                        Container(
-                          height: 200,
-                          width: MediaQuery.of(context).size.width - 20,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              singleTableForPortFolio(),
-                            ],
+                            fontSize: ConstanceData.SIZE_TITLE18,
+                            fontFamily: "Rosarivo",
                           ),
+                        )),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.02,
+                            right: MediaQuery.of(context).size.width * 0.02),
+                        padding: EdgeInsets.only(
+                          bottom: 3, // space between underline and text
                         ),
-/*                      SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.37,
-                          child: Container(
-                              margin: EdgeInsets.only(
-                                  top: 5.0, left: 5.0, right: 5.0, bottom: 5.0),
-                              child: getAreaChartView())
-                      ),*/
-                        SizedBox(
-                          height: 10,
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                          color: AllCoustomTheme.getHeadingThemeColors(),
+                          width: 1.0, // Underline width
+                        ))),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        // decoration: BoxDecoration(border: Border.all()),
+                        height: 30,
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Full List of Securities",
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    )),
+                      ),
+                      Container(
+                        height: 200,
+                        // decoration: BoxDecoration(border: Border.all()),
+                        width: MediaQuery.of(context).size.width - 10,
+                        child: singleTableForPortFolio(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              // go live button
             ],
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 
   Future<void> getDoughnutPortfolioData(setHomeTabState) async {
@@ -434,7 +460,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
         homeDonutArray.add(1);
         homeDonutArray.add(2);
         homeDonutArray.add(3);
-        // homeDonutArray.add(4);
+        homeDonutArray.add(4);
         portfolioChartData = null;
         portfolioChartData =
             response['message'] != null && response['message']['data'] != null
@@ -579,39 +605,38 @@ class _MainHomeTabState extends State<MainHomeTab> {
     //   print("securities : $securities");
     // }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Column(
-          children: [
-            singleRow(context, "Security", '# of shares/ \$', 'In-Price',
-                'Current Price', '% Return', Colors.indigo[100]),
-            singleRow(
-                context,
-                "${securities[0]['name']}",
-                '${securities[0]['share']}',
-                '${securities[0]['price']}',
-                '-',
-                '-',
-                Colors.indigo[50]),
-            singleRow(
-                context,
-                "${securities[1]['name']}",
-                '${securities[1]['share']}',
-                '${securities[1]['price']}',
-                '-',
-                '-',
-                Colors.indigo[100]),
-            singleRow(
-                context,
-                "${securities[2]['name']}",
-                '${securities[2]['share']}',
-                '${securities[2]['price']}',
-                '-',
-                '-',
-                Colors.indigo[50]),
-          ],
-        ),
+    return Container(
+      // width: MediaQuery.of(context).size.width -10,
+      // decoration: BoxDecoration(border: Border.all()),
+      child: Column(
+        children: [
+          singleRow(context, "Security", '# of shares/ \$', 'In-Price',
+              'Current Price', '% Return', Colors.indigo[100]),
+          singleRow(
+              context,
+              "${securities[0]['name']}",
+              '${securities[0]['share']}',
+              '${securities[0]['price']}',
+              '-',
+              '-',
+              Colors.indigo[50]),
+          singleRow(
+              context,
+              "${securities[1]['name']}",
+              '${securities[1]['share']}',
+              '${securities[1]['price']}',
+              '-',
+              '-',
+              Colors.indigo[100]),
+          singleRow(
+              context,
+              "${securities[2]['name']}",
+              '${securities[2]['share']}',
+              '${securities[2]['price']}',
+              '-',
+              '-',
+              Colors.indigo[50]),
+        ],
       ),
     );
   }
@@ -621,8 +646,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
+          width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 40,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
@@ -631,8 +655,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
           child: Center(child: Text(security)),
         ),
         Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
+          width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 40,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
@@ -645,8 +668,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
           )),
         ),
         Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
+          width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 40,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
@@ -659,8 +681,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
           )),
         ),
         Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
+          width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 40,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
@@ -673,8 +694,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
           )),
         ),
         Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
+          width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 40,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
@@ -688,5 +708,18 @@ class _MainHomeTabState extends State<MainHomeTab> {
         ),
       ],
     );
+  }
+
+  getChartTitle() {
+    switch (homeDonutCurrentIndex) {
+      case 0:
+        return "% mix by asset class";
+      case 1:
+        return "% mix by geography";
+      case 2:
+        return "% mix by sector";
+      case 4:
+        return null;
+    }
   }
 }

@@ -30,7 +30,13 @@ class _SampleFeaturedCompaniesListState
           if (snapshot.hasData) {
             return dd(snapshot.data);
           } else {
-            return SizedBox();
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.redAccent,
+                valueColor: AlwaysStoppedAnimation(Colors.green),
+                strokeWidth: 10,
+              ),
+            );
           }
         },
       ),
