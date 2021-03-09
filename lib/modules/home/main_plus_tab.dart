@@ -1,11 +1,19 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:auroim/constance/global.dart' as globals;
+import 'package:flutter/services.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:toast/toast.dart';
 
 class MainPlusTab extends StatefulWidget {
   @override
@@ -13,6 +21,7 @@ class MainPlusTab extends StatefulWidget {
 }
 
 class _MainPlusTabState extends State<MainPlusTab> {
+  bool _isInProgress = false;
   List<String> userList = <String>['Pooja', 'Ritika'];
 
   String selectedUser = "Pooja";
@@ -22,107 +31,209 @@ class _MainPlusTabState extends State<MainPlusTab> {
   void initState() {
     // displayModalBottomSheet(context);
     super.initState();
+    loadUserDetails();
+
+  }
+
+  loadUserDetails() async {
+    setState(() {
+      _isInProgress = true;
+    });
+    await Future.delayed(const Duration(milliseconds: 700));
+    setState(() {
+      _isInProgress = false;
+    });
+  }
+
+  Widget getUserField() {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.0),
+            ),
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE20,
+                color: AllCoustomTheme.getTextThemeColor()),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedUser == '',
+          child: getUserDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val != '') ||
+            (selectedUser != null && selectedUser != ''))
+            ? null
+            : 'choose One';
+      },
+    );
+  }
+
+  Widget getUserDropDownList() {
+    if (userList != null && userList.length != 0) {
+      return new DropdownButtonHideUnderline(
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedUser,
+                dropdownColor: Colors.white,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedUser = newValue;
+                  });
+                },
+                items: userList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          displayModalBottomSheet(context);
-        },
-        child: Icon(
-          Icons.more_vert_outlined,
-          color: AllCoustomTheme.getTextThemeColors(),
-          size: 30.0,
-        ),
-        backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-      ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-            padding: const EdgeInsets.only(right: 16, left: 16),
-            child: Column(
-              children: <Widget>[
-                /*SizedBox(
-            height: appBarheight,
-          ),*/
-                Row(
-                  children: <Widget>[
-                    GestureDetector(
-                      // onTap: () {
-                      //   _homeScaffoldKey.currentState.openDrawer();
-                      // },
-                      child: Icon(
-                        Icons.sort,
-                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                      ),
-                    ),
-                    Expanded(
-                      child: Animator(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.decelerate,
-                        cycles: 1,
-                        builder: (anim) => Transform.scale(
-                          scale: anim.value,
-                          child: Text(
-                            'Start Post',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColors(),
-                              fontWeight: FontWeight.bold,
-                              fontSize: ConstanceData.SIZE_TITLE20,
+    AppBar appBar = AppBar();
+    double appBarheight = appBar.preferredSize.height;
+    return Stack(
+      children: <Widget>[
+        SafeArea(
+            bottom: true,
+            child: Scaffold(
+              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  displayModalBottomSheet(context);
+                },
+                child: Icon(
+                  Icons.more_vert_outlined,
+                  color: AllCoustomTheme.getTextThemeColors(),
+                  size: 30.0,
+                ),
+                backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+              ),
+              body: ModalProgressHUD(
+                inAsyncCall: _isInProgress,
+                opacity: 0,
+                progressIndicator: CupertinoActivityIndicator(
+                  radius: 12,
+                ),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16, left: 16),
+                    child: !_isInProgress
+                        ? Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () {
+                                //   _homeScaffoldKey.currentState.openDrawer();
+                              },
+                              child: Animator(
+                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 0,
+                                builder: (anim) => FractionalTranslation(
+                                  translation: anim.value,
+                                  child: Icon(
+                                    Icons.sort,
+                                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                  ),
+                                ),
+                              ),
                             ),
+                            Expanded(
+                              child: Animator(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.decelerate,
+                                cycles: 1,
+                                builder: (anim) => Transform.scale(
+                                  scale: anim.value,
+                                  child: Text(
+                                    'Start Post',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: AllCoustomTheme.getTextThemeColor(),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: ConstanceData.SIZE_TITLE20,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: 14,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                            ),
+                            Expanded(
+                              child: getUserField(),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          child: TextField(
+                            maxLines: 50,
+                            decoration: InputDecoration(
+                              hintText: 'What do you want to talk about?',
+                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
+                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                              focusColor: AllCoustomTheme.getTextThemeColor(),
+                              fillColor: AllCoustomTheme.getTextThemeColor(),
+                            ),
+                            cursorColor: AllCoustomTheme.getTextThemeColor(),
+                            style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                           ),
                         ),
-                      ),
+                      ],
                     )
-                  ],
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 14,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                    ),
-                    Expanded(
-                      child: getUserField(),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 50,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      // labelText: 'Employment Status',
-                      hintText: 'What do you want to talk about?',
-                      hintStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          color: AllCoustomTheme.getTextThemeColors()),
-                      labelStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          color: AllCoustomTheme.getTextThemeColors()),
-                    ),
+                        : SizedBox(),
                   ),
                 ),
-/*            Container(
-            child: displayModalBottomSheet(context),
-          ),*/
-              ],
-            )),
-      )
+              ),
+            )
+        )
+      ],
     );
   }
+
 
   displayModalBottomSheet(context) {
     showModalBottomSheet(
@@ -287,71 +398,5 @@ class _MainPlusTabState extends State<MainPlusTab> {
             ),
           );
         });
-  }
-
-  Widget getUserField() {
-    return new FormField(
-      builder: (FormFieldState state) {
-        return InputDecorator(
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white, width: 1.0),
-            ),
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE20,
-                color: AllCoustomTheme.getTextThemeColors()),
-            errorText: state.hasError ? state.errorText : null,
-          ),
-          isEmpty: selectedUser == '',
-          child: getUserDropDownList(),
-        );
-      },
-      validator: (val) {
-        return ((val != null && val != '') ||
-                (selectedUser != null && selectedUser != ''))
-            ? null
-            : 'choose One';
-      },
-    );
-  }
-
-  Widget getUserDropDownList() {
-    if (userList != null && userList.length != 0) {
-      return new DropdownButtonHideUnderline(
-        child: ButtonTheme(
-            alignedDropdown: true,
-            child: Container(
-              height: 20.0,
-              child: new DropdownButton(
-                value: selectedUser,
-                dropdownColor: AllCoustomTheme.getThemeData().primaryColor,
-                isExpanded: true,
-                onChanged: (String newValue) {
-                  setState(() {
-                    selectedUser = newValue;
-                  });
-                },
-                items: userList.map((String value) {
-                  return new DropdownMenuItem(
-                    value: value,
-                    child: new Text(
-                      value,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            )),
-      );
-    } else {
-      return Container(
-        height: 0.0,
-        width: 0.0,
-      );
-    }
   }
 }

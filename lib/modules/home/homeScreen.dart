@@ -660,7 +660,7 @@ class _HomeScreenState extends State<HomeScreen>
                     child: Container(
                       color: isSelect2 || isSelect1
                           ? AllCoustomTheme.getPageBackgroundThemeColor()
-                          : (isSelect5 || isSelect4
+                          : (isSelect5 || isSelect4 || isSelect3
                               ? AllCoustomTheme.getBodyContainerThemeColor()
                               : AllCoustomTheme.getThemeData().primaryColor),
                       height: height,

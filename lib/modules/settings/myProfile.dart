@@ -5,6 +5,10 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
+import 'package:auroim/widgets/myProfile/Qus_ans.dart';
+import 'package:auroim/widgets/myProfile/live_paper_portfolio.dart';
+import 'package:auroim/widgets/myProfile/profile_background.dart';
+import 'package:auroim/widgets/myProfile/stockPitches.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -490,8 +494,25 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                     ),
                   ),
                   SizedBox(
+                    height: 5,
+                  ),
+                  LivePaperPortfolio(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  StockPitches(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  QusAns(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  ProfileBackground(),
+                  SizedBox(
                     height: 40,
                   ),
+
                 ],
               ),
             ),
