@@ -254,6 +254,349 @@ class _MyAccountState extends State<MyAccount> {
                               height: 20.0,
                             ),
                             Container(
+                              margin: EdgeInsets.only(left: 10.0,top: 10.0),
+                              child: ExpandablePanel(
+                                header: Text(
+                                  'My Fund balance',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                  ),
+                                ),
+                                expanded: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Icon(
+                                                Icons.circle,
+                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                size: 8,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 14,
+                                          ),
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Text(
+                                                'Cash Balance',
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Icon(
+                                                Icons.circle,
+                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                size: 8,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 14,
+                                          ),
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Text(
+                                                'Auro Account balance',
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Icon(
+                                                Icons.circle,
+                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                size: 8,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 14,
+                                          ),
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Text(
+                                                'Personal account balance',
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Icon(
+                                                Icons.circle,
+                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                size: 8,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 14,
+                                          ),
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Text(
+                                                'Add/Redeem funds',
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                tapHeaderToExpand: true,
+                                hasIcon: true,
+                                iconColor: Colors.blueGrey,
+
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 10.0,top: 10.0),
+                              child: ExpandablePanel(
+                                header: Text(
+                                  'Portfolio Holding details',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                  ),
+                                ),
+                                expanded: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Icon(
+                                                Icons.circle,
+                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                size: 8,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 14,
+                                          ),
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Text(
+                                                'Auro',
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Icon(
+                                                Icons.circle,
+                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                size: 8,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 14,
+                                          ),
+                                          Animator(
+                                            tween: Tween<double>(begin: 0, end: 1),
+                                            duration: Duration(milliseconds: 500),
+                                            cycles: 1,
+                                            builder: (anim) => SizeTransition(
+                                              sizeFactor: anim,
+                                              axis: Axis.horizontal,
+                                              axisAlignment: 1,
+                                              child: Text(
+                                                'Personal',
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme.getTextThemeColor(),
+                                                  fontSize: ConstanceData.SIZE_TITLE14,
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                tapHeaderToExpand: true,
+                                hasIcon: true,
+                                iconColor: Colors.blueGrey,
+
+                              ),
+                            ),
+/*                            Container(
                               child: ExpansionTile(
                                 title: Text(
                                   "Commute Reference",
@@ -586,7 +929,7 @@ class _MyAccountState extends State<MyAccount> {
 
                                 ],
                               ),
-                            ),
+                            ),*/
                             SizedBox(
                               height: 20.0,
                             ),

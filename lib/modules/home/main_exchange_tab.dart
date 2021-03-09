@@ -961,7 +961,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
             "No data available yet",
             textAlign: TextAlign.center,
             style: new TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
+              color: AllCoustomTheme.getTextThemeColor(),
               fontSize: ConstanceData.SIZE_TITLE18,
               fontFamily: "Rasa",
             ),
