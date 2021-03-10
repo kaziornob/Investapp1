@@ -801,19 +801,19 @@ class _AddEditQusState extends State<AddEditQus> {
                                                       ),
                                                     ),
                                                     onSubmitted: (value) {
-                                                      setState(() {
-                                                        itemList.add(TagData(
-                                                            _searchController
-                                                                .text,
-                                                            _searchController
-                                                                .text));
-                                                        tagListVisible =
-                                                            itemList.length == 0
-                                                                ? false
-                                                                : true;
-                                                      });
-                                                      _searchController.text =
-                                                          '';
+                                                      // setState(() {
+                                                      //   itemList.add(TagData(
+                                                      //       _searchController
+                                                      //           .text,
+                                                      //       _searchController
+                                                      //           .text));
+                                                      //   tagListVisible =
+                                                      //       itemList.length == 0
+                                                      //           ? false
+                                                      //           : true;
+                                                      // });
+                                                      // _searchController.text =
+                                                      //     '';
                                                     }),
                                             suggestionsCallback:
                                                 (pattern) async {
@@ -851,6 +851,9 @@ class _AddEditQusState extends State<AddEditQus> {
                                               return suggestionsBox;
                                             },
                                             onSuggestionSelected: (suggestion) {
+                                              print("suggestion: ${suggestion['ticker']}");
+                                              print("suggestion name: ${suggestion['company_name']}");
+
                                               _searchController.text = '';
                                               setState(() {
                                                 itemList.add(TagData(

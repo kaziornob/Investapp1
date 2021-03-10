@@ -12,11 +12,11 @@ class _StockPitchesState extends State<StockPitches> {
   List stockPitchList = [
     {
       "id": 1,
-      "title": "Is Apple a good buy?"
+      "title": "Apple"
     },
     {
       "id": 2,
-      "title": "Is Mukesh key for Reliance stock?"
+      "title": "Reliance"
     },
     {
       "id": 3,
@@ -144,7 +144,29 @@ class _StockPitchesState extends State<StockPitches> {
               ),
             ],
           ),
-        )
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 40.0,
+            ),
+            Expanded(
+              child: Text(
+                "Show More",
+                style: TextStyle(
+                    color: AllCoustomTheme.getSeeMoreThemeColor(),
+                    decoration: TextDecoration.underline,
+                    fontSize: ConstanceData.SIZE_TITLE16,
+                    fontFamily: "Roboto",
+                    package: 'Roboto-Regular',
+                    letterSpacing: 0.2
+                ),
+              ),
+            )
+          ],
+        ),
       ],
     );
   }

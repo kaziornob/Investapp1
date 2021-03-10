@@ -345,7 +345,8 @@ class _QusDetailState extends State<QusDetail> {
                                 ),
                                 Container(
                                   child: new Text(
-                                    "0",
+                                    // QusDetail.qusInfo['view']!=null ?  "${QusDetail.qusInfo['view']}" : '0',
+                                    widget.allParams["view"]!=null ? widget.allParams["view"] : '0',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: ConstanceData.SIZE_TITLE14,
@@ -424,8 +425,7 @@ class _QusDetailState extends State<QusDetail> {
                           ),
                         ),
                         //tags section
-/*                        Container(
-                          // margin: EdgeInsets.only(left: 15.0),
+                        Container(
                           child: StaggeredGridView.countBuilder(
                             itemCount: widget.allParams['tags'] != null ? widget.allParams['tags'].length : 0,
                             physics: NeverScrollableScrollPhysics(),
@@ -446,7 +446,7 @@ class _QusDetailState extends State<QusDetail> {
                                     children: <Widget>[
                                       Expanded(
                                         child: Text(
-                                          '${widget.allParams['tags'][index].tag}',
+                                          '${widget.allParams['tags'][index]['tag']}',
                                           style: TextStyle(
                                               color: AllCoustomTheme.getTextThemeColors(),
                                               fontSize: ConstanceData.SIZE_TITLE14,
@@ -461,7 +461,7 @@ class _QusDetailState extends State<QusDetail> {
                               );
                             },
                           ),
-                        ),*/
+                        ),
                         SizedBox(
                           height: 10,
                         ),

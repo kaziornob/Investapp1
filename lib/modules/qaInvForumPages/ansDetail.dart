@@ -94,7 +94,7 @@ class _AnsDetailState extends State<AnsDetail> {
                 children: [
                   Container(
                     child: new Text(
-                      '0',
+                      '${data[index]['up votes']}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: ConstanceData.SIZE_TITLE14,
@@ -110,7 +110,7 @@ class _AnsDetailState extends State<AnsDetail> {
                   ),
                   Container(
                     child: new Text(
-                      "0",
+                      '${data[index]['down votes']}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: ConstanceData.SIZE_TITLE14,
