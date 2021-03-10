@@ -865,7 +865,7 @@ class _AddEditQusState extends State<AddEditQus> {
                                                     itemList.length == 0
                                                         ? false
                                                         : true;
-                                              });
+                                              },);
                                             },
                                           ),
                                         ),

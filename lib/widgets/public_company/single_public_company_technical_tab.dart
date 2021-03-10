@@ -9,6 +9,7 @@ class SinglePublicCompanyDetailsTechnicalTab extends StatefulWidget {
   final equityBeta;
   final marketCapLocal;
   final fixRate;
+  final ticker;
 
   SinglePublicCompanyDetailsTechnicalTab({
     this.marketCapital,
@@ -18,6 +19,7 @@ class SinglePublicCompanyDetailsTechnicalTab extends StatefulWidget {
     this.roe3yr,
     this.marketCapLocal,
     this.fixRate,
+    this.ticker,
   });
 
   @override

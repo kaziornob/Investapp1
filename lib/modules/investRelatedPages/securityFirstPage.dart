@@ -209,6 +209,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
           equityBeta: data["equity_beta"],
           marketCapLocal: data["market_cap_local_mn"],
           fixRate: data["fx_rate"],
+          ticker: widget.companyTicker,
         );
     }
   }

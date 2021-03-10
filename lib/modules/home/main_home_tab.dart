@@ -4,6 +4,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/wishList.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
+import 'package:auroim/widgets/small_get_area_chart_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -21,10 +22,10 @@ class _MainHomeTabState extends State<MainHomeTab> {
   List homeDonutArray = [];
   List<ChartData> homeChartData = [];
   bool _isinit = true;
+  CarouselController _carouselController = CarouselController();
 
   @override
   void initState() {
-    print("");
     super.initState();
   }
 
@@ -109,8 +110,10 @@ class _MainHomeTabState extends State<MainHomeTab> {
                 child: Stack(
                   children: [
                     Container(
+                      height: 250,
                       // decoration: BoxDecoration(border: Border.all()),
                       child: CarouselSlider.builder(
+                        carouselController: _carouselController,
                         itemCount: homeDonutArray.length,
                         options: CarouselOptions(
                             autoPlay: false,
@@ -118,15 +121,17 @@ class _MainHomeTabState extends State<MainHomeTab> {
                             onPageChanged: (index, reason) {
                               setHomeTabState(() {
                                 homeDonutCurrentIndex = index;
-                                setHomeDoughnutChartData();
+                                if ([0, 1, 2].contains(index)) {
+                                  setHomeDoughnutChartData();
+                                }
                               });
                             }),
                         itemBuilder: (context, index) {
                           print("itembuilder $index");
-                          if (index == 3) {
+                          if (index == 6) {
                             return Container(
                               // decoration: BoxDecoration(border: Border.all()),
-                              height: 200,
+                              height: 300,
                               width: MediaQuery.of(context).size.width * 0.80,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -160,43 +165,62 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             );
+                          } else if (index == 3 || index == 4 || index == 5) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SmallGetAreaChartView(
+                                  newSalesData: [
+                                    NewSalesData(2010, 35),
+                                    NewSalesData(2011, 28),
+                                    NewSalesData(2012, 34),
+                                    NewSalesData(2013, 32),
+                                    NewSalesData(2014, 40),
+                                  ],
+                                  color: [
+                                    Colors.blue[50],
+                                    Colors.blue[200],
+                                    Colors.blue,
+                                  ],
+                                  stops: [0.0, 0.5, 1.0],
+                                  ticker: "000020 KS Equity",
+                                ),
+                              ],
+                            );
                           } else {
-                            return Container(
-                              // decoration: BoxDecoration(border: Border.all()),
-                              width: MediaQuery.of(context).size.width * 0.93,
-                              child: SfCircularChart(
-                                title: ChartTitle(text: getChartTitle()),
-                                legend: Legend(
-                                    isVisible: true,
-                                    textStyle: TextStyle(
-                                        color: AllCoustomTheme
-                                            .getTextThemeColors()),
-                                    overflowMode: LegendItemOverflowMode.wrap,
-                                    itemPadding: 5.0),
-                                series: <CircularSeries>[
-                                  DoughnutSeries<ChartData, String>(
-                                    dataSource: homeChartData,
-                                    xValueMapper: (ChartData data, _) => data.x,
-                                    yValueMapper: (ChartData data, _) => data.y,
-                                    dataLabelSettings: DataLabelSettings(
-                                        isVisible: true,
-                                        useSeriesColor: true,
-                                        showCumulativeValues: true,
-                                        showZeroValue: true),
-                                  )
-                                ],
-                              ),
+                            return SfCircularChart(
+                              title: ChartTitle(text: getChartTitle()),
+                              legend: Legend(
+                                  isVisible: true,
+                                  textStyle: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                  ),
+                                  overflowMode: LegendItemOverflowMode.wrap,
+                                  itemPadding: 5.0),
+                              series: <CircularSeries>[
+                                DoughnutSeries<ChartData, String>(
+                                  radius: "90%",
+                                  dataSource: homeChartData,
+                                  xValueMapper: (ChartData data, _) => data.x,
+                                  yValueMapper: (ChartData data, _) => data.y,
+                                  dataLabelSettings: DataLabelSettings(
+                                      isVisible: true,
+                                      useSeriesColor: true,
+                                      showCumulativeValues: true,
+                                      showZeroValue: true),
+                                )
+                              ],
                             );
                           }
                         },
                       ),
                     ),
                     Positioned(
-                      top: 80,
+                      top: 100,
                       right: 0,
                       child: IconButton(
                         icon: Icon(
@@ -204,22 +228,20 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          setHomeTabState(() {
-                            if (homeDonutCurrentIndex == 3) {
-                              homeDonutCurrentIndex = 0;
-                              setHomeDoughnutChartData();
-                            } else {
-                              homeDonutCurrentIndex = homeDonutCurrentIndex + 1;
-                              if (homeDonutCurrentIndex != 3) {
-                                setHomeDoughnutChartData();
-                              }
-                            }
-                          });
+                          if (homeDonutCurrentIndex == 6) {
+                            homeDonutCurrentIndex = 0;
+                            _carouselController
+                                .animateToPage(homeDonutCurrentIndex);
+                          } else {
+                            homeDonutCurrentIndex = homeDonutCurrentIndex + 1;
+                            _carouselController
+                                .animateToPage(homeDonutCurrentIndex);
+                          }
                         },
                       ),
                     ),
                     Positioned(
-                      top: 80,
+                      top: 100,
                       left: 0,
                       child: IconButton(
                         icon: Icon(
@@ -227,16 +249,15 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          setHomeTabState(() {
-                            if (homeDonutCurrentIndex == 0) {
-                              homeDonutCurrentIndex = 3;
-                            } else {
-                              homeDonutCurrentIndex = homeDonutCurrentIndex - 1;
-                              if (homeDonutCurrentIndex != 3) {
-                                setHomeDoughnutChartData();
-                              }
-                            }
-                          });
+                          if (homeDonutCurrentIndex == 0) {
+                            homeDonutCurrentIndex = 6;
+                            _carouselController
+                                .animateToPage(homeDonutCurrentIndex);
+                          } else {
+                            homeDonutCurrentIndex = homeDonutCurrentIndex - 1;
+                            _carouselController
+                                .animateToPage(homeDonutCurrentIndex);
+                          }
                         },
                       ),
                     ),
@@ -400,11 +421,13 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           bottom: 3, // space between underline and text
                         ),
                         decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                          color: AllCoustomTheme.getHeadingThemeColors(),
-                          width: 1.0, // Underline width
-                        ))),
+                          border: Border(
+                            bottom: BorderSide(
+                              color: AllCoustomTheme.getHeadingThemeColors(),
+                              width: 1.0, // Underline width
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 10,
@@ -427,7 +450,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                         ),
                       ),
                       Container(
-                        height: 200,
+                        // height: 200,
                         // decoration: BoxDecoration(border: Border.all()),
                         width: MediaQuery.of(context).size.width - 10,
                         child: singleTableForPortFolio(),
@@ -461,6 +484,9 @@ class _MainHomeTabState extends State<MainHomeTab> {
         homeDonutArray.add(2);
         homeDonutArray.add(3);
         homeDonutArray.add(4);
+        homeDonutArray.add(5);
+        homeDonutArray.add(6);
+        homeDonutArray.add(7);
         portfolioChartData = null;
         portfolioChartData =
             response['message'] != null && response['message']['data'] != null
@@ -484,23 +510,24 @@ class _MainHomeTabState extends State<MainHomeTab> {
         //     portfolioChartData['weights_assetclass']['weights'];
         print("in bro index 0");
         homeChartData = [];
-        Map countMap = {};
+        // Map countMap = {};
+        //
+        // portfolioChartData["data"].forEach(
+        //   (element) {
+        //     if (countMap.containsKey(element["asset_class"])) {
+        //       int earlyCount = countMap[element["asset_class"]];
+        //       countMap[element["asset_class"]] = earlyCount + 1;
+        //     } else {
+        //       countMap[element["asset_class"]] = 1;
+        //     }
+        //   },
+        // );
 
-        portfolioChartData["data"].forEach(
-          (element) {
-            if (countMap.containsKey(element["asset_class"])) {
-              int earlyCount = countMap[element["asset_class"]];
-              countMap[element["asset_class"]] = earlyCount + 1;
-            } else {
-              countMap[element["asset_class"]] = 1;
-            }
-          },
-        );
-
-        countMap.forEach((key, value) {
+        portfolioChartData["assetClass"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              value.toDouble(),
+              double.parse(value.toDouble().toStringAsFixed(2)),
+
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
@@ -509,46 +536,53 @@ class _MainHomeTabState extends State<MainHomeTab> {
       } else if (homeDonutCurrentIndex == 1) {
         print("in bro index 1");
         homeChartData = [];
-        Map countMap = {};
-
-        portfolioChartData["data"].forEach(
-          (element) {
-            if (countMap.containsKey(element["country"])) {
-              int earlyCount = countMap[element["country"]];
-              countMap[element["country"]] = earlyCount + 1;
-            } else {
-              countMap[element["country"]] = 1;
-            }
-          },
-        );
-
-        countMap.forEach((key, value) {
+        // Map countMap = {};
+        //
+        // portfolioChartData["data"].forEach(
+        //   (element) {
+        //     if (countMap.containsKey(element["country"])) {
+        //       int earlyCount = countMap[element["country"]];
+        //       countMap[element["country"]] = earlyCount + 1;
+        //     } else {
+        //       countMap[element["country"]] = 1;
+        //     }
+        //   },
+        // );
+        portfolioChartData["country"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              value.toDouble(),
+              double.parse(value.toDouble().toStringAsFixed(2)),
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
+
+        // countMap.forEach((key, value) {
+        //   homeChartData.add(ChartData(
+        //       '$key',
+        //       value.toDouble(),
+        //       // double.parse(tempDouble.toStringAsFixed(4)),
+        //       globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
+        // });
       } else if (homeDonutCurrentIndex == 2) {
         print("in bro index 2");
         homeChartData = [];
-        Map countMap = {};
+        // Map countMap = {};
+        //
+        // portfolioChartData["data"].forEach(
+        //   (element) {
+        //     if (countMap.containsKey(element["sector"])) {
+        //       int earlyCount = countMap[element["sector"]];
+        //       countMap[element["sector"]] = earlyCount + 1;
+        //     } else {
+        //       countMap[element["sector"]] = 1;
+        //     }
+        //   },
+        // );
 
-        portfolioChartData["data"].forEach(
-          (element) {
-            if (countMap.containsKey(element["sector"])) {
-              int earlyCount = countMap[element["sector"]];
-              countMap[element["sector"]] = earlyCount + 1;
-            } else {
-              countMap[element["sector"]] = 1;
-            }
-          },
-        );
-
-        countMap.forEach((key, value) {
+        portfolioChartData["sector"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              value.toDouble(),
+              double.parse(value.toDouble().toStringAsFixed(2)),
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
@@ -557,91 +591,47 @@ class _MainHomeTabState extends State<MainHomeTab> {
   }
 
   singleTableForPortFolio() {
-    // print("index: $index");
     final List<Map<String, dynamic>> securities = [
       {"name": "1", "share": "", "price": ""},
       {"name": "2", "share": "", "price": ""},
       {"name": "3", "share": "", "price": ""},
     ];
 
-    // if (portfolioChartData != null &&
-    //     portfolioChartData['weights_foliotickers'] != null &&
-    //     portfolioChartData['weights_foliotickers']
-    //             ['weights'] !=
-    //         null) {
-    //   print("data comes: $index");
-    //   print(
-    //       "weights folio tickers: ${portfolioChartData['weights_foliotickers']["weights"]}");
-    //   final Map<String, dynamic> weights =
-    //       portfolioChartData['weights_foliotickers']
-    //           ["weights"];
-    //
-    //   print("weights: $weights");
-    //
-    //   final Map<String, dynamic> weight_values =
-    //       portfolioChartData['weights_foliotickers']
-    //           ["weights_value"];
-    //   final Map<String, dynamic> in_prices =
-    //       portfolioChartData['weights_foliotickers']
-    //           ["in_price"];
-    //   final Map<String, dynamic> security_names =
-    //       portfolioChartData['weights_foliotickers']
-    //           ["security_name"];
-    //   print("weights : $weights");
-    //
-    //   var sortedKeys = weights.keys.toList(growable: false)
-    //     ..sort(
-    //         (k1, k2) => weights[k1].compareTo(weights[k2]));
-    //   sortedKeys = sortedKeys.getRange(0, 3).toList();
-    //   sortedKeys.forEach((k) => {
-    //         securities.add({
-    //           "weight": weights[k],
-    //           "name": security_names[k],
-    //           "price": in_prices[k],
-    //           "weight_value": weight_values[k],
-    //           "share": weight_values[k] / in_prices[k]
-    //         })
-    //       });
-    //   print("securities : $securities");
-    // }
+    var index = 0;
 
-    return Container(
-      // width: MediaQuery.of(context).size.width -10,
-      // decoration: BoxDecoration(border: Border.all()),
-      child: Column(
-        children: [
-          singleRow(context, "Security", '# of shares/ \$', 'In-Price',
-              'Current Price', '% Return', Colors.indigo[100]),
-          singleRow(
-              context,
-              "${securities[0]['name']}",
-              '${securities[0]['share']}',
-              '${securities[0]['price']}',
-              '-',
-              '-',
-              Colors.indigo[50]),
-          singleRow(
-              context,
-              "${securities[1]['name']}",
-              '${securities[1]['share']}',
-              '${securities[1]['price']}',
-              '-',
-              '-',
-              Colors.indigo[100]),
-          singleRow(
-              context,
-              "${securities[2]['name']}",
-              '${securities[2]['share']}',
-              '${securities[2]['price']}',
-              '-',
-              '-',
-              Colors.indigo[50]),
-        ],
-      ),
-    );
+    if (portfolioChartData != null) {
+      return Container(
+        // width: MediaQuery.of(context).size.width -10,
+        // decoration: BoxDecoration(border: Border.all()),
+        child: Column(
+          children: [
+            singleRow(context, "Security", '# of shares/ \$', 'In-Price',
+                'Current Price', '% Return', Colors.indigo[100]),
+            Column(
+              children: portfolioChartData["data"].map<Widget>((rowData) {
+                index = index + 1;
+                return singleRow(
+                  context,
+                  index,
+                  rowData["num_shares"].toStringAsFixed(2),
+                  rowData["inprice"].toStringAsFixed(2),
+                  "_",
+                  "_",
+                  index % 2 == 0 ? Colors.indigo[100] : Colors.indigo[50],
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 
-  singleRow(context, security, share, ip, cp, perReturn, color) {
+  Widget singleRow(context, security, share, ip, cp, perReturn, color) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -652,7 +642,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
             border: Border.all(color: Colors.white),
             color: color,
           ),
-          child: Center(child: Text(security)),
+          child: Center(child: Text("$security")),
         ),
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
@@ -663,7 +653,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
           ),
           child: Center(
               child: Text(
-            share,
+            "$share",
             textAlign: TextAlign.center,
           )),
         ),
@@ -676,7 +666,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
           ),
           child: Center(
               child: Text(
-            ip,
+            "$ip",
             textAlign: TextAlign.center,
           )),
         ),
@@ -718,7 +708,13 @@ class _MainHomeTabState extends State<MainHomeTab> {
         return "% mix by geography";
       case 2:
         return "% mix by sector";
+      case 3:
+        return "Security 1";
       case 4:
+        return "Security 2";
+      case 5:
+        return "Security 3";
+      default:
         return null;
     }
   }
