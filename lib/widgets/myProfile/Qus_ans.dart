@@ -1,5 +1,8 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/widgets/myProfile/all_ans_list.dart';
+import 'package:auroim/widgets/myProfile/all_qus_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class QusAns extends StatefulWidget {
@@ -244,11 +247,42 @@ class _QusAnsState extends State<QusAns> {
                   ),
                 ],
               ),
+              InkWell(
+                onTap: (){
+                  Navigator.of(context).push(
+                    CupertinoPageRoute(
+                      builder: (BuildContext context) => AllQusList(),
+                    ),
+                  );
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 40.0,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Show More",
+                        style: TextStyle(
+                            color: AllCoustomTheme.getSeeMoreThemeColor(),
+                            decoration: TextDecoration.underline,
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
+                            letterSpacing: 0.2
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
         SizedBox(
-          height: 10.0,
+          height: 40.0,
         ),
         // answer section
         Padding(
@@ -287,6 +321,38 @@ class _QusAnsState extends State<QusAns> {
                   ),
                 ],
               ),
+              InkWell(
+                onTap: ()
+                {
+                  Navigator.of(context).push(
+                    CupertinoPageRoute(
+                      builder: (BuildContext context) => AllAnswerList(),
+                    ),
+                  );
+                },
+                child:  Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 40.0,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Show More",
+                        style: TextStyle(
+                            color: AllCoustomTheme.getSeeMoreThemeColor(),
+                            decoration: TextDecoration.underline,
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
+                            letterSpacing: 0.2
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         )

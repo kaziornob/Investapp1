@@ -1,5 +1,8 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/widgets/myProfile/addEditEducation.dart';
+import 'package:auroim/widgets/myProfile/addEditEmployment.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileBackground extends StatefulWidget {
@@ -13,12 +16,12 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
   List eduList = [
     {
       "id": 1,
-      "title": "B.tech",
+      "title": "B.Ed",
       "start_year": 2012,
       "end_year": 2016,
       "desc": ""
     },
-    {
+/*    {
       "id": 2,
       "title": "Diploma",
       "start_year": 2008,
@@ -32,7 +35,7 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
       "start_year": 2006,
       "end_year": 2008,
       "desc": ""
-    }
+    }*/
   ];
 
   List empList = [
@@ -43,7 +46,7 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
       "end_year": 2021,
       "desc": ""
     },
-    {
+   /* {
       "id": 2,
       "title": "HCL",
       "start_year": 2008,
@@ -57,15 +60,15 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
       "start_year": 2006,
       "end_year": 2008,
       "desc": ""
-    }
+    }*/
   ];
 
   Widget getEmpList(data) {
     if (data != null && data.length != 0) {
       return new ListView.builder(
         itemCount: data.length,
-        // physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        // scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
@@ -158,8 +161,8 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
     if (data != null && data.length != 0) {
       return new ListView.builder(
         itemCount: data.length,
-        // physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        // scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
@@ -193,43 +196,6 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
               ),
             ),
           );
-/*          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // edu section
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 5.0),
-                    child: CircleAvatar(
-                      radius: 20.0,
-                      backgroundImage: new AssetImage('assets/download.jpeg'),
-                      backgroundColor: Colors.transparent,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "${data[index]['qus']}",
-                      style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColor(),
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          fontFamily: "Roboto",
-                          package: 'Roboto-Regular',
-                          letterSpacing: 0.2
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-            ],
-          );*/
         },
       );
     } else {
@@ -319,8 +285,16 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                     ),
                   ),
                   InkWell(
+                    onTap: ()
+                    {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (BuildContext context) => AddEditEmployment(),
+                        ),
+                      );
+                    },
                     child: Icon(
-                      Icons.add_box_sharp,
+                      empList.length==0 ?  Icons.add_box_sharp : Icons.edit,
                       color: AllCoustomTheme
                           .getSeeMoreThemeColor(),
                       size: 25,
@@ -337,11 +311,9 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                 children: [
                   Expanded(
                     child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.30,
-                        child: Scrollbar(
-                          child: getEmpList(empList),
-                        )
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.20,
+                      child: getEmpList(empList),
                     ),
                   ),
                 ],
@@ -376,8 +348,16 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                     ),
                   ),
                   InkWell(
+                    onTap: ()
+                    {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (BuildContext context) => AddEditEducation(),
+                        ),
+                      );
+                    },
                     child: Icon(
-                      Icons.add_box_sharp,
+                     eduList.length==0 ?  Icons.add_box_sharp : Icons.edit,
                       color: AllCoustomTheme
                           .getSeeMoreThemeColor(),
                       size: 25,
@@ -394,11 +374,9 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                 children: [
                   Expanded(
                     child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.30,
-                        child: Scrollbar(
-                          child: getEduList(eduList),
-                        )
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.20,
+                      child: getEduList(eduList),
                     ),
                   ),
                 ],

@@ -350,15 +350,23 @@ class _QusViewState extends State<QusView> {
   {
     var qusTitle = widget.allParams['title'];
     var qusBody = widget.allParams['body'];
-    var tagData= [];
+    // var tagData= [];
+
+    Map<String, String> tagData = {};
+
     for(var i=0; i<widget.allParams['tags'].length;i++)
     {
-      tagData.add(widget.allParams['tags'][i].tag);
+      // tagData.add({"tickerId": "${widget.allParams['tags'][i].id}","name": "${widget.allParams['tags'][i].tag}"});
+
+      tagData.addAll({"${widget.allParams['tags'][i].id}": '${widget.allParams['tags'][i].tag}'});
     }
 
     print("tags: $tagData");
-    var tempJsonReq = {"question_title":"$qusTitle","body":"$qusBody","tags":"$tagData"};
+
+    var tempJsonReq = {"question_title":"$qusTitle","body":"$qusBody","tags": tagData};
     String jsonReq = json.encode(tempJsonReq);
+
+    print("jsonReq: $jsonReq");
 
     var jsonReqResp = await request.postSubmit('forum/create_question',jsonReq);
     var result = json.decode(jsonReqResp.body);

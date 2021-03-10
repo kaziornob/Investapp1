@@ -747,6 +747,13 @@ class _MainExchangeTabState extends State<MainExchangeTab>
         scrollDirection: Axis.vertical,
         itemCount: data.length,
         itemBuilder: (context, index) {
+          var tagFinalData = [];
+
+          final tagData = data[index]['tags'] as Map;
+          for (final name in tagData.keys) {
+            final value = tagData[name];
+            tagFinalData.add({"id": name,"tag" : value});
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -754,18 +761,15 @@ class _MainExchangeTabState extends State<MainExchangeTab>
               // question section
               GestureDetector(
                 onTap: () {
-                  List<TagData> itemList = List();
-
-                  itemList.add(TagData("1", "native"));
-                  itemList.add(TagData("2", "fixed"));
 
                   var tempField = {
                     "id": "${data[index]['id']}",
                     "title": "${data[index]['title']}",
                     "body": "${data[index]['question']}",
                     "vote": "${data[index]['vote']}",
+                    "view": "${data[index]['view']}",
                     "totalAns": "${data[index]['no. of answer']}",
-                    "tags": itemList,
+                    "tags": tagFinalData,
                   };
 
                   print("QusDetail tempField: $tempField");
@@ -814,6 +818,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.only(top:3.0),
                     child: new Text(
                       "10K",
                       style: TextStyle(
@@ -832,6 +837,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.only(top:2.0),
                     child: new Text(
                       "${data[index]['no. of answer']}",
                       style: TextStyle(
@@ -850,8 +856,9 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.only(top:3.0),
                     child: new Text(
-                      "0",
+                      data[index]['view']!=null ?  "${data[index]['view']}" : '0',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: ConstanceData.SIZE_TITLE14,
@@ -868,6 +875,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.only(top:3.0),
                     child: new Text(
                       "100",
                       style: TextStyle(
@@ -886,6 +894,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.only(top:3.0),
                     child: new Text(
                       "${data[index]['vote']}",
                       style: TextStyle(
@@ -912,14 +921,14 @@ class _MainExchangeTabState extends State<MainExchangeTab>
               Container(
                 margin: EdgeInsets.only(left: 10.0),
                 child: StaggeredGridView.countBuilder(
-                  itemCount: tagItemList != null ? tagItemList.length : 0,
+                  itemCount: tagFinalData!=null && tagFinalData.length!=0 ? tagFinalData.length : 0,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 4,
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
                   shrinkWrap: true,
-                  staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                  itemBuilder: (context, index) {
+                  staggeredTileBuilder: (int tagIndex) => StaggeredTile.fit(1),
+                  itemBuilder: (context, tagIndex) {
                     return Container(
                         decoration: BoxDecoration(
                             color: AllCoustomTheme.getThemeData()
@@ -936,8 +945,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                           children: <Widget>[
                             Expanded(
                               child: Text(
-                                '${tagItemList[index]}',
-                                // data[index]['tags']
+                                tagFinalData[tagIndex]['tag'],
                                 style: TextStyle(
                                     color: AllCoustomTheme.getTextThemeColor(),
                                     fontSize: ConstanceData.SIZE_TITLE16,
@@ -951,6 +959,9 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   },
                 ),
               ),
+              Divider(
+                color: Colors.grey,
+              )
             ],
           );
         },
