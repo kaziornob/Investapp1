@@ -54,11 +54,11 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   @override
   void initState() {
     super.initState();
-    loadDetails();
+    // loadDetails();
     animation();
   }
 
-  loadDetails() async {
+  /*loadDetails() async {
     setState(() {
       _isDetailInProgress = true;
     });
@@ -66,7 +66,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     setState(() {
       _isDetailInProgress = false;
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +79,10 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
           body: ModalProgressHUD(
             inAsyncCall: _isDetailInProgress,
             opacity: 0,
-            progressIndicator: CupertinoActivityIndicator(
+            progressIndicator: SizedBox(),
+           /* progressIndicator: CupertinoActivityIndicator(
               radius: 12,
-            ),
+            ),*/
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(

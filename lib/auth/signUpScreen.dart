@@ -52,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void initState() {
     phoneIsoCode = '+852';
     super.initState();
-    loadDetails();
+    // loadDetails();
     animation();
   }
 
@@ -80,9 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
-            progressIndicator: CupertinoActivityIndicator(
-              radius: 12,
-            ),
+            progressIndicator:SizedBox(),
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
