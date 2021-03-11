@@ -5,6 +5,7 @@ import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:dropdown_date_picker/dropdown_date_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
@@ -71,7 +72,18 @@ class _AddEditEducationState extends State<AddEditEducation> {
   @override
   void initState() {
     super.initState();
+    loadDetails();
     animation();
+  }
+
+  loadDetails() async {
+    setState(() {
+      _isAddEditEduProgress = true;
+    });
+    await Future.delayed(const Duration(milliseconds: 700));
+    setState(() {
+      _isAddEditEduProgress = false;
+    });
   }
 
 /*  DateTime selectedDate = DateTime.now();
@@ -156,7 +168,9 @@ class _AddEditEducationState extends State<AddEditEducation> {
           body: ModalProgressHUD(
             inAsyncCall: _isAddEditEduProgress,
             opacity: 0,
-            progressIndicator: SizedBox(),
+            progressIndicator: CupertinoActivityIndicator(
+              radius: 12,
+            ),
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(

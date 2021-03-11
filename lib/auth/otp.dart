@@ -509,23 +509,11 @@ class _OtpState extends State<Otp> {
                                             splashColor: Colors.transparent,
                                             onTap: () async {
                                               print("total number: $totalPinNumber");
-                                              if(totalPinNumber==4) {
+                                              // if(totalPinNumber==4) {
+                                              if(controller1.text!="" && controller2.text!="" && controller3.text!="" && controller4.text!=""){
                                                 var finalOtp = controller1.text + controller2.text + controller3.text + controller4.text;
                                                 print("final otp: $finalOtp");
-
                                                 submit(finalOtp);
-                                                // matchOtp();
-                                                /*var value = await submit(finalOtp);
-
-                                                if (value == 'OTP Matched') {
-                                                  matchOtp();
-                                                }
-                                                else
-                                                {
-                                                  Toast.show("$value" + "", context,
-                                                      duration: Toast.LENGTH_LONG,
-                                                      gravity: Toast.BOTTOM);
-                                                }*/
                                               }
                                               else
                                               {
