@@ -87,7 +87,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     onTap: () {
                       // print("gschascvkajsc");
                       Navigator.of(context).push(
-                        CupertinoPageRoute(
+                        MaterialPageRoute(
                           builder: (BuildContext context) => AddEditQus(),
                         ),
                       );

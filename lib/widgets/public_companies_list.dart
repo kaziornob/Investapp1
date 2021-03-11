@@ -4,11 +4,10 @@ import 'package:auroim/widgets/get_area_chart_view.dart';
 import 'package:flutter/material.dart';
 
 class PublicCompaniesList extends StatefulWidget {
+  final Axis scrollDirection;
 
-  /*final Function callBack;
+  PublicCompaniesList({this.scrollDirection});
 
-  PublicCompaniesList ({this.callBack});
-  */
   @override
   _PublicCompaniesListState createState() => _PublicCompaniesListState();
 }
@@ -23,13 +22,15 @@ class _PublicCompaniesListState extends State<PublicCompaniesList> {
       future: _featuredCompaniesProvider.getPublicCompanyList(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          print("yes baby");
+          // print("yes baby");
           // print(snapshot.data);
           return Container(
             // decoration: BoxDecoration(border: Border.all(color: Colors.white,)),
-            height: 300,
+            height: widget.scrollDirection == null ? 300 : null,
             child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+                scrollDirection: widget.scrollDirection == null
+                    ? Axis.horizontal
+                    : widget.scrollDirection,
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   print(snapshot.data[0]);
@@ -52,7 +53,16 @@ class _PublicCompaniesListState extends State<PublicCompaniesList> {
                 }),
           );
         } else {
-          return SizedBox();
+          return Container(
+            height: 300,
+            child: Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.redAccent,
+                valueColor: AlwaysStoppedAnimation(Colors.green),
+                strokeWidth: 10,
+              ),
+            ),
+          );
         }
       },
     );

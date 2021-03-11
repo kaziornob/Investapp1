@@ -1,3 +1,6 @@
+import 'package:auroim/constance/constance.dart';
+import 'package:auroim/constance/themes.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +8,7 @@ class AuroStars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 210,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
@@ -40,7 +43,7 @@ class AuroStars extends StatelessWidget {
 
   smallImage(context, imagePath, bigImagePath) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left:8.0,right: 8.0,bottom: 0),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
@@ -49,13 +52,46 @@ class AuroStars extends StatelessWidget {
             ),
           );
         },
-        child: Container(
-          // decoration: BoxDecoration(
-          //   border: Border.all(),
-          // ),
-          height: 200,
-          width: 250,
-          child: Image.asset(imagePath),
+        child: Column(
+          children: [
+            Container(
+              // decoration: BoxDecoration(
+              //   border: Border.all(),
+              // ),
+              height: 170,
+              width: 250,
+              child: Image.asset(imagePath),
+            ),
+            SizedBox(
+              width: 120,
+              height: 30,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(20)),
+                  border: new Border.all(
+                      color: AllCoustomTheme
+                          .getChartBoxThemeColor(),
+                      width: 1.5),
+                  // color: AllCoustomTheme.getChartBoxThemeColor(),
+                ),
+                child: MaterialButton(
+                  splashColor: Colors.grey,
+                  child: Text(
+                    "BUY",
+                    style: TextStyle(
+                      color: AllCoustomTheme
+                          .getChartBoxTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE13,
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
+import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
 import 'package:auroim/widgets/go_to_marketplace_button.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class AllCryptoListBlack extends StatefulWidget {
+  final String sortingType;
+
+  AllCryptoListBlack({this.sortingType});
   @override
   _AllCryptoListBlackState createState() => _AllCryptoListBlackState();
 }
@@ -27,14 +31,20 @@ class _AllCryptoListBlackState extends State<AllCryptoListBlack> {
       child: Column(
         children: [
           FutureBuilder(
-            future: getData(),
+            future: _featuredCompaniesProvider.getCoinsListSorted(widget.sortingType),
             builder: (context, snapshot) {
               // print("cryptocurrencies");
               // print(snapshot.data);
               if (snapshot.hasData) {
                 return dd(snapshot.data);
               } else {
-                return SizedBox();
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.redAccent,
+                    valueColor: AlwaysStoppedAnimation(Colors.green),
+                    strokeWidth: 10,
+                  ),
+                );
               }
             },
           ),
@@ -73,38 +83,38 @@ class _AllCryptoListBlackState extends State<AllCryptoListBlack> {
     );
   }
 
-  getData() async {
-    print("in get data");
-    // var tempJsonReq = {};
-
-    // String jsonReq = jsonEncode(tempJsonReq);
-
-    var jsonReqResp = await _featuredCompaniesProvider
-        .coinDetails('https://api.coingecko.com/api/v3/coins/list');
-
-    var result = jsonDecode(jsonReqResp.body);
-    // print("coin details response: $result");
-
-    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
-      // print("ggggg");
-      // print("result");
-      return result;
-      // return getCompaniesList(result["message"]);
-
-      // if (result != null &&a
-      //     result.containsKey('auth') &&
-      //     result['auth'] == true) {
-      //   Toast.show("${result['message']}", context,
-      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      // }
-    } else if (result != null &&
-        result.containsKey('auth') &&
-        result['auth'] != true) {
-    } else {
-      Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-    }
-  }
+// getData() async {
+//   print("in get data");
+//   // var tempJsonReq = {};
+//
+//   // String jsonReq = jsonEncode(tempJsonReq);
+//
+//   var jsonReqResp = await _featuredCompaniesProvider
+//       .coinDetails('https://api.coingecko.com/api/v3/coins/list');
+//
+//   var result = jsonDecode(jsonReqResp.body);
+//   // print("coin details response: $result");
+//
+//   if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+//     // print("ggggg");
+//     // print("result");
+//     return result;
+//     // return getCompaniesList(result["message"]);
+//
+//     // if (result != null &&a
+//     //     result.containsKey('auth') &&
+//     //     result['auth'] == true) {
+//     //   Toast.show("${result['message']}", context,
+//     //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+//     // }
+//   } else if (result != null &&
+//       result.containsKey('auth') &&
+//       result['auth'] != true) {
+//   } else {
+//     Toast.show("Something went wrong!", context,
+//         duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+//   }
+// }
 }
 
 class CryptocurrencyItem extends StatelessWidget {
@@ -120,7 +130,7 @@ class CryptocurrencyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CoinUrl>(context,listen: false).getImageUrl(coinDetails["id"]);
+    // Provider.of<CoinUrl>(context, listen: false).getImageUrl(coinDetails["id"]);
     return Padding(
       padding: const EdgeInsets.only(
         left: 10.0,
@@ -150,7 +160,7 @@ class CryptocurrencyItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        coinDetails["name"],
+                        coinDetails["coin_id"].toUpperCase(),
                         style: TextStyle(
                           color: Color(0xffFF4544),
                           fontWeight: FontWeight.bold,
@@ -159,24 +169,16 @@ class CryptocurrencyItem extends StatelessWidget {
                       ),
                       width: boxConstraints.maxHeight / 3,
                     ),
-                    Consumer<CoinUrl>(
-                      builder: (context, urlProvider, _) {
-                        return Container(
-                          height: boxConstraints.maxHeight / 4,
-                          width: boxConstraints.maxHeight / 4,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xff5A56B9),
-                            ),
-                          ),
-                          child: !urlProvider.imageUrl
-                                  .containsKey(coinDetails["id"])
-                              ? SizedBox()
-                              : Image.network(
-                                  urlProvider.imageUrl[coinDetails["id"]]),
-                        );
-                      },
-                    ),
+                    Container(
+                      height: boxConstraints.maxHeight / 4,
+                      width: boxConstraints.maxHeight / 4,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xff5A56B9),
+                        ),
+                      ),
+                      child: Image.network(coinDetails["logo_link"]),
+                    )
                   ],
                 ),
               ),
@@ -193,58 +195,98 @@ class CryptocurrencyItem extends StatelessWidget {
               //         letterSpacing: 0.1),
               //   ),
               // ),
-              FutureBuilder(
-                future: getCoinData(context),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var metrics = jsonDecode(snapshot.data["metrics"]);
-                    var percentageChange =
-                        jsonDecode(snapshot.data["percentage_change"]);
-                    return Column(
-                      children: [
-                        Text(
-                          "Price : ${getPriceOfCoin(metrics)}",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                              fontFamily: "Roboto",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.1),
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          "24h Change : ${get24hChange(percentageChange)}",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                              fontFamily: "Roboto",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.1),
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          "Market Cap Rank : ${getMarketCapRank(metrics)}",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                              fontFamily: "Roboto",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.1),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return SizedBox();
-                  }
-                },
+              Column(
+                children: [
+                  Text(
+                    "Price : ${coinDetails["price"]}",
+                    style: TextStyle(
+                        color: Color(0xff5A56B9),
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.1),
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    "24h Change : ${coinDetails["per_24h"]}",
+                    style: TextStyle(
+                        color: Color(0xff5A56B9),
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.1),
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    "Market Cap Rank : #${coinDetails["market_cap_rank"]}",
+                    style: TextStyle(
+                        color: Color(0xff5A56B9),
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.1),
+                  ),
+                ],
               ),
+              // FutureBuilder(
+              //   future: getCoinData(context),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       var metrics = jsonDecode(snapshot.data["metrics"]);
+              //       var percentageChange =
+              //           jsonDecode(snapshot.data["percentage_change"]);
+              //       return Column(
+              //         children: [
+              //           Text(
+              //             "Price : ${getPriceOfCoin(metrics)}",
+              //             style: TextStyle(
+              //                 color: Colors.green,
+              //                 fontSize: 16,
+              //                 fontFamily: "Roboto",
+              //                 fontStyle: FontStyle.normal,
+              //                 fontWeight: FontWeight.bold,
+              //                 letterSpacing: 0.1),
+              //           ),
+              //           SizedBox(
+              //             height: 3,
+              //           ),
+              //           Text(
+              //             "24h Change : ${get24hChange(percentageChange)}",
+              //             style: TextStyle(
+              //                 color: Colors.green,
+              //                 fontSize: 16,
+              //                 fontFamily: "Roboto",
+              //                 fontStyle: FontStyle.normal,
+              //                 fontWeight: FontWeight.bold,
+              //                 letterSpacing: 0.1),
+              //           ),
+              //           SizedBox(
+              //             height: 3,
+              //           ),
+              //           Text(
+              //             "Market Cap Rank : ${getMarketCapRank(metrics)}",
+              //             style: TextStyle(
+              //                 color: Colors.green,
+              //                 fontSize: 16,
+              //                 fontFamily: "Roboto",
+              //                 fontStyle: FontStyle.normal,
+              //                 fontWeight: FontWeight.bold,
+              //                 letterSpacing: 0.1),
+              //           ),
+              //         ],
+              //       );
+              //     } else {
+              //       return SizedBox();
+              //     }
+              //   },
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FlatButton(
@@ -252,8 +294,8 @@ class CryptocurrencyItem extends StatelessWidget {
                     // getUserDetails();
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => SingleCryptoCurrencyDetails(
-                          coinDetails: coinDetails,
+                        builder: (context) => SingleCryptoCurrencyDetailsById(
+                          coinId:  coinDetails["coin_id"],
                         ),
                       ),
                     );
@@ -314,81 +356,81 @@ class CryptocurrencyItem extends StatelessWidget {
     );
   }
 
-  getCoinData(context) async {
-    print("in get data");
-    print(coinDetails["id"]);
-    // var tempJsonReq = {"coin": "${coinDetails["id"]}"};
-    //
-    // String jsonReq = jsonEncode(tempJsonReq);
+// getCoinData(context) async {
+//   print("in get data");
+//   print(coinDetails["id"]);
+//   // var tempJsonReq = {"coin": "${coinDetails["id"]}"};
+//   //
+//   // String jsonReq = jsonEncode(tempJsonReq);
+//
+//   var jsonReqResp = await _featuredCompaniesProvider.getSingleCoinDetails(
+//       'company_details/cryptoInfo?coin_id=${coinDetails["id"]}');
+//
+//   var result = jsonDecode(jsonReqResp.body);
+//   print("coin details response: $result");
+//   // print("gsnxvhjsvxhs");
+//   // print( "gagagagaga : "+result["message"]["percentage_change"].runtimeType.toString());
+//   // print(jsonDecode(result["message"]["percentage_change"])["1h"]);
+//
+//   if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+//     // print("ggggg");
+//     // print("result");
+//     // print(
+//     //   jsonDecode(result["message"]["percentage_change"].runtimeType.toString()),
+//     // );
+//
+//     // print( "gagagagaga : "+result["message"]["percentage_change"]["1h"]);
+//     return result["message"];
+//     // return getCompaniesList(result["message"]);
+//
+//     // if (result != null &&a
+//     //     result.containsKey('auth') &&
+//     //     result['auth'] == true) {
+//     //   Toast.show("${result['message']}", context,
+//     //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+//     // }
+//   } else if (result != null &&
+//       result.containsKey('auth') &&
+//       result['auth'] != true) {
+//   } else {
+//     Toast.show("Something went wrong!", context,
+//         duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+//   }
+// }
 
-    var jsonReqResp = await _featuredCompaniesProvider.getSingleCoinDetails(
-        'company_details/cryptoInfo?coin_id=${coinDetails["id"]}');
-
-    var result = jsonDecode(jsonReqResp.body);
-    print("coin details response: $result");
-    // print("gsnxvhjsvxhs");
-    // print( "gagagagaga : "+result["message"]["percentage_change"].runtimeType.toString());
-    // print(jsonDecode(result["message"]["percentage_change"])["1h"]);
-
-    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
-      // print("ggggg");
-      // print("result");
-      // print(
-      //   jsonDecode(result["message"]["percentage_change"].runtimeType.toString()),
-      // );
-
-      // print( "gagagagaga : "+result["message"]["percentage_change"]["1h"]);
-      return result["message"];
-      // return getCompaniesList(result["message"]);
-
-      // if (result != null &&a
-      //     result.containsKey('auth') &&
-      //     result['auth'] == true) {
-      //   Toast.show("${result['message']}", context,
-      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      // }
-    } else if (result != null &&
-        result.containsKey('auth') &&
-        result['auth'] != true) {
-    } else {
-      Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-    }
-  }
-
-  getMarketCapRank(coinDetails) {
-    List list = [];
-    if (coinDetails != null) {
-      list = coinDetails[7].split("Market Cap Rank");
-      var marketCapRank = list[list.length - 1];
-      print("marketCapRank: $marketCapRank");
-      return marketCapRank;
-    } else {
-      return "";
-    }
-  }
-
-  get24hChange(coinDetails) {
-    // List list = [];
-    if (coinDetails != null) {
-      String coin24hChange = coinDetails["24h"];
-      // var coin24hChange = list[list.length - 1];
-      print("coin24hChange: $coin24hChange");
-      return coin24hChange;
-    } else {
-      return "";
-    }
-  }
-
-  getPriceOfCoin(coinDetails) {
-    List list = [];
-    if (coinDetails != null) {
-      list = coinDetails[0].split("\$");
-      var price = list[list.length - 1];
-      print("price: $price");
-      return price;
-    } else {
-      return "";
-    }
-  }
+// getMarketCapRank(coinDetails) {
+//   List list = [];
+//   if (coinDetails != null) {
+//     list = coinDetails[7].split("Market Cap Rank");
+//     var marketCapRank = list[list.length - 1];
+//     print("marketCapRank: $marketCapRank");
+//     return marketCapRank;
+//   } else {
+//     return "";
+//   }
+// }
+//
+// get24hChange(coinDetails) {
+//   // List list = [];
+//   if (coinDetails != null) {
+//     String coin24hChange = coinDetails["24h"];
+//     // var coin24hChange = list[list.length - 1];
+//     print("coin24hChange: $coin24hChange");
+//     return coin24hChange;
+//   } else {
+//     return "";
+//   }
+// }
+//
+// getPriceOfCoin(coinDetails) {
+//   List list = [];
+//   if (coinDetails != null) {
+//     list = coinDetails[0].split("\$");
+//     var price = list[list.length - 1];
+//     print("price: $price");
+//     return price;
+//   } else {
+//     return "";
+//   }
+// }
 }

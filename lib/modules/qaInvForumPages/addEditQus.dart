@@ -80,17 +80,18 @@ class _AddEditQusState extends State<AddEditQus> {
 
   @override
   void initState() {
-    _searchController.addListener(() {
-      if (_searchController.text.length > 0) {
-        setState(() {
-          searchingTags = true;
-        });
-      } else {
-        setState(() {
-          searchingTags = false;
-        });
-      }
-    });
+    // _searchController.addListener(() {
+    //   if (_searchController.text.length > 0) {
+    //     print(_searchController.text);
+    //     setState(() {
+    //       searchingTags = true;
+    //     });
+    //   } else {
+    //     setState(() {
+    //       searchingTags = false;
+    //     });
+    //   }
+    // });
     super.initState();
     loadDetails();
   }
@@ -742,19 +743,19 @@ class _AddEditQusState extends State<AddEditQus> {
                                           child: TypeAheadFormField(
                                             textFieldConfiguration:
                                                 TextFieldConfiguration(
-                                                    onTap: () {
-                                                      print(
-                                                          "this got tapped hard");
-                                                      _scrollController
-                                                          .animateTo(
-                                                        0.0,
-                                                        curve: Curves.easeOut,
-                                                        duration:
-                                                            const Duration(
-                                                          milliseconds: 300,
-                                                        ),
-                                                      );
-                                                    },
+                                                    // onTap: () {
+                                                    //   print(
+                                                    //       "this got tapped hard");
+                                                    //   _scrollController
+                                                    //       .animateTo(
+                                                    //     0.0,
+                                                    //     curve: Curves.easeOut,
+                                                    //     duration:
+                                                    //         const Duration(
+                                                    //       milliseconds: 300,
+                                                    //     ),
+                                                    //   );
+                                                    // },
                                                     controller:
                                                         _searchController,
                                                     textInputAction:
@@ -817,6 +818,7 @@ class _AddEditQusState extends State<AddEditQus> {
                                                     }),
                                             suggestionsCallback:
                                                 (pattern) async {
+                                              print("pattern : $pattern");
                                               return await _featuredCompaniesProvider
                                                   .searchPublicCompanyList(
                                                       pattern);
@@ -856,10 +858,12 @@ class _AddEditQusState extends State<AddEditQus> {
 
                                               _searchController.text = '';
                                               setState(() {
-                                                itemList.add(TagData(
-                                                    suggestion['ticker'],
-                                                    suggestion[
-                                                        'company_name']));
+                                                itemList.add(
+                                                  TagData(
+                                                      suggestion['ticker'],
+                                                      suggestion[
+                                                          'company_name']),
+                                                );
                                                 tagListVisible =
                                                     itemList.length == 0
                                                         ? false

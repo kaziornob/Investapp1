@@ -4,10 +4,12 @@ import 'package:auroim/modules/investRelatedPages/searchFirstPage.dart';
 import 'package:auroim/widgets/auro_stars.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/goLiveInvest/personalSleeve.dart';
+import 'package:auroim/widgets/go_to_marketplace_button.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
 import 'package:auroim/widgets/public_companies_list.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import 'package:auroim/widgets/public_company/public_company_marketplace.dart';
 import 'package:flutter/material.dart';
 
 class MainInvestTab extends StatefulWidget {
@@ -105,6 +107,17 @@ class _MainInvestTabState extends State<MainInvestTab> {
                   ],
                 ),
                 PublicCompaniesList(),
+                GoToMarketplaceButton(
+                  buttonColor: AllCoustomTheme.getButtonBoxColor(),
+                  textColor: globals.isGoldBlack ? Colors.black : Colors.white,
+                  callback: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PublicCompanyMarketPlace(),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
             //crypto market place section
