@@ -54,8 +54,19 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   @override
   void initState() {
     super.initState();
+    // loadDetails();
     animation();
   }
+
+  /*loadDetails() async {
+    setState(() {
+      _isDetailInProgress = true;
+    });
+    await Future.delayed(const Duration(milliseconds: 1000));
+    setState(() {
+      _isDetailInProgress = false;
+    });
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +75,14 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     return Stack(
       children: <Widget>[
         Scaffold(
-          // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
           backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
           body: ModalProgressHUD(
             inAsyncCall: _isDetailInProgress,
             opacity: 0,
             progressIndicator: SizedBox(),
+           /* progressIndicator: CupertinoActivityIndicator(
+              radius: 12,
+            ),*/
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(

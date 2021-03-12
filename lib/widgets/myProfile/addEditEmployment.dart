@@ -70,7 +70,18 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
   @override
   void initState() {
     super.initState();
+    loadDetails();
     animation();
+  }
+
+  loadDetails() async {
+    setState(() {
+      _isEmpInProgress = true;
+    });
+    await Future.delayed(const Duration(milliseconds: 700));
+    setState(() {
+      _isEmpInProgress = false;
+    });
   }
 
 /*  DateTime selectedDate = DateTime.now();
@@ -155,7 +166,9 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
           body: ModalProgressHUD(
             inAsyncCall: _isEmpInProgress,
             opacity: 0,
-            progressIndicator: SizedBox(),
+            progressIndicator: CupertinoActivityIndicator(
+              radius: 12,
+            ),
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(

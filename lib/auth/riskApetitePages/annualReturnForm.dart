@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
+import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -589,13 +590,9 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
             duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
 
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen()
-            ),
-            ModalRoute.withName("/Home")
-        );
+        HelperClass.showLoading(context);
+
+        createPortfolioData();
       }
     }
     else if(result!=null && result.containsKey('auth') && result['auth']!=true)
@@ -617,5 +614,45 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
+  }
+
+  Future<void> createPortfolioData() async {
+    print("getDoughnutPortfolioData called");
+    var response =
+    await request.getRunAlgoExistingPortfolio('users/create_portfolio');
+    print("portfolio chart list: $response");
+    if (response != null && response != false && response.containsKey('auth') && response['auth'] == true) {
+
+      Navigator.pop(context);
+
+      Toast.show("Portfolio created successfully", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+
+      Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen()
+            ),
+            ModalRoute.withName("/Home")
+        );
+
+    }
+    else
+      {
+        Navigator.pop(context);
+
+        Toast.show("Not able to create portfolio", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen()
+            ),
+            ModalRoute.withName("/Home")
+        );
+      }
   }
 }

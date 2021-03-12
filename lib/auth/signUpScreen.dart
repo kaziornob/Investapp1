@@ -378,10 +378,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             child: Padding(
                                               padding: EdgeInsets.only(left: 10, bottom: 0,right: 20),
                                               child: InternationalPhoneInput(
-                                                // decoration: InputDecoration(),
                                                 labelText: 'Phone',
                                                 labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-
                                                 // style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 onPhoneNumberChange: onPhoneNumberChange,
                                                 initialPhoneNumber: phoneNumber,
@@ -390,7 +388,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 showCountryCodes: true,
                                                 showCountryFlags: true,
                                               ),
-                                            ),
+                                            )
                                         ),
 /*                                        Expanded(
                                           child: Padding(
