@@ -5,12 +5,13 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:auroim/constance/global.dart' as globals;
 import 'crypto_coin_price_data.dart';
 
 class GetAreaChartView extends StatefulWidget {
@@ -248,7 +249,14 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                               child: Container(
                                 margin: EdgeInsets.only(left: 10.0),
                                 child: Center(
-                                  child: Text("No Chart To Show"),
+                                  child: Text(
+                                    "No Chart To Show",
+                                    style: TextStyle(
+                                      color: globals.isGoldBlack
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                 ),
                               ),
                             );

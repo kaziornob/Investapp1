@@ -9,6 +9,7 @@ import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
 import 'package:auroim/widgets/auro_stars.dart';
+import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/go_to_marketplace_button.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
@@ -119,7 +120,22 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
           //crypto market place section
           Visibility(
             visible: globals.isGoldBlack ? false : true,
-            child: CryptoMarketplace(),
+            child: Column(
+              children: [
+                CryptoMarketplace(),
+                GoToMarketplaceButton(
+                  buttonColor: AllCoustomTheme.getButtonBoxColor(),
+                  textColor: globals.isGoldBlack ? Colors.black : Colors.white,
+                  callback: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CryptoCoinsMarketplace(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
 
           // public equities section

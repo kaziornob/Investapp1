@@ -54,17 +54,6 @@ class _AllCryptoListBlackState extends State<AllCryptoListBlack> {
           SizedBox(
             height: 10,
           ),
-          GoToMarketplaceButton(
-            buttonColor: AllCoustomTheme.getButtonBoxColor(),
-            textColor: Colors.black,
-            callback: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CryptoCoinsMarketplace(),
-                ),
-              );
-            },
-          ),
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/investRelatedPages/searchFirstPage.dart';
 import 'package:auroim/widgets/auro_stars.dart';
+import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/goLiveInvest/personalSleeve.dart';
 import 'package:auroim/widgets/go_to_marketplace_button.dart';
@@ -135,7 +136,22 @@ class _MainInvestTabState extends State<MainInvestTab> {
           //crypto market place section
           Visibility(
             visible: globals.isGoldBlack ? true : false,
-            child: CryptoMarketplace(),
+            child: Column(
+              children: [
+                CryptoMarketplace(),
+                GoToMarketplaceButton(
+                  buttonColor: AllCoustomTheme.getButtonBoxColor(),
+                  textColor: globals.isGoldBlack ? Colors.black : Colors.white,
+                  callback: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CryptoCoinsMarketplace(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
           //Pvt deals section
           Visibility(

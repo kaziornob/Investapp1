@@ -1,4 +1,3 @@
-
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
@@ -255,10 +254,14 @@ class _SearchFirstPageState extends State<SearchFirstPage>
 
   Widget crypto() {
     return Container(
-      height: 275,
+      height: globals.isGoldBlack ? 300 : 275,
       child: globals.isGoldBlack
-          ? AllCryptoListBlack(sortingType: "1d",)
-          : AllCryptocurrenciesList(sortingType: "1d",),
+          ? AllCryptoListBlack(
+              sortingType: "1d",
+            )
+          : AllCryptocurrenciesList(
+              sortingType: "1d",
+            ),
     );
   }
 
@@ -466,7 +469,6 @@ class _SearchFirstPageState extends State<SearchFirstPage>
       ),
     );
   }
-
 
   bigItem() {
     return Container(
