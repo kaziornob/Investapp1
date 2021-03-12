@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 // import 'package:admob_flutter/admob_flutter.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/empStatus.dart';
@@ -10,6 +11,7 @@ import 'package:auroim/model/listingsModel.dart';
 import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
+import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
@@ -73,6 +75,7 @@ class MyApp extends StatefulWidget {
   final SharedPreferences prefs;
 
   MyApp({this.prefs});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -111,7 +114,8 @@ class _MyAppState extends State<MyApp> {
           allCoinList.addAll(coindata);
           setState(() {
             // allCoinList.removeWhere((length) => length['quotes']['USD']['market_cap'] == null);
-            allCoinList.removeWhere((length) => length.quote.uSD.marketCap == null);
+            allCoinList
+                .removeWhere((length) => length.quote.uSD.marketCap == null);
             if (allCoin == true) {
               getApiAllData(index);
             }
@@ -176,11 +180,15 @@ class _MyAppState extends State<MyApp> {
             userAllDetail['risk_appetite'] != null &&
             userAllDetail['drawdown'] != null) {
           return new HomeScreen();
-        } else if (userAllDetail['f_name'] == null && userAllDetail['l_name'] == null && userAllDetail['dob'] == null) {
+        } else if (userAllDetail['f_name'] == null &&
+            userAllDetail['l_name'] == null &&
+            userAllDetail['dob'] == null) {
           return new UserPersonalDetails();
         } else if (userAllDetail['inv_status'] == null) {
           return new InvestorType();
-        } else if (userAllDetail['emp_status'] == null && userAllDetail['occupation'] == null && userAllDetail['business_area'] == null) {
+        } else if (userAllDetail['emp_status'] == null &&
+            userAllDetail['occupation'] == null &&
+            userAllDetail['business_area'] == null) {
           return new EmpStatus(parentFrom: "${userAllDetail['inv_status']}");
         }
 /*      else if(userAllDetail['risk_appetite']==null && userAllDetail['drawdown']==null)
@@ -219,6 +227,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => CoinUrl(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => PublicCompanyHistoricalPricing(),
           ),
         ],
         child: MaterialApp(

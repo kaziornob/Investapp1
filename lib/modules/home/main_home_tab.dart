@@ -526,7 +526,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
         portfolioChartData["assetClass"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              double.parse(value.toDouble().toStringAsFixed(2)),
+              double.parse((value.toDouble() * 100).toStringAsFixed(2)),
 
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
@@ -551,7 +551,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
         portfolioChartData["country"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              double.parse(value.toDouble().toStringAsFixed(2)),
+              double.parse((value.toDouble() * 100).toStringAsFixed(2)),
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
@@ -582,7 +582,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
         portfolioChartData["sector"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              double.parse(value.toDouble().toStringAsFixed(2)),
+              double.parse((value.toDouble() * 100).toStringAsFixed(2)),
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
@@ -591,18 +591,9 @@ class _MainHomeTabState extends State<MainHomeTab> {
   }
 
   singleTableForPortFolio() {
-    final List<Map<String, dynamic>> securities = [
-      {"name": "1", "share": "", "price": ""},
-      {"name": "2", "share": "", "price": ""},
-      {"name": "3", "share": "", "price": ""},
-    ];
-
     var index = 0;
-
     if (portfolioChartData != null) {
       return Container(
-        // width: MediaQuery.of(context).size.width -10,
-        // decoration: BoxDecoration(border: Border.all()),
         child: Column(
           children: [
             singleRow(context, "Security", '# of shares/ \$', 'In-Price',

@@ -176,14 +176,14 @@ class _SingleCryptoCurrencyDetailsByIdState
                     //   },
                     // ),
                     Container(
-                      width: 150,
-                      height: 150,
+                      width: 120,
+                      height: 120,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Color(0xff5A56B9),
                         ),
                       ),
-                      child: Image.network(coinData["logo_link"]),
+                      child: Image.network(coinData["logo_link"],fit: BoxFit.fill,),
                     ),
                     // Container(
                     //   width: 150,

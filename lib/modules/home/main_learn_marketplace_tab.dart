@@ -70,7 +70,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                     ),
                   );
                 },
-              )),
+              ),),
 
           //crypto market place section
           Visibility(visible: globals.isGoldBlack, child: CryptoMarketplace()),

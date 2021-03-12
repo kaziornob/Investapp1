@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class PublicCompanyHistoricalPricing with ChangeNotifier{
-  Map historicalPriceData = {};
+class PublicCompanyHistoricalPricing with ChangeNotifier {
+  List historicalPriceData = [];
 
-  getSinglePublicCompanyData(String ticker,int noOfDays) async {
+  getSinglePublicCompanyData(String ticker, int noOfDays) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
-    String filterPath = "company_details/listedInfo?ticker=$ticker&timeperiod=$noOfDays";
+    String filterPath =
+        "company_details/listedPricing?ticker=$ticker&timeperiod=$noOfDays";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -30,7 +31,7 @@ class PublicCompanyHistoricalPricing with ChangeNotifier{
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("results ${result["messsage"]}");
-      historicalPriceData[ticker] = result["message"];
+      historicalPriceData = result["message"];
       notifyListeners();
       // return result["message"];
 
