@@ -20,21 +20,21 @@ class PublicCompanyHistoricalPerformance extends StatefulWidget {
 class _PublicCompanyHistoricalPerformanceState
     extends State<PublicCompanyHistoricalPerformance> {
   Map<String, bool> selectedTabMap = {
-    "6m": true,
+    "1d": true,
+    "3d": false,
+    "1m": false,
+    "6m": false,
     "1y": false,
-    "2y": false,
-    "3y": false,
     "5y": false,
-    "max": false,
   };
 
-  int noOfDays = 180;
+  int noOfDays = 1;
   List<CryptoCoinPriceData> allPriceData = [];
 
   @override
   Widget build(BuildContext context) {
     Provider.of<PublicCompanyHistoricalPricing>(context, listen: false)
-        .getSinglePublicCompanyData(widget.ticker, 180);
+        .getSinglePublicCompanyData(widget.ticker, noOfDays);
     return StatefulBuilder(
       builder: (context, setChartState) {
         return Material(
@@ -65,8 +65,8 @@ class _PublicCompanyHistoricalPerformanceState
                 ),
                 Consumer<PublicCompanyHistoricalPricing>(
                   builder: (context, historicalPricingProvider, _) {
-                    if (historicalPricingProvider.historicalPriceData.length ==
-                        0) {
+                    if (historicalPricingProvider.historicalPriceData[widget.ticker] ==
+                        null) {
                       return Container(
                         child: Center(
                           child: Text("Fetching Prices.."),
@@ -74,7 +74,7 @@ class _PublicCompanyHistoricalPerformanceState
                       );
                     } else {
                       allPriceData = [];
-                      historicalPricingProvider.historicalPriceData
+                      historicalPricingProvider.historicalPriceData[widget.ticker]
                           .forEach((element) {
                         DateTime date =
                             DateFormat("yyyy-MM-dd").parse(element["date"]);
@@ -103,13 +103,12 @@ class _PublicCompanyHistoricalPerformanceState
                     ),
                     child: Row(
                       children: [
+                        selectedTab("1d", selectedTabMap["1d"], setChartState),
+                        selectedTab("3d", selectedTabMap["3d"], setChartState),
+                        selectedTab("1m", selectedTabMap["1m"], setChartState),
                         selectedTab("6m", selectedTabMap["6m"], setChartState),
                         selectedTab("1y", selectedTabMap["1y"], setChartState),
-                        selectedTab("2y", selectedTabMap["2y"], setChartState),
-                        selectedTab("3y", selectedTabMap["3y"], setChartState),
                         selectedTab("5y", selectedTabMap["5y"], setChartState),
-                        selectedTab(
-                            "max", selectedTabMap["max"], setChartState),
                       ],
                     ),
                   ),
@@ -124,18 +123,20 @@ class _PublicCompanyHistoricalPerformanceState
 
   getNoOfDays(text) {
     switch (text) {
+      case "1d":
+        return 1;
+      case "3d":
+        return 3;
+      case "1m":
+        return 30;
       case "6m":
-        return 180;
+        return 30 * 6;
       case "1y":
-        return 365;
-      case "2y":
-        return 365 * 2;
-      case "3y":
-        return 365 * 3;
+        return 30 * 12;
       case "5y":
-        return 365 * 5;
+        return 30 * 12 * 5;
       default:
-        return 180;
+        return 1;
     }
   }
 

@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class PublicCompanyHistoricalPricing with ChangeNotifier {
-  List historicalPriceData = [];
+  Map historicalPriceData = {};
 
   getSinglePublicCompanyData(String ticker, int noOfDays) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -23,17 +23,22 @@ class PublicCompanyHistoricalPricing with ChangeNotifier {
 
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get historical pricing url: $url");
-    // print("session token: $sessionToken");
 
     var response = await http.get(url, headers: headers);
     print("get single company response: ${response.statusCode}");
     var result = jsonDecode(response.body);
+    print(result.toString());
+    print(result.runtimeType.toString());
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("results ${result["messsage"]}");
-      historicalPriceData = result["message"];
-      notifyListeners();
-      // return result["message"];
+      if(result["message"] == "Ticker not in database"){
+        // historicalPriceData = ;
+        notifyListeners();
+      }else{
+        historicalPriceData[ticker] = result["message"];
+        notifyListeners();
+      }
 
     } else if (result != null &&
         result.containsKey('auth') &&

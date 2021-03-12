@@ -77,17 +77,6 @@ class _CryptoMarketplaceState extends State<CryptoMarketplace> {
           SizedBox(
             height: 10,
           ),
-          GoToMarketplaceButton(
-            buttonColor: AllCoustomTheme.getButtonBoxColor(),
-            textColor: Colors.white,
-            callback: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CryptoCoinsMarketplace(),
-                ),
-              );
-            },
-          ),
         ],
       ),
     );

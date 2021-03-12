@@ -33,7 +33,7 @@ class _SingleCryptoCurrencyDetailsByIdState
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
 
-  bool showPriceChart = false;
+  // bool showPriceChart = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,37 +72,13 @@ class _SingleCryptoCurrencyDetailsByIdState
 
   getData(coinId) async {
     print("in get data");
-    // print(coinDetails["id"]);
-    // var tempJsonReq = {"coin": "${coinDetails["id"]}"};
-    //
-    // String jsonReq = jsonEncode(tempJsonReq);
-
     var jsonReqResp = await _featuredCompaniesProvider
         .getSingleCoinDetails('company_details/cryptoInfo?coin_id=$coinId');
 
     var result = jsonDecode(jsonReqResp.body);
     print("coin details response: $result");
-    // print("gsnxvhjsvxhs");
-    // print( "gagagagaga : "+result["message"]["percentage_change"].runtimeType.toString());
-    // print(jsonDecode(result["message"]["percentage_change"])["1h"]);
-
     if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
-      // print("ggggg");
-      // print("result");
-      // print(
-      //   jsonDecode(result["message"]["percentage_change"].runtimeType.toString()),
-      // );
-
-      // print( "gagagagaga : "+result["message"]["percentage_change"]["1h"]);
       return result["message"];
-      // return getCompaniesList(result["message"]);
-
-      // if (result != null &&a
-      //     result.containsKey('auth') &&
-      //     result['auth'] == true) {
-      //   Toast.show("${result['message']}", context,
-      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      // }
     } else if (result != null &&
         result.containsKey('auth') &&
         result['auth'] != true) {
@@ -113,33 +89,6 @@ class _SingleCryptoCurrencyDetailsByIdState
   }
 
   ss(coinData) {
-    // var metrics = jsonDecode(coinData["metrics"]);
-    // var percentageChange = jsonDecode(coinData["percentage_change"]);
-    // List list = [];
-    // list = metrics[0].split("Price");
-    // var price = list[list.length - 1];
-    // print("price: $price");
-    //
-    // list = metrics[1].split("Market Cap");
-    // var marketCap = list[list.length - 1];
-    // print("marketCap: $marketCap");
-    //
-    // list = metrics[7].split("Market Cap Rank");
-    // var marketCapRank = list[list.length - 1];
-    // print("marketCapRank: $marketCapRank");
-    //
-    // list = metrics[8].split("All-Time High");
-    // var allTimeHigh = list[list.length - 1];
-    // print("allTimeHigh: $allTimeHigh");
-    //
-    // list = metrics[10].split("All-Time Low");
-    // var allTimeLow = list[list.length - 1];
-    // print("allTimeLow: $allTimeLow");
-
-    // list = metrics[10].split(" ");
-    // var allTimeLow = list[2];
-    // print("allTimeLow: $allTimeLow");
-
     return Container(
       color: Colors.white,
       width: MediaQuery.of(context).size.width,
@@ -162,19 +111,11 @@ class _SingleCryptoCurrencyDetailsByIdState
                   color: Colors.white,
                 ),
                 width: MediaQuery.of(context).size.width - 20,
-                height: showPriceChart ? 800 : 700,
+                height: 800,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Consumer<CoinUrl>(
-                    //   builder: (context, urlProvider, _) {
-                    //     return !urlProvider.imageUrl
-                    //             .containsKey(coinData["coin_id"])
-                    //         ? SizedBox()
-                    //         : ;
-                    //   },
-                    // ),
                     Container(
                       width: 120,
                       height: 120,
@@ -183,17 +124,11 @@ class _SingleCryptoCurrencyDetailsByIdState
                           color: Color(0xff5A56B9),
                         ),
                       ),
-                      child: Image.network(coinData["logo_link"],fit: BoxFit.fill,),
+                      child: Image.network(
+                        coinData["logo_link"],
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                    // Container(
-                    //   width: 150,
-                    //   height: 150,
-                    //   decoration: BoxDecoration(
-                    //     border: Border.all(),
-                    //   ),
-                    //   // child:
-                    //   // Image.network(widget.companyDetails["logo_link"]),
-                    // ),
                     Text(
                       coinData["coin_id"].toUpperCase(),
                       style: TextStyle(
@@ -211,17 +146,10 @@ class _SingleCryptoCurrencyDetailsByIdState
                       child: Container(
                         width: MediaQuery.of(context).size.width - 25,
                         height: 80,
-                        // decoration: BoxDecoration(
-                        //   border: Border.all(),
-                        // ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Container(
-                              // decoration: BoxDecoration(
-                              //   border: Border.all(),
-                              // ),
-                              // height: 60,
                               child: Column(
                                 children: [
                                   Text(
@@ -269,17 +197,19 @@ class _SingleCryptoCurrencyDetailsByIdState
                                   ],
                                 ),
                                 Container(
-                                  width: (MediaQuery.of(context).size.width-20)/2,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 20) /
+                                          2,
                                   height: 60,
                                   child: Expanded(
                                     child: Text(
-                                      // "",
                                       "${coinData["all_time_high"]}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontFamily: 'Roboto',
                                       ),
                                       overflow: TextOverflow.clip,
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
@@ -303,9 +233,6 @@ class _SingleCryptoCurrencyDetailsByIdState
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Container(
-                              // decoration: BoxDecoration(
-                              //   border: Border.all(),
-                              // ),
                               height: 60,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -339,6 +266,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                                           fontWeight: FontWeight.normal,
                                           fontFamily: 'Roboto',
                                         ),
+
                                       ),
                                     ),
                                     Positioned(
@@ -354,7 +282,9 @@ class _SingleCryptoCurrencyDetailsByIdState
                                   ],
                                 ),
                                 Container(
-                                  width: (MediaQuery.of(context).size.width-20)/2,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 20) /
+                                          2,
                                   height: 60,
                                   child: Expanded(
                                     child: Text(
@@ -365,6 +295,7 @@ class _SingleCryptoCurrencyDetailsByIdState
                                         fontFamily: 'Roboto',
                                       ),
                                       overflow: TextOverflow.clip,
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
@@ -480,59 +411,58 @@ class _SingleCryptoCurrencyDetailsByIdState
                       ],
                     ),
                     chart(coinData),
-                    showPriceChart
-                        ? FutureBuilder(
-                            future: getCoinPrices(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                List<CryptoCoinPriceData> allPriceData = [];
+                    // showPriceChart
+                    //     ?
+                    FutureBuilder(
+                      future: getCoinPrices(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<CryptoCoinPriceData> allPriceData = [];
 
-                                List prices = snapshot.data["prices"];
-                                // print(prices.toString());
+                          List prices = snapshot.data["prices"];
+                          // print(prices.toString());
 
-                                prices.forEach((element) {
-                                  DateTime date =
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                          element[0]);
-                                  print(element[1]);
-                                  allPriceData.add(
-                                    CryptoCoinPriceData(x: date, y: element[1]),
-                                  );
-                                });
-                                print("dadaaa");
-                                return CryptoCoinLineCharts(
-                                  pricesData: allPriceData,
-                                );
-                              } else {
-                                return SizedBox();
-                              }
-                            },
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                showPriceChart = true;
-                              });
-                            },
-                            child: Container(
-                              height: 40,
-                              width: 180,
-                              decoration: BoxDecoration(
-                                color: Color(0xff7499C6),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Learn More",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      fontFamily: "Roboto",
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
+                          prices.forEach((element) {
+                            DateTime date =
+                                DateTime.fromMillisecondsSinceEpoch(element[0]);
+                            // print(element[1]);
+                            allPriceData.add(
+                              CryptoCoinPriceData(x: date, y: element[1]),
+                            );
+                          });
+                          return CryptoCoinLineCharts(
+                            pricesData: allPriceData,
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      },
+                    )
+                    // : GestureDetector(
+                    //     onTap: () {
+                    //       setState(() {
+                    //         showPriceChart = true;
+                    //       });
+                    //     },
+                    //     child: Container(
+                    //       height: 40,
+                    //       width: 180,
+                    //       decoration: BoxDecoration(
+                    //         color: Color(0xff7499C6),
+                    //         borderRadius: BorderRadius.circular(10),
+                    //       ),
+                    //       child: Center(
+                    //         child: Text(
+                    //           "Learn More",
+                    //           style: TextStyle(
+                    //               fontWeight: FontWeight.bold,
+                    //               fontSize: 20,
+                    //               fontFamily: "Roboto",
+                    //               color: Colors.white),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
                   ],
                 ),
               ),

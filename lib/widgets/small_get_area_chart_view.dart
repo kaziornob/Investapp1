@@ -4,9 +4,14 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import 'crypto_coin_price_data.dart';
 
 class SmallGetAreaChartView extends StatefulWidget {
   final List<Color> color;
@@ -29,6 +34,8 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
   LinearGradient gradientColors;
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
+  List<CryptoCoinPriceData> allPriceData = [];
+  bool _isInit = true;
 
   @override
   void initState() {
@@ -40,8 +47,20 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
   }
 
   @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      print("did change small get area view");
+      Provider.of<PublicCompanyHistoricalPricing>(context)
+          .getSinglePublicCompanyData(widget.ticker, 30);
+      _isInit = false;
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // print(widget.companyData);
+
     return FutureBuilder(
       future: _featuredCompaniesProvider.getSinglePublicCompanyData(
           widget.ticker, "head"),
@@ -203,27 +222,65 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              height: MediaQuery.of(context).size.height * 0.10,
-                              child: Container(
-                                margin: EdgeInsets.only(left: 10.0),
-                                child: SfCartesianChart(
-                                    primaryXAxis: NumericAxis(
-                                      isVisible: false,
+                            Consumer<PublicCompanyHistoricalPricing>(
+                              builder: (context, historicalPricingProvider, _) {
+                                if (historicalPricingProvider
+                                        .historicalPriceData[widget.ticker] ==
+                                    null) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.80,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.10,
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 10.0),
                                     ),
-                                    primaryYAxis: NumericAxis(isVisible: false),
-                                    series: <ChartSeries>[
-                                      StackedAreaSeries<NewSalesData, double>(
-                                        dataSource: widget.newSalesData,
-                                        xValueMapper: (NewSalesData data, _) =>
-                                            data.year,
-                                        yValueMapper: (NewSalesData data, _) =>
-                                            data.sales,
-                                        gradient: gradientColors,
-                                      ),
-                                    ]),
-                              ),
+                                  );
+                                } else {
+                                  allPriceData = [];
+                                  historicalPricingProvider.historicalPriceData[
+                                          widget.ticker]
+                                      .forEach((element) {
+                                    DateTime date = DateFormat("yyyy-MM-dd")
+                                        .parse(element["date"]);
+                                    allPriceData.add(
+                                      CryptoCoinPriceData(
+                                          x: date,
+                                          y: element["price"].toDouble()),
+                                    );
+                                  });
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.80,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.10,
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 10.0),
+                                      child: SfCartesianChart(
+                                          primaryXAxis: DateTimeAxis(
+                                            isVisible: false,
+                                          ),
+                                          primaryYAxis:
+                                              NumericAxis(isVisible: false),
+                                          series: <ChartSeries>[
+                                            StackedAreaSeries<
+                                                CryptoCoinPriceData, dynamic>(
+                                              dataSource: allPriceData,
+                                              xValueMapper:
+                                                  (CryptoCoinPriceData data,
+                                                          _) =>
+                                                      data.x,
+                                              yValueMapper:
+                                                  (CryptoCoinPriceData data,
+                                                          _) =>
+                                                      data.y,
+                                              gradient: gradientColors,
+                                            ),
+                                          ]),
+                                    ),
+                                  );
+                                }
+                              },
                             ),
                             SizedBox(
                               // height: MediaQuery.of(context).size.height*0.10,

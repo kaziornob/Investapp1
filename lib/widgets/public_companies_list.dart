@@ -35,13 +35,13 @@ class _PublicCompaniesListState extends State<PublicCompaniesList> {
                 itemBuilder: (context, index) {
                   print(snapshot.data[0]);
                   return GetAreaChartView(
-                    newSalesData: [
-                      NewSalesData(2010, 35),
-                      NewSalesData(2011, 28),
-                      NewSalesData(2012, 34),
-                      NewSalesData(2013, 32),
-                      NewSalesData(2014, 40),
-                    ],
+                    // newSalesData: [
+                    //   NewSalesData(2010, 35),
+                    //   NewSalesData(2011, 28),
+                    //   NewSalesData(2012, 34),
+                    //   NewSalesData(2013, 32),
+                    //   NewSalesData(2014, 40),
+                    // ],
                     color: [
                       Colors.blue[50],
                       Colors.blue[200],

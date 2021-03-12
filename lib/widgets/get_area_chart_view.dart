@@ -1,11 +1,17 @@
+import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import 'crypto_coin_price_data.dart';
 
 class GetAreaChartView extends StatefulWidget {
   final List<Color> color;
@@ -26,6 +32,11 @@ class GetAreaChartView extends StatefulWidget {
 
 class _GetAreaChartViewState extends State<GetAreaChartView> {
   LinearGradient gradientColors;
+  List<CryptoCoinPriceData> allPriceData = [];
+  ZoomPanBehavior _zoomPanBehavior;
+  TooltipBehavior _tooltipBehavior;
+  FeaturedCompaniesProvider _featuredCompaniesProvider =
+      FeaturedCompaniesProvider();
 
   @override
   void initState() {
@@ -33,12 +44,16 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
       colors: widget.color,
       stops: widget.stops,
     );
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    _zoomPanBehavior = ZoomPanBehavior(enablePinching: true);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     // print(widget.companyData);
+    // Provider.of<PublicCompanyHistoricalPricing>(context)
+    //     .getSinglePublicCompanyData(widget.companyData["ticker"], 30);
     return Container(
       height: 300,
       child: Container(
@@ -62,27 +77,23 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Padding(
-                        padding:
-                        const EdgeInsets.only(top: 10.0, left: 5.0),
+                        padding: const EdgeInsets.only(top: 10.0, left: 5.0),
                         child: Container(
                           // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                           height: MediaQuery.of(context).size.height * 0.10,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     widget.companyData == null
                                         ? ""
-                                        : widget
-                                        .companyData["company_name"],
+                                        : widget.companyData["company_name"],
                                     style: TextStyle(
                                       color: AllCoustomTheme
                                           .getChartBoxTextThemeColor(),
@@ -114,23 +125,21 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                 width: 50,
                               ),
                               Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "HIGH",
                                         style: TextStyle(
                                           color: AllCoustomTheme
                                               .getNewTextThemeColors(),
-                                          fontSize:
-                                          ConstanceData.SIZE_TITLE10,
+                                          fontSize: ConstanceData.SIZE_TITLE10,
                                           fontFamily: "Roboto",
                                         ),
                                       ),
@@ -143,8 +152,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                         "139.00",
                                         style: TextStyle(
                                           color: Colors.green,
-                                          fontSize:
-                                          ConstanceData.SIZE_TITLE10,
+                                          fontSize: ConstanceData.SIZE_TITLE10,
                                           fontFamily: "Roboto",
                                         ),
                                       ),
@@ -155,17 +163,16 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                   ),
                                   Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "LOW",
                                         style: TextStyle(
                                           color: AllCoustomTheme
                                               .getNewTextThemeColors(),
-                                          fontSize:
-                                          ConstanceData.SIZE_TITLE10,
+                                          fontSize: ConstanceData.SIZE_TITLE10,
                                           fontFamily: "Roboto",
                                         ),
                                       ),
@@ -178,8 +185,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                         "139.00",
                                         style: TextStyle(
                                           color: Colors.red,
-                                          fontSize:
-                                          ConstanceData.SIZE_TITLE10,
+                                          fontSize: ConstanceData.SIZE_TITLE10,
                                           fontFamily: "Roboto",
                                         ),
                                       ),
@@ -191,27 +197,120 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.88,
-                          height: MediaQuery.of(context).size.height * 0.15,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10.0),
-                            child: SfCartesianChart(
-                                primaryXAxis: NumericAxis(
-                                  isVisible: false,
+                      FutureBuilder(
+                        future: _featuredCompaniesProvider
+                            .getSinglePublicCompanyHistoricalPricing(
+                                widget.companyData["ticker"], 30),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            allPriceData = [];
+                            snapshot.data.forEach((element) {
+                              DateTime date = DateFormat("yyyy-MM-dd")
+                                  .parse(element["date"]);
+                              allPriceData.add(
+                                CryptoCoinPriceData(
+                                    x: date, y: element["price"].toDouble()),
+                              );
+                            });
+                            return SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.88,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.15,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10.0),
+                                  child: SfCartesianChart(
+                                      primaryXAxis: DateTimeAxis(
+                                        isVisible: false,
+                                      ),
+                                      title: ChartTitle(text: "30D Pricing"),
+                                      tooltipBehavior: _tooltipBehavior,
+                                      zoomPanBehavior: _zoomPanBehavior,
+                                      primaryYAxis:
+                                          NumericAxis(isVisible: false),
+                                      series: <ChartSeries>[
+                                        StackedAreaSeries<CryptoCoinPriceData,
+                                            dynamic>(
+                                          dataSource: allPriceData,
+                                          xValueMapper:
+                                              (CryptoCoinPriceData data, _) =>
+                                                  data.x,
+                                          yValueMapper:
+                                              (CryptoCoinPriceData data, _) =>
+                                                  data.y,
+                                          gradient: gradientColors,
+                                        ),
+                                      ]),
+                                ));
+                          } else {
+                            return SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.88,
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 10.0),
+                                child: Center(
+                                  child: Text("No Chart To Show"),
                                 ),
-                                primaryYAxis: NumericAxis(isVisible: false),
-                                series: <ChartSeries>[
-                                  StackedAreaSeries<NewSalesData, double>(
-                                    dataSource: widget.newSalesData,
-                                    xValueMapper: (NewSalesData data, _) =>
-                                    data.year,
-                                    yValueMapper: (NewSalesData data, _) =>
-                                    data.sales,
-                                    gradient: gradientColors,
-                                  ),
-                                ]),
-                          )),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      // Consumer<PublicCompanyHistoricalPricing>(
+                      //   builder: (context, historicalPricingProvider, _) {
+                      //     if (historicalPricingProvider.historicalPriceData[
+                      //             widget.companyData["ticker"]] ==
+                      //         null) {
+                      //       return SizedBox(
+                      //         width: MediaQuery.of(context).size.width * 0.88,
+                      //         height: MediaQuery.of(context).size.height * 0.15,
+                      //         child: Container(
+                      //           margin: EdgeInsets.only(left: 10.0),
+                      //         ),
+                      //       );
+                      //     } else {
+                      //       allPriceData = [];
+                      //       historicalPricingProvider.historicalPriceData[
+                      //               widget.companyData["ticker"]]
+                      //           .forEach((element) {
+                      //         DateTime date = DateFormat("yyyy-MM-dd")
+                      //             .parse(element["date"]);
+                      //         allPriceData.add(
+                      //           CryptoCoinPriceData(
+                      //               x: date, y: element["price"].toDouble()),
+                      //         );
+                      //       });
+                      //       return SizedBox(
+                      //           width: MediaQuery.of(context).size.width * 0.88,
+                      //           height:
+                      //               MediaQuery.of(context).size.height * 0.15,
+                      //           child: Container(
+                      //             margin: EdgeInsets.only(left: 10.0),
+                      //             child: SfCartesianChart(
+                      //                 primaryXAxis: DateTimeAxis(
+                      //                   isVisible: false,
+                      //                 ),
+                      //                 title: ChartTitle(text: "30D Pricing"),
+                      //                 tooltipBehavior: _tooltipBehavior,
+                      //                 zoomPanBehavior: _zoomPanBehavior,
+                      //                 primaryYAxis:
+                      //                     NumericAxis(isVisible: false),
+                      //                 series: <ChartSeries>[
+                      //                   StackedAreaSeries<CryptoCoinPriceData,
+                      //                       dynamic>(
+                      //                     dataSource: allPriceData,
+                      //                     xValueMapper:
+                      //                         (CryptoCoinPriceData data, _) =>
+                      //                             data.x,
+                      //                     yValueMapper:
+                      //                         (CryptoCoinPriceData data, _) =>
+                      //                             data.y,
+                      //                     gradient: gradientColors,
+                      //                   ),
+                      //                 ]),
+                      //           ));
+                      //     }
+                      //   },
+                      // ),
                       SizedBox(
                         // height: MediaQuery.of(context).size.height*0.10,
                         child: Row(
@@ -222,20 +321,19 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                               width: 10,
                             ),
                             SizedBox(
-                              width:
-                              MediaQuery.of(context).size.width * 0.25,
-                              height: MediaQuery.of(context).size.height *
-                                  0.038,
+                              width: MediaQuery.of(context).size.width * 0.25,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.038,
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                      BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(
                                       color: AllCoustomTheme
                                           .getChartBoxThemeColor(),
                                       width: 1.5),
-                                  color: AllCoustomTheme
-                                      .getChartBoxThemeColor(),
+                                  color:
+                                      AllCoustomTheme.getChartBoxThemeColor(),
                                 ),
                                 child: MaterialButton(
                                   // splashColor: Colors.grey,
@@ -255,12 +353,11 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                     Navigator.of(context).push(
                                       new MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                        new SecurityPageFirst(
+                                            new SecurityPageFirst(
                                           logo: "logo.png",
-                                          callingFrom:
-                                          "Accredited Investor",
+                                          callingFrom: "Accredited Investor",
                                           companyTicker:
-                                          widget.companyData["ticker"],
+                                              widget.companyData["ticker"],
                                         ),
                                       ),
                                     );
@@ -269,14 +366,13 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                               ),
                             ),
                             SizedBox(
-                              width:
-                              MediaQuery.of(context).size.width * 0.26,
-                              height: MediaQuery.of(context).size.height *
-                                  0.038,
+                              width: MediaQuery.of(context).size.width * 0.26,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.038,
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                      BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(
                                       color: AllCoustomTheme
                                           .getChartBoxThemeColor(),
@@ -301,10 +397,10 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                     Navigator.of(context).push(
                                       new MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                        new SecurityPageFirst(
-                                            logo: "logo.png",
-                                            callingFrom:
-                                            "Accredited Investor"),
+                                            new SecurityPageFirst(
+                                                logo: "logo.png",
+                                                callingFrom:
+                                                    "Accredited Investor"),
                                       ),
                                     );
                                   },
@@ -312,14 +408,13 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                               ),
                             ),
                             SizedBox(
-                              width:
-                              MediaQuery.of(context).size.width * 0.32,
-                              height: MediaQuery.of(context).size.height *
-                                  0.038,
+                              width: MediaQuery.of(context).size.width * 0.32,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.038,
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                      BorderRadius.all(Radius.circular(20)),
                                   border: new Border.all(
                                       color: AllCoustomTheme
                                           .getChartBoxThemeColor(),
@@ -340,13 +435,12 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                   onPressed: () async {
                                     Navigator.of(context).push(
                                         new MaterialPageRoute(
-                                            builder:
-                                                (BuildContext context) =>
-                                            new OnBoardingFirst(
-                                              logo: "logo.png",
-                                              callingFrom:
-                                              "Accredited Investor",
-                                            )));
+                                            builder: (BuildContext context) =>
+                                                new OnBoardingFirst(
+                                                  logo: "logo.png",
+                                                  callingFrom:
+                                                      "Accredited Investor",
+                                                )));
                                   },
                                 ),
                               ),

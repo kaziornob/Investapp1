@@ -38,11 +38,14 @@ class _AllCryptoListBlackState extends State<AllCryptoListBlack> {
               if (snapshot.hasData) {
                 return dd(snapshot.data);
               } else {
-                return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.redAccent,
-                    valueColor: AlwaysStoppedAnimation(Colors.green),
-                    strokeWidth: 10,
+                return Container(
+                  height: 265,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.redAccent,
+                      valueColor: AlwaysStoppedAnimation(Colors.green),
+                      strokeWidth: 10,
+                    ),
                   ),
                 );
               }
@@ -173,9 +176,9 @@ class CryptocurrencyItem extends StatelessWidget {
                       height: boxConstraints.maxHeight / 4,
                       width: boxConstraints.maxHeight / 4,
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xff5A56B9),
-                        ),
+                        // border: Border.all(
+                        //   color: Color(0xff5A56B9),
+                        // ),
                       ),
                       child: Image.network(coinDetails["logo_link"]),
                     )
@@ -200,7 +203,7 @@ class CryptocurrencyItem extends StatelessWidget {
                   Text(
                     "Price : ${coinDetails["price"]}",
                     style: TextStyle(
-                        color: Color(0xff5A56B9),
+                        color: Colors.green,
                         fontSize: 16,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
@@ -213,7 +216,7 @@ class CryptocurrencyItem extends StatelessWidget {
                   Text(
                     "24h Change : ${coinDetails["per_24h"]}",
                     style: TextStyle(
-                        color: Color(0xff5A56B9),
+                        color: Colors.green,
                         fontSize: 16,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
@@ -226,7 +229,7 @@ class CryptocurrencyItem extends StatelessWidget {
                   Text(
                     "Market Cap Rank : #${coinDetails["market_cap_rank"]}",
                     style: TextStyle(
-                        color: Color(0xff5A56B9),
+                        color: Colors.green,
                         fontSize: 16,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
@@ -311,7 +314,7 @@ class CryptocurrencyItem extends StatelessWidget {
                         letterSpacing: 0.1),
                   ),
                 ),
-              )
+              ),
               // Padding(
               //   padding: const EdgeInsets.all(8.0),
               //   child: Container(

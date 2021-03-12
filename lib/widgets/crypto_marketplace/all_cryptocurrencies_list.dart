@@ -37,11 +37,14 @@ class _AllCryptocurrenciesListState extends State<AllCryptocurrenciesList> {
           if (snapshot.hasData) {
             return dd(snapshot.data);
           } else {
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.redAccent,
-                valueColor: AlwaysStoppedAnimation(Colors.green),
-                strokeWidth: 10,
+            return Container(
+              height: 265,
+              child: Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.redAccent,
+                  valueColor: AlwaysStoppedAnimation(Colors.green),
+                  strokeWidth: 10,
+                ),
               ),
             );
           }

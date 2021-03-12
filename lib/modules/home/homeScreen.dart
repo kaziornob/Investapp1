@@ -55,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen>
   var statusBarHeight = 0.0;
   var graphHeight = 0.0;
 
-
   @override
   void initState() {
     super.initState();
@@ -248,8 +247,11 @@ class _HomeScreenState extends State<HomeScreen>
                     preferredSize: Size.fromHeight(65.0),
                     child: AppBar(
                       automaticallyImplyLeading: false,
-                      backgroundColor:
-                          AllCoustomTheme.getAppBarBackgroundThemeColors(),
+                      backgroundColor: globals.isGoldBlack
+                          ? isSelect2 == true
+                              ? AllCoustomTheme.getAppBarBackgroundThemeColors()
+                              : Color(0xFF7499C6)
+                          : Color(0xFF7499C6),
                       title: _buildAppBar(context),
                     ),
                   )
@@ -555,13 +557,20 @@ class _HomeScreenState extends State<HomeScreen>
               child: Drawer(
                 elevation: 0,
                 child: AppDrawer(
+                  changeThemeCallback: (value) {
+                    // Navigator.of(context).pop();
+                    setState(() {
+                      globals.isGoldBlack = value;
+                      selectFirst();
+                    });
+                  },
                   selectItemName: 'home',
                   auroStreakCallback: () {
                     print("auro streak page to go on tapped");
-                    _scrollController = ScrollController(
-                      initialScrollOffset: 500,
-                      keepScrollOffset: true,
-                    );
+                    // _scrollController = ScrollController(
+                    //   initialScrollOffset: 500,
+                    //   keepScrollOffset: true,
+                    // );
                     setState(() {
                       selectFive();
                     });
@@ -589,7 +598,7 @@ class _HomeScreenState extends State<HomeScreen>
             backgroundColor: Colors.transparent,
             body: searching
                 ? Container(
-                    color: globals.isGoldBlack ? Colors.black : Colors.white,
+                    color: isSelect2 ? Colors.black : Colors.white,
                     height: MediaQuery.of(context).size.height - 65,
                     child: FutureBuilder(
                       future: _featuredCompaniesProvider
@@ -610,15 +619,13 @@ class _HomeScreenState extends State<HomeScreen>
                               title: Text(
                                 "No Results",
                                 style: TextStyle(
-                                  color: globals.isGoldBlack
-                                      ? Colors.white
-                                      : Colors.black,
+                                  color:
+                                      isSelect2 ? Colors.white : Colors.black,
                                 ),
                               ),
                               trailing: Icon(Icons.close_rounded,
-                                  color: globals.isGoldBlack
-                                      ? Colors.white
-                                      : Colors.black),
+                                  color:
+                                      isSelect2 ? Colors.white : Colors.black),
                             );
                           } else {
                             return ListView.builder(
@@ -640,7 +647,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   title: Text(
                                     snapshot.data[index]["company_name"],
                                     style: TextStyle(
-                                      color: globals.isGoldBlack
+                                      color: isSelect2
                                           ? Colors.white
                                           : Colors.black,
                                     ),
@@ -658,11 +665,14 @@ class _HomeScreenState extends State<HomeScreen>
                     opacity: 0,
                     progressIndicator: SizedBox(),
                     child: Container(
-                      color: isSelect2 || isSelect1
+                      color: isSelect2
                           ? AllCoustomTheme.getPageBackgroundThemeColor()
-                          : (isSelect5 || isSelect4 || isSelect3
-                              ? AllCoustomTheme.getBodyContainerThemeColor()
-                              : AllCoustomTheme.getThemeData().primaryColor),
+                          : isSelect1
+                              ? Color(0xFFD9E4E9)
+                              : (isSelect5 || isSelect4 || isSelect3
+                                  ? AllCoustomTheme.getBodyContainerThemeColor()
+                                  : AllCoustomTheme.getThemeData()
+                                      .primaryColor),
                       height: height,
                       child: Column(
                         children: <Widget>[

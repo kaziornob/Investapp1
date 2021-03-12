@@ -189,7 +189,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
                       tabText: "Trending",
                       selected: allTabsBool["Trending"] == true,
                       callback: () => selectedTab("Trending", setWidgetState),
-                      width: 70.0,
+                      width: 75.0,
                     ),
                     SmallTabChip(
                       tabText: "Unlisted",
@@ -255,7 +255,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
 
   Widget crypto() {
     return Container(
-      height: 285,
+      height: 275,
       child: globals.isGoldBlack
           ? AllCryptoListBlack(sortingType: "1d",)
           : AllCryptocurrenciesList(sortingType: "1d",),

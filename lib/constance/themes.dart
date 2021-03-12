@@ -71,7 +71,6 @@ class AllCoustomTheme {
     }
   }
 
-
   static Color getInvestTableTextThemeColors() {
     if (globals.isGoldBlack) {
       return Colors.black;
@@ -128,19 +127,36 @@ class AllCoustomTheme {
     return TextStyle(
         color: globals.isGoldBlack ? Colors.black : Colors.white,
         fontSize: ConstanceData.SIZE_TITLE13,
-      fontFamily: "Roboto",
-      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal
-    );
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal);
+  }
+
+  static getOtherTabButtonSelectedTextStyleTheme() {
+    return TextStyle(
+        color: Colors.white,
+        fontSize: ConstanceData.SIZE_TITLE13,
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal);
   }
 
   static getButtonNonSelectedTextStyleTheme() {
-      return TextStyle(
-          color: globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF7499C6),
-          fontSize: ConstanceData.SIZE_TITLE13,
-          fontFamily: "Roboto",
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.normal
-      );
+    return TextStyle(
+        color: globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF7499C6),
+        fontSize: ConstanceData.SIZE_TITLE13,
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal);
+  }
+
+  static getOtherTabButtonNonSelectedTextStyleTheme() {
+    return TextStyle(
+        color: Color(0xFF7499C6),
+        fontSize: ConstanceData.SIZE_TITLE13,
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal);
   }
 
   static Color getButtonTextThemeColors() {
@@ -159,6 +175,12 @@ class AllCoustomTheme {
     } else {
       return Colors.black;
     }
+  }
+
+  static Color getOtherTabHeadingThemeColors() {
+
+      return Colors.black;
+
   }
 
   static Color getSecondHeadingThemeColor() {
@@ -205,6 +227,9 @@ class AllCoustomTheme {
     }
   }
 
+  static Color getOtherTabButtonBoxColor() {
+    return Color(0xFF7499C6);
+  }
 
   static Color getIconThemeColors() {
     if (globals.isGoldBlack) {
@@ -217,10 +242,7 @@ class AllCoustomTheme {
   static Color getSecondIconThemeColor() {
     return Colors.grey;
     // return Color.fromRGBO(0, 0, 0, 0.5);
-
   }
-
-
 
   static Color boxColor() {
     return Color(0xFF1a202f);
@@ -357,7 +379,6 @@ class AllCoustomTheme {
     );
   }
 
-
   static ThemeData buildGoldBlackTheme() {
     Color primaryColor = HexColor(globals.primaryColorString);
     Color secondaryColor = Colors.black;
@@ -387,7 +408,6 @@ class AllCoustomTheme {
       accentTextTheme: _buildTextTheme(base.accentTextTheme),
     );
   }
-
 }
 
 class HexColor extends Color {

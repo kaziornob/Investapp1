@@ -13,6 +13,7 @@ import 'package:auroim/modules/introduction/IntroductionScreen.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +31,27 @@ import 'package:auroim/constance/global.dart' as globals;
 
 Map portfolioMap;
 List marketListData = [];
+var userAllDetail;
+
+getUserDetails() async {
+  print("getting user Details");
+  ApiProvider request = new ApiProvider();
+  // print("call set screen");
+  var response = await request.getRequest('users/get_details');
+  print("user detail response: $response");
+  if (response != null && response != false) {
+    userAllDetail = response['data'];
+    print(userAllDetail.toString());
+  } else {
+    print("Not got user data");
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
-
+  await getUserDetails();
   // Admob.initialize();
 
   Map portfolioMap;
@@ -84,18 +100,25 @@ class _MyAppState extends State<MyApp> {
   bool allCoin = false;
 
   ApiProvider request = new ApiProvider();
-  var userAllDetail;
 
   @override
   void initState() {
     super.initState();
     // GlobalInstance.getDoughnutPortfolioData();
-    globals.isGoldBlack = widget.prefs != null &&
-            widget.prefs.containsKey('InvestorType') &&
-            widget.prefs.getString('InvestorType') != null &&
-            widget.prefs.getString('InvestorType') == 'Accredited Investor'
-        ? true
-        : false;
+    // globals.isGoldBlack = widget.prefs != null &&
+    //         widget.prefs.containsKey('InvestorType') &&
+    //         widget.prefs.getString('InvestorType') != null &&
+    //         widget.prefs.getString('InvestorType') == 'Accredited Investor'
+    //     ? true
+    //     : false;
+
+    if(userAllDetail["inv_status"] == "Accredited Investor"){
+      globals.isGoldBlack  = false;
+    }else{
+      globals.isGoldBlack = true;
+    }
+    print(widget.prefs.getString('InvestorType'));
+    print("globals main function: ${globals.isGoldBlack}");
     // getApiAllData(1);
   }
 
@@ -123,15 +146,6 @@ class _MyAppState extends State<MyApp> {
           });
         }
       }
-    }
-  }
-
-  getUserDetails() async {
-    print("call set screen");
-    var response = await request.getRequest('users/get_details');
-    print("user detail: $response");
-    if (response != null && response != false) {
-      userAllDetail = response['data'];
     }
   }
 
@@ -230,6 +244,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => PublicCompanyHistoricalPricing(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => UserDetails(),
           ),
         ],
         child: MaterialApp(

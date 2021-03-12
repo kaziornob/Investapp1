@@ -52,7 +52,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void initState() {
     phoneIsoCode = '+852';
     super.initState();
+    // loadDetails();
     animation();
+  }
+
+  loadDetails() async {
+    setState(() {
+      _isInProgress = true;
+    });
+    await Future.delayed(const Duration(milliseconds: 1000));
+    setState(() {
+      _isInProgress = false;
+    });
   }
 
   final _signUpFormKey = new GlobalKey<FormState>();
@@ -69,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
-            progressIndicator: SizedBox(),
+            progressIndicator:SizedBox(),
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
@@ -380,7 +391,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               child: InternationalPhoneInput(
                                                 labelText: 'Phone',
                                                 labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-                                                // style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
                                                 onPhoneNumberChange: onPhoneNumberChange,
                                                 initialPhoneNumber: phoneNumber,
                                                 initialSelection: phoneIsoCode,
@@ -390,32 +401,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               ),
                                             )
                                         ),
-/*                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 0, bottom: 0,right: 20),
-                                            child: TextFormField(
-                                              controller: phoneController,
-                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                              keyboardType: TextInputType.number,
-                                              validator: _validatePhone,
-                                              decoration: new InputDecoration(
-                                                focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                hintText: 'Enter Phone here...',
-                                                hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                labelText: 'Phone',
-                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                              ),
-                                              // validator: _validatePassword,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  //lastnamesearchText = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ),*/
                                       ],
                                     ),
                                     Visibility(
@@ -589,9 +574,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   });
 
                                   if (loginProviderController.text != '' &&
-                                       loginAccessTokenController.text != '') {
-                                     _submit('facebook');
-                                   }
+                                      loginAccessTokenController.text != '') {
+                                    _submit('facebook');
+                                  }
                                   break;
                                 case FacebookLoginStatus.cancelledByUser:
                                 // TODO: Handle this case.
@@ -703,15 +688,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       var phone = confirmedNumber;
       var tempJsonReq ;var provider ;var token;
       if(from == 'facebook' || from == 'google')
-       {
-         provider = loginProviderController.text;
-         token = loginAccessTokenController.text;
-         tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"$provider","access_token":"$token"};
-       }
-       else
-       {
-         tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"","access_token":""};
-       }
+      {
+        provider = loginProviderController.text;
+        token = loginAccessTokenController.text;
+        tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"$provider","access_token":"$token"};
+      }
+      else
+      {
+        tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"","access_token":""};
+      }
 
 
       String jsonReq = json.encode(tempJsonReq);

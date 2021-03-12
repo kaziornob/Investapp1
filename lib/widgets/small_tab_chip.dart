@@ -1,5 +1,6 @@
-
+import 'package:auroim/constance/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:auroim/constance/global.dart' as globals;
 
 class SmallTabChip extends StatelessWidget {
   final bool selected;
@@ -22,10 +23,20 @@ class SmallTabChip extends StatelessWidget {
         onTap: callback,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: selected
-                ? Color(0xff7499C6)
-                : Colors.white,
+            // borderRadius: BorderRadius.circular(20),
+            // color: selected
+            //     ? Color(0xff7499C6)
+            //     : Colors.white,
+            border: selected
+                ? Border(
+                    bottom: BorderSide(
+                      color: selected
+                          ? AllCoustomTheme.getHeadingThemeColors()
+                          : AllCoustomTheme.getTextThemeColors(),
+                      width: 2,
+                    ),
+                  )
+                : null,
           ),
           width: width,
           height: 40,
@@ -35,8 +46,8 @@ class SmallTabChip extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 color: selected
-                    ? Colors.white
-                    : Colors.black,
+                    ? AllCoustomTheme.getHeadingThemeColors()
+                    : AllCoustomTheme.getTextThemeColors(),
                 fontWeight: FontWeight.bold,
               ),
             ),

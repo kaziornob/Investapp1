@@ -8,9 +8,13 @@ import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_pr
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
+import 'package:auroim/widgets/auro_stars.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
+import 'package:auroim/widgets/go_to_marketplace_button.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
+import 'package:auroim/widgets/public_companies_list.dart';
+import 'package:auroim/widgets/public_company/public_company_marketplace.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -59,27 +63,120 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
           ),
           // auro stars section
 
+          Visibility(
+            visible: globals.isGoldBlack ? false : true,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 150,
+                      padding: const EdgeInsets.only(
+                        bottom: 8,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Auro Stars",
+                          style: TextStyle(
+                              color: AllCoustomTheme.getHeadingThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE20,
+                              fontFamily: "Rosarivo",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.1),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                AuroStars(),
+              ],
+            ),
+          ),
           //Pvt deals section
           Visibility(
-              visible: globals.isGoldBlack,
-              child: PrivateDealsIntro(
-                goToMarketplaceCallback: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => PrivateDealsMarketplaceMainPage(),
-                    ),
-                  );
-                },
-              ),),
+            visible: globals.isGoldBlack ? false : true,
+            child: PrivateDealsIntro(
+              goToMarketplaceCallback: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PrivateDealsMarketplaceMainPage(),
+                  ),
+                );
+              },
+            ),
+          ),
 
           //crypto market place section
-          Visibility(visible: globals.isGoldBlack, child: CryptoMarketplace()),
+          Visibility(
+            visible: globals.isGoldBlack ? false : true,
+            child: CryptoMarketplace(),
+          ),
 
           // public equities section
-
+          Visibility(
+            visible: globals.isGoldBlack ? false : true,
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width - 100,
+                      padding: const EdgeInsets.only(
+                        bottom: 8,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Listed Company Marketplace",
+                          style: TextStyle(
+                              color: AllCoustomTheme.getHeadingThemeColors(),
+                              fontSize: ConstanceData.SIZE_TITLE20,
+                              fontFamily: "Rosarivo",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.1),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                PublicCompaniesList(),
+                GoToMarketplaceButton(
+                  buttonColor: AllCoustomTheme.getButtonBoxColor(),
+                  textColor: globals.isGoldBlack ? Colors.black : Colors.white,
+                  callback: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PublicCompanyMarketPlace(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
           // score board section start
           Visibility(
-              visible: globals.isGoldBlack == false ? true : false,
+              visible: !globals.isGoldBlack == false ? true : false,
               child: Column(
                 children: [
                   Container(
@@ -860,7 +957,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
           ),*/
           //Auro Streak section start
           Visibility(
-              visible: globals.isGoldBlack == false ? true : false,
+              visible: !globals.isGoldBlack == false ? true : false,
               child: Column(
                 children: [
                   // weekly auro strike

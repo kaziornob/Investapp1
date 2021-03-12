@@ -619,7 +619,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
   Future<void> createPortfolioData() async {
     print("getDoughnutPortfolioData called");
     var response =
-    await request.getRunAlgoExistingPortfolio('users/create_portfolio');
+    await request.getRunAlgoExistingPortfolio('users/run_algo');
     print("portfolio chart list: $response");
     if (response != null && response != false && response.containsKey('auth') && response['auth'] == true) {
 

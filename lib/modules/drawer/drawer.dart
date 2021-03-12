@@ -5,6 +5,7 @@ import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/main.dart';
 import 'package:auroim/modules/deposite/depositeCurrency.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/modules/muitisig/multisig.dart';
@@ -23,11 +24,13 @@ import 'package:auroim/constance/global.dart' as globals;
 class AppDrawer extends StatefulWidget {
   final String selectItemName;
   final VoidCallback auroStreakCallback;
+  final Function changeThemeCallback;
 
   const AppDrawer({
     Key key,
     this.selectItemName,
     this.auroStreakCallback,
+    this.changeThemeCallback,
   }) : super(key: key);
 
   @override
@@ -108,12 +111,12 @@ class _AppDrawerState extends State<AppDrawer> {
                             axis: Axis.horizontal,
                             axisAlignment: 1,
                             child: Text(
-                              profileData != null &&
-                                      profileData['f_name'] != null &&
-                                      profileData['l_name']
-                                  ? "${profileData['f_name']}" +
-                                      "${profileData['l_name']}"
-                                  : 'Not Found',
+                              // profileData != null &&
+                              //         profileData['f_name'] != null &&
+                              //         profileData['l_name']
+                              //     ? "${profileData['f_name']}" +
+                              //         "${profileData['l_name']}"
+                              userAllDetail["f_name"] ?? 'Not found',
                               style: TextStyle(
                                 color: AllCoustomTheme.getTextThemeColor(),
                                 fontWeight: FontWeight.bold,
@@ -132,24 +135,23 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 40.0,
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                builder: (BuildContext context) => MyAccount(),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (BuildContext context) =>
+                                      MyAccount(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'My Account',
+                              style: TextStyle(
+                                color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE14,
+                                fontFamily: "Roboto",
                               ),
-                            );
-                          },
-                          child: Text(
-                            'My Account',
-                            style: TextStyle(
-                              color:
-                              AllCoustomTheme.getSeeMoreThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE14,
-                              fontFamily: "Roboto",
-                            ),
-                          )
-                        ),
+                            )),
                         SizedBox(
                           width: 2.0,
                         ),
@@ -165,24 +167,22 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 2.0,
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                builder: (BuildContext context) => Setting(),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (BuildContext context) => Setting(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Settings',
+                              style: TextStyle(
+                                color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE14,
+                                fontFamily: "Roboto",
                               ),
-                            );
-                          },
-                          child: Text(
-                            'Settings',
-                            style: TextStyle(
-                              color:
-                              AllCoustomTheme.getSeeMoreThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE14,
-                              fontFamily: "Roboto",
-                            ),
-                          )
-                        ),
+                            )),
                         SizedBox(
                           width: 2.0,
                         ),
@@ -198,24 +198,23 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 2.0,
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                builder: (BuildContext context) => MyProfile(),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (BuildContext context) =>
+                                      MyProfile(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'My Profile',
+                              style: TextStyle(
+                                color: AllCoustomTheme.getSeeMoreThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE14,
+                                fontFamily: "Roboto",
                               ),
-                            );
-                          },
-                          child: Text(
-                            'My Profile',
-                            style: TextStyle(
-                              color:
-                              AllCoustomTheme.getSeeMoreThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE14,
-                              fontFamily: "Roboto",
-                            ),
-                          )
-                        )
+                            ))
                       ],
                     ),
                   ],
@@ -807,7 +806,6 @@ class _AppDrawerState extends State<AppDrawer> {
                                 ),
                               ),
                               ListTile(
-
                                 title: InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
@@ -1399,6 +1397,20 @@ class _AppDrawerState extends State<AppDrawer> {
                         ),
                         SizedBox(
                           height: 20,
+                        ),
+                        Container(
+                          child: SwitchListTile(
+                            value: globals.isGoldBlack,
+                            onChanged: widget.changeThemeCallback,
+                            title: Text(
+                              globals.isGoldBlack
+                                  ? "Non-Professional"
+                                  : "Professional",
+                              style: TextStyle(
+                                  color:
+                                      AllCoustomTheme.getSeeMoreThemeColor()),
+                            ),
+                          ),
                         ),
                       ],
                     ),

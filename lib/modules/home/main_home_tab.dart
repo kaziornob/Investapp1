@@ -49,7 +49,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                 child: Text(
                   'AURO PAPER PORTFOLIO',
                   style: TextStyle(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
+                      color: AllCoustomTheme.getOtherTabHeadingThemeColors(),
                       fontSize: ConstanceData.SIZE_TITLE20,
                       fontFamily: "Rosarivo",
                       fontStyle: FontStyle.normal,
@@ -69,7 +69,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                 decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
-                  color: Color(0xFFD8AF4F),
+                  color: Colors.black,
                   width: 1.6, // Underline width
                 ))),
               ),
@@ -197,7 +197,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                               legend: Legend(
                                   isVisible: true,
                                   textStyle: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    color: Colors.grey[700],
                                   ),
                                   overflowMode: LegendItemOverflowMode.wrap,
                                   itemPadding: 5.0),
@@ -332,14 +332,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
                               border: new Border.all(
-                                  color: AllCoustomTheme.getButtonBoxColor(),
+                                  color: AllCoustomTheme.getOtherTabButtonBoxColor(),
                                   width: 1.5),
-                              color: AllCoustomTheme.getButtonBoxColor()),
+                              color: AllCoustomTheme.getOtherTabButtonBoxColor()),
                           child: MaterialButton(
                             splashColor: Colors.grey,
                             child: Text("GO PRO",
                                 style: AllCoustomTheme
-                                    .getButtonSelectedTextStyleTheme()),
+                                    .getOtherTabButtonSelectedTextStyleTheme()),
                             onPressed: () async {
                               Navigator.of(context).push(new MaterialPageRoute(
                                   builder: (BuildContext context) =>
@@ -364,14 +364,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             border: new Border.all(
-                                color: AllCoustomTheme.getButtonBoxColor(),
+                                color: AllCoustomTheme.getOtherTabButtonBoxColor(),
                                 width: 1.5),
                           ),
                           child: MaterialButton(
                             splashColor: Colors.grey,
                             child: Text("GO LIVE",
                                 style: AllCoustomTheme
-                                    .getButtonNonSelectedTextStyleTheme()),
+                                    .getOtherTabButtonNonSelectedTextStyleTheme()),
                             onPressed: () async {
                               Navigator.of(context).push(new MaterialPageRoute(
                                   builder: (BuildContext context) =>
@@ -407,7 +407,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                             child: Text(
                           'AURO PORTFOLIO COMPONENTS',
                           style: new TextStyle(
-                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            color: AllCoustomTheme.getOtherTabHeadingThemeColors(),
                             fontSize: ConstanceData.SIZE_TITLE18,
                             fontFamily: "Rosarivo",
                           ),
@@ -423,7 +423,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
+                              color: AllCoustomTheme.getOtherTabHeadingThemeColors(),
                               width: 1.0, // Underline width
                             ),
                           ),
@@ -603,8 +603,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                 index = index + 1;
                 return singleRow(
                   context,
-                  index,
-                  rowData["num_shares"].toStringAsFixed(2),
+                  rowData["ticker"],
+                  rowData["weight"].toStringAsFixed(3),
                   rowData["inprice"].toStringAsFixed(2),
                   "_",
                   "_",
@@ -633,7 +633,12 @@ class _MainHomeTabState extends State<MainHomeTab> {
             border: Border.all(color: Colors.white),
             color: color,
           ),
-          child: Center(child: Text("$security")),
+          child: Center(
+            child: Text(
+              "$security",
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
