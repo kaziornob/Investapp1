@@ -50,7 +50,6 @@ dependencies:
   flutter_webview_plugin: ^0.3.11
   location: ^3.0.2
   firebase_core: ^0.5.0+1
-  # admob_flutter: 1.0.0
   toast: ^0.1.5
   international_phone_input: ^1.0.4
   dropdown_date_picker: 0.1.1+2

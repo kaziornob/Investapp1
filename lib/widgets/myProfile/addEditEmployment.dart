@@ -23,6 +23,15 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
   bool _visibleEmployment = false;
   ApiProvider request = new ApiProvider();
 
+  String selectedEmpType;
+  String selectedStartMonth;
+  String selectedStartYear;
+  String selectedEndMonth;
+  String selectedEndYear;
+
+  List<String> employmentList = <String>['Employed','Retired','Self-Employed','At home trader (no other occupation)','Student/ Intern','Unemployed','Homemaker'];
+  List<String> monthList = <String>['Jan', 'Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec'];
+  List<String> yearList = <String>['2015', '2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
 
   bool currentlyWorking = false;
   TextEditingController titleController = new TextEditingController();
@@ -33,7 +42,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
   bool startDateFound = true;
   bool endDateFound = true;
 
-  static final now = DateTime.now();
+/*  static final now = DateTime.now();
   final datePicker = DropdownDatePicker(
     dateFormat: DateFormat.ymd,
     firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
@@ -52,7 +61,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
     dropdownColor: Colors.white,
     dateHint: DateHint(year: 'Year', month: 'Month', day: 'Day'),
     ascending: false,
-  );
+  );*/
 
 
   animation() async {
@@ -61,10 +70,6 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
       _visibleEmployment = true;
     });
   }
-
-  List<String> employmentList = <String>['Employed','Retired','Self-Employed','At home trader (no other occupation)','Student/ Intern','Unemployed','Homemaker'];
-
-  String selectedEmpType;
 
 
   @override
@@ -99,6 +104,278 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
       });
   }*/
 
+  Widget getEndMonthField() {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.0),
+            ),
+            hintText: "Month",
+
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE20,
+                color: AllCoustomTheme.getTextThemeColor()),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedEndMonth == '',
+          child: getEndMonthDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val != '') ||
+            (selectedEndMonth != null && selectedEndMonth != ''))
+            ? null
+            : 'choose One';
+      },
+    );
+  }
+
+  Widget getEndMonthDropDownList() {
+    if (monthList != null && monthList.length != 0) {
+      return new DropdownButtonHideUnderline(
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedEndMonth,
+                dropdownColor: Colors.white,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedEndMonth = newValue;
+                  });
+                },
+                items: monthList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
+
+  Widget getEndYearField() {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.0),
+            ),
+            hintText: "Year",
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE20,
+                color: AllCoustomTheme.getTextThemeColor()),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedEndYear == '',
+          child: getEndYearDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val != '') ||
+            (selectedEndYear != null && selectedEndYear != ''))
+            ? null
+            : 'choose One';
+      },
+    );
+  }
+
+  Widget getEndYearDropDownList() {
+    if (yearList != null && yearList.length != 0) {
+      return new DropdownButtonHideUnderline(
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedEndYear,
+                dropdownColor: Colors.white,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedEndYear = newValue;
+                  });
+                },
+                items: yearList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
+
+  Widget getMonthField() {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.0),
+            ),
+            hintText: "Month",
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE20,
+                color: AllCoustomTheme.getTextThemeColor()),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedStartMonth == '',
+          child: getMonthDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val != '') ||
+            (selectedStartMonth != null && selectedStartMonth != ''))
+            ? null
+            : 'choose One';
+      },
+    );
+  }
+
+  Widget getMonthDropDownList() {
+    if (monthList != null && monthList.length != 0) {
+      return new DropdownButtonHideUnderline(
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedStartMonth,
+                dropdownColor: Colors.white,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedStartMonth = newValue;
+                  });
+                },
+                items: monthList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
+
+  Widget getStartYearField() {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.0),
+            ),
+            hintText: "Year",
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE20,
+                color: AllCoustomTheme.getTextThemeColor()),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedStartYear == '',
+          child: getStartYearDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val != '') ||
+            (selectedStartYear != null && selectedStartYear != ''))
+            ? null
+            : 'choose One';
+      },
+    );
+  }
+
+  Widget getStartYearDropDownList() {
+    if (yearList != null && yearList.length != 0) {
+      return new DropdownButtonHideUnderline(
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedStartYear,
+                dropdownColor: Colors.white,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedStartYear = newValue;
+                  });
+                },
+                items: yearList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
 
   Widget getEmpStatusDropDownList()
   {
@@ -361,38 +638,110 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 30,
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 14, top: 4),
-                                      child: Text(
-                                          "Start Date:",
-                                          style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                      ),
-                                    ),
-                                    Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(top: 4),
-                                          child: datePicker,
-                                        )
-                                    ),
-                                  ],
-                                ),
-                                Visibility(
-                                  visible: startDateFound==false ? true : false,
+                                Padding(
+                                  padding: EdgeInsets.only(left: 14, top: 4,right: 20),
                                   child: Row(
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: EdgeInsets.only(left: 14, top: 4),
-                                          child: Text(
-                                            "Please Fill Start Date",
-                                            style: TextStyle(
-                                              fontSize: ConstanceData.SIZE_TITLE12,
-                                              color: Color(0xFFC70039),
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      // start date
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 0, top: 4),
+                                            child: Text(
+                                                "Start Date:",
+                                                style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                             ),
-                                          )
+                                          ),
+                                          SizedBox(
+                                            height: 20.0,
+                                          ),
+                                          Container(
+                                            height: 60,
+                                            width: MediaQuery.of(context).size.width * 0.40,
+                                            child: getMonthField(),
+                                          ),
+                                          SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          Container(
+                                            height: 60,
+                                            width: MediaQuery.of(context).size.width * 0.40,
+                                            child: getStartYearField(),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Visibility(
+                                        visible: startDateFound==false ? true : false,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Padding(
+                                                padding: EdgeInsets.only(left: 14, top: 4),
+                                                child: Text(
+                                                  "Please Fill Start Date",
+                                                  style: TextStyle(
+                                                    fontSize: ConstanceData.SIZE_TITLE12,
+                                                    color: Color(0xFFC70039),
+                                                  ),
+                                                )
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      // end date
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 0, top: 4),
+                                            child: Text(
+                                                "End Date:",
+                                                style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 20.0,
+                                          ),
+                                          Container(
+                                            height: 60,
+                                            width: MediaQuery.of(context).size.width * 0.40,
+                                            child: getEndMonthField(),
+                                          ),
+                                          SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          Container(
+                                            height: 60,
+                                            width: MediaQuery.of(context).size.width * 0.40,
+                                            child: getEndYearField(),
+                                          ),
+                                        ],
+                                      ),
+                                      Visibility(
+                                        visible: endDateFound==false ? true : false,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Padding(
+                                                padding: EdgeInsets.only(left: 14, top: 4),
+                                                child: Text(
+                                                  "Please Fill End Date",
+                                                  style: TextStyle(
+                                                    fontSize: ConstanceData.SIZE_TITLE12,
+                                                    color: Color(0xFFC70039),
+                                                  ),
+                                                )
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -400,42 +749,6 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 14, top: 4),
-                                      child: Text(
-                                          "End Date:",
-                                          style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                      ),
-                                    ),
-                                    Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(top: 4),
-                                          child: endDatePicker,
-                                          // child: _selectDate,
-                                        )
-                                    ),
-                                  ],
-                                ),
-                                Visibility(
-                                  visible: endDateFound==false ? true : false,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: EdgeInsets.only(left: 14, top: 4),
-                                          child: Text(
-                                            "Please Fill End Date",
-                                            style: TextStyle(
-                                              fontSize: ConstanceData.SIZE_TITLE12,
-                                              color: Color(0xFFC70039),
-                                            ),
-                                          )
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 10.0,),
                                 Padding(
                                   padding: EdgeInsets.only(left: 14, top: 4,right: 20),
                                   child: Container(
