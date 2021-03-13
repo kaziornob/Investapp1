@@ -105,18 +105,18 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     // GlobalInstance.getDoughnutPortfolioData();
-    // globals.isGoldBlack = widget.prefs != null &&
-    //         widget.prefs.containsKey('InvestorType') &&
-    //         widget.prefs.getString('InvestorType') != null &&
-    //         widget.prefs.getString('InvestorType') == 'Accredited Investor'
-    //     ? true
-    //     : false;
+    globals.isGoldBlack = widget.prefs != null &&
+            widget.prefs.containsKey('InvestorType') &&
+            widget.prefs.getString('InvestorType') != null &&
+            widget.prefs.getString('InvestorType') == 'Accredited Investor'
+        ? true
+        : false;
 
-    if(userAllDetail["inv_status"] == "Accredited Investor"){
-      globals.isGoldBlack  = false;
-    }else{
-      globals.isGoldBlack = true;
-    }
+    // if(userAllDetail["inv_status"] == "Accredited Investor"){
+    //   globals.isGoldBlack  = false;
+    // }else{
+    //   globals.isGoldBlack = true;
+    // }
     print(widget.prefs.getString('InvestorType'));
     print("globals main function: ${globals.isGoldBlack}");
     // getApiAllData(1);
