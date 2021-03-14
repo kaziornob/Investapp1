@@ -46,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen>
   bool isSelect3 = false;
   bool isSelect4 = false;
   bool isSelect5 = false;
-
   bool isLoading = false;
 
   var width = 0.0;
@@ -79,11 +78,6 @@ class _HomeScreenState extends State<HomeScreen>
   getSharedPrefData() async {
     prefs = await SharedPreferences.getInstance();
     print("investor type : ${prefs.getString('InvestorType')}");
-  }
-
-  @override
-  dispose() {
-    super.dispose();
   }
 
   isLoadingList() async {
@@ -265,15 +259,15 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               // height: 52,
-              height: MediaQuery.of(context).size.height * 0.088,
+              height: MediaQuery.of(context).size.height * 0.070,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         isSelect1
                             ? Animator(
@@ -358,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen>
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         isSelect2
                             ? Animator(
@@ -406,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen>
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         isSelect3
                             ? Animator(
@@ -454,7 +448,7 @@ class _HomeScreenState extends State<HomeScreen>
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         isSelect5
                             ? Animator(
@@ -502,7 +496,7 @@ class _HomeScreenState extends State<HomeScreen>
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         isSelect4
                             ? Animator(
@@ -864,8 +858,8 @@ class _HomeScreenState extends State<HomeScreen>
                       prefs.containsKey('InvestorType') &&
                       prefs.getString('InvestorType') != null &&
                       prefs.getString('InvestorType') == 'Accredited Investor'
-                  ? 'MarketPlace'
-                  : 'Learn',
+                  ? 'Learn'
+                  : 'MarketPlace',
               style: TextStyle(
                   fontSize: ConstanceData.SIZE_TITLE14,
                   color: isSelect5
@@ -875,80 +869,6 @@ class _HomeScreenState extends State<HomeScreen>
                   fontStyle: FontStyle.normal,
                   letterSpacing: 0.2),
             )),
-      ],
-    );
-  }
-
-  singleRow(context, security, share, ip, cp, perReturn, color) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
-          height: 40,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
-          child: Center(child: Text(security)),
-        ),
-        Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
-          height: 40,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
-          child: Center(
-              child: Text(
-            share,
-            textAlign: TextAlign.center,
-          )),
-        ),
-        Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
-          height: 40,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
-          child: Center(
-              child: Text(
-            ip,
-            textAlign: TextAlign.center,
-          )),
-        ),
-        Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
-          height: 40,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
-          child: Center(
-              child: Text(
-            cp,
-            textAlign: TextAlign.center,
-          )),
-        ),
-        Container(
-          // width: (MediaQuery.of(context).size.width / 2) - 6,
-          width: 70,
-          height: 40,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
-          child: Center(
-              child: Text(
-            perReturn,
-            textAlign: TextAlign.center,
-          )),
-        ),
       ],
     );
   }

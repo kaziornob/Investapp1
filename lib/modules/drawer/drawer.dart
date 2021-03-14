@@ -111,12 +111,12 @@ class _AppDrawerState extends State<AppDrawer> {
                             axis: Axis.horizontal,
                             axisAlignment: 1,
                             child: Text(
-                              // profileData != null &&
-                              //         profileData['f_name'] != null &&
-                              //         profileData['l_name']
-                              //     ? "${profileData['f_name']}" +
-                              //         "${profileData['l_name']}"
-                              userAllDetail["f_name"] ?? 'Not found',
+                              profileData != null &&
+                                      profileData['f_name'] != null &&
+                                      profileData['l_name']
+                                  ? "${profileData['f_name']}" +
+                                      "${profileData['l_name']}"
+                                  : 'Not found',
                               style: TextStyle(
                                 color: AllCoustomTheme.getTextThemeColor(),
                                 fontWeight: FontWeight.bold,

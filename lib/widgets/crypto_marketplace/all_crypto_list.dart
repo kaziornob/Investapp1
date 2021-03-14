@@ -1,16 +1,7 @@
-import 'dart:convert';
-
-import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/constance/themes.dart';
-import 'package:auroim/provider_abhinav/coin_url.dart';
-import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
-import 'package:auroim/widgets/go_to_marketplace_button.dart';
-import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
+
 
 class AllCryptoListBlack extends StatefulWidget {
   final String sortingType;
