@@ -852,23 +852,23 @@ class _HomeScreenState extends State<HomeScreen>
           height: 2,
         ),
         Align(
-            alignment: Alignment.topCenter,
-            child: Text(
-              prefs != null &&
-                      prefs.containsKey('InvestorType') &&
-                      prefs.getString('InvestorType') != null &&
-                      prefs.getString('InvestorType') == 'Accredited Investor'
-                  ? 'Learn'
-                  : 'MarketPlace',
-              style: TextStyle(
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                  color: isSelect5
-                      ? AllCoustomTheme.getIconThemeColors()
-                      : AllCoustomTheme.getSecondIconThemeColor(),
-                  fontFamily: "Rasa",
-                  fontStyle: FontStyle.normal,
-                  letterSpacing: 0.2),
-            )),
+          alignment: Alignment.topCenter,
+          child: Text(
+            // prefs != null &&
+            //         prefs.containsKey('InvestorType') &&
+            //         prefs.getString('InvestorType') != null &&
+            //         prefs.getString('InvestorType') == 'Accredited Investor'
+            globals.isGoldBlack ? 'Learn' : 'MarketPlace',
+            style: TextStyle(
+                fontSize: ConstanceData.SIZE_TITLE14,
+                color: isSelect5
+                    ? AllCoustomTheme.getIconThemeColors()
+                    : AllCoustomTheme.getSecondIconThemeColor(),
+                fontFamily: "Rasa",
+                fontStyle: FontStyle.normal,
+                letterSpacing: 0.2),
+          ),
+        ),
       ],
     );
   }

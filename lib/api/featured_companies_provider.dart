@@ -172,8 +172,14 @@ class FeaturedCompaniesProvider {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("ggggg");
-      print("results $result");
-      return result["message"];
+
+      if(result["message"] == "Ticker not in database"){
+        return {};
+      }else{
+        print("results $result");
+        return result["message"];
+      }
+
       // return result["message"];
       // return getCompaniesList(result["message"]);
 

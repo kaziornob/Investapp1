@@ -68,17 +68,22 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
         if (snapshot.hasData) {
           print("data is got for securities baba");
           return Container(
-            height: 220,
+            height: 230,
             child: Container(
-              // decoration: BoxDecoration(border: Border.all(color: Colors.white,),),
+              // decoration: BoxDecoration(
+              //   border: Border.all(
+              //     color: Colors.black,
+              //   ),
+              // ),
+              padding: EdgeInsets.only(right: 6.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
-                      height: 210,
-                      width: MediaQuery.of(context).size.width * 0.90,
+                  Container(
+                      height: 220,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       child: Container(
-                        margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
                         decoration: new BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           border: new Border.all(
@@ -89,137 +94,137 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 5.0),
-                              child: Container(
-                                // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.10,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
+                            Container(
+                              // decoration: BoxDecoration(
+                              //   border: Border.all(
+                              //     color: Colors.black,
+                              //   ),
+                              // ),
+                              height: 70,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.55,
+                                        // decoration: BoxDecoration(border: Border.all()),
+                                        child: Text(
                                           snapshot.data["company_name"] == null
                                               ? ""
                                               : snapshot.data["company_name"],
                                           style: TextStyle(
                                             color: AllCoustomTheme
                                                 .getChartBoxTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE18,
+                                            fontSize: 16,
                                             fontFamily: "Roboto",
                                           ),
+                                          overflow: TextOverflow.clip,
                                         ),
-                                        Text(
-                                          "2.20 (1.61%)",
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getNewSecondTextThemeColor(),
-                                            fontSize: ConstanceData.SIZE_TITLE8,
-                                            fontFamily: "Roboto",
-                                          ),
+                                      ),
+                                      Text(
+                                        "2.20 (1.61%)",
+                                        style: TextStyle(
+                                          color: AllCoustomTheme
+                                              .getNewSecondTextThemeColor(),
+                                          fontSize: 10,
+                                          fontFamily: "Roboto",
                                         ),
-                                        Text(
-                                          '\$' + " 390.00",
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getChartBoxTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE18,
-                                            fontFamily: "Roboto",
-                                          ),
+                                      ),
+                                      Text(
+                                        '\$' + " 390.00",
+                                        style: TextStyle(
+                                          color: AllCoustomTheme
+                                              .getChartBoxTextThemeColor(),
+                                          fontSize: 16,
+                                          fontFamily: "Roboto",
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 50,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "HIGH",
-                                              style: TextStyle(
-                                                color: AllCoustomTheme
-                                                    .getNewTextThemeColors(),
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE10,
-                                                fontFamily: "Roboto",
-                                              ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "HIGH",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getNewTextThemeColors(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
                                             ),
-                                            Icon(
-                                              FontAwesomeIcons.arrowUp,
+                                          ),
+                                          Icon(
+                                            FontAwesomeIcons.arrowUp,
+                                            color: Colors.green,
+                                            size: 10,
+                                          ),
+                                          Text(
+                                            "139.00",
+                                            style: TextStyle(
                                               color: Colors.green,
-                                              size: 10,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
                                             ),
-                                            Text(
-                                              "139.00",
-                                              style: TextStyle(
-                                                color: Colors.green,
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE10,
-                                                fontFamily: "Roboto",
-                                              ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "LOW",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getNewTextThemeColors(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
                                             ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "LOW",
-                                              style: TextStyle(
-                                                color: AllCoustomTheme
-                                                    .getNewTextThemeColors(),
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE10,
-                                                fontFamily: "Roboto",
-                                              ),
-                                            ),
-                                            Icon(
-                                              FontAwesomeIcons.arrowDown,
+                                          ),
+                                          Icon(
+                                            FontAwesomeIcons.arrowDown,
+                                            color: Colors.red,
+                                            size: 10,
+                                          ),
+                                          Text(
+                                            "139.00",
+                                            style: TextStyle(
                                               color: Colors.red,
-                                              size: 10,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE10,
+                                              fontFamily: "Roboto",
                                             ),
-                                            Text(
-                                              "139.00",
-                                              style: TextStyle(
-                                                color: Colors.red,
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE10,
-                                                fontFamily: "Roboto",
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                             Consumer<PublicCompanyHistoricalPricing>(
@@ -227,19 +232,24 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                 if (historicalPricingProvider
                                         .historicalPriceData[widget.ticker] ==
                                     null) {
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.80,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.10,
+                                  return Center(
                                     child: Container(
-                                      margin: EdgeInsets.only(left: 10.0),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.75,
+                                      // decoration:
+                                      //     BoxDecoration(border: Border.all()),
+                                      height: 90,
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 10.0),
+                                        child: Center(
+                                            child: Text("No Chart to show")),
+                                      ),
                                     ),
                                   );
                                 } else {
                                   allPriceData = [];
-                                  historicalPricingProvider.historicalPriceData[
-                                          widget.ticker]
+                                  historicalPricingProvider
+                                      .historicalPriceData[widget.ticker]
                                       .forEach((element) {
                                     DateTime date = DateFormat("yyyy-MM-dd")
                                         .parse(element["date"]);
@@ -249,54 +259,51 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           y: element["price"].toDouble()),
                                     );
                                   });
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.80,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.10,
+                                  return Center(
                                     child: Container(
-                                      margin: EdgeInsets.only(left: 10.0),
-                                      child: SfCartesianChart(
-                                          primaryXAxis: DateTimeAxis(
-                                            isVisible: false,
-                                          ),
-                                          primaryYAxis:
-                                              NumericAxis(isVisible: false),
-                                          series: <ChartSeries>[
-                                            StackedAreaSeries<
-                                                CryptoCoinPriceData, dynamic>(
-                                              dataSource: allPriceData,
-                                              xValueMapper:
-                                                  (CryptoCoinPriceData data,
-                                                          _) =>
-                                                      data.x,
-                                              yValueMapper:
-                                                  (CryptoCoinPriceData data,
-                                                          _) =>
-                                                      data.y,
-                                              gradient: gradientColors,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.75,
+                                      height: 90,
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 10.0),
+                                        child: SfCartesianChart(
+                                            primaryXAxis: DateTimeAxis(
+                                              isVisible: false,
                                             ),
-                                          ]),
+                                            primaryYAxis:
+                                                NumericAxis(isVisible: false),
+                                            series: <ChartSeries>[
+                                              StackedAreaSeries<
+                                                  CryptoCoinPriceData, dynamic>(
+                                                dataSource: allPriceData,
+                                                xValueMapper:
+                                                    (CryptoCoinPriceData data,
+                                                            _) =>
+                                                        data.x,
+                                                yValueMapper:
+                                                    (CryptoCoinPriceData data,
+                                                            _) =>
+                                                        data.y,
+                                                gradient: gradientColors,
+                                              ),
+                                            ]),
+                                      ),
                                     ),
                                   );
                                 }
                               },
                             ),
-                            SizedBox(
-                              // height: MediaQuery.of(context).size.height*0.10,
+                            Container(
+                              // decoration: BoxDecoration(border: Border.all()),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   SizedBox(
-                                    width: 10,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.20,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.030,
+                                    width: (MediaQuery.of(context).size.width *
+                                            0.80) /
+                                        3,
+                                    height: 20,
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
@@ -309,9 +316,8 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                             .getChartBoxThemeColor(),
                                       ),
                                       child: MaterialButton(
-                                        // splashColor: Colors.grey,
                                         child: Text(
-                                          "BUY",
+                                          "TRADE",
                                           style: TextStyle(
                                             color: AllCoustomTheme
                                                 .getButtonTextThemeColors(),
@@ -340,88 +346,48 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.21,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.030,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10.0),
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                        border: new Border.all(
-                                            color: AllCoustomTheme
-                                                .getChartBoxThemeColor(),
-                                            width: 1.5),
-                                        // color: AllCoustomTheme.getChartBoxThemeColor(),
-                                      ),
-                                      child: MaterialButton(
-                                        splashColor: Colors.grey,
-                                        child: Text(
-                                          "SELL",
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getChartBoxTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE13,
-                                            fontFamily: "Roboto",
-                                          ),
+                                      width:
+                                          (MediaQuery.of(context).size.width *
+                                                  0.80) /
+                                              3,
+                                      height: 20,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          border: new Border.all(
+                                              color: AllCoustomTheme
+                                                  .getChartBoxThemeColor(),
+                                              width: 1.5),
+                                          // color: AllCoustomTheme.getChartBoxThemeColor(),
                                         ),
-                                        onPressed: () async {
-/*                                      Navigator.of(context).push(new MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                            new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));*/
-                                          Navigator.of(context).push(
-                                            new MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  new SecurityPageFirst(
-                                                      logo: "logo.png",
-                                                      callingFrom:
-                                                          "Accredited Investor"),
+                                        child: MaterialButton(
+                                          splashColor: Colors.grey,
+                                          child: Text(
+                                            "FOLLOW",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getChartBoxTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE13,
+                                              fontFamily: "Roboto",
                                             ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.30,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.030,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                        border: new Border.all(
-                                            color: AllCoustomTheme
-                                                .getChartBoxThemeColor(),
-                                            width: 1.5),
-                                        // color: AllCoustomTheme.getChartBoxThemeColor(),
-                                      ),
-                                      child: MaterialButton(
-                                        splashColor: Colors.grey,
-                                        child: Text(
-                                          "FOLLOW",
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getChartBoxTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE13,
-                                            fontFamily: "Roboto",
                                           ),
+                                          onPressed: () async {
+                                            Navigator.of(context).push(
+                                                new MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        new OnBoardingFirst(
+                                                          logo: "logo.png",
+                                                          callingFrom:
+                                                              "Accredited Investor",
+                                                        )));
+                                          },
                                         ),
-                                        onPressed: () async {
-                                          Navigator.of(context).push(
-                                              new MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          new OnBoardingFirst(
-                                                            logo: "logo.png",
-                                                            callingFrom:
-                                                                "Accredited Investor",
-                                                          )));
-                                        },
                                       ),
                                     ),
                                   ),

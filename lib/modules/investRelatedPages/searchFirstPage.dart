@@ -329,7 +329,7 @@ class _SearchFirstPageState extends State<SearchFirstPage>
                     child: new Image(
                         width: 35.0,
                         fit: BoxFit.fill,
-                        image: new AssetImage('assets/logo.png')),
+                        image: AssetImage('assets/logo.png')),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10.0),

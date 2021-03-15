@@ -114,6 +114,7 @@ class _SinglePublicCompanyOverviewTabState
           //compare section
           CompareChartForPublicCompany(
             ticker: widget.data["ticker"],
+            companyData: widget.data,
           ),
           // description section
           Padding(
@@ -572,7 +573,7 @@ class _SinglePublicCompanyOverviewTabState
                                         image: DecorationImage(
                                           image: NetworkImage(snapshot
                                               .data[index]["logo_img_name"]),
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.contain,
                                         ),
                                         shape: BoxShape.circle,
                                         // borderRadius: new BorderRadius.all(new Radius.circular(50.0)),

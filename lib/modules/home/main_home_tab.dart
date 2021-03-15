@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/wishList.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
+import 'package:auroim/widgets/payment_pages/payment_purchase.dart';
+import 'package:auroim/widgets/payment_pages/payment_types.dart';
 import 'package:auroim/widgets/small_get_area_chart_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -75,35 +79,20 @@ class _MainHomeTabState extends State<MainHomeTab> {
               ),
               // handshake/loader image box
               Visibility(
-                  visible: homeDonutArray == null || homeDonutArray.length == 0
-                      ? true
-                      : false,
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.10,
-                        bottom: MediaQuery.of(context).size.height * 0.10),
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.redAccent,
-                      valueColor: AlwaysStoppedAnimation(Colors.green),
-                      strokeWidth: 10,
-                    ),
-                  )),
-
-/*            Visibility(
-              visible: homeDonutArray == null || homeDonutArray.length == 0
-                  ? true
-                  : false,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.25,
+                visible: homeDonutArray == null || homeDonutArray.length == 0
+                    ? true
+                    : false,
                 child: Container(
-                  margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
-                  child: Image(
-                      fit: BoxFit.fill,
-                      image: new AssetImage('assets/handShake.png')),
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.10,
+                      bottom: MediaQuery.of(context).size.height * 0.10),
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.redAccent,
+                    valueColor: AlwaysStoppedAnimation(Colors.green),
+                    strokeWidth: 10,
+                  ),
                 ),
               ),
-            ),*/
               Visibility(
                 visible: homeDonutArray.length != 0 ? true : false,
                 // visible: true,
@@ -136,33 +125,37 @@ class _MainHomeTabState extends State<MainHomeTab> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "As part of free view we only show you the three smallest securities in your " +
-                                        "auro portfolio and the % return generated on the entire portfolio to get you comfortable with our product",
-                                    style: TextStyle(
-                                        color: AllCoustomTheme
-                                            .getNewSecondTextThemeColor(),
-                                        fontSize: 14.5,
-                                        fontFamily: "Roboto",
-                                        fontStyle: FontStyle.normal,
-                                        letterSpacing: 0.2),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
                                   Container(
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Color(0xFFD8AF4F),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.65,
+                                    child: Image.asset('assets/logo.png'),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        // MaterialPageRoute(
+                                        //   builder: (context) =>
+                                        //       PaymentPurchaseScreen(),
+                                        // ),
+                                        MaterialPageRoute(
+                                          builder: (context) => PaymentTypes(),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Color(0xFFD8AF4F),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    child: Text(
-                                      "Click here to see entire portfolio",
-                                      style: TextStyle(
-                                        color: Color(0xFFD8AF4F),
-                                        fontWeight: FontWeight.bold,
+                                      child: Text(
+                                        "Click here to see entire portfolio",
+                                        style: TextStyle(
+                                          color: Color(0xFFD8AF4F),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -332,9 +325,11 @@ class _MainHomeTabState extends State<MainHomeTab> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
                               border: new Border.all(
-                                  color: AllCoustomTheme.getOtherTabButtonBoxColor(),
+                                  color: AllCoustomTheme
+                                      .getOtherTabButtonBoxColor(),
                                   width: 1.5),
-                              color: AllCoustomTheme.getOtherTabButtonBoxColor()),
+                              color:
+                                  AllCoustomTheme.getOtherTabButtonBoxColor()),
                           child: MaterialButton(
                             splashColor: Colors.grey,
                             child: Text("GO PRO",
@@ -364,7 +359,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             border: new Border.all(
-                                color: AllCoustomTheme.getOtherTabButtonBoxColor(),
+                                color:
+                                    AllCoustomTheme.getOtherTabButtonBoxColor(),
                                 width: 1.5),
                           ),
                           child: MaterialButton(
@@ -407,7 +403,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                             child: Text(
                           'AURO PORTFOLIO COMPONENTS',
                           style: new TextStyle(
-                            color: AllCoustomTheme.getOtherTabHeadingThemeColors(),
+                            color:
+                                AllCoustomTheme.getOtherTabHeadingThemeColors(),
                             fontSize: ConstanceData.SIZE_TITLE18,
                             fontFamily: "Rosarivo",
                           ),
@@ -423,7 +420,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: AllCoustomTheme.getOtherTabHeadingThemeColors(),
+                              color: AllCoustomTheme
+                                  .getOtherTabHeadingThemeColors(),
                               width: 1.0, // Underline width
                             ),
                           ),
@@ -526,7 +524,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
         portfolioChartData["assetClass"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              double.parse((value.toDouble() * 100).toStringAsFixed(2)),
+              double.parse((value.toDouble() * 100).toInt().toString()),
 
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
@@ -551,7 +549,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
         portfolioChartData["country"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              double.parse((value.toDouble() * 100).toStringAsFixed(2)),
+              double.parse((value.toDouble() * 100).toInt().toString()),
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
@@ -582,7 +580,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
         portfolioChartData["sector"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
-              double.parse((value.toDouble() * 100).toStringAsFixed(2)),
+              double.parse((value.toDouble() * 100).toInt().toString()),
               // double.parse(tempDouble.toStringAsFixed(4)),
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
@@ -596,15 +594,16 @@ class _MainHomeTabState extends State<MainHomeTab> {
       return Container(
         child: Column(
           children: [
-            singleRow(context, "Security", '# of shares/ \$', 'In-Price',
+            singleRow(context, "Security", 'Weight', 'In-Price',
                 'Current Price', '% Return', Colors.indigo[100]),
             Column(
-              children: portfolioChartData["data"].map<Widget>((rowData) {
+              children: portfolioChartData["lowest_securities"]
+                  .map<Widget>((rowData) {
                 index = index + 1;
                 return singleRow(
                   context,
                   rowData["ticker"],
-                  rowData["weight"].toStringAsFixed(3),
+                  (rowData["weight"] * 100).toInt(),
                   rowData["inprice"].toStringAsFixed(2),
                   "_",
                   "_",
@@ -612,6 +611,89 @@ class _MainHomeTabState extends State<MainHomeTab> {
                 );
               }).toList(),
             ),
+            Center(
+              child: Container(
+                height: 130,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Center(
+                      child: Column(
+                        children: portfolioChartData["lowest_securities"]
+                            .map<Widget>((rowData) {
+                          index = index + 1;
+                          return singleRow(
+                            context,
+                            rowData["ticker"],
+                            (rowData["weight"] * 100).toInt(),
+                            rowData["inprice"].toStringAsFixed(2),
+                            "_",
+                            "_",
+                            index % 2 == 0
+                                ? Colors.indigo[100]
+                                : Colors.indigo[50],
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width-15,
+                      child: ClipRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: 5.0,
+                            sigmaY: 5.0,
+                          ),
+                          child: Container(
+                            color: Colors.grey.withOpacity(0.1),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.55,
+                            child: Image.asset('assets/logo.png'),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                // MaterialPageRoute(
+                                //   builder: (context) =>
+                                //       PaymentPurchaseScreen(),
+                                // ),
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentTypes(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              child: Text(
+                                "Click here to see entire portfolio",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       );
