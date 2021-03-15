@@ -206,6 +206,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                           color: AllCoustomTheme.getHeadingThemeColors(),
                           fontSize: ConstanceData.SIZE_TITLE18,
                           fontFamily: "Rosarivo",
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -457,6 +458,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                               style: TextStyle(
                                                 color: AllCoustomTheme
                                                     .getsecoundTextThemeColor(),
+                                                fontWeight: FontWeight.bold,
                                                 fontSize:
                                                     ConstanceData.SIZE_TITLE16,
                                                 fontFamily: "Roboto",
@@ -490,8 +492,8 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                           child: Text(
                                             'INTERMEDIATE',
                                             style: TextStyle(
-                                              color: AllCoustomTheme
-                                                  .getsecoundTextThemeColor(),
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
                                               fontSize:
                                                   ConstanceData.SIZE_TITLE15,
                                               fontFamily: "Roboto",
@@ -521,8 +523,8 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                           child: Text(
                                             'HARD',
                                             style: TextStyle(
-                                              color: AllCoustomTheme
-                                                  .getsecoundTextThemeColor(),
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
                                               fontSize:
                                                   ConstanceData.SIZE_TITLE16,
                                               fontFamily: "Roboto",
@@ -551,33 +553,34 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                       children: <Widget>[
                         Expanded(
                           child: Container(
-                              height: 30,
-                              decoration: new BoxDecoration(
+                            height: 30,
+                            decoration: new BoxDecoration(
+                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                              border: Border.all(
                                 color:
                                     AllCoustomTheme.getsecoundTextThemeColor(),
-                                border: Border.all(
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(2.0),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 4.0),
+                              child: Text(
+                                "Today's progress: 1 concept",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                   color: AllCoustomTheme
-                                      .getsecoundTextThemeColor(),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(2.0),
+                                      .getSubHeadingThemeColors(),
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Roboto",
+                                  package: 'Roboto-Regular',
                                 ),
                               ),
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 4.0),
-                                child: Text(
-                                  "Today's progress: 1 concept",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AllCoustomTheme
-                                        .getSubHeadingThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    fontFamily: "Roboto",
-                                    package: 'Roboto-Regular',
-                                  ),
-                                ),
-                              )),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -626,6 +629,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                     color: AllCoustomTheme.getTextThemeColor(),
                                     fontSize: ConstanceData.SIZE_TITLE15,
                                     fontFamily: "Roboto",
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               )),

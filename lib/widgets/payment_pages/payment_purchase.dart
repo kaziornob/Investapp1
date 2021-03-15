@@ -33,19 +33,34 @@ class _PaymentPurchaseScreenState extends State<PaymentPurchaseScreen> {
           height: MediaQuery.of(context).size.height,
           child: Container(
             padding: EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: AllCoustomTheme.getTextThemeColors()),
-            ),
             width: MediaQuery.of(context).size.width - 80,
             height: MediaQuery.of(context).size.height - 20,
             child: Column(
               children: [
                 Container(
-                  height: 140,
-                  child: Image.asset('assets/logo.png'),
+                  // decoration: BoxDecoration(border: Border.all()),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
-                  height: 500,
+                  height: 100,
+                  width: MediaQuery.of(context).size.width-60,
+                  child: Image.asset('assets/logo.png'),
+                ),
+                SizedBox(height: 10,),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xff5A56B9),),
+                  ),
+                  height: 350,
                   width: MediaQuery.of(context).size.width - 50,
                   child: Column(
                     children: [
@@ -67,51 +82,59 @@ class _PaymentPurchaseScreenState extends State<PaymentPurchaseScreen> {
   }
 
   oneRow(text) {
-    return Row(
-      children: [
-        Container(
-          height: 80,
-          width: MediaQuery.of(context).size.width - 50,
-          child: Row(
-            children: [
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6.0),
-                      child: CircleAvatar(
-                        radius: 5,
-                        backgroundColor: Colors.black,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Container(
+            height: 50,
+            // decoration: BoxDecoration(
+            //   border: Border.all(color: Color(0xff5A56B9),),
+            // ),
+            width: MediaQuery.of(context).size.width - 80,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  // decoration: BoxDecoration(border: Border.all()),
+                  padding: EdgeInsets.only(top: 6,left: 10,),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Color(0xff5A56B9),
+                        radius: 5.0,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          text,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            text,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 18,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.clip,
                           ),
-                          overflow: TextOverflow.clip,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

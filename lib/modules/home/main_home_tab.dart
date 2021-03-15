@@ -11,6 +11,7 @@ import 'package:auroim/widgets/payment_pages/payment_types.dart';
 import 'package:auroim/widgets/small_get_area_chart_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
@@ -133,13 +134,13 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(
-                                        // MaterialPageRoute(
-                                        //   builder: (context) =>
-                                        //       PaymentPurchaseScreen(),
-                                        // ),
                                         MaterialPageRoute(
-                                          builder: (context) => PaymentTypes(),
+                                          builder: (context) =>
+                                              PaymentPurchaseScreen(),
                                         ),
+                                        // MaterialPageRoute(
+                                        //   builder: (context) => PaymentTypes(),
+                                        // ),
                                       );
                                     },
                                     child: Container(
@@ -186,14 +187,56 @@ class _MainHomeTabState extends State<MainHomeTab> {
                             );
                           } else {
                             return SfCircularChart(
-                              title: ChartTitle(text: getChartTitle()),
+                              title: ChartTitle(
+                                text: getChartTitle(),
+                                textStyle: TextStyle(
+                                  fontFamily: "Ubuntu",
+                                ),
+                              ),
+                              // margin: EdgeInsets.all(4),
                               legend: Legend(
-                                  isVisible: true,
-                                  textStyle: TextStyle(
-                                    color: Colors.grey[700],
-                                  ),
-                                  overflowMode: LegendItemOverflowMode.wrap,
-                                  itemPadding: 5.0),
+                                isVisible: true,
+                                // textStyle: TextStyle(
+                                //   color: Colors.grey[700],
+                                // ),
+
+                                overflowMode: LegendItemOverflowMode.wrap,
+                                itemPadding: 5.0,
+                                legendItemBuilder:
+                                    (name, series, point, index) {
+                                  var changesString =
+                                      name.replaceAll("_", " ").toLowerCase();
+                                  // print("legend");
+                                  DoughnutSeriesRenderer ss = series;
+                                  ChartPoint<dynamic> dd = point;
+                                  // print(series.runtimeType.toString());
+                                  // print(point.runtimeType.toString());
+                                  return Container(
+                                    padding: EdgeInsets.all(1.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          FontAwesomeIcons.quinscape,
+                                          color: dd.color,
+                                          size: 15,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          changesString,
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontFamily: "Ubuntu",
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                               series: <CircularSeries>[
                                 DoughnutSeries<ChartData, String>(
                                   radius: "90%",
@@ -201,10 +244,11 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                   xValueMapper: (ChartData data, _) => data.x,
                                   yValueMapper: (ChartData data, _) => data.y,
                                   dataLabelSettings: DataLabelSettings(
-                                      isVisible: true,
-                                      useSeriesColor: true,
-                                      showCumulativeValues: true,
-                                      showZeroValue: true),
+                                    isVisible: true,
+                                    useSeriesColor: true,
+                                    showCumulativeValues: true,
+                                    showZeroValue: true,
+                                  ),
                                 )
                               ],
                             );
@@ -336,12 +380,15 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                 style: AllCoustomTheme
                                     .getOtherTabButtonSelectedTextStyleTheme()),
                             onPressed: () async {
-                              Navigator.of(context).push(new MaterialPageRoute(
+                              Navigator.of(context).push(
+                                new MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       new OnBoardingFirst(
-                                        logo: "logo.png",
-                                        callingFrom: "Accredited Investor",
-                                      )));
+                                    logo: "logo.png",
+                                    callingFrom: "Accredited Investor",
+                                  ),
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -595,49 +642,59 @@ class _MainHomeTabState extends State<MainHomeTab> {
         child: Column(
           children: [
             singleRow(context, "Security", 'Weight', 'In-Price',
-                'Current Price', '% Return', Colors.indigo[100]),
-            Column(
-              children: portfolioChartData["lowest_securities"]
-                  .map<Widget>((rowData) {
-                index = index + 1;
-                return singleRow(
-                  context,
-                  rowData["ticker"],
-                  (rowData["weight"] * 100).toInt(),
-                  rowData["inprice"].toStringAsFixed(2),
-                  "_",
-                  "_",
-                  index % 2 == 0 ? Colors.indigo[100] : Colors.indigo[50],
-                );
-              }).toList(),
+                'Current Price', '% Return', Colors.indigo[100], 15.0),
+            Container(
+              height: 120,
+              child: ListView(
+                reverse: true,
+                children: portfolioChartData["lowest_securities"].map<Widget>(
+                  (rowData) {
+                    index = index + 1;
+                    return singleRow(
+                      context,
+                      rowData["ticker"],
+                      (rowData["weight"] * 100).toInt(),
+                      rowData["inprice"].toStringAsFixed(2),
+                      "_",
+                      "_",
+                      index % 2 == 0 ? Colors.indigo[100] : Colors.indigo[50],
+                      12.0,
+                    );
+                  },
+                ).toList(),
+              ),
             ),
             Center(
               child: Container(
-                height: 130,
+                height: 240,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
                     Center(
                       child: Column(
-                        children: portfolioChartData["lowest_securities"]
-                            .map<Widget>((rowData) {
-                          index = index + 1;
-                          return singleRow(
-                            context,
-                            rowData["ticker"],
-                            (rowData["weight"] * 100).toInt(),
-                            rowData["inprice"].toStringAsFixed(2),
-                            "_",
-                            "_",
-                            index % 2 == 0
-                                ? Colors.indigo[100]
-                                : Colors.indigo[50],
-                          );
-                        }).toList(),
+                        children: (portfolioChartData["lowest_securities"] +
+                                portfolioChartData["lowest_securities"])
+                            .map<Widget>(
+                          (rowData) {
+                            index = index + 1;
+                            return singleRow(
+                              context,
+                              rowData["ticker"],
+                              (rowData["weight"] * 100).toInt(),
+                              rowData["inprice"].toStringAsFixed(2),
+                              "_",
+                              "_",
+                              index % 2 == 0
+                                  ? Colors.indigo[100]
+                                  : Colors.indigo[50],
+                              12.0,
+                            );
+                          },
+                        ).toList(),
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width-15,
+                      width: MediaQuery.of(context).size.width - 15,
                       child: ClipRect(
                         child: BackdropFilter(
                           filter: ImageFilter.blur(
@@ -704,9 +761,11 @@ class _MainHomeTabState extends State<MainHomeTab> {
     }
   }
 
-  Widget singleRow(context, security, share, ip, cp, perReturn, color) {
+  Widget singleRow(
+      context, security, share, ip, cp, perReturn, color, fontSize) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
@@ -719,6 +778,9 @@ class _MainHomeTabState extends State<MainHomeTab> {
             child: Text(
               "$security",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
             ),
           ),
         ),
@@ -730,10 +792,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
             color: color,
           ),
           child: Center(
-              child: Text(
-            "$share",
-            textAlign: TextAlign.center,
-          )),
+            child: Text(
+              "$share",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
         ),
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
@@ -743,10 +809,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
             color: color,
           ),
           child: Center(
-              child: Text(
-            "$ip",
-            textAlign: TextAlign.center,
-          )),
+            child: Text(
+              "$ip",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
         ),
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
@@ -756,10 +826,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
             color: color,
           ),
           child: Center(
-              child: Text(
-            cp,
-            textAlign: TextAlign.center,
-          )),
+            child: Text(
+              cp,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
         ),
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
@@ -769,10 +843,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
             color: color,
           ),
           child: Center(
-              child: Text(
-            perReturn,
-            textAlign: TextAlign.center,
-          )),
+            child: Text(
+              perReturn,
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
       ],
     );

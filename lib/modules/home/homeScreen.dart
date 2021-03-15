@@ -105,36 +105,45 @@ class _HomeScreenState extends State<HomeScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Stack(
-          alignment: Alignment.bottomRight,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 4.0),
-              child: CircleAvatar(
-                radius: 20.0,
-                backgroundImage: new AssetImage('assets/download.jpeg'),
-                backgroundColor: Colors.transparent,
-              ),
+        Padding(
+          padding: EdgeInsets.only(top: 4.0),
+          child: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.bars,
+              size: 28,
+              color: Colors.black,
             ),
-            InkWell(
-              onTap: () {
-                _homeScaffoldKey.currentState.openDrawer();
-              },
-              child: FractionalTranslation(
-                translation: Offset(0.4, 0.2),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 11.0,
-                  child: Icon(
-                    Icons.sort_outlined,
-                    size: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            )
-          ],
+            onPressed: () => _homeScaffoldKey.currentState.openDrawer(),
+          ),
+          // CircleAvatar(
+          //   radius: 20.0,
+          //   backgroundImage: new AssetImage('assets/download.jpeg'),
+          //   backgroundColor: Colors.transparent,
+          // ),
         ),
+        // Stack(
+        //   alignment: Alignment.bottomRight,
+        //   children: <Widget>[
+        //
+        //     InkWell(
+        //       onTap: () {
+        //         _homeScaffoldKey.currentState.openDrawer();
+        //       },
+        //       child: FractionalTranslation(
+        //         translation: Offset(0.4, 0.2),
+        //         child: CircleAvatar(
+        //           backgroundColor: Colors.white,
+        //           radius: 11.0,
+        //           child: Icon(
+        //             Icons.sort_outlined,
+        //             size: 16,
+        //             color: Colors.black,
+        //           ),
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
         //search box area
         Container(
           margin: EdgeInsets.only(top: 10.0, left: 13.0),

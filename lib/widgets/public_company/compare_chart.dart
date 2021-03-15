@@ -65,6 +65,7 @@ class CompareChartForPublicCompany extends StatelessWidget {
                     "5y High",
                     "Low",
                     Colors.indigo[50],
+                    14.0,
                   ),
                   singleRow(
                     context,
@@ -79,6 +80,7 @@ class CompareChartForPublicCompany extends StatelessWidget {
                     snapshot.data["ticker_5y_high"],
                     snapshot.data["ticker_5y_low"],
                     Colors.indigo[100],
+                    12.0,
                   ),
                   singleRow(
                     context,
@@ -93,6 +95,8 @@ class CompareChartForPublicCompany extends StatelessWidget {
                     "",
                     "",
                     Colors.indigo[100],
+                    12.0,
+
                   ),
                   singleRow(
                     context,
@@ -107,6 +111,7 @@ class CompareChartForPublicCompany extends StatelessWidget {
                     "",
                     "",
                     Colors.indigo[100],
+                    12.0,
                   ),
                 ],
               ),
@@ -130,9 +135,10 @@ class CompareChartForPublicCompany extends StatelessWidget {
     high_5y,
     low_5y,
     color,
+      fontSize,
   ) {
     // print("baba");
-    print(week_low_52.runtimeType.toString());
+    // print(week_low_52.runtimeType.toString());
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -155,25 +161,27 @@ class CompareChartForPublicCompany extends StatelessWidget {
               width: (MediaQuery.of(context).size.width - 15) / 5,
               // height: 50,
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: SingleChildScrollView(
 
-                  children: [
-                    Text(
-                      "$title",
-                      style: TextStyle(
-                        fontSize: 14,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "$title",
+                        style: TextStyle(
+                          fontSize: fontSize,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "$index_name",
-                      style: TextStyle(
-                        fontSize: 10,
+                      Text(
+                        "$index_name",
+                        style: TextStyle(
+                          fontSize: fontSize-2,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -191,7 +199,7 @@ class CompareChartForPublicCompany extends StatelessWidget {
                 child: Text(
                   "$performance_5y",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: fontSize,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -211,7 +219,7 @@ class CompareChartForPublicCompany extends StatelessWidget {
                 child: Text(
                   "$performance_1y",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: fontSize,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -230,17 +238,17 @@ class CompareChartForPublicCompany extends StatelessWidget {
                 child: week_low_52.runtimeType.toString() == "double"
                     ? Text(
                         "${week_high_52.toStringAsFixed(2)}" +
-                            "/" +
+                            " /\n" +
                             "${week_low_52.toStringAsFixed(2)}",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: fontSize,
                         ),
                         textAlign: TextAlign.center,
                       )
                     : Text(
-                        "$week_high_52" + "/" + "$week_low_52",
+                        "$week_high_52" + " /\n" + "$week_low_52",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -253,17 +261,17 @@ class CompareChartForPublicCompany extends StatelessWidget {
                 child: high_5y.runtimeType.toString() == "double"
                     ? Text(
                         "${high_5y.toStringAsFixed(2)}" +
-                            "/" +
+                            " /\n" +
                             "${low_5y.toStringAsFixed(2)}",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: fontSize,
                         ),
                         textAlign: TextAlign.center,
                       )
                     : Text(
-                        "$high_5y" + "/" + "$low_5y",
+                        "$high_5y" + " /\n" + "$low_5y",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: fontSize,
                         ),
                         textAlign: TextAlign.center,
                       ),

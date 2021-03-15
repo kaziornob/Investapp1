@@ -20,33 +20,49 @@ class _AppbarWidgetWithDrawerState extends State<AppbarWidgetWithDrawer> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Stack(
-          alignment: Alignment.bottomRight,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 4.0),
-              child: CircleAvatar(
-                radius: 20.0,
-                backgroundImage: new AssetImage('assets/download.jpeg'),
-                backgroundColor: Colors.transparent,
-              ),
+        // Stack(
+        //   alignment: Alignment.bottomRight,
+        //   children: <Widget>[
+        //     Padding(
+        //       padding: EdgeInsets.only(top: 4.0),
+        //       child: CircleAvatar(
+        //         radius: 20.0,
+        //         backgroundImage: new AssetImage('assets/download.jpeg'),
+        //         backgroundColor: Colors.transparent,
+        //       ),
+        //     ),
+        //     FractionalTranslation(
+        //       translation: Offset(0.4, 0.2),
+        //       child: GestureDetector(
+        //         onTap: widget.callback,
+        //         child: CircleAvatar(
+        //           backgroundColor: Colors.white,
+        //           radius: 11.0,
+        //           child: Icon(
+        //             Icons.sort_outlined,
+        //             size: 16,
+        //             color: Colors.black,
+        //           ),
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        Padding(
+          padding: EdgeInsets.only(top: 4.0),
+          child: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.bars,
+              size: 28,
+              color: Colors.black,
             ),
-            FractionalTranslation(
-              translation: Offset(0.4, 0.2),
-              child: GestureDetector(
-                onTap: widget.callback,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 11.0,
-                  child: Icon(
-                    Icons.sort_outlined,
-                    size: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            )
-          ],
+            onPressed: () {},
+          ),
+          // CircleAvatar(
+          //   radius: 20.0,
+          //   backgroundImage: new AssetImage('assets/download.jpeg'),
+          //   backgroundColor: Colors.transparent,
+          // ),
         ),
         //search box area
         Container(

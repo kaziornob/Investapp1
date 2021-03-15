@@ -27,18 +27,17 @@ class AuroPaperPortfolioPerformaceChart extends StatefulWidget {
 
 class _AuroPaperPortfolioPerformaceChartState
     extends State<AuroPaperPortfolioPerformaceChart> {
-  // LinearGradient gradientColors;
   ZoomPanBehavior _zoomPanBehavior;
   TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
-    // gradientColors = LinearGradient(
-    //   colors: widget.color,
-    //   stops: widget.stops,
-    // );
-    _tooltipBehavior = TooltipBehavior(enable: true);
-    _zoomPanBehavior = ZoomPanBehavior(enablePinching: true);
+    _tooltipBehavior = TooltipBehavior(
+      enable: true,
+    );
+    _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+    );
     super.initState();
   }
 

@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-
 class OnBoardingSecond extends StatefulWidget {
   final String callingFrom;
   final String logo;
 
-  const OnBoardingSecond({Key key, @required this.callingFrom,this.logo}) : super(key: key);
+  const OnBoardingSecond({Key key, @required this.callingFrom, this.logo})
+      : super(key: key);
 
   @override
   _OnBoardingSecondState createState() => _OnBoardingSecondState();
@@ -21,9 +21,15 @@ class OnBoardingSecond extends StatefulWidget {
 class _OnBoardingSecondState extends State<OnBoardingSecond> {
   bool _isInProgress = false;
 
-  final List sliderData = [{"text":"Equities","value": 10},{"text":"Bonds","value": 10},{"text":"Real Estate","value": 10},
-    {"text":"Commodities","value": 10},{"text":"Private Deals","value": 10},{"text":"PE/VC fund","value": 10},{"text":"Impact Investing","value": 10},
-    {"text":"Impact Crypto","value": 10}];
+  Map sliderData = {
+    "Equities": 10,
+    "Bonds": 10,
+    "Real Estate": 10,
+    "Commodities": 10,
+    "Private Deals (PE/VC)": 10,
+    "Impact Investing": 10,
+    "Impact Crypto": 10,
+  };
 
   @override
   void initState() {
@@ -41,57 +47,78 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
     });
   }
 
-  Widget getSliderListView(data) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: data.length,
-      // physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 8.0),
-              width: MediaQuery.of(context).size.width*0.30,
-              height: MediaQuery.of(context).size.height*0.062,
-              child:  Text(
-                "${data[index]["text"]}",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: ConstanceData.SIZE_TITLE15,
-                    fontFamily: "RobotoLight",
-                    letterSpacing: 0.1
+  Widget getSliderListView(Map data) {
+    return Column(
+      children: data.keys.toList().map<Widget>(
+        (key) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                // decoration: BoxDecoration(border: Border.all()),
+                // margin: EdgeInsets.only(top: 8.0),
+                width: MediaQuery.of(context).size.width * 0.30,
+                height: 40,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "$key",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: ConstanceData.SIZE_TITLE15,
+                          fontFamily: "RobotoLight",
+                          letterSpacing: 0.1,
+                        ),
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.clip,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width*0.58,
-              height: MediaQuery.of(context).size.height*0.062,
-              child:  Slider(
-                // value: _value.toDouble(),
-                  value: data[index]["value"].toDouble(),
-                  min: 1.0,
+              Container(
+                // decoration: BoxDecoration(border: Border.all()),
+                width: MediaQuery.of(context).size.width * 0.58,
+                height: 40,
+                child: Slider(
+                  // value: _value.toDouble(),
+                  value: data[key].toDouble(),
+                  min: 0.0,
                   max: 20.0,
-                  activeColor: Color(0xfffec20f),
+                  divisions: 2,
+                  activeColor: sliderData.containsValue(20) ||
+                          sliderData.containsValue(0)
+                      ? Color(0xfffec20f)
+                      : Colors.grey,
                   inactiveColor: Color(0xFF060513),
-                  // activeColor: widget.callingFrom=="Accredited Investor" ?  Color(0xfffec20f) : Color(0xFF00BFFF),
-                  // inactiveColor: widget.callingFrom=="Accredited Investor" ?  Color(0xFF060513) : Color(0xff696969),
-                  label: 'Set volume value',
+                  label: sliderLabel(data[key].toDouble()),
                   onChanged: (double newValue) {
                     setState(() {
-                      data[index]["value"] = newValue.round();
+                      data[key] = newValue.round();
                     });
                   },
                   semanticFormatterCallback: (double newValue) {
                     return '${newValue.round()} dollars';
-                  }
-              ),
-            )
-          ],
-        );
-      },
+                  },
+                ),
+              )
+            ],
+          );
+        },
+      ).toList(),
     );
+  }
+
+  sliderLabel(value) {
+    switch (value) {
+      case 0:
+        return "EXCLUDE";
+      case 10:
+        return "LET AURO DECIDE";
+      case 20:
+        return "INCLUDE";
+    }
   }
 
   @override
@@ -115,181 +142,135 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                      // width: MediaQuery.of(context).size.width,
-                      // height: MediaQuery.of(context).size.height*1.3,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
+                          // width: MediaQuery.of(context).size.width,
+                          // height: MediaQuery.of(context).size.height*1.3,
+                          child: Column(
                             children: <Widget>[
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Animator(
-                                  tween: Tween<Offset>(
-                                      begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                  duration: Duration(milliseconds: 500),
-                                  cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
-                                    translation: anim.value,
-                                    child: Icon(
-                                      Icons.arrow_back_ios,
-                                      color:
-                                      AllCoustomTheme.getTextThemeColor(),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  InkWell(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Animator(
+                                      tween: Tween<Offset>(
+                                          begin: Offset(0, 0),
+                                          end: Offset(0.2, 0)),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 0,
+                                      builder: (anim) => FractionalTranslation(
+                                        translation: anim.value,
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          color: AllCoustomTheme
+                                              .getTextThemeColor(),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                height: MediaQuery.of(context).size.height * 0.099,
-                                width: MediaQuery.of(context).size.width * 0.90,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        child: Center(
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.099,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                            child: Center(
                                           child: new Image(
                                               width: 150.0,
                                               fit: BoxFit.fill,
-                                              image: new AssetImage('assets/logo.png')
+                                              image: new AssetImage(
+                                                  'assets/logo.png')),
+                                        )),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: 70.0, right: 70.0),
+                                          padding: EdgeInsets.only(
+                                            bottom:
+                                                1, // space between underline and text
                                           ),
-                                        )
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                            color: Color(0xFFD8AF4F),
+                                            width: 1.5, // Underline width
+                                          ))),
+                                        ),
+                                      ],
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(left: 70.0,right: 70.0),
-                                      padding: EdgeInsets.only(
-                                        bottom: 1, // space between underline and text
-                                      ),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                color: Color(0xFFD8AF4F),
-                                                width: 1.5, // Underline width
-                                              )
-                                          )
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height*1.1,
-                            /*decoration: new BoxDecoration(
+                                  )
+                                ],
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 1.1,
+                                /*decoration: new BoxDecoration(
                               color: widget.callingFrom=="Accredited Investor"
                                   ?  StyleTheme.Colors.accScreenBackgroundColor : StyleTheme.Colors.retailScreenBackgroundColor,
                             ),*/
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(top: 20.0,bottom: 10.0,left: 15.0,right: 3.0),
-                                  child: Text(
-                                    "A well-diversified portfolio should have all of below!!",
-                                    style: new TextStyle(
-                                        color: Colors.black,
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "Rosarivo",
-                                        letterSpacing: 0.1
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          top: 5.0,
+                                          bottom: 5.0,
+                                          left: 15.0,
+                                          right: 3.0),
+                                      child: Text(
+                                        "A well-diversified portfolio should have all of below!!",
+                                        style: new TextStyle(
+                                            color: Colors.black,
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                            fontFamily: "Rosarivo",
+                                            letterSpacing: 0.1),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 5.0,bottom: 10.0,left: 15.0,right: 3.0),
-                                  child: Text(
-                                    "However, let us know if you want Auro to exclude or definitely include any one",
-                                    style: new TextStyle(
-                                        color: Colors.black,
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "RobotoLight",
-                                        letterSpacing: 0.1
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          top: 5.0,
+                                          bottom: 10.0,
+                                          left: 15.0,
+                                          right: 3.0),
+                                      child: Text(
+                                        "However, let us know if you want Auro to exclude or definitely include any one",
+                                        style: new TextStyle(
+                                            color: Colors.black,
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                            fontFamily: "RobotoLight",
+                                            letterSpacing: 0.1),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        SizedBox(
-                                          width: 80,
-                                        ),
-                                        Container(
-                                          decoration: new BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                            border: Border.all(
-                                              color: Color(0xFFFFFFFF),
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(2.0),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            "EXCLUDE",
-                                            style: new TextStyle(
-                                                color: Colors.black,
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                fontFamily: "Rosarivo",
-                                                letterSpacing: 0.1
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: new BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                            border: Border.all(
-                                              color: Color(0xFFFFFFFF),
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(2.0),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            "INCLUDE",
-                                            style: new TextStyle(
-                                                color: Colors.black,
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                fontFamily: "Rosarivo",
-                                                letterSpacing: 0.1
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                      ],
-                                    )
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 20.0,right: 10.0),
+                                    Container(
+                                      height: 290,
+                                      // decoration: BoxDecoration(border: Border.all(),),
+                                      margin: EdgeInsets.only(
+                                        left: 20.0,
+                                        right: 10.0,
+                                      ),
                                       child: Scrollbar(
                                         child: getSliderListView(sliderData),
-                                      )
-                                    )
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height*0.25,
-                                    child: Container(
-                                        margin: EdgeInsets.only(left: 20.0,right: 10.0,top: 20,bottom: 20),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 100,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            left: 20.0,
+                                            right: 10.0,
+                                            top: 5,
+                                            bottom: 20),
                                         child: ListView(
-                                          physics: NeverScrollableScrollPhysics(),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
                                           children: <Widget>[
                                             Container(
                                               child: Text(
@@ -297,102 +278,78 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                                 style: new TextStyle(
                                                     // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
                                                     color: Colors.black,
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE16,
                                                     fontFamily: "RobotoLight",
-                                                    letterSpacing: 0.1
-                                                ),
+                                                    letterSpacing: 0.1),
                                               ),
                                             ),
                                           ],
-                                        )
-                                    )
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    SizedBox(
-                                      height: 35,
-                                      child: Container(
-                                        height: 35,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                            color: Color(0xFFD8AF4F)
-                                        ),
-                                        child: MaterialButton(
-                                          splashColor: Colors.grey,
-                                          child: Text(
-                                            "SKIP",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                            ),
-                                          ),
-                                          onPressed: () async
-                                          {
-                                            submit();
-                                          },
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 40,
-                                    ),
-                                    SizedBox(
-                                      height: 35,
-                                      child: Container(
-                                        height: 35,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                            color: Color(0xFFD8AF4F)
-                                        ),
-                                        child: MaterialButton(
-                                          splashColor: Colors.grey,
-                                          child: Text(
-                                            "NEXT",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 35,
+                                          child: Container(
+                                            height: 35,
+                                            width: 120,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20)),
+                                                border: new Border.all(
+                                                    color: Color(0xFFD8AF4F),
+                                                    width: 1.5),
+                                                color: Color(0xFFD8AF4F)),
+                                            child: MaterialButton(
+                                              splashColor: Colors.grey,
+                                              child: Text(
+                                                sliderData.containsValue(0) ||
+                                                        sliderData
+                                                            .containsValue(20)
+                                                    ? "NEXT"
+                                                    : "SKIP",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
+                                                ),
+                                              ),
+                                              onPressed: () async {
+                                                submit();
+                                              },
                                             ),
                                           ),
-                                          onPressed: () async
-                                          {
-                                            submit();
-                                          },
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      )
-                  )
+                        )
                       : SizedBox(),
                 ),
               ),
-            )
-        )
+            ))
       ],
     );
   }
 
   Future submit() async {
-    Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) =>
-        new OnBoardingThird(logo: widget.logo,callingFrom: widget.callingFrom,)));
-
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => OnBoardingThird(
+          logo: widget.logo,
+          callingFrom: widget.callingFrom,
+        ),
+      ),
+    );
   }
 }
