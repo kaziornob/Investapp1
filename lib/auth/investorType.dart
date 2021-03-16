@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/empStatus.dart';
+import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/model/radioQusModel.dart';
+import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -106,6 +109,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                   ),
                                 ),
                                 onPressed: () {
+                                  // goToNextScreen();
                                   _submit('Accredited Investor');
                                 },
                               ),
@@ -185,9 +189,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                     ),
                                   ),
                                   onPressed: () async {
-/*                                      Navigator.of(context).push(new MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              PiEmpStatus(parentFrom: 'Retail Investor')));*/
+                                    // _submit('Retail Investor');
                                   },
                                 ),
                               ),
@@ -244,7 +246,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                       fontSize: ConstanceData.SIZE_TITLE18,
                                     ),
                                   ),
-                                  onPressed: () async {
+                                  onPressed: () {
 /*                                      Navigator.of(context).push(new MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               PiEmpStatus(parentFrom: 'Retail Investor')));*/
@@ -305,7 +307,9 @@ class _InvestorTypeState extends State<InvestorType> {
             duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
 
-        Navigator.of(context, rootNavigator: true).push(
+        goToNextScreen();
+
+        /*Navigator.of(context, rootNavigator: true).push(
           CupertinoPageRoute<void>(
             builder: (BuildContext context) =>
                 EmpStatus(parentFrom: 'Accredited Investor'),
@@ -314,7 +318,7 @@ class _InvestorTypeState extends State<InvestorType> {
           setState(() {
             _isInvestorInProgress = false;
           });
-        });
+        });*/
       }
     }
     else if(result!=null && result.containsKey('auth') && result['auth']!=true)
@@ -336,5 +340,21 @@ class _InvestorTypeState extends State<InvestorType> {
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }
+  }
+
+  goToNextScreen() async {
+
+    List<RadioQusModel> questions = await getRadioQusTempData('Accredited Investor','piVersion');
+
+    Navigator.of(context, rootNavigator: true).push(
+      CupertinoPageRoute<void>(
+        builder: (BuildContext context) =>
+            RiskAptForm(optionData: questions),
+      ),
+    ).then((onValue) {
+      setState(() {
+        _isInvestorInProgress = false;
+      });
+    });
   }
 }

@@ -32,6 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String phoneNumber;
   String phoneIsoCode;
   bool visible = false;
+  bool passwordFill = false;
   String confirmedNumber = '';
 
   TextEditingController emailController = new TextEditingController();
@@ -337,9 +338,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               ),
                                               validator: _validatePassword,
                                               controller: signUpPasswordController,
-                                              onSaved: (value) {
+                                              onFieldSubmitted: (value) {
                                                 setState(() {
                                                   //lastnamesearchText = value;
+                                                  passwordFill = true;
                                                 });
                                               },
                                             ),
@@ -349,6 +351,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ),
                                     SizedBox(
                                       height: 10,
+                                    ),
+                                    Visibility(
+                                      visible: !passwordFill,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          Expanded(
+                                              child: Padding(
+                                                  padding: EdgeInsets.only(left: 14,right: 20),
+                                                  child: Text(
+                                                    "Minimum six characters, at least one upper,lower and number",
+                                                    style: TextStyle(
+                                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  )
+                                              ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Row(
                                       children: <Widget>[
@@ -880,7 +906,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       return null;*/
 
-      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
+      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$';
       RegExp regExp = new RegExp(pattern);
       if(!regExp.hasMatch(value))
       {
