@@ -19,10 +19,10 @@ class MyProfile extends StatefulWidget {
   _MyProfileState createState() => _MyProfileState();
 }
 
-class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMixin{
+class _MyProfileState extends State<MyProfile>
+    with SingleTickerProviderStateMixin {
   int selectedTabIndex;
   String selectedInceptionLeague;
-
 
   final List<Tab> tabList = <Tab>[
     new Tab(text: 'Overall'),
@@ -36,8 +36,6 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
     super.initState();
     _tabController = new TabController(vsync: this, length: tabList.length);
   }
-
-
 
   Widget getInceptionMemberView(data) {
     return new ListView.builder(
@@ -94,7 +92,6 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     final List<ChartData> chartData = [
@@ -149,7 +146,8 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                           Navigator.pop(context);
                         },
                         child: Animator(
-                          tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                          tween: Tween<Offset>(
+                              begin: Offset(0, 0), end: Offset(0.2, 0)),
                           duration: Duration(milliseconds: 500),
                           cycles: 0,
                           builder: (anim) => FractionalTranslation(
@@ -176,8 +174,7 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                             package: 'Roboto-Regular',
                           ),
                         ),
-                      )
-                  ),
+                      )),
                   Container(
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.10,
@@ -188,9 +185,9 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                     decoration: BoxDecoration(
                         border: Border(
                             bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              width: 1.0, // Underline width
-                            ))),
+                      color: AllCoustomTheme.getHeadingThemeColors(),
+                      width: 1.0, // Underline width
+                    ))),
                   ),
                   SizedBox(
                     height: 20,
@@ -202,7 +199,8 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 5.0),
+                            padding:
+                                const EdgeInsets.only(left: 16, right: 5.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -217,7 +215,8 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                                   },
                                   child: Container(
                                     child: Image(
-                                      image: AssetImage('assets/buttonBadge.png'),
+                                      image:
+                                          AssetImage('assets/buttonBadge.png'),
                                       fit: BoxFit.fill,
                                       height: 30,
                                       width: 40,
@@ -251,10 +250,12 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                                   onTap: (index) {
                                     selectedTabIndex = index;
                                   },
-                                  labelColor: AllCoustomTheme.getTextThemeColor(),
-                                  labelStyle:
-                                  TextStyle(fontSize: 16.0, letterSpacing: 0.2),
-                                  indicatorColor: AllCoustomTheme.getTextThemeColor(),
+                                  labelColor:
+                                      AllCoustomTheme.getTextThemeColor(),
+                                  labelStyle: TextStyle(
+                                      fontSize: 16.0, letterSpacing: 0.2),
+                                  indicatorColor:
+                                      AllCoustomTheme.getTextThemeColor(),
                                   indicatorWeight: 4.0,
                                   // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
                                   tabs: <Widget>[
@@ -284,22 +285,27 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                                                 textStyle: TextStyle(
                                                     color: AllCoustomTheme
                                                         .getTextThemeColor()),
-                                                alignment: ChartAlignment.center,
+                                                alignment:
+                                                    ChartAlignment.center,
                                                 position: LegendPosition.bottom,
                                                 overflowMode:
-                                                LegendItemOverflowMode.wrap,
+                                                    LegendItemOverflowMode.wrap,
                                                 itemPadding: 10.0),
                                             series: <CircularSeries>[
                                               // Render pie chart
                                               DoughnutSeries<ChartData, String>(
                                                 dataSource: trackChartData,
-                                                pointColorMapper: (ChartData data, _) =>
-                                                data.color,
-                                                xValueMapper: (ChartData data, _) =>
-                                                data.x,
-                                                yValueMapper: (ChartData data, _) =>
-                                                data.y,
-                                                dataLabelSettings: DataLabelSettings(
+                                                pointColorMapper:
+                                                    (ChartData data, _) =>
+                                                        data.color,
+                                                xValueMapper:
+                                                    (ChartData data, _) =>
+                                                        data.x,
+                                                yValueMapper:
+                                                    (ChartData data, _) =>
+                                                        data.y,
+                                                dataLabelSettings:
+                                                    DataLabelSettings(
                                                   isVisible: true,
                                                 ),
                                               )
@@ -310,7 +316,8 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                                               onTap: () {
                                                 Navigator.of(context).push(
                                                   CupertinoPageRoute(
-                                                    builder: (BuildContext context) =>
+                                                    builder: (BuildContext
+                                                            context) =>
                                                         InvestedAssetModule(),
                                                   ),
                                                 );
@@ -318,37 +325,44 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                                               child: Container(
                                                 // margin: EdgeInsets.only(top:115),
                                                 margin: EdgeInsets.only(
-                                                    top: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                        0.18),
+                                                  top: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.18,
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     Center(
                                                       child: Text(
                                                         '800',
-                                                        textAlign: TextAlign.center,
+                                                        textAlign:
+                                                            TextAlign.center,
                                                         style: TextStyle(
                                                           color: AllCoustomTheme
                                                               .getSeeMoreThemeColor(),
-                                                          fontSize: ConstanceData
-                                                              .SIZE_TITLE16,
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE16,
                                                           fontFamily: "Roboto",
-                                                          package: 'Roboto-Regular',
+                                                          package:
+                                                              'Roboto-Regular',
                                                         ),
                                                       ),
                                                     ),
                                                     Center(
                                                       child: Text(
                                                         'coins',
-                                                        textAlign: TextAlign.center,
+                                                        textAlign:
+                                                            TextAlign.center,
                                                         style: TextStyle(
                                                           color: AllCoustomTheme
                                                               .getSeeMoreThemeColor(),
-                                                          fontSize: ConstanceData
-                                                              .SIZE_TITLE16,
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE16,
                                                           fontFamily: "Roboto",
-                                                          package: 'Roboto-Regular',
+                                                          package:
+                                                              'Roboto-Regular',
                                                         ),
                                                       ),
                                                     )
@@ -365,8 +379,7 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                             ),
                           ),
                         ],
-                      )
-                  ),
+                      )),
                   // inception to data league
                   SizedBox(
                     height: 20,
@@ -395,7 +408,8 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                             Container(
                               // margin: EdgeInsets.only(right: 130.0),
                               margin: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width * 0.28),
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.28),
 
                               padding: EdgeInsets.only(
                                 bottom: 3, // space between underline and text
@@ -403,9 +417,9 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                               decoration: BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
-                                        color: AllCoustomTheme.getHeadingThemeColors(),
-                                        width: 1.0, // Underline width
-                                      ))),
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              ))),
                             ),
                           ],
                         ),
@@ -424,46 +438,47 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                             return InputDecorator(
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: Colors.blueGrey, width: 1.0),
+                                  borderSide: BorderSide(
+                                      color: Colors.blueGrey, width: 1.0),
                                 ),
-                                labelStyle:
-                                AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
-                                errorText: state.hasError ? state.errorText : null,
+                                labelStyle: AllCoustomTheme
+                                    .getDropDownFieldLabelStyleTheme(),
+                                errorText:
+                                    state.hasError ? state.errorText : null,
                               ),
                               isEmpty: selectedInceptionLeague == '',
                               child: new DropdownButtonHideUnderline(
                                   child: ButtonTheme(
-                                    alignedDropdown: true,
-                                    child: Container(
-                                      height: 16.0,
-                                      child: new DropdownButton(
-                                        value: selectedInceptionLeague,
-                                        dropdownColor: Colors.white,
-                                        isExpanded: true,
-                                        onChanged: (String newValue) {
-                                          setState(() {
-                                            selectedInceptionLeague = newValue;
-                                          });
-                                        },
-                                        items: <String>[
-                                          'Total Coins',
-                                          'Invest Edu coins',
-                                          'Track Record coins',
-                                          'Stock Pitch coins',
-                                          'Invest Q&A coins',
-                                          'Social Invest coins'
-                                        ].map((String value) {
-                                          return new DropdownMenuItem(
-                                            value: value,
-                                            child: new Text(value,
-                                                style: AllCoustomTheme
-                                                    .getDropDownMenuItemStyleTheme()),
-                                          );
-                                        }).toList(),
-                                      ),
-                                    ),
-                                  )),
+                                alignedDropdown: true,
+                                child: Container(
+                                  height: 16.0,
+                                  child: new DropdownButton(
+                                    value: selectedInceptionLeague,
+                                    dropdownColor: Colors.white,
+                                    isExpanded: true,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        selectedInceptionLeague = newValue;
+                                      });
+                                    },
+                                    items: <String>[
+                                      'Total Coins',
+                                      'Invest Edu coins',
+                                      'Track Record coins',
+                                      'Stock Pitch coins',
+                                      'Invest Q&A coins',
+                                      'Social Invest coins'
+                                    ].map((String value) {
+                                      return new DropdownMenuItem(
+                                        value: value,
+                                        child: new Text(value,
+                                            style: AllCoustomTheme
+                                                .getDropDownMenuItemStyleTheme()),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              )),
                             );
                           },
                         )),
@@ -487,7 +502,8 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * 0.35,
                               child: Scrollbar(
-                                child: getInceptionMemberView(inceptionMemberList),
+                                child:
+                                    getInceptionMemberView(inceptionMemberList),
                               )),
                         ),
                       ],
@@ -512,7 +528,6 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
                   SizedBox(
                     height: 40,
                   ),
-
                 ],
               ),
             ),
@@ -521,8 +536,6 @@ class _MyProfileState extends State<MyProfile> with SingleTickerProviderStateMix
       ],
     );
   }
-
-
 
   /// Inefficient way of capitalizing each word in a string.
   String titleCase(String text) {

@@ -90,16 +90,16 @@ class ApiProvider {
   }
 
   Future getRunAlgoExistingPortfolio(funName) async {
-    var token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE5MCwiaWF0IjoxNjE0NjU5NzM1fQ.ERmIJcyOT15FOX_8dh1F3JaG4-Vf6aqRgP4RO0hIo-I";
-    // final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // final String sessionToken = prefs.getString('Session_token');
+    // var token =
+    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE5MCwiaWF0IjoxNjE0NjU5NzM1fQ.ERmIJcyOT15FOX_8dh1F3JaG4-Vf6aqRgP4RO0hIo-I";
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
     // set up Get request arguments
     final String url = GlobalInstance.apiBaseUrl + funName;
     print("get url : $url");
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Token $token',
+      'Authorization': 'Token $sessionToken',
     };
 
     // make get request

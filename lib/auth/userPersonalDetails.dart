@@ -492,14 +492,13 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     var dob = datePicker.getDate();
 
     var tempJsonReq = {"first_name":"$firstName","last_name":"$lastName","residence_country":"$country","dob":"$dob"};
-
+    print("user details entered : " + "${tempJsonReq.toString()}");
     String jsonReq = json.encode(tempJsonReq);
 
     var jsonReqResp = await request.postSubmit('users/add_details', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
-    print("post submit response: $result");
-
+    print("post submit userdetails response: $result");
 
     if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
     {

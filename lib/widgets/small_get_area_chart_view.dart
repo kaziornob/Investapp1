@@ -18,12 +18,14 @@ class SmallGetAreaChartView extends StatefulWidget {
   final List<double> stops;
   final List<NewSalesData> newSalesData;
   final ticker;
+  final nameOfCompany;
 
   SmallGetAreaChartView({
     this.color,
     this.newSalesData,
     this.stops,
     this.ticker,
+    this.nameOfCompany,
   });
 
   @override
@@ -117,10 +119,10 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                             MediaQuery.of(context).size.width *
                                                 0.55,
                                         // decoration: BoxDecoration(border: Border.all()),
-                                        child: Text(
-                                          snapshot.data["company_name"] == null
-                                              ? ""
-                                              : snapshot.data["company_name"],
+                                        child: Text(widget.nameOfCompany["security_name"],
+                                          // snapshot.data["company_name"] == null
+                                          //     ? ""
+                                          //     : snapshot.data["company_name"],
                                           style: TextStyle(
                                             color: AllCoustomTheme
                                                 .getChartBoxTextThemeColor(),

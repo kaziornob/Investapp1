@@ -286,7 +286,7 @@ class _InvestorTypeState extends State<InvestorType> {
     print("final inv type payload: $tempJsonReq");
 
     String jsonReq = json.encode(tempJsonReq);
-
+    // print()
     var jsonReqResp = await request.postSubmit('users/add_invtype', jsonReq);
 
     var result = json.decode(jsonReqResp.body);

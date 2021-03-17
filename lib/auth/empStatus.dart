@@ -434,8 +434,8 @@ class _EmpStatusState extends State<EmpStatus> {
     var tempJsonReq = {"emp_status":"$selectedEmpStatus","emp_business":"$selectedEmpBuss","occupation":"$occupation","emp_name":"$name"};
 
     String jsonReq = json.encode(tempJsonReq);
-
-    var jsonReqResp = await request.postSubmit('users/add_details', jsonReq);
+    print("employment status : " + "${jsonReq.toString()}");
+    var jsonReqResp = await request.postSubmit('users/add_employment', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit response: $result");

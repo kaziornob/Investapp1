@@ -132,8 +132,8 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                           CarouselSlider.builder(
                             itemCount: listPaths.length,
                             options: CarouselOptions(
-                                height: MediaQuery.of(context).size.height *
-                                    0.92,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.92,
                                 autoPlay: false,
                                 viewportFraction: 0.95,
                                 onPageChanged: (index, reason) {
@@ -142,8 +142,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                                   });
                                 }),
                             itemBuilder: (context, index) {
-                              return MySliderView(
-                                  listPaths[index], _current);
+                              return MySliderView(listPaths[index], _current);
                             },
                           ),
                         ]),
@@ -151,15 +150,14 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                     ],
                   ),
                 ),
-              )),
+              ),),
           Positioned(
             bottom: 10,
             child: Column(
               children: [
                 Container(
                   child: Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: listPaths.map((url) {
                       int index = listPaths.indexOf(url);
                       return Container(
@@ -170,7 +168,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _current == index
-                          // ? Color(0xFFFFFFFF)
+                              // ? Color(0xFFFFFFFF)
                               ? Color(0xFFD8AF4F)
                               : Color(0xffCBB4B4),
                         ),
@@ -181,109 +179,80 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                 SizedBox(
                   height: 10.0,
                 ),
-                Row(
-                  crossAxisAlignment:
-                  CrossAxisAlignment.start,
-                  mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SizedBox(
-                      width:
-                      MediaQuery.of(context).size.width *
-                          0.09,
-                    ),
-                    Container(
-
-                      height:
-                      MediaQuery.of(context).size.height *
-                          0.053,
-                      width:
-                      MediaQuery.of(context).size.width *
-                          0.40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(20)),
-                        border: new Border.all(
-                            color: Color(0xFFD8AF4F),
-                            width: 1.5),
-                        color: _current != 0
-                            ? Color(0xFFD8AF4F)
-                            : Colors.transparent,
-                      ),
-                      child: MaterialButton(
-                        splashColor: Colors.grey,
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            color: _current != 0
-                                ? AllCoustomTheme
-                                .getTextThemeColors()
-                                : Color(0xFFD8AF4F),
-                            fontSize:
-                            ConstanceData.SIZE_TITLE14,
-                          ),
-                        ),
-                        onPressed: () async {
-                          Navigator.of(context,
-                              rootNavigator: true)
-                              .push(
-                            CupertinoPageRoute<void>(
-                              builder:
-                                  (BuildContext context) =>
-                                  SignInScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 5,),
-                    Container(
-                      height:
-                      MediaQuery.of(context).size.height *
-                          0.053,
-                      width:
-                      MediaQuery.of(context).size.width *
-                          0.40,
-                      decoration: BoxDecoration(
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        height: 40,
+                        width: (MediaQuery.of(context).size.width/2) - 50,
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
-                              Radius.circular(20)),
-                          border: new Border.all(
-                              color: Color(0xFFD8AF4F),
-                              width: 1.5),
-                          color: _current == 0
-                              ? Color(0xFFFFB300)
-                              : Colors.transparent),
-                      child: MaterialButton(
-                        splashColor: Colors.grey,
-                        child: Text(
-                          "Try For Free",
-                          style: TextStyle(
-                            color: _current != 0
-                                ? Color(0xFFD8AF4F)
-                                : Colors.black,
-                            fontSize:
-                            ConstanceData.SIZE_TITLE14,
+                            Radius.circular(20),
                           ),
+                          border: new Border.all(
+                              color: Color(0xFFD8AF4F), width: 1.5),
+                          color: _current != 0
+                              ? Color(0xFFD8AF4F)
+                              : Colors.transparent,
                         ),
-                        onPressed: () async {
-                          Navigator.of(context,
-                              rootNavigator: true)
-                              .push(
-                            CupertinoPageRoute<void>(
-                              builder:
-                                  (BuildContext context) =>
-                                  SignUpScreen(),
+                        child: MaterialButton(
+                          splashColor: Colors.grey,
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              color: _current != 0
+                                  ? AllCoustomTheme.getTextThemeColors()
+                                  : Color(0xFFD8AF4F),
+                              fontSize: ConstanceData.SIZE_TITLE14,
                             ),
-                          );
-                        },
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context, rootNavigator: true).push(
+                              CupertinoPageRoute<void>(
+                                builder: (BuildContext context) => SignInScreen(),
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width:
-                      MediaQuery.of(context).size.width *
-                          0.09,
-                    ),
-                  ],
+                      // SizedBox(
+                      //   width: 5,
+                      // ),
+                      Container(
+                        height: 40,
+                        width: (MediaQuery.of(context).size.width/2) - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: new Border.all(
+                                color: Color(0xFFD8AF4F), width: 1.5),
+                            color: _current == 0
+                                ? Color(0xFFFFB300)
+                                : Colors.transparent),
+                        child: MaterialButton(
+                          splashColor: Colors.grey,
+                          child: Text(
+                            "Try For Free",
+                            style: TextStyle(
+                              color: _current != 0
+                                  ? Color(0xFFD8AF4F)
+                                  : Colors.black,
+                              fontSize: ConstanceData.SIZE_TITLE14,
+                            ),
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context, rootNavigator: true).push(
+                              CupertinoPageRoute<void>(
+                                builder: (BuildContext context) => SignUpScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

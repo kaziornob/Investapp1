@@ -319,145 +319,91 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                       //     }
                       //   },
                       // ),
-                      SizedBox(
-                        // height: MediaQuery.of(context).size.height*0.10,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            SizedBox(
-                              width: 10,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            width:
+                                (MediaQuery.of(context).size.width - 100) / 2,
+                            height: 35,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                border: new Border.all(
+                                    color:
+                                        AllCoustomTheme.getChartBoxThemeColor(),
+                                    width: 1.5),
+                                color: AllCoustomTheme.getChartBoxThemeColor(),
+                              ),
+                              child: MaterialButton(
+                                // splashColor: Colors.grey,
+                                child: Text(
+                                  "TRADE",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme
+                                        .getButtonTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE13,
+                                    fontFamily: "Roboto",
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          new SecurityPageFirst(
+                                        logo: "logo.png",
+                                        callingFrom: "Accredited Investor",
+                                        companyTicker:
+                                            widget.companyData["ticker"],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              height:
-                                  MediaQuery.of(context).size.height * 0.038,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(
-                                      color: AllCoustomTheme
-                                          .getChartBoxThemeColor(),
-                                      width: 1.5),
+                          ),
+                          Container(
+                            width:
+                                (MediaQuery.of(context).size.width - 100) / 2,
+                            height: 35,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                border: new Border.all(
                                   color:
                                       AllCoustomTheme.getChartBoxThemeColor(),
+                                  width: 1.5,
                                 ),
-                                child: MaterialButton(
-                                  // splashColor: Colors.grey,
-                                  child: Text(
-                                    "BUY",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getButtonTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE13,
-                                      fontFamily: "Roboto",
-                                    ),
-                                  ),
-                                  onPressed: () async {
-/*                                      Navigator.of(context).push(new MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                            new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));*/
-                                    Navigator.of(context).push(
-                                      new MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            new SecurityPageFirst(
-                                          logo: "logo.png",
-                                          callingFrom: "Accredited Investor",
-                                          companyTicker:
-                                              widget.companyData["ticker"],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
+                                // color: AllCoustomTheme.getChartBoxThemeColor(),
                               ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.26,
-                              height:
-                                  MediaQuery.of(context).size.height * 0.038,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(
-                                      color: AllCoustomTheme
-                                          .getChartBoxThemeColor(),
-                                      width: 1.5),
-                                  // color: AllCoustomTheme.getChartBoxThemeColor(),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Text(
-                                    "SELL",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getChartBoxTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE13,
-                                      fontFamily: "Roboto",
-                                    ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "FOLLOW",
+                                  style: TextStyle(
+                                    color: AllCoustomTheme
+                                        .getChartBoxTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE13,
+                                    fontFamily: "Roboto",
                                   ),
-                                  onPressed: () async {
-/*                                      Navigator.of(context).push(new MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                            new OnBoardingFirst(logo: "logo.png",callingFrom: "Accredited Investor",)));*/
-                                    Navigator.of(context).push(
+                                ),
+                                onPressed: () async {
+                                  Navigator.of(context).push(
                                       new MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            new SecurityPageFirst(
+                                          builder: (BuildContext context) =>
+                                              new OnBoardingFirst(
                                                 logo: "logo.png",
                                                 callingFrom:
-                                                    "Accredited Investor"),
-                                      ),
-                                    );
-                                  },
-                                ),
+                                                    "Accredited Investor",
+                                              )));
+                                },
                               ),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.32,
-                              height:
-                                  MediaQuery.of(context).size.height * 0.038,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(
-                                      color: AllCoustomTheme
-                                          .getChartBoxThemeColor(),
-                                      width: 1.5),
-                                  // color: AllCoustomTheme.getChartBoxThemeColor(),
-                                ),
-                                child: MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Text(
-                                    "FOLLOW",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getChartBoxTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE13,
-                                      fontFamily: "Roboto",
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    Navigator.of(context).push(
-                                        new MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                new OnBoardingFirst(
-                                                  logo: "logo.png",
-                                                  callingFrom:
-                                                      "Accredited Investor",
-                                                )));
-                                  },
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 3,

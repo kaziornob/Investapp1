@@ -726,7 +726,7 @@ class HelperClass {
                     child: Padding(
                   padding: EdgeInsets.only(top: 15.0, bottom: 8.0),
                   child: new CircularProgressIndicator(),
-                )),
+                ),),
                 Padding(
                   padding: EdgeInsets.only(left: 110.0, bottom: 10.0, top: 5.0),
                   child: new Text(

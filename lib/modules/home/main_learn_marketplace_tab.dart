@@ -1033,72 +1033,67 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                       children: [
                         Expanded(
                           child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.10,
-                              child: Scrollbar(
-                                child: ListView.builder(
-                                  itemCount: 10,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return InkWell(
-                                        onTap: () {
-                                          var tempField = {
-                                            "rankingNum": "1",
-                                            "name": "Warren Buffet",
-                                            "philosophy":
-                                                "Buy companies at a low price, improve them via management and make long term gains",
-                                            "trackRecord":
-                                                "He has a 30-year-plus track record making on average 20 percent a year",
-                                            "image": "WarrenBuffet"
-                                          };
-                                          print("tempfield: $tempField");
-                                          Navigator.of(context).push(
-                                            CupertinoPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  ClubDetail(
-                                                      allField: tempField),
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                            child: Row(
-                                          children: [
-                                            Stack(
-                                              alignment: Alignment.topLeft,
-                                              children: <Widget>[
-                                                CircleAvatar(
-                                                  radius: 25.0,
-                                                  backgroundImage: index == 0
-                                                      ? new AssetImage(
-                                                          'assets/filledweeklyAuroBadge.png')
-                                                      : new AssetImage(
-                                                          'assets/weeklyAuroBadge.png'),
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                ),
-                                                Positioned(
-                                                  bottom: 25,
-                                                  child: CircleAvatar(
-                                                    backgroundColor:
-                                                        Colors.blue,
-                                                    radius: 12.0,
-                                                    child: Text(
-                                                      "${index + 1}",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xFFD8AF4F),
-                                                        fontSize: ConstanceData
-                                                            .SIZE_TITLE18,
-                                                        fontFamily: "Roboto",
-                                                        package:
-                                                            'Roboto-Regular',
-                                                      ),
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.10,
+                            child: Scrollbar(
+                              child: ListView.builder(
+                                itemCount: 10,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      var tempField = {
+                                        "rankingNum": "1",
+                                        "name": "Warren Buffet",
+                                        "philosophy":
+                                            "Buy companies at a low price, improve them via management and make long term gains",
+                                        "trackRecord":
+                                            "He has a 30-year-plus track record making on average 20 percent a year",
+                                        "image": "WarrenBuffet"
+                                      };
+                                      print("tempfield: $tempField");
+                                      Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                          builder: (BuildContext context) =>
+                                              ClubDetail(allField: tempField),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      child: Row(
+                                        children: [
+                                          Stack(
+                                            alignment: Alignment.topLeft,
+                                            children: <Widget>[
+                                              CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundImage: index == 0
+                                                    ? new AssetImage(
+                                                        'assets/filledweeklyAuroBadge.png')
+                                                    : new AssetImage(
+                                                        'assets/weeklyAuroBadge.png'),
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                              ),
+                                              Positioned(
+                                                bottom: 25,
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.blue,
+                                                  radius: 12.0,
+                                                  child: Text(
+                                                    "${index + 1}",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Color(0xFFD8AF4F),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE18,
+                                                      fontFamily: "Roboto",
+                                                      package: 'Roboto-Regular',
                                                     ),
                                                   ),
                                                 ),
-                                                /*                                          FractionalTranslation(
+                                              ),
+                                              /*                                          FractionalTranslation(
                                               translation: Offset(0.0, -0.99),
                                               child: CircleAvatar(
                                                 backgroundColor: Colors.blue,
@@ -1115,16 +1110,19 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                 ),
                                               ),
                                             )*/
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            )
-                                          ],
-                                        )));
-                                  },
-                                ),
-                              )),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -1165,11 +1163,14 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                 bottom: 3, // space between underline and text
                               ),
                               decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              ))),
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color:
+                                        AllCoustomTheme.getHeadingThemeColors(),
+                                    width: 1.0, // Underline width
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -1183,54 +1184,57 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                         SizedBox(
                           width: 110,
                         ),
-                        Expanded(child: new FormField(
-                          builder: (FormFieldState state) {
-                            return InputDecorator(
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.blueGrey, width: 1.0),
+                        Expanded(
+                          child: new FormField(
+                            builder: (FormFieldState state) {
+                              return InputDecorator(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blueGrey, width: 1.0),
+                                  ),
+                                  labelStyle: AllCoustomTheme
+                                      .getDropDownFieldLabelStyleTheme(),
+                                  errorText:
+                                      state.hasError ? state.errorText : null,
                                 ),
-                                labelStyle: AllCoustomTheme
-                                    .getDropDownFieldLabelStyleTheme(),
-                                errorText:
-                                    state.hasError ? state.errorText : null,
-                              ),
-                              isEmpty: selectedWeeklyLeague == '',
-                              child: new DropdownButtonHideUnderline(
+                                isEmpty: selectedWeeklyLeague == '',
+                                child: new DropdownButtonHideUnderline(
                                   child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: Container(
-                                  height: 16.0,
-                                  child: new DropdownButton(
-                                    value: selectedWeeklyLeague,
-                                    dropdownColor: Colors.white,
-                                    isExpanded: true,
-                                    onChanged: (String newValue) {
-                                      setState(() {
-                                        selectedWeeklyLeague = newValue;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'Adaptive Investment Learning',
-                                      'Investment Track Record',
-                                      'Investment Stock Pitch',
-                                      'Investment QnA',
-                                      'Social Investment Score'
-                                    ].map((String value) {
-                                      return new DropdownMenuItem(
-                                        value: value,
-                                        child: new Text(value,
-                                            style: AllCoustomTheme
-                                                .getDropDownMenuItemStyleTheme()),
-                                      );
-                                    }).toList(),
+                                    alignedDropdown: true,
+                                    child: Container(
+                                      height: 16.0,
+                                      child: new DropdownButton(
+                                        value: selectedWeeklyLeague,
+                                        dropdownColor: Colors.white,
+                                        isExpanded: true,
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            selectedWeeklyLeague = newValue;
+                                          });
+                                        },
+                                        items: <String>[
+                                          'Adaptive Investment Learning',
+                                          'Investment Track Record',
+                                          'Investment Stock Pitch',
+                                          'Investment QnA',
+                                          'Social Investment Score'
+                                        ].map((String value) {
+                                          return new DropdownMenuItem(
+                                            value: value,
+                                            child: new Text(value,
+                                                style: AllCoustomTheme
+                                                    .getDropDownMenuItemStyleTheme()),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              )),
-                            );
-                          },
-                        )),
+                              );
+                            },
+                          ),
+                        ),
                         SizedBox(
                           width: 5,
                         ),
@@ -1248,12 +1252,13 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                       children: [
                         Expanded(
                           child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              child: Scrollbar(
-                                child: getWeeklyLeagueMemberView(
-                                    inceptionMemberList),
-                              )),
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.35,
+                            child: Scrollbar(
+                              child: getWeeklyLeagueMemberView(
+                                  inceptionMemberList),
+                            ),
+                          ),
                         ),
                       ],
                     ),

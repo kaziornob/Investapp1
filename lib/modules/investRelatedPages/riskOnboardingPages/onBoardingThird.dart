@@ -74,7 +74,9 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     'Dominica',
   ];
 
-  List<String> sectorList = <String>[
+  List<String> combinedList = [];
+
+  List<String> sectorList = [
     'Architecture/Engineering',
     'Arts/Design',
     'Business, Non-Finance',
@@ -98,9 +100,15 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
 
   String selectedCountry = "Denmark";
   String selectedSector = "Life, Physical and Social Science";
+  String selectedCombined = "Afghanistan - Legal";
 
   @override
   void initState() {
+    countryList.forEach((country) {
+      sectorList.forEach((sector) {
+        combinedList.add(country + " - " + sector);
+      });
+    });
     super.initState();
     loadDetails();
   }
@@ -122,8 +130,14 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     if (selectedCountry != null &&
         selectedCountry != "" &&
         selectedSector != null &&
-        selectedSector != "") {
-      val = "$selectedCountry" + "\n" + "$selectedSector";
+        selectedSector != "" &&
+        selectedCombined != null &&
+        selectedCombined != "") {
+      val = "$selectedCountry" +
+          " - " +
+          "$selectedSector" +
+          " - " +
+          "$selectedCombined";
     } else if ((selectedCountry != null && selectedCountry != "") &&
         (selectedSector == null || selectedSector == "")) {
       val = "$selectedCountry";
@@ -172,6 +186,57 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
             return DropdownMenuItem(
               value: value,
               child: Text(value,
+                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
+            );
+          }).toList(),
+        ),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
+
+  // dropDownList(selectedValue){
+  //   return DropdownButtonHideUnderline(
+  //     child: DropdownButton(
+  //       value: selectedValue,
+  //       dropdownColor: Colors.white,
+  //       isExpanded: true,
+  //       onChanged: (String newValue) {
+  //         setState(() {
+  //           selectedSector = newValue;
+  //         });
+  //       },
+  //       items: sectorList.map((String value) {
+  //         return new DropdownMenuItem(
+  //           value: value,
+  //           child: new Text(value,
+  //               style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
+  //         );
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
+
+  Widget getCombinedDropDownList() {
+    if (sectorList != null && sectorList.length != 0) {
+      return DropdownButtonHideUnderline(
+        child: DropdownButton(
+          value: selectedCombined,
+          dropdownColor: Colors.white,
+          isExpanded: true,
+          onChanged: (String newValue) {
+            setState(() {
+              selectedCombined = newValue;
+            });
+          },
+          items: combinedList.map((String value) {
+            return new DropdownMenuItem(
+              value: value,
+              child: new Text(value,
                   style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
             );
           }).toList(),
@@ -336,7 +401,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 5,
                                   ),
                                   Container(
                                     height: 40,
@@ -353,14 +418,14 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
                             Container(
                               margin: EdgeInsets.only(left: 20.0, right: 20.0),
                               height: 50,
                               child: Text(
-                                'AND/OR',
+                                'AND',
                                 style: new TextStyle(
                                     // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
                                     color: AllCoustomTheme.getTextThemeColor(),
@@ -388,7 +453,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 5,
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(
@@ -405,8 +470,57 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            Container(
+                              margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                              height: 50,
+                              child: Text(
+                                'AND',
+                                style: new TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    letterSpacing: 0.3,
+                                    fontSize: ConstanceData.SIZE_TITLE18,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: 20.0,
+                                      right: 20.0,
+                                    ),
+                                    child: Text(
+                                      'Country_Sector',
+                                      style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Rosarivo",
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: 20.0,
+                                      right: 20.0,
+                                    ),
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white54,
+                                      // border: Border.all(),
+                                    ),
+                                    child: getCombinedDropDownList(),
+                                  ),
+                                ],
+                              ),
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 10),

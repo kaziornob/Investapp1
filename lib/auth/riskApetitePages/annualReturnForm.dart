@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
-
 class AnnualReturnForm extends StatefulWidget {
   final String riskAptType;
   final List<dynamic> optionData;
 
-  const AnnualReturnForm({Key key, @required this.riskAptType,this.optionData}) : super(key: key);
+  const AnnualReturnForm({Key key, @required this.riskAptType, this.optionData})
+      : super(key: key);
 
   @override
   _AnnualReturnFormState createState() => _AnnualReturnFormState();
@@ -51,8 +51,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
     });
   }
 
-  Widget getRiskApetiteView()
-  {
+  Widget getRiskApetiteView() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,19 +59,25 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
         ...widget.optionData.map((option) {
           var index = widget.optionData.indexOf(option);
           return Container(
-            height: MediaQuery.of(context).size.height*0.22,
-            width: MediaQuery.of(context).size.width*0.177,
+            height: MediaQuery.of(context).size.height * 0.22,
+            width: MediaQuery.of(context).size.width * 0.177,
             child: Stack(
               children: [
                 Positioned(
-                  top: index==0 ? 0 : (index==1 ? 7 : (index==2 ? 14 : (index==3 ? 21 : (index==4 ? 28 : 0)))),
-                  child:  Container(
-                    height: MediaQuery.of(context).size.height*0.11,
-                    width: MediaQuery.of(context).size.width*0.09,
+                  top: index == 0
+                      ? 0
+                      : (index == 1
+                          ? 7
+                          : (index == 2
+                              ? 14
+                              : (index == 3 ? 21 : (index == 4 ? 28 : 0)))),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.11,
+                    width: MediaQuery.of(context).size.width * 0.09,
                     decoration: BoxDecoration(
                       color: Color(0xFF32CD32),
                     ),
-                    child:Text(
+                    child: Text(
                       '${option["potentialGain"]}',
                       style: TextStyle(
                         color: AllCoustomTheme.getTextThemeColors(),
@@ -85,12 +90,18 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                 Positioned(
 /*                  top: 70,
                   right: 31,*/
-                  top: MediaQuery.of(context).size.height*0.11,
-                  right: MediaQuery.of(context).size.width*0.086,
-                  bottom: index==0 ? 0 : (index==1 ? 15 : (index==2 ? 20 : (index==3 ? 25 : (index==4 ? 30 : 0)))),
+                  top: MediaQuery.of(context).size.height * 0.11,
+                  right: MediaQuery.of(context).size.width * 0.086,
+                  bottom: index == 0
+                      ? 0
+                      : (index == 1
+                          ? 15
+                          : (index == 2
+                              ? 20
+                              : (index == 3 ? 25 : (index == 4 ? 30 : 0)))),
                   child: Container(
-                    height: MediaQuery.of(context).size.height*0.11,
-                    width: MediaQuery.of(context).size.width*0.09,
+                    height: MediaQuery.of(context).size.height * 0.11,
+                    width: MediaQuery.of(context).size.width * 0.09,
                     decoration: BoxDecoration(
                       color: Color(0xFFe70b31),
                     ),
@@ -110,8 +121,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
               ],
             ),
           );
-         }
-        ),
+        }),
       ],
     );
 
@@ -186,24 +196,24 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
         data: Theme.of(context).copyWith(
           unselectedWidgetColor: Colors.black,
         ),
-        child:  Row(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            ...widget.optionData.map((option) =>  Container(
-              height: MediaQuery.of(context).size.height*0.01,
-              width: MediaQuery.of(context).size.width*0.18,
-              // margin: EdgeInsets.only(left: 3.0),
-              child: Radio(
-                value: option["potentialLoss"],
-                groupValue: annualReturnValue,
-                activeColor: Color(0xFFD8AF4F),
-                onChanged: (newValue) {
-                  print("newValue: $newValue");
-                  setState(() {
-                    annualReturnValue = newValue;
-                  });
-                },
-              ),
+            ...widget.optionData.map((option) => Container(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                  width: MediaQuery.of(context).size.width * 0.18,
+                  // margin: EdgeInsets.only(left: 3.0),
+                  child: Radio(
+                    value: option["potentialLoss"],
+                    groupValue: annualReturnValue,
+                    activeColor: Color(0xFFD8AF4F),
+                    onChanged: (newValue) {
+                      print("newValue: $newValue");
+                      setState(() {
+                        annualReturnValue = newValue;
+                      });
+                    },
+                  ),
 /*              Checkbox(
                 value: option["checked"],
                 activeColor: Color(0xFFD8AF4F),
@@ -214,11 +224,9 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                   });
                 },
               ),*/
-            )
-            ),
+                )),
           ],
-        )
-    );
+        ));
   }
 
   @override
@@ -226,50 +234,47 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
     return Stack(
       children: <Widget>[
         SafeArea(
-            bottom: true,
-            child: Scaffold(
-              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
-              body: ModalProgressHUD(
-                inAsyncCall: _isInProgress,
-                opacity: 0,
-                progressIndicator: CupertinoActivityIndicator(
-                  radius: 12,
-                ),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: !_isInProgress
-                      ? Container(
-                      // width: MediaQuery.of(context).size.width,
-                      // height: MediaQuery.of(context).size.height*1.7,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                              height: MediaQuery.of(context).size.height * 0.09,
-                              child: Center(
-                                child: new Image(
-                                    width: 150.0,
-                                    fit: BoxFit.fill,
-                                    image: new AssetImage('assets/logo.png')
-                                ),
-                              )
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 80.0,right: 80.0),
-                            padding: EdgeInsets.only(
-                              bottom: 1, // space between underline and text
+          bottom: true,
+          child: Scaffold(
+            backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+            body: ModalProgressHUD(
+              inAsyncCall: _isInProgress,
+              opacity: 0,
+              progressIndicator: CupertinoActivityIndicator(
+                radius: 12,
+              ),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: !_isInProgress
+                    ? Container(
+                        // width: MediaQuery.of(context).size.width,
+                        // height: MediaQuery.of(context).size.height*1.7,
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 20,
                             ),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                      color: Color(0xFFD8AF4F),
-                                      width: 1.5, // Underline width
-                                    )
-                                )
+                            Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.09,
+                                child: Center(
+                                  child: new Image(
+                                      width: 150.0,
+                                      fit: BoxFit.fill,
+                                      image: new AssetImage('assets/logo.png')),
+                                )),
+                            Container(
+                              margin: EdgeInsets.only(left: 80.0, right: 80.0),
+                              padding: EdgeInsets.only(
+                                bottom: 1, // space between underline and text
+                              ),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                color: Color(0xFFD8AF4F),
+                                width: 1.5, // Underline width
+                              ))),
                             ),
-                          ),
 /*                          Row(
                             children: <Widget>[
                               InkWell(
@@ -330,234 +335,266 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                             ],
                           ),*/
 
-                          Container(
-                              height: MediaQuery.of(context).size.height*0.19,
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.only(top: 20.0,bottom: 14.0,left: 20.0,right: 20.0),
+                            Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.19,
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.only(
+                                    top: 20.0,
+                                    bottom: 14.0,
+                                    left: 20.0,
+                                    right: 20.0),
+                                decoration: new BoxDecoration(
+                                  border: Border.all(
+                                    // color: widget.callingFrom=="Accredited Investor" ?  Color(0xff696969) : Color(0xFFFFFFFF),
+                                    color: Color(0xff696969),
+                                    width: 1.2,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(2.0),
+                                  ),
+                                ),
+                                child: ListView(
+                                  children: <Widget>[
+                                    Container(
+                                        margin: EdgeInsets.only(top: 5.0),
+                                        child: Center(
+                                          child: Text(
+                                            "Your Attitude To Risk",
+                                            style: new TextStyle(
+                                                // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                                color: Colors.black,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE16,
+                                                fontFamily: "Rosarivo",
+                                                letterSpacing: 0.1),
+                                          ),
+                                        )),
+                                    Container(
+                                        margin: EdgeInsets.only(
+                                            top: 10.0, left: 20.0, right: 10.0),
+                                        child: Center(
+                                          child: Text(
+                                            "Which of the following option describe your expectation for annual returns?",
+                                            style: new TextStyle(
+                                                // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                                color: Colors.black,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE16,
+                                                fontFamily: "RobotoLight",
+                                                letterSpacing: 0.1),
+                                          ),
+                                        )),
+                                  ],
+                                )),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.16,
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              margin: EdgeInsets.only(
+                                  top: 10.0,
+                                  bottom: 5.0,
+                                  left: 165.0,
+                                  right: 10.0),
                               decoration: new BoxDecoration(
+                                color: Color(0xFFFFFFFF),
                                 border: Border.all(
-                                  // color: widget.callingFrom=="Accredited Investor" ?  Color(0xff696969) : Color(0xFFFFFFFF),
-                                  color: Color(0xff696969),
+                                  color: Color(0xFFFFFFFF),
                                   width: 1.2,
                                 ),
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(2.0),
                                 ),
                               ),
-                              child: ListView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Container(
-                                      margin: EdgeInsets.only(top:5.0),
-                                      child: Center(
-                                        child: Text(
-                                          "Your Attitude To Risk",
-                                          style: new TextStyle(
-                                              // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                              color: Colors.black,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "Rosarivo",
-                                              letterSpacing: 0.1
+                                    margin: EdgeInsets.only(left: 4.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.08,
+                                          decoration: new BoxDecoration(
+                                            color: Color(0xFF32CD32),
+                                            border: Border.all(
+                                              color: Color(0xFFFFFFFF),
+                                              width: 1.2,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(2.0),
+                                            ),
                                           ),
                                         ),
-                                      )
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.07,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.35,
+                                          child: Text("Potential gain",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
+                                                  fontFamily: "RobotoLight",
+                                                  letterSpacing: 0.1)),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                   Container(
-                                      margin: EdgeInsets.only(top:10.0,left: 20.0,right: 10.0),
-                                      child: Center(
-                                        child: Text(
-                                          "Which of the following option describe your expectation for annual returns?",
-                                          style: new TextStyle(
-                                              // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                              color: Colors.black,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "RobotoLight",
-                                              letterSpacing: 0.1
+                                    margin: EdgeInsets.only(left: 4.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.08,
+                                          decoration: new BoxDecoration(
+                                            color: Color(0xFFe70b31),
+                                            border: Border.all(
+                                              color: Color(0xFFFFFFFF),
+                                              width: 1.2,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(2.0),
+                                            ),
                                           ),
                                         ),
-                                      )
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.07,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.35,
+                                          child: Text("Potential loss",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
+                                                  fontFamily: "RobotoLight",
+                                                  letterSpacing: 0.1)),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ],
-                              )
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height*0.16,
-                            width: MediaQuery.of(context).size.width*0.45,
-                            margin: EdgeInsets.only(top: 10.0,bottom: 5.0,left: 165.0,right: 10.0),
-                            decoration: new BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              border: Border.all(
-                                color: Color(0xFFFFFFFF),
-                                width: 1.2,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(2.0),
                               ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(
+                                  top: 10.0,
+                                  bottom: 14.0,
+                                  left: 16.0,
+                                  right: 20.0),
+                              child: getRiskApetiteView(),
+                            ),
+                            Container(
+                              child: getOptionList(),
+                            ),
+                            SizedBox(
+                              height: 60,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(left: 4.0),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 20, left: 20, right: 20),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Container(
-                                        height: MediaQuery.of(context).size.height*0.03,
-                                        width: MediaQuery.of(context).size.width*0.08,
-                                        decoration: new BoxDecoration(
-                                          color: Color(0xFF32CD32),
-                                          border: Border.all(
-                                            color: Color(0xFFFFFFFF),
-                                            width: 1.2,
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(2.0),
+                                      SizedBox(
+                                        height: 37,
+                                        child: Container(
+                                          height: 37,
+                                          width: 130,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                              border: new Border.all(
+                                                  color: Color(0xFFD8AF4F),
+                                                  width: 1.5),
+                                              color: Color(0xFFD8AF4F)),
+                                          child: MaterialButton(
+                                            splashColor: Colors.grey,
+                                            child: Text(
+                                              "DONE",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE18,
+                                              ),
+                                            ),
+                                            onPressed: () async {
+                                              submit();
+                                            },
                                           ),
                                         ),
-
                                       ),
-                                      Container(
-                                        height: MediaQuery.of(context).size.height*0.07,
-                                        width: MediaQuery.of(context).size.width*0.35,
-                                        child: Text(
-                                          "Potential gain",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "RobotoLight",
-                                              letterSpacing: 0.1
-                                          )
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 4.0),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        height: MediaQuery.of(context).size.height*0.03,
-                                        width: MediaQuery.of(context).size.width*0.08,
-                                        decoration: new BoxDecoration(
-                                          color: Color(0xFFe70b31),
-                                          border: Border.all(
-                                            color: Color(0xFFFFFFFF),
-                                            width: 1.2,
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(2.0),
-                                          ),
-                                        ),
-
-                                      ),
-                                      Container(
-                                        height: MediaQuery.of(context).size.height*0.07,
-                                        width: MediaQuery.of(context).size.width*0.35,
-                                        child: Text(
-                                          "Potential loss",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "RobotoLight",
-                                              letterSpacing: 0.1)
-                                        ),
-                                      )
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height*0.25,
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.only(top: 10.0,bottom: 14.0,left: 16.0,right: 20.0),
-                            child: getRiskApetiteView(),
-                          ),
-                          Container(
-                            child: getOptionList(),
-                          ),
-                          SizedBox(
-                            height: 60,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 37,
-                                      child: Container(
-                                        height: 37,
-                                        width: 130,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                                            border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
-                                            color: Color(0xFFD8AF4F)
-                                        ),
-                                        child: MaterialButton(
-                                          splashColor: Colors.grey,
-                                          child: Text(
-                                            "DONE",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE18,
-                                            ),
-                                          ),
-                                          onPressed: () async
-                                          {
-                                            submit();
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       )
-                  )
-                      : SizedBox(),
-                ),
+                    : SizedBox(),
               ),
-            )
-        )
+            ),
+          ),
+        ),
       ],
     );
   }
 
-  getDrawDownConvertedValue()
-  {
+  getDrawDownConvertedValue() {
     var tempDrawDown;
     var tempPerDrawDownValue = annualReturnValue.split('%');
     print("tempDrawDownValue: $tempPerDrawDownValue");
 
-    if(tempPerDrawDownValue[0].contains('-')) {
+    if (tempPerDrawDownValue[0].contains('-')) {
       var temp = tempPerDrawDownValue[0].split('-');
       print("temp: $temp");
       tempDrawDown = int.parse(temp[1]);
+    } else {
+      tempDrawDown = int.parse(tempPerDrawDownValue[0]);
     }
-    else
-      {
-        tempDrawDown = int.parse(tempPerDrawDownValue[0]);
-      }
 
     print("tempDrawDown: $tempDrawDown");
-    var drawDown = tempDrawDown/100;
+    var drawDown = tempDrawDown / 100;
     print("drawDown: $drawDown");
     return drawDown;
   }
 
   Future submit() async {
-
 /*    Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -568,7 +605,10 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
 
     var drawDown = getDrawDownConvertedValue();
 
-    var tempJsonReq = {"riskApetite_type": "${widget.riskAptType}","drawdown": drawDown};
+    var tempJsonReq = {
+      "riskApetite_type": "${widget.riskAptType}",
+      "drawdown": drawDown
+    };
 
     print("final risk payload: $tempJsonReq");
 
@@ -579,80 +619,64 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
     var result = json.decode(jsonReqResp.body);
     print("post submit response: $result");
 
-
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
-
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
-
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true) {
         Toast.show("${result['message']}", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
         HelperClass.showLoading(context);
 
         createPortfolioData();
       }
-    }
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
-
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
       Toast.show("${result['message']}", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       setState(() {
         _isInProgress = false;
       });
-    }
-    else{
+    } else {
       setState(() {
         _isInProgress = false;
       });
       Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
 
   Future<void> createPortfolioData() async {
     print("getDoughnutPortfolioData called");
-    var response =
-    await request.getRunAlgoExistingPortfolio('users/run_algo');
+    var response = await request.getRequest('users/run_algo');
     print("portfolio chart list: $response");
-    if (response != null && response != false && response.containsKey('auth') && response['auth'] == true) {
-
+    if (response != null &&
+        response != false &&
+        response.containsKey('auth') &&
+        response['auth'] == true) {
       Navigator.pop(context);
 
-      Toast.show("Portfolio created successfully", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+      Toast.show(response["message"], context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen()
-            ),
-            ModalRoute.withName("/Home")
-        );
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        ModalRoute.withName("/Home"),
+      );
+    } else {
+      Navigator.pop(context);
 
+      Toast.show("Not able to create portfolio", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        ModalRoute.withName("/Home"),
+      );
     }
-    else
-      {
-        Navigator.pop(context);
-
-        Toast.show("Not able to create portfolio", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
-
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen()
-            ),
-            ModalRoute.withName("/Home")
-        );
-      }
   }
 }

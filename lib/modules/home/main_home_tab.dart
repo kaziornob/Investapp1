@@ -164,6 +164,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
                               ),
                             );
                           } else if (index == 3 || index == 4 || index == 5) {
+                            var securityData;
+                            if(index == 3){
+                              securityData = portfolioChartData["lowest_securities"][0];
+                            }else if(index == 4){
+                              securityData = portfolioChartData["lowest_securities"][1];
+                            }else{
+                              securityData = portfolioChartData["lowest_securities"][2];
+                            }
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -182,6 +190,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                   ],
                                   stops: [0.0, 0.5, 1.0],
                                   ticker: "000020 KS Equity",
+                                  nameOfCompany: securityData,
                                 ),
                               ],
                             );
@@ -653,10 +662,10 @@ class _MainHomeTabState extends State<MainHomeTab> {
                     return singleRow(
                       context,
                       rowData["ticker"],
-                      (rowData["weight"] * 100).toInt(),
+                      (rowData["weight"] * 100).toStringAsFixed(2),
                       rowData["inprice"].toStringAsFixed(2),
-                      "_",
-                      "_",
+                      rowData["current_price"].toStringAsFixed(2),
+                      rowData["return"].toStringAsFixed(2),
                       index % 2 == 0 ? Colors.indigo[100] : Colors.indigo[50],
                       12.0,
                     );
@@ -680,10 +689,10 @@ class _MainHomeTabState extends State<MainHomeTab> {
                             return singleRow(
                               context,
                               rowData["ticker"],
-                              (rowData["weight"] * 100).toInt(),
+                              (rowData["weight"] * 100).toStringAsFixed(2),
                               rowData["inprice"].toStringAsFixed(2),
-                              "_",
-                              "_",
+                              rowData["current_price"].toStringAsFixed(2),
+                              rowData["return"].toStringAsFixed(2),
                               index % 2 == 0
                                   ? Colors.indigo[100]
                                   : Colors.indigo[50],
