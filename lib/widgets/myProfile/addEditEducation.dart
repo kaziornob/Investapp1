@@ -21,6 +21,12 @@ class _AddEditEducationState extends State<AddEditEducation> {
   bool _visibleEdu = false;
   ApiProvider request = new ApiProvider();
 
+  String selectedStartYear;
+  String selectedEndYear;
+
+  List<String> monthList = <String>['Jan', 'Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec'];
+  List<String> yearList = <String>['2015', '2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
+
 
   bool currentlyWorking = false;
   TextEditingController schoolController = new TextEditingController();
@@ -35,26 +41,142 @@ class _AddEditEducationState extends State<AddEditEducation> {
   bool startDateFound = true;
   bool endDateFound = true;
 
-  static final now = DateTime.now();
-  final datePicker = DropdownDatePicker(
-    dateFormat: DateFormat.ymd,
-    firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
-    lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
-    textStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-    dropdownColor: Colors.white,
-    dateHint: DateHint(year: 'Year', month: 'Month', day: 'Day'),
-    ascending: false,
-  );
 
-  final endDatePicker = DropdownDatePicker(
-    dateFormat: DateFormat.ymd,
-    firstDate: ValidDate(year: now.year - 100, month: 1, day: 1),
-    lastDate: ValidDate(year: now.year, month: now.month, day: now.day),
-    textStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-    dropdownColor: Colors.white,
-    dateHint: DateHint(year: 'Year', month: 'Month', day: 'Day'),
-    ascending: false,
-  );
+  Widget getEndYearField() {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.0),
+            ),
+            hintText: "Year",
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE20,
+                color: AllCoustomTheme.getTextThemeColor()),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedEndYear == '',
+          child: getEndYearDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val != '') ||
+            (selectedEndYear != null && selectedEndYear != ''))
+            ? null
+            : 'choose One';
+      },
+    );
+  }
+
+  Widget getEndYearDropDownList() {
+    if (yearList != null && yearList.length != 0) {
+      return new DropdownButtonHideUnderline(
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedEndYear,
+                dropdownColor: Colors.white,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedEndYear = newValue;
+                  });
+                },
+                items: yearList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
+
+  Widget getStartYearField() {
+    return new FormField(
+      builder: (FormFieldState state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.0),
+            ),
+            hintText: "Year",
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE20,
+                color: AllCoustomTheme.getTextThemeColor()),
+            errorText: state.hasError ? state.errorText : null,
+          ),
+          isEmpty: selectedStartYear == '',
+          child: getStartYearDropDownList(),
+        );
+      },
+      validator: (val) {
+        return ((val != null && val != '') ||
+            (selectedStartYear != null && selectedStartYear != ''))
+            ? null
+            : 'choose One';
+      },
+    );
+  }
+
+  Widget getStartYearDropDownList() {
+    if (yearList != null && yearList.length != 0) {
+      return new DropdownButtonHideUnderline(
+        child: ButtonTheme(
+            alignedDropdown: true,
+            child: Container(
+              height: 20.0,
+              child: new DropdownButton(
+                value: selectedStartYear,
+                dropdownColor: Colors.white,
+                isExpanded: true,
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedStartYear = newValue;
+                  });
+                },
+                items: yearList.map((String value) {
+                  return new DropdownMenuItem(
+                    value: value,
+                    child: new Text(
+                      value,
+                      style: TextStyle(
+                        color: AllCoustomTheme.getTextThemeColor(),
+                        fontSize: ConstanceData.SIZE_TITLE16,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+      );
+    } else {
+      return Container(
+        height: 0.0,
+        width: 0.0,
+      );
+    }
+  }
 
 
   animation() async {
@@ -317,7 +439,7 @@ class _AddEditEducationState extends State<AddEditEducation> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 20,
                                 ),
                                 Row(
                                   children: <Widget>[
@@ -328,10 +450,13 @@ class _AddEditEducationState extends State<AddEditEducation> {
                                           style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                       ),
                                     ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
                                     Expanded(
                                         child: Padding(
-                                          padding: EdgeInsets.only(top: 4),
-                                          child: datePicker,
+                                          padding: EdgeInsets.only(top: 4,right: 10.0),
+                                          child: getStartYearField(),
                                         )
                                     ),
                                   ],
@@ -354,7 +479,7 @@ class _AddEditEducationState extends State<AddEditEducation> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 20,
                                 ),
                                 Row(
                                   children: <Widget>[
@@ -365,10 +490,13 @@ class _AddEditEducationState extends State<AddEditEducation> {
                                           style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
                                       ),
                                     ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
                                     Expanded(
                                         child: Padding(
-                                          padding: EdgeInsets.only(top: 4),
-                                          child: endDatePicker,
+                                          padding: EdgeInsets.only(top: 4,right: 10.0),
+                                          child: getEndYearField(),
                                           // child: _selectDate,
                                         )
                                     ),
