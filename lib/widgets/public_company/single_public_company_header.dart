@@ -203,7 +203,7 @@ class SinglePublicCompanyHeader extends StatelessWidget {
         currency == "USD"
             ? SizedBox()
             : singleRow(context, "Market Cap($currency)", Colors.indigo[100],
-                "${double.parse(marketCapLocal).toStringAsFixed(3)}" + "M"),
+                "${double.parse(marketCapLocal.toString().replaceAll(",", "")).toStringAsFixed(3)}" + "M"),
         singleRowWithToolTip(
             context,
             "Enterprise Value(USD)",

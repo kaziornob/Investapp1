@@ -5,6 +5,7 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/wishList.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/golive_screen.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/widgets/payment_pages/payment_purchase.dart';
 import 'package:auroim/widgets/payment_pages/payment_types.dart';
@@ -165,12 +166,15 @@ class _MainHomeTabState extends State<MainHomeTab> {
                             );
                           } else if (index == 3 || index == 4 || index == 5) {
                             var securityData;
-                            if(index == 3){
-                              securityData = portfolioChartData["lowest_securities"][0];
-                            }else if(index == 4){
-                              securityData = portfolioChartData["lowest_securities"][1];
-                            }else{
-                              securityData = portfolioChartData["lowest_securities"][2];
+                            if (index == 3) {
+                              securityData =
+                                  portfolioChartData["lowest_securities"][0];
+                            } else if (index == 4) {
+                              securityData =
+                                  portfolioChartData["lowest_securities"][1];
+                            } else {
+                              securityData =
+                                  portfolioChartData["lowest_securities"][2];
                             }
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -189,8 +193,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                     Colors.blue,
                                   ],
                                   stops: [0.0, 0.5, 1.0],
-                                  ticker: "000020 KS Equity",
-                                  nameOfCompany: securityData,
+                                  ticker: securityData["ticker"],
+                                  companyData: securityData,
                                 ),
                               ],
                             );
@@ -425,9 +429,15 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                 style: AllCoustomTheme
                                     .getOtherTabButtonNonSelectedTextStyleTheme()),
                             onPressed: () async {
-                              Navigator.of(context).push(new MaterialPageRoute(
+                              // Navigator.of(context).push(new MaterialPageRoute(
+                              //     builder: (BuildContext context) =>
+                              //         new WishList()));
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      new WishList()));
+                                      GoLiveScreen(),
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -655,13 +665,12 @@ class _MainHomeTabState extends State<MainHomeTab> {
             Container(
               height: 120,
               child: ListView(
-                reverse: true,
                 children: portfolioChartData["lowest_securities"].map<Widget>(
                   (rowData) {
                     index = index + 1;
                     return singleRow(
                       context,
-                      rowData["ticker"],
+                      rowData["security_name"],
                       (rowData["weight"] * 100).toStringAsFixed(2),
                       rowData["inprice"].toStringAsFixed(2),
                       rowData["current_price"].toStringAsFixed(2),

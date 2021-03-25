@@ -8,6 +8,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/main.dart';
 import 'package:auroim/modules/deposite/depositeCurrency.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/modules/introduction/IntroductionScreen.dart';
 import 'package:auroim/modules/muitisig/multisig.dart';
 import 'package:auroim/modules/myWallet/wallet.dart';
 import 'package:auroim/modules/settings/myAccount.dart';
@@ -16,10 +17,13 @@ import 'package:auroim/modules/settings/setting.dart';
 import 'package:auroim/modules/tradingPair/tradingPair.dart';
 import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:auroim/modules/withdraw/withdrawCurrency.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDrawer extends StatefulWidget {
   final String selectItemName;
@@ -102,28 +106,20 @@ class _AppDrawerState extends State<AppDrawer> {
                         SizedBox(
                           width: 10,
                         ),
-                        Animator(
-                          tween: Tween<double>(begin: 0, end: 1),
-                          duration: Duration(milliseconds: 500),
-                          cycles: 1,
-                          builder: (anim) => SizeTransition(
-                            sizeFactor: anim,
-                            axis: Axis.horizontal,
-                            axisAlignment: 1,
-                            child: Text(
-                              profileData != null &&
-                                      profileData['f_name'] != null &&
-                                      profileData['l_name']
-                                  ? "${profileData['f_name']}" +
-                                      "${profileData['l_name']}"
-                                  : 'Not found',
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColor(),
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "Roboto",
-                              ),
-                            ),
-                          ),
+                        Consumer<UserDetails>(
+                          builder: (context, userDetailsProvider, index) {
+                            if (userDetailsProvider.userDetails == null) {
+                              print("No User Data to set");
+                              return Text("Not Found");
+                            } else {
+                              print("Set Username");
+                              return Text(userDetailsProvider
+                                          .userDetails["f_name"] ==
+                                      null
+                                  ? "Not found"
+                                  : userDetailsProvider.userDetails["f_name"]);
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -1397,6 +1393,26 @@ class _AppDrawerState extends State<AppDrawer> {
                         ),
                         SizedBox(
                           height: 20,
+                        ),
+                        Container(
+                          child: ListTile(
+                            onTap: () async {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.remove('Session_token');
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => IntroductionScreen(),
+                                ),
+                              );
+                            },
+                            title: Text(
+                              "Logout",
+                              style: TextStyle(
+                                  color:
+                                      AllCoustomTheme.getSeeMoreThemeColor()),
+                            ),
+                          ),
                         ),
                         Container(
                           child: SwitchListTile(

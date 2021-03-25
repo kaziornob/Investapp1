@@ -61,6 +61,7 @@ dependencies:
   expandable: 3.0.1
   #  video_player: 0.10.11+2
   #  chewie: 0.9.10
+  dotted_line: ^2.0.2
   youtube_player_flutter: 7.0.0+5
   video_player: 0.10.11+2
   chewie: 0.9.10

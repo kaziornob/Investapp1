@@ -705,7 +705,7 @@ class HelperClass {
     }
   }
 
-  static void showLoading(context) {
+  static void showLoading(context,text) {
     // var sLoadingContext;
     print("show loading call");
     showDialog(
@@ -714,24 +714,27 @@ class HelperClass {
       builder: (BuildContext loadingContext) {
         // sLoadingContext = loadingContext;
         return Container(
-          height: MediaQuery.of(context).size.height * 0.05,
+          height: 100,
           margin: EdgeInsets.only(top: 50, bottom: 30),
           child: Dialog(
             backgroundColor: Color(0xff161946),
-            child: new Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
                     child: Padding(
                   padding: EdgeInsets.only(top: 15.0, bottom: 8.0),
-                  child: new CircularProgressIndicator(),
+                  child: CircularProgressIndicator(),
                 ),),
                 Padding(
-                  padding: EdgeInsets.only(left: 110.0, bottom: 10.0, top: 5.0),
-                  child: new Text(
-                    "Please wait...",
-                    style: TextStyle(color: const Color(0xFFD9E4E9)),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      text == null ?"Please wait..." : text,
+                      style: TextStyle(color: const Color(0xFFD9E4E9)),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 )
               ],

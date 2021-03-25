@@ -11,6 +11,7 @@ import 'package:auroim/model/listingsModel.dart';
 import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
+import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
@@ -29,6 +30,8 @@ import 'constance/themes.dart';
 import 'modules/home/homeScreen.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
+
+// Thanks for signing up to Auro. Please wait as we allow our AI engine to custom build your portfolio.
 Map portfolioMap;
 List marketListData = [];
 var userAllDetail;
@@ -41,6 +44,7 @@ getUserDetails() async {
   print("user detail response: $response");
   if (response != null && response != false) {
     userAllDetail = response['data'];
+
     print(userAllDetail.toString());
   } else {
     print("Not got user data");
@@ -232,6 +236,8 @@ class _MyAppState extends State<MyApp> {
       systemNavigationBarIconBrightness: Brightness.light,
     ));
 
+
+
     return Container(
       color: AllCoustomTheme.getThemeData().primaryColor,
       child: MultiProvider(
@@ -247,6 +253,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => UserDetails(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => GoProDataProvider(),
           ),
         ],
         child: MaterialApp(

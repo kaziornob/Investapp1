@@ -620,7 +620,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
 
 
   Future _submit() async {
-    HelperClass.showLoading(context);
+    HelperClass.showLoading(context,null);
 
     var questionJson;
 
@@ -738,7 +738,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
   }
 
   setNextQus() async {
-    HelperClass.showLoading(context);
+    HelperClass.showLoading(context,null);
     Question questions = await getQuestions();
     if (questions==null) {
       Navigator.pop(context);

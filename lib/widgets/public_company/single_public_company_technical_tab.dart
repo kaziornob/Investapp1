@@ -102,7 +102,7 @@ class _SinglePublicCompanyDetailsTechnicalTabState
                   context,
                   "Market Cap(${widget.currency})",
                   Colors.indigo[100],
-                  "${double.parse(widget.marketCapLocal).toStringAsFixed(3)}" +
+                  "${double.parse(widget.marketCapLocal.toString().replaceAll(",", "")).toStringAsFixed(3)}" +
                       "M"),
           singleRowWithToolTip(
               context,

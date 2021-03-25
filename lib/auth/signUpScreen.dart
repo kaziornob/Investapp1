@@ -25,9 +25,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool phoneError = true;
   ApiProvider request = new ApiProvider();
   final internationalPhoneInput = InternationalPhoneInput();
-  //  //facebook sign in
-  FacebookLogin fbLogin   =  new FacebookLogin();
 
+  //  //facebook sign in
+  FacebookLogin fbLogin = new FacebookLogin();
 
   String phoneNumber;
   String phoneIsoCode;
@@ -37,10 +37,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController signUpPasswordController = new TextEditingController();
-  TextEditingController signUpConfirmPasswordController = new TextEditingController();
+  TextEditingController signUpConfirmPasswordController =
+      new TextEditingController();
   TextEditingController loginProviderController = new TextEditingController();
-  TextEditingController loginAccessTokenController = new TextEditingController();
-
+  TextEditingController loginAccessTokenController =
+      new TextEditingController();
 
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -81,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           body: ModalProgressHUD(
             inAsyncCall: _isInProgress,
             opacity: 0,
-            progressIndicator:SizedBox(),
+            progressIndicator: SizedBox(),
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
@@ -104,68 +105,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               children: <Widget>[
                                 InkWell(
                                   onTap: () {
-                                    Navigator.of(context, rootNavigator: true).pop();
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop();
                                   },
                                   child: Animator(
-                                    tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                    tween: Tween<Offset>(
+                                        begin: Offset(0, 0),
+                                        end: Offset(0.2, 0)),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 0,
                                     builder: (anim) => FractionalTranslation(
                                       translation: anim.value,
                                       child: Icon(
                                         Icons.arrow_back_ios,
-                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                       ),
                                     ),
                                   ),
                                 ),
                                 !_isClickonSignIn
                                     ? GestureDetector(
-                                  onTap: () async {
-                                    setState(() {
-                                      _isClickonSignIn = true;
-                                    });
-                                    await Future.delayed(const Duration(milliseconds: 700));
+                                        onTap: () async {
+                                          setState(() {
+                                            _isClickonSignIn = true;
+                                          });
+                                          await Future.delayed(const Duration(
+                                              milliseconds: 700));
 
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(
-                                      CupertinoPageRoute<void>(
-                                        builder: (BuildContext context) => SignInScreen(),
-                                      ),
-                                    )
-                                        .then((onValue) {
-                                      setState(() {
-                                        _isClickonSignIn = false;
-                                      });
-                                    });
-                                  },
-                                  child: Animator(
-                                    tween: Tween<double>(begin: 0.8, end: 1.1),
-                                    curve: Curves.easeInToLinear,
-                                    cycles: 0,
-                                    builder: (anim) => Transform.scale(
-                                      scale: anim.value,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(right: 16),
-                                        child: Text(
-                                          'Sign In',
-                                          style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColor(),
-                                              fontSize: ConstanceData.SIZE_TITLE20,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.bold
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .push(
+                                            CupertinoPageRoute<void>(
+                                              builder: (BuildContext context) =>
+                                                  SignInScreen(),
+                                            ),
+                                          )
+                                              .then((onValue) {
+                                            setState(() {
+                                              _isClickonSignIn = false;
+                                            });
+                                          });
+                                        },
+                                        child: Animator(
+                                          tween: Tween<double>(
+                                              begin: 0.8, end: 1.1),
+                                          curve: Curves.easeInToLinear,
+                                          cycles: 0,
+                                          builder: (anim) => Transform.scale(
+                                            scale: anim.value,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 16),
+                                              child: Text(
+                                                'Sign In',
+                                                style: TextStyle(
+                                                    color: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE20,
+                                                    fontFamily: "Roboto",
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                )
+                                      )
                                     : Padding(
-                                  padding: EdgeInsets.only(right: 14),
-                                  child: CupertinoActivityIndicator(
-                                    radius: 12,
-                                  ),
-                                )
+                                        padding: EdgeInsets.only(right: 14),
+                                        child: CupertinoActivityIndicator(
+                                          radius: 12,
+                                        ),
+                                      )
                               ],
                             ),
                             SizedBox(
@@ -184,11 +196,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: Text(
                                       'Sign Up',
                                       style: TextStyle(
-                                          color: AllCoustomTheme.getTextThemeColor(),
+                                          color: AllCoustomTheme
+                                              .getTextThemeColor(),
                                           fontSize: ConstanceData.SIZE_TITLE20,
                                           fontFamily: "Roboto",
-                                          fontWeight: FontWeight.bold
-                                      ),
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
@@ -203,29 +215,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
                                 color: AllCoustomTheme.boxColor(),
                               ),*/
-                              child: Form(
-                                key: _signUpFormKey,
-                                child: Column(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 0.5,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 20),
-                                      child: Container(
-                                        height: 3,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                  color: Color(0xFFD8AF4F),
-                                                  width: 1.6, // Underline width
-                                                )
-                                            )
-                                        ),
-                                      ),
-                                    ),
-                                    /* Container(
+                                    child: Form(
+                                      key: _signUpFormKey,
+                                      child: Column(
+                                        children: <Widget>[
+                                          SizedBox(
+                                            height: 0.5,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 20),
+                                            child: Container(
+                                              height: 3,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                color: Color(0xFFD8AF4F),
+                                                width: 1.6, // Underline width
+                                              ))),
+                                            ),
+                                          ),
+                                          /* Container(
                                         height: 60,
                                         color: AllCoustomTheme.getsecoundTextThemeColor(),
                                         padding: EdgeInsets.all(10),
@@ -285,222 +295,308 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       SizedBox(
                                         height: 10,
                                       ),*/
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 14, top: 4,right: 20),
-                                            child: TextFormField(
-                                              controller: emailController,
-                                              validator: _validateEmail,
-                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                              keyboardType: TextInputType.emailAddress,
-                                              decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                  hintText: 'Enter email here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'E-mail',
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
+                                          Row(
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 14,
+                                                      top: 4,
+                                                      right: 20),
+                                                  child: TextFormField(
+                                                    controller: emailController,
+                                                    validator: _validateEmail,
+                                                    cursorColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    style: AllCoustomTheme
+                                                        .getTextFormFieldBaseStyleTheme(),
+                                                    keyboardType: TextInputType
+                                                        .emailAddress,
+                                                    decoration: new InputDecoration(
+                                                        focusColor: AllCoustomTheme
+                                                            .getTextThemeColor(),
+                                                        fillColor: AllCoustomTheme
+                                                            .getTextThemeColor(),
+                                                        hintText:
+                                                            'Enter email here...',
+                                                        hintStyle: TextStyle(
+                                                            color: Colors
+                                                                .grey[600],
+                                                            fontSize: ConstanceData
+                                                                .SIZE_TITLE14),
+                                                        labelText: 'E-mail',
+                                                        labelStyle: AllCoustomTheme
+                                                            .getTextFormFieldLabelStyleTheme()),
+                                                    //controller: lastnameController,
+                                                    onSaved: (value) {
+                                                      setState(() {
+                                                        //lastnamesearchText = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                ),
                                               ),
-                                              //controller: lastnameController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  //lastnamesearchText = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
-                                            child: TextFormField(
-                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                              keyboardType: TextInputType.text,
-                                              obscureText: true,
-                                              decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                  hintText: 'Enter password here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Password',
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                              ),
-                                              validator: _validatePassword,
-                                              controller: signUpPasswordController,
-                                              onFieldSubmitted: (value) {
-                                                setState(() {
-                                                  //lastnamesearchText = value;
-                                                  passwordFill = true;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Visibility(
-                                      visible: !passwordFill,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          Expanded(
-                                              child: Padding(
-                                                  padding: EdgeInsets.only(left: 14,right: 20),
-                                                  child: Text(
-                                                    "Minimum six characters, at least one upper,lower and number",
-                                                    style: TextStyle(
-                                                      fontSize: ConstanceData.SIZE_TITLE12,
-                                                      color: Colors.grey,
-                                                    ),
-                                                  )
-                                              ),
+                                            ],
                                           ),
                                           SizedBox(
                                             height: 10,
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
-                                            child: TextFormField(
-                                              cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                              keyboardType: TextInputType.text,
-                                              obscureText: true,
-                                              decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                  hintText: 'Re-Enter password here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Confirm Password',
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                              ),
-                                              validator: _validatePassword,
-                                              controller: signUpConfirmPasswordController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  //lastnamesearchText = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(left: 10, bottom: 0,right: 20),
-                                              child: InternationalPhoneInput(
-                                                labelText: 'Phone',
-                                                labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                                onPhoneNumberChange: onPhoneNumberChange,
-                                                initialPhoneNumber: phoneNumber,
-                                                initialSelection: phoneIsoCode,
-                                                enabledCountries: ['+852', '+1', '+233', '+91'],
-                                                showCountryCodes: true,
-                                                showCountryFlags: true,
-                                              ),
-                                            )
-                                        ),
-                                      ],
-                                    ),
-                                    Visibility(
-                                      visible: phoneError==false  ? true : false,
-                                      child: Row(
-                                        children: <Widget>[
-                                          Padding(
-                                              padding: EdgeInsets.only(left: 14, top: 4),
-                                              child: Text(
-                                                "Phone cannot be empty",
-                                                style: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE12,
-                                                  color: Color(0xFFC70039),
-                                                ),
-                                              )
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: <Widget>[
-                                          SizedBox(
-                                            height: 50,
-                                            child: !_isInProgress
-                                                ? GestureDetector(
-                                              onTap: () {
-                                                _submit('');
-                                              },
-                                              child: Animator(
-                                                tween: Tween<double>(begin: 0.8, end: 1.1),
-                                                curve: Curves.easeInToLinear,
-                                                cycles: 0,
-                                                builder: (anim) => Transform.scale(
-                                                  scale: anim.value,
-                                                  child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    decoration: BoxDecoration(
-                                                        border: new Border.all(color: Colors.white, width: 1.5),
-                                                        shape: BoxShape.circle,
-                                                        color: Color(0xFFD8AF4F)
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(left: 3),
-                                                      child: Icon(
-                                                        Icons.arrow_forward_ios,
-                                                        size: 20,
-                                                        color: AllCoustomTheme.getTextThemeColors(),
-                                                      ),
-                                                    ),
+                                          Row(
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 14,
+                                                      bottom: 10,
+                                                      right: 20),
+                                                  child: TextFormField(
+                                                    cursorColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    style: AllCoustomTheme
+                                                        .getTextFormFieldBaseStyleTheme(),
+                                                    keyboardType:
+                                                        TextInputType.text,
+                                                    obscureText: true,
+                                                    decoration: new InputDecoration(
+                                                        focusColor: AllCoustomTheme
+                                                            .getTextThemeColor(),
+                                                        fillColor: AllCoustomTheme
+                                                            .getTextThemeColor(),
+                                                        hintText:
+                                                            'Enter password here...',
+                                                        hintStyle: TextStyle(
+                                                            color: Colors
+                                                                .grey[600],
+                                                            fontSize: ConstanceData
+                                                                .SIZE_TITLE14),
+                                                        labelText: 'Password',
+                                                        labelStyle: AllCoustomTheme
+                                                            .getTextFormFieldLabelStyleTheme()),
+                                                    validator:
+                                                        _validatePassword,
+                                                    controller:
+                                                        signUpPasswordController,
+                                                    onFieldSubmitted: (value) {
+                                                      setState(() {
+                                                        //lastnamesearchText = value;
+                                                        passwordFill = true;
+                                                      });
+                                                    },
                                                   ),
                                                 ),
                                               ),
-                                            )
-                                                : Padding(
-                                              padding: EdgeInsets.only(right: 14),
-                                              child: CupertinoActivityIndicator(
-                                                radius: 12,
-                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Visibility(
+                                            visible: !passwordFill,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                Expanded(
+                                                  child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 14, right: 20),
+                                                      child: Text(
+                                                        "Minimum six characters, at least one upper,lower and number",
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE12,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      )),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                              ],
                                             ),
                                           ),
+                                          Row(
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 14,
+                                                      bottom: 10,
+                                                      right: 20),
+                                                  child: TextFormField(
+                                                    cursorColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    style: AllCoustomTheme
+                                                        .getTextFormFieldBaseStyleTheme(),
+                                                    keyboardType:
+                                                        TextInputType.text,
+                                                    obscureText: true,
+                                                    decoration: new InputDecoration(
+                                                        focusColor: AllCoustomTheme
+                                                            .getTextThemeColor(),
+                                                        fillColor: AllCoustomTheme
+                                                            .getTextThemeColor(),
+                                                        hintText:
+                                                            'Re-Enter password here...',
+                                                        hintStyle: TextStyle(
+                                                            color: Colors
+                                                                .grey[600],
+                                                            fontSize: ConstanceData
+                                                                .SIZE_TITLE14),
+                                                        labelText:
+                                                            'Confirm Password',
+                                                        labelStyle: AllCoustomTheme
+                                                            .getTextFormFieldLabelStyleTheme()),
+                                                    validator:
+                                                        _validatePassword,
+                                                    controller:
+                                                        signUpConfirmPasswordController,
+                                                    onSaved: (value) {
+                                                      setState(() {
+                                                        //lastnamesearchText = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Expanded(
+                                                  child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 10,
+                                                    bottom: 0,
+                                                    right: 20),
+                                                child: InternationalPhoneInput(
+                                                  labelText: 'Phone',
+                                                  labelStyle: AllCoustomTheme
+                                                      .getTextFormFieldLabelStyleTheme(),
+                                                  style: AllCoustomTheme
+                                                      .getTextFormFieldBaseStyleTheme(),
+                                                  onPhoneNumberChange:
+                                                      onPhoneNumberChange,
+                                                  initialPhoneNumber:
+                                                      phoneNumber,
+                                                  initialSelection:
+                                                      phoneIsoCode,
+                                                  enabledCountries: [
+                                                    '+852',
+                                                    '+1',
+                                                    '+233',
+                                                    '+91'
+                                                  ],
+                                                  showCountryCodes: true,
+                                                  showCountryFlags: true,
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                          Visibility(
+                                            visible: phoneError == false
+                                                ? true
+                                                : false,
+                                            child: Row(
+                                              children: <Widget>[
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 14, top: 4),
+                                                    child: Text(
+                                                      "Phone cannot be empty",
+                                                      style: TextStyle(
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE12,
+                                                        color:
+                                                            Color(0xFFC70039),
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 20,
+                                                left: 14,
+                                                right: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: <Widget>[
+                                                SizedBox(
+                                                  height: 50,
+                                                  child: !_isInProgress
+                                                      ? GestureDetector(
+                                                          onTap: () {
+                                                            _submit('');
+                                                          },
+                                                          child: Animator(
+                                                            tween:
+                                                                Tween<double>(
+                                                                    begin: 0.8,
+                                                                    end: 1.1),
+                                                            curve: Curves
+                                                                .easeInToLinear,
+                                                            cycles: 0,
+                                                            builder: (anim) =>
+                                                                Transform.scale(
+                                                              scale: anim.value,
+                                                              child: Container(
+                                                                height: 50,
+                                                                width: 50,
+                                                                decoration: BoxDecoration(
+                                                                    border: new Border
+                                                                            .all(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        width:
+                                                                            1.5),
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color: Color(
+                                                                        0xFFD8AF4F)),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left: 3),
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .arrow_forward_ios,
+                                                                    size: 20,
+                                                                    color: AllCoustomTheme
+                                                                        .getTextThemeColors(),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  right: 14),
+                                                          child:
+                                                              CupertinoActivityIndicator(
+                                                            radius: 12,
+                                                          ),
+                                                        ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
+                                    ),
+                                  )
                                 : SizedBox(),
                           ],
                         ),
@@ -516,8 +612,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               letterSpacing: 0.3,
                               fontSize: ConstanceData.SIZE_TITLE18,
                               fontFamily: "Roboto",
-                              fontWeight: FontWeight.bold
-                          ),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       AnimatedOpacity(
@@ -530,14 +625,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 320.0,
                             alignment: FractionalOffset.center,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 1.5),
+                                border:
+                                    Border.all(color: Colors.white, width: 1.5),
                                 borderRadius: BorderRadius.circular(30),
-                                color: Color(0xFFD8AF4F)
-                            ),
+                                color: Color(0xFFD8AF4F)),
                             child: Text(
                               "Sign Up With Gmail",
                               style: TextStyle(
-                                color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                color: AllCoustomTheme
+                                    .getReBlackAndWhiteThemeColors(),
                                 letterSpacing: 0.3,
                               ),
                             ),
@@ -549,7 +645,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                               await Future.delayed(const Duration(milliseconds: 500));
 */
-
                           },
                         ),
                       ),
@@ -564,17 +659,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: new Container(
                             height: 45.0,
                             width: 320.0,
-
                             alignment: FractionalOffset.center,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 1.5),
+                                border:
+                                    Border.all(color: Colors.white, width: 1.5),
                                 borderRadius: BorderRadius.circular(30),
-                                color: Color(0xFFD8AF4F)
-                            ),
+                                color: Color(0xFFD8AF4F)),
                             child: Text(
                               "Facebook",
                               style: TextStyle(
-                                color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                color: AllCoustomTheme
+                                    .getReBlackAndWhiteThemeColors(),
                                 letterSpacing: 0.3,
                               ),
                             ),
@@ -585,14 +680,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                               await Future.delayed(const Duration(milliseconds: 500));*/
 
-                            fbLogin.logInWithReadPermissions(['email', 'public_profile']).then((result) async {
-                              switch(result.status) {
+                            fbLogin.logInWithReadPermissions([
+                              'email',
+                              'public_profile'
+                            ]).then((result) async {
+                              switch (result.status) {
                                 case FacebookLoginStatus.loggedIn:
                                   final token = result.accessToken.token;
                                   final graphResponse = await http.get(
                                       'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
-                                  final profile = json.decode(graphResponse.body);
-
+                                  final profile =
+                                      json.decode(graphResponse.body);
 
                                   setState(() {
                                     loginProviderController.text = 'facebook';
@@ -600,20 +698,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   });
 
                                   if (loginProviderController.text != '' &&
-                                       loginAccessTokenController.text != '') {
-                                     _submit('facebook');
-                                   }
+                                      loginAccessTokenController.text != '') {
+                                    _submit('facebook');
+                                  }
                                   break;
                                 case FacebookLoginStatus.cancelledByUser:
-                                // TODO: Handle this case.
+                                  // TODO: Handle this case.
                                   break;
                                 case FacebookLoginStatus.error:
-                                // TODO: Handle this case.
+                                  // TODO: Handle this case.
                                   break;
                               }
-                            })
-                                .catchError((e) {
-                            });
+                            }).catchError((e) {});
                           },
                         ),
                       ),
@@ -630,14 +726,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 320.0,
                             alignment: FractionalOffset.center,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 1.5),
+                                border:
+                                    Border.all(color: Colors.white, width: 1.5),
                                 borderRadius: BorderRadius.circular(30),
-                                color: Color(0xFFD8AF4F)
-                            ),
+                                color: Color(0xFFD8AF4F)),
                             child: Text(
                               "Apple",
                               style: TextStyle(
-                                color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                color: AllCoustomTheme
+                                    .getReBlackAndWhiteThemeColors(),
                                 letterSpacing: 0.3,
                               ),
                             ),
@@ -670,7 +767,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       phoneIsoCode = isoCode;
       confirmedNumber = internationalizedPhoneNumber;
       print("internationalNum $confirmedNumber");
-
     });
   }
 
@@ -685,9 +781,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var myScreenFocusNode = FocusNode();
 
   _submit(from) async {
-
-    if(signUpPasswordController.text.trim() == signUpConfirmPasswordController.text.trim())
-    {
+    if (signUpPasswordController.text.trim() ==
+        signUpConfirmPasswordController.text.trim()) {
       setState(() {
         _isInProgress = true;
       });
@@ -697,7 +792,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print("phoneIsoCode: $phoneIsoCode");
 
       // || phoneNumber=="" || phoneNumber==null || phoneIsoCode=="" || phoneIsoCode==null
-      if (_signUpFormKey.currentState.validate() == false || phoneNumber=="" || phoneNumber==null) {
+      if (_signUpFormKey.currentState.validate() == false ||
+          phoneNumber == "" ||
+          phoneNumber == null) {
         setState(() {
           _isInProgress = false;
 /*            internationalPhoneInput.hasError = true;
@@ -712,31 +809,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
       var email = emailController.text.trim();
       var password = signUpPasswordController.text.trim();
       var phone = confirmedNumber;
-      var tempJsonReq ;var provider ;var token;
-      if(from == 'facebook' || from == 'google')
-       {
-         provider = loginProviderController.text;
-         token = loginAccessTokenController.text;
-         tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"$provider","access_token":"$token"};
-       }
-       else
-       {
-         tempJsonReq = {"email":"$email","password":"$password","phone":"$phone","provider":"","access_token":""};
-       }
-
+      var tempJsonReq;
+      var provider;
+      var token;
+      if (from == 'facebook' || from == 'google') {
+        provider = loginProviderController.text;
+        token = loginAccessTokenController.text;
+        tempJsonReq = {
+          "email": "$email",
+          "password": "$password",
+          "phone": "$phone",
+          "provider": "$provider",
+          "access_token": "$token"
+        };
+      } else {
+        tempJsonReq = {
+          "email": "$email",
+          "password": "$password",
+          "phone": "$phone",
+          "provider": "",
+          "access_token": ""
+        };
+      }
 
       String jsonReq = json.encode(tempJsonReq);
 
-      var jsonReqResp = await request.signUp('users/authenticate/new',jsonReq);
+      var jsonReqResp = await request.signUp('users/authenticate/new', jsonReq);
 
       var result = json.decode(jsonReqResp.body);
       print("signup response: $result");
 
-      if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-      {
-
-        if (result!=null && result.containsKey('auth') && result['auth']==true)
-        {
+      if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+        if (result != null &&
+            result.containsKey('auth') &&
+            result['auth'] == true) {
           setState(() {
             _isInProgress = false;
           });
@@ -745,39 +851,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
             "email": "$email",
             "password": "$password",
             "phone": "$phone",
-            "provider":"$provider",
-            "access_token":"$token"
+            "provider": "$provider",
+            "access_token": "$token"
           };
           getDialog(tempField);
         }
-      }
-      else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-      {
-
+      } else if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] != true) {
         Toast.show("${result['message']}", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
         setState(() {
           _isInProgress = false;
         });
-      }
-      else{
+      } else {
         setState(() {
           _isInProgress = false;
         });
         Toast.show("Something went wrong!", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       }
-    }
-    else {
+    } else {
       PasswordNotMatched(context);
     }
   }
 
   void getDialog(tempField) {
-    showDialog(context: context,
+    showDialog(
+        context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
@@ -810,7 +912,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 onPressed: () {
-
 /*                  var tempField = {
                     "email": "$email",
                     "password": "$password",
@@ -818,21 +919,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   };*/
 
                   Navigator.of(context).pop();
-                  Navigator.of(context, rootNavigator: true).push(
+                  Navigator.of(context, rootNavigator: true)
+                      .push(
                     CupertinoPageRoute<void>(
                       builder: (BuildContext context) =>
-                          Otp(allParams: tempField),
+                          EnterOtpScreen(allParams: tempField),
                     ),
-                  ).then((onValue) {
+                  )
+                      .then((onValue) {
                     setState(() {
                       _isInProgress = false;
                     });
                   });
                 },
               ),
-            ],);
-        }
-    );
+            ],
+          );
+        });
   }
 
   // ignore: non_constant_identifier_names
@@ -872,7 +975,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-
   String _validateEmail(value) {
     if (value.isEmpty) {
       return "Email cannot be empty";
@@ -888,9 +990,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (value.length == 0) {
       return 'Phone cannot be empty';
     }
-    *//*else if (!regExp.hasMatch(value)) {
+    */ /*else if (!regExp.hasMatch(value)) {
       return 'Please enter valid phone number';
-    }*//*
+    }*/ /*
     return null;
   }*/
 
@@ -906,10 +1008,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       return null;*/
 
-      String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$';
+      String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$';
       RegExp regExp = new RegExp(pattern);
-      if(!regExp.hasMatch(value))
-      {
+      if (!regExp.hasMatch(value)) {
         return "Minimum six characters, at least one upper,lower and number";
       }
       return null;

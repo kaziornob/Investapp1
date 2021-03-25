@@ -70,8 +70,9 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                   decoration: new BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     border: new Border.all(
-                        color: AllCoustomTheme.getChartBoxThemeColor(),
-                        width: 1.0),
+                      color: AllCoustomTheme.getChartBoxThemeColor(),
+                      width: 1.0,
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +151,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                         size: 10,
                                       ),
                                       Text(
-                                        "139.00",
+                                        "${widget.companyData["30d_high"].toStringAsFixed(2)}",
                                         style: TextStyle(
                                           color: Colors.green,
                                           fontSize: ConstanceData.SIZE_TITLE10,
@@ -183,7 +184,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                         size: 10,
                                       ),
                                       Text(
-                                        "139.00",
+                                        "${widget.companyData["30d_low"].toStringAsFixed(2)}",
                                         style: TextStyle(
                                           color: Colors.red,
                                           fontSize: ConstanceData.SIZE_TITLE10,

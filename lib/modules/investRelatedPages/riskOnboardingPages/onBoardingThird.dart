@@ -2,11 +2,13 @@ import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSix.dart';
+import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class OnBoardingThird extends StatefulWidget {
@@ -22,93 +24,137 @@ class OnBoardingThird extends StatefulWidget {
 
 class _OnBoardingThirdState extends State<OnBoardingThird> {
   bool _isInProgress = false;
-
   List teamMemberList = List();
   List<String> teamMemberIds = List();
-
   List<String> selectionList = List();
 
   List<String> countryList = <String>[
-    'Afghanistan',
-    'Algeria',
-    'Andorra',
-    'Angola',
-    'Antigua and Barbuda',
-    'Argentina',
-    'Armenia',
-    'Australia, Austria',
-    'Azerbaijan',
-    'Bahamas',
-    'Bahrain',
-    'Bangladesh, Barbados',
-    'Belarus',
-    'Belgium, Belize',
-    'Benin',
-    'Bhutan, Bolivia, Bosnia and Herzegovina',
-    'Botswana',
-    'Brazil',
-    'Brunei Darussalam',
-    'Bulgaria',
-    'Burkina Faso',
-    'Burundi',
-    'Cambodia',
-    'Cameroon',
-    'Canada',
-    'Cape Verde',
-    'Central African Republic',
-    'Chad',
-    'Chile',
-    'China',
-    'Colombia',
-    'Comoros',
-    'Congo',
-    'Costa Rica',
-    'Croatia',
-    'Cuba',
-    'Cyprus',
-    'Czech Republic',
-    'Democratic Peoples Republic of Korea (North Korea]',
-    'Democratic Republic of the Congo',
-    'Denmark',
-    'Djibouti',
-    'Dominica',
+    "Emerging Markets Excl Asia",
+    "Western Europe",
+    "Asean",
+    "Australia",
+    "Canada",
+    "China",
+    "India",
+    "Japan",
+    "United States",
   ];
 
-  List<String> combinedList = [];
+  // List<String> combinedList = [];
+  List<String> countrySectorList = [
+    "",
+    "China-Health Care",
+    "China-Communication Services",
+    "China-Consumer Discretionary",
+    "China-Consumer Staples",
+    "China-Energy",
+    "China-Financials",
+    "China-Industrials",
+    "China-Information Technology",
+    "China-Materials",
+    "China-Real Estate",
+    "China-Utilities",
+    "India-Communication Services",
+    "India-Consumer Discretionary",
+    "India-Consumer Staples",
+    "India-Energy",
+    "India-Financials",
+    "India-Health Care",
+    "India-Industrials",
+    "India-Information Technology",
+    "India-Materials",
+    "India-Real Estate",
+    "Japan-Consumer Discretionary",
+    "Japan-Consumer Staples",
+    "Japan-Financials",
+    "Japan-Health Care",
+    "Japan-Industrials",
+    "Japan-Information Technology",
+    "United States-Communication Services",
+    "United States-Consumer Staples",
+    "United States-Energy",
+    "United States-Health Care",
+    "United States-Industrials",
+    "United States-Information Technology",
+    "United States-Materials",
+    "United States-Real Estate",
+    "United States-Utilities",
+    "Japan-Real Estate",
+    "Australia-Consumer Discretionary",
+    "Australia-Consumer Staples",
+    "Australia-Financials",
+    "Australia-Health Care",
+    "Australia-Information Technology",
+    "Australia-Materials",
+    "Western Europe-Consumer Staples",
+    "Western Europe-Communication Services",
+    "Western Europe-Consumer Discretionary",
+    "Western Europe-Energy",
+    "Western Europe-Financials",
+    "Western Europe-Health Care",
+    "Western Europe-Industrials",
+    "Western Europe-Information Technology",
+    "Western Europe-Real Estate",
+    "Western Europe-Utilities",
+    "Canada-Consumer Discretionary",
+    "Canada-Consumer Staples",
+    "Canada-Information Technology",
+    "Western Europe-Materials",
+    "India-Utilities",
+    "Asean-Communication Services",
+    "Asean-Consumer Discretionary",
+    "Asean-Consumer Staples",
+    "Asean-Financials",
+    "Emerging Markets Excl Asia-Information Technology",
+    "Japan-Communication Services",
+    "Japan-Materials",
+    "Asean-Energy",
+    "Asean-Industrials",
+    "Asean-Information Technology",
+    "Emerging Markets Excl Asia-Communication Services",
+    "Emerging Markets Excl Asia-Financials",
+    "Emerging Markets Excl Asia-Materials",
+    "Asean-Real Estate",
+    "Asean-Materials",
+    "Asean-Utilities",
+    "United States-Consumer Discretionary",
+    "United States-Financials",
+    "Australia-Real Estate",
+
+  ];
 
   List<String> sectorList = [
-    'Architecture/Engineering',
-    'Arts/Design',
-    'Business, Non-Finance',
-    'Community/Social Service',
-    'Computer/Information Technology',
-    'Construction/Extraction',
-    'Education/Training/Library',
-    'Farming, Fishing and Forestry',
-    'Finance/Broker Dealer (407 flag)',
-    'Food Preparation and Servicing',
-    'Healthcare',
-    'Installation, Maintenance, and Repair',
-    'Legal',
-    'Life, Physical and Social Science',
-    'Media and Communications',
-    'Military/Law Enforcement, Government, Protective Service',
-    'Personal Care/Service',
-    'Production',
-    'Transportation and Material Moving'
+    "Communication Services",
+    "Consumer Discretionary",
+    "Consumer Staples",
+    "Energy",
+    "Financials",
+    "Health Care",
+    "Industrials",
+    "Information Technology",
+    "Materials",
+    "Real Estate",
+    "Utilities",
+    "All",
   ];
 
-  String selectedCountry = "Denmark";
-  String selectedSector = "Life, Physical and Social Science";
-  String selectedCombined = "Afghanistan - Legal";
+  List listOfCountriesSelected = [];
+  List listOfSectorsSelected = [];
+  List listOfCountrySectorSelected = [];
+
+  String selectedCountry = "";
+  String selectedSector = "";
+  String selectedCountrySector = "";
 
   @override
   void initState() {
-    countryList.forEach((country) {
-      sectorList.forEach((sector) {
-        combinedList.add(country + " - " + sector);
-      });
-    });
+    countrySectorList.sort((a, b) => a.toString().compareTo(b.toString()));
+    sectorList.sort((a, b) => a.toString().compareTo(b.toString()));
+    // countryList.sort((a, b) => a.toString().compareTo(b.toString()));
+
+    countryList.add("");
+    sectorList.add("");
+    // countrySectorList.add("");
     super.initState();
     loadDetails();
   }
@@ -123,52 +169,84 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     });
   }
 
-  void setSelectionArea() {
-    var val;
-    var exist = false;
-
-    if (selectedCountry != null &&
-        selectedCountry != "" &&
-        selectedSector != null &&
-        selectedSector != "" &&
-        selectedCombined != null &&
-        selectedCombined != "") {
-      val = "$selectedCountry" +
-          " - " +
-          "$selectedSector" +
-          " - " +
-          "$selectedCombined";
-    } else if ((selectedCountry != null && selectedCountry != "") &&
-        (selectedSector == null || selectedSector == "")) {
-      val = "$selectedCountry";
-    } else if ((selectedSector != null && selectedSector != "") &&
-        (selectedCountry == null || selectedCountry == "")) {
-      val = "$selectedSector";
-    }
-
-    if (selectionList != null && selectionList.length != 0) {
-      for (var i = 0; i < selectionList.length; i++) {
-        print("val: $val");
-        print("selectionList: ${selectionList[i]}");
-        if (selectionList[i].toLowerCase().contains(val.toLowerCase().trim())) {
-          setState(() {
-            exist = true;
-          });
-          break;
-        }
-      }
-    }
-
-    // check value exist or not
-    if (exist == false) {
+  addCountryPreference() {
+    if (selectedCountry != null && selectedCountry != "") {
+      print("add counrty");
+      listOfCountriesSelected.add("equity-" + selectedCountry.toLowerCase());
       setState(() {
-        selectionList.add(val.trim());
+        selectionList.add(selectedCountry);
       });
     } else {
-      Toast.show("Already exist", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      print("nope counrty");
     }
   }
+
+  addSectorPreference() {
+    if (selectedSector != null && selectedSector != "") {
+      listOfSectorsSelected.add(selectedSector);
+      setState(() {
+        selectionList.add(selectedSector);
+      });
+    }
+    // var ss = "[\"China\",\"dd\"]";
+  }
+
+  addCountrySectorPreference() {
+    if (selectedCountrySector != null && selectedCountrySector != "") {
+      listOfCountrySectorSelected
+          .add("equity-" + selectedCountrySector.toLowerCase());
+      setState(() {
+        selectionList.add(selectedCountrySector);
+      });
+    }
+  }
+
+  // void setSelectionArea() {
+  //   var val;
+  //   var exist = false;
+  //
+  //   if (selectedCountry != null &&
+  //       selectedCountry != "" &&
+  //       selectedSector != null &&
+  //       selectedSector != "" &&
+  //       selectedCountrySector != null &&
+  //       selectedCountrySector != "") {
+  //     val = "$selectedCountry" +
+  //         " - " +
+  //         "$selectedSector" +
+  //         " - " +
+  //         "$selectedCountrySector";
+  //   } else if ((selectedCountry != null && selectedCountry != "") &&
+  //       (selectedSector == null || selectedSector == "")) {
+  //     val = "$selectedCountry";
+  //   } else if ((selectedSector != null && selectedSector != "") &&
+  //       (selectedCountry == null || selectedCountry == "")) {
+  //     val = "$selectedSector";
+  //   }
+  //
+  //   if (selectionList != null && selectionList.length != 0) {
+  //     for (var i = 0; i < selectionList.length; i++) {
+  //       print("val: $val");
+  //       print("selectionList: ${selectionList[i]}");
+  //       if (selectionList[i].toLowerCase().contains(val.toLowerCase().trim())) {
+  //         setState(() {
+  //           exist = true;
+  //         });
+  //         break;
+  //       }
+  //     }
+  //   }
+  //
+  //   // check value exist or not
+  //   if (exist == false) {
+  //     setState(() {
+  //       selectionList.add(val.trim());
+  //     });
+  //   } else {
+  //     Toast.show("Already exist", context,
+  //         duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+  //   }
+  // }
 
   Widget getCountryDropDownList() {
     if (countryList != null && countryList.length != 0) {
@@ -225,15 +303,15 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     if (sectorList != null && sectorList.length != 0) {
       return DropdownButtonHideUnderline(
         child: DropdownButton(
-          value: selectedCombined,
+          value: selectedCountrySector,
           dropdownColor: Colors.white,
           isExpanded: true,
           onChanged: (String newValue) {
             setState(() {
-              selectedCombined = newValue;
+              selectedCountrySector = newValue;
             });
           },
-          items: combinedList.map((String value) {
+          items: countrySectorList.map((String value) {
             return new DropdownMenuItem(
               value: value,
               child: new Text(value,
@@ -300,8 +378,6 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                 physics: BouncingScrollPhysics(),
                 child: !_isInProgress
                     ? Container(
-/*                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*1.7,*/
                         child: Column(
                           children: <Widget>[
                             SizedBox(
@@ -344,8 +420,8 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                             width: 150.0,
                                             fit: BoxFit.fill,
                                             image: new AssetImage(
-                                                'assets/logo.png')),
-                                      )),
+                                                'assets/logo.png'),),
+                                      ),),
                                       Container(
                                         margin: EdgeInsets.only(
                                             left: 70.0, right: 70.0),
@@ -354,11 +430,13 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                               1, // space between underline and text
                                         ),
                                         decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                          color: Color(0xFFD8AF4F),
-                                          width: 1.5, // Underline width
-                                        ))),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Color(0xFFD8AF4F),
+                                              width: 1.5, // Underline width
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -371,10 +449,10 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                             Container(
                               margin: EdgeInsets.only(left: 15.0, right: 3.0),
                               child: Text(
-                                "Which sector and geography pair do you definitely want in your portfolio for equities?",
+                                "Auro allows you to customize your portfolio across your preferences for not only Country (e.g. US) and Sector (e.g. Tech) but also the combination of Country-Sector (e.g. US Tech). You can make multiple selection for all 3 and Auro will take that into account:",
                                 style: new TextStyle(
                                     color: Colors.black,
-                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontSize: 15,
                                     fontFamily: "Rosarivo",
                                     letterSpacing: 0.1),
                               ),
@@ -397,6 +475,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                         color: Colors.black,
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Rosarivo",
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
@@ -418,23 +497,46 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 ],
                               ),
                             ),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
                             Container(
-                              margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                              height: 50,
-                              child: Text(
-                                'AND',
-                                style: new TextStyle(
-                                    // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                    color: AllCoustomTheme.getTextThemeColor(),
-                                    letterSpacing: 0.3,
-                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.bold),
+                              margin: EdgeInsets.only(left: 10),
+                              height: 30,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                border: new Border.all(
+                                    color: Color(0xFFD8AF4F), width: 1.5),
+                                color: Color(0xFFD8AF4F),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "ADD PREFERENCE",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  if (selectedCountry == "") {
+                                    Toast.show("No value selected", context,
+                                        duration: Toast.LENGTH_LONG,
+                                        gravity: Toast.BOTTOM);
+                                  } else if (listOfCountriesSelected.contains(
+                                      "equity-" +
+                                          selectedCountry.toLowerCase())) {
+                                    Toast.show("Already Added", context,
+                                        duration: Toast.LENGTH_LONG,
+                                        gravity: Toast.BOTTOM);
+                                  } else {
+                                    addCountryPreference();
+                                  }
+                                },
                               ),
                             ),
+                            Divider(),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,10 +547,10 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                     child: Text(
                                       'Sector',
                                       style: new TextStyle(
-                                        // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
                                         color: Colors.black,
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Rosarivo",
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
@@ -470,22 +572,43 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 ],
                               ),
                             ),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
                             Container(
-                              margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                              height: 50,
-                              child: Text(
-                                'AND',
-                                style: new TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColor(),
-                                    letterSpacing: 0.3,
-                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.bold),
+                              margin: EdgeInsets.only(left: 10),
+                              height: 30,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  border: new Border.all(
+                                      color: Color(0xFFD8AF4F), width: 1.5),
+                                  color: Color(0xFFD8AF4F)),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text(
+                                  "ADD PREFERENCE",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  if (selectedSector == "") {
+                                    Toast.show("No value selected", context,
+                                        duration: Toast.LENGTH_LONG,
+                                        gravity: Toast.BOTTOM);
+                                  } else if (listOfSectorsSelected
+                                      .contains(selectedSector)) {
+                                    Toast.show("Already Added", context,
+                                        duration: Toast.LENGTH_LONG,
+                                        gravity: Toast.BOTTOM);
+                                  } else {
+                                    addSectorPreference();
+                                  }
+                                },
                               ),
                             ),
+                            Divider(),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -501,6 +624,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                         color: Colors.black,
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Rosarivo",
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
@@ -525,7 +649,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                             Container(
                               margin: EdgeInsets.only(left: 10),
                               height: 30,
-                              width: 100,
+                              width: 200,
                               decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
@@ -535,46 +659,32 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                               child: MaterialButton(
                                 splashColor: Colors.grey,
                                 child: Text(
-                                  "ADD",
+                                  "ADD PREFERENCE",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: ConstanceData.SIZE_TITLE16,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 onPressed: () async {
-                                  if ((selectedCountry == null ||
-                                          selectedCountry == "") &&
-                                      (selectedSector == null ||
-                                          selectedSector == "")) {
-                                    Toast.show("choose any one", context,
+                                  if (selectedCountrySector == "") {
+                                    Toast.show("No value selected", context,
+                                        duration: Toast.LENGTH_LONG,
+                                        gravity: Toast.BOTTOM);
+                                  } else if (listOfCountrySectorSelected
+                                      .contains("equity-" +
+                                          selectedCountrySector
+                                              .toLowerCase())) {
+                                    Toast.show("Already Added", context,
                                         duration: Toast.LENGTH_LONG,
                                         gravity: Toast.BOTTOM);
                                   } else {
-                                    setSelectionArea();
+                                    addCountrySectorPreference();
                                   }
                                 },
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 15.0, right: 3.0),
-                              child: Text(
-                                "Example of pairs: Indian Pharma, China biotech, Usa, Technology,Usa technology, Japan hardware tech",
-                                style: new TextStyle(
-                                    // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                    color: AllCoustomTheme
-                                        .getNewSecondTextThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE15,
-                                    fontFamily: "Roboto",
-                                    fontStyle: FontStyle.normal,
-                                    letterSpacing: 0.2),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            Divider(),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -722,6 +832,13 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                       ),
                                       onPressed: () async {
                                         submit();
+                                        // selectionList.length == 0
+                                        //     ? Toast.show(
+                                        //         "Please select atleast one",
+                                        //         context,
+                                        //         duration: Toast.LENGTH_LONG,
+                                        //         gravity: Toast.BOTTOM)
+                                        //     : submit();
                                       },
                                     ),
                                   ),
@@ -741,6 +858,35 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
   }
 
   Future submit() async {
+    Map<String, Map> dataToSave = {
+      "assetclass_country_weights": {},
+      "sector_weights": {},
+      "assetclass_country_sector_weights": {},
+    };
+
+    dataToSave["assetclass_country_weights"] = {
+      "$listOfCountriesSelected": {
+        "min_weight": 0,
+        "max_weight": 100,
+      },
+    };
+    dataToSave["sector_weights"] = {
+      "$listOfSectorsSelected": {
+        "min_weight": 0,
+        "max_weight": 100,
+      },
+    };
+    dataToSave["assetclass_country_sector_weights"] = {
+      "$listOfCountrySectorSelected": {
+        "min_weight": 0,
+        "max_weight": 100,
+      },
+    };
+
+    ///run_algo?volatility=0.15&drawdown=0.20&client_id=aa_default
+
+    Provider.of<GoProDataProvider>(context, listen: false)
+        .setThirdPagePreferences(dataToSave);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => OnBoardingSix(

@@ -1,10 +1,12 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
+import 'package:auroim/main.dart';
 import 'package:auroim/modules/home/main_exchange_tab.dart';
 import 'package:auroim/modules/home/main_learn_marketplace_tab.dart';
 import 'package:auroim/modules/home/main_plus_tab.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
@@ -15,6 +17,7 @@ import 'package:auroim/constance/global.dart' as globals;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'main_home_tab.dart';
 import 'main_invest_tab.dart';
@@ -57,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
+
     getSharedPrefData();
     _appbarTextController.addListener(() {
       if (_appbarTextController.text.length > 0) {
@@ -220,6 +224,8 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<UserDetails>(context, listen: false)
+        .setUserDetails(userAllDetail);
     AppBar appBar = AppBar();
     appBarheight = appBar.preferredSize.height;
     height = MediaQuery.of(context).size.height;
@@ -287,14 +293,17 @@ class _HomeScreenState extends State<HomeScreen>
                                   child: Container(
                                     height: 2.5,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.iconButtonColor1,
-                                          globals.iconButtonColor2,
-                                        ],
-                                      ),
+                                      color: globals.isGoldBlack
+                                          ? Color(0xFFD8AF4F)
+                                          : Color(0xFF7499C6),
+                                      // gradient: LinearGradient(
+                                      //   begin: Alignment.topLeft,
+                                      //   end: Alignment.bottomRight,
+                                      //   colors: [
+                                      //     globals.iconButtonColor1,
+                                      //     globals.iconButtonColor2,
+                                      //   ],
+                                      // ),
                                     ),
                                   ),
                                 ),
@@ -372,14 +381,17 @@ class _HomeScreenState extends State<HomeScreen>
                                   child: Container(
                                     height: 2.5,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.iconButtonColor1,
-                                          globals.iconButtonColor2,
-                                        ],
-                                      ),
+                                      color: globals.isGoldBlack
+                                          ? Color(0xFFD8AF4F)
+                                          : Color(0xFF7499C6),
+                                      // gradient: LinearGradient(
+                                      //   begin: Alignment.topLeft,
+                                      //   end: Alignment.bottomRight,
+                                      //   colors: [
+                                      //     globals.iconButtonColor1,
+                                      //     globals.iconButtonColor2,
+                                      //   ],
+                                      // ),
                                     ),
                                   ),
                                 ),
@@ -420,15 +432,18 @@ class _HomeScreenState extends State<HomeScreen>
                                   child: Container(
                                     height: 2.5,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.iconButtonColor1,
-                                          globals.iconButtonColor2,
-                                        ],
-                                      ),
-                                    ),
+                                        color: globals.isGoldBlack
+                                            ? Color(0xFFD8AF4F)
+                                            : Color(0xFF7499C6)
+                                        // gradient: LinearGradient(
+                                        //   begin: Alignment.topLeft,
+                                        //   end: Alignment.bottomRight,
+                                        //   colors: [
+                                        //     globals.iconButtonColor1,
+                                        //     globals.iconButtonColor2,
+                                        //   ],
+                                        // ),
+                                        ),
                                   ),
                                 ),
                               )
@@ -468,15 +483,18 @@ class _HomeScreenState extends State<HomeScreen>
                                   child: Container(
                                     height: 2.5,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.iconButtonColor1,
-                                          globals.iconButtonColor2,
-                                        ],
-                                      ),
-                                    ),
+                                        color: globals.isGoldBlack
+                                            ? Color(0xFFD8AF4F)
+                                            : Color(0xFF7499C6)
+                                        // gradient: LinearGradient(
+                                        //   begin: Alignment.topLeft,
+                                        //   end: Alignment.bottomRight,
+                                        //   colors: [
+                                        //     globals.iconButtonColor1,
+                                        //     globals.iconButtonColor2,
+                                        //   ],
+                                        // ),
+                                        ),
                                   ),
                                 ),
                               )
@@ -516,14 +534,17 @@ class _HomeScreenState extends State<HomeScreen>
                                   child: Container(
                                     height: 2.5,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          globals.iconButtonColor1,
-                                          globals.iconButtonColor2,
-                                        ],
-                                      ),
+                                      color: globals.isGoldBlack
+                                          ? Color(0xFFD8AF4F)
+                                          : Color(0xFF7499C6),
+                                      // gradient: LinearGradient(
+                                      //   begin: Alignment.topLeft,
+                                      //   end: Alignment.bottomRight,
+                                      //   colors: [
+                                      //     globals.iconButtonColor1,
+                                      //     globals.iconButtonColor2,
+                                      //   ],
+                                      // ),
                                     ),
                                   ),
                                 ),

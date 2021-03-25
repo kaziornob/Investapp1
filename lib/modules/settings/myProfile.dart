@@ -1,10 +1,12 @@
 import 'package:animator/animator.dart';
+import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/myProfile/Qus_ans.dart';
 import 'package:auroim/widgets/myProfile/live_paper_portfolio.dart';
 import 'package:auroim/widgets/myProfile/profile_background.dart';
@@ -12,6 +14,7 @@ import 'package:auroim/widgets/myProfile/stockPitches.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class MyProfile extends StatefulWidget {
@@ -23,12 +26,14 @@ class _MyProfileState extends State<MyProfile>
     with SingleTickerProviderStateMixin {
   int selectedTabIndex;
   String selectedInceptionLeague;
+  FeaturedCompaniesProvider _featuredCompaniesProvider =
+      FeaturedCompaniesProvider();
 
   final List<Tab> tabList = <Tab>[
     new Tab(text: 'Overall'),
     new Tab(text: 'Weekly'),
   ];
-
+  String badgeImagePath = "";
   TabController _tabController;
 
   @override
@@ -62,19 +67,36 @@ class _MyProfileState extends State<MyProfile>
                       package: 'Roboto-Regular',
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-/*                    child: Icon(
-                      Icons.badge,
-                      color: Colors.yellow,
-                    ),*/
-                    child: Image(
-                      image: AssetImage('assets/buttonBadge.png'),
-                      fit: BoxFit.fill,
-                      height: 30,
-                      width: 30,
-                    ),
-                  ),
+                  // Consumer<UserDetails>(
+                  //   builder: (context,userDetailsProvider,_){
+                  //     print(userDetailsProvider.userBadge);
+                  //     switch(userDetailsProvider.userBadge){
+                  //       case "Challenger":
+                  //         badgeImagePath = "assets/challenger_badge.png";
+                  //         break;
+                  //       case "Trusted User":
+                  //         badgeImagePath = "assets/trusted_user_badge.png";
+                  //         break;
+                  //       case "Guru":
+                  //         badgeImagePath = "assets/trusted_user_badge.png";
+                  //         break;
+                  //       case "Wolf of Wall Street":
+                  //         badgeImagePath = "assets/trusted_user_badge.png";
+                  //         break;
+                  //       default:
+                  //         badgeImagePath = 'assets/buttonBadge.png';
+                  //
+                  //
+                  //     }
+                  //     return Image(
+                  //       image: AssetImage(badgeImagePath),
+                  //       fit: BoxFit.fill,
+                  //       height: 30,
+                  //       width: 30,
+                  //     );
+                  //   },
+                  // ),
+
                   GestureDetector(
                     onTap: () {},
                     child: Image(
@@ -94,6 +116,7 @@ class _MyProfileState extends State<MyProfile>
 
   @override
   Widget build(BuildContext context) {
+    // Provider.of<UserDetails>(context, listen: false).setUserBadge();
     final List<ChartData> chartData = [
       ChartData('David', 35, Color(0xFFFF8C00)),
       ChartData('Steve', 38, Color(0xFF008080)),
@@ -165,7 +188,15 @@ class _MyProfileState extends State<MyProfile>
                       padding: EdgeInsets.only(top: 0.0),
                       child: Center(
                         child: Text(
-                          'Ankur’s Investment Track Record',
+                          Provider.of<UserDetails>(context, listen: false)
+                                          .userDetails["f_name"] !=
+                                      null &&
+                                  Provider.of<UserDetails>(context,
+                                              listen: false)
+                                          .userDetails !=
+                                      null
+                              ? '${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Investment Track Record'
+                              : "Investment Track Record",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),
@@ -226,13 +257,45 @@ class _MyProfileState extends State<MyProfile>
                                 SizedBox(
                                   width: 18,
                                 ),
-                                Container(
-                                  child: Image(
-                                    image: AssetImage('assets/badgeStar.jpg'),
-                                    fit: BoxFit.fill,
-                                    height: 30,
-                                    width: 40,
-                                  ),
+                                FutureBuilder(
+                                  future: Provider.of<UserDetails>(context)
+                                      .getUserBadge(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      print("badge data got");
+                                      print(snapshot.data);
+                                      switch (snapshot.data) {
+                                        case "Challenger":
+                                          badgeImagePath =
+                                              "assets/challenger_badge.png";
+                                          break;
+                                        case "Trusted User":
+                                          badgeImagePath =
+                                              "assets/trusted_user_badge.png";
+                                          break;
+                                        case "Guru":
+                                          badgeImagePath =
+                                              "assets/guru_badge.png";
+                                          break;
+                                        case "Wolf of Wall Street":
+                                          badgeImagePath =
+                                              "assets/wolf_of_wall_street_badge.png";
+                                          break;
+                                        default:
+                                          badgeImagePath =
+                                              'assets/buttonBadge.png';
+                                      }
+                                      return Image(
+                                        image: AssetImage(badgeImagePath),
+                                        fit: BoxFit.fill,
+                                        height: 30,
+                                        width: 30,
+                                      );
+                                    } else {
+                                      print("No badge data");
+                                      return Container();
+                                    }
+                                  },
                                 ),
                               ],
                             ),
@@ -311,65 +374,141 @@ class _MyProfileState extends State<MyProfile>
                                               )
                                             ]),
                                         new Align(
-                                            alignment: Alignment.topCenter,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                  CupertinoPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        InvestedAssetModule(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                // margin: EdgeInsets.only(top:115),
-                                                margin: EdgeInsets.only(
-                                                  top: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.18,
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Center(
-                                                      child: Text(
-                                                        '800',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: AllCoustomTheme
-                                                              .getSeeMoreThemeColor(),
-                                                          fontSize:
-                                                              ConstanceData
-                                                                  .SIZE_TITLE16,
-                                                          fontFamily: "Roboto",
-                                                          package:
-                                                              'Roboto-Regular',
-                                                        ),
+                                          alignment: Alignment.topCenter,
+                                          child: Column(
+                                            children: [
+                                              FutureBuilder(
+                                                future:
+                                                    _featuredCompaniesProvider
+                                                        .getUserCoinsScoreData(),
+                                                builder: (context, snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    return Container(
+                                                      // margin: EdgeInsets.only(top:115),
+                                                      margin: EdgeInsets.only(
+                                                        top: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height *
+                                                            0.18,
                                                       ),
-                                                    ),
-                                                    Center(
-                                                      child: Text(
-                                                        'coins',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: AllCoustomTheme
-                                                              .getSeeMoreThemeColor(),
-                                                          fontSize:
-                                                              ConstanceData
-                                                                  .SIZE_TITLE16,
-                                                          fontFamily: "Roboto",
-                                                          package:
-                                                              'Roboto-Regular',
-                                                        ),
+                                                      child: Column(
+                                                        children: [
+                                                          Center(
+                                                            child: Text(
+                                                              "${snapshot.data["user_score"]}",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: AllCoustomTheme
+                                                                    .getSeeMoreThemeColor(),
+                                                                fontSize:
+                                                                    ConstanceData
+                                                                        .SIZE_TITLE16,
+                                                                fontFamily:
+                                                                    "Roboto",
+                                                                package:
+                                                                    'Roboto-Regular',
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Center(
+                                                            child: Text(
+                                                              'coins',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: AllCoustomTheme
+                                                                    .getSeeMoreThemeColor(),
+                                                                fontSize:
+                                                                    ConstanceData
+                                                                        .SIZE_TITLE16,
+                                                                fontFamily:
+                                                                    "Roboto",
+                                                                package:
+                                                                    'Roboto-Regular',
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
                                                       ),
-                                                    )
-                                                  ],
-                                                ),
+                                                    );
+                                                  } else {
+                                                    return Container(
+                                                      // margin: EdgeInsets.only(top:115),
+                                                      margin: EdgeInsets.only(
+                                                        top: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height *
+                                                            0.18,
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Center(
+                                                            child: Text(
+                                                              '0',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: AllCoustomTheme
+                                                                    .getSeeMoreThemeColor(),
+                                                                fontSize:
+                                                                    ConstanceData
+                                                                        .SIZE_TITLE16,
+                                                                fontFamily:
+                                                                    "Roboto",
+                                                                package:
+                                                                    'Roboto-Regular',
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Center(
+                                                            child: Text(
+                                                              'coins',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: AllCoustomTheme
+                                                                    .getSeeMoreThemeColor(),
+                                                                fontSize:
+                                                                    ConstanceData
+                                                                        .SIZE_TITLE16,
+                                                                fontFamily:
+                                                                    "Roboto",
+                                                                package:
+                                                                    'Roboto-Regular',
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
+                                                },
                                               ),
-                                            )),
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.help,
+                                                  color: Color(0xff5A56B9),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context).push(
+                                                    CupertinoPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          InvestedAssetModule(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   );

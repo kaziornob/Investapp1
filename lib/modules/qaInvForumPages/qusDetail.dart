@@ -599,7 +599,7 @@ class _QusDetailState extends State<QusDetail> {
 
   _updateQusVote (from,context) async
   {
-    HelperClass.showLoading(context);
+    HelperClass.showLoading(context,null);
     var tempIdData = [
       "question",
       QusDetail.qusInfo['id']

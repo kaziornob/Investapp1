@@ -18,14 +18,14 @@ class SmallGetAreaChartView extends StatefulWidget {
   final List<double> stops;
   final List<NewSalesData> newSalesData;
   final ticker;
-  final nameOfCompany;
+  final companyData;
 
   SmallGetAreaChartView({
     this.color,
     this.newSalesData,
     this.stops,
     this.ticker,
-    this.nameOfCompany,
+    this.companyData,
   });
 
   @override
@@ -38,9 +38,18 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
       FeaturedCompaniesProvider();
   List<CryptoCoinPriceData> allPriceData = [];
   bool _isInit = true;
+  ZoomPanBehavior _zoomPanBehavior;
+  TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
+    print(widget.companyData["ticker"]);
+    _tooltipBehavior = TooltipBehavior(
+      enable: true,
+    );
+    _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+    );
     gradientColors = LinearGradient(
       colors: widget.color,
       stops: widget.stops,
@@ -64,11 +73,12 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
     // print(widget.companyData);
 
     return FutureBuilder(
-      future: _featuredCompaniesProvider.getSinglePublicCompanyData(
-          widget.ticker, "head"),
+      future: _featuredCompaniesProvider
+          .getSinglePublicCompanyDataFromStatic(widget.companyData["ticker"]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           print("data is got for securities baba");
+          print(snapshot.data);
           return Container(
             height: 230,
             child: Container(
@@ -89,8 +99,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                         decoration: new BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           border: new Border.all(
-                              color: AllCoustomTheme.getChartBoxThemeColor(),
-                              width: 1.0),
+                              color: Color(0xFF423EAF), width: 1.0),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,13 +128,13 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                             MediaQuery.of(context).size.width *
                                                 0.55,
                                         // decoration: BoxDecoration(border: Border.all()),
-                                        child: Text(widget.nameOfCompany["security_name"],
+                                        child: Text(
+                                          widget.companyData["security_name"],
                                           // snapshot.data["company_name"] == null
                                           //     ? ""
                                           //     : snapshot.data["company_name"],
                                           style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getChartBoxTextThemeColor(),
+                                            color: Color(0xFF423EAF),
                                             fontSize: 16,
                                             fontFamily: "Roboto",
                                           ),
@@ -144,8 +153,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                       Text(
                                         '\$' + " 390.00",
                                         style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getChartBoxTextThemeColor(),
+                                          color: Color(0xFF423EAF),
                                           fontSize: 16,
                                           fontFamily: "Roboto",
                                         ),
@@ -166,8 +174,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           Text(
                                             "HIGH",
                                             style: TextStyle(
-                                              color: AllCoustomTheme
-                                                  .getNewTextThemeColors(),
+                                              color: Colors.grey[900],
                                               fontSize:
                                                   ConstanceData.SIZE_TITLE10,
                                               fontFamily: "Roboto",
@@ -179,7 +186,8 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                             size: 10,
                                           ),
                                           Text(
-                                            "139.00",
+                                            "${snapshot.data["30d_high"]}" ,
+                                            // snapshot.data[""],
                                             style: TextStyle(
                                               color: Colors.green,
                                               fontSize:
@@ -201,8 +209,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           Text(
                                             "LOW",
                                             style: TextStyle(
-                                              color: AllCoustomTheme
-                                                  .getNewTextThemeColors(),
+                                              color: Colors.grey[900],
                                               fontSize:
                                                   ConstanceData.SIZE_TITLE10,
                                               fontFamily: "Roboto",
@@ -261,14 +268,17 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           y: element["price"].toDouble()),
                                     );
                                   });
+
                                   return Center(
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
-                                          0.75,
+                                          0.85,
                                       height: 90,
                                       child: Container(
-                                        margin: EdgeInsets.only(left: 10.0),
+                                        // margin: EdgeInsets.only(left: 10.0),
                                         child: SfCartesianChart(
+                                            tooltipBehavior: _tooltipBehavior,
+                                            zoomPanBehavior: _zoomPanBehavior,
                                             primaryXAxis: DateTimeAxis(
                                               isVisible: false,
                                             ),
@@ -287,6 +297,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                                             _) =>
                                                         data.y,
                                                 gradient: gradientColors,
+                                                name: "Price On"
                                               ),
                                             ]),
                                       ),
@@ -309,20 +320,18 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
+                                          Radius.circular(20),
+                                        ),
                                         border: new Border.all(
-                                            color: AllCoustomTheme
-                                                .getChartBoxThemeColor(),
+                                            color: Color(0xFF423EAF),
                                             width: 1.5),
-                                        color: AllCoustomTheme
-                                            .getChartBoxThemeColor(),
+                                        color: Color(0xFF423EAF),
                                       ),
                                       child: MaterialButton(
                                         child: Text(
                                           "TRADE",
                                           style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getButtonTextThemeColors(),
+                                            color: Colors.white,
                                             fontSize:
                                                 ConstanceData.SIZE_TITLE13,
                                             fontFamily: "Roboto",
@@ -359,10 +368,10 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(20)),
+                                            Radius.circular(20),
+                                          ),
                                           border: new Border.all(
-                                              color: AllCoustomTheme
-                                                  .getChartBoxThemeColor(),
+                                              color: Color(0xFF423EAF),
                                               width: 1.5),
                                           // color: AllCoustomTheme.getChartBoxThemeColor(),
                                         ),
@@ -371,8 +380,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           child: Text(
                                             "FOLLOW",
                                             style: TextStyle(
-                                              color: AllCoustomTheme
-                                                  .getChartBoxTextThemeColor(),
+                                              color: Color(0xFF423EAF),
                                               fontSize:
                                                   ConstanceData.SIZE_TITLE13,
                                               fontFamily: "Roboto",
@@ -380,14 +388,16 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           ),
                                           onPressed: () async {
                                             Navigator.of(context).push(
-                                                new MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
+                                              new MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
                                                         new OnBoardingFirst(
-                                                          logo: "logo.png",
-                                                          callingFrom:
-                                                              "Accredited Investor",
-                                                        )));
+                                                  logo: "logo.png",
+                                                  callingFrom:
+                                                      "Accredited Investor",
+                                                ),
+                                              ),
+                                            );
                                           },
                                         ),
                                       ),

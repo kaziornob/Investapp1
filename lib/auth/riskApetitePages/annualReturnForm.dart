@@ -626,7 +626,8 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
         Toast.show("${result['message']}", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
-        HelperClass.showLoading(context);
+        HelperClass.showLoading(context,
+            "Thanks for signing up to Auro. Please wait as we allow our AI engine to custom build your portfolio.");
 
         createPortfolioData();
       }

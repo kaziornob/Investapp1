@@ -2,10 +2,13 @@ import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingThird.dart';
+import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 
 class OnBoardingSecond extends StatefulWidget {
   final String callingFrom;
@@ -22,13 +25,13 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
   bool _isInProgress = false;
 
   Map sliderData = {
-    "Equities": 10,
-    "Bonds": 10,
-    "Real Estate": 10,
-    "Commodities": 10,
+    "Commodity": 10,
+    "Crypto": 10,
+    "Equity": 10,
+    "Fixed Income": 10,
+    "Hedge Fund": 10,
     "Private Deals (PE/VC)": 10,
-    "Impact Investing": 10,
-    "Impact Crypto": 10,
+    "Real Estate": 10,
   };
 
   @override
@@ -48,65 +51,101 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
   }
 
   Widget getSliderListView(Map data) {
-    return Column(
-      children: data.keys.toList().map<Widget>(
-        (key) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                // decoration: BoxDecoration(border: Border.all()),
-                // margin: EdgeInsets.only(top: 8.0),
-                width: MediaQuery.of(context).size.width * 0.30,
-                height: 40,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "$key",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: ConstanceData.SIZE_TITLE15,
-                          fontFamily: "RobotoLight",
-                          letterSpacing: 0.1,
-                        ),
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
+    return Stack(
+      children: [
+        Container(
+          // decoration: BoxDecoration(border: Border.all()),
+          child: Column(
+            children: data.keys.toList().map<Widget>(
+              (key) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      // decoration: BoxDecoration(border: Border.all()),
+                      // margin: EdgeInsets.only(top: 8.0),
+                      width: MediaQuery.of(context).size.width * 0.30,
+                      height: 40,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "$key",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: ConstanceData.SIZE_TITLE15,
+                                fontFamily: "RobotoLight",
+                                letterSpacing: 0.1,
+                              ),
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    Container(
+                      // decoration: BoxDecoration(border: Border.all()),
+                      width: MediaQuery.of(context).size.width * 0.58,
+                      height: 40,
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          thumbColor: Color(0xFFD8AF4F),
+                          activeTrackColor: Colors.black,
+                          inactiveTrackColor: Colors.black,
+                        ),
+                        child: Slider(
+                          value: data[key].toDouble(),
+                          min: 0.0,
+                          max: 20.0,
+                          divisions: 2,
+                          label: sliderLabel(data[key].toDouble()),
+                          onChanged: (double newValue) {
+                            setState(() {
+                              data[key] = newValue.round();
+                            });
+                          },
+                          semanticFormatterCallback: (double newValue) {
+                            return '${newValue.round()} dollars';
+                          },
+                        ),
+                      ),
+                    )
                   ],
-                ),
-              ),
-              Container(
-                // decoration: BoxDecoration(border: Border.all()),
-                width: MediaQuery.of(context).size.width * 0.58,
-                height: 40,
-                child: Slider(
-                  // value: _value.toDouble(),
-                  value: data[key].toDouble(),
-                  min: 0.0,
-                  max: 20.0,
-                  divisions: 2,
-                  activeColor: sliderData.containsValue(20) ||
-                          sliderData.containsValue(0)
-                      ? Color(0xfffec20f)
-                      : Colors.grey,
-                  inactiveColor: Color(0xFF060513),
-                  label: sliderLabel(data[key].toDouble()),
-                  onChanged: (double newValue) {
-                    setState(() {
-                      data[key] = newValue.round();
-                    });
-                  },
-                  semanticFormatterCallback: (double newValue) {
-                    return '${newValue.round()} dollars';
-                  },
-                ),
-              )
-            ],
-          );
-        },
-      ).toList(),
+                );
+              },
+            ).toList(),
+          ),
+        ),
+        Positioned(
+          left: MediaQuery.of(context).size.width * 0.36,
+          child: DottedLine(
+            direction: Axis.vertical,
+            lineLength: 280,
+            lineThickness: 1.0,
+            dashLength: 4.0,
+            dashColor: Colors.black,
+            dashRadius: 0.0,
+            dashGapLength: 4.0,
+            dashGapColor: Colors.transparent,
+            dashGapRadius: 0.0,
+          ),
+        ),
+        Positioned(
+          right: MediaQuery.of(context).size.width * 0.1,
+          child: DottedLine(
+            direction: Axis.vertical,
+            lineLength: 280,
+            lineThickness: 1.0,
+            dashLength: 4.0,
+            dashColor: Colors.black,
+            dashRadius: 0.0,
+            dashGapLength: 4.0,
+            dashGapColor: Colors.transparent,
+            dashGapRadius: 0.0,
+          ),
+        ),
+      ],
     );
   }
 
@@ -115,7 +154,7 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
       case 0:
         return "EXCLUDE";
       case 10:
-        return "LET AURO DECIDE";
+        return "ALGO DECIDES";
       case 20:
         return "INCLUDE";
     }
@@ -250,6 +289,47 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                       ),
                                     ),
                                     Container(
+                                      height: 20,
+                                      // decoration: BoxDecoration(border: Border.all(),),
+                                      margin: EdgeInsets.only(
+                                        left: 20.0,
+                                        right: 10.0,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.18,
+                                          ),
+                                          Text(
+                                            "EXCLUDE",
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            "ALGO DECIDES",
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            "INCLUDE",
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
                                       height: 290,
                                       // decoration: BoxDecoration(border: Border.all(),),
                                       margin: EdgeInsets.only(
@@ -343,6 +423,41 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
   }
 
   Future submit() async {
+    var dataToSave = {};
+    sliderData.forEach((key, value) {
+      var value;
+      if (sliderData[key] == 0) {
+        value = {
+          "min_weight": 0,
+          "max_weight": 0,
+        };
+      } else if (sliderData[key] == 10) {
+        value = {
+          "min_weight": 0,
+          "max_weight": 100,
+        };
+      } else {
+        value = {
+          "min_weight": 10,
+          "max_weight": 100,
+        };
+      }
+      var changesKey;
+      if (key == "Private Deals (PE/VC)") {
+        changesKey = "Private_Equity";
+      } else if (key == "Fixed Income") {
+        changesKey = "Fixed Income";
+      } else {
+        changesKey = key.toString().replaceAll(" ", "_");
+      }
+      dataToSave[changesKey] = value;
+    });
+
+    Map<String, Map> data = {
+      "assetclass_weights": dataToSave,
+    };
+    Provider.of<GoProDataProvider>(context, listen: false)
+        .setSecondPagePreferences(data);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => OnBoardingThird(

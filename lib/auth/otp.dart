@@ -490,7 +490,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
 
   // otp verify process
   submit(otp) async {
-    HelperClass.showLoading(context);
+    HelperClass.showLoading(context,null);
 
     var tempJsonReq = {
       "email": "${widget.allParams['email']}",
