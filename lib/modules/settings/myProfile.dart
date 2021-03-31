@@ -3,6 +3,8 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/modules/settings/show_list_of_following.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
@@ -214,11 +216,13 @@ class _MyProfileState extends State<MyProfile>
                       bottom: 3, // space between underline and text
                     ),
                     decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
-                      width: 1.0, // Underline width
-                    ))),
+                      border: Border(
+                        bottom: BorderSide(
+                          color: AllCoustomTheme.getHeadingThemeColors(),
+                          width: 1.0, // Underline width
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -235,25 +239,25 @@ class _MyProfileState extends State<MyProfile>
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      CupertinoPageRoute(
-                                        builder: (BuildContext context) =>
-                                            AuroStrikeBadges(),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    child: Image(
-                                      image:
-                                          AssetImage('assets/buttonBadge.png'),
-                                      fit: BoxFit.fill,
-                                      height: 30,
-                                      width: 40,
-                                    ),
-                                  ),
-                                ),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //     Navigator.of(context).push(
+                                //       CupertinoPageRoute(
+                                //         builder: (BuildContext context) =>
+                                //             AuroStrikeBadges(),
+                                //       ),
+                                //     );
+                                //   },
+                                //   child: Container(
+                                //     child: Image(
+                                //       image:
+                                //           AssetImage('assets/buttonBadge.png'),
+                                //       fit: BoxFit.fill,
+                                //       height: 30,
+                                //       width: 40,
+                                //     ),
+                                //   ),
+                                // ),
                                 SizedBox(
                                   width: 18,
                                 ),
@@ -288,12 +292,12 @@ class _MyProfileState extends State<MyProfile>
                                       return Image(
                                         image: AssetImage(badgeImagePath),
                                         fit: BoxFit.fill,
-                                        height: 30,
-                                        width: 30,
+                                        height: 50,
+                                        width: 50,
                                       );
                                     } else {
                                       print("No badge data");
-                                      return Container();
+                                      return SizedBox();
                                     }
                                   },
                                 ),
@@ -638,12 +642,13 @@ class _MyProfileState extends State<MyProfile>
                       children: [
                         Expanded(
                           child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              child: Scrollbar(
-                                child:
-                                    getInceptionMemberView(inceptionMemberList),
-                              )),
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.35,
+                            child: Scrollbar(
+                              child:
+                                  getInceptionMemberView(inceptionMemberList),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -663,9 +668,25 @@ class _MyProfileState extends State<MyProfile>
                   SizedBox(
                     height: 5,
                   ),
+                  ShowListOfFollowing(
+                    text: "Listed Companies You Follow",
+                    type: "listed",
+                  ),
+                  ShowListOfFollowing(
+                    text: "Private Companies You Follow",
+                    type: "private",
+                  ),
+                  ShowListOfFollowing(
+                    text: "Crypto You Follow",
+                    type: "crypto",
+                  ),
+                  ShowListOfFollowing(
+                    text: "Investors You Follow",
+                    type: "user",
+                  ),
                   ProfileBackground(),
                   SizedBox(
-                    height: 40,
+                    height: 20,
                   ),
                 ],
               ),

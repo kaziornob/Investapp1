@@ -29,6 +29,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
   var appBarheight = 0.0;
   var statusBarHeight = 0.0;
   var graphHeight = 0.0;
+
   // AdmobBannerController admobBannerController;
   List<dynamic> questionsList;
   ApiProvider request = new ApiProvider();
@@ -83,24 +84,26 @@ class _MainExchangeTabState extends State<MainExchangeTab>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                GestureDetector(
-                    onTap: () {
-                      // print("gschascvkajsc");
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => AddEditQus(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "Ask question",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getSeeMoreThemeColor(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        fontFamily: "Roboto",
+                RaisedButton(
+                  child: Text(
+                    "Ask question",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AllCoustomTheme.getSeeMoreThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  onPressed: () {
+                    // print("gschascvkajsc");
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => AddEditQus(),
                       ),
-                    ))
+                    );
+                  },
+                )
 /*                GestureDetector(
                   onTap: () {
                     _scaffoldKey.currentState.openDrawer();
@@ -531,7 +534,6 @@ class _MainExchangeTabState extends State<MainExchangeTab>
     );
   }
 
-
   // ignore: missing_return
   Widget _getPage(Tab tab) {
     switch (tab.text) {
@@ -543,73 +545,121 @@ class _MainExchangeTabState extends State<MainExchangeTab>
         return week();
       case 'Month':
         return month();
-    // case 'Ask Question': return askQus();
+      // case 'Ask Question': return askQus();
     }
   }
 
   Widget trending() {
     return Container(
-        child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height * 0.50,
+              child: Scrollbar(
+                child: getQuestionsList(questionsList),
+              ),
             ),
           ),
-        ));
+        ],
+      ),
+    );
+    // Container(
+    //   child: Padding(
+    //     padding: EdgeInsets.only(left: 20.0),
+    //     child: Text(
+    //       'Coming Soon... ',
+    //       textAlign: TextAlign.center,
+    //       style: TextStyle(
+    //         color: AllCoustomTheme.getTextThemeColor(),
+    //         fontSize: ConstanceData.SIZE_TITLE18,
+    //       ),
+    //     ),
+    //   ));
   }
 
   Widget week() {
     return Container(
-        child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height * 0.50,
+              child: Scrollbar(
+                child: getQuestionsList(questionsList),
+              ),
             ),
           ),
-        ));
+        ],
+      ),
+    );
+    // return Container(
+    //     child: Padding(
+    //   padding: EdgeInsets.only(left: 20.0),
+    //   child: Text(
+    //     'Coming Soon... ',
+    //     textAlign: TextAlign.center,
+    //     style: TextStyle(
+    //       color: AllCoustomTheme.getTextThemeColor(),
+    //       fontSize: ConstanceData.SIZE_TITLE18,
+    //     ),
+    //   ),
+    // ));
   }
 
   Widget month() {
+
     return Container(
-        child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height * 0.50,
+              child: Scrollbar(
+                child: getQuestionsList(questionsList),
+              ),
             ),
           ),
-        ));
+        ],
+      ),
+    );
+    // return Container(
+    //     child: Padding(
+    //   padding: EdgeInsets.only(left: 20.0),
+    //   child: Text(
+    //     'Coming Soon... ',
+    //     textAlign: TextAlign.center,
+    //     style: TextStyle(
+    //       color: AllCoustomTheme.getTextThemeColor(),
+    //       fontSize: ConstanceData.SIZE_TITLE18,
+    //     ),
+    //   ),
+    // ));
   }
-
-
-
 
   Widget weekly() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Coming Soon... ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-            ),
-          ),
-        ));
+      padding: EdgeInsets.only(left: 20.0),
+      child: Text(
+        'Coming Soon... ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AllCoustomTheme.getTextThemeColors(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+        ),
+      ),
+    ));
   }
-
 
   Widget recommended() {
     return SingleChildScrollView(
@@ -635,87 +685,87 @@ class _MainExchangeTabState extends State<MainExchangeTab>
               ),
               Container(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 70,
-                              width: 85.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/language.png')),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/android.png')),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/askUbuntu.png')),
-                        ],
-                      )
+                      new Image(
+                          height: 70,
+                          width: 85.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/language.png')),
                     ],
-                  )),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/android.png')),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/askUbuntu.png')),
+                    ],
+                  )
+                ],
+              )),
               Container(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/askUbuntu.png')),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          new Image(
-                              height: 40,
-                              width: 40.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/android.png')),
-                        ],
-                      ),
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/askUbuntu.png')),
                       SizedBox(
-                        height: 4,
+                        width: 5,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Image(
-                              height: 70,
-                              width: 85.0,
-                              fit: BoxFit.fill,
-                              image: new AssetImage('assets/arqade.jpeg')),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
+                      new Image(
+                          height: 40,
+                          width: 40.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/android.png')),
                     ],
-                  )),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      new Image(
+                          height: 70,
+                          width: 85.0,
+                          fit: BoxFit.fill,
+                          image: new AssetImage('assets/arqade.jpeg')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                ],
+              )),
             ],
           ),
           SizedBox(
@@ -740,7 +790,6 @@ class _MainExchangeTabState extends State<MainExchangeTab>
     );
   }
 
-
   Widget getQuestionsList(data) {
     if (data != null && data.length != 0) {
       return new ListView.builder(
@@ -752,7 +801,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
           final tagData = data[index]['tags'] as Map;
           for (final name in tagData.keys) {
             final value = tagData[name];
-            tagFinalData.add({"id": name,"tag" : value});
+            tagFinalData.add({"id": name, "tag": value});
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -761,7 +810,6 @@ class _MainExchangeTabState extends State<MainExchangeTab>
               // question section
               GestureDetector(
                 onTap: () {
-
                   var tempField = {
                     "id": "${data[index]['id']}",
                     "title": "${data[index]['title']}",
@@ -785,17 +833,17 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   children: [
                     Expanded(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 15.0),
-                          child: Text(
-                            "${data[index]['question']}",
-                            style: TextStyle(
-                                color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontFamily: "Rosarivo",
-                                fontStyle: FontStyle.normal,
-                                letterSpacing: 0.2),
-                          ),
-                        ))
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Text(
+                        "${data[index]['question']}",
+                        style: TextStyle(
+                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Rosarivo",
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: 0.2),
+                      ),
+                    ))
                   ],
                 ),
               ),
@@ -818,7 +866,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:3.0),
+                    margin: EdgeInsets.only(top: 3.0),
                     child: new Text(
                       "10K",
                       style: TextStyle(
@@ -837,7 +885,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:2.0),
+                    margin: EdgeInsets.only(top: 2.0),
                     child: new Text(
                       "${data[index]['no. of answer']}",
                       style: TextStyle(
@@ -856,9 +904,11 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:3.0),
+                    margin: EdgeInsets.only(top: 3.0),
                     child: new Text(
-                      data[index]['view']!=null ?  "${data[index]['view']}" : '0',
+                      data[index]['view'] != null
+                          ? "${data[index]['view']}"
+                          : '0',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: ConstanceData.SIZE_TITLE14,
@@ -875,7 +925,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:3.0),
+                    margin: EdgeInsets.only(top: 3.0),
                     child: new Text(
                       "100",
                       style: TextStyle(
@@ -894,7 +944,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:3.0),
+                    margin: EdgeInsets.only(top: 3.0),
                     child: new Text(
                       "${data[index]['vote']}",
                       style: TextStyle(
@@ -921,7 +971,9 @@ class _MainExchangeTabState extends State<MainExchangeTab>
               Container(
                 margin: EdgeInsets.only(left: 10.0),
                 child: StaggeredGridView.countBuilder(
-                  itemCount: tagFinalData!=null && tagFinalData.length!=0 ? tagFinalData.length : 0,
+                  itemCount: tagFinalData != null && tagFinalData.length != 0
+                      ? tagFinalData.length
+                      : 0,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 4,
                   crossAxisSpacing: 8.0,
@@ -969,14 +1021,14 @@ class _MainExchangeTabState extends State<MainExchangeTab>
     } else {
       return Center(
           child: Text(
-            "No data available yet",
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-              fontFamily: "Rasa",
-            ),
-          ));
+        "No data available yet",
+        textAlign: TextAlign.center,
+        style: new TextStyle(
+          color: AllCoustomTheme.getTextThemeColor(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+          fontFamily: "Rasa",
+        ),
+      ));
     }
   }
 }

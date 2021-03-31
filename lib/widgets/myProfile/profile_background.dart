@@ -1,9 +1,11 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/myProfile/addEditEducation.dart';
 import 'package:auroim/widgets/myProfile/addEditEmployment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileBackground extends StatefulWidget {
   @override
@@ -11,8 +13,6 @@ class ProfileBackground extends StatefulWidget {
 }
 
 class _ProfileBackgroundState extends State<ProfileBackground> {
-
-
   List eduList = [
     {
       "id": 1,
@@ -46,7 +46,7 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
       "end_year": 2021,
       "desc": ""
     },
-   /* {
+    /* {
       "id": 2,
       "title": "HCL",
       "start_year": 2008,
@@ -92,7 +92,9 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                 ],
               ),
               subtitle: Text(
-                "${data[index]['start_year']}"+ "-" + "${data[index]['end_year']}",
+                "${data[index]['start_year']}" +
+                    "-" +
+                    "${data[index]['end_year']}",
                 style: new TextStyle(
                   color: AllCoustomTheme.getTextThemeColor(),
                   fontSize: ConstanceData.SIZE_TITLE16,
@@ -166,27 +168,29 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-                leading: CircleAvatar(
-                  radius: 15.0,
-                  backgroundImage: new AssetImage('assets/download.jpeg'),
-                  backgroundColor: Colors.transparent,
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      data[index]['title'],
-                      style: new TextStyle(
-                        color: AllCoustomTheme.getTextThemeColor(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        fontFamily: "Roboto",
-                        package: 'Roboto-Regular',
-                      ),
+              leading: CircleAvatar(
+                radius: 15.0,
+                backgroundImage: new AssetImage('assets/download.jpeg'),
+                backgroundColor: Colors.transparent,
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    data[index]['title'],
+                    style: new TextStyle(
+                      color: AllCoustomTheme.getTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      package: 'Roboto-Regular',
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
               subtitle: Text(
-                "${data[index]['start_year']}"+ "-" + "${data[index]['end_year']}",
+                "${data[index]['start_year']}" +
+                    "-" +
+                    "${data[index]['end_year']}",
                 style: new TextStyle(
                   color: AllCoustomTheme.getTextThemeColor(),
                   fontSize: ConstanceData.SIZE_TITLE16,
@@ -214,49 +218,56 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-            padding: const EdgeInsets.only(left: 16, right: 5.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.09,
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Ankur’s Background',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFD8AF4F),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                          ),
+          padding: const EdgeInsets.only(left: 16, right: 5.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.09,
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        Provider.of<UserDetails>(context, listen: false)
+                                        .userDetails["f_name"] !=
+                                    null &&
+                                Provider.of<UserDetails>(context, listen: false)
+                                        .userDetails !=
+                                    null
+                            ? "${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Background"
+                            : 'Background',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFFD8AF4F),
+                          fontSize: ConstanceData.SIZE_TITLE18,
+                          fontFamily: "Roboto",
+                          package: 'Roboto-Regular',
                         ),
-                      )
+                      ),
+                    )),
+                Container(
+                  margin: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 0.43),
+                  padding: EdgeInsets.only(
+                    bottom: 3, // space between underline and text
                   ),
-                  Container(
-                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.43),
-                    padding: EdgeInsets.only(
-                      bottom: 3, // space between underline and text
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              width: 1.0, // Underline width
-                            ))
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ),
                     ),
                   ),
-                ],
-              ),
-            )
+                ),
+              ],
+            ),
+          ),
         ),
         SizedBox(
           height: 20.0,
@@ -285,18 +296,17 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                     ),
                   ),
                   InkWell(
-                    onTap: ()
-                    {
+                    onTap: () {
                       Navigator.of(context).push(
                         CupertinoPageRoute(
-                          builder: (BuildContext context) => AddEditEmployment(),
+                          builder: (BuildContext context) =>
+                              AddEditEmployment(),
                         ),
                       );
                     },
                     child: Icon(
-                      empList.length==0 ?  Icons.add_box_sharp : Icons.edit,
-                      color: AllCoustomTheme
-                          .getSeeMoreThemeColor(),
+                      empList.length == 0 ? Icons.add_box_sharp : Icons.edit,
+                      color: AllCoustomTheme.getSeeMoreThemeColor(),
                       size: 25,
                     ),
                   )
@@ -348,8 +358,7 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                     ),
                   ),
                   InkWell(
-                    onTap: ()
-                    {
+                    onTap: () {
                       Navigator.of(context).push(
                         CupertinoPageRoute(
                           builder: (BuildContext context) => AddEditEducation(),
@@ -357,9 +366,8 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                       );
                     },
                     child: Icon(
-                     eduList.length==0 ?  Icons.add_box_sharp : Icons.edit,
-                      color: AllCoustomTheme
-                          .getSeeMoreThemeColor(),
+                      eduList.length == 0 ? Icons.add_box_sharp : Icons.edit,
+                      color: AllCoustomTheme.getSeeMoreThemeColor(),
                       size: 25,
                     ),
                   )

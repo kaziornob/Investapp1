@@ -251,8 +251,19 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                         // height: MediaQuery.of(context).size.height*1.7,
                         child: Column(
                           children: <Widget>[
-                            SizedBox(
-                              height: 20,
+                            Container(
+                              // decoration: BoxDecoration(border: Border.all()),
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  )
+                                ],
+                              ),
                             ),
                             Container(
                                 height:
@@ -336,59 +347,62 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                           ),*/
 
                             Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.19,
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.only(
-                                    top: 20.0,
-                                    bottom: 14.0,
-                                    left: 20.0,
-                                    right: 20.0),
-                                decoration: new BoxDecoration(
-                                  border: Border.all(
-                                    // color: widget.callingFrom=="Accredited Investor" ?  Color(0xff696969) : Color(0xFFFFFFFF),
-                                    color: Color(0xff696969),
-                                    width: 1.2,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(2.0),
-                                  ),
+                              height: MediaQuery.of(context).size.height * 0.19,
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(
+                                  top: 20.0,
+                                  bottom: 14.0,
+                                  left: 20.0,
+                                  right: 20.0),
+                              decoration: new BoxDecoration(
+                                border: Border.all(
+                                  // color: widget.callingFrom=="Accredited Investor" ?  Color(0xff696969) : Color(0xFFFFFFFF),
+                                  color: Color(0xff696969),
+                                  width: 1.2,
                                 ),
-                                child: ListView(
-                                  children: <Widget>[
-                                    Container(
-                                        margin: EdgeInsets.only(top: 5.0),
-                                        child: Center(
-                                          child: Text(
-                                            "Your Attitude To Risk",
-                                            style: new TextStyle(
-                                                // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                                color: Colors.black,
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE16,
-                                                fontFamily: "Rosarivo",
-                                                letterSpacing: 0.1),
-                                          ),
-                                        )),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            top: 10.0, left: 20.0, right: 10.0),
-                                        child: Center(
-                                          child: Text(
-                                            "Which of the following option describe your expectation for annual returns?",
-                                            style: new TextStyle(
-                                                // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
-                                                color: Colors.black,
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE16,
-                                                fontFamily: "RobotoLight",
-                                                letterSpacing: 0.1),
-                                          ),
-                                        )),
-                                  ],
-                                )),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(2.0),
+                                ),
+                              ),
+                              child: ListView(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(top: 5.0),
+                                    child: Center(
+                                      child: Text(
+                                        "Your Attitude To Risk",
+                                        style: new TextStyle(
+                                            // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                            color: Colors.black,
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                            fontFamily: "Rosarivo",
+                                            letterSpacing: 0.1),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: 10.0, left: 20.0, right: 10.0),
+                                    child: Center(
+                                      child: Text(
+                                        "There is an element of risk involved in achieving any return. Please select the combination of potential gain and loss that you are most comfortable with?",
+                                        // "Which of the following option describe your expectation for annual returns?",
+                                        style: new TextStyle(
+                                            // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFF000000),
+                                            color: Colors.black,
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                            fontFamily: "RobotoLight",
+                                            letterSpacing: 0.1),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Container(
-                              height: MediaQuery.of(context).size.height * 0.16,
+                              height: 70,
                               width: MediaQuery.of(context).size.width * 0.45,
                               margin: EdgeInsets.only(
                                   top: 10.0,
@@ -411,16 +425,23 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Container(
+                                    // decoration: new BoxDecoration(
+                                    //   color: Color(0xFFe70b31),
+                                    //   border: Border.all(
+                                    //     color: Color(0xFFFFFFFF),
+                                    //     width: 1,
+                                    //   ),
+                                    //   borderRadius: BorderRadius.all(
+                                    //     Radius.circular(2.0),
+                                    //   ),
+                                    // ),
                                     margin: EdgeInsets.only(left: 4.0),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.03,
+                                          height: 30,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -437,36 +458,42 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                                           ),
                                         ),
                                         Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.07,
+                                          height: 30,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
                                               0.35,
-                                          child: Text("Potential gain",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: ConstanceData
-                                                      .SIZE_TITLE16,
-                                                  fontFamily: "RobotoLight",
-                                                  letterSpacing: 0.1)),
+                                          child: Text(
+                                            "Potential gain",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE16,
+                                                fontFamily: "RobotoLight",
+                                                letterSpacing: 0.1),
+                                          ),
                                         )
                                       ],
                                     ),
                                   ),
                                   Container(
+                                    // decoration: new BoxDecoration(
+                                    //   color: Color(0xFFe70b31),
+                                    //   border: Border.all(
+                                    //     color: Color(0xFFFFFFFF),
+                                    //     width: 1.2,
+                                    //   ),
+                                    //   borderRadius: BorderRadius.all(
+                                    //     Radius.circular(2.0),
+                                    //   ),
+                                    // ),
                                     margin: EdgeInsets.only(left: 4.0),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.03,
+                                          height: 30,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -483,10 +510,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                                           ),
                                         ),
                                         Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.07,
+                                          height: 30,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -627,7 +651,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
         HelperClass.showLoading(context,
-            "Thanks for signing up to Auro. Please wait as we allow our AI engine to custom build your portfolio.");
+            "Thanks for signing up to Auro. Please wait as we allow our AI engine to custom build your portfolio.Given the complex analytics involved, this could take a few minutes, so please be patient.");
 
         createPortfolioData();
       }

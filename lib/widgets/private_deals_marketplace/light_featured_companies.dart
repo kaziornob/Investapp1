@@ -69,7 +69,7 @@ class _FeaturedCompaniesListState extends State<FeaturedCompaniesList> {
         'company_details/pvtMain?list_type=all', jsonReq);
 
     var result = jsonDecode(jsonReqResp.body);
-    // print("company details response: $result");
+    print("company details response: $result");
 
     if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
       // print("ggggg");

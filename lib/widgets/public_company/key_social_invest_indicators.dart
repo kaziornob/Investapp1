@@ -1,10 +1,18 @@
+import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/provider_abhinav/follow_provider.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/public_company/single_notification_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../main.dart';
 
 class KeySocialInvestIndicators extends StatefulWidget {
   final fixRate;
+  final companyTicker;
 
-  KeySocialInvestIndicators({this.fixRate});
+  KeySocialInvestIndicators({this.fixRate, this.companyTicker});
+
   @override
   _KeySocialInvestIndicatorsState createState() =>
       _KeySocialInvestIndicatorsState();
@@ -74,7 +82,12 @@ class _KeySocialInvestIndicatorsState extends State<KeySocialInvestIndicators> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 2.0, right: 2.0, top: 8.0,bottom: 4.0,),
+              padding: const EdgeInsets.only(
+                left: 2.0,
+                right: 2.0,
+                top: 8.0,
+                bottom: 4.0,
+              ),
               child: Row(
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,34 +150,49 @@ class _KeySocialInvestIndicatorsState extends State<KeySocialInvestIndicators> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 3.0),
-                    width: (MediaQuery.of(context).size.width / 3) - 10,
-                    decoration: new BoxDecoration(
-                      border: Border.all(
-                        color: Color(0xff90AADC),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8.0),
-                      ),
-                      color: Color(0xff90AADC),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Follow',
-                          style: new TextStyle(
-                            fontFamily: "Poppins",
-                            fontSize: 18.0,
-                            letterSpacing: 0.2,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                  Consumer<FollowProvider>(
+                    builder: (context, followProvider, _) {
+                      var isFollowing = false;
+                      if (followProvider.mapOfFollowingListedCompanies[
+                              widget.companyTicker] !=
+                          null) {
+                        isFollowing =
+                            followProvider.mapOfFollowingListedCompanies[
+                                widget.companyTicker];
+                      }
+                      return GestureDetector(
+                        onTap: () => onPressedFollow(isFollowing),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 3.0),
+                          width: (MediaQuery.of(context).size.width / 3) - 10,
+                          decoration: new BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xff90AADC),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                            color: Color(0xff90AADC),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                isFollowing ? "Unfollow" : 'Follow',
+                                style: new TextStyle(
+                                  fontFamily: "Poppins",
+                                  fontSize: 18.0,
+                                  letterSpacing: 0.2,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -215,5 +243,50 @@ class _KeySocialInvestIndicatorsState extends State<KeySocialInvestIndicators> {
         ),
       ),
     );
+  }
+
+  onPressedFollow(isFollowing) async {
+    print("follow button pressed");
+    var userEmail;
+    if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+        null) {
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    } else {
+      await getUserDetails();
+      Provider.of<UserDetails>(context, listen: false)
+          .setUserDetails(userAllDetail);
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    }
+
+    if (isFollowing) {
+      Provider.of<FollowProvider>(context, listen: false).unfollowSingleItem(
+        userEmail,
+        "listed",
+        widget.companyTicker,
+      );
+    } else {
+      Provider.of<FollowProvider>(context, listen: false).setFollowing(
+        userEmail,
+        "listed",
+        widget.companyTicker,
+      );
+    }
+  }
+
+  getUserDetails() async {
+    print("getting user Details");
+    ApiProvider request = new ApiProvider();
+    // print("call set screen");
+    var response = await request.getRequest('users/get_details');
+    print("user detail response: $response");
+    if (response != null && response != false) {
+      userAllDetail = response['data'];
+
+      print(userAllDetail.toString());
+    } else {
+      print("Not got user data");
+    }
   }
 }

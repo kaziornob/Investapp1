@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 
 // import 'package:admob_flutter/admob_flutter.dart';
 import 'package:auroim/api/apiProvider.dart';
@@ -11,12 +13,17 @@ import 'package:auroim/model/listingsModel.dart';
 import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
+import 'package:auroim/provider_abhinav/follow_provider.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
+import 'package:auroim/provider_abhinav/long_short_provider.dart';
+import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -30,11 +37,30 @@ import 'constance/themes.dart';
 import 'modules/home/homeScreen.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
-
 // Thanks for signing up to Auro. Please wait as we allow our AI engine to custom build your portfolio.
 Map portfolioMap;
 List marketListData = [];
 var userAllDetail;
+
+reportError(exception, stackTrace) async {
+  // if (isInDebugMode) {
+  print("Reporting Error in Debug mode");
+  print("Runtime Error Type : " + "${exception.runtimeType}");
+  //   print(exception.toString());
+  //   print(stackTrace.toString());
+  // } else {
+  FirebaseCrashlytics.instance.recordError(
+    exception,
+    stackTrace,
+  );
+  // }
+}
+
+bool get isInDebugMode {
+  bool inDebugMode = false;
+  assert(inDebugMode = true);
+  return inDebugMode;
+}
 
 getUserDetails() async {
   print("getting user Details");
@@ -53,7 +79,7 @@ getUserDetails() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await getUserDetails();
   // Admob.initialize();
@@ -82,13 +108,51 @@ void main() async {
     }
   });
 
-  SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
-  ).then(
-    (_) => runApp(
-      MyApp(prefs: prefs),
-    ),
-  );
+  // if (isInDebugMode) {
+  //   // await FirebaseCrashlytics.instance
+  //   //     .setCrashlyticsCollectionEnabled(false);
+  //   SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  //   ).then(
+  //     (_) => runApp(
+  //       MyApp(prefs: prefs),
+  //     ),
+  //   );
+  // } else {
+  // This captures errors reported by the Flutter framework.
+  // FlutterError.onError = (FlutterErrorDetails details) {
+  //   print("flutter error");
+  //   reportError(details.exception, details.stack);
+  // };
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+  Isolate.current.addErrorListener(RawReceivePort((dynamic pair) async {
+    print('Isolate.current.addErrorListener caught an error');
+    final List<dynamic> errorAndStacktrace = pair;
+    await FirebaseCrashlytics.instance.recordError(
+      errorAndStacktrace.first,
+      errorAndStacktrace.last,
+    );
+  }).sendPort);
+
+  runZonedGuarded<Future<void>>(() async {
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    ).then(
+      (_) => runApp(
+        MyApp(prefs: prefs),
+      ),
+    );
+  }, FirebaseCrashlytics.instance.recordError
+      //         (Object error, StackTrace stackTrace) {
+      //   // Whenever an error occurs, call the `_reportError` function. This sends
+      //   // Dart errors to the dev console depending on the environment.
+      //   print("zoned error");
+      //   reportError(error, stackTrace);
+      // }
+      );
+  // }
 }
 
 class MyApp extends StatefulWidget {
@@ -236,8 +300,6 @@ class _MyAppState extends State<MyApp> {
       systemNavigationBarIconBrightness: Brightness.light,
     ));
 
-
-
     return Container(
       color: AllCoustomTheme.getThemeData().primaryColor,
       child: MultiProvider(
@@ -256,6 +318,15 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => GoProDataProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => FollowProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => PortfolioProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => LongShortProvider(),
           ),
         ],
         child: MaterialApp(

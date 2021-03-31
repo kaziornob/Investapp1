@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/auth/google_sign_in.dart';
 import 'package:auroim/auth/otp.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/constance/constance.dart';
@@ -537,7 +538,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   child: !_isInProgress
                                                       ? GestureDetector(
                                                           onTap: () {
-                                                            _submit('');
+                                                            _submit('','');
                                                           },
                                                           child: Animator(
                                                             tween:
@@ -639,12 +640,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           onPressed: () async {
-/*
-                              setState(() {
-                                _isInProgress = true;
-                              });
-                              await Future.delayed(const Duration(milliseconds: 500));
-*/
+                            var googleToken = await signInWithGoogle();
+                            loginProviderController.text = "google";
+                            _submit("google",googleToken);
                           },
                         ),
                       ),
@@ -699,7 +697,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                   if (loginProviderController.text != '' &&
                                       loginAccessTokenController.text != '') {
-                                    _submit('facebook');
+                                    _submit('facebook','');
                                   }
                                   break;
                                 case FacebookLoginStatus.cancelledByUser:
@@ -780,7 +778,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   var myScreenFocusNode = FocusNode();
 
-  _submit(from) async {
+  _submitGoogleToken(data,token){
+    var tempJsonReq = {
+      "email": "${data["email"]}",
+      // "password": "${}",
+      // "phone": "$phone",
+      "provider": "google",
+      "access_token": "$token",
+    };
+
+
+  }
+
+  _submit(from,token) async {
     if (signUpPasswordController.text.trim() ==
         signUpConfirmPasswordController.text.trim()) {
       setState(() {
@@ -811,10 +821,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       var phone = confirmedNumber;
       var tempJsonReq;
       var provider;
-      var token;
+      var authToken;
       if (from == 'facebook' || from == 'google') {
         provider = loginProviderController.text;
-        token = loginAccessTokenController.text;
+        authToken = token;
         tempJsonReq = {
           "email": "$email",
           "password": "$password",

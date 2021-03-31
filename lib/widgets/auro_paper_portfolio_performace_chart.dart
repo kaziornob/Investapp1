@@ -1,4 +1,3 @@
-import 'package:auroim/model/tagAndChartData.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -32,6 +31,8 @@ class _AuroPaperPortfolioPerformaceChartState
 
   @override
   void initState() {
+
+
     _tooltipBehavior = TooltipBehavior(
       enable: true,
     );
@@ -43,6 +44,23 @@ class _AuroPaperPortfolioPerformaceChartState
 
   @override
   Widget build(BuildContext context) {
+    // double val = 0.0;
+    // List h = [];
+    // widget.pricesData.forEach((element) {
+    //  h.add(1 + (element.y/100));
+    // });
+    // var ff;
+    // print(h);
+    // int i=0;
+    // h.forEach((element) {
+    //   if(i==0){
+    //     ff = element;
+    //   }else{
+    //     ff = element*ff;
+    //   }
+    //   i++;
+    // });
+    // print("cummulative sum : $ff");
     return Container(
       height: 200,
       child: SfCartesianChart(

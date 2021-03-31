@@ -1,6 +1,8 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StockPitches extends StatefulWidget {
   @override
@@ -8,20 +10,10 @@ class StockPitches extends StatefulWidget {
 }
 
 class _StockPitchesState extends State<StockPitches> {
-
   List stockPitchList = [
-    {
-      "id": 1,
-      "title": "Apple"
-    },
-    {
-      "id": 2,
-      "title": "Reliance"
-    },
-    {
-      "id": 3,
-      "title": "Netflix"
-    }
+    {"id": 1, "title": "Apple"},
+    {"id": 2, "title": "Reliance"},
+    {"id": 3, "title": "Netflix"}
   ];
 
   Widget getStockPitchList(data) {
@@ -57,8 +49,7 @@ class _StockPitchesState extends State<StockPitches> {
                             fontSize: ConstanceData.SIZE_TITLE16,
                             fontFamily: "Roboto",
                             package: 'Roboto-Regular',
-                            letterSpacing: 0.2
-                        ),
+                            letterSpacing: 0.2),
                       ),
                     )
                   ],
@@ -74,60 +65,67 @@ class _StockPitchesState extends State<StockPitches> {
     } else {
       return Center(
           child: Text(
-            "No data available yet",
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-              fontFamily: "Rasa",
-            ),
-          ));
+        "No data available yet",
+        textAlign: TextAlign.center,
+        style: new TextStyle(
+          color: AllCoustomTheme.getTextThemeColor(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+          fontFamily: "Rasa",
+        ),
+      ));
     }
   }
-  
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-            padding: const EdgeInsets.only(left: 16, right: 5.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.09,
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Ankur’s Stock Pitches',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFD8AF4F),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                          ),
+          padding: const EdgeInsets.only(left: 16, right: 5.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.09,
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        Provider.of<UserDetails>(context, listen: false)
+                                        .userDetails["f_name"] !=
+                                    null &&
+                                Provider.of<UserDetails>(context, listen: false)
+                                        .userDetails !=
+                                    null
+                            ? "${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s  Stock Pitches"
+                            : 'Stock Pitches',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFFD8AF4F),
+                          fontSize: ConstanceData.SIZE_TITLE18,
+                          fontFamily: "Roboto",
+                          package: 'Roboto-Regular',
                         ),
-                      )
+                      ),
+                    )),
+                Container(
+                  margin: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 0.40),
+                  padding: EdgeInsets.only(
+                    bottom: 3, // space between underline and text
                   ),
-                  Container(
-                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.40),
-                    padding: EdgeInsets.only(
-                      bottom: 3, // space between underline and text
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              width: 1.0, // Underline width
-                            ))
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ),
                     ),
                   ),
-                ],
-              ),
-            )
+                ),
+              ],
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 5.0),
@@ -139,8 +137,7 @@ class _StockPitchesState extends State<StockPitches> {
                 child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.18,
-                    child: getStockPitchList(stockPitchList)
-                ),
+                    child: getStockPitchList(stockPitchList)),
               ),
             ],
           ),
@@ -161,8 +158,7 @@ class _StockPitchesState extends State<StockPitches> {
                     fontSize: ConstanceData.SIZE_TITLE16,
                     fontFamily: "Roboto",
                     package: 'Roboto-Regular',
-                    letterSpacing: 0.2
-                ),
+                    letterSpacing: 0.2),
               ),
             )
           ],

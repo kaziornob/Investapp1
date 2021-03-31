@@ -1,9 +1,11 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/myProfile/all_ans_list.dart';
 import 'package:auroim/widgets/myProfile/all_qus_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QusAns extends StatefulWidget {
   @override
@@ -11,36 +13,16 @@ class QusAns extends StatefulWidget {
 }
 
 class _QusAnsState extends State<QusAns> {
-
   List qusList = [
-    {
-      "id": 1,
-      "qus": "Is Apple a good buy?"
-    },
-    {
-      "id": 2,
-      "qus": "Is Mukesh key for Reliance stock?"
-    },
-    {
-      "id": 3,
-      "qus": "Netflix"
-    }
+    {"id": 1, "qus": "Is Apple a good buy?"},
+    {"id": 2, "qus": "Is Mukesh key for Reliance stock?"},
+    {"id": 3, "qus": "Netflix"}
   ];
   List ansList = [
-    {
-      "id": 1,
-      "ans": "EM contagion"
-    },
-    {
-      "id": 2,
-      "ans": "Why Buy Etherium"
-    },
-    {
-      "id": 3,
-      "ans": "Why short Netflix"
-    }
+    {"id": 1, "ans": "EM contagion"},
+    {"id": 2, "ans": "Why Buy Etherium"},
+    {"id": 3, "ans": "Why short Netflix"}
   ];
-
 
   Widget getQuestionsList(data) {
     if (data != null && data.length != 0) {
@@ -68,16 +50,15 @@ class _QusAnsState extends State<QusAns> {
                       width: 5.0,
                     ),
                     Expanded(
-                        child: Text(
-                          "${data[index]['qus']}",
-                          style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                              letterSpacing: 0.2
-                          ),
-                        ),
+                      child: Text(
+                        "${data[index]['qus']}",
+                        style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
+                            letterSpacing: 0.2),
+                      ),
                     )
                   ],
                 ),
@@ -92,14 +73,14 @@ class _QusAnsState extends State<QusAns> {
     } else {
       return Center(
           child: Text(
-            "No data available yet",
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-              fontFamily: "Rasa",
-            ),
-          ));
+        "No data available yet",
+        textAlign: TextAlign.center,
+        style: new TextStyle(
+          color: AllCoustomTheme.getTextThemeColor(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+          fontFamily: "Rasa",
+        ),
+      ));
     }
   }
 
@@ -129,16 +110,15 @@ class _QusAnsState extends State<QusAns> {
                       width: 5.0,
                     ),
                     Expanded(
-                        child: Text(
-                          "${data[index]['ans']}",
-                          style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              fontSize: ConstanceData.SIZE_TITLE16,
-                              fontFamily: "Roboto",
-                              package: 'Roboto-Regular',
-                              letterSpacing: 0.2
-                          ),
-                        ),
+                      child: Text(
+                        "${data[index]['ans']}",
+                        style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Roboto",
+                            package: 'Roboto-Regular',
+                            letterSpacing: 0.2),
+                      ),
                     )
                   ],
                 ),
@@ -153,14 +133,14 @@ class _QusAnsState extends State<QusAns> {
     } else {
       return Center(
           child: Text(
-            "No data available yet",
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-              color: AllCoustomTheme.getTextThemeColor(),
-              fontSize: ConstanceData.SIZE_TITLE18,
-              fontFamily: "Rasa",
-            ),
-          ));
+        "No data available yet",
+        textAlign: TextAlign.center,
+        style: new TextStyle(
+          color: AllCoustomTheme.getTextThemeColor(),
+          fontSize: ConstanceData.SIZE_TITLE18,
+          fontFamily: "Rasa",
+        ),
+      ));
     }
   }
 
@@ -179,7 +159,15 @@ class _QusAnsState extends State<QusAns> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Ankur’s Investment Q&A',
+                          Provider.of<UserDetails>(context, listen: false)
+                                          .userDetails["f_name"] !=
+                                      null &&
+                                  Provider.of<UserDetails>(context,
+                                              listen: false)
+                                          .userDetails !=
+                                      null
+                              ? "${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Investment Q&A"
+                              : 'Investment Q&A',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),
@@ -188,25 +176,23 @@ class _QusAnsState extends State<QusAns> {
                             package: 'Roboto-Regular',
                           ),
                         ),
-                      )
-                  ),
+                      )),
                   Container(
-                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.35),
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.35),
                     padding: EdgeInsets.only(
                       bottom: 3, // space between underline and text
                     ),
                     decoration: BoxDecoration(
                         border: Border(
                             bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              width: 1.0, // Underline width
-                            ))
-                    ),
+                      color: AllCoustomTheme.getHeadingThemeColors(),
+                      width: 1.0, // Underline width
+                    ))),
                   ),
                 ],
               ),
-            )
-        ),
+            )),
         SizedBox(
           height: 10.0,
         ),
@@ -232,8 +218,7 @@ class _QusAnsState extends State<QusAns> {
                         package: 'Roboto-Regular',
                       ),
                     ),
-                  )
-              ),
+                  )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,13 +227,12 @@ class _QusAnsState extends State<QusAns> {
                     child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.18,
-                        child: getQuestionsList(qusList)
-                    ),
+                        child: getQuestionsList(qusList)),
                   ),
                 ],
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (BuildContext context) => AllQusList(),
@@ -271,8 +255,7 @@ class _QusAnsState extends State<QusAns> {
                             fontSize: ConstanceData.SIZE_TITLE16,
                             fontFamily: "Roboto",
                             package: 'Roboto-Regular',
-                            letterSpacing: 0.2
-                        ),
+                            letterSpacing: 0.2),
                       ),
                     )
                   ],
@@ -306,8 +289,7 @@ class _QusAnsState extends State<QusAns> {
                         package: 'Roboto-Regular',
                       ),
                     ),
-                  )
-              ),
+                  )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -316,21 +298,19 @@ class _QusAnsState extends State<QusAns> {
                     child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.18,
-                        child: getAnsList(ansList)
-                    ),
+                        child: getAnsList(ansList)),
                   ),
                 ],
               ),
               InkWell(
-                onTap: ()
-                {
+                onTap: () {
                   Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (BuildContext context) => AllAnswerList(),
                     ),
                   );
                 },
-                child:  Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -346,8 +326,7 @@ class _QusAnsState extends State<QusAns> {
                             fontSize: ConstanceData.SIZE_TITLE16,
                             fontFamily: "Roboto",
                             package: 'Roboto-Regular',
-                            letterSpacing: 0.2
-                        ),
+                            letterSpacing: 0.2),
                       ),
                     )
                   ],

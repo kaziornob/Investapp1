@@ -120,7 +120,6 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     "United States-Consumer Discretionary",
     "United States-Financials",
     "Australia-Real Estate",
-
   ];
 
   List<String> sectorList = [
@@ -415,13 +414,15 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                   child: Column(
                                     children: [
                                       Container(
-                                          child: Center(
-                                        child: new Image(
+                                        child: Center(
+                                          child: new Image(
                                             width: 150.0,
                                             fit: BoxFit.fill,
                                             image: new AssetImage(
-                                                'assets/logo.png'),),
-                                      ),),
+                                                'assets/logo.png'),
+                                          ),
+                                        ),
+                                      ),
                                       Container(
                                         margin: EdgeInsets.only(
                                             left: 70.0, right: 70.0),
@@ -887,13 +888,23 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
 
     Provider.of<GoProDataProvider>(context, listen: false)
         .setThirdPagePreferences(dataToSave);
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => OnBoardingSix(
-          logo: widget.logo,
-          callingFrom: widget.callingFrom,
-        ),
-      ),
-    );
+
+    var oneOffDeposit = 100000;
+    var monthlyDeposit = 0;
+    Provider.of<GoProDataProvider>(context, listen: false)
+        .setSixthPagePreferences({
+      "One Off Deposit" : oneOffDeposit,
+      "Monthly Deposit" : monthlyDeposit,
+    });
+    Provider.of<GoProDataProvider>(context, listen: false)
+        .saveDataToSql(context);
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (BuildContext context) => OnBoardingSix(
+    //       logo: widget.logo,
+    //       callingFrom: widget.callingFrom,
+    //     ),
+    //   ),
+    // );
   }
 }

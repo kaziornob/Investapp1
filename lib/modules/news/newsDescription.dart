@@ -4,7 +4,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+// import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class NewsDescription extends StatefulWidget {
   final String title;
@@ -94,30 +94,30 @@ class _NewsDescriptionState extends State<NewsDescription> {
               SizedBox(
                 height: 10,
               ),
-              Expanded(
-                child: Animator(
-                  duration: Duration(milliseconds: 500),
-                  cycles: 1,
-                  builder: (anim) => Transform.scale(
-                    scale: anim.value,
-                    child: WebviewScaffold(
-                      url: widget.url,
-                      withZoom: true,
-                      withLocalStorage: true,
-                      appCacheEnabled: true,
-                      resizeToAvoidBottomInset: true,
-                      initialChild: Container(
-                        color: Colors.transparent,
-                        child: Center(
-                          child: CupertinoActivityIndicator(
-                            radius: 12,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: Animator(
+              //     duration: Duration(milliseconds: 500),
+              //     cycles: 1,
+              //     builder: (anim) => Transform.scale(
+              //       scale: anim.value,
+              //       child: WebviewScaffold(
+              //         url: widget.url,
+              //         withZoom: true,
+              //         withLocalStorage: true,
+              //         appCacheEnabled: true,
+              //         resizeToAvoidBottomInset: true,
+              //         initialChild: Container(
+              //           color: Colors.transparent,
+              //           child: Center(
+              //             child: CupertinoActivityIndicator(
+              //               radius: 12,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         )

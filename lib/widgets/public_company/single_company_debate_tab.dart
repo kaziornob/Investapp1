@@ -1,4 +1,8 @@
+import 'package:auroim/constance/themes.dart';
+import 'package:auroim/modules/home/add_comment_bottom_sheet_widget.dart';
+import 'package:auroim/provider_abhinav/long_short_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SinglePublicCompaniesDebateTab extends StatefulWidget {
   final data;
@@ -13,187 +17,275 @@ class SinglePublicCompaniesDebateTab extends StatefulWidget {
 class _SinglePublicCompaniesDebateTabState
     extends State<SinglePublicCompaniesDebateTab> {
   double _voteValue = 3.0;
+  bool _isinit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isinit) {
+      Provider.of<LongShortProvider>(context)
+          .getProConsForPublicCompany(widget.data["ticker"]);
+      _isinit = false;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(
-      builder: (context, setVotingBarState) {
-        return Column(
-          children: [
-            Container(
-              // decoration: BoxDecoration(border: Border.all()),
-              width: MediaQuery.of(context).size.width - 15,
-              height: 40,
-              child: Center(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        "Auro Sentiment Score",
-                        style: TextStyle(
-                          fontFamily: "Rosarivo",
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+    return
+        // StatefulBuilder(
+        // builder: (context, setVotingBarState) {
+        //   return
+
+        Column(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width - 50,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 2,
+                color: Color(0xFFfec20f),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 5.0, left: 8.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: 100,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xFFfec20f),
-                        ),
-                      ),
-                    ),
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: Center(
-                      child: Text(
-                        'Voting bar',
-                        style: new TextStyle(
-                          fontFamily: "Poppins",
-                          color: Colors.black,
-                          fontSize: 18.0,
-                          letterSpacing: 0.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  margin: EdgeInsets.all(7.0),
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xff5A56B9),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                  ),
-                  child: SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: Colors.green,
-                      inactiveTrackColor: Colors.red[100],
-                      trackShape: RoundedRectSliderTrackShape(),
-                      trackHeight: 4.0,
-                      thumbShape:
-                          RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                      thumbColor: Colors.green,
-                      overlayColor: Colors.red.withAlpha(32),
-                      overlayShape:
-                          RoundSliderOverlayShape(overlayRadius: 28.0),
-                      tickMarkShape: RoundSliderTickMarkShape(),
-                      activeTickMarkColor: Colors.green,
-                      inactiveTickMarkColor: Colors.red[100],
-                      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                      valueIndicatorColor: Colors.green,
-                      valueIndicatorTextStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    child: Slider(
-                      value: _voteValue,
-                      min: 0,
-                      max: 100,
-                      divisions: 10,
-                      label: '$_voteValue',
-                      onChanged: (value) {
-                        setVotingBarState(() {
-                          _voteValue = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    button("Vote Long", Colors.green,120.0, () {}),
-                    button("Vote Short", Colors.red,120.0 ,() {}),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            articleSection(),
-            Row(
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 5.0, left: 10.0),
-                  child: Container(
-                    width: 200,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Color(0xFFfec20f),
-                        ),
-                      ),
-                    ),
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      'Auro News Score',
-                      style: new TextStyle(
-                        fontFamily: "Rosarivo",
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        letterSpacing: 0.2,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "Long(Buy), Short(Sell) Debate",
+                    style: TextStyle(
+                      fontFamily: "Rosarivo",
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                button("Long News", Colors.green,150.0, () {}),
-                button("Short News", Colors.red, 150.0,() {}),
-              ],
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 15.0, left: 8.0),
+          child: Row(
+            children: [
+              Container(
+                width: 300,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Color(0xFFfec20f),
+                    ),
+                  ),
+                ),
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Auro Sentiment Score - Voting Bar',
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black,
+                    fontSize: 18.0,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.05,
+              margin: EdgeInsets.all(7.0),
+              decoration: new BoxDecoration(
+                border: Border.all(
+                  color: Color(0xff5A56B9),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(2.0),
+                ),
+              ),
+              child: SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  activeTrackColor: Colors.green,
+                  inactiveTrackColor: Colors.red[100],
+                  trackShape: RoundedRectSliderTrackShape(),
+                  trackHeight: 4.0,
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                  thumbColor: Colors.green,
+                  overlayColor: Colors.red.withAlpha(32),
+                  overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+                  tickMarkShape: RoundSliderTickMarkShape(),
+                  activeTickMarkColor: Colors.green,
+                  inactiveTickMarkColor: Colors.red[100],
+                  valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                  valueIndicatorColor: Colors.green,
+                  valueIndicatorTextStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                child: Slider(
+                  value: _voteValue,
+                  min: 0,
+                  max: 100,
+                  divisions: 10,
+                  label: '$_voteValue',
+                  onChanged: (value) {
+                    // setVotingBarState(() {
+                    //   _voteValue = value;
+                    // });
+                  },
+                ),
+              ),
             ),
-            SizedBox(height: 10,),
-            articleSection(),
-            SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                button("Long Trending", Colors.green,150.0 ,() {}),
-                button("Short Trending", Colors.red, 150.0,() {}),
+                button("Vote Long", Colors.green, 120.0, true),
+                button("Vote Short", Colors.red, 120.0, false),
               ],
             ),
           ],
-        );
-      },
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Consumer<LongShortProvider>(builder: (context, longShortProvider, _) {
+          if (longShortProvider.proConsForPublicCompany != null) {
+            return longShortSection(longShortProvider.proConsForPublicCompany);
+          } else {
+            return SizedBox();
+          }
+        }),
+
+        // articleSection(""),
+        // Consumer<LongShortProvider>(
+        //   builder: (context, longShortProvider, _) {
+        //     if (longShortProvider.proConsForPublicCompany != null) {
+        //       return articleSection(longShortProvider.proConsForPublicCompany);
+        //     } else {
+        //       return SizedBox();
+        //     }
+        //   },
+        // ),
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 5.0, left: 10.0),
+              child: Container(
+                width: 200,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Color(0xFFfec20f),
+                    ),
+                  ),
+                ),
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Auro News Score',
+                  style: new TextStyle(
+                    fontFamily: "Rosarivo",
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    letterSpacing: 0.2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            button("Long News", Colors.green, 150.0, () {}),
+            button("Short News", Colors.red, 150.0, () {}),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        articleSection(""),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            button("Long Trending", Colors.green, 150.0, () {}),
+            button("Short Trending", Colors.red, 150.0, () {}),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                width: (MediaQuery.of(context).size.width/2)-10,
+                height: 80,
+              ),
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
+                ),
+                width: (MediaQuery.of(context).size.width/2)-10,
+                height: 80,
+              )
+            ],
+          ),
+        )
+      ],
     );
+
+    //   },
+    // );
   }
 
-  button(text, color,width, callback) {
+  button(text, color, width, isLong) {
     return Container(
-      width:width,
+      width: width,
       height: 40,
       child: RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+            builder: (builder) {
+              return AddCommentBottomSheetWidget(
+                heading: isLong
+                    ? "If you are Positive on this stock’s return potential tell us why?"
+                    : "If you are Negative on this stock’s return potential tell us why?",
+              );
+            },
+          );
+        },
         child: Text(
           text,
           style: TextStyle(
@@ -210,7 +302,123 @@ class _SinglePublicCompaniesDebateTabState
     );
   }
 
-  articleSection() {
+  longShortSection(data) {
+    return Container(
+      height: 150,
+      width: MediaQuery.of(context).size.width - 15,
+      decoration: new BoxDecoration(
+        border: Border.all(
+          color: Color(0xff5A56B9),
+          width: 1,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(2.0),
+        ),
+      ),
+      child: Column(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: Text(
+                  "Pros",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Roboto",
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff1D6177),
+                  ),
+                ),
+              ),
+              prosConsList(data["pro_one"]),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: Text(
+                  "Cons",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Roboto",
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff1D6177),
+                  ),
+                ),
+              ),
+              prosConsList(data["con_one"]),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  prosConsList(text1) {
+    return Column(
+      children: [
+        bulletPoints("$text1"),
+      ],
+    );
+  }
+
+  bulletPoints(text) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            // decoration: BoxDecoration(border: Border.all()),
+            padding: EdgeInsets.only(top: 6),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Color(0xff5A56B9),
+                  radius: 3.0,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 6),
+            // decoration: BoxDecoration(
+            //   border: Border.all(),
+            // ),
+            width: MediaQuery.of(context).size.width - 60,
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: text.length > 60
+                        ? "${text.toString().substring(0, 60)}"
+                        : "$text",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  TextSpan(
+                    text: " ...see more",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  articleSection(proconsData) {
     return Column(
       children: [
         Container(

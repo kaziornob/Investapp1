@@ -27,7 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion 29
-
+//    flavorDimensions "default"
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -38,14 +38,32 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.advtest"
+        applicationId "com.auro.investapp"
         minSdkVersion 17
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
-     
     }
+
+//    productFlavors {
+//        firebase {
+//            applicationId "com.auro.investapp"
+//            versionCode 1
+//            versionName "1.0"
+//        }
+
+//        aws {
+//
+//            applicationId "com.advtest"
+//            minSdkVersion 17
+//            targetSdkVersion 29
+//            versionCode flutterVersionCode.toInteger()
+//            versionName flutterVersionName
+//            multiDexEnabled true
+//        }
+
+//    }
 
     buildTypes {
         release {
@@ -61,11 +79,19 @@ flutter {
 }
 
 dependencies {
-     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation 'com.google.firebase:firebase-core:17.5.0'
     // testImplementation 'junit:junit:4.12'
     // androidTestImplementation 'androidx.test:runner:1.1.1'
     // androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-     implementation 'com.android.support:multidex:1.0.3'
-     implementation 'com.facebook.android:facebook-login:[8.1)'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.facebook.android:facebook-login:[8.1)'
 }
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 

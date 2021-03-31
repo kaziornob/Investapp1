@@ -24,7 +24,8 @@ class _SinglePublicCompanyVideosState extends State<SinglePublicCompanyVideos> {
     print("single videos init");
     print(jsonDecode(widget.allVideosLinkString.replaceAll("\'", "\""))
         .runtimeType);
-    videoLink = jsonDecode(widget.allVideosLinkString.replaceAll("\'", "\""));
+    print(widget.allVideosLinkString);
+    videoLink = widget.allVideosLinkString == "0" ? [] : jsonDecode(widget.allVideosLinkString.replaceAll("\'", "\""));
     // print(videoLink[0]);
 
     for (int i = 0; i < videoLink.length; i++) {

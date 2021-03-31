@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
+import 'package:auroim/provider_abhinav/follow_provider.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/article_static.dart';
 import 'package:auroim/widgets/crypto_coin_line_chart.dart';
 import 'package:auroim/widgets/crypto_marketplace/all_crypto_metrics_data.dart';
@@ -14,6 +17,7 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
+import '../../main.dart';
 import '../crypto_coin_chart.dart';
 import '../crypto_coin_price_data.dart';
 import '../private_deals_marketplace/appbar_widget.dart';
@@ -266,7 +270,6 @@ class _SingleCryptoCurrencyDetailsByIdState
                                           fontWeight: FontWeight.normal,
                                           fontFamily: 'Roboto',
                                         ),
-
                                       ),
                                     ),
                                     Positioned(
@@ -540,22 +543,36 @@ class _SingleCryptoCurrencyDetailsByIdState
         height: 150,
         child: Row(
           children: [
-            Container(
-              height: 200,
-              width: MediaQuery.of(context).size.width / 2.3,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color(0xff5A56B9),
-                ),
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Text(
-                  "FOLLOW",
-                  style: TextStyle(fontSize: 30, fontFamily: "Roboto"),
-                ),
-              ),
+            Consumer<FollowProvider>(
+              builder: (context, followProvider, _) {
+                var isFollowing = false;
+                if (followProvider
+                        .mapOfFollowingCrypto[widget.coinId] !=
+                    null) {
+                  isFollowing = followProvider
+                      .mapOfFollowingCrypto[widget.coinId];
+                }
+                return GestureDetector(
+                  onTap: onPressedFollowCrypto,
+                  child: Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width / 2.3,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Color(0xff5A56B9),
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Text(
+                        isFollowing ? "UNFOLLOW" : "FOLLOW",
+                        style: TextStyle(fontSize: 30, fontFamily: "Roboto"),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -751,6 +768,43 @@ class _SingleCryptoCurrencyDetailsByIdState
         ),
       ),
     );
+  }
+
+  onPressedFollowCrypto() async {
+    print("follow button pressed");
+    var userEmail;
+    if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+        null) {
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    } else {
+      await getUserDetails();
+      Provider.of<UserDetails>(context, listen: false)
+          .setUserDetails(userAllDetail);
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    }
+
+    Provider.of<FollowProvider>(context, listen: false).setFollowing(
+      userEmail,
+      "crypto",
+      widget.coinId,
+    );
+  }
+
+  getUserDetails() async {
+    print("getting user Details");
+    ApiProvider request = new ApiProvider();
+    // print("call set screen");
+    var response = await request.getRequest('users/get_details');
+    print("user detail response: $response");
+    if (response != null && response != false) {
+      userAllDetail = response['data'];
+
+      print(userAllDetail.toString());
+    } else {
+      print("Not got user data");
+    }
   }
 
   oneValueString(text, color) {

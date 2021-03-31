@@ -7,6 +7,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSevenMarginApproved.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:auroim/widgets/future_return_chart.dart';
+import 'package:auroim/widgets/public_company/auro_paper_portfolio_performance.dart';
 import 'package:auroim/widgets/user_portfolio_performance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -471,44 +472,49 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        // decoration: BoxDecoration(border: Border.all()),
-                                        height: 35,
-                                        child: Container(
-                                          height: 35,
-                                          width: 120,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
-                                            border: new Border.all(
-                                                color: Color(0xFFD8AF4F),
-                                                width: 1.5),
-                                            color: Color(0xFFD8AF4F),
-                                          ),
-                                          child: MaterialButton(
-                                            splashColor: Colors.grey,
-                                            child: Text(
-                                              _oneOffDepositController
-                                                          .text.length ==
-                                                      0
-                                                  ? "SKIP"
-                                                  : "NEXT",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE16,
-                                              ),
-                                            ),
-                                            onPressed: () async {
-                                              submit();
-                                            },
-                                          ),
-                                        ),
-                                      ),
+                                      // Container(
+                                      //   // decoration: BoxDecoration(border: Border.all()),
+                                      //   height: 35,
+                                      //   child: Container(
+                                      //     height: 35,
+                                      //     width: 120,
+                                      //     decoration: BoxDecoration(
+                                      //       borderRadius: BorderRadius.all(
+                                      //         Radius.circular(20),
+                                      //       ),
+                                      //       border: new Border.all(
+                                      //           color: Color(0xFFD8AF4F),
+                                      //           width: 1.5),
+                                      //       color: Color(0xFFD8AF4F),
+                                      //     ),
+                                      //     child: MaterialButton(
+                                      //       splashColor: Colors.grey,
+                                      //       child: Text(
+                                      //         _oneOffDepositController
+                                      //                     .text.length ==
+                                      //                 0
+                                      //             ? "SKIP"
+                                      //             : "NEXT",
+                                      //         style: TextStyle(
+                                      //           color: Colors.white,
+                                      //           fontSize:
+                                      //               ConstanceData.SIZE_TITLE16,
+                                      //         ),
+                                      //       ),
+                                      //       onPressed: () async {
+                                      //         submit();
+                                      //       },
+                                      //     ),
+                                      //   ),
+                                      // ),
+
                                     ],
                                   ),
                                 ),
+                              ),
+                              AuroPaperPortfolioPerformace(
+                                portfolioReturnDollar: "0.00",
+                                percAnnualReturn: "0.00",
                               ),
                             ],
                           ),
@@ -670,25 +676,25 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
     return listOfChartData;
   }
 
-  Future submit() async {
-    var dataToSave = {};
-
-    dataToSave["One Off Deposit"] =
-        double.parse(_oneOffDepositController.text.trim());
-    dataToSave["Monthly Deposit"] =
-        double.parse(_monthlyDepositController.text.trim());
-    Provider.of<GoProDataProvider>(context, listen: false)
-        .setSixthPagePreferences(dataToSave);
-    Provider.of<GoProDataProvider>(context, listen: false)
-        .saveDataToSql(context);
-
-    // Navigator.of(context).push(
-    //   new MaterialPageRoute(
-    //     builder: (BuildContext context) => new OnBoardingSevenMarginApproved(
-    //       logo: widget.logo,
-    //       callingFrom: widget.callingFrom,
-    //     ),
-    //   ),
-    // );
-  }
+  // Future submit() async {
+  //   var dataToSave = {};
+  //
+  //   dataToSave["One Off Deposit"] =
+  //       double.parse(_oneOffDepositController.text.trim());
+  //   dataToSave["Monthly Deposit"] =
+  //       double.parse(_monthlyDepositController.text.trim());
+  //   Provider.of<GoProDataProvider>(context, listen: false)
+  //       .setSixthPagePreferences(dataToSave);
+  //   Provider.of<GoProDataProvider>(context, listen: false)
+  //       .saveDataToSql(context);
+  //
+  //   // Navigator.of(context).push(
+  //   //   new MaterialPageRoute(
+  //   //     builder: (BuildContext context) => new OnBoardingSevenMarginApproved(
+  //   //       logo: widget.logo,
+  //   //       callingFrom: widget.callingFrom,
+  //   //     ),
+  //   //   ),
+  //   // );
+  // }
 }

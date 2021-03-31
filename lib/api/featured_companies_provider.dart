@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:auroim/constance/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:toast/toast.dart';
+// import 'package:toast/toast.dart';
 
 class FeaturedCompaniesProvider {
   Future companyDetails(path, body) async {

@@ -238,9 +238,7 @@ class _PrivateDealsMarketplaceMainPageState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),
                 SizedBox(height: 5),
-                isGoldBlack
-                    ? SampleFeaturedCompaniesListItem()
-                    : FeaturedCompaniesList(),
+                FeaturedCompaniesList(),
                 // PrivateDealsGraphs(),
                 AllCompanies(),
                 // CryptoMarketplace(),

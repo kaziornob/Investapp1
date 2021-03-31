@@ -5,6 +5,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
+import 'package:auroim/modules/home/add_comment_bottom_sheet_widget.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,6 @@ class _MainPlusTabState extends State<MainPlusTab> {
     // displayModalBottomSheet(context);
     super.initState();
     loadUserDetails();
-
   }
 
   loadUserDetails() async {
@@ -65,7 +65,7 @@ class _MainPlusTabState extends State<MainPlusTab> {
       },
       validator: (val) {
         return ((val != null && val != '') ||
-            (selectedUser != null && selectedUser != ''))
+                (selectedUser != null && selectedUser != ''))
             ? null
             : 'choose One';
       },
@@ -145,258 +145,114 @@ class _MainPlusTabState extends State<MainPlusTab> {
                     padding: const EdgeInsets.only(right: 16, left: 16),
                     child: !_isInProgress
                         ? Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                //   _homeScaffoldKey.currentState.openDrawer();
-                              },
-                              child: Animator(
-                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                duration: Duration(milliseconds: 500),
-                                cycles: 0,
-                                builder: (anim) => FractionalTranslation(
-                                  translation: anim.value,
-                                  child: Icon(
-                                    Icons.sort,
-                                    color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Animator(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.decelerate,
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: Text(
-                                    'Start Post',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: ConstanceData.SIZE_TITLE20,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  InkWell(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    onTap: () {
+                                      //   _homeScaffoldKey.currentState.openDrawer();
+                                    },
+                                    child: Animator(
+                                      tween: Tween<Offset>(
+                                          begin: Offset(0, 0),
+                                          end: Offset(0.2, 0)),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 0,
+                                      builder: (anim) => FractionalTranslation(
+                                        translation: anim.value,
+                                        child: Icon(
+                                          Icons.sort,
+                                          color: AllCoustomTheme
+                                              .getsecoundTextThemeColor(),
+                                        ),
+                                      ),
                                     ),
                                   ),
+                                  Expanded(
+                                    child: Animator(
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.decelerate,
+                                      cycles: 1,
+                                      builder: (anim) => Transform.scale(
+                                        scale: anim.value,
+                                        child: Text(
+                                          'Start Post',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 14,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                  ),
+                                  Expanded(
+                                    child: getUserField(),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                child: TextField(
+                                  maxLines: 50,
+                                  decoration: InputDecoration(
+                                    hintText: 'What do you want to talk about?',
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: ConstanceData.SIZE_TITLE14),
+                                    labelStyle: AllCoustomTheme
+                                        .getTextFormFieldLabelStyleTheme(),
+                                    focusColor:
+                                        AllCoustomTheme.getTextThemeColor(),
+                                    fillColor:
+                                        AllCoustomTheme.getTextThemeColor(),
+                                  ),
+                                  cursorColor:
+                                      AllCoustomTheme.getTextThemeColor(),
+                                  style: AllCoustomTheme
+                                      .getTextFormFieldBaseStyleTheme(),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CircleAvatar(
-                              radius: 14,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                            ),
-                            Expanded(
-                              child: getUserField(),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          child: TextField(
-                            maxLines: 50,
-                            decoration: InputDecoration(
-                              hintText: 'What do you want to talk about?',
-                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-                              focusColor: AllCoustomTheme.getTextThemeColor(),
-                              fillColor: AllCoustomTheme.getTextThemeColor(),
-                            ),
-                            cursorColor: AllCoustomTheme.getTextThemeColor(),
-                            style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                          ),
-                        ),
-                      ],
-                    )
+                            ],
+                          )
                         : SizedBox(),
                   ),
                 ),
               ),
-            )
-        )
+            ))
       ],
     );
   }
 
-
   displayModalBottomSheet(context) {
     showModalBottomSheet(
-        context: context,
-        backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-        builder: (builder) {
-          return Container(
-            child: new Wrap(
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 40.0,
-                    ),
-                    CircleAvatar(
-                      backgroundColor:
-                      AllCoustomTheme.getsecoundTextThemeColor(),
-                      radius: 20,
-                      child: Icon(
-                        Icons.camera_alt_rounded,
-                        color: AllCoustomTheme.boxColor(),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40.0,
-                    ),
-                    CircleAvatar(
-                      backgroundColor:
-                      AllCoustomTheme.getsecoundTextThemeColor(),
-                      radius: 20,
-                      child: Icon(
-                        Icons.video_call,
-                        color: AllCoustomTheme.boxColor(),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40.0,
-                    ),
-                    CircleAvatar(
-                      backgroundColor:
-                      AllCoustomTheme.getsecoundTextThemeColor(),
-                      radius: 20,
-                      child: Icon(
-                        Icons.image,
-                        color: AllCoustomTheme.boxColor(),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40.0,
-                    ),
-                  ],
-                ),
-                Divider(
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                ),
-                InkWell(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: Center(
-                      child: Text(
-                        'Upload stock pitch',
-                        style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (BuildContext context) => StockPitch(),
-                      ),
-                    );
-                  },
-                ),
-                Divider(
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                ),
-                InkWell(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: Center(
-                      child: Text(
-                        'Upload portfolio pitch',
-                        style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColors(),
-                          fontSize: ConstanceData.SIZE_TITLE18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (BuildContext context) => PortfolioPitch(),
-                      ),
-                    );
-                  },
-                ),
-                Divider(
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Center(
-                    child: Text(
-                      'Ask a question',
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: ConstanceData.SIZE_TITLE18,
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Center(
-                    child: Text(
-                      'Add a document',
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: ConstanceData.SIZE_TITLE18,
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(
-                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                ),
-                InkWell(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          builder: (BuildContext context) => CreatePoll(),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
-                      child: Center(
-                        child: Text(
-                          'Create a poll',
-                          style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColors(),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                          ),
-                        ),
-                      ),
-                    ))
-              ],
-            ),
-          );
-        });
+      context: context,
+      backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+      builder: (builder) {
+        return AddCommentBottomSheetWidget();
+      },
+    );
   }
 }

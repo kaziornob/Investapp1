@@ -20,6 +20,13 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
   SuperTooltip tooltip;
 
   @override
+  void initState() {
+    print("in sonhhhh");
+    print("company data : ${widget.companyDetails.toString()}");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
@@ -121,7 +128,7 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                       ),
                                     ),
                                     Text(
-                                      widget.companyDetails["total_funding"],
+                                      widget.companyDetails["total_funding"] ?? "",
                                       style: TextStyle(
                                           color: AllCoustomTheme
                                               .getNewSecondTextThemeColor(),
@@ -190,7 +197,7 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                     //     BoxDecoration(border: Border.all()),
                                     child: SingleChildScrollView(
                                       child: Text(
-                                        widget.companyDetails["location"],
+                                        widget.companyDetails["location"] ?? "",
                                         style: TextStyle(
                                             color: AllCoustomTheme
                                                 .getNewSecondTextThemeColor(),
@@ -258,7 +265,7 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                 onTap: () => launch(
                                     "https://${widget.companyDetails["web_link"]}"),
                                 child: Text(
-                                  widget.companyDetails["web_link"],
+                                  widget.companyDetails["web_link"] ?? "",
                                   style: TextStyle(
                                     fontFamily: 'Roboto',
                                     color: Color(0xff5A56B9),
@@ -305,7 +312,7 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                       letterSpacing: 0.1),
                                 ),
                                 Text(
-                                  widget.companyDetails["deal_type"],
+                                  widget.companyDetails["deal_type"] ?? "",
                                   style: TextStyle(
                                       color: Color(0xff7499C6),
                                       fontFamily: "Roboto",
@@ -330,7 +337,7 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                   children: [
                                     Container(
                                       child: Text(
-                                        widget.companyDetails["valuation"],
+                                        widget.companyDetails["valuation"] ?? 0.0,
                                         style: TextStyle(
                                             color: Color(0xff7499C6),
                                             fontFamily: "Roboto",
@@ -483,28 +490,34 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
     print(date.toString());
     int now = DateTime.now().year;
     int companyYears;
-    if (date.length == 4) {
-      companyYears = now - int.parse(date);
-    } else {
-      companyYears = now - DateFormat("dd-MM-yyyy").parse(date).year;
+    if(date != null){
+      if (date.length == 4) {
+        companyYears = now - int.parse(date);
+      } else {
+        companyYears = now - DateFormat("dd-MM-yyyy").parse(date).year;
+      }
+      return companyYears;
+    }else{
+      return 0;
     }
-    return companyYears;
   }
 
   List<Widget> lisOfFounders() {
     List<Widget> all = [];
-    widget.companyDetails["founders"].split(", ").forEach(
-          (e) => all.add(Text(
-            e,
-            style: TextStyle(
-                color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                fontFamily: "Roboto",
-                fontSize: 14.5,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.normal,
-                letterSpacing: 0.1),
-          )),
-        );
+    if(widget.companyDetails["founders"] != null){
+      widget.companyDetails["founders"].split(", ").forEach(
+            (e) => all.add(Text(
+          e,
+          style: TextStyle(
+              color: AllCoustomTheme.getNewSecondTextThemeColor(),
+              fontFamily: "Roboto",
+              fontSize: 14.5,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.normal,
+              letterSpacing: 0.1),
+        )),
+      );
+    }
 
     return all;
   }

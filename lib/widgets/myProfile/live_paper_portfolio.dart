@@ -1,6 +1,8 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LivePaperPortfolio extends StatefulWidget {
   @override
@@ -23,7 +25,15 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Ankur’s Portfolio Track Record',
+                          Provider.of<UserDetails>(context, listen: false)
+                                          .userDetails["f_name"] !=
+                                      null &&
+                                  Provider.of<UserDetails>(context,
+                                              listen: false)
+                                          .userDetails !=
+                                      null
+                              ? "${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Portfolio Track Record"
+                              : 'Portfolio Track Record',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),
@@ -32,25 +42,23 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                             package: 'Roboto-Regular',
                           ),
                         ),
-                      )
-                  ),
+                      )),
                   Container(
-                    margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.22),
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.22),
                     padding: EdgeInsets.only(
                       bottom: 3, // space between underline and text
                     ),
                     decoration: BoxDecoration(
                         border: Border(
                             bottom: BorderSide(
-                              color: AllCoustomTheme.getHeadingThemeColors(),
-                              width: 1.0, // Underline width
-                            ))
-                    ),
+                      color: AllCoustomTheme.getHeadingThemeColors(),
+                      width: 1.0, // Underline width
+                    ))),
                   ),
                 ],
               ),
-            )
-        ),
+            )),
         SizedBox(
           height: 10.0,
         ),
@@ -80,123 +88,125 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                             package: 'Roboto-Regular',
                           ),
                         ),
-                      )
-                  ),
+                      )),
                   SizedBox(
                     height: 10.0,
                   ),
                   Padding(
                       padding: EdgeInsets.only(top: 5.0),
                       child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Icon(
-                                    Icons.circle,
-                                    color: AllCoustomTheme
-                                        .getsecoundTextThemeColor(),
-                                    size: 8,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Return: 25%',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                      fontFamily: "Roboto",
-                                      package: 'Roboto-Regular',
+                          alignment: Alignment.topLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      color: AllCoustomTheme
+                                          .getsecoundTextThemeColor(),
+                                      size: 8,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Icon(
-                                    Icons.circle,
-                                    color: AllCoustomTheme
-                                        .getsecoundTextThemeColor(),
-                                    size: 8,
+                                  SizedBox(
+                                    width: 5.0,
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Risk/Volatility: 10%',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                      fontFamily: "Roboto",
-                                      package: 'Roboto-Regular',
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Return: 25%',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Roboto",
+                                        package: 'Roboto-Regular',
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Icon(
-                                    Icons.circle,
-                                    color: AllCoustomTheme
-                                        .getsecoundTextThemeColor(),
-                                    size: 8,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Sharpe ratio: 2.1',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                      fontFamily: "Roboto",
-                                      package: 'Roboto-Regular',
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      color: AllCoustomTheme
+                                          .getsecoundTextThemeColor(),
+                                      size: 8,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-
-                          ],
-                        )
-                      )
-                  ),
+                                  SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Risk/Volatility: 10%',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Roboto",
+                                        package: 'Roboto-Regular',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      color: AllCoustomTheme
+                                          .getsecoundTextThemeColor(),
+                                      size: 8,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Sharpe ratio: 2.1',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontFamily: "Roboto",
+                                        package: 'Roboto-Regular',
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ))),
                 ],
               ),
               // paper section
@@ -219,8 +229,7 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                             package: 'Roboto-Regular',
                           ),
                         ),
-                      )
-                  ),
+                      )),
                   SizedBox(
                     height: 10.0,
                   ),
@@ -234,7 +243,8 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(top: 5.0),
@@ -254,7 +264,8 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                                       'Return: 25%',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Roboto",
                                         package: 'Roboto-Regular',
@@ -268,7 +279,8 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(top: 5.0),
@@ -288,7 +300,8 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                                       'Risk/Volatility: 10%',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Roboto",
                                         package: 'Roboto-Regular',
@@ -302,7 +315,8 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(top: 5.0),
@@ -322,7 +336,8 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                                       'Sharpe ratio: 2.1',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Roboto",
                                         package: 'Roboto-Regular',
@@ -331,17 +346,12 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                                   )
                                 ],
                               ),
-
                             ],
-                          )
-                      )
-                  ),
+                          ))),
                 ],
               )
-
             ],
           ),
-
         )
       ],
     );

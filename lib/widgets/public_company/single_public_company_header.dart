@@ -9,6 +9,7 @@ class SinglePublicCompanyHeader extends StatelessWidget {
   final equityBeta;
   final marketCapLocal;
   final fixRate;
+  final ticker;
 
   SinglePublicCompanyHeader({
     this.marketCapital,
@@ -17,7 +18,7 @@ class SinglePublicCompanyHeader extends StatelessWidget {
     this.netDebt,
     this.roe3yr,
     this.marketCapLocal,
-    this.fixRate,
+    this.fixRate, this.ticker,
   });
 
   @override
@@ -98,6 +99,7 @@ class SinglePublicCompanyHeader extends StatelessWidget {
 
           KeySocialInvestIndicators(
             fixRate: fixRate,
+            companyTicker: ticker,
           ),
           listItem1(context),
           // Padding(
@@ -203,7 +205,8 @@ class SinglePublicCompanyHeader extends StatelessWidget {
         currency == "USD"
             ? SizedBox()
             : singleRow(context, "Market Cap($currency)", Colors.indigo[100],
-                "${double.parse(marketCapLocal.toString().replaceAll(",", "")).toStringAsFixed(3)}" + "M"),
+            "${double.parse(marketCapLocal.toString().replaceAll(",", ""))
+                .toStringAsFixed(3)}" + "M"),
         singleRowWithToolTip(
             context,
             "Enterprise Value(USD)",
@@ -235,7 +238,10 @@ class SinglePublicCompanyHeader extends StatelessWidget {
           color: color,
         ),
         height: 25,
-        width: MediaQuery.of(context).size.width - 20,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width - 20,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -243,20 +249,20 @@ class SinglePublicCompanyHeader extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: Center(
                   child: Row(
-                children: [
-                  Text(text),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  Tooltip(
-                    message: "$text",
-                    child: Icon(
-                      Icons.help,
-                      size: 15,
-                    ),
-                  ),
-                ],
-              )),
+                    children: [
+                      Text(text),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Tooltip(
+                        message: "$text",
+                        child: Icon(
+                          Icons.help,
+                          size: 15,
+                        ),
+                      ),
+                    ],
+                  )),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
@@ -276,7 +282,10 @@ class SinglePublicCompanyHeader extends StatelessWidget {
           color: color,
         ),
         height: 25,
-        width: MediaQuery.of(context).size.width - 20,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width - 20,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

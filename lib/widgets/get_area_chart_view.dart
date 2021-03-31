@@ -1,10 +1,13 @@
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/provider_abhinav/follow_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import '../main.dart';
 import 'crypto_coin_price_data.dart';
 
 class GetAreaChartView extends StatefulWidget {
@@ -47,7 +51,59 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
     );
     _tooltipBehavior = TooltipBehavior(enable: true);
     _zoomPanBehavior = ZoomPanBehavior(enablePinching: true);
+    getFollowing();
     super.initState();
+  }
+
+  getFollowing() async {
+    print("getting single follow");
+    var userEmail;
+    if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+        null) {
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    } else {
+      await getUserDetails();
+      Provider.of<UserDetails>(context, listen: false)
+          .setUserDetails(userAllDetail);
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    }
+    await Provider.of<FollowProvider>(context, listen: false)
+        .getFollowingForSingleItem(
+            userEmail, "listed", widget.companyData["ticker"]);
+  }
+
+  companyPriceData(diff, pricesData) {
+    if (pricesData == null) {
+      if (diff) {
+        return "0.00";
+      } else {
+        return "0.00(+0.00)";
+      }
+    } else {
+      double lastItem = pricesData.length == 0
+          ? 0.0
+          : pricesData[pricesData.length - 1]["price"];
+      double secondLastItem = pricesData.length <= 1
+          ? 0.0
+          : pricesData[pricesData.length - 2]["price"];
+      print(secondLastItem);
+      var companyPrice = lastItem;
+      var companyPriceDifference =
+          secondLastItem != 0 ? (lastItem - secondLastItem) : 0.0;
+      print(companyPriceDifference);
+      print(companyPrice);
+      var companyPercentageDifference = companyPriceDifference == 0.0
+          ? 0.0
+          : companyPrice / companyPriceDifference;
+
+      if (diff) {
+        return '\$' + " ${companyPrice.toStringAsFixed(3)}";
+      } else {
+        return "${companyPriceDifference.toStringAsFixed(3)} (${(companyPercentageDifference / 100).toStringAsFixed(3)}%)";
+      }
+    }
   }
 
   @override
@@ -103,24 +159,35 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                       fontFamily: "Roboto",
                                     ),
                                   ),
-                                  Text(
-                                    "2.20 (1.61%)",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getNewSecondTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE8,
-                                      fontFamily: "Roboto",
-                                    ),
-                                  ),
-                                  Text(
-                                    '\$' + " 390.00",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getChartBoxTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE18,
-                                      fontFamily: "Roboto",
-                                    ),
-                                  ),
+                                  Consumer<PublicCompanyHistoricalPricing>(
+                                    builder: (context,
+                                        historicalPricingProvider, _) {
+                                      return Column(
+                                        children: [
+                                          Text(
+                                            "${companyPriceData(false, historicalPricingProvider.historicalPriceData[widget.companyData["ticker"]])}",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getNewSecondTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE8,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          Text(
+                                            "${companyPriceData(true, historicalPricingProvider.historicalPriceData[widget.companyData["ticker"]])}",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getChartBoxTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE18,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )
                                 ],
                               ),
                               SizedBox(
@@ -200,9 +267,10 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                         ),
                       ),
                       FutureBuilder(
-                        future: _featuredCompaniesProvider
-                            .getSinglePublicCompanyHistoricalPricing(
-                                widget.companyData["ticker"], 30),
+                        future:
+                            Provider.of<PublicCompanyHistoricalPricing>(context)
+                                .getSinglePublicCompanyData2(
+                                    widget.companyData["ticker"], 30),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             allPriceData = [];
@@ -214,6 +282,23 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                     x: date, y: element["price"].toDouble()),
                               );
                             });
+                            double lastItem = allPriceData.length == 0
+                                ? 0.0
+                                : allPriceData[allPriceData.length - 1].y;
+                            double secondLastItem = allPriceData.length <= 1
+                                ? 0.0
+                                : allPriceData[allPriceData.length - 2].y;
+                            print(secondLastItem);
+                            var companyPrice = lastItem;
+                            var companyPriceDifference = secondLastItem != 0
+                                ? (lastItem - secondLastItem)
+                                : 0.0;
+                            print(companyPriceDifference);
+                            print(companyPrice);
+                            var companyPercentageDifference =
+                                companyPriceDifference == 0.0
+                                    ? 0.0
+                                    : companyPrice / companyPriceDifference;
                             return SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.88,
                                 height:
@@ -365,44 +450,49 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                               ),
                             ),
                           ),
-                          Container(
-                            width:
-                                (MediaQuery.of(context).size.width - 100) / 2,
-                            height: 35,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                border: new Border.all(
-                                  color:
-                                      AllCoustomTheme.getChartBoxThemeColor(),
-                                  width: 1.5,
-                                ),
-                                // color: AllCoustomTheme.getChartBoxThemeColor(),
-                              ),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "FOLLOW",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme
-                                        .getChartBoxTextThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE13,
-                                    fontFamily: "Roboto",
+                          Consumer<FollowProvider>(
+                            builder: (context, followProvider, _) {
+                              var isFollowing = false;
+                              if (followProvider.mapOfFollowingListedCompanies[
+                                      widget.companyData["ticker"]] !=
+                                  null) {
+                                isFollowing = followProvider
+                                        .mapOfFollowingListedCompanies[
+                                    widget.companyData["ticker"]];
+                              }
+                              return Container(
+                                width:
+                                    (MediaQuery.of(context).size.width - 100) /
+                                        2,
+                                height: 35,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    border: new Border.all(
+                                      color: AllCoustomTheme
+                                          .getChartBoxThemeColor(),
+                                      width: 1.5,
+                                    ),
+                                    // color: AllCoustomTheme.getChartBoxThemeColor(),
+                                  ),
+                                  child: MaterialButton(
+                                    splashColor: Colors.grey,
+                                    child: Text(
+                                      isFollowing ? "UNFOLLOW" : "FOLLOW",
+                                      style: TextStyle(
+                                        color: AllCoustomTheme
+                                            .getChartBoxTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE13,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
+                                    onPressed: () =>
+                                        onPressedFollow(isFollowing),
                                   ),
                                 ),
-                                onPressed: () async {
-                                  Navigator.of(context).push(
-                                      new MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              new OnBoardingFirst(
-                                                logo: "logo.png",
-                                                callingFrom:
-                                                    "Accredited Investor",
-                                              )));
-                                },
-                              ),
-                            ),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -416,5 +506,50 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
         ),
       ),
     );
+  }
+
+  onPressedFollow(isFollowing) async {
+    print("follow button pressed");
+    var userEmail;
+    if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+        null) {
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    } else {
+      await getUserDetails();
+      Provider.of<UserDetails>(context, listen: false)
+          .setUserDetails(userAllDetail);
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    }
+
+    if (isFollowing) {
+      Provider.of<FollowProvider>(context, listen: false).unfollowSingleItem(
+        userEmail,
+        "listed",
+        widget.companyData["ticker"],
+      );
+    } else {
+      Provider.of<FollowProvider>(context, listen: false).setFollowing(
+        userEmail,
+        "listed",
+        widget.companyData["ticker"],
+      );
+    }
+  }
+
+  getUserDetails() async {
+    print("getting user Details");
+    ApiProvider request = new ApiProvider();
+    // print("call set screen");
+    var response = await request.getRequest('users/get_details');
+    print("user detail response: $response");
+    if (response != null && response != false) {
+      userAllDetail = response['data'];
+
+      print(userAllDetail.toString());
+    } else {
+      print("Not got user data");
+    }
   }
 }

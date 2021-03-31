@@ -26,7 +26,7 @@ class _SampleFeaturedCompaniesListState
       child: FutureBuilder(
         future: getData(),
         builder: (context, snapshot) {
-          // print(snapshot.data);
+          print(snapshot.data);
           if (snapshot.hasData) {
             return dd(snapshot.data);
           } else {

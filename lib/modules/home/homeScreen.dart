@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen>
   ApiProvider request = new ApiProvider();
 
   TextEditingController _appbarTextController = TextEditingController();
+  FocusNode searchFocusNode = FocusNode();
   FocusNode _focusNode = FocusNode();
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
@@ -63,17 +64,25 @@ class _HomeScreenState extends State<HomeScreen>
 
     getSharedPrefData();
     _appbarTextController.addListener(() {
+      print("listen textFiel");
       if (_appbarTextController.text.length > 0) {
+        print("hass all focus");
         setState(() {
           searching = true;
         });
-      } else {
+      }
+      else {
         setState(() {
           searching = false;
         });
+        // print("hass nooo focus");
+        // if(!FocusScope.of(context).hasFocus){
+        //
+        // }else{
+        //   print("focus node not");
+        // }
       }
     });
-
     setFirstTab();
   }
 

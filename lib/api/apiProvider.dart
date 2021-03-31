@@ -111,7 +111,7 @@ class ApiProvider {
       print("Error with response");
     });
     // print("response of run algo : ${response.body}");
-    print("get existing portfolio: ${response.statusCode}");
+    print("get existing portfolio: ${json.decode(response.body)}");
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON.

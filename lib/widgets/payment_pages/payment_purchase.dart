@@ -35,7 +35,7 @@ class _PaymentPurchaseScreenState extends State<PaymentPurchaseScreen> {
             padding: EdgeInsets.all(10.0),
             width: MediaQuery.of(context).size.width - 80,
             height: MediaQuery.of(context).size.height - 20,
-            child: Column(
+            child: ListView(
               children: [
                 Container(
                   // decoration: BoxDecoration(border: Border.all()),
@@ -52,22 +52,39 @@ class _PaymentPurchaseScreenState extends State<PaymentPurchaseScreen> {
                 ),
                 Container(
                   height: 100,
-                  width: MediaQuery.of(context).size.width-60,
+                  width: MediaQuery.of(context).size.width - 60,
                   child: Image.asset('assets/logo.png'),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width - 50,
+                  child: Text(
+                    "The 3 holdings we showed you earlier for free are the smallest 3 holdings in your Auro Portfolio. To view additional holdings, please select from below:",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xff5A56B9),),
+                    border: Border.all(
+                      color: Color(0xff5A56B9),
+                    ),
                   ),
                   height: 350,
                   width: MediaQuery.of(context).size.width - 50,
                   child: Column(
                     children: [
-                      oneRow("SEE TOP 1 HOLDING [\$9]"),
-                      oneRow("SEE TOP 3 HOLDING [\$15]"),
-                      oneRow("SEE TOP 5 HOLDING [\$25]"),
-                      oneRow("See All Holdings- Snapshot\n[\$49]"),
+                      oneRow("SEE TOP 1 HIGHEST CONVICTION \n HOLDING [US\$9]"),
+                      oneRow(
+                          "SEE TOP 3 HIGHEST CONVICTION \n HOLDING [US\$15]"),
+                      oneRow(
+                          "SEE TOP 5 HIGHEST CONVICTION \n HOLDING [US\$25]"),
+                      oneRow("See All Holdings- Snapshot\n[US\$49]"),
                       oneRow(
                           "See All Holdings- Dynamic\n[\$99 + 9.99 MONTHLY]"),
                     ],
@@ -91,13 +108,16 @@ class _PaymentPurchaseScreenState extends State<PaymentPurchaseScreen> {
             // decoration: BoxDecoration(
             //   border: Border.all(color: Color(0xff5A56B9),),
             // ),
-            width: MediaQuery.of(context).size.width - 80,
+            width: MediaQuery.of(context).size.width - 70,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   // decoration: BoxDecoration(border: Border.all()),
-                  padding: EdgeInsets.only(top: 6,left: 10,),
+                  padding: EdgeInsets.only(
+                    top: 6,
+                    left: 10,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
