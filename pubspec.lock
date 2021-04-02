@@ -261,9 +261,11 @@ packages:
   flutter_facebook_login:
     dependency: "direct main"
     description:
-      name: flutter_facebook_login
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: "79ff08a"
+      resolved-ref: "79ff08a06e9aa38f4cce82bd5294a563f0884e79"
+      url: "https://github.com/roughike/flutter_facebook_login"
+    source: git
     version: "1.2.0"
   flutter_inappwebview:
     dependency: transitive
