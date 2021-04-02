@@ -512,10 +512,10 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                                   ),
                                 ),
                               ),
-                              AuroPaperPortfolioPerformace(
-                                portfolioReturnDollar: "0.00",
-                                percAnnualReturn: "0.00",
-                              ),
+                              // AuroPaperPortfolioPerformace(
+                              //   portfolioReturnDollar: "0.00",
+                              //   percAnnualReturn: "0.00",
+                              // ),
                             ],
                           ),
                         ),

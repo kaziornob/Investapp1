@@ -387,41 +387,41 @@ class GlobalInstance {
     {
       "riskAptType": "0.07",
       "optionValue": [
-        {"checked": false, "potentialLoss": "-10%", "potentialGain": "12%"},
-        {"checked": false, "potentialLoss": "-9%", "potentialGain": "10%"},
-        {"checked": false, "potentialLoss": "-8%", "potentialGain": "8%"},
-        {"checked": false, "potentialLoss": "-7%", "potentialGain": "6%"},
-        {"checked": false, "potentialLoss": "-6%", "potentialGain": "5%"},
+        {"checked": false, "potentialLoss": "-10%", "potentialGain": "17%"},
+        {"checked": false, "potentialLoss": "-9%", "potentialGain": "15%"},
+        {"checked": false, "potentialLoss": "-8%", "potentialGain": "13%"},
+        {"checked": false, "potentialLoss": "-7%", "potentialGain": "12%"},
+        {"checked": false, "potentialLoss": "-6%", "potentialGain": "10%"},
       ]
     },
     {
       "riskAptType": "0.15",
       "optionValue": [
-        {"checked": false, "potentialLoss": "-16%", "potentialGain": "21%"},
-        {"checked": false, "potentialLoss": "-15%", "potentialGain": "17%"},
-        {"checked": false, "potentialLoss": "-14%", "potentialGain": "14%"},
-        {"checked": false, "potentialLoss": "-13%", "potentialGain": "12%"},
-        {"checked": false, "potentialLoss": "-12%", "potentialGain": "10%"},
+        {"checked": false, "potentialLoss": "-16%", "potentialGain": "27%"},
+        {"checked": false, "potentialLoss": "-15%", "potentialGain": "25%"},
+        {"checked": false, "potentialLoss": "-14%", "potentialGain": "23%"},
+        {"checked": false, "potentialLoss": "-13%", "potentialGain": "22%"},
+        {"checked": false, "potentialLoss": "-12%", "potentialGain": "20%"},
       ]
     },
     {
       "riskAptType": "0.25",
       "optionValue": [
-        {"checked": false, "potentialLoss": "-26%", "potentialGain": "31%"},
-        {"checked": false, "potentialLoss": "-25%", "potentialGain": "24%"},
-        {"checked": false, "potentialLoss": "-24%", "potentialGain": "18%"},
-        {"checked": false, "potentialLoss": "-23%", "potentialGain": "13%"},
-        {"checked": false, "potentialLoss": "-22%", "potentialGain": "10%"},
+        {"checked": false, "potentialLoss": "-26%", "potentialGain": "43%"},
+        {"checked": false, "potentialLoss": "-25%", "potentialGain": "42%"},
+        {"checked": false, "potentialLoss": "-24%", "potentialGain": "40%"},
+        {"checked": false, "potentialLoss": "-23%", "potentialGain": "38%"},
+        {"checked": false, "potentialLoss": "-22%", "potentialGain": "37%"},
       ]
     },
     {
       "riskAptType": "0.35",
       "optionValue": [
-        {"checked": false, "potentialLoss": "-37%", "potentialGain": "66%"},
-        {"checked": false, "potentialLoss": "-34%", "potentialGain": "49%"},
-        {"checked": false, "potentialLoss": "-31%", "potentialGain": "37%"},
-        {"checked": false, "potentialLoss": "-28%", "potentialGain": "28%"},
-        {"checked": false, "potentialLoss": "-25%", "potentialGain": "21"},
+        {"checked": false, "potentialLoss": "-37%", "potentialGain": "65%"},
+        {"checked": false, "potentialLoss": "-34%", "potentialGain": "60%"},
+        {"checked": false, "potentialLoss": "-31%", "potentialGain": "54%"},
+        {"checked": false, "potentialLoss": "-28%", "potentialGain": "49%"},
+        {"checked": false, "potentialLoss": "-25%", "potentialGain": "44%"},
       ]
     }
   ];

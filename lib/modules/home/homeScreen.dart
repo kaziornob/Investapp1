@@ -70,8 +70,7 @@ class _HomeScreenState extends State<HomeScreen>
         setState(() {
           searching = true;
         });
-      }
-      else {
+      } else {
         setState(() {
           searching = false;
         });
@@ -124,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen>
             icon: Icon(
               FontAwesomeIcons.bars,
               size: 28,
-              color: Colors.black,
+              color: isSelect2 ? Colors.white : Colors.black,
             ),
             onPressed: () => _homeScaffoldKey.currentState.openDrawer(),
           ),

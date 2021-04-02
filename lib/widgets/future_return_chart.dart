@@ -1,5 +1,6 @@
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class FutureReturnChart extends StatefulWidget {
@@ -82,7 +83,8 @@ class _FutureReturnChartState extends State<FutureReturnChart> {
             ),
           ),
           primaryYAxis: NumericAxis(
-            isVisible: false,
+            isVisible: true,
+            title: AxisTitle(text: "Year"),
             maximum: widget.pricesData.length == 0
                 ? null
                 : widget.pricesData[widget.pricesData.length - 1].sales,

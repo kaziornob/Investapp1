@@ -1414,20 +1414,20 @@ class _AppDrawerState extends State<AppDrawer> {
                             ),
                           ),
                         ),
-                        Container(
-                          child: SwitchListTile(
-                            value: globals.isGoldBlack,
-                            onChanged: widget.changeThemeCallback,
-                            title: Text(
-                              globals.isGoldBlack
-                                  ? "Non-Professional"
-                                  : "Professional",
-                              style: TextStyle(
-                                  color:
-                                      AllCoustomTheme.getSeeMoreThemeColor()),
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   child: SwitchListTile(
+                        //     value: globals.isGoldBlack,
+                        //     onChanged: widget.changeThemeCallback,
+                        //     title: Text(
+                        //       globals.isGoldBlack
+                        //           ? "Non-Professional"
+                        //           : "Professional",
+                        //       style: TextStyle(
+                        //           color:
+                        //               AllCoustomTheme.getSeeMoreThemeColor()),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   )

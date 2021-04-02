@@ -177,8 +177,12 @@ class _MyAppState extends State<MyApp> {
             widget.prefs.containsKey('InvestorType') &&
             widget.prefs.getString('InvestorType') != null &&
             widget.prefs.getString('InvestorType') == 'Accredited Investor'
-        ? true
-        : false;
+        ? false
+        : true;
+
+    print(widget.prefs.containsKey('InvestorType'));
+    print("In Main Main : "+widget.prefs.getString('InvestorType'));
+
 
     // if(userAllDetail["inv_status"] == "Accredited Investor"){
     //   globals.isGoldBlack  = false;

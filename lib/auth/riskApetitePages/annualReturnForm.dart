@@ -347,7 +347,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                           ),*/
 
                             Container(
-                              height: MediaQuery.of(context).size.height * 0.19,
+                              height: 180,
                               width: MediaQuery.of(context).size.width,
                               margin: EdgeInsets.only(
                                   top: 20.0,
@@ -398,6 +398,15 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                                       ),
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(
+                                        " **Please note these are 'expectations' of 'potential' gains and losses from our model. 'Actual' gains and losses can vary significantly from these levels",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -543,7 +552,7 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                               child: getOptionList(),
                             ),
                             SizedBox(
-                              height: 60,
+                              height: 20,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

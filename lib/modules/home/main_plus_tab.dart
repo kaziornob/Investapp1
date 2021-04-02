@@ -1,20 +1,10 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/bussPost/createPoll.dart';
-import 'package:auroim/modules/bussPost/portfolioPitch.dart';
-import 'package:auroim/modules/bussPost/stockPitch.dart';
 import 'package:auroim/modules/home/add_comment_bottom_sheet_widget.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
-import 'package:flutter/services.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:toast/toast.dart';
 
 class MainPlusTab extends StatefulWidget {
   @override
@@ -23,15 +13,16 @@ class MainPlusTab extends StatefulWidget {
 
 class _MainPlusTabState extends State<MainPlusTab> {
   bool _isInProgress = false;
-  List<String> userList = <String>['Pooja', 'Ritika'];
+  List<String> userList = <String>['Abhinav', 'Amar'];
 
-  String selectedUser = "Pooja";
+  String selectedUser = "Abhinav";
   List<String> tagItemList = <String>['native', 'fixed'];
 
   @override
   void initState() {
     // displayModalBottomSheet(context);
     super.initState();
+    onInitDisplayBootomSheet();
     loadUserDetails();
   }
 
@@ -254,5 +245,17 @@ class _MainPlusTabState extends State<MainPlusTab> {
         return AddCommentBottomSheetWidget();
       },
     );
+  }
+
+  onInitDisplayBootomSheet() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showModalBottomSheet(
+        context: context,
+        backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+        builder: (builder) {
+          return AddCommentBottomSheetWidget();
+        },
+      );
+    });
   }
 }

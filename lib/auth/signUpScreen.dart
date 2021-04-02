@@ -9,6 +9,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+// import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
@@ -673,6 +674,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           onPressed: () async {
+
+
 /*                              setState(() {
                                 _isInProgress = true;
                               });
@@ -688,7 +691,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   final graphResponse = await http.get(
                                       'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
                                   final profile =
-                                      json.decode(graphResponse.body);
+                                  json.decode(graphResponse.body);
 
                                   setState(() {
                                     loginProviderController.text = 'facebook';
@@ -701,10 +704,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   }
                                   break;
                                 case FacebookLoginStatus.cancelledByUser:
-                                  // TODO: Handle this case.
+                                // TODO: Handle this case.
                                   break;
                                 case FacebookLoginStatus.error:
-                                  // TODO: Handle this case.
+                                // TODO: Handle this case.
                                   break;
                               }
                             }).catchError((e) {});

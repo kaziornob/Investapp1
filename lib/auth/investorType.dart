@@ -261,7 +261,7 @@ class _InvestorTypeState extends State<InvestorType> {
                                     fontSize: ConstanceData.SIZE_TITLE18,
                                   ),
                                 ),
-                                onPressed: () {
+                                onPressed: () async{
                                   _submit("Student");
 /*                                      Navigator.of(context).push(new MaterialPageRoute(
                                           builder: (BuildContext context) =>

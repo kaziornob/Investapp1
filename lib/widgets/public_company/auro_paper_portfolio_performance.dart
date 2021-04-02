@@ -80,7 +80,7 @@ class _AuroPaperPortfolioPerformaceState
             ),
             elevation: 4,
             child: Container(
-              height: 450,
+              height: 460,
               width: MediaQuery.of(context).size.width - 30,
               child: Column(
                 children: [

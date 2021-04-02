@@ -139,12 +139,16 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                   return Container(
                                     // decoration: BoxDecoration(border: Border.all()),
                                     height: 300,
-                                    width: MediaQuery.of(context).size.width * 0.80,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.80,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.65,
                                           child: Image.asset('assets/logo.png'),
                                         ),
@@ -180,7 +184,9 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                       ],
                                     ),
                                   );
-                                } else if (index == 3 || index == 4 || index == 5) {
+                                } else if (index == 3 ||
+                                    index == 4 ||
+                                    index == 5) {
                                   var securityData;
                                   if (index == 3) {
                                     securityData = portfolioProvider
@@ -236,7 +242,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                                 Text(
                                                   homeDonutCurrentIndex == 0
                                                       ? '\$ ${portfolioProvider.portfolioData["portfolio_return_dollar"].toStringAsFixed(1)}'
-                                                      : homeDonutCurrentIndex == 1
+                                                      : homeDonutCurrentIndex ==
+                                                              1
                                                           ? "${portfolioProvider.portfolioData["portfolio_return"].toStringAsFixed(2)}%"
                                                           : '${portfolioProvider.portfolioData["portfolio_inception_return"].toStringAsFixed(2)}%',
                                                   style: TextStyle(
@@ -248,7 +255,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                                 Text(
                                                   homeDonutCurrentIndex == 0
                                                       ? 'US \$ Profit'
-                                                      : homeDonutCurrentIndex == 1
+                                                      : homeDonutCurrentIndex ==
+                                                              1
                                                           ? "Annualized \nreturn %"
                                                           : "Inception-to-date return %",
                                                   style: TextStyle(
@@ -262,7 +270,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                           ),
                                         ),
                                         verticalAlignment: ChartAlignment.near,
-                                        horizontalAlignment: ChartAlignment.near,
+                                        horizontalAlignment:
+                                            ChartAlignment.near,
                                         height: "60.0",
                                         width: "90.0",
                                         angle: 200,
@@ -278,8 +287,9 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                       itemPadding: 5.0,
                                       legendItemBuilder:
                                           (name, series, point, index) {
-                                        var changesString =
-                                            name.replaceAll("_", " ").toLowerCase();
+                                        var changesString = name
+                                            .replaceAll("_", " ")
+                                            .toLowerCase();
                                         // print("legend");
                                         DoughnutSeriesRenderer ss = series;
                                         ChartPoint<dynamic> dd = point;
@@ -316,16 +326,16 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                         radius: "110%",
                                         innerRadius: '60%',
                                         dataSource: homeChartData,
-
-                                        xValueMapper: (ChartData data, _) => data.x,
-                                        yValueMapper: (ChartData data, _) => data.y,
+                                        xValueMapper: (ChartData data, _) =>
+                                            data.x,
+                                        yValueMapper: (ChartData data, _) =>
+                                            data.y,
                                         dataLabelSettings: DataLabelSettings(
                                           isVisible: true,
                                           useSeriesColor: true,
                                           showCumulativeValues: true,
                                           showZeroValue: true,
                                         ),
-
                                       )
                                     ],
                                   );
@@ -347,7 +357,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                   _carouselController
                                       .animateToPage(homeDonutCurrentIndex);
                                 } else {
-                                  homeDonutCurrentIndex = homeDonutCurrentIndex + 1;
+                                  homeDonutCurrentIndex =
+                                      homeDonutCurrentIndex + 1;
                                   _carouselController
                                       .animateToPage(homeDonutCurrentIndex);
                                 }
@@ -368,7 +379,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                   _carouselController
                                       .animateToPage(homeDonutCurrentIndex);
                                 } else {
-                                  homeDonutCurrentIndex = homeDonutCurrentIndex - 1;
+                                  homeDonutCurrentIndex =
+                                      homeDonutCurrentIndex - 1;
                                   _carouselController
                                       .animateToPage(homeDonutCurrentIndex);
                                 }
@@ -381,7 +393,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: homeDonutArray.map((url) {
-                            int index = url-1;
+                            int index = url - 1;
                             return Container(
                               width: 10.0,
                               height: 8.0,
@@ -390,7 +402,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: homeDonutCurrentIndex == index
-                                // ? Color(0xFFFFFFFF)
+                                    // ? Color(0xFFFFFFFF)
                                     ? Color(0xFFD8AF4F)
                                     : Colors.white,
                               ),
@@ -432,118 +444,158 @@ class _MainHomeTabState extends State<MainHomeTab> {
                 SizedBox(
                   height: 10.0,
                 ),
-                SizedBox(
-                  height: 15,
-                ),
                 // go pro,live button
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: portfolioProvider.portfolioData == null
-                      ? MainAxisAlignment.spaceEvenly
-                      : portfolioProvider
-                                  .portfolioData["has_gopro_portfolio"] ==
-                              0
-                          ? MainAxisAlignment.spaceEvenly
-                          : MainAxisAlignment.center,
-                  children: <Widget>[
-                    // SizedBox(
-                    //   width: 30,
-                    // ),
-                    portfolioProvider.portfolioData == null
-                        ? SizedBox()
-                        : portfolioProvider
-                                    .portfolioData["has_gopro_portfolio"] ==
-                                0
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.32,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20)),
-                                          border: new Border.all(
-                                            color: AllCoustomTheme
-                                                .getOtherTabButtonBoxColor(),
-                                            width: 1.5,
-                                          ),
-                                          color: AllCoustomTheme
-                                              .getOtherTabButtonBoxColor()),
-                                      child: MaterialButton(
-                                        splashColor: Colors.grey,
-                                        child: Text("GO PRO",
-                                            style: AllCoustomTheme
-                                                .getOtherTabButtonSelectedTextStyleTheme()),
-                                        onPressed: () async {
-                                          Navigator.of(context).push(
-                                            new MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  new OnBoardingFirst(
-                                                logo: "logo.png",
-                                                callingFrom:
-                                                    "Accredited Investor",
-                                              ),
+                Container(
+                  // decoration: BoxDecoration(border: Border.all()),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    // portfolioProvider.portfolioData == null
+                    //     ? MainAxisAlignment.spaceEvenly
+                    //     : portfolioProvider
+                    //                 .portfolioData["has_gopro_portfolio"] ==
+                    //             0
+                    //         ? MainAxisAlignment.spaceEvenly
+                    //         : MainAxisAlignment.center,
+                    children: <Widget>[
+                      portfolioProvider.portfolioData == null
+                          ? SizedBox()
+                          : portfolioProvider
+                                      .portfolioData["has_gopro_portfolio"] ==
+                                  0
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: MediaQuery.of(context).size.height *
+                                          0.06,
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.06,
+                                        width: MediaQuery.of(context).size.width *
+                                            0.32,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            border: new Border.all(
+                                              color: AllCoustomTheme
+                                                  .getOtherTabButtonBoxColor(),
+                                              width: 1.5,
                                             ),
-                                          );
-                                        },
+                                            color: AllCoustomTheme
+                                                .getOtherTabButtonBoxColor()),
+                                        child: MaterialButton(
+                                          splashColor: Colors.grey,
+                                          child: Text("GO PRO",
+                                              style: AllCoustomTheme
+                                                  .getOtherTabButtonSelectedTextStyleTheme()),
+                                          onPressed: () async {
+                                            Navigator.of(context).push(
+                                              new MaterialPageRoute(
+                                                builder: (BuildContext context) =>
+                                                    new OnBoardingFirst(
+                                                  logo: "logo.png",
+                                                  callingFrom:
+                                                      "Accredited Investor",
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          child: Container(
+                                  ],
+                                )
+                              : SizedBox(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
-                            width: MediaQuery.of(context).size.width * 0.32,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                              border: new Border.all(
-                                  color: AllCoustomTheme
-                                      .getOtherTabButtonBoxColor(),
-                                  width: 1.5),
-                            ),
-                            child: MaterialButton(
-                              splashColor: Colors.grey,
-                              child: Text("GO LIVE",
-                                  style: AllCoustomTheme
-                                      .getOtherTabButtonNonSelectedTextStyleTheme()),
-                              onPressed: () async {
-                                // Navigator.of(context).push(new MaterialPageRoute(
-                                //     builder: (BuildContext context) =>
-                                //         new WishList()));
-                                Navigator.of(context).push(
-                                  // MaterialPageRoute(
-                                  //   builder: (BuildContext context) =>
-                                  //       InvestorType(),
-                                  // ),
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        GoLiveScreen(),
-                                  ),
-                                );
-                              },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              width: MediaQuery.of(context).size.width * 0.32,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                border: new Border.all(
+                                    color: AllCoustomTheme
+                                        .getOtherTabButtonBoxColor(),
+                                    width: 1.5),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text("GO LIVE",
+                                    style: AllCoustomTheme
+                                        .getOtherTabButtonNonSelectedTextStyleTheme()),
+                                onPressed: () async {
+                                  // Navigator.of(context).push(new MaterialPageRoute(
+                                  //     builder: (BuildContext context) =>
+                                  //         new WishList()));
+                                  Navigator.of(context).push(
+                                    // MaterialPageRoute(
+                                    //   builder: (BuildContext context) =>
+                                    //       InvestorType(),
+                                    // ),
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          GoLiveScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    // SizedBox(
-                    //   width: 30,
-                    // ),
-                  ],
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              width: MediaQuery.of(context).size.width * 0.32,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(20)),
+                                border: new Border.all(
+                                    color: AllCoustomTheme
+                                        .getOtherTabButtonBoxColor(),
+                                    width: 1.5),
+                              ),
+                              child: MaterialButton(
+                                splashColor: Colors.grey,
+                                child: Text("SUBSCRIBE",
+                                    style: AllCoustomTheme
+                                        .getOtherTabButtonNonSelectedTextStyleTheme()),
+                                onPressed: () async {
+                                  // Navigator.of(context).push(new MaterialPageRoute(
+                                  //     builder: (BuildContext context) =>
+                                  //         new WishList()));
+                                  Navigator.of(context).push(
+                                    // MaterialPageRoute(
+                                    //   builder: (BuildContext context) =>
+                                    //       InvestorType(),
+                                    // ),
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          PaymentTypes(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // SizedBox(
+                      //   width: 30,
+                      // ),
+                    ],
+                  ),
                 ),
 
                 // portfolio component box
@@ -614,8 +666,8 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           // height: 200,
                           // decoration: BoxDecoration(border: Border.all()),
                           width: MediaQuery.of(context).size.width - 10,
-                          child: singleTableForPortFolio(portfolioProvider
-                              .portfolioData),
+                          child: singleTableForPortFolio(
+                              portfolioProvider.portfolioData),
                         ),
                         SizedBox(
                           height: 10,
@@ -1116,6 +1168,35 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                 ),
                               );
                             },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.32,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              border: new Border.all(
+                                color:
+                                    AllCoustomTheme.getOtherTabButtonBoxColor(),
+                                width: 1.5,
+                              ),
+                              color:
+                                  AllCoustomTheme.getOtherTabButtonBoxColor()),
+                          child: MaterialButton(
+                            splashColor: Colors.grey,
+                            child: Text("SUBSCRIBE",
+                                style: AllCoustomTheme
+                                    .getOtherTabButtonSelectedTextStyleTheme()),
+                            onPressed: () async {},
                           ),
                         ),
                       ),

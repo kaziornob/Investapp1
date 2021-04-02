@@ -44,23 +44,23 @@ class _AuroPaperPortfolioPerformaceChartState
 
   @override
   Widget build(BuildContext context) {
-    // double val = 0.0;
-    // List h = [];
-    // widget.pricesData.forEach((element) {
-    //  h.add(1 + (element.y/100));
-    // });
-    // var ff;
-    // print(h);
-    // int i=0;
-    // h.forEach((element) {
-    //   if(i==0){
-    //     ff = element;
-    //   }else{
-    //     ff = element*ff;
-    //   }
-    //   i++;
-    // });
-    // print("cummulative sum : $ff");
+    double val = 0.0;
+    List h = [];
+    widget.pricesData.forEach((element) {
+     h.add(1 + (element.y/100));
+    });
+    var ff;
+    print(h);
+    int i=0;
+    h.forEach((element) {
+      if(i==0){
+        ff = element;
+      }else{
+        ff = element*ff;
+      }
+      i++;
+    });
+    print("cummulative sum : $ff");
     return Container(
       height: 200,
       child: SfCartesianChart(

@@ -3,6 +3,7 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/modules/home/investment_masterclass.dart';
 import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
 import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
@@ -28,7 +29,7 @@ class MainLearnMarketTab extends StatefulWidget {
 
 class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
   FeaturedCompaniesProvider _featuredCompaniesProvider =
-  FeaturedCompaniesProvider();
+      FeaturedCompaniesProvider();
   ScrollController _scrollController = ScrollController();
   String selectedWeeklyLeague;
   var userData;
@@ -149,10 +150,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width - 100,
+                      width: MediaQuery.of(context).size.width - 100,
                       padding: const EdgeInsets.only(
                         bottom: 8,
                       ),
@@ -217,23 +215,17 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                      left: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.25,
-                      right: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.25),
+                      left: MediaQuery.of(context).size.width * 0.25,
+                      right: MediaQuery.of(context).size.width * 0.25),
                   padding: EdgeInsets.only(
                     bottom: 3, // space between underline and text
                   ),
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
-                            color: AllCoustomTheme.getHeadingThemeColors(),
-                            width: 1.0, // Underline width
-                          ))),
+                    color: AllCoustomTheme.getHeadingThemeColors(),
+                    width: 1.0, // Underline width
+                  ))),
                 ),
                 SizedBox(
                   height: 4,
@@ -266,23 +258,11 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                       if (snapshot.data["user_score"] == 0) {
                         return Container(
                           margin: EdgeInsets.only(
-                              left: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.10,
-                              right: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.10,
-                              top: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.04,
+                              left: MediaQuery.of(context).size.width * 0.10,
+                              right: MediaQuery.of(context).size.width * 0.10,
+                              top: MediaQuery.of(context).size.height * 0.04,
                               bottom:
-                              MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.04),
+                                  MediaQuery.of(context).size.height * 0.04),
                           decoration: new BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
@@ -305,15 +285,9 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                 onTap: increaseYourScore,
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      left: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width *
+                                      left: MediaQuery.of(context).size.width *
                                           0.28,
-                                      right: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width *
+                                      right: MediaQuery.of(context).size.width *
                                           0.28),
                                   child: Icon(
                                     Icons.add,
@@ -327,15 +301,9 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                               ),
                               Container(
                                 margin: EdgeInsets.only(
-                                    left: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width *
+                                    left: MediaQuery.of(context).size.width *
                                         0.07,
-                                    right: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width *
+                                    right: MediaQuery.of(context).size.width *
                                         0.03),
                                 child: Text(
                                   "Answer your first question and start earning Auro coins",
@@ -401,14 +369,8 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                         );
                       } else {
                         return Container(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.30,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.30,
                             margin: EdgeInsets.only(left: 15.0, right: 5.0),
                             child: Stack(
                               children: [
@@ -418,11 +380,11 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                     DoughnutSeries<ChartData, String>(
                                       dataSource: renderedChartData,
                                       pointColorMapper: (ChartData data, _) =>
-                                      data.color,
+                                          data.color,
                                       xValueMapper: (ChartData data, _) =>
-                                      data.x,
+                                          data.x,
                                       yValueMapper: (ChartData data, _) =>
-                                      data.y,
+                                          data.y,
                                       dataLabelSettings: DataLabelSettings(
                                         showZeroValue: true,
                                         isVisible: true,
@@ -435,10 +397,9 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                     alignment: Alignment.topCenter,
                                     child: Container(
                                       margin: EdgeInsets.only(
-                                          top: MediaQuery
-                                              .of(context)
-                                              .size
-                                              .height *
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.11),
                                       child: Column(
                                         children: [
@@ -450,7 +411,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                 color: AllCoustomTheme
                                                     .getTextThemeColor(),
                                                 fontSize:
-                                                ConstanceData.SIZE_TITLE16,
+                                                    ConstanceData.SIZE_TITLE16,
                                                 fontFamily: "Roboto",
                                                 package: 'Roboto-Regular',
                                               ),
@@ -464,7 +425,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                 color: AllCoustomTheme
                                                     .getTextThemeColor(),
                                                 fontSize:
-                                                ConstanceData.SIZE_TITLE16,
+                                                    ConstanceData.SIZE_TITLE16,
                                                 fontFamily: "Roboto",
                                                 package: 'Roboto-Regular',
                                               ),
@@ -501,7 +462,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                   .getsecoundTextThemeColor(),
                                               fontWeight: FontWeight.bold,
                                               fontSize:
-                                              ConstanceData.SIZE_TITLE16,
+                                                  ConstanceData.SIZE_TITLE16,
                                               fontFamily: "Roboto",
                                               package: 'Roboto-Regular',
                                             ),
@@ -536,7 +497,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize:
-                                            ConstanceData.SIZE_TITLE15,
+                                                ConstanceData.SIZE_TITLE15,
                                             fontFamily: "Roboto",
                                             package: 'Roboto-Regular',
                                           ),
@@ -566,13 +527,13 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize:
-                                          ConstanceData.SIZE_TITLE16,
+                                          fontSize: ConstanceData.SIZE_TITLE16,
                                           fontFamily: "Roboto",
                                           package: 'Roboto-Regular',
                                         ),
                                       ),
-                                    ),),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ));
@@ -600,7 +561,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                               color: AllCoustomTheme.getsecoundTextThemeColor(),
                               border: Border.all(
                                 color:
-                                AllCoustomTheme.getsecoundTextThemeColor(),
+                                    AllCoustomTheme.getsecoundTextThemeColor(),
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.all(
@@ -690,9 +651,46 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                 SizedBox(
                   height: 4,
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => InvestmentMasterclass(),
+                            ),
+                          ),
+                          child: Container(
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: AllCoustomTheme.getSeeMoreThemeColor(),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                'INVESTMENT MASTERCLASS',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ConstanceData.SIZE_TITLE15,
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
+
           // score board section end
 
           // investment track record
@@ -1038,10 +1036,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                   Padding(
                       padding: const EdgeInsets.only(left: 16, right: 5.0),
                       child: Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.06,
+                        height: MediaQuery.of(context).size.height * 0.06,
                         child: ListView(
                           children: <Widget>[
                             Padding(
@@ -1062,20 +1057,16 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                             Container(
                               margin: EdgeInsets.only(
                                   right:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.42),
+                                      MediaQuery.of(context).size.width * 0.42),
                               padding: EdgeInsets.only(
                                 bottom: 3, // space between underline and text
                               ),
                               decoration: BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
-                                        color: AllCoustomTheme
-                                            .getHeadingThemeColors(),
-                                        width: 1.0, // Underline width
-                                      ))),
+                                color: AllCoustomTheme.getHeadingThemeColors(),
+                                width: 1.0, // Underline width
+                              ))),
                             ),
                           ],
                         ),
@@ -1091,14 +1082,8 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                       children: [
                         Expanded(
                           child: Container(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.10,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.10,
                             child: Scrollbar(
                               child: ListView.builder(
                                 itemCount: 10,
@@ -1110,9 +1095,9 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                         "rankingNum": "1",
                                         "name": "Warren Buffet",
                                         "philosophy":
-                                        "Buy companies at a low price, improve them via management and make long term gains",
+                                            "Buy companies at a low price, improve them via management and make long term gains",
                                         "trackRecord":
-                                        "He has a 30-year-plus track record making on average 20 percent a year",
+                                            "He has a 30-year-plus track record making on average 20 percent a year",
                                         "image": "WarrenBuffet"
                                       };
                                       print("tempfield: $tempField");
@@ -1133,11 +1118,11 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                 radius: 25.0,
                                                 backgroundImage: index == 0
                                                     ? new AssetImage(
-                                                    'assets/filledweeklyAuroBadge.png')
+                                                        'assets/filledweeklyAuroBadge.png')
                                                     : new AssetImage(
-                                                    'assets/weeklyAuroBadge.png'),
+                                                        'assets/weeklyAuroBadge.png'),
                                                 backgroundColor:
-                                                Colors.transparent,
+                                                    Colors.transparent,
                                               ),
                                               Positioned(
                                                 bottom: 25,
@@ -1199,10 +1184,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                   Padding(
                       padding: const EdgeInsets.only(left: 16, right: 5.0),
                       child: Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.06,
+                        height: MediaQuery.of(context).size.height * 0.06,
                         child: ListView(
                           children: <Widget>[
                             Padding(
@@ -1225,10 +1207,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                               // margin: EdgeInsets.only(right: 210.0),
                               margin: EdgeInsets.only(
                                   right:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.55),
+                                      MediaQuery.of(context).size.width * 0.55),
                               padding: EdgeInsets.only(
                                 bottom: 3, // space between underline and text
                               ),
@@ -1236,7 +1215,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                 border: Border(
                                   bottom: BorderSide(
                                     color:
-                                    AllCoustomTheme.getHeadingThemeColors(),
+                                        AllCoustomTheme.getHeadingThemeColors(),
                                     width: 1.0, // Underline width
                                   ),
                                 ),
@@ -1266,7 +1245,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                   labelStyle: AllCoustomTheme
                                       .getDropDownFieldLabelStyleTheme(),
                                   errorText:
-                                  state.hasError ? state.errorText : null,
+                                      state.hasError ? state.errorText : null,
                                 ),
                                 isEmpty: selectedWeeklyLeague == '',
                                 child: new DropdownButtonHideUnderline(
@@ -1322,14 +1301,8 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                       children: [
                         Expanded(
                           child: Container(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.35,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.35,
                             child: Scrollbar(
                               child: getWeeklyLeagueMemberView(
                                   inceptionMemberList),
@@ -1404,13 +1377,12 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
   }
 
   increaseYourScore() async {
-    HelperClass.showLoading(context,null);
+    HelperClass.showLoading(context, null);
     Question questions = await getQuestions();
     if (questions == null) {
       Navigator.pop(context);
       Navigator.of(context).push(CupertinoPageRoute(
-          builder: (_) =>
-              ErrorPage(
+          builder: (_) => ErrorPage(
                 message: "There are not enough questions yet.",
               )));
       return;
