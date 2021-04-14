@@ -74,6 +74,26 @@ class _MainInvestTabState extends State<MainInvestTab> {
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
+                  child: Container(
+                    // margin: EdgeInsets.only(left: 35.0,right: 20.0),
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.07,
+                        right: MediaQuery.of(context).size.width * 0.03),
+                    child: Text(
+                      "Invest in actively managed portfolios created by Auroville Investment Management" +
+                          " team of licensed professionals",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                          fontSize: 14.5,
+                          fontFamily: "Roboto",
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: 0.2),
+                    ),
+                  ),
+                ),
                 AuroStars(),
               ],
             ),
@@ -166,6 +186,7 @@ class _MainInvestTabState extends State<MainInvestTab> {
               },
             ),
           ),
+          SizedBox(height: 10,),
           // investment guru component box
           // SizedBox(
           //   width: MediaQuery.of(context).size.width,

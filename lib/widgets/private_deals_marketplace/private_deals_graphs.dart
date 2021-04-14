@@ -17,7 +17,8 @@ class PrivateDealsGraphs extends StatefulWidget {
   _PrivateDealsGraphsState createState() => _PrivateDealsGraphsState();
 }
 
-class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTickerProviderStateMixin {
+class _PrivateDealsGraphsState extends State<PrivateDealsGraphs>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
   String selectedInceptionLeague;
   String selectedWeeklyLeague;
@@ -29,6 +30,92 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
     new Tab(text: "Month"),
     // new Tab(text: "Ask Question"),
   ];
+
+  List names = [
+    "Warren Buffet",
+    "Jim Simons",
+    "Benjamin Graham",
+    "Bill Gross",
+    "John Templeton",
+    "Steve Mandel",
+    "Peter Lynch",
+    "George Soros",
+    "Lei Zhang",
+    "Rakesh Jhunjhunwala"
+  ];
+
+  final Map alldetailsForClubs = {
+    "Warren Buffet": {
+      "text1":
+          "Buy companies at a low price, improve them via management and make long term gains",
+      "text2":
+          "He has a 30-year-plus track record making on average 20 percent a year.",
+      "name": "Warren Buffet",
+    },
+    "Jim Simons": {
+      "text1":
+          "Jim Simons, one of the greatest investors of all time, built his market-beating strategy around taking the human element out of investing. He founded Renaissance Technologies, which uses quantitative models underpinned by massive amounts of data to identify and profit from patterns in the market",
+      "text2":
+          "66% before charging fees—39% after fees—racking up trading gains of more than dollar 100 billion.",
+      "name": "Jim Simons",
+    },
+    "Benjamin Graham": {
+      "text1":
+          "value investing using fundamental analysis, whereby investors analyze stock data to find assets that have been systematically undervalued.",
+      "text2":
+          "Graham's investment firm posted annualized returns of about 20% from 1936 to 1956, far outpacing the 12.2% average return for the broader market over that time",
+      "name": "Benjamin Graham",
+    },
+    "Bill Gross": {
+      "text1":
+          "“King of bonds”- focus on buying individual bonds with a long-term (3-5 year) outlook",
+      "text2":
+          "Gross’ compounded annual return over the 27 year period was 7.52%, versus 6.44% for the Barclay’s Aggregate US Index.",
+      "name": "Bill Gross",
+    },
+    "John Templeton": {
+      "text1":
+          "1.Diversification 2.Look for companies globally- best value stocks are those that are most neglected",
+      "text2":
+          "Templeton’s Growth Fund, created in 1954, went on to earn about a 14% annual return over the next 38 years when he retired in 1992.",
+      "name": "John Templeton",
+    },
+    "Steve Mandel": {
+      "text1":
+          "He employs fundamental analysis and a bottom-up stock picking approach, meaning he focuses on individual companies instead of global macro trends and economic cycles.",
+      "text2":
+          "The Hedge Fund 'Lone Pine' has averaged 30% annualized returns since 1997.",
+      "name": "Steve Mandel",
+    },
+    "Peter Lynch": {
+      "text1":
+          "1.Be 100% sure. 2.It’s impossible to predict the economy and interest rates. 3.Take your time to identify exceptional companies 4.buy good businesses5.Be aware of the risks of your purchase",
+      "text2":
+          "As the manager of the Magellan Fund at Fidelity Investments between 1977 and 1990, Lynch averaged a 29.2% annual return, consistently more than double the S&P 500 stock market index and making it the best-performing mutual fund in the world.",
+      "name": "Peter Lynch",
+    },
+    "George Soros": {
+      "text1":
+          "Identify macroeconomic trends Highly leveraged bets on bonds and commodities",
+      "text2":
+          "Soros Fund Management, LLC is a private American investment management firm. It is currently structured as a family office, but formerly as a hedge fund. The firm was founded in 1969 by George Soros[1] and, in 2010, was reported to be one of the most profitable firms in the hedge fund industry,[2] averaging a 20% annual rate of return over four decades.",
+      "name": "George Soros",
+    },
+    "Lei Zhang": {
+      "text1":
+          "Lei Zhang is a big believer in value investing, but where he deviates from the traditional value investing philosophy is that he likes investing in changes. He believes that it is change that derives value and he would like to invest in people driving them.",
+      "text2":
+          "Hillhouse has achieved investment returns of up to 52% annualized from inception in 2005 until 2012, even in spite of a 37% drop in 2008, making Hillhouse among the most profitable funds of its size in the world, and the leading fund in Asia",
+      "name": "Lei Zhang",
+    },
+    "Rakesh Jhunjhunwala": {
+      "text1":
+          "buy when the share is in uptrend and sell only when the share goes in the downtrend.",
+      "text2":
+          "In 1985, Jhunjhunwala invested Rs 5,000 (dollar 70) as capital. By September 2018, that capital had inflated to Rs 11,000 crore (dollar 1.5 bn).",
+      "name": "Rakesh Jhunjhunwala",
+    },
+  };
 
   final List<Tab> socialFilterTabList = <Tab>[
     new Tab(text: 'Overall'),
@@ -42,6 +129,7 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
     _tabController = new TabController(vsync: this, length: tabList.length);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return fifthScreen();
@@ -106,9 +194,9 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
-                      width: 1.0, // Underline width
-                    ))),
+              color: AllCoustomTheme.getHeadingThemeColors(),
+              width: 1.0, // Underline width
+            ))),
           ),
           SizedBox(
             height: 4,
@@ -196,7 +284,7 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                               'EASY',
                               style: TextStyle(
                                 color:
-                                AllCoustomTheme.getsecoundTextThemeColor(),
+                                    AllCoustomTheme.getsecoundTextThemeColor(),
                                 fontSize: ConstanceData.SIZE_TITLE16,
                                 fontFamily: "Roboto",
                                 package: 'Roboto-Regular',
@@ -316,40 +404,40 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
               children: <Widget>[
                 Expanded(
                     child: InkWell(
-                      onTap: () async {
-                        Question questions = await getQuestions();
-                        if (questions!=null) {
-                          Navigator.of(context).push(CupertinoPageRoute(
-                              builder: (_) => ErrorPage(
+                  onTap: () async {
+                    Question questions = await getQuestions();
+                    if (questions != null) {
+                      Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (_) => ErrorPage(
                                 message: "There are not enough questions yet.",
                               )));
-                          return;
-                        }
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (BuildContext context) =>
-                                QuestionTemplate(questions: questions),
+                      return;
+                    }
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (BuildContext context) =>
+                            QuestionTemplate(questions: questions),
+                      ),
+                    );
+                  },
+                  child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: AllCoustomTheme.getSeeMoreThemeColor(),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          'INCREASE YOUR SCORE',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AllCoustomTheme.getTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE15,
+                            fontFamily: "Roboto",
                           ),
-                        );
-                      },
-                      child: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 5.0),
-                            child: Text(
-                              'INCREASE YOUR SCORE',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AllCoustomTheme.getTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE15,
-                                fontFamily: "Roboto",
-                              ),
-                            ),
-                          )),
-                    )),
+                        ),
+                      )),
+                )),
               ],
             ),
           ),
@@ -380,9 +468,9 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
-                      width: 1.0, // Underline width
-                    ))),
+              color: AllCoustomTheme.getHeadingThemeColors(),
+              width: 1.0, // Underline width
+            ))),
           ),
           SizedBox(
             height: 10,
@@ -445,7 +533,7 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                           },
                           labelColor: AllCoustomTheme.getTextThemeColor(),
                           labelStyle:
-                          TextStyle(fontSize: 16.0, letterSpacing: 0.2),
+                              TextStyle(fontSize: 16.0, letterSpacing: 0.2),
                           indicatorColor: AllCoustomTheme.getTextThemeColor(),
                           indicatorWeight: 4.0,
                           // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
@@ -481,18 +569,18 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                                         alignment: ChartAlignment.center,
                                         position: LegendPosition.bottom,
                                         overflowMode:
-                                        LegendItemOverflowMode.wrap,
+                                            LegendItemOverflowMode.wrap,
                                         itemPadding: 10.0),
                                     series: <CircularSeries>[
                                       // Render pie chart
                                       DoughnutSeries<ChartData, String>(
                                         dataSource: trackChartData,
                                         pointColorMapper: (ChartData data, _) =>
-                                        data.color,
+                                            data.color,
                                         xValueMapper: (ChartData data, _) =>
-                                        data.x,
+                                            data.x,
                                         yValueMapper: (ChartData data, _) =>
-                                        data.y,
+                                            data.y,
                                         dataLabelSettings: DataLabelSettings(
                                           isVisible: true,
                                         ),
@@ -513,8 +601,8 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                                         // margin: EdgeInsets.only(top:115),
                                         margin: EdgeInsets.only(
                                             top: MediaQuery.of(context)
-                                                .size
-                                                .height *
+                                                    .size
+                                                    .height *
                                                 0.16),
                                         child: Column(
                                           children: [
@@ -596,9 +684,9 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              ))),
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ))),
                     ),
                   ],
                 ),
@@ -618,45 +706,45 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.blueGrey, width: 1.0),
+                              BorderSide(color: Colors.blueGrey, width: 1.0),
                         ),
                         labelStyle:
-                        AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
+                            AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
                         errorText: state.hasError ? state.errorText : null,
                       ),
                       isEmpty: selectedInceptionLeague == '',
                       child: new DropdownButtonHideUnderline(
                           child: ButtonTheme(
-                            alignedDropdown: true,
-                            child: Container(
-                              height: 16.0,
-                              child: new DropdownButton(
-                                value: selectedInceptionLeague,
-                                dropdownColor: Colors.white,
-                                isExpanded: true,
-                                onChanged: (String newValue) {
-                                  setState(() {
-                                    selectedInceptionLeague = newValue;
-                                  });
-                                },
-                                items: <String>[
-                                  'Total Coins',
-                                  'Invest Edu coins',
-                                  'Track Record coins',
-                                  'Stock Pitch coins',
-                                  'Invest Q&A coins',
-                                  'Social Invest coins'
-                                ].map((String value) {
-                                  return new DropdownMenuItem(
-                                    value: value,
-                                    child: new Text(value,
-                                        style: AllCoustomTheme
-                                            .getDropDownMenuItemStyleTheme()),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          )),
+                        alignedDropdown: true,
+                        child: Container(
+                          height: 16.0,
+                          child: new DropdownButton(
+                            value: selectedInceptionLeague,
+                            dropdownColor: Colors.white,
+                            isExpanded: true,
+                            onChanged: (String newValue) {
+                              setState(() {
+                                selectedInceptionLeague = newValue;
+                              });
+                            },
+                            items: <String>[
+                              'Total Coins',
+                              'Invest Edu coins',
+                              'Track Record coins',
+                              'Stock Pitch coins',
+                              'Invest Q&A coins',
+                              'Social Invest coins'
+                            ].map((String value) {
+                              return new DropdownMenuItem(
+                                value: value,
+                                child: new Text(value,
+                                    style: AllCoustomTheme
+                                        .getDropDownMenuItemStyleTheme()),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      )),
                     );
                   },
                 )),
@@ -721,9 +809,9 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              ))),
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ))),
                     ),
                   ],
                 ),
@@ -743,61 +831,55 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                       height: MediaQuery.of(context).size.height * 0.10,
                       child: Scrollbar(
                         child: ListView.builder(
-                          itemCount: 10,
+                          itemCount: names.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
+                            print(names[index]);
                             return InkWell(
                                 onTap: () {
-                                  var tempField = {
-                                    "rankingNum": "1",
-                                    "name": "Warren Buffet",
-                                    "philosophy":
-                                    "Buy companies at a low price, improve them via management and make long term gains",
-                                    "trackRecord":
-                                    "He has a 30-year-plus track record making on average 20 percent a year",
-                                    "image": "WarrenBuffet"
-                                  };
-                                  print("tempfield: $tempField");
+                                  // print("tempfield: $tempField");
                                   Navigator.of(context).push(
                                     CupertinoPageRoute(
                                       builder: (BuildContext context) =>
-                                          ClubDetail(allField: tempField),
+                                          ClubDetail(
+                                              allField: alldetailsForClubs[
+                                                  names[index]]),
                                     ),
                                   );
                                 },
                                 child: Container(
                                     child: Row(
-                                      children: [
-                                        Stack(
-                                          alignment: Alignment.topLeft,
-                                          children: <Widget>[
-                                            CircleAvatar(
-                                              radius: 25.0,
-                                              backgroundImage: index == 0
-                                                  ? new AssetImage(
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.topLeft,
+                                      children: <Widget>[
+                                        CircleAvatar(
+                                          radius: 25.0,
+                                          backgroundImage: index == 0
+                                              ? new AssetImage(
                                                   'assets/filledweeklyAuroBadge.png')
-                                                  : new AssetImage(
+                                              : new AssetImage(
                                                   'assets/weeklyAuroBadge.png'),
-                                              backgroundColor: Colors.transparent,
-                                            ),
-                                            Positioned(
-                                              bottom: 25,
-                                              child: CircleAvatar(
-                                                backgroundColor: Colors.blue,
-                                                radius: 12.0,
-                                                child: Text(
-                                                  "${index + 1}",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Color(0xFFD8AF4F),
-                                                    fontSize:
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                        Positioned(
+                                          bottom: 25,
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.blue,
+                                            radius: 12.0,
+                                            child: Text(
+                                              "${index + 1}",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color(0xFFD8AF4F),
+                                                fontSize:
                                                     ConstanceData.SIZE_TITLE18,
-                                                    fontFamily: "Roboto",
-                                                    package: 'Roboto-Regular',
-                                                  ),
-                                                ),
+                                                fontFamily: "Roboto",
+                                                package: 'Roboto-Regular',
                                               ),
                                             ),
+                                          ),
+                                        ),
 /*                                          FractionalTranslation(
                                             translation: Offset(0.0, -0.99),
                                             child: CircleAvatar(
@@ -815,13 +897,13 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                                               ),
                                             ),
                                           )*/
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        )
                                       ],
-                                    )));
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    )
+                                  ],
+                                )));
                           },
                         ),
                       )),
@@ -865,9 +947,9 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              ))),
+                        color: AllCoustomTheme.getHeadingThemeColors(),
+                        width: 1.0, // Underline width
+                      ))),
                     ),
                   ],
                 ),
@@ -887,44 +969,44 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.blueGrey, width: 1.0),
+                              BorderSide(color: Colors.blueGrey, width: 1.0),
                         ),
                         labelStyle:
-                        AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
+                            AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
                         errorText: state.hasError ? state.errorText : null,
                       ),
                       isEmpty: selectedWeeklyLeague == '',
                       child: new DropdownButtonHideUnderline(
                           child: ButtonTheme(
-                            alignedDropdown: true,
-                            child: Container(
-                              height: 16.0,
-                              child: new DropdownButton(
-                                value: selectedWeeklyLeague,
-                                dropdownColor: Colors.white,
-                                isExpanded: true,
-                                onChanged: (String newValue) {
-                                  setState(() {
-                                    selectedWeeklyLeague = newValue;
-                                  });
-                                },
-                                items: <String>[
-                                  'Adaptive Investment Learning',
-                                  'Investment Track Record',
-                                  'Investment Stock Pitch',
-                                  'Investment QnA',
-                                  'Social Investment Score'
-                                ].map((String value) {
-                                  return new DropdownMenuItem(
-                                    value: value,
-                                    child: new Text(value,
-                                        style: AllCoustomTheme
-                                            .getDropDownMenuItemStyleTheme()),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          )),
+                        alignedDropdown: true,
+                        child: Container(
+                          height: 16.0,
+                          child: new DropdownButton(
+                            value: selectedWeeklyLeague,
+                            dropdownColor: Colors.white,
+                            isExpanded: true,
+                            onChanged: (String newValue) {
+                              setState(() {
+                                selectedWeeklyLeague = newValue;
+                              });
+                            },
+                            items: <String>[
+                              'Adaptive Investment Learning',
+                              'Investment Track Record',
+                              'Investment Stock Pitch',
+                              'Investment QnA',
+                              'Social Investment Score'
+                            ].map((String value) {
+                              return new DropdownMenuItem(
+                                value: value,
+                                child: new Text(value,
+                                    style: AllCoustomTheme
+                                        .getDropDownMenuItemStyleTheme()),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      )),
                     );
                   },
                 )),
@@ -1014,7 +1096,6 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
     );
   }
 
-
   Widget getInceptionMemberView(data) {
     return new ListView.builder(
       itemCount: data.length,
@@ -1069,7 +1150,6 @@ class _PrivateDealsGraphsState extends State<PrivateDealsGraphs> with SingleTick
       },
     );
   }
-
 
   /// Inefficient way of capitalizing each word in a string.
   String titleCase(String text) {

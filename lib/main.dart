@@ -180,8 +180,8 @@ class _MyAppState extends State<MyApp> {
         ? false
         : true;
 
-    print(widget.prefs.containsKey('InvestorType'));
-    print("In Main Main : "+widget.prefs.getString('InvestorType'));
+    // print(widget.prefs.containsKey('InvestorType'));
+    // print("In Main Main : "+widget.prefs.getString('InvestorType'));
 
 
     // if(userAllDetail["inv_status"] == "Accredited Investor"){
@@ -189,8 +189,8 @@ class _MyAppState extends State<MyApp> {
     // }else{
     //   globals.isGoldBlack = true;
     // }
-    print(widget.prefs.getString('InvestorType'));
-    print("globals main function: ${globals.isGoldBlack}");
+    // print(widget.prefs.getString('InvestorType'));
+    // print("globals main function: ${globals.isGoldBlack}");
     // getApiAllData(1);
   }
 

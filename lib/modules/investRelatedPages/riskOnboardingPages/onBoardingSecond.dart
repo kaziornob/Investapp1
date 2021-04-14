@@ -3,6 +3,7 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingThird.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -91,8 +92,9 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                       child: SliderTheme(
                         data: SliderThemeData(
                           thumbColor: Color(0xFFD8AF4F),
-                          activeTrackColor: Colors.black,
+                          // activeTrackColor: Colors.black,
                           inactiveTrackColor: Colors.black,
+                          trackShape: RectangularSliderTrackShape(),
                         ),
                         child: Slider(
                           value: data[key].toDouble(),
@@ -263,7 +265,7 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                           left: 15.0,
                                           right: 3.0),
                                       child: Text(
-                                        "A well-diversified portfolio should have all of below!!",
+                                        "A well-diversified portfolio should include all of below. However, Auro can customize based on your preferences. Move the gold circle to Exclude OR Include any of these asset classes, to make your selection below:",
                                         style: new TextStyle(
                                             color: Colors.black,
                                             fontSize:
@@ -272,22 +274,22 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                             letterSpacing: 0.1),
                                       ),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: 5.0,
-                                          bottom: 10.0,
-                                          left: 15.0,
-                                          right: 3.0),
-                                      child: Text(
-                                        "However, let us know if you want Auro to exclude or definitely include any one",
-                                        style: new TextStyle(
-                                            color: Colors.black,
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE16,
-                                            fontFamily: "RobotoLight",
-                                            letterSpacing: 0.1),
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   margin: EdgeInsets.only(
+                                    //       top: 5.0,
+                                    //       bottom: 10.0,
+                                    //       left: 15.0,
+                                    //       right: 3.0),
+                                    //   child: Text(
+                                    //     "However, let us know if you want Auro to exclude or definitely include any one",
+                                    //     style: new TextStyle(
+                                    //         color: Colors.black,
+                                    //         fontSize:
+                                    //             ConstanceData.SIZE_TITLE16,
+                                    //         fontFamily: "RobotoLight",
+                                    //         letterSpacing: 0.1),
+                                    //   ),
+                                    // ),
                                     Container(
                                       height: 20,
                                       // decoration: BoxDecoration(border: Border.all(),),
@@ -424,6 +426,7 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
 
   Future submit() async {
     var dataToSave = {};
+    var userRisk = Provider.of<UserDetails>(context, listen: false).userDetails;
     sliderData.forEach((key, value) {
       var value;
       if (sliderData[key] == 0) {
@@ -445,12 +448,22 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
       var changesKey;
       if (key == "Private Deals (PE/VC)") {
         changesKey = "Private_Equity";
+        dataToSave[changesKey] = value;
+      } else if (key == "Fixed Income" &&
+          (userRisk["risk_appetite"] == 0.07 ||
+              userRisk["risk_appetite"] == 0.15)) {
+        changesKey = "Fixed Income";
+        dataToSave[changesKey] = {
+          "min_weight": 0,
+          "max_weight": 100,
+        };
       } else if (key == "Fixed Income") {
         changesKey = "Fixed Income";
+        dataToSave[changesKey] = value;
       } else {
         changesKey = key.toString().replaceAll(" ", "_");
+        dataToSave[changesKey] = value;
       }
-      dataToSave[changesKey] = value;
     });
 
     Map<String, Map> data = {

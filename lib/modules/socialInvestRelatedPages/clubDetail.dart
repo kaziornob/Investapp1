@@ -90,7 +90,7 @@ class _ClubDetailState extends State<ClubDetail> {
                             builder: (anim) => Transform.scale(
                               scale: anim.value,
                               child: Text(
-                                '#${widget.allField["rankingNum"]}.${widget.allField["name"]}',
+                                '#${widget.allField["name"]}',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: Color(0xfffec20f),
@@ -131,7 +131,7 @@ class _ClubDetailState extends State<ClubDetail> {
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 5.0),
                                   child: Text(
-                                    'Investment Philosophy:  ${widget.allField["name"]}, ${widget.allField["philosophy"]}',
+                                    'Investment Philosophy:  ${widget.allField["text1"]}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       color: AllCoustomTheme.getTextThemeColor(),
@@ -158,10 +158,10 @@ class _ClubDetailState extends State<ClubDetail> {
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 5.0),
                                   child: Text(
-                                    'Investment Track record:  ${widget.allField["trackRecord"]}',
+                                    'Investment Track record:  ${widget.allField["text2"]}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      color:Colors.black,
                                       fontSize: ConstanceData.SIZE_TITLE18,
                                       fontFamily: "Rasa",
 

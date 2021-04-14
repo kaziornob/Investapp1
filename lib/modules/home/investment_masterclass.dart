@@ -29,6 +29,24 @@ class _InvestmentMasterclassState extends State<InvestmentMasterclass> {
                 ),
               ),
               Container(
+                height: MediaQuery.of(context).size.height * 0.09,
+                child: Center(
+                  child: new Image(
+                    width: 150.0,
+                    fit: BoxFit.fill,
+                    image: new AssetImage('assets/logo.png'),
+                  ),
+                ),
+                // decoration: BoxDecoration(
+                //   border: Border(
+                //     bottom: BorderSide(
+                //       width: 1,
+                //       color: Color(0xFFfec20f),
+                //     ),
+                //   ),
+                // ),
+              ),
+              Container(
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -38,7 +56,7 @@ class _InvestmentMasterclassState extends State<InvestmentMasterclass> {
                   ),
                 ),
                 child: Text(
-                  "Course Categorization",
+                  "Investment Master Classes",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -65,20 +83,38 @@ class _InvestmentMasterclassState extends State<InvestmentMasterclass> {
                     ),
                   ),
                   width: MediaQuery.of(context).size.width - 30,
-                  height: 320,
+                  height: 400,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      bulletPoints("Test + Certification \$25"),
-                      // auroBeginner(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Container(
+                          child: Text(
+                            "Pricing Menu",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff1D6177),
+                            ),
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
+                      bulletPoints("Courseware: Free"),
+
+                      bulletPoints("Test + Certification \$25"),
+                      // auroBeginner(),
+
                       bulletPoints("Test + Certification + Ask Auro \$49"),
                       // auroBeginner(),
                       SizedBox(
                         height: 10,
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Container(

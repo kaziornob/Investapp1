@@ -80,8 +80,9 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
   getFollowing() async {
     print("getting single follow");
     var userEmail;
-    if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
-        null) {
+    if (Provider.of<UserDetails>(context, listen: false).userDetails != null &&
+        Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+            null) {
       userEmail =
           Provider.of<UserDetails>(context, listen: false).userDetails["email"];
     } else {
@@ -403,13 +404,13 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           0.85,
                                       height: 90,
                                       child: Container(
+                                        // decoration: BoxDecoration(border: Border.al),
                                         // margin: EdgeInsets.only(left: 10.0),
                                         child: SfCartesianChart(
                                             tooltipBehavior: _tooltipBehavior,
                                             zoomPanBehavior: _zoomPanBehavior,
                                             primaryXAxis: DateTimeAxis(
-                                              isVisible: false,
-                                              title: AxisTitle(text: "Date"),
+                                              isVisible: true,
                                             ),
                                             primaryYAxis: NumericAxis(
                                               isVisible: true,

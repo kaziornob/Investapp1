@@ -35,91 +35,83 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     "Australia",
     "Canada",
     "China",
-    "India",
     "Japan",
     "United States",
   ];
 
-  // List<String> combinedList = [];
-  List<String> countrySectorList = [
+  var countrySectorList = [
     "",
-    "China-Health Care",
     "China-Communication Services",
-    "China-Consumer Discretionary",
-    "China-Consumer Staples",
     "China-Energy",
-    "China-Financials",
+    "China-Health Care",
     "China-Industrials",
     "China-Information Technology",
     "China-Materials",
+    "China-Consumer Discretionary",
     "China-Real Estate",
+    "China-Consumer Staples",
     "China-Utilities",
-    "India-Communication Services",
-    "India-Consumer Discretionary",
-    "India-Consumer Staples",
-    "India-Energy",
-    "India-Financials",
-    "India-Health Care",
-    "India-Industrials",
-    "India-Information Technology",
-    "India-Materials",
-    "India-Real Estate",
+    "China-Financials",
+    "United States-Health Care",
+    "United States-Real Estate",
+    "United States-Financials",
     "Japan-Consumer Discretionary",
     "Japan-Consumer Staples",
     "Japan-Financials",
     "Japan-Health Care",
     "Japan-Industrials",
     "Japan-Information Technology",
-    "United States-Communication Services",
-    "United States-Consumer Staples",
-    "United States-Energy",
-    "United States-Health Care",
-    "United States-Industrials",
+    "Japan-Utilities",
     "United States-Information Technology",
     "United States-Materials",
-    "United States-Real Estate",
+    "United States-Communication Services",
+    "United States-Energy",
+    "United States-Industrials",
+    "United States-Consumer Staples",
     "United States-Utilities",
-    "Japan-Real Estate",
-    "Australia-Consumer Discretionary",
-    "Australia-Consumer Staples",
-    "Australia-Financials",
-    "Australia-Health Care",
-    "Australia-Information Technology",
-    "Australia-Materials",
-    "Western Europe-Consumer Staples",
-    "Western Europe-Communication Services",
-    "Western Europe-Consumer Discretionary",
-    "Western Europe-Energy",
-    "Western Europe-Financials",
-    "Western Europe-Health Care",
-    "Western Europe-Industrials",
-    "Western Europe-Information Technology",
-    "Western Europe-Real Estate",
-    "Western Europe-Utilities",
-    "Canada-Consumer Discretionary",
-    "Canada-Consumer Staples",
-    "Canada-Information Technology",
-    "Western Europe-Materials",
-    "India-Utilities",
-    "Asean-Communication Services",
-    "Asean-Consumer Discretionary",
-    "Asean-Consumer Staples",
+    "Asean-Industrials",
     "Asean-Financials",
+    "Asean-Consumer Discretionary",
+    "Asean-Real Estate",
+    "Asean-Consumer Staples",
+    "Asean-Communication Services",
+    "Asean-Information Technology",
+    "Asean-energy",
+    "Australia-Materials",
+    "Australia-Consumer Staples",
+    "Australia-Consumer Discretionary",
+    "Australia-Financials",
+    "Australia-Information Technology",
+    "Australia-Health Care",
+    "Canada-Consumer Staples",
+    "Canada-Consumer Discretionary",
+    "Canada-Information Technology",
     "Emerging Markets Excl Asia-Information Technology",
+    "Emerging Markets Excl Asia-Materials",
+    "Emerging Markets Excl Asia-Financials",
+    "Emerging Markets Excl Asia-Communication Services",
+    "Japan-Real Estate",
+    "Western Europe-Consumer Discretionary",
+    "Western Europe-Financials",
+    "Western Europe-Information Technology",
+    "Western Europe-Consumer Staples",
+    "Western Europe-Industrials",
+    "Western Europe-Materials",
+    "Western Europe-Health Care",
+    "Western Europe-Energy",
+    "Western Europe-Communication Services",
+    "Western Europe-Utilities",
+    "Western Europe-Real Estate",
+    "United States-Consumer Discretionary",
     "Japan-Communication Services",
     "Japan-Materials",
-    "Asean-Energy",
-    "Asean-Industrials",
-    "Asean-Information Technology",
-    "Emerging Markets Excl Asia-Communication Services",
-    "Emerging Markets Excl Asia-Financials",
-    "Emerging Markets Excl Asia-Materials",
-    "Asean-Real Estate",
-    "Asean-Materials",
-    "Asean-Utilities",
-    "United States-Consumer Discretionary",
-    "United States-Financials",
+    "Japan-Energy",
+    "Australia-Utilities",
+    "Australia-Industrials",
     "Australia-Real Estate",
+    "Merging Markets Excl Asia-Consumer Discretionary",
+    "Australia-Energy",
+    "Australia-Communication Services"
   ];
 
   List<String> sectorList = [
@@ -134,7 +126,6 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     "Materials",
     "Real Estate",
     "Utilities",
-    "All",
   ];
 
   List listOfCountriesSelected = [];
@@ -537,7 +528,9 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 },
                               ),
                             ),
-                            Divider(),
+                            Divider(
+                              thickness: 2,
+                            ),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -609,7 +602,9 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 },
                               ),
                             ),
-                            Divider(),
+                            Divider(
+                              thickness: 2,
+                            ),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -685,7 +680,9 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 },
                               ),
                             ),
-                            Divider(),
+                            Divider(
+                              thickness: 2,
+                            ),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -889,13 +886,14 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     Provider.of<GoProDataProvider>(context, listen: false)
         .setThirdPagePreferences(dataToSave);
 
-    var oneOffDeposit = 100000;
+    var oneOffDeposit = 1000000;
     var monthlyDeposit = 0;
     Provider.of<GoProDataProvider>(context, listen: false)
         .setSixthPagePreferences({
-      "One Off Deposit" : oneOffDeposit,
-      "Monthly Deposit" : monthlyDeposit,
+      "One Off Deposit": oneOffDeposit,
+      "Monthly Deposit": monthlyDeposit,
     });
+
     Provider.of<GoProDataProvider>(context, listen: false)
         .saveDataToSql(context);
     // Navigator.of(context).push(

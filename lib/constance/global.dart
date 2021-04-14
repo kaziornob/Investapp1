@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 // import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/listingsModel.dart';
+import 'package:auroim/widgets/loading_dialog_with_timer.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -28,7 +31,8 @@ var buttoncolor2 = Color(0xFF7635ff);
 var iconButtonColor1 = isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF7499C6);
 var iconButtonColor2 = isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF7499C6);
 
-String coinMarketcap = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=";
+String coinMarketcap =
+    "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=";
 // String coinMarketcap = "https://api.coinmarketcap.com/v1/ticker/?start=";
 // String imageURL = "https://s2.coinmarketcap.com/static/img/coins/128x128/";
 String coinImageURL = 'https://static.coincap.io/assets/icons/';
@@ -121,7 +125,8 @@ Future<List<CryptoCoinDetail>> getData1(int start) async {
       Uri.encodeFull(coinMarketcap + start.toString()),
       headers: {
         "Accept": "application/json",
-        "X-CMC_PRO_API_KEY": "41939c64-03af-467f-8e62-f150722470e0", //41939c64-03af-467f-8e62-f150722470e0
+        "X-CMC_PRO_API_KEY": "41939c64-03af-467f-8e62-f150722470e0",
+        //41939c64-03af-467f-8e62-f150722470e0
       },
     );
     if (response.statusCode == 200) {
@@ -227,10 +232,12 @@ class MySeparator extends StatelessWidget {
 
 class AnimatedForwardArrow extends StatelessWidget {
   final bool isShowingarroeForward;
+
   const AnimatedForwardArrow({
     Key key,
     this.isShowingarroeForward,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Animator(
@@ -326,7 +333,9 @@ class PinDisable extends StatelessWidget {
 
 class PinNumberStyle extends StatelessWidget {
   final String digit;
+
   const PinNumberStyle({Key key, this.digit}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -345,6 +354,7 @@ class MagicBoxGradiantLine extends StatelessWidget {
   final double height;
 
   const MagicBoxGradiantLine({Key key, this.height}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -387,21 +397,21 @@ class GlobalInstance {
     {
       "riskAptType": "0.07",
       "optionValue": [
-        {"checked": false, "potentialLoss": "-10%", "potentialGain": "17%"},
-        {"checked": false, "potentialLoss": "-9%", "potentialGain": "15%"},
-        {"checked": false, "potentialLoss": "-8%", "potentialGain": "13%"},
-        {"checked": false, "potentialLoss": "-7%", "potentialGain": "12%"},
-        {"checked": false, "potentialLoss": "-6%", "potentialGain": "10%"},
+        {"checked": false, "potentialLoss": "-11%", "potentialGain": "17%"},
+        {"checked": false, "potentialLoss": "-10%", "potentialGain": "15%"},
+        {"checked": false, "potentialLoss": "-9%", "potentialGain": "13%"},
+        {"checked": false, "potentialLoss": "-8%", "potentialGain": "12%"},
+        {"checked": false, "potentialLoss": "-7%", "potentialGain": "10%"},
       ]
     },
     {
       "riskAptType": "0.15",
       "optionValue": [
-        {"checked": false, "potentialLoss": "-16%", "potentialGain": "27%"},
-        {"checked": false, "potentialLoss": "-15%", "potentialGain": "25%"},
-        {"checked": false, "potentialLoss": "-14%", "potentialGain": "23%"},
-        {"checked": false, "potentialLoss": "-13%", "potentialGain": "22%"},
-        {"checked": false, "potentialLoss": "-12%", "potentialGain": "20%"},
+        {"checked": false, "potentialLoss": "-18%", "potentialGain": "27%"},
+        {"checked": false, "potentialLoss": "-17%", "potentialGain": "25%"},
+        {"checked": false, "potentialLoss": "-16%", "potentialGain": "23%"},
+        {"checked": false, "potentialLoss": "-15%", "potentialGain": "22%"},
+        {"checked": false, "potentialLoss": "-14%", "potentialGain": "20%"},
       ]
     },
     {
@@ -430,9 +440,14 @@ class GlobalInstance {
     print("getDoughnutPortfolioData called");
     var response = await request.getRequest('users/run_algo');
     print("portfolio chart list: $response");
-    if (response != null && response != false && response.containsKey('auth') && response['auth'] == true) {
-      portfolioChartData =
-          response['message'] != null && response['message']['algo_result'] != null ? response['message']['algo_result'] : null;
+    if (response != null &&
+        response != false &&
+        response.containsKey('auth') &&
+        response['auth'] == true) {
+      portfolioChartData = response['message'] != null &&
+              response['message']['algo_result'] != null
+          ? response['message']['algo_result']
+          : null;
     }
   }
 
@@ -688,7 +703,11 @@ class GlobalInstance {
 class HelperClass {
   // Minimum eight characters, at least one letter, one number and one special character:
   static bool validatePassword(String value) {
-    return RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&^=+-])[A-Za-z\d@$!%*#?&^=+-]{6,}$").hasMatch(value) ? true : false;
+    return RegExp(
+                r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&^=+-])[A-Za-z\d@$!%*#?&^=+-]{6,}$")
+            .hasMatch(value)
+        ? true
+        : false;
   }
 
   static bool validateString(String value) {
@@ -705,7 +724,9 @@ class HelperClass {
     }
   }
 
-  static void showLoading(context,text) {
+
+
+  static void showLoading(context, text) {
     // var sLoadingContext;
     print("show loading call");
     showDialog(
@@ -713,34 +734,7 @@ class HelperClass {
       barrierDismissible: false,
       builder: (BuildContext loadingContext) {
         // sLoadingContext = loadingContext;
-        return Container(
-          height: 100,
-          margin: EdgeInsets.only(top: 50, bottom: 30),
-          child: Dialog(
-            backgroundColor: Color(0xff161946),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                    child: Padding(
-                  padding: EdgeInsets.only(top: 15.0, bottom: 8.0),
-                  child: CircularProgressIndicator(),
-                ),),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      text == null ?"Please wait..." : text,
-                      style: TextStyle(color: const Color(0xFFD9E4E9)),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
+        return LoadingDialogWithTimer(text: text,);
       },
     );
   }

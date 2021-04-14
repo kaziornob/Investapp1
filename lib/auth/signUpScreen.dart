@@ -9,6 +9,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+
 // import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -27,6 +28,224 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool phoneError = true;
   ApiProvider request = new ApiProvider();
   final internationalPhoneInput = InternationalPhoneInput();
+
+  var callingCodes = [
+    "+93",
+    "+355",
+    "+213",
+    "+376",
+    "+244",
+    "+672",
+    "+54",
+    "+374",
+    "+297",
+    "+61",
+    "+43",
+    "+994",
+    "+973",
+    "+880",
+    "+375",
+    "+32",
+    "+501",
+    "+229",
+    "+975",
+    "+591",
+    "+387",
+    "+267",
+    "+55",
+    "+246",
+    "+673",
+    "+359",
+    "+226",
+    "+257",
+    "+855",
+    "+237",
+    "+1",
+    "+238",
+    "+236",
+    "+235",
+    "+56",
+    "+86",
+    "+61",
+    "+57",
+    "+269",
+    "+682",
+    "+506",
+    "+385",
+    "+53",
+    "+599",
+    "+357",
+    "+420",
+    "+243",
+    "+45",
+    "+253",
+    "+670",
+    "+593",
+    "+20",
+    "+503",
+    "+240",
+    "+291",
+    "+372",
+    "+251",
+    "+500",
+    "+298",
+    "+679",
+    "+358",
+    "+33",
+    "+689",
+    "+241",
+    "+220",
+    "+995",
+    "+49",
+    "+233",
+    "+350",
+    "+30",
+    "+299",
+    "+502",
+    "+224",
+    "+245",
+    "+592",
+    "+509",
+    "+504",
+    "+852",
+    "+36",
+    "+354",
+    "+91",
+    "+62",
+    "+98",
+    "+964",
+    "+353",
+    "+972",
+    "+39",
+    "+225",
+    "+81",
+    "+962",
+    "+7",
+    "+254",
+    "+686",
+    "+383",
+    "+965",
+    "+996",
+    "+856",
+    "+371",
+    "+961",
+    "+266",
+    "+231",
+    "+218",
+    "+423",
+    "+370",
+    "+352",
+    "+853",
+    "+389",
+    "+261",
+    "+265",
+    "+60",
+    "+960",
+    "+223",
+    "+356",
+    "+692",
+    "+222",
+    "+230",
+    "+262",
+    "+52",
+    "+691",
+    "+373",
+    "+377",
+    "+976",
+    "+382",
+    "+212",
+    "+258",
+    "+95",
+    "+264",
+    "+674",
+    "+977",
+    "+31",
+    "+599",
+    "+687",
+    "+64",
+    "+505",
+    "+227",
+    "+234",
+    "+683",
+    "+850",
+    "+47",
+    "+968",
+    "+92",
+    "+680",
+    "+970",
+    "+507",
+    "+675",
+    "+595",
+    "+51",
+    "+63",
+    "+64",
+    "+48",
+    "+351",
+    "+1-787",
+    "+974",
+    "+242",
+    "+262",
+    "+40",
+    "+250",
+    "+590",
+    "+290",
+    "+590",
+    "+508",
+    "+685",
+    "+378",
+    "+239",
+    "+966",
+    "+221",
+    "+381",
+    "+248",
+    "+232",
+    "+65",
+    "+421",
+    "+386",
+    "+677",
+    "+252",
+    "+27",
+    "+82",
+    "+211",
+    "+34",
+    "+94",
+    "+249",
+    "+597",
+    "+47",
+    "+268",
+    "+46",
+    "+41",
+    "+963",
+    "+886",
+    "+992",
+    "+255",
+    "+66",
+    "+228",
+    "+690",
+    "+676",
+    "+1-868",
+    "+216",
+    "+90",
+    "+993",
+    "+1-649",
+    "+688",
+    "+1-340",
+    "+256",
+    "+380",
+    "+971",
+    "+44",
+    "+598",
+    "+998",
+    "+678",
+    "+379",
+    "+58",
+    "+84",
+    "+681",
+    "+212",
+    "+967",
+    "+260",
+    "+263",
+  ];
 
   //  //facebook sign in
   FacebookLogin fbLogin = new FacebookLogin();
@@ -54,6 +273,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
+    // callingCodes.sort((a,b) {
+    //   if(int.parse(a.split("+")[1]) > int.parse(a.split("+")[1])){
+    //     return a;
+    //   }else{
+    //     return b;
+    //   }
+    // });
+    List ss = [];
+    callingCodes.forEach((item) {
+      int item1 = int.parse(item.replaceAll("-", "").split("+")[1]);
+      ss.add(item1);
+    });
+    ss.sort();
+    
+    print("${ss.toSet()}");
+    print("$ss");
     phoneIsoCode = '+852';
     super.initState();
     // loadDetails();
@@ -489,12 +724,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       phoneNumber,
                                                   initialSelection:
                                                       phoneIsoCode,
-                                                  enabledCountries: [
-                                                    '+852',
-                                                    '+1',
-                                                    '+233',
-                                                    '+91'
-                                                  ],
+                                                  enabledCountries: callingCodes,
                                                   showCountryCodes: true,
                                                   showCountryFlags: true,
                                                 ),
@@ -539,7 +769,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   child: !_isInProgress
                                                       ? GestureDetector(
                                                           onTap: () {
-                                                            _submit('','');
+                                                            _submit('', '');
                                                           },
                                                           child: Animator(
                                                             tween:
@@ -604,150 +834,150 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       //social media buttons
-                      Container(
-                        height: 45.0,
-                        alignment: FractionalOffset.center,
-                        child: Text(
-                          "OR",
-                          style: TextStyle(
-                              color: AllCoustomTheme.getTextThemeColor(),
-                              letterSpacing: 0.3,
-                              fontSize: ConstanceData.SIZE_TITLE18,
-                              fontFamily: "Roboto",
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      AnimatedOpacity(
-                        duration: Duration(milliseconds: 500),
-                        opacity: 1.0,
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
-                          child: Container(
-                            height: 45.0,
-                            width: 320.0,
-                            alignment: FractionalOffset.center,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.white, width: 1.5),
-                                borderRadius: BorderRadius.circular(30),
-                                color: Color(0xFFD8AF4F)),
-                            child: Text(
-                              "Sign Up With Gmail",
-                              style: TextStyle(
-                                color: AllCoustomTheme
-                                    .getReBlackAndWhiteThemeColors(),
-                                letterSpacing: 0.3,
-                              ),
-                            ),
-                          ),
-                          onPressed: () async {
-                            var googleToken = await signInWithGoogle();
-                            loginProviderController.text = "google";
-                            _submit("google",googleToken);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      AnimatedOpacity(
-                        duration: Duration(milliseconds: 500),
-                        opacity: 1.0,
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
-                          child: new Container(
-                            height: 45.0,
-                            width: 320.0,
-                            alignment: FractionalOffset.center,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.white, width: 1.5),
-                                borderRadius: BorderRadius.circular(30),
-                                color: Color(0xFFD8AF4F)),
-                            child: Text(
-                              "Facebook",
-                              style: TextStyle(
-                                color: AllCoustomTheme
-                                    .getReBlackAndWhiteThemeColors(),
-                                letterSpacing: 0.3,
-                              ),
-                            ),
-                          ),
-                          onPressed: () async {
-
-
-/*                              setState(() {
-                                _isInProgress = true;
-                              });
-                              await Future.delayed(const Duration(milliseconds: 500));*/
-
-                            fbLogin.logInWithReadPermissions([
-                              'email',
-                              'public_profile'
-                            ]).then((result) async {
-                              switch (result.status) {
-                                case FacebookLoginStatus.loggedIn:
-                                  final token = result.accessToken.token;
-                                  final graphResponse = await http.get(
-                                      'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
-                                  final profile =
-                                  json.decode(graphResponse.body);
-
-                                  setState(() {
-                                    loginProviderController.text = 'facebook';
-                                    loginAccessTokenController.text = token;
-                                  });
-
-                                  if (loginProviderController.text != '' &&
-                                      loginAccessTokenController.text != '') {
-                                    _submit('facebook','');
-                                  }
-                                  break;
-                                case FacebookLoginStatus.cancelledByUser:
-                                // TODO: Handle this case.
-                                  break;
-                                case FacebookLoginStatus.error:
-                                // TODO: Handle this case.
-                                  break;
-                              }
-                            }).catchError((e) {});
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      AnimatedOpacity(
-                        duration: Duration(milliseconds: 500),
-                        opacity: 1.0,
-                        child: FlatButton(
-                          padding: EdgeInsets.all(0),
-                          child: new Container(
-                            height: 45.0,
-                            width: 320.0,
-                            alignment: FractionalOffset.center,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.white, width: 1.5),
-                                borderRadius: BorderRadius.circular(30),
-                                color: Color(0xFFD8AF4F)),
-                            child: Text(
-                              "Apple",
-                              style: TextStyle(
-                                color: AllCoustomTheme
-                                    .getReBlackAndWhiteThemeColors(),
-                                letterSpacing: 0.3,
-                              ),
-                            ),
-                          ),
-                          onPressed: () async {
-/*                              setState(() {
-                                _isInProgress = true;
-                              });
-                              await Future.delayed(const Duration(milliseconds: 500));*/
-                          },
-                        ),
-                      )
+//                       Container(
+//                         height: 45.0,
+//                         alignment: FractionalOffset.center,
+//                         child: Text(
+//                           "OR",
+//                           style: TextStyle(
+//                               color: AllCoustomTheme.getTextThemeColor(),
+//                               letterSpacing: 0.3,
+//                               fontSize: ConstanceData.SIZE_TITLE18,
+//                               fontFamily: "Roboto",
+//                               fontWeight: FontWeight.bold),
+//                         ),
+//                       ),
+//                       AnimatedOpacity(
+//                         duration: Duration(milliseconds: 500),
+//                         opacity: 1.0,
+//                         child: FlatButton(
+//                           padding: EdgeInsets.all(0),
+//                           child: Container(
+//                             height: 45.0,
+//                             width: 320.0,
+//                             alignment: FractionalOffset.center,
+//                             decoration: BoxDecoration(
+//                                 border:
+//                                     Border.all(color: Colors.white, width: 1.5),
+//                                 borderRadius: BorderRadius.circular(30),
+//                                 color: Color(0xFFD8AF4F)),
+//                             child: Text(
+//                               "Sign Up With Gmail",
+//                               style: TextStyle(
+//                                 color: AllCoustomTheme
+//                                     .getReBlackAndWhiteThemeColors(),
+//                                 letterSpacing: 0.3,
+//                               ),
+//                             ),
+//                           ),
+//                           onPressed: () async {
+//                             var googleToken = await signInWithGoogle();
+//                             loginProviderController.text = "google";
+//                             _submit("google",googleToken);
+//                           },
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 5,
+//                       ),
+//                       AnimatedOpacity(
+//                         duration: Duration(milliseconds: 500),
+//                         opacity: 1.0,
+//                         child: FlatButton(
+//                           padding: EdgeInsets.all(0),
+//                           child: new Container(
+//                             height: 45.0,
+//                             width: 320.0,
+//                             alignment: FractionalOffset.center,
+//                             decoration: BoxDecoration(
+//                                 border:
+//                                     Border.all(color: Colors.white, width: 1.5),
+//                                 borderRadius: BorderRadius.circular(30),
+//                                 color: Color(0xFFD8AF4F)),
+//                             child: Text(
+//                               "Facebook",
+//                               style: TextStyle(
+//                                 color: AllCoustomTheme
+//                                     .getReBlackAndWhiteThemeColors(),
+//                                 letterSpacing: 0.3,
+//                               ),
+//                             ),
+//                           ),
+//                           onPressed: () async {
+//
+//
+// /*                              setState(() {
+//                                 _isInProgress = true;
+//                               });
+//                               await Future.delayed(const Duration(milliseconds: 500));*/
+//
+//                             fbLogin.logInWithReadPermissions([
+//                               'email',
+//                               'public_profile'
+//                             ]).then((result) async {
+//                               switch (result.status) {
+//                                 case FacebookLoginStatus.loggedIn:
+//                                   final token = result.accessToken.token;
+//                                   final graphResponse = await http.get(
+//                                       'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
+//                                   final profile =
+//                                   json.decode(graphResponse.body);
+//
+//                                   setState(() {
+//                                     loginProviderController.text = 'facebook';
+//                                     loginAccessTokenController.text = token;
+//                                   });
+//
+//                                   if (loginProviderController.text != '' &&
+//                                       loginAccessTokenController.text != '') {
+//                                     _submit('facebook','');
+//                                   }
+//                                   break;
+//                                 case FacebookLoginStatus.cancelledByUser:
+//                                 // TODO: Handle this case.
+//                                   break;
+//                                 case FacebookLoginStatus.error:
+//                                 // TODO: Handle this case.
+//                                   break;
+//                               }
+//                             }).catchError((e) {});
+//                           },
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 5,
+//                       ),
+//                       AnimatedOpacity(
+//                         duration: Duration(milliseconds: 500),
+//                         opacity: 1.0,
+//                         child: FlatButton(
+//                           padding: EdgeInsets.all(0),
+//                           child: new Container(
+//                             height: 45.0,
+//                             width: 320.0,
+//                             alignment: FractionalOffset.center,
+//                             decoration: BoxDecoration(
+//                                 border:
+//                                     Border.all(color: Colors.white, width: 1.5),
+//                                 borderRadius: BorderRadius.circular(30),
+//                                 color: Color(0xFFD8AF4F)),
+//                             child: Text(
+//                               "Apple",
+//                               style: TextStyle(
+//                                 color: AllCoustomTheme
+//                                     .getReBlackAndWhiteThemeColors(),
+//                                 letterSpacing: 0.3,
+//                               ),
+//                             ),
+//                           ),
+//                           onPressed: () async {
+// /*                              setState(() {
+//                                 _isInProgress = true;
+//                               });
+//                               await Future.delayed(const Duration(milliseconds: 500));*/
+//                           },
+//                         ),
+//                       )
                     ],
                   ),
                 ),
@@ -781,7 +1011,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   var myScreenFocusNode = FocusNode();
 
-  _submitGoogleToken(data,token){
+  _submitGoogleToken(data, token) {
     var tempJsonReq = {
       "email": "${data["email"]}",
       // "password": "${}",
@@ -789,11 +1019,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       "provider": "google",
       "access_token": "$token",
     };
-
-
   }
 
-  _submit(from,token) async {
+  _submit(from, token) async {
     if (signUpPasswordController.text.trim() ==
         signUpConfirmPasswordController.text.trim()) {
       setState(() {

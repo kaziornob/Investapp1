@@ -9,6 +9,7 @@ import 'package:auroim/main.dart';
 import 'package:auroim/modules/deposite/depositeCurrency.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/muitisig/multisig.dart';
 import 'package:auroim/modules/myWallet/wallet.dart';
 import 'package:auroim/modules/settings/myAccount.dart';
@@ -18,12 +19,14 @@ import 'package:auroim/modules/tradingPair/tradingPair.dart';
 import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:auroim/modules/withdraw/withdrawCurrency.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/widgets/how_app_works.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatefulWidget {
   final String selectItemName;
@@ -46,12 +49,7 @@ var appBarheight = 0.0;
 class _AppDrawerState extends State<AppDrawer> {
   var profileData;
   ApiProvider request = new ApiProvider();
-
-  @override
-  void initState() {
-    super.initState();
-    getProfileData();
-  }
+  bool _isinit = true;
 
   Future<void> getProfileData() async {
     var response = await request.getRequest('users/get_details');
@@ -63,6 +61,31 @@ class _AppDrawerState extends State<AppDrawer> {
         });
       }
     }
+  }
+
+  getUserDetails() async {
+    print("getting user Details");
+    ApiProvider request = new ApiProvider();
+    // print("call set screen");
+    var response = await request.getRequest('users/get_details');
+    print("user detail response: $response");
+    if (response != null && response != false) {
+      userAllDetail = response['data'];
+
+      Provider.of<UserDetails>(context, listen: false)
+          .setUserDetails(userAllDetail);
+      print(userAllDetail.toString());
+    } else {
+      print("Not got user data");
+    }
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (_isinit) {
+      getUserDetails();
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -386,13 +409,28 @@ class _AppDrawerState extends State<AppDrawer> {
                                           sizeFactor: anim,
                                           axis: Axis.horizontal,
                                           axisAlignment: 1,
-                                          child: Text(
-                                            'Go pro',
-                                            style: TextStyle(
-                                              color: AllCoustomTheme
-                                                  .getTextThemeColor(),
-                                              fontSize:
-                                                  ConstanceData.SIZE_TITLE14,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          OnBoardingFirst(
+                                                    logo: "logo.png",
+                                                    callingFrom:
+                                                        "Accredited Investor",
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'Go pro',
+                                              style: TextStyle(
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1179,6 +1217,123 @@ class _AppDrawerState extends State<AppDrawer> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: () async {
+                                    await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return HowAppWorks(
+                                            videoLink:
+                                            "https://www.youtube.com/watch?v=RWFXn2Dsb9E",
+                                          );
+                                        });
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (anim) => SizeTransition(
+                                          sizeFactor: anim,
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Icon(
+                                            Icons.circle,
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
+                                            size: 8,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 14,
+                                      ),
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (anim) => SizeTransition(
+                                          sizeFactor: anim,
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Text(
+                                            'Presentation at Stanford \nAngels Summit',
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                              ConstanceData.SIZE_TITLE14,
+                                            ),
+                                            overflow: TextOverflow.clip,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 10,),
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: () async {
+                                    await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return HowAppWorks(
+                                            videoLink:
+                                                "https://www.youtube.com/watch?v=Tj5vvzUVqrc&t=2s",
+                                          );
+                                        });
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (anim) => SizeTransition(
+                                          sizeFactor: anim,
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Icon(
+                                            Icons.circle,
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
+                                            size: 8,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 14,
+                                      ),
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (anim) => SizeTransition(
+                                          sizeFactor: anim,
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Text(
+                                            'How app works',
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,

@@ -274,7 +274,7 @@ class _BuyCompanyStocksState extends State<BuyCompanyStocks> {
                                           color: AllCoustomTheme
                                               .getNewSecondTextThemeColor(),
                                           fontFamily: "Roboto",
-                                          fontSize: 17,
+                                          fontSize: 15,
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.bold,
                                           letterSpacing: 0.1),
@@ -414,61 +414,61 @@ class _BuyCompanyStocksState extends State<BuyCompanyStocks> {
                     ),
                   ],
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 8,
-                      ),
-                      child: Text(
-                        "Implied Share Price",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "Roboto",
-                            fontSize: 14.5,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.1),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                      ),
-                      child: Container(
-                        height: 30,
-                        width: MediaQuery.of(context).size.width - 20,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xff5A56B9),
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("\$"),
-                              Text("12.5",
-                                  style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getNewSecondTextThemeColor(),
-                                      fontFamily: "Roboto",
-                                      fontSize: 16,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.normal,
-                                      letterSpacing: 0.1)),
-                              SizedBox(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Padding(
+                //       padding: const EdgeInsets.only(
+                //         top: 8,
+                //       ),
+                //       child: Text(
+                //         "Implied Share Price",
+                //         style: TextStyle(
+                //             color: Colors.black,
+                //             fontFamily: "Roboto",
+                //             fontSize: 14.5,
+                //             fontStyle: FontStyle.normal,
+                //             fontWeight: FontWeight.bold,
+                //             letterSpacing: 0.1),
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.only(
+                //         top: 10,
+                //       ),
+                //       child: Container(
+                //         height: 30,
+                //         width: MediaQuery.of(context).size.width - 20,
+                //         decoration: BoxDecoration(
+                //           border: Border.all(
+                //             color: Color(0xff5A56B9),
+                //           ),
+                //           borderRadius: BorderRadius.circular(15),
+                //           color: Colors.white,
+                //         ),
+                //         child: Padding(
+                //           padding: const EdgeInsets.only(left: 8.0),
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               Text("\$"),
+                //               Text("12.5",
+                //                   style: TextStyle(
+                //                       color: AllCoustomTheme
+                //                           .getNewSecondTextThemeColor(),
+                //                       fontFamily: "Roboto",
+                //                       fontSize: 16,
+                //                       fontStyle: FontStyle.normal,
+                //                       fontWeight: FontWeight.normal,
+                //                       letterSpacing: 0.1)),
+                //               SizedBox(),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

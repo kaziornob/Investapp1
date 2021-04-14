@@ -51,8 +51,9 @@ class GoProDataProvider with ChangeNotifier {
     print(allDataToSave);
     await addGoProDataToServer(allDataToSave, context);
     HelperClass.showLoading(context,
-        "Thanks for signing up to Auro Pro. Please wait as we allow our AI engine to custom build your pro portfolio.");
+        "It requires a lot of computing power and analytics to incorporate this level of Customer Preferences while still staying as close as possible to your prior indicated risk appetite, so please be patient while Auro customizes your portfolio.");
     await runAlgo(context);
+
   }
 
   addGoProDataToServer(body, context) async {
@@ -106,7 +107,8 @@ class GoProDataProvider with ChangeNotifier {
     // print("session token: $sessionToken");
 
     var response = await http.get(url, headers: headers);
-    print("get static company response: ${response.statusCode}");
+    print("get go pro response: ${response.statusCode}");
+    print("${response.body}");
     var result = jsonDecode(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -121,9 +123,6 @@ class GoProDataProvider with ChangeNotifier {
         ModalRoute.withName("/Home"),
       );
       // return result["message"];
-    } else if (result != null &&
-        result.containsKey('auth') &&
-        result['auth'] != true) {
     } else {
       Navigator.pop(context);
 
@@ -137,8 +136,4 @@ class GoProDataProvider with ChangeNotifier {
       );
     }
   }
-
-
-
-
 }

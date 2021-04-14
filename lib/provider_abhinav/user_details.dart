@@ -10,6 +10,7 @@ class UserDetails extends ChangeNotifier {
   var userBadge;
 
   setUserDetails(detail) {
+    print("set user name");
     userDetails = detail;
     // notifyListeners();
   }

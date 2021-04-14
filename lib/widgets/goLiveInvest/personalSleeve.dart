@@ -45,7 +45,7 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    getDoughnutPortfolioData();
+    // getDoughnutPortfolioData();
     getSharedPrefData();
     _tabController = new TabController(vsync: this, length: tabList.length);
   }
@@ -238,7 +238,7 @@ class _PersonalSleeveState extends State<PersonalSleeve> with SingleTickerProvid
                                       color: Colors.black,
                                       size: 70,
                                     ),
-                                  )
+                                  ),
                               ),
                               SizedBox(
                                 height: 25.0,

@@ -191,11 +191,11 @@ class _MyProfileState extends State<MyProfile>
                       child: Center(
                         child: Text(
                           Provider.of<UserDetails>(context, listen: false)
-                                          .userDetails["f_name"] !=
+                                          .userDetails !=
                                       null &&
                                   Provider.of<UserDetails>(context,
                                               listen: false)
-                                          .userDetails !=
+                                          .userDetails["f_name"] !=
                                       null
                               ? '${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Investment Track Record'
                               : "Investment Track Record",

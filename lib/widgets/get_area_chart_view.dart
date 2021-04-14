@@ -58,8 +58,9 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
   getFollowing() async {
     print("getting single follow");
     var userEmail;
-    if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
-        null) {
+    if (Provider.of<UserDetails>(context, listen: false).userDetails != null &&
+        Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+            null) {
       userEmail =
           Provider.of<UserDetails>(context, listen: false).userDetails["email"];
     } else {
@@ -307,13 +308,14 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                   margin: EdgeInsets.only(left: 10.0),
                                   child: SfCartesianChart(
                                       primaryXAxis: DateTimeAxis(
-                                        isVisible: false,
+                                        isVisible: true,
+
                                       ),
-                                      title: ChartTitle(text: "30D Pricing"),
+                                      // title: ChartTitle(text: "30D Pricing"),
                                       tooltipBehavior: _tooltipBehavior,
                                       zoomPanBehavior: _zoomPanBehavior,
                                       primaryYAxis:
-                                          NumericAxis(isVisible: false),
+                                          NumericAxis(isVisible: true),
                                       series: <ChartSeries>[
                                         StackedAreaSeries<CryptoCoinPriceData,
                                             dynamic>(

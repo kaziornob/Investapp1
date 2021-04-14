@@ -1,6 +1,7 @@
 // import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/api/reusable_functions.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
@@ -23,6 +24,7 @@ class MainExchangeTab extends StatefulWidget {
 class _MainExchangeTabState extends State<MainExchangeTab>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  ReusableFunctions _reusableFunctions = ReusableFunctions();
   int selectedTabIndex;
   var width = 0.0;
   var height = 0.0;
@@ -49,9 +51,53 @@ class _MainExchangeTabState extends State<MainExchangeTab>
 
   @override
   void initState() {
+    onInitDisplayBootomSheet();
     _tabController = new TabController(vsync: this, length: tabList.length);
     getQuestionsData();
     super.initState();
+  }
+
+
+  onInitDisplayBootomSheet() async {
+    // print();
+    int showPopupData = await _reusableFunctions.exchangePagePopupGetData();
+    print("exchange tab popppopop $showPopupData}");
+    if (showPopupData == null || showPopupData == 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await showDialog(
+          context: context,
+          builder: (builder) {
+            return AlertDialog(
+              content: Text(
+                "Welcome to Auro Exchange. Here you can ask investment related questions or browse questions others have asked, and earn earn Auro Coins if people like your answers",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  letterSpacing: 0.8,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              backgroundColor: Color(0xff161946),
+              actions: [
+                FlatButton(
+                  child: Text(
+                    "OK",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () async {
+                    print("exchange OK pressed");
+                    await _reusableFunctions.exchangePagePopupPressed();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
+    }
   }
 
   // api calls section start

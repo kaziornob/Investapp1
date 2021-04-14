@@ -1,4 +1,5 @@
 import 'package:auroim/api/featured_companies_provider.dart';
+import 'package:auroim/api/reusable_functions.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
@@ -13,6 +14,7 @@ import 'package:auroim/widgets/auro_stars.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/go_to_marketplace_button.dart';
+import 'package:auroim/widgets/payment_pages/payment_types.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
 import 'package:auroim/widgets/public_companies_list.dart';
@@ -31,8 +33,174 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
   ScrollController _scrollController = ScrollController();
+  ReusableFunctions _reusableFunctions = ReusableFunctions();
   String selectedWeeklyLeague;
   var userData;
+
+  List names = [
+    "Warren Buffet",
+    "Jim Simons",
+    "Benjamin Graham",
+    "Bill Gross",
+    "John Templeton",
+    "Steve Mandel",
+    "Peter Lynch",
+    "George Soros",
+    "Lei Zhang",
+    "Rakesh Jhunjhunwala"
+  ];
+
+  final Map alldetailsForClubs = {
+    "Warren Buffet": {
+      "text1":
+      "Buy companies at a low price, improve them via management and make long term gains",
+      "text2":
+      "He has a 30-year-plus track record making on average 20 percent a year.",
+      "name": "Warren Buffet",
+    },
+    "Jim Simons": {
+      "text1":
+      "Jim Simons, one of the greatest investors of all time, built his market-beating strategy around taking the human element out of investing. He founded Renaissance Technologies, which uses quantitative models underpinned by massive amounts of data to identify and profit from patterns in the market",
+      "text2":
+      "66% before charging fees—39% after fees—racking up trading gains of more than dollar 100 billion.",
+      "name": "Jim Simons",
+    },
+    "Benjamin Graham": {
+      "text1":
+      "value investing using fundamental analysis, whereby investors analyze stock data to find assets that have been systematically undervalued.",
+      "text2":
+      "Graham's investment firm posted annualized returns of about 20% from 1936 to 1956, far outpacing the 12.2% average return for the broader market over that time",
+      "name": "Benjamin Graham",
+    },
+    "Bill Gross": {
+      "text1":
+      "“King of bonds”- focus on buying individual bonds with a long-term (3-5 year) outlook",
+      "text2":
+      "Gross’ compounded annual return over the 27 year period was 7.52%, versus 6.44% for the Barclay’s Aggregate US Index.",
+      "name": "Bill Gross",
+    },
+    "John Templeton": {
+      "text1":
+      "1.Diversification 2.Look for companies globally- best value stocks are those that are most neglected",
+      "text2":
+      "Templeton’s Growth Fund, created in 1954, went on to earn about a 14% annual return over the next 38 years when he retired in 1992.",
+      "name": "John Templeton",
+    },
+    "Steve Mandel": {
+      "text1":
+      "He employs fundamental analysis and a bottom-up stock picking approach, meaning he focuses on individual companies instead of global macro trends and economic cycles.",
+      "text2":
+      "The Hedge Fund 'Lone Pine' has averaged 30% annualized returns since 1997.",
+      "name": "Steve Mandel",
+    },
+    "Peter Lynch": {
+      "text1":
+      "1.Be 100% sure. 2.It’s impossible to predict the economy and interest rates. 3.Take your time to identify exceptional companies 4.buy good businesses5.Be aware of the risks of your purchase",
+      "text2":
+      "As the manager of the Magellan Fund at Fidelity Investments between 1977 and 1990, Lynch averaged a 29.2% annual return, consistently more than double the S&P 500 stock market index and making it the best-performing mutual fund in the world.",
+      "name": "Peter Lynch",
+    },
+    "George Soros": {
+      "text1":
+      "Identify macroeconomic trends Highly leveraged bets on bonds and commodities",
+      "text2":
+      "Soros Fund Management, LLC is a private American investment management firm. It is currently structured as a family office, but formerly as a hedge fund. The firm was founded in 1969 by George Soros[1] and, in 2010, was reported to be one of the most profitable firms in the hedge fund industry,[2] averaging a 20% annual rate of return over four decades.",
+      "name": "George Soros",
+    },
+    "Lei Zhang": {
+      "text1":
+      "Lei Zhang is a big believer in value investing, but where he deviates from the traditional value investing philosophy is that he likes investing in changes. He believes that it is change that derives value and he would like to invest in people driving them.",
+      "text2":
+      "Hillhouse has achieved investment returns of up to 52% annualized from inception in 2005 until 2012, even in spite of a 37% drop in 2008, making Hillhouse among the most profitable funds of its size in the world, and the leading fund in Asia",
+      "name": "Lei Zhang",
+    },
+    "Rakesh Jhunjhunwala": {
+      "text1":
+      "buy when the share is in uptrend and sell only when the share goes in the downtrend.",
+      "text2":
+      "In 1985, Jhunjhunwala invested Rs 5,000 (dollar 70) as capital. By September 2018, that capital had inflated to Rs 11,000 crore (dollar 1.5 bn).",
+      "name": "Rakesh Jhunjhunwala",
+    },
+  };
+
+  // onInitDisplayBootomSheet() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     await showDialog(
+  //       context: context,
+  //       builder: (builder) {
+  //         return AlertDialog(
+  //           content: Text(
+  //             "Welcome to Auro’s Adaptive Learning. You will get Questions teaching you investment concepts based on your difficulty level, and allow you to earn Auro Coins, based on which you'll become a member of different investment clubs!",
+  //             style: TextStyle(color: Colors.white,fontSize: 20,letterSpacing: 0.8,),
+  //             textAlign: TextAlign.center,
+  //           ),
+  //           backgroundColor: Color(0xff161946),
+  //           actions: [
+  //             FlatButton(
+  //               child: Text(
+  //                 "OK",
+  //                 style: TextStyle(
+  //                   color: Colors.white,
+  //                 ),
+  //               ),
+  //               onPressed: () => Navigator.of(context).pop(),
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //   });
+  // }
+
+  onInitDisplayBootomSheet() async {
+    // print();
+    int showPopupData = await _reusableFunctions.learnMarketplacePagePopupGetData();
+    print("learn marketplace tab popppopop $showPopupData}");
+    if (showPopupData == null || showPopupData == 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await showDialog(
+          context: context,
+          builder: (builder) {
+            return AlertDialog(
+              content: Text(
+                "Welcome to Auro’s Adaptive Learning. You will get Questions teaching you investment concepts based on your difficulty level, and allow you to earn Auro Coins, based on which you'll become a member of different investment clubs!",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  letterSpacing: 0.8,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              backgroundColor: Color(0xff161946),
+              actions: [
+                FlatButton(
+                  child: Text(
+                    "OK",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () async {
+                    print("exchange OK pressed");
+                    await _reusableFunctions.learnMarketplacePagePopupPressed();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
+    }
+  }
+
+
+  @override
+  void initState() {
+    onInitDisplayBootomSheet();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +268,26 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                       ),
                     ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
+                  child: Container(
+                    // margin: EdgeInsets.only(left: 35.0,right: 20.0),
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.07,
+                        right: MediaQuery.of(context).size.width * 0.03),
+                    child: Text(
+                      "Invest in actively managed portfolios created by Auroville Investment Management" +
+                          " team of licensed professionals",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                          fontSize: 14.5,
+                          fontFamily: "Roboto",
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: 0.2),
+                    ),
+                  ),
                 ),
                 AuroStars(),
               ],
@@ -614,7 +802,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                   ),
                 ),
                 SizedBox(
-                  height: 4,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 5.0),
@@ -649,44 +837,155 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                   ),
                 ),
                 SizedBox(
-                  height: 4,
+                  height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: InkWell(
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => InvestmentMasterclass(),
-                            ),
-                          ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left:8.0),
+                    //   child: Container(
+                    //     height: 50,
+                    //     width: (MediaQuery.of(context).size.width / 2) - 10,
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       color: AllCoustomTheme.getSeeMoreThemeColor(),
+                    //     ),
+                    //     child: Center(
+                    //       child: Text(
+                    //         'SUBSCRIBE',
+                    //         textAlign: TextAlign.center,
+                    //         style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: ConstanceData.SIZE_TITLE15,
+                    //           fontFamily: "Roboto",
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.06,
                           child: Container(
-                            height: 30,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: (MediaQuery.of(context).size.width/2)-40,
                             decoration: BoxDecoration(
-                              color: AllCoustomTheme.getSeeMoreThemeColor(),
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20)),
+                              border: new Border.all(
+                                  color: AllCoustomTheme
+                                      .getOtherTabButtonBoxColor(),
+                                  width: 1.5),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 5.0),
-                              child: Text(
-                                'INVESTMENT MASTERCLASS',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: ConstanceData.SIZE_TITLE15,
-                                  fontFamily: "Roboto",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                            child: MaterialButton(
+                              splashColor: Colors.grey,
+                              child: Text("SUBSCRIBE",
+                                  style: AllCoustomTheme
+                                      .getOtherTabButtonNonSelectedTextStyleTheme()),
+                              onPressed: () async {
+                                // Navigator.of(context).push(new MaterialPageRoute(
+                                //     builder: (BuildContext context) =>
+                                //         new WishList()));
+                                Navigator.of(context).push(
+                                  // MaterialPageRoute(
+                                  //   builder: (BuildContext context) =>
+                                  //       InvestorType(),
+                                  // ),
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        PaymentTypes(),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: (MediaQuery.of(context).size.width/2)-40,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20)),
+                              border: new Border.all(
+                                  color: AllCoustomTheme
+                                      .getOtherTabButtonBoxColor(),
+                                  width: 1.5),
+                            ),
+                            child: MaterialButton(
+                              splashColor: Colors.grey,
+                              child: Text("INVESTMENT MASTERCLASS",
+                                  style: AllCoustomTheme
+                                      .getOtherTabButtonNonSelectedTextStyleTheme()),
+                              onPressed: () async {
+                                // Navigator.of(context).push(new MaterialPageRoute(
+                                //     builder: (BuildContext context) =>
+                                //         new WishList()));
+                                Navigator.of(context).push(
+                                  // MaterialPageRoute(
+                                  //   builder: (BuildContext context) =>
+                                  //       InvestorType(),
+                                  // ),
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        InvestmentMasterclass(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
+
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 16, right: 5.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: <Widget>[
+                //       Expanded(
+                //         child: InkWell(
+                //           onTap: () => Navigator.of(context).push(
+                //             MaterialPageRoute(
+                //               builder: (context) => InvestmentMasterclass(),
+                //             ),
+                //           ),
+                //           child: Container(
+                //             height: 30,
+                //             decoration: BoxDecoration(
+                //               color: AllCoustomTheme.getSeeMoreThemeColor(),
+                //             ),
+                //             child: Padding(
+                //               padding: EdgeInsets.only(top: 5.0),
+                //               child: Text(
+                //                 'INVESTMENT MASTERCLASS',
+                //                 textAlign: TextAlign.center,
+                //                 style: TextStyle(
+                //                   color: Colors.white,
+                //                   fontSize: ConstanceData.SIZE_TITLE15,
+                //                   fontFamily: "Roboto",
+                //                   fontWeight: FontWeight.bold,
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -1086,25 +1385,18 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                             height: MediaQuery.of(context).size.height * 0.10,
                             child: Scrollbar(
                               child: ListView.builder(
-                                itemCount: 10,
+                                itemCount: names.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return InkWell(
                                     onTap: () {
-                                      var tempField = {
-                                        "rankingNum": "1",
-                                        "name": "Warren Buffet",
-                                        "philosophy":
-                                            "Buy companies at a low price, improve them via management and make long term gains",
-                                        "trackRecord":
-                                            "He has a 30-year-plus track record making on average 20 percent a year",
-                                        "image": "WarrenBuffet"
-                                      };
-                                      print("tempfield: $tempField");
+
                                       Navigator.of(context).push(
                                         CupertinoPageRoute(
                                           builder: (BuildContext context) =>
-                                              ClubDetail(allField: tempField),
+                                              ClubDetail(
+                                                  allField: alldetailsForClubs[
+                                                  names[index]]),
                                         ),
                                       );
                                     },

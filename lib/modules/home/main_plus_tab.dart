@@ -2,9 +2,11 @@ import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/add_comment_bottom_sheet_widget.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 
 class MainPlusTab extends StatefulWidget {
   @override
@@ -13,9 +15,9 @@ class MainPlusTab extends StatefulWidget {
 
 class _MainPlusTabState extends State<MainPlusTab> {
   bool _isInProgress = false;
-  List<String> userList = <String>['Abhinav', 'Amar'];
+  List<String> userList = ["",];
 
-  String selectedUser = "Abhinav";
+  String selectedUser = "";
   List<String> tagItemList = <String>['native', 'fixed'];
 
   @override
@@ -25,6 +27,8 @@ class _MainPlusTabState extends State<MainPlusTab> {
     onInitDisplayBootomSheet();
     loadUserDetails();
   }
+
+
 
   loadUserDetails() async {
     setState(() {
@@ -101,6 +105,15 @@ class _MainPlusTabState extends State<MainPlusTab> {
         width: 0.0,
       );
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    userList.add(Provider.of<UserDetails>(context).userDetails["f_name"]);
+    setState(() {
+      selectedUser = Provider.of<UserDetails>(context).userDetails["f_name"];
+    });
+    super.didChangeDependencies();
   }
 
   @override
