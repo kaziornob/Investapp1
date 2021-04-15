@@ -286,7 +286,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ss.add(item1);
     });
     ss.sort();
-    
+
     print("${ss.toSet()}");
     print("$ss");
     phoneIsoCode = '+852';
@@ -671,22 +671,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     keyboardType:
                                                         TextInputType.text,
                                                     obscureText: true,
-                                                    decoration: new InputDecoration(
-                                                        focusColor: AllCoustomTheme
-                                                            .getTextThemeColor(),
-                                                        fillColor: AllCoustomTheme
-                                                            .getTextThemeColor(),
-                                                        hintText:
-                                                            'Re-Enter password here...',
-                                                        hintStyle: TextStyle(
-                                                            color: Colors
-                                                                .grey[600],
-                                                            fontSize: ConstanceData
-                                                                .SIZE_TITLE14),
-                                                        labelText:
-                                                            'Confirm Password',
-                                                        labelStyle: AllCoustomTheme
-                                                            .getTextFormFieldLabelStyleTheme()),
+                                                    decoration:
+                                                        new InputDecoration(
+                                                            focusColor:
+                                                                AllCoustomTheme
+                                                                    .getTextThemeColor(),
+                                                            fillColor:
+                                                                AllCoustomTheme
+                                                                    .getTextThemeColor(),
+                                                            hintText:
+                                                                'Re-Enter password here...',
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              color: Colors
+                                                                  .grey[600],
+                                                              fontSize:
+                                                                  ConstanceData
+                                                                      .SIZE_TITLE14,
+                                                            ),
+                                                            labelText:
+                                                                'Confirm Password',
+                                                            labelStyle:
+                                                                AllCoustomTheme
+                                                                    .getTextFormFieldLabelStyleTheme()),
                                                     validator:
                                                         _validatePassword,
                                                     controller:
@@ -724,7 +731,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       phoneNumber,
                                                   initialSelection:
                                                       phoneIsoCode,
-                                                  enabledCountries: callingCodes,
+                                                  enabledCountries:
+                                                      callingCodes,
                                                   showCountryCodes: true,
                                                   showCountryFlags: true,
                                                 ),

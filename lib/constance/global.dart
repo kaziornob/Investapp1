@@ -726,7 +726,7 @@ class HelperClass {
 
 
 
-  static void showLoading(context, text) {
+  static void showLoading(context, text,showTimer) {
     // var sLoadingContext;
     print("show loading call");
     showDialog(
@@ -734,7 +734,7 @@ class HelperClass {
       barrierDismissible: false,
       builder: (BuildContext loadingContext) {
         // sLoadingContext = loadingContext;
-        return LoadingDialogWithTimer(text: text,);
+        return LoadingDialogWithTimer(text: text,showTimer: showTimer,);
       },
     );
   }

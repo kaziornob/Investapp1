@@ -252,7 +252,7 @@ class _AnsViewState extends State<AnsView> {
 
   _submit (context) async
   {
-    HelperClass.showLoading(context,null);
+    HelperClass.showLoading(context,null,false);
 
     var tempJsonReq = {"question_id":"${widget.allParams['qusID']}","answer":"${widget.allParams['body']}"};
     print("create answer tempJsonReq: $tempJsonReq");

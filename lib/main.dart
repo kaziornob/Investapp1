@@ -14,6 +14,7 @@ import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/provider_abhinav/follow_provider.dart';
+import 'package:auroim/provider_abhinav/forgot_password_provider.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:auroim/provider_abhinav/long_short_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
@@ -331,6 +332,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => LongShortProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ForgotPasswordProvider(),
           ),
         ],
         child: MaterialApp(

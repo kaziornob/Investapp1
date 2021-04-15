@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class LoadingDialogWithTimer extends StatefulWidget {
   final text;
+  final showTimer;
 
-  const LoadingDialogWithTimer({Key key, this.text}) : super(key: key);
+  const LoadingDialogWithTimer({Key key, this.text, this.showTimer})
+      : super(key: key);
 
   @override
   _LoadingDialogWithTimerState createState() => _LoadingDialogWithTimerState();
@@ -31,14 +33,16 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
 
   @override
   void dispose() {
-    _timer.cancel();
+   if( _timer != null){
+     _timer.cancel();
+   }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, loadingState) {
-      if (_isInit) {
+      if (_isInit && widget.showTimer) {
         startTimer(loadingState);
         _isInit = false;
       }
@@ -51,20 +55,22 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 15.0, bottom: 8.0),
-                  child: Container(
-                    child: Text(
-                      "${120 - _start} seconds remaining",
-                      style: TextStyle(
-                        color: const Color(0xFFD9E4E9),
+              widget.showTimer
+                  ? Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 15.0, bottom: 8.0),
+                        child: Container(
+                          child: Text(
+                            "${120 - _start} seconds remaining",
+                            style: TextStyle(
+                              color: const Color(0xFFD9E4E9),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
+                    )
+                  : SizedBox(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(

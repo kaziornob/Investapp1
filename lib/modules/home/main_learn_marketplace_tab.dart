@@ -1669,7 +1669,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
   }
 
   increaseYourScore() async {
-    HelperClass.showLoading(context, null);
+    HelperClass.showLoading(context, null,false);
     Question questions = await getQuestions();
     if (questions == null) {
       Navigator.pop(context);

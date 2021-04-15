@@ -610,7 +610,7 @@ class _AnsDetailState extends State<AnsDetail> {
 
   _updateAnsVote (from,context) async
   {
-    HelperClass.showLoading(context,null);
+    HelperClass.showLoading(context,null,false);
 
     var tempIdData = [
       "answer",

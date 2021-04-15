@@ -27,7 +27,6 @@ class QuestionTemplate extends StatefulWidget {
 }
 
 class _QuestionTemplateState extends State<QuestionTemplate> {
-
   bool _isInProgress = false;
   ApiProvider request = new ApiProvider();
   bool answerRequest = false;
@@ -42,7 +41,6 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
   Future<void> _initializeVideoPlayerFuture;
   ChewieController _chewieController;*/
 
-
   @override
   void initState() {
     super.initState();
@@ -53,22 +51,20 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     _initializeVideoPlayerFuture = videoPlayerController.initialize();*/
   }
 
-
   @override
   void dispose() {
 /*    videoPlayerController.pause();
     videoPlayerController.dispose();
     _chewieController.dispose();*/
 
-    if(_controller.value.isFullScreen)
-      {
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.landscapeRight,
-          DeviceOrientation.landscapeLeft,
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]);
-      }
+    if (_controller.value.isFullScreen) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    }
     _controller.dispose();
     super.dispose();
   }
@@ -79,8 +75,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     videoPlayerController.dispose();
     _chewieController.dispose();*/
 
-    if(_controller.value.isFullScreen)
-    {
+    if (_controller.value.isFullScreen) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeRight,
         DeviceOrientation.landscapeLeft,
@@ -99,22 +94,22 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
           data: Theme.of(context).copyWith(
             unselectedWidgetColor: Colors.white,
           ),
-          child:  Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ...options.map(
-                    (option) => RadioListTile(
+                (option) => RadioListTile(
                   title: Row(
                     children: <Widget>[
                       Expanded(
                         flex: 3,
-                        child: Text('${option["option_value"]}',
+                        child: Text(
+                          '${option["option_value"]}',
                           style: TextStyle(
                               fontSize: ConstanceData.SIZE_TITLE16,
                               fontWeight: FontWeight.w400,
-                              color: AllCoustomTheme.getTextThemeColors()
-                          ),
+                              color: AllCoustomTheme.getTextThemeColors()),
                         ),
                       ),
                     ],
@@ -134,25 +129,28 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                 ),
               ),
             ],
-          )
-      );
+          ));
     } else if (qusType == 'multianswermcq') {
-
       return Theme(
           data: Theme.of(context).copyWith(
             unselectedWidgetColor: Colors.white,
           ),
-          child:  Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ...options.map(
-                    (items) => CheckboxListTile(
-                  title: Text('${items["option_value"]}',
+                (items) => CheckboxListTile(
+                  title: Text(
+                    '${items["option_value"]}',
                     style: TextStyle(
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontWeight: FontWeight.w400,
-                        color: answerRequest== false ? Colors.white : (items["is_correct"]==true || items["is_correct"]=="true" ? Colors.green : Colors.red)
-                    ),
+                        color: answerRequest == false
+                            ? Colors.white
+                            : (items["is_correct"] == true ||
+                                    items["is_correct"] == "true"
+                                ? Colors.green
+                                : Colors.red)),
                   ),
                   value: items["checked"],
                   controlAffinity: ListTileControlAffinity.leading,
@@ -166,8 +164,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                 ),
               ),
             ],
-          )
-      );
+          ));
     } else {
       return Row();
     }
@@ -178,7 +175,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     for (int i = 0; i < optionsData.length; i++) {
       if (optionsData[i]['checked'] == true) {
         var temp = optionsData[i];
-       /* var temp = {
+        /* var temp = {
           "value": "${optionsData[i]["option_value"]}",
         };*/
         widget.questions.userAnswer.add(temp);
@@ -203,27 +200,26 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     }
   }
 
-  Widget getVideos(link)
-  {
+  Widget getVideos(link) {
     var appBar = AppBar();
 
-    if(link!='' && link!=null)
-    {
-        var videoId = YoutubePlayer.convertUrlToId("$link");
-        _controller = YoutubePlayerController(
-          initialVideoId: '$videoId',
-          flags: YoutubePlayerFlags(
-            autoPlay: true,
-            mute: false,
-            loop: false,
-          ),
-        );
+    if (link != '' && link != null) {
+      var videoId = YoutubePlayer.convertUrlToId("$link");
+      _controller = YoutubePlayerController(
+        initialVideoId: '$videoId',
+        flags: YoutubePlayerFlags(
+          autoPlay: true,
+          mute: false,
+          loop: false,
+        ),
+      );
 
       return Container(
-          height: fullScreenModeActive==false ? (MediaQuery.of(context).size.height -
-              appBar.preferredSize.height) /
-              2.5 : MediaQuery.of(context).size.height,
-
+          height: fullScreenModeActive == false
+              ? (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height) /
+                  2.5
+              : MediaQuery.of(context).size.height,
           child: Stack(
             children: <Widget>[
               YoutubePlayer(
@@ -231,12 +227,9 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                 showVideoProgressIndicator: true,
                 onReady: () {
                   _controller.addListener(() {
-                    if(_controller.value.isFullScreen)
-                    {
+                    if (_controller.value.isFullScreen) {
                       fullScreenModeActive = true;
-                    }
-                    else
-                    {
+                    } else {
                       fullScreenModeActive = false;
                       SystemChrome.setPreferredOrientations([
                         DeviceOrientation.landscapeRight,
@@ -252,16 +245,12 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                 },
               ),
             ],
-          )
-      );
-    }
-    else
-    {
-
+          ));
+    } else {
       return Container(
-        height: (MediaQuery.of(context).size.height -
-            appBar.preferredSize.height) /
-            2.5,
+        height:
+            (MediaQuery.of(context).size.height - appBar.preferredSize.height) /
+                2.5,
       );
     }
   }
@@ -295,9 +284,8 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     var rightAnsStatus = false;
 
     if (widget.questions.questionType == "singleanswermcq") {
-      var findValue = widget.questions.userAnswer[0]["value"]
-          .toLowerCase()
-          .trim();
+      var findValue =
+          widget.questions.userAnswer[0]["value"].toLowerCase().trim();
       var temp = widget.questions.qusOptions[0]["option_value"]
           .toLowerCase()
           .trim()
@@ -307,24 +295,16 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
       } else {
         wrongAnsStatus = true;
       }
-    } else if (widget.questions.questionType ==
-        "multianswermcq") {
+    } else if (widget.questions.questionType == "multianswermcq") {
       var newArray = [];
 
-      for (var i = 0;
-      i < widget.questions.qusOptions.length;
-      i++) {
-        var rightValue = widget
-            .questions.qusOptions[i]['value']
-            .toLowerCase()
-            .trim();
+      for (var i = 0; i < widget.questions.qusOptions.length; i++) {
+        var rightValue =
+            widget.questions.qusOptions[i]['value'].toLowerCase().trim();
 
-        for (var j = 0;
-        j < widget.questions.userAnswer.length;
-        j++) {
-          var userValue = widget.questions.userAnswer[j]['value']
-              .toLowerCase()
-              .trim();
+        for (var j = 0; j < widget.questions.userAnswer.length; j++) {
+          var userValue =
+              widget.questions.userAnswer[j]['value'].toLowerCase().trim();
 
           if (userValue == rightValue) {
             newArray.add({"value": "$rightValue"});
@@ -332,8 +312,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
         }
       }
 
-      if (widget.questions.qusOptions.length ==
-          newArray.length &&
+      if (widget.questions.qusOptions.length == newArray.length &&
           widget.questions.userAnswer.length ==
               widget.questions.qusOptions.length) {
         rightAnsStatus = true;
@@ -404,8 +383,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                         style: TextStyle(
                             fontSize: ConstanceData.SIZE_TITLE16,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xffffffff)
-                        ),
+                            color: Color(0xffffffff)),
                       ),
                     ),
                     Divider(),
@@ -423,7 +401,6 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -446,16 +423,13 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                     height: 50,
                     child: GestureDetector(
                       onTap: () {
-                        if(widget.questions.userAnswer.length==0)
-                          {
-                            _controller.pause();
-                            HelperClass.showAlert(context, "Choose option first");
-                          }
-                        else
-                          {
-                            _controller.pause();
-                            _submit();
-                          }
+                        if (widget.questions.userAnswer.length == 0) {
+                          _controller.pause();
+                          HelperClass.showAlert(context, "Choose option first");
+                        } else {
+                          _controller.pause();
+                          _submit();
+                        }
                       },
                       child: Animator(
                         tween: Tween<double>(begin: 0.8, end: 1.1),
@@ -506,98 +480,100 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                 padding: const EdgeInsets.only(right: 16, left: 16),
                 child: !_isInProgress
                     ? Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: appBarheight,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Animator(
-                            tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                            duration: Duration(milliseconds: 500),
-                            cycles: 0,
-                            builder: (anim) => FractionalTranslation(
-                              translation: anim.value,
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: AllCoustomTheme.getTextThemeColors(),
-                              ),
-                            ),
+                        children: <Widget>[
+                          SizedBox(
+                            height: appBarheight,
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(
-                            top: 15.0, left: 10.0, right: 10.0, bottom: 20.0),
-                        child: Padding(
-                          padding:
-                          EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0),
-                          child: DefaultTextStyle.merge(
-                              style: const TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xffffffff)
+                          Row(
+                            children: <Widget>[
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Animator(
+                                  tween: Tween<Offset>(
+                                      begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                  duration: Duration(milliseconds: 500),
+                                  cycles: 0,
+                                  builder: (anim) => FractionalTranslation(
+                                    translation: anim.value,
+                                    child: Icon(
+                                      Icons.arrow_back_ios,
+                                      color:
+                                          AllCoustomTheme.getTextThemeColors(),
+                                    ),
+                                  ),
+                                ),
                               ),
-                              softWrap: true,
-                              child: Text(
-                                '${widget.questions.question}',
+                            ],
+                          ),
+                          Container(
+                              margin: EdgeInsets.only(
+                                  top: 15.0,
+                                  left: 10.0,
+                                  right: 10.0,
+                                  bottom: 20.0),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 16.0, right: 16.0, top: 5.0),
+                                child: DefaultTextStyle.merge(
+                                    style: const TextStyle(
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffffffff)),
+                                    softWrap: true,
+                                    child: Text(
+                                      '${widget.questions.question}',
+                                    )),
                               )),
-                        )
-                    ),
-                    Divider(),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Text("*you may find the following video useful before you answer the question",
-                              style: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE12,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.blueGrey
-                              ),
+                          Divider(),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    "*you may find the following video useful before you answer the question",
+                                    style: TextStyle(
+                                        fontSize: ConstanceData.SIZE_TITLE12,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.blueGrey),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    "*This question has multiple correct options.",
+                                    style: TextStyle(
+                                        fontSize: ConstanceData.SIZE_TITLE12,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.blueGrey),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Expanded(
-                            flex: 3,
-                            child: Text("*This question has multiple correct options.",
-                              style: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE12,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.blueGrey
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.30,
-                      child: getVideos(widget.questions.videoLink),
+                          Divider(),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.30,
+                            child: getVideos(widget.questions.videoLink),
 /*                      child: getS3Videos(
                           "${widget.questions.videoLink}"),*/
-                    ),
-                    Divider(),
-                    Container(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: getOptionList(
-                            widget.questions.questionType,
-                            options),
-                      ),
-                    ),
+                          ),
+                          Divider(),
+                          Container(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                              child: getOptionList(
+                                  widget.questions.questionType, options),
+                            ),
+                          ),
 /*                    Visibility(
                         visible: widget.questions.userAnswer.length!=0,
                         child: Container(
@@ -606,9 +582,8 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                           child: getAnswerList(widget.questions.qusOptions),
                         )
                     ),*/
-
-                  ],
-                )
+                        ],
+                      )
                     : SizedBox(),
               ),
             ),
@@ -618,14 +593,12 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
     );
   }
 
-
   Future _submit() async {
-    HelperClass.showLoading(context,null);
+    HelperClass.showLoading(context, null, false);
 
     var questionJson;
 
     if (widget.questions.questionType == "multianswermcq") {
-
       var optionsResult = [];
 
       for (var i = 0; i < widget.questions.userAnswer.length; i++) {
@@ -646,64 +619,55 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
         "diff": widget.questions.diffScore,
         "answer_id": answerId,
       };
-
     }
-
 
     print("questionJson: $questionJson");
 
     String jsonReq = json.encode(questionJson);
 
-    var jsonReqResp = await request.postSubmit('qa/user_answer',jsonReq);
+    var jsonReqResp = await request.postSubmit('qa/user_answer', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("question and answers response: $result");
 
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
       Navigator.pop(context);
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
-        if(result['message']['result']=='correct answer')
-          {
-            setState(() {
-              answerRequest = true;
-            });
-            await Future.delayed(const Duration(seconds: 5));
-            getDialog();
-          }
-        else
-          {
-            Toast.show("${result['message']['result']}", context,
-                duration: Toast.LENGTH_LONG,
-                gravity: Toast.BOTTOM);
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true) {
+        if (result['message']['result'] == 'correct answer') {
+          setState(() {
+            answerRequest = true;
+          });
+          await Future.delayed(const Duration(seconds: 5));
+          getDialog();
+        } else {
+          Toast.show("${result['message']['result']}", context,
+              duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
-            setState(() {
-              answerRequest = true;
-            });
-            await Future.delayed(const Duration(seconds: 4));
-            setNextQus();
-          }
+          setState(() {
+            answerRequest = true;
+          });
+          await Future.delayed(const Duration(seconds: 4));
+          setNextQus();
+        }
       }
-    }
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
-
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
       Navigator.pop(context);
       Toast.show("${result['message']['result']}", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
-    }
-    else{
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    } else {
       Navigator.pop(context);
       Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
 
   void getDialog() {
-    showDialog(context: context,
+    showDialog(
+        context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
@@ -732,22 +696,24 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                   setNextQus();
                 },
               ),
-            ],);
-        }
-    );
+            ],
+          );
+        });
   }
 
   setNextQus() async {
-    HelperClass.showLoading(context,null);
+    HelperClass.showLoading(
+      context,
+      null,
+      false,
+    );
     Question questions = await getQuestions();
-    if (questions==null) {
+    if (questions == null) {
       Navigator.pop(context);
       Navigator.of(context).push(CupertinoPageRoute(
           builder: (_) => ErrorPage(
-            message: "There are not enough questions yet.",
-          )
-      )
-      );
+                message: "There are not enough questions yet.",
+              )));
       return;
     }
     Navigator.pop(context);
@@ -760,9 +726,11 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
         ModalRoute.withName("/qusAnsTemplate")
     );*/
 
-    Navigator.of(context).push(CupertinoPageRoute(
-      builder: (BuildContext context) => QuestionTemplate(questions: questions),
-    ),
+    Navigator.of(context).pushReplacement(
+      CupertinoPageRoute(
+        builder: (BuildContext context) =>
+            QuestionTemplate(questions: questions),
+      ),
     );
   }
 }

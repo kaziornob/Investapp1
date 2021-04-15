@@ -1,10 +1,15 @@
 import 'package:animator/animator.dart';
+import 'package:auroim/auth/otp_forgot_pass.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/forgot_password_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+
+import 'otp.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -14,6 +19,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool _isInProgress = false;
   bool _visible = false;
+  TextEditingController _emailController = TextEditingController();
 
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -26,6 +32,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void initState() {
     super.initState();
     animation();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
   }
 
   final _forgotFormKey = new GlobalKey<FormState>();
@@ -101,11 +113,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 child: Text(
                                   'Forgot password',
                                   style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
+                                      color:
+                                          AllCoustomTheme.getTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE20,
                                       fontFamily: "Roboto",
-                                      fontWeight: FontWeight.bold
-                                  ),
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -142,11 +154,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   bottom: BorderSide(
-                                                    color: Color(0xFFD8AF4F),
-                                                    width: 1.6, // Underline width
-                                                  )
-                                              )
-                                          ),
+                                            color: Color(0xFFD8AF4F),
+                                            width: 1.6, // Underline width
+                                          ))),
                                         ),
                                       ),
                                       Row(
@@ -154,25 +164,30 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                  left: 14, top: 4,right: 20),
+                                                  left: 14, top: 4, right: 20),
                                               child: TextFormField(
+                                                controller: _emailController,
                                                 validator: _validateEmail,
                                                 cursorColor: AllCoustomTheme
                                                     .getTextThemeColor(),
-                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
                                                 keyboardType:
                                                     TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme
-                                                      .getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme
-                                                      .getTextThemeColor(),
-                                                  hintText:
-                                                      'Enter email here...',
-                                                    hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'E-mail',
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                                ),
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText:
+                                                        'Enter email here...',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText: 'E-mail',
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
                                                 //controller: lastnameController,
                                                 onSaved: (value) {
                                                   setState(() {
@@ -199,15 +214,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                                   alignment:
                                                       FractionalOffset.center,
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                                    border: new Border.all(color: Color(0xFFD8AF4F), width: 1.5),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                20)),
+                                                    border: new Border.all(
+                                                        color:
+                                                            Color(0xFFD8AF4F),
+                                                        width: 1.5),
                                                     color: Color(0xFFD8AF4F),
                                                   ),
                                                   child: new Text(
                                                     "Send Email",
                                                     style: TextStyle(
-                                                      color: AllCoustomTheme.getTextThemeColors(),
-                                                      fontSize: ConstanceData.SIZE_TITLE14,
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColors(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE14,
                                                     ),
                                                   ),
                                                 ),
@@ -240,6 +263,68 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
+  void getDialog(text,goToNextScreen) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+            title: Text(
+              "",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AllCoustomTheme.getTextThemeColors(),
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            content: Text(
+              "$text",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AllCoustomTheme.getTextThemeColors(),
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Ok',
+                  style: TextStyle(
+                    color: AllCoustomTheme.getTextThemeColors(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  if(goToNextScreen){
+                    Navigator.of(context, rootNavigator: true)
+                        .push(
+                      CupertinoPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            ForgotPasswordOtpScreen(email: _emailController.text,),
+                      ),
+                    )
+                        .then((onValue) {
+                      setState(() {
+                        _isInProgress = false;
+                      });
+                    });
+                  }else{
+                    print("Cannot go to next screen");
+                    setState(() {
+                      _isInProgress = false;
+                    });
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   var myScreenFocusNode = FocusNode();
 
   _submit() async {
@@ -257,18 +342,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
     _forgotFormKey.currentState.save();
 
+    bool otpSent = await Provider.of<ForgotPasswordProvider>(context,listen: false)
+        .sendOtp(_emailController.text);
+    if(otpSent){
+      getDialog("OTP sent to your email",true);
+    }else{
+      getDialog("Something Went Wrong",false);
+    }
+
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.of(context)
-        .push(
-      CupertinoPageRoute<void>(
-        builder: (BuildContext context) => SignInScreen(),
-      ),
-    )
-        .then((onValue) {
-      setState(() {
-        _isInProgress = false;
-      });
-    });
+
+
+    // Navigator.of(context)
+    //     .push(
+    //   CupertinoPageRoute<void>(
+    //     builder: (BuildContext context) => SignInScreen(),
+    //   ),
+    // )
+    //     .then((onValue) {
+    //
+    // });
   }
 
   String _validateEmail(value) {
@@ -281,12 +374,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 }
 
-class Validators {
-  static const Pattern _pattern =
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  static RegExp _regex = new RegExp(_pattern);
-
-  static bool validateEmail(String value) {
-    return _regex.hasMatch(value);
-  }
-}
+// class Validators {
+//   static const Pattern _pattern =
+//       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+//   static RegExp _regex = new RegExp(_pattern);
+//
+//   static bool validateEmail(String value) {
+//     return _regex.hasMatch(value);
+//   }
+// }

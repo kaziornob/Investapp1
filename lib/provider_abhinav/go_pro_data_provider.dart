@@ -50,10 +50,11 @@ class GoProDataProvider with ChangeNotifier {
     });
     print(allDataToSave);
     await addGoProDataToServer(allDataToSave, context);
-    HelperClass.showLoading(context,
-        "It requires a lot of computing power and analytics to incorporate this level of Customer Preferences while still staying as close as possible to your prior indicated risk appetite, so please be patient while Auro customizes your portfolio.");
+    HelperClass.showLoading(
+        context,
+        "It requires a lot of computing power and analytics to incorporate this level of Customer Preferences while still staying as close as possible to your prior indicated risk appetite, so please be patient while Auro customizes your portfolio.",
+        true);
     await runAlgo(context);
-
   }
 
   addGoProDataToServer(body, context) async {
