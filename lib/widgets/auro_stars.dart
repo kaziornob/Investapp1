@@ -1,10 +1,12 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AuroStars extends StatelessWidget {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(

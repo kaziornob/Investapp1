@@ -2,36 +2,32 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
-
-
-
-// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/empStatus.dart';
 import 'package:auroim/auth/investorType.dart';
-import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
 import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/model/listingsModel.dart';
-import 'package:auroim/model/radioQusModel.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
+import 'package:auroim/provider_abhinav/auro_stars_provider.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
+import 'package:auroim/provider_abhinav/crypto_coins_provider.dart';
 import 'package:auroim/provider_abhinav/follow_provider.dart';
 import 'package:auroim/provider_abhinav/forgot_password_provider.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
+import 'package:auroim/provider_abhinav/listed_companies_provider.dart';
 import 'package:auroim/provider_abhinav/long_short_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
+import 'package:auroim/provider_abhinav/search_all_securities_provider.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
-import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screen/screen.dart';
@@ -345,6 +341,18 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => StockPitchProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => CryptoCoinsProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ListedCompanyProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => SearchAllSecuritiesProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => AuroStarProvider(),
           ),
         ],
         child: MaterialApp(

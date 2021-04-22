@@ -4,6 +4,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/widgets/auro_stars.dart';
 import 'package:auroim/widgets/crypto_marketplace/all_crypto_list.dart';
 import 'package:auroim/widgets/crypto_marketplace/all_cryptocurrencies_list.dart';
+import 'package:auroim/widgets/invest_tab/trending_tab.dart';
 import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';
 import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 import 'package:auroim/widgets/public_companies_list.dart';
@@ -51,20 +52,8 @@ class _SearchFirstPageState extends State<SearchFirstPage>
     NewSalesData(2013, 32),
     NewSalesData(2014, 40)
   ];
-
-  // final List<Tab> tabList = <Tab>[
-  //   new Tab(text: 'Trending'),
-  //   new Tab(text: 'Unlisted'),
-  //   new Tab(text: 'Crypto'),
-  //   new Tab(text: 'Listed'),
-  //   new Tab(text: 'AuroStars'),
-  // ];
-
-  // TabController _tabController;
-
   @override
   void initState() {
-    // _tabController = new TabController(vsync: this, length: tabList.length);
     color.add(Colors.blue[50]);
     color.add(Colors.blue[200]);
     color.add(Colors.blue);
@@ -102,65 +91,66 @@ class _SearchFirstPageState extends State<SearchFirstPage>
               ),
             ),
           ),
-          Container(
-            // decoration: BoxDecoration(border: Border.all()),
-            margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-/*            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.40,*/
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 0.5),
-                Container(
-/*                  width: MediaQuery.of(context).size.width*0.45,
-                  height: MediaQuery.of(context).size.height*0.41,*/
-                  margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      //first row of small box
-                      Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            //first box of first row
-                            smallItem(),
-                            SizedBox(
-                              width: 4.0,
-                            ),
-                            //second  box of first row
-                            smallItem(),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 4.0),
-                      //second row of small box
-                      Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            //first box of first row
-                            smallItem(),
-                            SizedBox(
-                              width: 4.0,
-                            ),
-                            //second  box of first row
-                            smallItem(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //Big Box
-                bigItem(),
-              ],
-            ),
-          ),
+//           Container(
+//             // decoration: BoxDecoration(border: Border.all()),
+//             margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+// /*            width: MediaQuery.of(context).size.width,
+//             height: MediaQuery.of(context).size.height*0.40,*/
+//             child: Row(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: <Widget>[
+//                 SizedBox(width: 0.5),
+//                 Container(
+// /*                  width: MediaQuery.of(context).size.width*0.45,
+//                   height: MediaQuery.of(context).size.height*0.41,*/
+//                   margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                     children: <Widget>[
+//                       //first row of small box
+//                       Container(
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: <Widget>[
+//                             //first box of first row
+//                             smallItem(),
+//                             SizedBox(
+//                               width: 4.0,
+//                             ),
+//                             //second  box of first row
+//                             smallItem(),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(height: 4.0),
+//                       //second row of small box
+//                       Container(
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: <Widget>[
+//                             //first box of first row
+//                             smallItem(),
+//                             SizedBox(
+//                               width: 4.0,
+//                             ),
+//                             //second  box of first row
+//                             smallItem(),
+//                           ],
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 //Big Box
+//                 bigItem(),
+//               ],
+//             ),
+//           ),
+        TrendingTab(),
         ],
       ),
     );

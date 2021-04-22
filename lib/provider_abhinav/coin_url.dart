@@ -50,4 +50,7 @@ class CoinUrl with ChangeNotifier {
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
+
+
+
 }

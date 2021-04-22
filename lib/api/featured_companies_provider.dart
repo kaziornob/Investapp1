@@ -600,6 +600,24 @@ class FeaturedCompaniesProvider {
     }
   }
 
+  getCoinPrices(coinId) async {
+    print("get coin prices");
+
+    // String jsonReq = jsonEncode(tempJsonReq);
+
+    var jsonReqResp = await coinDetails(
+        'https://api.coingecko.com/api/v3/coins/$coinId/market_chart?vs_currency=usd&days=30');
+
+    var result = jsonDecode(jsonReqResp.body);
+    print("coin prices response: $result");
+
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      return result["prices"];
+    } else{
+      return [];
+    }
+  }
+
   getSinglePublicCompanyHistoricalPricing(ticker, days) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
