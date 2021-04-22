@@ -53,10 +53,12 @@ class UserDetails extends ChangeNotifier {
       // }
     } else if (result != null &&
         result.containsKey('auth') &&
-        result['auth'] != true) {} else {
+        result['auth'] != true) {
+    } else {
       // Toast.show("Something went wrong!", context,
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
+
 
 }

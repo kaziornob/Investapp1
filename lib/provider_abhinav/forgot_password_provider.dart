@@ -46,7 +46,10 @@ class ForgotPasswordProvider with ChangeNotifier {
 
   resetPassword(email, otp, password) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String sessionToken = prefs.getString('Session_token');
+    final String sessionToken = prefs.getString('Session_token') == null
+        ? ""
+        : prefs.getString('Session_token');
+    print("session token : $sessionToken");
 
     String filterPath = "company_details/resetPassword";
 

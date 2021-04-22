@@ -1,20 +1,16 @@
 import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
-import 'package:auroim/auth/google_sign_in.dart';
 import 'package:auroim/auth/otp.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-
 // import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
-import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -248,7 +244,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   ];
 
   //  //facebook sign in
-  FacebookLogin fbLogin = new FacebookLogin();
+  // FacebookLogin fbLogin = new FacebookLogin();
 
   String phoneNumber;
   String phoneIsoCode;
@@ -1260,7 +1256,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$';
       RegExp regExp = new RegExp(pattern);
       if (!regExp.hasMatch(value)) {
-        return "Minimum six characters, at least one upper,lower and number";
+        return "Min 6 characters, atleast 1 upper,lower & number";
       }
       return null;
     }

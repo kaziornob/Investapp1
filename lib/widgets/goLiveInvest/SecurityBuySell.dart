@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class SecurityBuySell extends StatefulWidget {

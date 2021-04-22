@@ -8,11 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfileBackground extends StatefulWidget {
+  final userName;
+
+  const ProfileBackground({Key key, this.userName}) : super(key: key);
+
+
   @override
   _ProfileBackgroundState createState() => _ProfileBackgroundState();
 }
 
 class _ProfileBackgroundState extends State<ProfileBackground> {
+  String title = "";
   List eduList = [
     {
       "id": 1,
@@ -21,21 +27,6 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
       "end_year": 2016,
       "desc": ""
     },
-/*    {
-      "id": 2,
-      "title": "Diploma",
-      "start_year": 2008,
-      "end_year": 2010,
-      "desc": ""
-
-    },
-    {
-      "id": 3,
-      "title": "DELED",
-      "start_year": 2006,
-      "end_year": 2008,
-      "desc": ""
-    }*/
   ];
 
   List empList = [
@@ -46,21 +37,6 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
       "end_year": 2021,
       "desc": ""
     },
-    /* {
-      "id": 2,
-      "title": "HCL",
-      "start_year": 2008,
-      "end_year": 2010,
-      "desc": ""
-
-    },
-    {
-      "id": 3,
-      "title": "Wipro",
-      "start_year": 2006,
-      "end_year": 2008,
-      "desc": ""
-    }*/
   ];
 
   Widget getEmpList(data) {
@@ -220,6 +196,15 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserDetails>(context, listen: false);
+    if (widget.userName == null) {
+      title = userProvider.userDetails["f_name"] != null &&
+          userProvider.userDetails != null
+          ? "${userProvider.userDetails["f_name"]}\'s Background"
+          : 'Background';
+    } else {
+      title = "${widget.userName}\'s Background";
+    }
     return Column(
       children: [
         Padding(
@@ -233,14 +218,7 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        Provider.of<UserDetails>(context, listen: false)
-                                        .userDetails["f_name"] !=
-                                    null &&
-                                Provider.of<UserDetails>(context, listen: false)
-                                        .userDetails !=
-                                    null
-                            ? "${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Background"
-                            : 'Background',
+                        title,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color(0xFFD8AF4F),

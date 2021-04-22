@@ -1,16 +1,10 @@
 import 'dart:convert';
 
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/constance/themes.dart';
-import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/widgets/crypto_coin_chart.dart';
 import 'package:auroim/widgets/crypto_coin_price_data.dart';
-import 'package:auroim/widgets/crypto_marketplace/single_crypto_details.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
-import 'package:auroim/widgets/get_area_chart_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class CryptoCoinBuyItem extends StatefulWidget {
@@ -251,7 +245,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
 
   getCoinPrices() async {
     print("get coin prices");
-    var tempJsonReq = {};
+    // var tempJsonReq = {};
 
     // String jsonReq = jsonEncode(tempJsonReq);
 

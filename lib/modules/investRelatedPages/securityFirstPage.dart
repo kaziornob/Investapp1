@@ -110,7 +110,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
                         height: 20,
                       ),
                       SinglePublicCompanyAppBar(
-                        companyName: data["company_name"],
+                        companyName: data["company_name"] ,
                         companyImageUrl: data["logo_img_name"],
                       ),
                       // SizedBox(

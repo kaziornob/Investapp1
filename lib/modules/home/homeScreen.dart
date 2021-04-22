@@ -6,7 +6,10 @@ import 'package:auroim/modules/home/main_exchange_tab.dart';
 import 'package:auroim/modules/home/main_learn_marketplace_tab.dart';
 import 'package:auroim/modules/home/main_plus_tab.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/modules/settings/user_profile_page.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
+import 'package:auroim/widgets/user_profile/other_user_profile.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
@@ -16,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'main_home_tab.dart';
@@ -189,7 +191,9 @@ class _HomeScreenState extends State<HomeScreen>
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       size: 15,
                     ),
-                    hintText: "Search Listed Companies",
+                    hintText: (isSelect5 || isSelect4)
+                        ? "Search Investors"
+                        : "Search Listed Companies",
                     hintStyle: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE14,
@@ -442,16 +446,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     decoration: BoxDecoration(
                                         color: globals.isGoldBlack
                                             ? Color(0xFFD8AF4F)
-                                            : Color(0xFF7499C6)
-                                        // gradient: LinearGradient(
-                                        //   begin: Alignment.topLeft,
-                                        //   end: Alignment.bottomRight,
-                                        //   colors: [
-                                        //     globals.iconButtonColor1,
-                                        //     globals.iconButtonColor2,
-                                        //   ],
-                                        // ),
-                                        ),
+                                            : Color(0xFF7499C6)),
                                   ),
                                 ),
                               )
@@ -633,8 +628,12 @@ class _HomeScreenState extends State<HomeScreen>
                     color: isSelect2 ? Colors.black : Colors.white,
                     height: MediaQuery.of(context).size.height - 65,
                     child: FutureBuilder(
-                      future: _featuredCompaniesProvider
-                          .searchPublicCompanyList(_appbarTextController.text),
+                      future: (isSelect5 || isSelect4)
+                          ? Provider.of<UsernameFunctionalityProvider>(context,
+                                  listen: false)
+                              .getUsernameList(_appbarTextController.text)
+                          : _featuredCompaniesProvider.searchPublicCompanyList(
+                              _appbarTextController.text),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return Center(
@@ -663,28 +662,7 @@ class _HomeScreenState extends State<HomeScreen>
                             return ListView.builder(
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  onTap: () {
-                                    _appbarTextController.text = "";
-                                    FocusScope.of(context).unfocus();
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => SecurityPageFirst(
-                                          companyTicker: snapshot.data[index]
-                                              ["ticker"],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  title: Text(
-                                    snapshot.data[index]["company_name"],
-                                    style: TextStyle(
-                                      color: isSelect2
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                );
+                                return searchListTile(snapshot.data[index]);
                               },
                             );
                           }
@@ -709,27 +687,26 @@ class _HomeScreenState extends State<HomeScreen>
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                              height: isSelect1 ||
-                                      isSelect2 ||
-                                      isSelect5 ||
-                                      isSelect4
-                                  ? 2
-                                  : MediaQuery.of(context).padding.top,
-                              child: Visibility(
-                                visible: isSelect1 ||
-                                    isSelect2 ||
-                                    isSelect5 ||
-                                    isSelect4,
-                                child: Container(
-                                  decoration: new BoxDecoration(
+                            height:
+                                isSelect1 || isSelect2 || isSelect5 || isSelect4
+                                    ? 2
+                                    : MediaQuery.of(context).padding.top,
+                            child: Visibility(
+                              visible: isSelect1 ||
+                                  isSelect2 ||
+                                  isSelect5 ||
+                                  isSelect4,
+                              child: Container(
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFFFFFFFF),
+                                  border: Border.all(
                                     color: Color(0xFFFFFFFF),
-                                    border: Border.all(
-                                      color: Color(0xFFFFFFFF),
-                                      width: 1.5,
-                                    ),
+                                    width: 1.5,
                                   ),
                                 ),
-                              )),
+                              ),
+                            ),
+                          ),
                           Expanded(
                             child: isSelect1
                                 ? MainHomeTab()
@@ -978,5 +955,47 @@ class _HomeScreenState extends State<HomeScreen>
         isSelect5 = true;
       });
     }
+  }
+
+  searchListTile(itemData) {
+    return ListTile(
+      onTap: () {
+        _appbarTextController.text = "";
+        FocusScope.of(context).unfocus();
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => (isSelect5 || isSelect4)
+                ? UserProfilePage(
+                    userId: itemData["user_id"],
+                    userName: itemData["f_name"],
+                  )
+                : SecurityPageFirst(
+                    companyTicker: itemData["ticker"],
+                  ),
+          ),
+        );
+      },
+      title: (isSelect5 || isSelect4)
+          ? Text(
+              itemData["f_name"] + " " + itemData["l_name"],
+              style: TextStyle(
+                color: isSelect2 ? Colors.white : Colors.black,
+              ),
+            )
+          : Text(
+              itemData["company_name"],
+              style: TextStyle(
+                color: isSelect2 ? Colors.white : Colors.black,
+              ),
+            ),
+      subtitle: (isSelect5 || isSelect4)
+          ? Text(
+              itemData["username"],
+              style: TextStyle(
+                color: isSelect2 ? Colors.white : Colors.black,
+              ),
+            )
+          : null,
+    );
   }
 }

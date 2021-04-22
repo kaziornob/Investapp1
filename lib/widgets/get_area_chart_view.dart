@@ -40,8 +40,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
   List<CryptoCoinPriceData> allPriceData = [];
   ZoomPanBehavior _zoomPanBehavior;
   TooltipBehavior _tooltipBehavior;
-  FeaturedCompaniesProvider _featuredCompaniesProvider =
-      FeaturedCompaniesProvider();
+  bool _isInit = true;
 
   @override
   void initState() {
@@ -108,10 +107,19 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
   }
 
   @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<PublicCompanyHistoricalPricing>(context)
+          .getSinglePublicCompanyData(widget.companyData["ticker"], 30);
+      _isInit = false;
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // print(widget.companyData);
-    // Provider.of<PublicCompanyHistoricalPricing>(context)
-    //     .getSinglePublicCompanyData(widget.companyData["ticker"], 30);
+
     return Container(
       height: 300,
       child: Container(
@@ -120,7 +128,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-                height: 290,
+                height: 292,
                 width: MediaQuery.of(context).size.width * 0.96,
                 child: Container(
                   margin: EdgeInsets.only(left: 10, right: 10, top: 10),
@@ -267,107 +275,15 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                           ),
                         ),
                       ),
-                      FutureBuilder(
-                        future:
-                            Provider.of<PublicCompanyHistoricalPricing>(context)
-                                .getSinglePublicCompanyData2(
-                                    widget.companyData["ticker"], 30),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            allPriceData = [];
-                            snapshot.data.forEach((element) {
-                              DateTime date = DateFormat("yyyy-MM-dd")
-                                  .parse(element["date"]);
-                              allPriceData.add(
-                                CryptoCoinPriceData(
-                                    x: date, y: element["price"].toDouble()),
-                              );
-                            });
-                            double lastItem = allPriceData.length == 0
-                                ? 0.0
-                                : allPriceData[allPriceData.length - 1].y;
-                            double secondLastItem = allPriceData.length <= 1
-                                ? 0.0
-                                : allPriceData[allPriceData.length - 2].y;
-                            print(secondLastItem);
-                            var companyPrice = lastItem;
-                            var companyPriceDifference = secondLastItem != 0
-                                ? (lastItem - secondLastItem)
-                                : 0.0;
-                            print(companyPriceDifference);
-                            print(companyPrice);
-                            var companyPercentageDifference =
-                                companyPriceDifference == 0.0
-                                    ? 0.0
-                                    : companyPrice / companyPriceDifference;
-                            return SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.88,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.15,
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 10.0),
-                                  child: SfCartesianChart(
-                                      primaryXAxis: DateTimeAxis(
-                                        isVisible: true,
-
-                                      ),
-                                      // title: ChartTitle(text: "30D Pricing"),
-                                      tooltipBehavior: _tooltipBehavior,
-                                      zoomPanBehavior: _zoomPanBehavior,
-                                      primaryYAxis:
-                                          NumericAxis(isVisible: true),
-                                      series: <ChartSeries>[
-                                        StackedAreaSeries<CryptoCoinPriceData,
-                                            dynamic>(
-                                          dataSource: allPriceData,
-                                          xValueMapper:
-                                              (CryptoCoinPriceData data, _) =>
-                                                  data.x,
-                                          yValueMapper:
-                                              (CryptoCoinPriceData data, _) =>
-                                                  data.y,
-                                          gradient: gradientColors,
-                                        ),
-                                      ]),
-                                ));
-                          } else {
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.88,
-                              height: MediaQuery.of(context).size.height * 0.15,
-                              child: Container(
-                                margin: EdgeInsets.only(left: 10.0),
-                                child: Center(
-                                  child: Text(
-                                    "No Chart To Show",
-                                    style: TextStyle(
-                                      color: globals.isGoldBlack
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                      // Consumer<PublicCompanyHistoricalPricing>(
-                      //   builder: (context, historicalPricingProvider, _) {
-                      //     if (historicalPricingProvider.historicalPriceData[
-                      //             widget.companyData["ticker"]] ==
-                      //         null) {
-                      //       return SizedBox(
-                      //         width: MediaQuery.of(context).size.width * 0.88,
-                      //         height: MediaQuery.of(context).size.height * 0.15,
-                      //         child: Container(
-                      //           margin: EdgeInsets.only(left: 10.0),
-                      //         ),
-                      //       );
-                      //     } else {
+                      // FutureBuilder(
+                      //   future:
+                      //       Provider.of<PublicCompanyHistoricalPricing>(context)
+                      //           .getSinglePublicCompanyData2(
+                      //               widget.companyData["ticker"], 30),
+                      //   builder: (context, snapshot) {
+                      //     if (snapshot.hasData) {
                       //       allPriceData = [];
-                      //       historicalPricingProvider.historicalPriceData[
-                      //               widget.companyData["ticker"]]
-                      //           .forEach((element) {
+                      //       snapshot.data.forEach((element) {
                       //         DateTime date = DateFormat("yyyy-MM-dd")
                       //             .parse(element["date"]);
                       //         allPriceData.add(
@@ -375,6 +291,23 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                       //               x: date, y: element["price"].toDouble()),
                       //         );
                       //       });
+                      //       double lastItem = allPriceData.length == 0
+                      //           ? 0.0
+                      //           : allPriceData[allPriceData.length - 1].y;
+                      //       double secondLastItem = allPriceData.length <= 1
+                      //           ? 0.0
+                      //           : allPriceData[allPriceData.length - 2].y;
+                      //       print(secondLastItem);
+                      //       var companyPrice = lastItem;
+                      //       var companyPriceDifference = secondLastItem != 0
+                      //           ? (lastItem - secondLastItem)
+                      //           : 0.0;
+                      //       print(companyPriceDifference);
+                      //       print(companyPrice);
+                      //       var companyPercentageDifference =
+                      //           companyPriceDifference == 0.0
+                      //               ? 0.0
+                      //               : companyPrice / companyPriceDifference;
                       //       return SizedBox(
                       //           width: MediaQuery.of(context).size.width * 0.88,
                       //           height:
@@ -383,13 +316,13 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                       //             margin: EdgeInsets.only(left: 10.0),
                       //             child: SfCartesianChart(
                       //                 primaryXAxis: DateTimeAxis(
-                      //                   isVisible: false,
+                      //                   isVisible: true,
                       //                 ),
-                      //                 title: ChartTitle(text: "30D Pricing"),
+                      //                 // title: ChartTitle(text: "30D Pricing"),
                       //                 tooltipBehavior: _tooltipBehavior,
                       //                 zoomPanBehavior: _zoomPanBehavior,
                       //                 primaryYAxis:
-                      //                     NumericAxis(isVisible: false),
+                      //                     NumericAxis(isVisible: true),
                       //                 series: <ChartSeries>[
                       //                   StackedAreaSeries<CryptoCoinPriceData,
                       //                       dynamic>(
@@ -404,9 +337,82 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                       //                   ),
                       //                 ]),
                       //           ));
+                      //     } else {
+                      //       return SizedBox(
+                      //         width: MediaQuery.of(context).size.width * 0.88,
+                      //         height: MediaQuery.of(context).size.height * 0.15,
+                      //         child: Container(
+                      //           margin: EdgeInsets.only(left: 10.0),
+                      //           child: Center(
+                      //             child: Text(
+                      //               "No Chart To Show",
+                      //               style: TextStyle(
+                      //                 color: globals.isGoldBlack
+                      //                     ? Colors.white
+                      //                     : Colors.black,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       );
                       //     }
                       //   },
                       // ),
+                      Consumer<PublicCompanyHistoricalPricing>(
+                        builder: (context, historicalPricingProvider, _) {
+                          if (historicalPricingProvider.historicalPriceData[
+                                  widget.companyData["ticker"]] ==
+                              null) {
+                            return SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.88,
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 10.0),
+                              ),
+                            );
+                          } else {
+                            allPriceData = [];
+                            historicalPricingProvider.historicalPriceData[
+                                    widget.companyData["ticker"]]
+                                .forEach((element) {
+                              DateTime date = DateFormat("yyyy-MM-dd")
+                                  .parse(element["date"]);
+                              allPriceData.add(
+                                CryptoCoinPriceData(
+                                    x: date, y: element["price"].toDouble()),
+                              );
+                            });
+                            return SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.88,
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 10.0),
+                                child: SfCartesianChart(
+                                    primaryXAxis: DateTimeAxis(
+                                      isVisible: true,
+                                    ),
+                                    title: ChartTitle(text: "30D Pricing"),
+                                    tooltipBehavior: _tooltipBehavior,
+                                    zoomPanBehavior: _zoomPanBehavior,
+                                    primaryYAxis: NumericAxis(isVisible: true),
+                                    series: <ChartSeries>[
+                                      StackedAreaSeries<CryptoCoinPriceData,
+                                          dynamic>(
+                                        dataSource: allPriceData,
+                                        xValueMapper:
+                                            (CryptoCoinPriceData data, _) =>
+                                                data.x,
+                                        yValueMapper:
+                                            (CryptoCoinPriceData data, _) =>
+                                                data.y,
+                                        gradient: gradientColors,
+                                      ),
+                                    ]),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

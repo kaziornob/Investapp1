@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:auroim/constance/global.dart';
-import 'package:auroim/widgets/crypto_coin_price_data.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -64,7 +63,7 @@ class PublicCompanyHistoricalPricing with ChangeNotifier {
     };
 
     String url = GlobalInstance.apiBaseUrl + filterPath;
-    print("get historical pricing url: $url");
+    print("get historical pricing url 2: $url");
 
     var response = await http.get(url, headers: headers);
     print("get single company response: ${response.statusCode}");

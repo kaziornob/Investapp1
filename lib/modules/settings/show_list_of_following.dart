@@ -1,6 +1,7 @@
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
+import 'package:auroim/modules/settings/user_profile_page.dart';
 import 'package:auroim/provider_abhinav/follow_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
@@ -12,8 +13,15 @@ import '../../main.dart';
 class ShowListOfFollowing extends StatefulWidget {
   final String text;
   final type;
+  final otherUserEmail;
+  bool getOtherUserData;
 
-  ShowListOfFollowing({this.text, this.type});
+  ShowListOfFollowing({
+    this.text,
+    this.type,
+    this.otherUserEmail,
+    this.getOtherUserData,
+  });
 
   @override
   _ShowListOfFollowingState createState() => _ShowListOfFollowingState();
@@ -26,7 +34,9 @@ class _ShowListOfFollowingState extends State<ShowListOfFollowing> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getFollowingData(),
+      future: widget.getOtherUserData == true
+          ? getFollowingDataForOtherUser()
+          : getFollowingData(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           print("future ${widget.type}");
@@ -114,9 +124,9 @@ class _ShowListOfFollowingState extends State<ShowListOfFollowing> {
                                             MaterialPageRoute(
                                               builder: (BuildContext context) =>
                                                   SingleCryptoCurrencyDetailsById(
-                                                    coinId: snapshot.data[index]
+                                                coinId: snapshot.data[index]
                                                     ["value"],
-                                                  ),
+                                              ),
                                             ),
                                           );
                                           break;
@@ -124,10 +134,10 @@ class _ShowListOfFollowingState extends State<ShowListOfFollowing> {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  SingleCryptoCurrencyDetailsById(
-                                                    coinId: snapshot.data[index]
-                                                    ["value"],
-                                                  ),
+                                                  UserProfilePage(
+                                                userId: "",
+
+                                              ),
                                             ),
                                           );
                                           break;
@@ -177,6 +187,26 @@ class _ShowListOfFollowingState extends State<ShowListOfFollowing> {
         }
       },
     );
+  }
+
+  getFollowingDataForOtherUser() async {
+    List allFollowingList = [];
+    print("follow button pressed");
+    var userEmail = widget.otherUserEmail;
+    // if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+    //     null) {
+    //   userEmail =
+    //   Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    // } else {
+    //   await getUserDetails();
+    //   Provider.of<UserDetails>(context, listen: false)
+    //       .setUserDetails(userAllDetail);
+    //   userEmail =
+    //   Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    // }
+    allFollowingList = await Provider.of<FollowProvider>(context)
+        .getFollowing(userEmail, widget.type);
+    return allFollowingList;
   }
 
   getFollowingData() async {

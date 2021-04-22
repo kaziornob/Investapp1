@@ -118,8 +118,6 @@ class _MainPlusTabState extends State<MainPlusTab> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(

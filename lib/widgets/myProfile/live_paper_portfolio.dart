@@ -5,13 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LivePaperPortfolio extends StatefulWidget {
+  final userName;
+
+  const LivePaperPortfolio({Key key, this.userName}) : super(key: key);
+
   @override
   _LivePaperPortfolioState createState() => _LivePaperPortfolioState();
 }
 
 class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
+  String title;
+
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserDetails>(context, listen: false);
+    if (widget.userName == null) {
+      title = userProvider.userDetails["f_name"] != null &&
+              userProvider.userDetails != null
+          ? "${userProvider.userDetails["f_name"]}\'s Portfolio Track Record"
+          : 'Portfolio Track Record';
+    } else {
+      title = "${widget.userName}\'s Portfolio Track Record";
+    }
+
     return Column(
       children: [
         Padding(
@@ -25,15 +41,7 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          Provider.of<UserDetails>(context, listen: false)
-                                          .userDetails["f_name"] !=
-                                      null &&
-                                  Provider.of<UserDetails>(context,
-                                              listen: false)
-                                          .userDetails !=
-                                      null
-                              ? "${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Portfolio Track Record"
-                              : 'Portfolio Track Record',
+                          title,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),

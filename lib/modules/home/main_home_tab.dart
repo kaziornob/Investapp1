@@ -6,6 +6,7 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/api/future_return.dart';
 import 'package:auroim/api/reusable_functions.dart';
 import 'package:auroim/auth/investorType.dart';
+import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
@@ -638,7 +639,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                   Navigator.of(context).push(
                                     // MaterialPageRoute(
                                     //   builder: (BuildContext context) =>
-                                    //       InvestorType(),
+                                    //       UserPersonalDetails(),
                                     // ),
                                     MaterialPageRoute(
                                       builder: (BuildContext context) =>
@@ -1260,14 +1261,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                 //     builder: (BuildContext context) =>
                                 //         new WishList()));
                                 Navigator.of(context).push(
-                                  // MaterialPageRoute(
-                                  //   builder: (BuildContext context) =>
-                                  //       InvestorType(),
-                                  // ),
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        GoLiveScreen(),
+                                        UserPersonalDetails(),
                                   ),
+                                  // MaterialPageRoute(
+                                  //   builder: (BuildContext context) =>
+                                  //       GoLiveScreen(),
+                                  // ),
                                 );
                               },
                             ),

@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QusAns extends StatefulWidget {
+  final userName;
+
+  const QusAns({Key key, this.userName}) : super(key: key);
+
   @override
   _QusAnsState createState() => _QusAnsState();
 }
@@ -23,6 +27,7 @@ class _QusAnsState extends State<QusAns> {
     {"id": 2, "ans": "Why Buy Etherium"},
     {"id": 3, "ans": "Why short Netflix"}
   ];
+  String title = "";
 
   Widget getQuestionsList(data) {
     if (data != null && data.length != 0) {
@@ -146,6 +151,15 @@ class _QusAnsState extends State<QusAns> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserDetails>(context, listen: false);
+    if (widget.userName == null) {
+      title = userProvider.userDetails["f_name"] != null &&
+              userProvider.userDetails != null
+          ? "${userProvider.userDetails["f_name"]}\'s Investment Q&A"
+          : 'Investment Q&A';
+    } else {
+      title = "${widget.userName}\'s Investment Q&A";
+    }
     return Column(
       children: [
         Padding(
@@ -159,15 +173,7 @@ class _QusAnsState extends State<QusAns> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          Provider.of<UserDetails>(context, listen: false)
-                                          .userDetails["f_name"] !=
-                                      null &&
-                                  Provider.of<UserDetails>(context,
-                                              listen: false)
-                                          .userDetails !=
-                                      null
-                              ? "${Provider.of<UserDetails>(context).userDetails["f_name"]}\'s Investment Q&A"
-                              : 'Investment Q&A',
+                          title,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),

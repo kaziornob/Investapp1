@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
+
+
 // import 'package:admob_flutter/admob_flutter.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/empStatus.dart';
@@ -20,7 +22,9 @@ import 'package:auroim/provider_abhinav/long_short_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
+import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
 import 'package:auroim/resources/radioQusTemplateData.dart';
 import 'package:auroim/splash/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -331,10 +335,16 @@ class _MyAppState extends State<MyApp> {
             create: (_) => PortfolioProvider(),
           ),
           ChangeNotifierProvider(
-            create: (_) => LongShortProvider(),
+            create: (_) => LongShortProvider()
           ),
           ChangeNotifierProvider(
             create: (_) => ForgotPasswordProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => UsernameFunctionalityProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => StockPitchProvider(),
           ),
         ],
         child: MaterialApp(

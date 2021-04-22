@@ -3,11 +3,8 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/modules/settings/show_list_of_following.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
-import 'package:auroim/modules/socialInvestRelatedPages/auroStrikeBadges.dart';
-import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/myProfile/Qus_ans.dart';
 import 'package:auroim/widgets/myProfile/live_paper_portfolio.dart';
@@ -37,6 +34,7 @@ class _MyProfileState extends State<MyProfile>
   ];
   String badgeImagePath = "";
   TabController _tabController;
+
 
   @override
   void initState() {
@@ -69,36 +67,6 @@ class _MyProfileState extends State<MyProfile>
                       package: 'Roboto-Regular',
                     ),
                   ),
-                  // Consumer<UserDetails>(
-                  //   builder: (context,userDetailsProvider,_){
-                  //     print(userDetailsProvider.userBadge);
-                  //     switch(userDetailsProvider.userBadge){
-                  //       case "Challenger":
-                  //         badgeImagePath = "assets/challenger_badge.png";
-                  //         break;
-                  //       case "Trusted User":
-                  //         badgeImagePath = "assets/trusted_user_badge.png";
-                  //         break;
-                  //       case "Guru":
-                  //         badgeImagePath = "assets/trusted_user_badge.png";
-                  //         break;
-                  //       case "Wolf of Wall Street":
-                  //         badgeImagePath = "assets/trusted_user_badge.png";
-                  //         break;
-                  //       default:
-                  //         badgeImagePath = 'assets/buttonBadge.png';
-                  //
-                  //
-                  //     }
-                  //     return Image(
-                  //       image: AssetImage(badgeImagePath),
-                  //       fit: BoxFit.fill,
-                  //       height: 30,
-                  //       width: 30,
-                  //     );
-                  //   },
-                  // ),
-
                   GestureDetector(
                     onTap: () {},
                     child: Image(
@@ -115,6 +83,14 @@ class _MyProfileState extends State<MyProfile>
       },
     );
   }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -239,25 +215,6 @@ class _MyProfileState extends State<MyProfile>
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                // GestureDetector(
-                                //   onTap: () {
-                                //     Navigator.of(context).push(
-                                //       CupertinoPageRoute(
-                                //         builder: (BuildContext context) =>
-                                //             AuroStrikeBadges(),
-                                //       ),
-                                //     );
-                                //   },
-                                //   child: Container(
-                                //     child: Image(
-                                //       image:
-                                //           AssetImage('assets/buttonBadge.png'),
-                                //       fit: BoxFit.fill,
-                                //       height: 30,
-                                //       width: 40,
-                                //     ),
-                                //   ),
-                                // ),
                                 SizedBox(
                                   width: 18,
                                 ),
@@ -680,10 +637,10 @@ class _MyProfileState extends State<MyProfile>
                     text: "Crypto You Follow",
                     type: "crypto",
                   ),
-                  ShowListOfFollowing(
-                    text: "Investors You Follow",
-                    type: "user",
-                  ),
+                  // ShowListOfFollowing(
+                  //   text: "Investors You Follow",
+                  //   type: "user",
+                  // ),
                   ProfileBackground(),
                   SizedBox(
                     height: 20,

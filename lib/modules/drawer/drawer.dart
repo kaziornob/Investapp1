@@ -1230,6 +1230,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                           );
                                         });
                                   },
+
+
                                   child: Row(
                                     children: <Widget>[
                                       Animator(

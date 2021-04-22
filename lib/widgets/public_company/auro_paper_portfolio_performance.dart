@@ -90,7 +90,7 @@ class _AuroPaperPortfolioPerformaceState
           });
           List allPriceData2 = allPriceData
               .map(
-                (e) => CryptoCoinPriceData(x: e.x, y: e.y*100),
+                (e) => CryptoCoinPriceData(x: e.x, y: e.y * 100),
               )
               .toList();
           print("length: ${allPriceData.length}");
@@ -133,17 +133,21 @@ class _AuroPaperPortfolioPerformaceState
           // cumm return perc * client initial inv
           var inception_to_date_return_dollar =
               inception_to_date_return_pct * 1000000;
-          DateTime date_of_creation =
-              allPriceData.length == 0 ? DateTime.now() : allPriceData[0].x;
-          String date_of_creation_string = "${date_of_creation.day} " +
-              "${months[date_of_creation.month - 1]}," +
-              "${date_of_creation.year}";
+          DateTime date_of_creation = allPriceData.length == 0
+              ? DateTime.now()
+              : DateTime.parse(widget.userInceptionDate);
+          // String date_of_creation_string = "${date_of_creation.day} " +
+          //     "${months[date_of_creation.month - 1]}," +
+          //     "${date_of_creation.year}";
           var days_diff = DateTime.now().difference(date_of_creation).inDays;
           print("days diff: " + days_diff.toString());
-          var client_portfolio_creation_date;
+          // var client_portfolio_creation_date;
           // ((1+inception_to_date_return_pct) ** (365/total_duration_of_investment))-1
           var inceptionToDateAnnualizedReturnPct =
               (pow(1 + inception_to_date_return_pct, (365 / days_diff)) - 1);
+
+          // print(
+          //     "inception to date annualized return : ${pow(1 + inception_to_date_return_pct, (365 / days_diff))}");
           print(
               "inception to date annualized return : $inceptionToDateAnnualizedReturnPct");
           // var h = [];

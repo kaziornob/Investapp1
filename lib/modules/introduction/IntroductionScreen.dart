@@ -1,3 +1,4 @@
+import 'package:auroim/widgets/how_app_works.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/auth/signUpScreen.dart';
@@ -29,7 +30,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
       "firstPara": "",
       "image": "assets/logInSlider1.png",
       "lastPara":
-          "Invest with confidence on world’s leading Robo and Social Investment App"
+          "Invest with confidence on world’s leading Robo and Social Investment App.Built by licenced asset-manager with strong track record of outperforming markets"
     },
     {
       "logoBottomLine": "PERSONALIZED PORTFOLIOS",
@@ -115,42 +116,42 @@ class _IntroductionScreenState extends State<IntroductionScreen>
             ),
           ),
           Scaffold(
-              backgroundColor: _current == 0
-                  ? Colors.transparent
-                  : AllCoustomTheme.getBodyContainerThemeColor(),
-              body: SingleChildScrollView(
-                child: Container(
-                  // height: MediaQuery.of(context).size.height*1.1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: Column(children: [
-                          CarouselSlider.builder(
-                            itemCount: listPaths.length,
-                            options: CarouselOptions(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.92,
-                                autoPlay: false,
-                                viewportFraction: 0.95,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                }),
-                            itemBuilder: (context, index) {
-                              return MySliderView(listPaths[index], _current);
-                            },
-                          ),
-                        ]),
-                      ),
-                    ],
-                  ),
+            backgroundColor: _current == 0
+                ? Colors.transparent
+                : AllCoustomTheme.getBodyContainerThemeColor(),
+            body: SingleChildScrollView(
+              child: Container(
+                // height: MediaQuery.of(context).size.height*1.1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Column(children: [
+                        CarouselSlider.builder(
+                          itemCount: listPaths.length,
+                          options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.92,
+                              autoPlay: false,
+                              viewportFraction: 0.95,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _current = index;
+                                });
+                              }),
+                          itemBuilder: (context, index) {
+                            return MySliderView(listPaths[index], _current);
+                          },
+                        ),
+                      ]),
+                    ),
+                  ],
                 ),
-              ),),
+              ),
+            ),
+          ),
           Positioned(
             bottom: 10,
             child: Column(
@@ -179,6 +180,61 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                 SizedBox(
                   height: 10.0,
                 ),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Swipe to see how App works",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: _current != 0 ? Colors.grey : Colors.white,
+                          letterSpacing: 0.2,
+                          fontFamily: "Rasa",
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return HowAppWorks(
+                            videoLink:
+                                "https://www.youtube.com/watch?v=AysSRNN7v_c",
+                          );
+                        });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            color: _current != 0 ? Colors.grey : Colors.white),
+                      ),
+                    ),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Why do i need Auro.AI?",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: _current != 0 ? Colors.grey : Colors.white,
+                              letterSpacing: 0.2,
+                              fontFamily: "Rasa",
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
@@ -187,7 +243,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                     children: <Widget>[
                       Container(
                         height: 40,
-                        width: (MediaQuery.of(context).size.width/2) - 50,
+                        width: (MediaQuery.of(context).size.width / 2) - 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(20),
@@ -212,7 +268,8 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                           onPressed: () async {
                             Navigator.of(context, rootNavigator: true).push(
                               CupertinoPageRoute<void>(
-                                builder: (BuildContext context) => SignInScreen(),
+                                builder: (BuildContext context) =>
+                                    SignInScreen(),
                               ),
                             );
                           },
@@ -223,7 +280,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                       // ),
                       Container(
                         height: 40,
-                        width: (MediaQuery.of(context).size.width/2) - 50,
+                        width: (MediaQuery.of(context).size.width / 2) - 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             border: new Border.all(
@@ -245,7 +302,8 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                           onPressed: () async {
                             Navigator.of(context, rootNavigator: true).push(
                               CupertinoPageRoute<void>(
-                                builder: (BuildContext context) => SignUpScreen(),
+                                builder: (BuildContext context) =>
+                                    SignUpScreen(),
                               ),
                             );
                           },

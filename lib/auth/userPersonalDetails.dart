@@ -7,10 +7,12 @@ import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
 import 'package:dropdown_date_picker/dropdown_date_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class UserPersonalDetails extends StatefulWidget {
@@ -24,11 +26,13 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
   bool _visible = false;
   final _detailFormKey = new GlobalKey<FormState>();
   ApiProvider request = new ApiProvider();
+  bool usernameValid = false;
 
   String selectedCountry;
 
   TextEditingController firstNameController = new TextEditingController();
   TextEditingController lastNameController = new TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 
   bool dobFound = true;
   static final now = DateTime.now();
@@ -43,7 +47,6 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     ascending: false,
   );
 
-
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
     setState(() {
@@ -53,9 +56,28 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
 
   @override
   void initState() {
+    usernameController.addListener(checkUsername);
     super.initState();
     // loadDetails();
     animation();
+  }
+
+  checkUsername() async {
+    if (usernameController.text.length > 3) {
+      print("username listener");
+      bool uniqueUsername = await Provider.of<UsernameFunctionalityProvider>(
+              context,
+              listen: false)
+          .checkUniqueUsername(usernameController.text);
+
+      setState(() {
+        usernameValid = uniqueUsername;
+      });
+    } else {
+      setState(() {
+        usernameValid = false;
+      });
+    }
   }
 
   /*loadDetails() async {
@@ -80,7 +102,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
             inAsyncCall: _isDetailInProgress,
             opacity: 0,
             progressIndicator: SizedBox(),
-           /* progressIndicator: CupertinoActivityIndicator(
+            /* progressIndicator: CupertinoActivityIndicator(
               radius: 12,
             ),*/
             child: SingleChildScrollView(
@@ -103,10 +125,12 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                           children: <Widget>[
                             InkWell(
                               onTap: () {
-                                Navigator.of(context, rootNavigator: true).pop();
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
                               },
                               child: Animator(
-                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                tween: Tween<Offset>(
+                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
                                 builder: (anim) => FractionalTranslation(
@@ -124,12 +148,14 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                       setState(() {
                                         _isClickOnDetail = true;
                                       });
-                                      await Future.delayed(const Duration(milliseconds: 700));
+                                      await Future.delayed(
+                                          const Duration(milliseconds: 700));
 
                                       Navigator.of(context, rootNavigator: true)
                                           .push(
                                         CupertinoPageRoute<void>(
-                                          builder: (BuildContext context) => SignInScreen(),
+                                          builder: (BuildContext context) =>
+                                              SignInScreen(),
                                         ),
                                       )
                                           .then((onValue) {
@@ -139,21 +165,24 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                       });
                                     },
                                     child: Animator(
-                                      tween: Tween<double>(begin: 0.8, end: 1.1),
+                                      tween:
+                                          Tween<double>(begin: 0.8, end: 1.1),
                                       curve: Curves.easeInToLinear,
                                       cycles: 0,
                                       builder: (anim) => Transform.scale(
                                         scale: anim.value,
                                         child: Padding(
-                                          padding: const EdgeInsets.only(right: 16),
+                                          padding:
+                                              const EdgeInsets.only(right: 16),
                                           child: Text(
                                             'Sign In',
                                             style: TextStyle(
-                                                color: AllCoustomTheme.getTextThemeColor(),
-                                                fontSize: ConstanceData.SIZE_TITLE20,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE20,
                                                 fontFamily: "Roboto",
-                                                fontWeight: FontWeight.bold
-                                            ),
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),
@@ -183,11 +212,11 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                 child: Text(
                                   'User Personal Details',
                                   style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
+                                      color:
+                                          AllCoustomTheme.getTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE20,
                                       fontFamily: "Roboto",
-                                      fontWeight: FontWeight.bold
-                                  ),
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -217,32 +246,40 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   bottom: BorderSide(
-                                                    color: Color(0xFFD8AF4F),
-                                                    width: 1.6, // Underline width
-                                                  )
-                                              )
-                                          ),
+                                            color: Color(0xFFD8AF4F),
+                                            width: 1.6, // Underline width
+                                          ))),
                                         ),
                                       ),
                                       Row(
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, top: 4,right: 20),
+                                              padding: EdgeInsets.only(
+                                                  left: 14, top: 4, right: 20),
                                               child: TextFormField(
                                                 validator: _validateName,
                                                 controller: firstNameController,
-                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                                keyboardType: TextInputType.text,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                  hintText: 'Enter First name here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'First Name',
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                                ),
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText:
+                                                        'Enter First name here...',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText: 'First Name',
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
                                                 //controller: lastnameController,
                                                 onSaved: (value) {
                                                   setState(() {
@@ -261,21 +298,31 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, top: 4,right: 20),
+                                              padding: EdgeInsets.only(
+                                                  left: 14, top: 4, right: 20),
                                               child: TextFormField(
                                                 validator: _validateName,
                                                 controller: lastNameController,
-                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                                keyboardType: TextInputType.text,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                  hintText: 'Enter Last name here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Last Name',
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                                ),
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText:
+                                                        'Enter Last name here...',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText: 'Last Name',
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
                                                 //controller: lastnameController,
                                                 onSaved: (value) {
                                                   setState(() {
@@ -293,34 +340,35 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                       Row(
                                         children: <Widget>[
                                           Padding(
-                                            padding: EdgeInsets.only(left: 14, top: 4),
-                                            child: Text(
-                                              "Date Of Birth :",
-                                              style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                            ),
+                                            padding: EdgeInsets.only(
+                                                left: 14, top: 4),
+                                            child: Text("Date Of Birth :",
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldLabelStyleTheme()),
                                           ),
                                           Expanded(
                                               child: Padding(
-                                                padding: EdgeInsets.only(top: 4),
-                                                child: datePicker,
-                                              )
-                                          ),
+                                            padding: EdgeInsets.only(top: 4),
+                                            child: datePicker,
+                                          )),
                                         ],
                                       ),
                                       Visibility(
-                                        visible: dobFound==false ? true : false,
+                                        visible:
+                                            dobFound == false ? true : false,
                                         child: Row(
                                           children: <Widget>[
                                             Padding(
-                                                padding: EdgeInsets.only(left: 14, top: 4),
+                                                padding: EdgeInsets.only(
+                                                    left: 14, top: 4),
                                                 child: Text(
                                                   "Please Fill Date Of Birth",
                                                   style: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE12,
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE12,
                                                     color: Color(0xFFC70039),
                                                   ),
-                                                )
-                                            ),
+                                                )),
                                           ],
                                         ),
                                       ),
@@ -331,33 +379,47 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, top: 4,right: 20),
+                                              padding: EdgeInsets.only(
+                                                  left: 14, top: 4, right: 20),
                                               child: new FormField(
-                                                builder: (FormFieldState state) {
+                                                builder:
+                                                    (FormFieldState state) {
                                                   return InputDecorator(
                                                     decoration: InputDecoration(
-                                                      labelText: 'Country Of Residency',
-                                                      labelStyle: AllCoustomTheme.getDropDownFieldLabelStyleTheme(),
-                                                      errorText: state.hasError ? state.errorText : null,
+                                                      labelText:
+                                                          'Country Of Residency',
+                                                      labelStyle: AllCoustomTheme
+                                                          .getDropDownFieldLabelStyleTheme(),
+                                                      errorText: state.hasError
+                                                          ? state.errorText
+                                                          : null,
                                                     ),
-                                                    isEmpty: selectedCountry == '',
-                                                    child: new DropdownButtonHideUnderline(
+                                                    isEmpty:
+                                                        selectedCountry == '',
+                                                    child:
+                                                        new DropdownButtonHideUnderline(
                                                       child: new DropdownButton(
                                                         value: selectedCountry,
-                                                        dropdownColor: Colors.white,
+                                                        dropdownColor:
+                                                            Colors.white,
                                                         isExpanded: true,
-                                                        onChanged: (String newValue) {
+                                                        onChanged:
+                                                            (String newValue) {
                                                           setState(() {
-                                                            selectedCountry = newValue;
+                                                            selectedCountry =
+                                                                newValue;
                                                           });
                                                         },
-                                                        items: GlobalInstance.countryList.map((String value) {
+                                                        items: GlobalInstance
+                                                            .countryList
+                                                            .map(
+                                                                (String value) {
                                                           return new DropdownMenuItem(
                                                             value: value,
                                                             child: new Text(
-                                                              value,
-                                                              style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
-                                                            ),
+                                                                value,
+                                                                style: AllCoustomTheme
+                                                                    .getDropDownMenuItemStyleTheme()),
                                                           );
                                                         }).toList(),
                                                       ),
@@ -365,37 +427,17 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                   );
                                                 },
                                                 validator: (val) {
-                                                  return ((val != null && val!='') || (selectedCountry!=null && selectedCountry!='')) ? null : 'Please '
-                                                      'select country';
+                                                  return ((val != null &&
+                                                              val != '') ||
+                                                          (selectedCountry !=
+                                                                  null &&
+                                                              selectedCountry !=
+                                                                  ''))
+                                                      ? null
+                                                      : 'Please '
+                                                          'select country';
                                                 },
-                                              )
-/*                                              child: TextFormField(
-                                                controller: countryController,
-                                                cursorColor: AllCoustomTheme.getTextThemeColors(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getTextThemeColors(),
-                                                ),
-                                                keyboardType: TextInputType.text,
-                                                decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColors(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColors(),
-                                                  hintText: 'Enter Country here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Country Residency',
-                                                  labelStyle: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                                //controller: lastnameController,
-                                                onSaved: (value) {
-                                                  setState(() {
-                                                    //lastnamesearchText = value;
-                                                  });
-                                                },
-                                              ),*/
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -403,10 +445,91 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                       SizedBox(
                                         height: 10,
                                       ),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 14, top: 4, right: 20),
+                                              child: TextFormField(
+                                                validator: _validateUsername,
+                                                controller: usernameController,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                decoration: new InputDecoration(
+                                                  focusColor: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fillColor: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  hintText:
+                                                      'Enter username here...',
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.grey[600],
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE14),
+                                                  labelText: 'Username',
+                                                  labelStyle: AllCoustomTheme
+                                                      .getTextFormFieldLabelStyleTheme(),
+                                                  suffixIcon: usernameValid
+                                                      ? Icon(
+                                                          Icons
+                                                              .check_circle_outline,
+                                                          color: Colors.green,
+                                                        )
+                                                      : Icon(
+                                                          Icons.close_rounded,
+                                                          color: Colors.red,
+                                                        ),
+                                                ),
+                                                //controller: lastnameController,
+
+                                                // onSaved: (value) async {
+                                                //   bool valid = await Provider
+                                                //           .of<UsernameFunctionalityProvider>(
+                                                //               context,
+                                                //               listen: false)
+                                                //       .checkUniqueUsername(
+                                                //           usernameController
+                                                //               .text);
+                                                //   setState(() {
+                                                //     usernameValid = valid;
+                                                //   });
+                                                // },
+                                                // onFieldSubmitted:
+                                                //     (value) async {
+                                                //   bool valid = await Provider
+                                                //           .of<UsernameFunctionalityProvider>(
+                                                //               context,
+                                                //               listen: false)
+                                                //       .checkUniqueUsername(
+                                                //           usernameController
+                                                //               .text);
+                                                //   setState(() {
+                                                //     usernameValid = valid;
+                                                //   });
+                                                // },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      // StatefulBuilder(builder:
+                                      //     (context, setUsernameFieldState) {
+                                      //   return ;
+                                      // }),
                                       Padding(
-                                        padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                                        padding: const EdgeInsets.only(
+                                            bottom: 20, left: 14, right: 10),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: <Widget>[
                                             SizedBox(
                                               height: 50,
@@ -416,25 +539,41 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                         _submit();
                                                       },
                                                       child: Animator(
-                                                        tween: Tween<double>(begin: 0.8, end: 1.1),
-                                                        curve: Curves.easeInToLinear,
+                                                        tween: Tween<double>(
+                                                            begin: 0.8,
+                                                            end: 1.1),
+                                                        curve: Curves
+                                                            .easeInToLinear,
                                                         cycles: 0,
-                                                        builder: (anim) => Transform.scale(
+                                                        builder: (anim) =>
+                                                            Transform.scale(
                                                           scale: anim.value,
                                                           child: Container(
                                                             height: 50,
                                                             width: 50,
-                                                            decoration: BoxDecoration(
-                                                              border: new Border.all(color: Colors.white, width: 1.5),
-                                                              shape: BoxShape.circle,
-                                                              color: Color(0xFFD8AF4F),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border: new Border
+                                                                      .all(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  width: 1.5),
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: Color(
+                                                                  0xFFD8AF4F),
                                                             ),
                                                             child: Padding(
-                                                              padding: const EdgeInsets.only(left: 3),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 3),
                                                               child: Icon(
-                                                                Icons.arrow_forward_ios,
+                                                                Icons
+                                                                    .arrow_forward_ios,
                                                                 size: 20,
-                                                                color: AllCoustomTheme.getTextThemeColors(),
+                                                                color: AllCoustomTheme
+                                                                    .getTextThemeColors(),
                                                               ),
                                                             ),
                                                           ),
@@ -442,8 +581,10 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                                       ),
                                                     )
                                                   : Padding(
-                                                      padding: EdgeInsets.only(right: 14),
-                                                      child: CupertinoActivityIndicator(
+                                                      padding: EdgeInsets.only(
+                                                          right: 14),
+                                                      child:
+                                                          CupertinoActivityIndicator(
                                                         radius: 12,
                                                       ),
                                                     ),
@@ -478,10 +619,17 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     await Future.delayed(const Duration(milliseconds: 700));
 
     FocusScope.of(context).requestFocus(myDetailScreenFocusNode);
-    if (_detailFormKey.currentState.validate() == false || (datePicker.year==null || datePicker.month==null || datePicker.day==null)) {
+    if (_detailFormKey.currentState.validate() == false ||
+        (datePicker.year == null ||
+            datePicker.month == null ||
+            datePicker.day == null)) {
       setState(() {
         _isDetailInProgress = false;
-        dobFound = (datePicker.year==null || datePicker.month==null || datePicker.day==null) ? false : true;
+        dobFound = (datePicker.year == null ||
+                datePicker.month == null ||
+                datePicker.day == null)
+            ? false
+            : true;
       });
       return;
     }
@@ -491,56 +639,67 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     var country = selectedCountry.trim();
     var dob = datePicker.getDate();
 
-    var tempJsonReq = {"first_name":"$firstName","last_name":"$lastName","residence_country":"$country","dob":"$dob"};
+    var tempJsonReq = {
+      "first_name": "$firstName",
+      "last_name": "$lastName",
+      "residence_country": "$country",
+      "dob": "$dob",
+      "is_public_profile": 1,
+      "username": usernameController.text.trim(),
+    };
     print("user details entered : " + "${tempJsonReq.toString()}");
     String jsonReq = json.encode(tempJsonReq);
+
+    if(!usernameValid){
+      Toast.show("Username Already Exists", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      setState(() {
+        _isDetailInProgress = false;
+      });
+      return ;
+    }
 
     var jsonReqResp = await request.postSubmit('users/add_details', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit userdetails response: $result");
 
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
-
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true) {
         _detailFormKey.currentState.save();
 
         Toast.show("${result['message']}", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
-        Navigator.of(context, rootNavigator: true).push(
+        Navigator.of(context, rootNavigator: true)
+            .push(
           CupertinoPageRoute<void>(
-            builder: (BuildContext context) =>
-                InvestorType(),
+            builder: (BuildContext context) => InvestorType(),
           ),
-        ).then((onValue) {
+        )
+            .then((onValue) {
           setState(() {
             _isDetailInProgress = false;
           });
         });
       }
-    }
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
-
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
       Toast.show("${result['message']}", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       setState(() {
         _isDetailInProgress = false;
       });
-    }
-    else{
+    } else {
       setState(() {
         _isDetailInProgress = false;
       });
       Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
 
 /*    String jsonReq = "users/add_details?first_name=$firstName&last_name=$lastName&residence_country=$country&dob=$dob";
@@ -575,22 +734,16 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
           duration: Toast.LENGTH_LONG,
           gravity: Toast.BOTTOM);
     }*/
-    
   }
 
-
-
   // ignore: missing_return
-  String _validateName(String value)
-  {
+  String _validateName(String value) {
     Pattern pattern = r'^[A-Za-z _]*[A-Za-z][A-Za-z _]*$';
     RegExp regex = new RegExp(pattern);
 
     if (value.isEmpty) {
       return "Name cannot be empty";
-    }
-    else if(value!='' && value!=null)
-    {
+    } else if (value != '' && value != null) {
       if (!regex.hasMatch(value))
         return 'Name Consist Only Alphabets';
       else
@@ -598,4 +751,11 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
     }
   }
 
+  String _validateUsername(String value) {
+    if (value.isEmpty) {
+      return "Username cannot be empty";
+    } else if (value.length < 4) {
+      return "Atleast 4 characters";
+    }
+  }
 }

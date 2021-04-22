@@ -173,9 +173,9 @@ class FeaturedCompaniesProvider {
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("ggggg");
 
-      if(result["message"] == "Ticker not in database"){
+      if (result["message"] == "Ticker not in database") {
         return {};
-      }else{
+      } else {
         print("results $result");
         return result["message"];
       }
@@ -406,6 +406,35 @@ class FeaturedCompaniesProvider {
     }
   }
 
+  getUserDetailsByUserId(userId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+
+    String filterPath = "users/get_other_user_details";
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken'
+    };
+
+    var body = {"user_id": userId};
+
+    String url = GlobalInstance.apiBaseUrl + filterPath;
+    print("get user details by userid url : $url");
+
+    var response =
+        await http.post(url, headers: headers, body: jsonEncode(body));
+    print("get user badge response: ${response.statusCode}");
+    var result = jsonDecode(response.body);
+    print(result.toString());
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return result["data"];
+    } else {
+      return null;
+    }
+  }
+
   getUserCoinsScoreData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
@@ -593,11 +622,11 @@ class FeaturedCompaniesProvider {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("ggggg");
-      if(result["message"] == "Ticker not in database"){
+      if (result["message"] == "Ticker not in database") {
         // historicalPriceData = ;
         // notifyListeners();
         return null;
-      }else{
+      } else {
         print("results ${result["messsage"]}");
         return result["message"];
       }
@@ -690,48 +719,48 @@ class FeaturedCompaniesProvider {
     }
   }
 
+  getSinglePublicCompanyDataFromStatic(
+    String ticker,
+  ) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
 
+    String filterPath = "company_details/listedStaticTicker?ticker=$ticker";
 
-  getSinglePublicCompanyDataFromStatic(String ticker,) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String sessionToken = prefs.getString('Session_token');
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken'
+    };
 
-  String filterPath = "company_details/listedStaticTicker?ticker=$ticker";
+    String url = GlobalInstance.apiBaseUrl + filterPath;
+    print("get static url: $url");
+    // print("session token: $sessionToken");
 
-  Map<String, String> headers = {
-    "Content-type": "application/json",
-    'Authorization': 'Token $sessionToken'
-  };
+    var response = await http.get(url, headers: headers);
+    print("get static company response: ${response.statusCode}");
+    var result = jsonDecode(response.body);
 
-  String url = GlobalInstance.apiBaseUrl + filterPath;
-  print("get static url: $url");
-  // print("session token: $sessionToken");
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // print("ggggg");
+      print("results ${result["messsage"]}");
+      return result["message"];
+      // return result["message"];
+      // return getCompaniesList(result["message"]);
 
-  var response = await http.get(url, headers: headers);
-  print("get static company response: ${response.statusCode}");
-  var result = jsonDecode(response.body);
-
-  if (response.statusCode == 200 || response.statusCode == 201) {
-  // print("ggggg");
-  print("results ${result["messsage"]}");
-  return result["message"];
-  // return result["message"];
-  // return getCompaniesList(result["message"]);
-
-  // if (result != null &&a
-  //     result.containsKey('auth') &&
-  //     result['auth'] == true) {
-  //   Toast.show("${result['message']}", context,
-  //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-  // }
-  } else if (result != null &&
-  result.containsKey('auth') &&
-  result['auth'] != true) {
-  } else {
-  // Toast.show("Something went wrong!", context,
-  //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      // if (result != null &&a
+      //     result.containsKey('auth') &&
+      //     result['auth'] == true) {
+      //   Toast.show("${result['message']}", context,
+      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      // }
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
+    } else {
+      // Toast.show("Something went wrong!", context,
+      //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    }
   }
-}
 
   getSinglePublicCompanyData(String ticker, String type) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -749,7 +778,7 @@ class FeaturedCompaniesProvider {
     // print("session token: $sessionToken");
 
     var response = await http.get(url, headers: headers);
-    print("get single company response: ${response.statusCode}");
+    print("get single public company data response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
