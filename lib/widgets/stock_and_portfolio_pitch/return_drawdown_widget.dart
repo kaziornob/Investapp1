@@ -42,12 +42,13 @@ class ReturnDrawdownWidget extends StatelessWidget {
                       height: 50,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Row(
                         children: [
                           Text("Return "),
                           Tooltip(
-                            message: "Return",
+                            message:
+                                "Net increase or decrease in value of portfolio",
                             child: Icon(
                               Icons.help,
                               size: 15,
@@ -57,12 +58,13 @@ class ReturnDrawdownWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Row(
                         children: [
                           Text("Drawdown "),
                           Tooltip(
-                            message: "Drawdown",
+                            message:
+                                "A maximum drawdown is the maximum observed loss from a peak to a trough of a portfolio, before a new peak is attained",
                             child: Icon(
                               Icons.help,
                               size: 15,
@@ -73,12 +75,13 @@ class ReturnDrawdownWidget extends StatelessWidget {
                     ),
                     showMore
                         ? Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(top: 8.0),
                             child: Row(
                               children: [
                                 Text("Volatility "),
                                 Tooltip(
-                                  message: "Volatility",
+                                  message:
+                                      "The volatility of a portfolio of stocks is a measure of how wildly the total value of all the stocks in that portfolio appreciates or declines",
                                   child: Icon(
                                     Icons.help,
                                     size: 15,
@@ -90,12 +93,13 @@ class ReturnDrawdownWidget extends StatelessWidget {
                         : SizedBox(),
                     showMore
                         ? Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(top: 8.0),
                             child: Row(
                               children: [
                                 Text("Sharpe Ratio "),
                                 Tooltip(
-                                  message: "Sharpe Ratio",
+                                  message:
+                                      "The ratio is the average return earned in excess of the risk-free rate per unit of volatility or total risk",
                                   child: Icon(
                                     Icons.help,
                                     size: 15,
@@ -138,14 +142,14 @@ class ReturnDrawdownWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top:15),
+                          padding: const EdgeInsets.only(top: 15),
                           child: Text(
-                              "${(data["target_return"] * 100).toStringAsFixed(2)} %"),
+                              "${(data["target_return"]).toStringAsFixed(2)} %"),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top:15.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                              "${(data["target_drawdown"] * 100).toStringAsFixed(2)} %"),
+                              "${(data["target_drawdown"]).toStringAsFixed(2)} %"),
                         ),
                       ],
                     ),
@@ -167,7 +171,6 @@ class ReturnDrawdownWidget extends StatelessWidget {
                         fontSize: 18,
                       ),
                       overflow: TextOverflow.clip,
-
                     ),
                   ),
                   Container(
@@ -194,31 +197,49 @@ class ReturnDrawdownWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top:8.0),
+                          padding: const EdgeInsets.only(top: 12.0),
                           child: Text(
-                              "${(data["realization_itd_perc"] * 100).toStringAsFixed(2)} %"),
+                              "${(data["realization_itd_perc"]).toStringAsFixed(2)} %"),
                         ),
-                        Text(
-                          "ITD Return %",
-                          style: TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
+                        showMore
+                            ? SizedBox()
+                            : Text(
+                                "ITD Return %",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
                         Padding(
-                          padding: const EdgeInsets.only(top:8.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                              "${(data["realization_annual_return_perc"] * 100).toStringAsFixed(2)} %"),
+                              "${(data["realization_annual_return_perc"]).toStringAsFixed(2)} %"),
                         ),
-                        Container(
-                          width: 80,
-                          child: Text(
-                            "Annualized Return %",
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                        showMore
+                            ? SizedBox()
+                            : Container(
+                                width: 80,
+                                child: Text(
+                                  "Annualized Return %",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                        showMore
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                    "${(data["volatility"]).toStringAsFixed(2)} %"),
+                              )
+                            : SizedBox(),
+                        showMore
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                    "${(data["sharpe_ratio"]).toStringAsFixed(2)}     "),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ),

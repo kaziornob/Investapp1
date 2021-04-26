@@ -16,6 +16,7 @@ import 'package:auroim/provider_abhinav/forgot_password_provider.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:auroim/provider_abhinav/listed_companies_provider.dart';
 import 'package:auroim/provider_abhinav/long_short_provider.dart';
+import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:auroim/provider_abhinav/search_all_securities_provider.dart';
@@ -341,6 +342,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => StockPitchProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => PortfolioPitchProvider(),
           ),
           ChangeNotifierProvider(
             create: (_) => CryptoCoinsProvider(),

@@ -1,6 +1,9 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
+import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/widgets/stock_and_portfolio_pitch/show_portfolio_pitch_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +18,17 @@ class LivePaperPortfolio extends StatefulWidget {
 
 class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
   String title;
+  bool _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<PortfolioPitchProvider>(context).getPortfolioPitches(
+          Provider.of<UserDetails>(context).userDetails["email"]);
+      _isInit = false;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,340 +42,401 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
       title = "${widget.userName}\'s Portfolio Track Record";
     }
 
-    return Column(
-      children: [
-        Padding(
-            padding: const EdgeInsets.only(left: 16, right: 5.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.09,
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFD8AF4F),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                          ),
-                        ),
-                      )),
-                  Container(
-                    margin: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width * 0.22),
-                    padding: EdgeInsets.only(
-                      bottom: 3, // space between underline and text
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
-                      width: 1.0, // Underline width
-                    ))),
-                  ),
-                ],
-              ),
-            )),
-        SizedBox(
-          height: 10.0,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20, right: 5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Consumer<PortfolioPitchProvider>(
+      builder: (context, portfolioProvider, _) {
+        if (portfolioProvider.allPortfolioPitches != null &&
+            portfolioProvider.allPortfolioPitches.length != 0) {
+          return Column(
             children: [
-              // live section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Live',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                            decoration: TextDecoration.underline,
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
+              Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 5.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.09,
+                    child: ListView(
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(top: 5.0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                title,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFFD8AF4F),
+                                  fontSize: ConstanceData.SIZE_TITLE18,
+                                  fontFamily: "Roboto",
+                                  package: 'Roboto-Regular',
+                                ),
+                              ),
+                            )),
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width * 0.22),
+                          padding: EdgeInsets.only(
+                            bottom: 3, // space between underline and text
                           ),
-                        ),
-                      )),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      color: AllCoustomTheme
-                                          .getsecoundTextThemeColor(),
-                                      size: 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Return: 25%',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color:
-                                            AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "Roboto",
-                                        package: 'Roboto-Regular',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      color: AllCoustomTheme
-                                          .getsecoundTextThemeColor(),
-                                      size: 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Risk/Volatility: 10%',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color:
-                                            AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "Roboto",
-                                        package: 'Roboto-Regular',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      color: AllCoustomTheme
-                                          .getsecoundTextThemeColor(),
-                                      size: 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Sharpe ratio: 2.1',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color:
-                                            AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "Roboto",
-                                        package: 'Roboto-Regular',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            width: 1.0, // Underline width
                           ))),
-                ],
+                        ),
+                      ],
+                    ),
+                  )),
+              SizedBox(
+                height: 10.0,
               ),
-              // paper section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Paper',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                            decoration: TextDecoration.underline,
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                          ),
+              Container(
+                height: 300,
+                child: ListView.builder(
+                    itemCount: portfolioProvider.allPortfolioPitches.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 5.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // live section
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5.0),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Live',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AllCoustomTheme
+                                            .getSeeMoreThemeColor(),
+                                        decoration: TextDecoration.underline,
+                                        fontSize: ConstanceData.SIZE_TITLE18,
+                                        fontFamily: "Roboto",
+                                        package: 'Roboto-Regular',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 5.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: AllCoustomTheme
+                                                        .getsecoundTextThemeColor(),
+                                                    size: 8,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    'Return: 25%',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColor(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE16,
+                                                      fontFamily: "Roboto",
+                                                      package: 'Roboto-Regular',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 5.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: AllCoustomTheme
+                                                        .getsecoundTextThemeColor(),
+                                                    size: 8,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    'Risk/Volatility: 10%',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColor(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE16,
+                                                      fontFamily: "Roboto",
+                                                      package: 'Roboto-Regular',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 5.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: AllCoustomTheme
+                                                        .getsecoundTextThemeColor(),
+                                                    size: 8,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    'Sharpe ratio: 2.1',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColor(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE16,
+                                                      fontFamily: "Roboto",
+                                                      package: 'Roboto-Regular',
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ))),
+                              ],
+                            ),
+                            // paper section
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5.0),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ShowPortfolioPitchPage(
+                                              portfolioData: portfolioProvider
+                                                  .allPortfolioPitches[index],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Paper${index + 1}',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AllCoustomTheme
+                                              .getSeeMoreThemeColor(),
+                                          decoration: TextDecoration.underline,
+                                          fontSize: ConstanceData.SIZE_TITLE18,
+                                          fontFamily: "Roboto",
+                                          package: 'Roboto-Regular',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 5.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: AllCoustomTheme
+                                                        .getsecoundTextThemeColor(),
+                                                    size: 8,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    'Return: ${portfolioProvider.allPortfolioPitches[index]["target_return"]}%',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColor(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE16,
+                                                      fontFamily: "Roboto",
+                                                      package: 'Roboto-Regular',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 5.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: AllCoustomTheme
+                                                        .getsecoundTextThemeColor(),
+                                                    size: 8,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    'Risk/Volatility: ${portfolioProvider.allPortfolioPitches[index]["volatility"]}',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColor(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE16,
+                                                      fontFamily: "Roboto",
+                                                      package: 'Roboto-Regular',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 5.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: AllCoustomTheme
+                                                        .getsecoundTextThemeColor(),
+                                                    size: 8,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    'Sharpe ratio: ${portfolioProvider.allPortfolioPitches[index]["sharpe_ratio"]}',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColor(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE16,
+                                                      fontFamily: "Roboto",
+                                                      package: 'Roboto-Regular',
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ))),
+                              ],
+                            )
+                          ],
                         ),
-                      )),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      color: AllCoustomTheme
-                                          .getsecoundTextThemeColor(),
-                                      size: 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Return: 25%',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color:
-                                            AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "Roboto",
-                                        package: 'Roboto-Regular',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      color: AllCoustomTheme
-                                          .getsecoundTextThemeColor(),
-                                      size: 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Risk/Volatility: 10%',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color:
-                                            AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "Roboto",
-                                        package: 'Roboto-Regular',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      color: AllCoustomTheme
-                                          .getsecoundTextThemeColor(),
-                                      size: 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Sharpe ratio: 2.1',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color:
-                                            AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        fontFamily: "Roboto",
-                                        package: 'Roboto-Regular',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ))),
-                ],
-              )
+                      );
+                    }),
+              ),
             ],
-          ),
-        )
-      ],
+          );
+        } else {
+          return SizedBox();
+        }
+      },
     );
   }
 }

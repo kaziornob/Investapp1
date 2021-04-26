@@ -2,7 +2,6 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
-import 'package:auroim/widgets/stock_and_portfolio_pitch/show_portfolio_pitch_page.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/show_stock_pitch_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,11 +67,6 @@ class _StockPitchesState extends State<StockPitches> {
                                 stockPitchData: data[index],
                               ),
                             ),
-                            // MaterialPageRoute(
-                            //   builder: (context) => ShowPortfolioPitchPage(
-                            //     listOfSecurities: [1, 2],
-                            //   ),
-                            // ),
                           );
                         },
                       ),

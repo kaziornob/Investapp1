@@ -110,7 +110,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
   void didChangeDependencies() {
     if (_isInit) {
       Provider.of<PublicCompanyHistoricalPricing>(context)
-          .getSinglePublicCompanyData(widget.companyData["ticker"], 30);
+          .getSinglePublicCompanyData(widget.companyData["ticker"], 365);
       _isInit = false;
     }
     super.didChangeDependencies();

@@ -65,7 +65,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
     if (_isInit) {
       print("did change small get area view");
       Provider.of<PublicCompanyHistoricalPricing>(context)
-          .getSinglePublicCompanyData(widget.ticker, 30);
+          .getSinglePublicCompanyData(widget.ticker, 365);
       getFollowing();
       _isInit = false;
     }
@@ -397,7 +397,6 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           y: element["price"].toDouble()),
                                     );
                                   });
-
                                   return Center(
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *

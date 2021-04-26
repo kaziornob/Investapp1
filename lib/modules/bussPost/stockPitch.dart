@@ -785,18 +785,6 @@ class _StockPitchState extends State<StockPitch> {
                                             fontSize: 15.0,
                                           ),
                                         ),
-                                        onSubmitted: (value) {
-                                          // setState(() {
-                                          //   itemList.add(TagData(
-                                          //       _searchTopicController.text,
-                                          //       _searchTopicController.text));
-                                          //   tagListVisible =
-                                          //       itemList.length == 0
-                                          //           ? false
-                                          //           : true;
-                                          // });
-                                          // _searchTopicController.text = '';
-                                        },
                                       ),
                                       suggestionsCallback: (pattern) async {
                                         print("pattern : $pattern");
@@ -861,8 +849,9 @@ class _StockPitchState extends State<StockPitch> {
                                       )),
                                   Container(
                                     margin: EdgeInsets.only(
-                                        top: 8.0,
-                                        bottom: tagListVisible ? 24.0 : 0.0),
+                                      top: 8.0,
+                                      bottom: tagListVisible ? 24.0 : 0.0,
+                                    ),
                                     child: StaggeredGridView.countBuilder(
                                       itemCount: itemList != null
                                           ? itemList.length
@@ -877,11 +866,13 @@ class _StockPitchState extends State<StockPitch> {
                                       itemBuilder: (context, index) {
                                         return Container(
                                             decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.0),
-                                                border: Border.all(
-                                                    color: Colors.grey,
-                                                    width: 1.0)),
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                                width: 1.0,
+                                              ),
+                                            ),
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0,
                                                 vertical: 8.0),

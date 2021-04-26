@@ -2,18 +2,33 @@ import 'package:auroim/widgets/stock_and_portfolio_pitch/return_drawdown_widget.
 import 'package:flutter/material.dart';
 
 class ShowPortfolioPitchPage extends StatefulWidget {
-  final List listOfSecurities;
+  final portfolioData;
 
-  const ShowPortfolioPitchPage({Key key, this.listOfSecurities})
-      : super(key: key);
+  const ShowPortfolioPitchPage({Key key, this.portfolioData}) : super(key: key);
 
   @override
   _ShowPortfolioPitchPageState createState() => _ShowPortfolioPitchPageState();
 }
 
 class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
+  List monthList = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "April",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
   @override
   Widget build(BuildContext context) {
+    DateTime date = DateTime.parse(widget.portfolioData["date"]);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -55,12 +70,14 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: Text("Created on 16th April, 2021"),
+                      child: Text(
+                          "Created on ${date.day}th ${monthList[date.month - 1]}, ${date.year}"),
                     ),
                   ],
                 ),
                 ReturnDrawdownWidget(
                   showMore: true,
+                  data: widget.portfolioData,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +98,7 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                            "I invest in the IT sector with low risk in general, with trades taking from a few days up to several months."),
+                            "${widget.portfolioData["portfolio_strategy"]}"),
                       ),
                       width: MediaQuery.of(context).size.width - 30,
                     ),
@@ -116,11 +133,23 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
                               width:
                                   (MediaQuery.of(context).size.width - 60) / 3,
                               child: Center(
-                                child: Text(
-                                  "Initial Wt",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Initial Wt",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Tooltip(
+                                      message: "",
+                                      child: Icon(
+                                        Icons.help,
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -129,11 +158,23 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
                               width:
                                   (MediaQuery.of(context).size.width - 60) / 3,
                               child: Center(
-                                child: Text(
-                                  "Current Wt",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Current Wt",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Tooltip(
+                                      message: "",
+                                      child: Icon(
+                                        Icons.help,
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -141,11 +182,63 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
                         ),
                       ),
                       Column(
-                        children: widget.listOfSecurities.map<Widget>((item) {
-                          return securityListRow();
+                        children:
+                            (widget.portfolioData["all_tikers_data"] as List)
+                                .map<Widget>((item) {
+                          return securityListRow(item);
                         }).toList(),
-                      )
+                      ),
                     ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: (MediaQuery.of(context).size.width - 20) / 3,
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(),
+                          //   borderRadius: BorderRadius.circular(2),
+                          // ),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Equity Invested",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Tooltip(
+                                  message: "",
+                                  child: Icon(
+                                    Icons.help,
+                                    size: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 50,
+                          width: (MediaQuery.of(context).size.width - 60) / 3,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "${widget.portfolioData["initial_investment_amount"]}",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -156,7 +249,7 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
     );
   }
 
-  securityListRow() {
+  securityListRow(data) {
     return Container(
       // decoration: BoxDecoration(
       //   border: Border.all(),
@@ -171,6 +264,13 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
               width: (MediaQuery.of(context).size.width - 60) / 3,
               decoration: BoxDecoration(
                 border: Border.all(),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              child: Center(
+                child: Text(
+                  "${data["company_name"]}",
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             Container(
@@ -178,6 +278,13 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
               width: (MediaQuery.of(context).size.width - 60) / 3,
               decoration: BoxDecoration(
                 border: Border.all(),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              child: Center(
+                child: Text(
+                  "${(data["previous_weight"]).toStringAsFixed(1)}",
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             Container(
@@ -185,6 +292,13 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
               width: (MediaQuery.of(context).size.width - 60) / 3,
               decoration: BoxDecoration(
                 border: Border.all(),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              child: Center(
+                child: Text(
+                  "${(data["current_weight"]).toStringAsFixed(1)}",
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],

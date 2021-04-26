@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
+import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/widgets/stock_and_portfolio_pitch/search_security.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -9,14 +15,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class SecurityOption {
   final String id;
   String textSecurity;
-  String textWeight;
+  double weight;
 
-  SecurityOption(this.id, this.textSecurity, this.textWeight);
+  SecurityOption(this.id, this.textSecurity, this.weight);
 }
 
 class PortfolioPitch extends StatefulWidget {
@@ -30,19 +37,23 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
   List tagList = List();
   bool tagListVisible = false;
   List<TagData> itemList = List();
-  List<TextEditingController> listOfWeightControllers;
+  List<TextEditingController> listOfWeightControllers = [];
+  List<TextEditingController> listOfSecuritiesControllers = [];
+  List<String> listOfSecuritiesTickers = [];
   TextEditingController _searchTopicTagsController = TextEditingController();
   TextEditingController _targetReturnPercController = TextEditingController();
   TextEditingController _targetMaxDrawdownController = TextEditingController();
   TextEditingController _portfolioStrategyController = TextEditingController();
-  // TextEditingController _Controller = TextEditingController();
-
+  TextEditingController _initialAmountInvestedController =
+      TextEditingController(text: '1,000,000');
+  FeaturedCompaniesProvider _featuredCompaniesProvider =
+      FeaturedCompaniesProvider();
   List<String> targetMaxList = <String>['Long', 'Short'];
 
   List<SecurityOption> securityList = [];
   int _optionIndex = 1;
 
-  String selectedTargetMax;
+  String selectedLongShort;
 
   @override
   void initState() {
@@ -93,13 +104,12 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
           if (optObj.id == itemId) {
             if (from == "security")
               optObj.textSecurity = text;
-            else if (from == "weight") optObj.textWeight = text;
+            else if (from == "weight") optObj.weight = double.parse(text);
           }
         }
       }
     } on FormatException {}
   }
-
 
   @override
   void dispose() {
@@ -108,6 +118,9 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
     _targetMaxDrawdownController.dispose();
     _targetReturnPercController.dispose();
     listOfWeightControllers.forEach((element) {
+      element.dispose();
+    });
+    listOfSecuritiesControllers.forEach((element) {
       element.dispose();
     });
     super.dispose();
@@ -269,13 +282,17 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                               color: AllCoustomTheme.boxColor(),
                                             ),
                                             child: TextFormField(
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              controller:
+                                                  _targetReturnPercController,
                                               style: TextStyle(
                                                 color: AllCoustomTheme
                                                     .getTextThemeColors(),
                                                 fontSize:
                                                     ConstanceData.SIZE_TITLE14,
                                               ),
-                                              initialValue: "",
+                                              // initialValue: "",
                                             ),
                                           )
                                         ],
@@ -332,13 +349,17 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                               color: AllCoustomTheme.boxColor(),
                                             ),
                                             child: TextFormField(
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              controller:
+                                                  _targetMaxDrawdownController,
                                               style: TextStyle(
                                                 color: AllCoustomTheme
                                                     .getTextThemeColors(),
                                                 fontSize:
                                                     ConstanceData.SIZE_TITLE14,
                                               ),
-                                              initialValue: "",
+                                              // initialValue: "",
                                             ),
                                           )
                                         ],
@@ -362,15 +383,14 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                 0.40,
                                           ),
                                           Container(
-                                            margin: EdgeInsets.only(
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.05),
+                                            decoration: BoxDecoration(
+                                              color: AllCoustomTheme.boxColor(),
+                                            ),
+                                            padding: EdgeInsets.only(left: 10),
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.07,
+                                                0.05,
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -389,11 +409,11 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                         : null,
                                                   ),
                                                   isEmpty:
-                                                      selectedTargetMax == '',
+                                                      selectedLongShort == '',
                                                   child:
                                                       new DropdownButtonHideUnderline(
                                                     child: new DropdownButton(
-                                                      value: selectedTargetMax,
+                                                      value: selectedLongShort,
                                                       dropdownColor:
                                                           AllCoustomTheme
                                                                   .getThemeData()
@@ -401,10 +421,12 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                       isExpanded: true,
                                                       onChanged:
                                                           (String newValue) {
-                                                        setState(() {
-                                                          selectedTargetMax =
-                                                              newValue;
-                                                        });
+                                                        setState(
+                                                          () {
+                                                            selectedLongShort =
+                                                                newValue;
+                                                          },
+                                                        );
                                                       },
                                                       items: targetMaxList
                                                           .map((String value) {
@@ -429,9 +451,9 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                               validator: (val) {
                                                 return ((val != null &&
                                                             val != '') ||
-                                                        (selectedTargetMax !=
+                                                        (selectedLongShort !=
                                                                 null &&
-                                                            selectedTargetMax !=
+                                                            selectedLongShort !=
                                                                 ''))
                                                     ? null
                                                     : 'Please select field';
@@ -451,6 +473,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                               Container(
                                 height: 120,
                                 child: TextField(
+                                  controller: _portfolioStrategyController,
                                   maxLines: 10,
                                   decoration: InputDecoration(
                                     labelText: 'Portfolio strategy',
@@ -504,87 +527,77 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                     child: TypeAheadFormField(
                                       textFieldConfiguration:
                                           TextFieldConfiguration(
-                                              controller: _searchTopicTagsController,
-                                              textInputAction:
-                                                  TextInputAction.done,
-                                              textAlign: TextAlign.start,
-                                              keyboardType: TextInputType.text,
-                                              maxLines: 1,
-                                              style: TextStyle(fontSize: 16.0),
-                                              inputFormatters: [
-                                                LengthLimitingTextInputFormatter(
-                                                    30)
-                                              ],
-                                              decoration: InputDecoration(
-                                                hintText: 'Search Topic Tags',
-                                                border: OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        width: 1.0,
-                                                        color: AllCoustomTheme
-                                                            .getTextThemeColors()),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                0.0))),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey,
-                                                      width: 1.0),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.white,
-                                                      width: 1.0),
-                                                ),
-                                                hintStyle: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 15.0,
-                                                ),
-                                              ),
-                                              onSubmitted: (value) {
-                                                setState(() {
-                                                  itemList.add(TagData(
-                                                      _searchTopicTagsController.text,
-                                                      _searchTopicTagsController.text));
-                                                  tagListVisible =
-                                                      itemList.length == 0
-                                                          ? false
-                                                          : true;
-                                                });
-                                                _searchTopicTagsController.text = '';
-                                              }),
-                                      suggestionsCallback: (pattern) {
-                                        if (pattern.toString().trim().length <
-                                            2) {
-                                          return null;
-                                        } else {
-                                          return searchItems(pattern);
-                                        }
+                                        controller: _searchTopicTagsController,
+                                        textInputAction: TextInputAction.done,
+                                        textAlign: TextAlign.start,
+                                        keyboardType: TextInputType.text,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 16.0),
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(30)
+                                        ],
+                                        decoration: InputDecoration(
+                                          hintText: 'Search Topic Tags',
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 1.0,
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColors()),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(0.0))),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.grey, width: 1.0),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.white,
+                                                width: 1.0),
+                                          ),
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 15.0,
+                                          ),
+                                        ),
+                                      ),
+                                      suggestionsCallback: (pattern) async {
+                                        print("pattern : $pattern");
+                                        return await _featuredCompaniesProvider
+                                            .searchPublicCompanyList(pattern);
                                       },
                                       itemBuilder: (context, suggestion) {
-                                        if (_searchTopicTagsController.text.isNotEmpty) {
-                                          return ListTile(
-                                            title: Text(suggestion['tag']),
-                                          );
-                                        } else
-                                          return Container();
+                                        return ListTile(
+                                          title: Text(
+                                            suggestion["company_name"],
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        );
                                       },
                                       transitionBuilder: (context,
                                           suggestionsBox, controller) {
                                         return suggestionsBox;
                                       },
                                       onSuggestionSelected: (suggestion) {
+                                        print(
+                                            "suggestion: ${suggestion['ticker']}");
+                                        print(
+                                            "suggestion name: ${suggestion['company_name']}");
+
                                         _searchTopicTagsController.text = '';
-                                        setState(() {
-                                          itemList.add(TagData(
-                                              suggestion['_id'],
-                                              suggestion['tag']));
-                                          tagListVisible = itemList.length == 0
-                                              ? false
-                                              : true;
-                                        });
+                                        setState(
+                                          () {
+                                            itemList.add(
+                                              TagData(suggestion['ticker'],
+                                                  suggestion['company_name']),
+                                            );
+                                            tagListVisible =
+                                                itemList.length == 0
+                                                    ? false
+                                                    : true;
+                                          },
+                                        );
                                       },
                                     ),
                                   ),
@@ -707,178 +720,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                     top: 5.0, bottom: 9.0),
                                                 child: Container(
                                                   height: 60,
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Container(
-/*                                                  height: 60,
-                                                  width: MediaQuery.of(context).size.width *0.44,*/
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height *
-                                                            0.11,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.45,
-                                                        // margin: EdgeInsets.only(left: 5.0),
-                                                        child: TextFormField(
-                                                          onChanged: (text) {
-                                                            takeSecurityNumber(
-                                                                text,
-                                                                'security',
-                                                                securityList[
-                                                                        index]
-                                                                    .id);
-                                                          },
-                                                          initialValue:
-                                                              securityList[
-                                                                      index]
-                                                                  .textSecurity,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            border: new OutlineInputBorder(
-                                                                borderSide: new BorderSide(
-                                                                    color: AllCoustomTheme
-                                                                        .getsecoundTextThemeColor(),
-                                                                    width:
-                                                                        12.0)),
-                                                            // labelText: 'Option 1',
-                                                            hintText:
-                                                                'Securities',
-                                                            hintStyle: TextStyle(
-                                                                fontSize:
-                                                                    ConstanceData
-                                                                        .SIZE_TITLE14,
-                                                                color: AllCoustomTheme
-                                                                    .getTextThemeColors()),
-                                                            labelText:
-                                                                'Security 1',
-                                                            labelStyle: TextStyle(
-                                                                fontSize:
-                                                                    ConstanceData
-                                                                        .SIZE_TITLE16,
-                                                                color: AllCoustomTheme
-                                                                    .getTextThemeColors()),
-                                                            fillColor:
-                                                                Colors.white,
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      width:
-                                                                          1.0),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0),
-                                                            ),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide: BorderSide(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  width: 1.0),
-                                                            ),
-                                                          ),
-                                                          style: TextStyle(
-                                                            color: AllCoustomTheme
-                                                                .getTextThemeColors(),
-                                                            fontSize:
-                                                                ConstanceData
-                                                                    .SIZE_TITLE16,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-/*                                                  height: 52,
-                                                  width: MediaQuery.of(context).size.width *0.44,*/
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height *
-                                                            0.11,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.45,
-                                                        // margin: EdgeInsets.only(left: 5.0),
-                                                        child: TextFormField(
-                                                          onChanged: (text) {
-                                                            takeSecurityNumber(
-                                                                text,
-                                                                'weight',
-                                                                securityList[
-                                                                        index]
-                                                                    .id);
-                                                          },
-                                                          initialValue:
-                                                              securityList[
-                                                                      index]
-                                                                  .textSecurity,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            border: new OutlineInputBorder(
-                                                                borderSide: new BorderSide(
-                                                                    color: AllCoustomTheme
-                                                                        .getsecoundTextThemeColor(),
-                                                                    width:
-                                                                        12.0)),
-                                                            // labelText: 'Option 1',
-                                                            hintText:
-                                                                'Weightage',
-                                                            hintStyle: TextStyle(
-                                                                fontSize:
-                                                                    ConstanceData
-                                                                        .SIZE_TITLE14,
-                                                                color: AllCoustomTheme
-                                                                    .getTextThemeColors()),
-                                                            labelText:
-                                                                'Weightage(%)',
-                                                            labelStyle: TextStyle(
-                                                                fontSize:
-                                                                    ConstanceData
-                                                                        .SIZE_TITLE16,
-                                                                color: AllCoustomTheme
-                                                                    .getTextThemeColors()),
-                                                            fillColor:
-                                                                Colors.white,
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      width:
-                                                                          1.0),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0),
-                                                            ),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide: BorderSide(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  width: 1.0),
-                                                            ),
-                                                          ),
-                                                          style: TextStyle(
-                                                            color: AllCoustomTheme
-                                                                .getTextThemeColors(),
-                                                            fontSize:
-                                                                ConstanceData
-                                                                    .SIZE_TITLE16,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
+                                                  child: addSecurityRow(index),
                                                 ),
                                               ),
                                               Positioned(
@@ -936,27 +778,17 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          setState(() {
-                                            securityList.add(SecurityOption(
-                                                "$_optionIndex", '', ''));
-                                            _optionIndex++;
-                                            stockHeight = stockHeight + 100.0;
-                                          });
+                                          print("tapped add security");
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) =>
+                                                SearchSecurity(
+                                              callBack: searchSecurityCallback,
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
-/*                              Container(
-                                height: 20,
-                                width: 130,
-                                child: Text(
-                                  "Equity Left (?)",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),*/
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.height *
@@ -964,7 +796,9 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                       width: MediaQuery.of(context).size.width *
                                           0.45,
                                       child: TextFormField(
-                                        initialValue: '\$' + '1,000,000',
+                                        controller:
+                                            _initialAmountInvestedController,
+                                        keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           border: new OutlineInputBorder(
                                               borderSide: new BorderSide(
@@ -978,6 +812,12 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                 width: 1.0),
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
+                                          ),
+                                          prefix: Text(
+                                            "\$",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
@@ -1042,7 +882,8 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                Navigator.pop(context);
+                                                submitPortfolio();
+                                                // Navigator.pop(context);
                                               },
                                             ),
                                           ),
@@ -1061,6 +902,224 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
             ))
       ],
     );
+  }
+
+  submitPortfolio() async {
+    try {
+      if (_targetMaxDrawdownController.text.isNotEmpty &&
+          _targetMaxDrawdownController.text.isNotEmpty) {
+        double sumOfWeights = 0;
+        listOfWeightControllers.forEach((element) {
+          sumOfWeights = sumOfWeights + double.parse(element.text);
+        });
+        print(sumOfWeights);
+        if (sumOfWeights == 100.0) {
+          List allTags = [];
+          itemList.forEach((element) {
+            allTags.add(element.tag);
+          });
+          int i = 0;
+          print(_initialAmountInvestedController.text);
+          var body = {
+            "email": Provider.of<UserDetails>(context, listen: false)
+                .userDetails["email"],
+            "stock_name": "Listed",
+            "isLong": selectedLongShort == "Short" ? 0 : 1,
+            "target_return_perc":
+                double.parse(_targetReturnPercController.text),
+            "target_max_drawdown":
+                double.parse(_targetMaxDrawdownController.text),
+            "portfolio_strategy": _portfolioStrategyController.text,
+            "topic_tags": jsonEncode(allTags),
+            "portfolio_securities_data":
+                jsonEncode(listOfSecuritiesControllers.map((singleRow) {
+              var item = {
+                "security_ticker": listOfSecuritiesTickers[i],
+                "security_name": listOfSecuritiesControllers[i].text,
+                "weight": double.parse(listOfWeightControllers[i].text) / 100,
+              };
+              i = i + 1;
+              return item;
+            }).toList()),
+            "initial_investment_amount": double.parse(
+                _initialAmountInvestedController.text.replaceAll(",", "")),
+          };
+          bool isUploaded =
+              await Provider.of<PortfolioPitchProvider>(context, listen: false)
+                  .uploadPortfolioPitch(body);
+
+          print(body);
+
+          if (isUploaded) {
+            getDialog("Portfolio Pitch Uploaded !!", true);
+          }
+        } else {
+          getDialog("Sum of Weights should be 100% !!", false);
+        }
+      } else {
+        getDialog("Provide Return and Drawdown !!", false);
+      }
+    } catch (e, stackTrace) {
+      print(e.toString());
+      print(stackTrace);
+      getDialog("Some Error Occurred!!", false);
+    }
+  }
+
+  void getDialog(text, cancel) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+            title: Text(
+              "",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AllCoustomTheme.getTextThemeColors(),
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            content: Text(
+              "$text",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AllCoustomTheme.getTextThemeColors(),
+                fontWeight: FontWeight.bold,
+                fontSize: ConstanceData.SIZE_TITLE18,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Ok',
+                  style: TextStyle(
+                    color: AllCoustomTheme.getTextThemeColors(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  if (cancel) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  addSecurityRow(index) {
+    return Row(
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height * 0.11,
+          width: MediaQuery.of(context).size.width * 0.45,
+          child: TextFormField(
+            controller: listOfSecuritiesControllers[index],
+            onChanged: (text) {
+              takeSecurityNumber(text, 'security', securityList[index].id);
+            },
+            // initialValue: securityList[index].textSecurity,
+            decoration: InputDecoration(
+              border: new OutlineInputBorder(
+                borderSide: new BorderSide(
+                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                    width: 12.0),
+              ),
+              // labelText: 'Option 1',
+              hintText: 'Securities',
+              hintStyle: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: AllCoustomTheme.getTextThemeColors()),
+              labelText: 'Security ${index + 1}',
+              labelStyle: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                  color: AllCoustomTheme.getTextThemeColors()),
+              fillColor: Colors.white,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white, width: 1.0),
+              ),
+            ),
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE16,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.11,
+          width: MediaQuery.of(context).size.width * 0.45,
+          // margin: EdgeInsets.only(left: 5.0),
+          child: TextFormField(
+            controller: listOfWeightControllers[index],
+            onChanged: (text) {
+              takeSecurityNumber(text, 'weight', securityList[index].id);
+            },
+            keyboardType: TextInputType.number,
+            // initialValue: securityList[index].textSecurity,
+            decoration: InputDecoration(
+              border: new OutlineInputBorder(
+                borderSide: new BorderSide(
+                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                    width: 12.0),
+              ),
+              // labelText: 'Option 1',
+              hintText: 'Weightage',
+              hintStyle: TextStyle(
+                fontSize: ConstanceData.SIZE_TITLE14,
+                color: AllCoustomTheme.getTextThemeColors(),
+              ),
+
+              labelText: 'Weightage(%)',
+              labelStyle: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                  color: AllCoustomTheme.getTextThemeColors()),
+              fillColor: Colors.white,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white, width: 1.0),
+              ),
+            ),
+            style: TextStyle(
+              color: AllCoustomTheme.getTextThemeColors(),
+              fontSize: ConstanceData.SIZE_TITLE16,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  searchSecurityCallback(companyData) {
+    setState(() {
+      listOfWeightControllers.add(TextEditingController());
+      listOfSecuritiesControllers.add(TextEditingController());
+      securityList.add(
+        SecurityOption("$_optionIndex", companyData["company_name"], 0),
+      );
+      print(_optionIndex);
+      listOfSecuritiesControllers[_optionIndex - 1].text =
+          companyData["company_name"];
+      listOfSecuritiesTickers.add(companyData["ticker"]);
+      _optionIndex++;
+      stockHeight = stockHeight + 100.0;
+    });
+
+    Navigator.of(context).pop();
   }
 
   void _showConfirmation(from, index) {
