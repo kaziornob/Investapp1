@@ -406,7 +406,7 @@ class FeaturedCompaniesProvider {
     }
   }
 
-  getUserDetailsByUserId(userId) async {
+  getUserDetailsByUserId(email) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -417,10 +417,10 @@ class FeaturedCompaniesProvider {
       'Authorization': 'Token $sessionToken'
     };
 
-    var body = {"user_id": userId};
+    var body = {"email": email};
 
     String url = GlobalInstance.apiBaseUrl + filterPath;
-    print("get user details by userid url : $url");
+    print("get user details by email url : $url");
 
     var response =
         await http.post(url, headers: headers, body: jsonEncode(body));
@@ -606,7 +606,7 @@ class FeaturedCompaniesProvider {
     // String jsonReq = jsonEncode(tempJsonReq);
 
     var jsonReqResp = await coinDetails(
-        'https://api.coingecko.com/api/v3/coins/$coinId/market_chart?vs_currency=usd&days=30');
+        'https://api.coingecko.com/api/v3/coins/$coinId/market_chart?vs_currency=usd&days=365');
 
     var result = jsonDecode(jsonReqResp.body);
     print("coin prices response: $result");

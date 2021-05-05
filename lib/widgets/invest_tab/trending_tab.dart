@@ -2,14 +2,17 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/provider_abhinav/auro_stars_provider.dart';
 import 'package:auroim/provider_abhinav/crypto_coins_provider.dart';
 import 'package:auroim/provider_abhinav/listed_companies_provider.dart';
+import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../crypto_coin_price_data.dart';
 
@@ -19,6 +22,7 @@ class TrendingTab extends StatefulWidget {
 }
 
 class _TrendingTabState extends State<TrendingTab> {
+  YoutubePlayerController controller;
   final mapOfAuroStars = {
     "Auro Global Thematic Portfolio": {
       "aurostar_id": 6,
@@ -70,6 +74,14 @@ class _TrendingTabState extends State<TrendingTab> {
 
   @override
   void initState() {
+    controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(
+          "https://www.youtube.com/watch?v=XgZMW7es3KY&t=4s"),
+      flags: YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
     color.add(Colors.blue[50]);
     color.add(Colors.blue[200]);
     color.add(Colors.blue);
@@ -157,7 +169,9 @@ class _TrendingTabState extends State<TrendingTab> {
                 ),
                 //Big Box
                 bigItem(auroStarData),
-                SizedBox(width: 5.0,),
+                SizedBox(
+                  width: 5.0,
+                ),
               ],
             ),
           );
@@ -179,7 +193,21 @@ class _TrendingTabState extends State<TrendingTab> {
 
   smallItem(isCrypto, data) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => isCrypto
+                ? SingleCryptoCurrencyDetailsById(
+                    coinId: data["coin_id"],
+                  )
+                : SecurityPageFirst(
+                    logo: "logo.png",
+                    callingFrom: "Accredited Investor",
+                    companyTicker: data["ticker"],
+                  ),
+          ),
+        );
+      },
       child: Container(
         decoration: new BoxDecoration(
           color: Color(0xFFFFFFFF),
@@ -235,7 +263,7 @@ class _TrendingTabState extends State<TrendingTab> {
                   ? _featuredCompaniesProvider.getCoinPrices(data["coin_id"])
                   : _featuredCompaniesProvider
                       .getSinglePublicCompanyHistoricalPricing(
-                          data["ticker"], 30),
+                          data["ticker"], 365),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<CryptoCoinPriceData> allPriceData = [];
@@ -294,7 +322,7 @@ class _TrendingTabState extends State<TrendingTab> {
                         width: MediaQuery.of(context).size.width * 0.22,
                         height: MediaQuery.of(context).size.height * 0.09,
                         child: SfCartesianChart(
-                          primaryXAxis: DateTimeAxis(isVisible: false),
+                          primaryXAxis: DateTimeAxis(isVisible: true),
                           primaryYAxis: NumericAxis(isVisible: false),
                           series: <ChartSeries>[
                             StackedAreaSeries<CryptoCoinPriceData, dynamic>(
@@ -401,17 +429,15 @@ class _TrendingTabState extends State<TrendingTab> {
             height: MediaQuery.of(context).size.height * 0.06,
             child: Padding(
               padding: EdgeInsets.only(top: 10.0),
-              child: Expanded(
-                child: Text(
-                  '${data[0]["name"]}',
-                  style: new TextStyle(
-                      fontFamily: "Poppins",
-                      color: Color(0xFF000000),
-                      fontSize: 15.0,
-                      letterSpacing: 0.2),
-                  overflow: TextOverflow.clip,
-                  textAlign: TextAlign.center,
-                ),
+              child: Text(
+                '${data[0]["name"]}',
+                style: new TextStyle(
+                    fontFamily: "Poppins",
+                    color: Color(0xFF000000),
+                    fontSize: 15.0,
+                    letterSpacing: 0.2),
+                overflow: TextOverflow.clip,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -447,10 +473,33 @@ class _TrendingTabState extends State<TrendingTab> {
           //     ],
           //   ),
           // ),
+
           Container(
             width: MediaQuery.of(context).size.width * 0.454,
             height: MediaQuery.of(context).size.height * 0.12,
-            child: Image.asset(mapOfAuroStars[data[0]["name"]]["header_path"]),
+            child: Center(
+              child: Image.asset(
+                mapOfAuroStars[data[0]["name"]]["header_path"],
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 8.0, right: 8.0, bottom: 5.0, top: 5.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.454,
+              height: MediaQuery.of(context).size.height * 0.12,
+              child: YoutubePlayer(
+                controller: controller,
+                showVideoProgressIndicator: true,
+                onReady: () {},
+                onEnded: (YoutubeMetaData metaData) {
+                  controller.pause();
+                },
+              ),
+            ),
           ),
           Container(
             // decoration: BoxDecoration(border: Border.all()),
@@ -531,8 +580,8 @@ class _TrendingTabState extends State<TrendingTab> {
       double lastItem = pricesData.length == 0
           ? 0.0
           : isCrypto
-              ? pricesData[pricesData.length - 1][1]
-              : pricesData[pricesData.length - 1]["price"];
+              ? pricesData[pricesData.length - 1][1].toDouble()
+              : pricesData[pricesData.length - 1]["price"].toDouble();
       double secondLastItem = pricesData.length <= 1
           ? 0.0
           : isCrypto

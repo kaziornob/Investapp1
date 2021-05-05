@@ -33,8 +33,6 @@ var iconButtonColor2 = isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF7499C6);
 
 String coinMarketcap =
     "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=";
-// String coinMarketcap = "https://api.coinmarketcap.com/v1/ticker/?start=";
-// String imageURL = "https://s2.coinmarketcap.com/static/img/coins/128x128/";
 String coinImageURL = 'https://static.coincap.io/assets/icons/';
 
 normalizeNumNoCommas(num input) {

@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class LivePaperPortfolio extends StatefulWidget {
   final userName;
+  final email;
 
-  const LivePaperPortfolio({Key key, this.userName}) : super(key: key);
+  const LivePaperPortfolio({Key key, this.userName,this.email}) : super(key: key);
 
   @override
   _LivePaperPortfolioState createState() => _LivePaperPortfolioState();
@@ -24,7 +25,7 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
   void didChangeDependencies() {
     if (_isInit) {
       Provider.of<PortfolioPitchProvider>(context).getPortfolioPitches(
-          Provider.of<UserDetails>(context).userDetails["email"]);
+          widget.email);
       _isInit = false;
     }
     super.didChangeDependencies();
@@ -368,7 +369,7 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                                                 Align(
                                                   alignment: Alignment.topLeft,
                                                   child: Text(
-                                                    'Risk/Volatility: ${portfolioProvider.allPortfolioPitches[index]["volatility"]}',
+                                                    'Risk/Volatility: ${portfolioProvider.allPortfolioPitches[index]["volatility"].toStringAsFixed(2)}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       color: AllCoustomTheme
@@ -408,7 +409,7 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                                                 Align(
                                                   alignment: Alignment.topLeft,
                                                   child: Text(
-                                                    'Sharpe ratio: ${portfolioProvider.allPortfolioPitches[index]["sharpe_ratio"]}',
+                                                    'Sharpe ratio: ${portfolioProvider.allPortfolioPitches[index]["sharpe_ratio"].toStringAsFixed(2)}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       color: AllCoustomTheme

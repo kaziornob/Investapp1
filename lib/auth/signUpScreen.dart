@@ -1157,12 +1157,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 onPressed: () {
-/*                  var tempField = {
-                    "email": "$email",
-                    "password": "$password",
-                    "phone": "$phone"
-                  };*/
-
                   Navigator.of(context).pop();
                   Navigator.of(context, rootNavigator: true)
                       .push(

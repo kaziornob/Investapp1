@@ -5,6 +5,7 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/provider_abhinav/currency_rate_provider.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:file_picker/file_picker.dart';
@@ -16,7 +17,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
 
 class StockPitch extends StatefulWidget {
   @override
@@ -28,6 +28,7 @@ class _StockPitchState extends State<StockPitch> {
   List tagList = List();
   bool tagListVisible = false;
   List<TagData> itemList = List();
+  bool _isInit = true;
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
   TextEditingController _searchTopicController = TextEditingController();
@@ -38,7 +39,8 @@ class _StockPitchState extends State<StockPitch> {
   TextEditingController _searchStockNameController = TextEditingController();
   TextEditingController _stockPitchTitleController = TextEditingController();
   TextEditingController _investmentThesisController = TextEditingController();
-
+  List<String> listOfFxs = [];
+  String selectedFx;
   List<String> pollDurationList = <String>['7 days', '14 days', '21 days'];
 
   // List<String> stockNameList = <String>["Listed", "Unlisted", "Crypto"];
@@ -144,6 +146,21 @@ class _StockPitchState extends State<StockPitch> {
     _stockPitchTitleController.dispose();
     _investmentThesisController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      await Provider.of<CurrencyRateProvider>(context, listen: false)
+          .getListOfAllFx();
+      Provider.of<CurrencyRateProvider>(context, listen: false)
+          .listOfAllFxs
+          .forEach((element) {
+            listOfFxs.add(element["ccy_symbol"]);
+      });
+      _isInit = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -407,6 +424,77 @@ class _StockPitchState extends State<StockPitch> {
                                           : 'choose one';
                                     },
                                   ))
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: new FormField(
+                                    builder: (FormFieldState state) {
+                                      return InputDecorator(
+                                        decoration: InputDecoration(
+                                          labelText: 'Select Currency',
+                                          labelStyle: AllCoustomTheme
+                                              .getDropDownFieldLabelStyleTheme(),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.white,
+                                                width: 1.0),
+                                          ),
+                                          errorText: state.hasError
+                                              ? state.errorText
+                                              : null,
+                                        ),
+                                        isEmpty: selectedFx == '',
+                                        child: new DropdownButtonHideUnderline(
+                                            child: ButtonTheme(
+                                                alignedDropdown: true,
+                                                child: Container(
+                                                  height: 18.0,
+                                                  child: new DropdownButton(
+                                                    value: selectedFx,
+                                                    dropdownColor: Colors.white,
+                                                    isExpanded: true,
+                                                    onChanged:
+                                                        (String newValue) {
+                                                      setState(() {
+                                                        selectedFx =
+                                                            newValue;
+                                                      });
+                                                    },
+                                                    items: listOfFxs
+                                                        .map((String value) {
+                                                      return DropdownMenuItem(
+                                                        value: value,
+                                                        child: Text(
+                                                          value,
+                                                          style: TextStyle(
+                                                            color: AllCoustomTheme
+                                                                .getTextThemeColor(),
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE16,
+                                                            fontFamily:
+                                                                "Roboto",
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }).toList(),
+                                                  ),
+                                                ))),
+                                      );
+                                    },
+                                    validator: (val) {
+                                      return ((val != null && val != '') ||
+                                              (selectedLongShort != null &&
+                                                  selectedLongShort != ''))
+                                          ? null
+                                          : 'choose one';
+                                    },
+                                  )),
                                 ],
                               ),
                               SizedBox(
@@ -997,66 +1085,69 @@ class _StockPitchState extends State<StockPitch> {
                                                                 .height *
                                                             0.50,
                                                     child: new Scrollbar(
-                                                        child: new ListView
-                                                            .separated(
-                                                      itemCount: paths !=
-                                                                  null &&
-                                                              paths.isNotEmpty
-                                                          ? paths.length
-                                                          : 1,
-                                                      itemBuilder:
-                                                          (BuildContext context,
-                                                              int index) {
-                                                        final bool isMultiPath =
-                                                            paths != null &&
-                                                                paths
-                                                                    .isNotEmpty;
-                                                        final int fileNo =
-                                                            index + 1;
-                                                        final String name =
-                                                            'File $fileNo : ' +
-                                                                (isMultiPath
-                                                                    ? paths.keys
-                                                                            .toList()[
-                                                                        index]
-                                                                    : fileName ??
-                                                                        '...');
-                                                        final filePath =
-                                                            isMultiPath
-                                                                ? paths
-                                                                    .values
-                                                                    .toList()[
-                                                                        index]
-                                                                    .toString()
-                                                                : path;
-                                                        return new ListTile(
-                                                          title: new Text(
-                                                            name,
-                                                            style: TextStyle(
-                                                              color: AllCoustomTheme
-                                                                  .getTextThemeColor(),
-                                                              fontSize:
-                                                                  ConstanceData
-                                                                      .SIZE_TITLE14,
+                                                      child: new ListView
+                                                          .separated(
+                                                        itemCount: paths !=
+                                                                    null &&
+                                                                paths.isNotEmpty
+                                                            ? paths.length
+                                                            : 1,
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          final bool
+                                                              isMultiPath =
+                                                              paths != null &&
+                                                                  paths
+                                                                      .isNotEmpty;
+                                                          final int fileNo =
+                                                              index + 1;
+                                                          final String name =
+                                                              'File $fileNo : ' +
+                                                                  (isMultiPath
+                                                                      ? paths.keys
+                                                                              .toList()[
+                                                                          index]
+                                                                      : fileName ??
+                                                                          '...');
+                                                          final filePath =
+                                                              isMultiPath
+                                                                  ? paths.values
+                                                                      .toList()[
+                                                                          index]
+                                                                      .toString()
+                                                                  : path;
+                                                          return new ListTile(
+                                                            title: new Text(
+                                                              name,
+                                                              style: TextStyle(
+                                                                color: AllCoustomTheme
+                                                                    .getTextThemeColor(),
+                                                                fontSize:
+                                                                    ConstanceData
+                                                                        .SIZE_TITLE14,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          subtitle: new Text(
-                                                            filePath,
-                                                            style: TextStyle(
-                                                              color: AllCoustomTheme
-                                                                  .getTextThemeColor(),
-                                                              fontSize:
-                                                                  ConstanceData
-                                                                      .SIZE_TITLE14,
+                                                            subtitle: new Text(
+                                                              filePath,
+                                                              style: TextStyle(
+                                                                color: AllCoustomTheme
+                                                                    .getTextThemeColor(),
+                                                                fontSize:
+                                                                    ConstanceData
+                                                                        .SIZE_TITLE14,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      separatorBuilder:
-                                                          (BuildContext context,
-                                                                  int index) =>
-                                                              new Divider(),
-                                                    )),
+                                                          );
+                                                        },
+                                                        separatorBuilder:
+                                                            (BuildContext
+                                                                        context,
+                                                                    int index) =>
+                                                                new Divider(),
+                                                      ),
+                                                    ),
                                                   )
                                                 : new Container(),
                                   ),

@@ -17,13 +17,11 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class UserProfilePage extends StatefulWidget {
-  final userId;
-  final userName;
+  final email;
 
   const UserProfilePage({
     Key key,
-    this.userId,
-    this.userName,
+    this.email,
   }) : super(key: key);
 
   @override
@@ -126,7 +124,7 @@ class _UserProfilePageState extends State<UserProfilePage>
 
   getUserDetails() async {
     userDetails =
-        await _featuredCompaniesProvider.getUserDetailsByUserId(widget.userId);
+        await _featuredCompaniesProvider.getUserDetailsByUserId(widget.email);
     return userDetails;
   }
 
@@ -175,8 +173,12 @@ class _UserProfilePageState extends State<UserProfilePage>
         future: getUserDetails(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Provider.of<FollowProvider>(context,listen: false).getFollowingForSingleItem(
-                Provider.of<UserDetails>(context,listen: false).userDetails["email"] , "user", userDetails["email"]);
+            Provider.of<FollowProvider>(context, listen: false)
+                .getFollowingForSingleItem(
+                    Provider.of<UserDetails>(context, listen: false)
+                        .userDetails["email"],
+                    "user",
+                    userDetails["email"]);
             return Stack(
               children: <Widget>[
                 Scaffold(
@@ -771,19 +773,21 @@ class _UserProfilePageState extends State<UserProfilePage>
                             height: 5,
                           ),
                           LivePaperPortfolio(
-                            userName: widget.userName,
+                            userName: userDetails["username"],
+                            email: userDetails["email"],
                           ),
                           SizedBox(
                             height: 5,
                           ),
                           StockPitches(
-                            userName: widget.userName,
+                            userName: userDetails["username"],
+                            email: userDetails["email"],
                           ),
                           SizedBox(
                             height: 5,
                           ),
                           QusAns(
-                            userName: widget.userName,
+                            userName: userDetails["username"],
                           ),
                           SizedBox(
                             height: 5,
@@ -806,14 +810,14 @@ class _UserProfilePageState extends State<UserProfilePage>
                             getOtherUserData: true,
                             otherUserEmail: userDetails["email"],
                           ),
-                          // ShowListOfFollowing(
-                          //   text: "Investors You Follow",
-                          //   type: "user",
-                          //   getOtherUserData: true,
-                          //   otherUserEmail: userDetails["email"],
-                          // ),
+                          ShowListOfFollowing(
+                            text: "Investors You Follow",
+                            type: "user",
+                            getOtherUserData: true,
+                            otherUserEmail: userDetails["email"],
+                          ),
                           ProfileBackground(
-                            userName: widget.userName,
+                            userName: userDetails["username"],
                           ),
                           SizedBox(
                             height: 20,

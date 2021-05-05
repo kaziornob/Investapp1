@@ -6,11 +6,16 @@ import 'package:auroim/auth/forgotPasswordScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
+import '../main.dart';
 import 'signUpScreen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -23,6 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isInProgress = false;
   bool _isClickonSignUp = false;
   bool _isClickonForgotPassword = false;
+
 
   ApiProvider request = new ApiProvider();
 
@@ -385,7 +391,7 @@ class _SignInScreenState extends State<SignInScreen> {
       });
       return;
     }
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     // Navigator.pushNamedAndRemoveUntil(context, Routes.Home, (Route<dynamic> route) => false);
 
     var email = emailController.text.trim();
@@ -396,13 +402,26 @@ class _SignInScreenState extends State<SignInScreen> {
     String jsonReq = json.encode(tempJsonReq);
 
     var response = await request.login('users/authenticate/me',jsonReq);
-    print(response);
-/*    String jsonReq = 'users/authenticate/me?email=$email&password=$password';
-
-    var response = await request.login(jsonReq);*/
-
+    // print(response);
+    // var result = jsonDecode(response.body);
     print("login response: $response");
     if (response == true) {
+      // var now = new DateTime.now();
+      // final SharedPreferences prefs = await SharedPreferences.getInstance();
+      // prefs.setString('Session_token', result['token']);
+      // prefs.setString(
+      //   'DateTime',
+      //   new DateFormat("yyyy-MM-dd HH:mm").format(now),
+      // );
+      // Provider.of<UserDetails>(context).
+      await getUserDetails();
+      prefs.setString('InvestorType', userAllDetail["inv_status"]);
+      globals.isGoldBlack = prefs != null &&
+          prefs.containsKey('InvestorType') &&
+          prefs.getString('InvestorType') != null &&
+          prefs.getString('InvestorType') == 'Accredited Investor'
+          ? false
+          : true;
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -428,6 +447,24 @@ class _SignInScreenState extends State<SignInScreen> {
       return "Please enter valid email";
     }
     return null;
+  }
+
+
+  getUserDetails() async {
+    print("getting user Details");
+    ApiProvider request = new ApiProvider();
+    // print("call set screen");
+    var response = await request.getRequest('users/get_details');
+    print("user detail response: $response");
+    if (response != null && response != false) {
+      userAllDetail = response['data'];
+
+      Provider.of<UserDetails>(context, listen: false)
+          .setUserDetails(userAllDetail);
+      print(userAllDetail.toString());
+    } else {
+      print("Not got user data");
+    }
   }
 
   String _validatePassword(value) {

@@ -8,19 +8,15 @@ import 'package:provider/provider.dart';
 
 class StockPitches extends StatefulWidget {
   final userName;
+  final email;
 
-  const StockPitches({Key key, this.userName}) : super(key: key);
+  const StockPitches({Key key, this.userName, this.email}) : super(key: key);
 
   @override
   _StockPitchesState createState() => _StockPitchesState();
 }
 
 class _StockPitchesState extends State<StockPitches> {
-  List stockPitchList = [
-    {"id": 1, "title": "Apple"},
-    {"id": 2, "title": "Reliance"},
-    {"id": 3, "title": "Netflix"}
-  ];
   String title = "";
   bool _isInit = true;
 
@@ -98,9 +94,8 @@ class _StockPitchesState extends State<StockPitches> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<StockPitchProvider>(context).getStockPitches(
-          Provider.of<UserDetails>(context).userDetails["email"]);
-      _isInit=false;
+      Provider.of<StockPitchProvider>(context).getStockPitches(widget.email);
+      _isInit = false;
     }
     super.didChangeDependencies();
   }
@@ -117,7 +112,8 @@ class _StockPitchesState extends State<StockPitches> {
       title = "${widget.userName}\'s Stock Pitches";
     }
     return Consumer<StockPitchProvider>(builder: (context, pitchProvider, _) {
-      if (pitchProvider.allStockPitches != null) {
+      if (pitchProvider.allStockPitches != null &&
+          pitchProvider.allStockPitches.length != 0) {
         return Column(
           children: [
             Padding(

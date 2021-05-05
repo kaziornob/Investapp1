@@ -12,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'dart:math';
 import '../main.dart';
 import 'crypto_coin_price_data.dart';
 
@@ -386,6 +386,7 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                   );
                                 } else {
                                   allPriceData = [];
+                                  List<double> onlyPriceList = [];
                                   historicalPricingProvider
                                       .historicalPriceData[widget.ticker]
                                       .forEach((element) {
@@ -396,7 +397,11 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           x: date,
                                           y: element["price"].toDouble()),
                                     );
+                                    onlyPriceList
+                                        .add(element["price"].toDouble());
                                   });
+                                  double maxVal = onlyPriceList.reduce(max);
+                                  double minVal = onlyPriceList.reduce(min);
                                   return Center(
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
@@ -414,6 +419,8 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                             primaryYAxis: NumericAxis(
                                               isVisible: true,
                                               title: AxisTitle(text: "Price"),
+                                              maximum: maxVal + (maxVal / 10),
+                                              minimum: minVal,
                                             ),
                                             series: <ChartSeries>[
                                               StackedAreaSeries<

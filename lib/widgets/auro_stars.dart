@@ -2,10 +2,35 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class AuroStars extends StatelessWidget {
+class AuroStars extends StatefulWidget {
+  @override
+  _AuroStarsState createState() => _AuroStarsState();
+}
+
+class _AuroStarsState extends State<AuroStars> {
+  YoutubePlayerController controller;
 
 
+  @override
+  void initState() {
+    controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(
+          "https://www.youtube.com/watch?v=XgZMW7es3KY&t=4s"),
+      flags: YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +39,21 @@ class AuroStars extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 0),
+            child: Container(
+              height: 200,
+              width: 250,
+              child: YoutubePlayer(
+                controller: controller,
+                showVideoProgressIndicator: true,
+                onReady: () {},
+                onEnded: (YoutubeMetaData metaData) {
+                  controller.pause();
+                },
+              ),
+            ),
+          ),
           smallImage(
               context,
               "assets/auro_asia_quantimental_portfolio_header.jpg",
@@ -41,11 +81,9 @@ class AuroStars extends StatelessWidget {
     );
   }
 
-  // AssetImage('assets/logo.png')
-
   smallImage(context, imagePath, bigImagePath) {
     return Padding(
-      padding: const EdgeInsets.only(left:8.0,right: 8.0,bottom: 0),
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 0),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
@@ -69,11 +107,9 @@ class AuroStars extends StatelessWidget {
               height: 30,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(20)),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                   border: new Border.all(
-                      color: AllCoustomTheme
-                          .getChartBoxThemeColor(),
+                      color: AllCoustomTheme.getChartBoxThemeColor(),
                       width: 1.5),
                   // color: AllCoustomTheme.getChartBoxThemeColor(),
                 ),
@@ -82,8 +118,7 @@ class AuroStars extends StatelessWidget {
                   child: Text(
                     "BUY",
                     style: TextStyle(
-                      color: AllCoustomTheme
-                          .getChartBoxTextThemeColor(),
+                      color: AllCoustomTheme.getChartBoxTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE13,
                       fontFamily: "Roboto",
                       fontWeight: FontWeight.bold,

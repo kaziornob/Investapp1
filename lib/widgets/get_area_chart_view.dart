@@ -1,9 +1,7 @@
 import 'package:auroim/api/apiProvider.dart';
-import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/provider_abhinav/follow_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
@@ -14,9 +12,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import '../main.dart';
 import 'crypto_coin_price_data.dart';
+import 'dart:math';
 
 class GetAreaChartView extends StatefulWidget {
   final List<Color> color;
@@ -372,6 +370,7 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                             );
                           } else {
                             allPriceData = [];
+                            List<double> onlyPriceList = [];
                             historicalPricingProvider.historicalPriceData[
                                     widget.companyData["ticker"]]
                                 .forEach((element) {
@@ -381,7 +380,11 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                 CryptoCoinPriceData(
                                     x: date, y: element["price"].toDouble()),
                               );
+                              onlyPriceList.add(element["price"].toDouble());
                             });
+                            double maxVal = onlyPriceList.reduce(max);
+                            double minVal = onlyPriceList.reduce(min);
+
                             return SizedBox(
                               width: MediaQuery.of(context).size.width * 0.88,
                               height: MediaQuery.of(context).size.height * 0.15,
@@ -391,10 +394,14 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
                                     primaryXAxis: DateTimeAxis(
                                       isVisible: true,
                                     ),
-                                    title: ChartTitle(text: "30D Pricing"),
+                                    // title: ChartTitle(text: "30D Pricing"),
                                     tooltipBehavior: _tooltipBehavior,
                                     zoomPanBehavior: _zoomPanBehavior,
-                                    primaryYAxis: NumericAxis(isVisible: true),
+                                    primaryYAxis: NumericAxis(
+                                      isVisible: true,
+                                      maximum: maxVal + (maxVal / 10),
+                                      minimum: minVal,
+                                    ),
                                     series: <ChartSeries>[
                                       StackedAreaSeries<CryptoCoinPriceData,
                                           dynamic>(

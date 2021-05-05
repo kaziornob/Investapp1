@@ -136,28 +136,16 @@ class _MainHomeTabState extends State<MainHomeTab> {
   @override
   Widget build(BuildContext context) {
     return cc();
-    //   FutureBuilder(
-    //   future: getDoughnutPortfolioData(),
-    //   builder: (context, snapshot) {
-    //     if()
-    //   },
-    // );
+    // return cc();
+    // //   FutureBuilder(
+    // //   future: getDoughnutPortfolioData(),
+    // //   builder: (context, snapshot) {
+    // //     if()
+    // //   },
+    // // );
   }
 
   cc() {
-    // return FutureBuilder(
-    //   future: Provider.of<PortfolioProvider>(context, listen: false)
-    //       .getDailyReturnPortfolio(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData) {
-    //
-    //
-    //       return ;
-    //     } else {
-    //       return SizedBox();
-    //     }
-    //   },
-    // );
     return Consumer<PortfolioProvider>(
       builder: (context, portfolioProvider, _) {
         if (portfolioProvider.portfolioData != null) {

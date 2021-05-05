@@ -251,39 +251,36 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
                                     ),
                                   ),
                                 ),
-                                Visibility(
-                                  visible: _ansBodyController.text!="" ? true : false,
-                                  child: Container(
-                                    height: 25,
-                                    width: 95,
-                                    decoration: BoxDecoration(
-                                      color: AllCoustomTheme.getThemeData()
-                                          .textSelectionColor,
-                                      border: new Border.all(
-                                          color: Colors.white, width: 1.0),
-                                    ),
-                                    child: _isAddAnsClickOnSubmit  ? Container(
-                                      color: Colors.white,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 14),
-                                        child: CupertinoActivityIndicator(
-                                          radius: 12,
-                                        ),
+                                Container(
+                                  height: 25,
+                                  width: 95,
+                                  decoration: BoxDecoration(
+                                    color: AllCoustomTheme.getThemeData()
+                                        .textSelectionColor,
+                                    border: new Border.all(
+                                        color: Colors.white, width: 1.0),
+                                  ),
+                                  child: _isAddAnsClickOnSubmit  ? Container(
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: 14),
+                                      child: CupertinoActivityIndicator(
+                                        radius: 12,
                                       ),
-                                    ) : MaterialButton(
-                                      splashColor: Colors.grey,
-                                      child: Text(
-                                        "Preview",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColors(),
-                                          fontSize: ConstanceData.SIZE_TITLE12,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        _submit();
-                                      },
                                     ),
+                                  ) : MaterialButton(
+                                    splashColor: Colors.grey,
+                                    child: Text(
+                                      "Preview",
+                                      style: TextStyle(
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
+                                        fontSize: ConstanceData.SIZE_TITLE12,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _submit();
+                                    },
                                   ),
                                 )
                               ],

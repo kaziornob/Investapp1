@@ -122,7 +122,7 @@ class ReturnDrawdownWidget extends StatelessWidget {
                     child: Text(
                       "Target",
                       style: TextStyle(
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         fontSize: 18,
                       ),
                     ),
@@ -167,7 +167,7 @@ class ReturnDrawdownWidget extends StatelessWidget {
                     child: Text(
                       "Realization",
                       style: TextStyle(
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         fontSize: 18,
                       ),
                       overflow: TextOverflow.clip,
@@ -177,7 +177,7 @@ class ReturnDrawdownWidget extends StatelessWidget {
                     // decoration: BoxDecoration(
                     //   border: Border.all(),
                     // ),
-                    width: MediaQuery.of(context).size.width / 4,
+                    width: 110,
                     height: 50,
                     child: Text(
                       "(base on current price as of \n${DateTime.now().day}th ${monthList[DateTime.now().month - 1]}, ${DateTime.now().year})",

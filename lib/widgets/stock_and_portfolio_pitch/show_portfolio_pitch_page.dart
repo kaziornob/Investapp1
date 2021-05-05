@@ -282,7 +282,7 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
               ),
               child: Center(
                 child: Text(
-                  "${(data["previous_weight"]).toStringAsFixed(1)}",
+                  "${(data["previous_weight"]*100).toStringAsFixed(2)}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -296,7 +296,7 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
               ),
               child: Center(
                 child: Text(
-                  "${(data["current_weight"]).toStringAsFixed(1)}",
+                  "${(data["current_weight"]*100).toStringAsFixed(2)}",
                   textAlign: TextAlign.center,
                 ),
               ),

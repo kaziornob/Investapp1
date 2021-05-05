@@ -1,10 +1,15 @@
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/follow_provider.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/private_deals_marketplace/buy_company_stocks.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../main.dart';
 import 'appbar_widget.dart';
 
 class SingleCompanyDetails extends StatefulWidget {
@@ -18,12 +23,27 @@ class SingleCompanyDetails extends StatefulWidget {
 
 class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
   SuperTooltip tooltip;
+  bool _isInit = true;
 
   @override
   void initState() {
     print("in sonhhhh");
     print("company data : ${widget.companyDetails.toString()}");
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<FollowProvider>(context, listen: false)
+          .getFollowingForSingleItem(
+              Provider.of<UserDetails>(context, listen: false)
+                  .userDetails["email"],
+              "private",
+              widget.companyDetails["company_name"]);
+      _isInit = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -51,11 +71,55 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                     color: Colors.white,
                   ),
                   width: MediaQuery.of(context).size.width - 20,
-                  height: 500,
+                  height: 540,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Consumer<FollowProvider>(
+                        builder: (context, followProvider, _) {
+                          var isFollowing = false;
+                          if (followProvider.mapOfFollowingPrivate[
+                                  widget.companyDetails["company_name"]] !=
+                              null) {
+                            isFollowing = followProvider.mapOfFollowingPrivate[
+                                widget.companyDetails["company_name"]];
+                          }
+                          return GestureDetector(
+                            onTap: () => onPressedFollow(isFollowing),
+                            child: Container(
+                              height: 40,
+                              margin: EdgeInsets.only(top: 3.0, right: 10),
+                              width: 120,
+                              decoration: new BoxDecoration(
+                                border: Border.all(
+                                  color: Color(0xff90AADC),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8.0),
+                                ),
+                                color: Color(0xff90AADC),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    isFollowing ? "Unfollow" : 'Follow',
+                                    style: new TextStyle(
+                                      fontFamily: "Poppins",
+                                      fontSize: 18.0,
+                                      letterSpacing: 0.2,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                       Container(
                         width: 150,
                         height: 150,
@@ -128,7 +192,8 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                       ),
                                     ),
                                     Text(
-                                      widget.companyDetails["total_funding"] ?? "",
+                                      widget.companyDetails["total_funding"] ??
+                                          "",
                                       style: TextStyle(
                                           color: AllCoustomTheme
                                               .getNewSecondTextThemeColor(),
@@ -337,7 +402,8 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
                                   children: [
                                     Container(
                                       child: Text(
-                                        widget.companyDetails["valuation"] ?? 0.0,
+                                        widget.companyDetails["valuation"] ??
+                                            0.0,
                                         style: TextStyle(
                                             color: Color(0xff7499C6),
                                             fontFamily: "Roboto",
@@ -485,38 +551,83 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
     tooltip.show(context);
   }
 
+  onPressedFollow(isFollowing) async {
+    print("follow button pressed");
+    var userEmail;
+    if (Provider.of<UserDetails>(context, listen: false).userDetails["email"] !=
+        null) {
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    } else {
+      await getUserDetails();
+      Provider.of<UserDetails>(context, listen: false)
+          .setUserDetails(userAllDetail);
+      userEmail =
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"];
+    }
+
+    if (isFollowing) {
+      Provider.of<FollowProvider>(context, listen: false).unfollowSingleItem(
+        userEmail,
+        "private",
+        widget.companyDetails["company_name"],
+      );
+    } else {
+      Provider.of<FollowProvider>(context, listen: false).setFollowing(
+        userEmail,
+        "private",
+        widget.companyDetails["company_name"],
+      );
+    }
+  }
+
+  getUserDetails() async {
+    print("getting user Details");
+    ApiProvider request = new ApiProvider();
+    // print("call set screen");
+    var response = await request.getRequest('users/get_details');
+    print("user detail response: $response");
+    if (response != null && response != false) {
+      userAllDetail = response['data'];
+
+      print(userAllDetail.toString());
+    } else {
+      print("Not got user data");
+    }
+  }
+
   date(date) {
     print("date here");
     print(date.toString());
     int now = DateTime.now().year;
     int companyYears;
-    if(date != null){
+    if (date != null) {
       if (date.length == 4) {
         companyYears = now - int.parse(date);
       } else {
         companyYears = now - DateFormat("dd-MM-yyyy").parse(date).year;
       }
       return companyYears;
-    }else{
+    } else {
       return 0;
     }
   }
 
   List<Widget> lisOfFounders() {
     List<Widget> all = [];
-    if(widget.companyDetails["founders"] != null){
+    if (widget.companyDetails["founders"] != null) {
       widget.companyDetails["founders"].split(", ").forEach(
             (e) => all.add(Text(
-          e,
-          style: TextStyle(
-              color: AllCoustomTheme.getNewSecondTextThemeColor(),
-              fontFamily: "Roboto",
-              fontSize: 14.5,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.normal,
-              letterSpacing: 0.1),
-        )),
-      );
+              e,
+              style: TextStyle(
+                  color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                  fontFamily: "Roboto",
+                  fontSize: 14.5,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 0.1),
+            )),
+          );
     }
 
     return all;

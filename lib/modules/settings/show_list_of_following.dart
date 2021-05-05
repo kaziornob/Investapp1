@@ -131,12 +131,15 @@ class _ShowListOfFollowingState extends State<ShowListOfFollowing> {
                                           );
                                           break;
                                         case "user":
+                                          print("user tapped");
+                                          print(
+                                              "${snapshot.data[index]["value"]}");
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (BuildContext context) =>
                                                   UserProfilePage(
-                                                userId: "",
-
+                                                email: snapshot.data[index]
+                                                    ["value"],
                                               ),
                                             ),
                                           );

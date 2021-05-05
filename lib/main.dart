@@ -11,11 +11,13 @@ import 'package:auroim/modules/introduction/IntroductionScreen.dart';
 import 'package:auroim/provider_abhinav/auro_stars_provider.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/provider_abhinav/crypto_coins_provider.dart';
+import 'package:auroim/provider_abhinav/currency_rate_provider.dart';
 import 'package:auroim/provider_abhinav/follow_provider.dart';
 import 'package:auroim/provider_abhinav/forgot_password_provider.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:auroim/provider_abhinav/listed_companies_provider.dart';
 import 'package:auroim/provider_abhinav/long_short_provider.dart';
+import 'package:auroim/provider_abhinav/personal_sleeve_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
@@ -358,39 +360,16 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(
             create: (_) => AuroStarProvider(),
           ),
+          ChangeNotifierProvider(
+            create: (_) => PersonalSleeveProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => CurrencyRateProvider(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Auro',
-/*        home: FutureBuilder<dynamic>(
-            future: getUserDetails(), // async work
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting: return ModalProgressHUD(
-                  inAsyncCall: false,
-                  opacity: 0,
-                  progressIndicator: SizedBox(),
-                  child: Text(""),
-                );
-                default:
-                  if (snapshot.hasError)
-                    {
-                      return Container(
-                        child: Text(
-                          'Error: ${snapshot.error}',
-                          textAlign: TextAlign.center,
-                          style: new TextStyle(
-                            fontSize: 18,
-                            fontFamily: "Rasa",
-                          ),
-                        ),
-                      );
-                    }
-                  else
-                    return HomeScreen();
-              }
-            },
-          ),*/
           home: _decideMainPage(context),
           // routes: routes,
           theme: AllCoustomTheme.getThemeData(),

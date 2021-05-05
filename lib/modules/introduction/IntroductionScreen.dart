@@ -6,6 +6,7 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/routes.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
@@ -184,7 +185,39 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "Swipe to see how App works",
+                        text: "Swipe to see how App works or click ",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: _current != 0 ? Colors.grey : Colors.white,
+                          letterSpacing: 0.2,
+                          fontFamily: "Rasa",
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "here ",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: _current != 0 ? Colors.grey : Colors.white,
+                          letterSpacing: 0.2,
+                          fontFamily: "Rasa",
+                          fontStyle: FontStyle.normal,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return HowAppWorks(
+                                    videoLink:
+                                        "https://www.youtube.com/watch?v=zrVikZUqeH4",
+                                  );
+                                });
+                          },
+                      ),
+                      TextSpan(
+                        text: "for video",
                         style: TextStyle(
                           fontSize: 15,
                           color: _current != 0 ? Colors.grey : Colors.white,
@@ -196,42 +229,42 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return HowAppWorks(
-                            videoLink:
-                                "https://www.youtube.com/watch?v=AysSRNN7v_c",
-                          );
-                        });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            color: _current != 0 ? Colors.grey : Colors.white),
-                      ),
-                    ),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Why do i need Auro.AI?",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: _current != 0 ? Colors.grey : Colors.white,
-                              letterSpacing: 0.2,
-                              fontFamily: "Rasa",
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () async {
+                //     await showDialog(
+                //         context: context,
+                //         builder: (context) {
+                //           return HowAppWorks(
+                //             videoLink:
+                //                 "https://www.youtube.com/watch?v=zrVikZUqeH4",
+                //           );
+                //         });
+                //   },
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       border: Border(
+                //         bottom: BorderSide(
+                //             color: _current != 0 ? Colors.grey : Colors.white),
+                //       ),
+                //     ),
+                //     child: RichText(
+                //       text: TextSpan(
+                //         children: [
+                //           TextSpan(
+                //             text: "Why do i need Auro.AI?",
+                //             style: TextStyle(
+                //               fontSize: 15,
+                //               color: _current != 0 ? Colors.grey : Colors.white,
+                //               letterSpacing: 0.2,
+                //               fontFamily: "Rasa",
+                //               fontStyle: FontStyle.normal,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -346,19 +379,47 @@ class MySliderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       child: Column(
         children: [
           Container(
-              margin: EdgeInsets.only(top: 30.0),
-              height: MediaQuery.of(context).size.height * 0.09,
-              child: Center(
-                child: new Image(
-                    width: 150.0,
-                    fit: BoxFit.fill,
-                    image: new AssetImage('assets/logo.png')),
-              )),
+            margin: EdgeInsets.only(top: 30.0),
+            height: MediaQuery.of(context).size.height * 0.09,
+            // decoration: BoxDecoration(border: Border.all(color: Colors.white),),
+            child: Center(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Image(
+                      height: 50,
+                      width: 150.0,
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/logo.png'),
+                    ),
+                  ),
+                  Container(
+                    // height: MediaQuery.of(context).size.height * 0.11,
+                    // margin: EdgeInsets.only(bottom: 10),
+                    // decoration: BoxDecoration(border: Border.all(color: Colors.white),),
+                    child: Text(
+                      "AI",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 60,
+                        color: Color(0xFFD8AF4F),
+                        fontFamily: "Scheherazade",
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(left: 50.0, right: 50.0),
             padding: EdgeInsets.only(
@@ -407,27 +468,7 @@ class MySliderView extends StatelessWidget {
                 ),
               );
             }),
-/*              child: Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 53),
-                    child: Text(
-                      "${allFields["firstPara"]}",
-                      style: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                        color: Color(0xFF060513),
-                        letterSpacing: 0.2,
-                        fontFamily: "Rasa",
-                        fontStyle: FontStyle.normal,
-
-                      ),
-                    ),
-                  )
-              ),*/
           ),
-/*            SizedBox(
-              height: 5,
-            ),*/
           Container(
             height: currentIndex == 0
                 ? MediaQuery.of(context).size.height * 0.38
@@ -438,28 +479,6 @@ class MySliderView extends StatelessWidget {
                 fit: BoxFit.contain,
                 image: new AssetImage('${allFields["image"]}')),
           ),
-/*            SizedBox(
-              height: 5,
-            ),*/
-          Visibility(
-            visible: currentIndex == 0,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.11,
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(bottom: 10),
-              child: Text(
-                "AI",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 56,
-                  color: Color(0xFFD8AF4F),
-                  fontFamily: "Scheherazade",
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                ),
-              ),
-            ),
-          ),
           LayoutBuilder(builder: (context, constraints) {
             return Container(
               // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
@@ -467,15 +486,18 @@ class MySliderView extends StatelessWidget {
                   ? constraints.maxWidth * 0.85
                   : constraints.maxWidth * 0.85,
               child: currentIndex == 0
-                  ? Text(
-                      "${allFields["lastPara"]}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        color: Color(0xFFFFFFFF),
-                        fontFamily: "RedHatDisplay",
-                        letterSpacing: 0.2,
-                        fontStyle: FontStyle.normal,
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 40.0),
+                      child: Text(
+                        "${allFields["lastPara"]}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          color: Color(0xFFFFFFFF),
+                          fontFamily: "RedHatDisplay",
+                          letterSpacing: 0.2,
+                          fontStyle: FontStyle.normal,
+                        ),
                       ),
                     )
                   : Text(
@@ -490,32 +512,6 @@ class MySliderView extends StatelessWidget {
                     ),
             );
           }),
-/*            Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.only(left: currentIndex!=0 ? 53 : 28),
-                  child: currentIndex==0 ? Text(
-                    "${allFields["lastPara"]}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      color: Color(0xFFFFFFFF),
-                      fontFamily: "RedHatDisplay",
-                      letterSpacing: 0.2,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ) : Text(
-                    "${allFields["lastPara"]}",
-                    style: TextStyle(
-                      fontSize: ConstanceData.SIZE_TITLE14,
-                      color: Color(0xFF060513),
-                      fontFamily: "Rasa",
-                      letterSpacing: 0.2,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                )
-            ),*/
         ],
       ),
     );

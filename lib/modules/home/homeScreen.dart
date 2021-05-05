@@ -966,8 +966,7 @@ class _HomeScreenState extends State<HomeScreen>
           MaterialPageRoute(
             builder: (context) => (isSelect5 || isSelect4)
                 ? UserProfilePage(
-                    userId: itemData["user_id"],
-                    userName: itemData["f_name"],
+                    email: itemData["email"],
                   )
                 : SecurityPageFirst(
                     companyTicker: itemData["ticker"],

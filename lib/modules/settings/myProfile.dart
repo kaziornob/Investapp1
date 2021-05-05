@@ -35,7 +35,6 @@ class _MyProfileState extends State<MyProfile>
   String badgeImagePath = "";
   TabController _tabController;
 
-
   @override
   void initState() {
     super.initState();
@@ -89,8 +88,6 @@ class _MyProfileState extends State<MyProfile>
     _tabController.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -613,11 +610,17 @@ class _MyProfileState extends State<MyProfile>
                   SizedBox(
                     height: 5,
                   ),
-                  LivePaperPortfolio(),
+                  LivePaperPortfolio(
+                    email:
+                        Provider.of<UserDetails>(context).userDetails["email"],
+                  ),
                   SizedBox(
                     height: 5,
                   ),
-                  StockPitches(),
+                  StockPitches(
+                    email:
+                        Provider.of<UserDetails>(context).userDetails["email"],
+                  ),
                   SizedBox(
                     height: 5,
                   ),
@@ -637,10 +640,11 @@ class _MyProfileState extends State<MyProfile>
                     text: "Crypto You Follow",
                     type: "crypto",
                   ),
-                  // ShowListOfFollowing(
-                  //   text: "Investors You Follow",
-                  //   type: "user",
-                  // ),
+                  ShowListOfFollowing(
+                    text: "Investors You Follow",
+                    type: "user",
+                    getOtherUserData: false,
+                  ),
                   ProfileBackground(),
                   SizedBox(
                     height: 20,
