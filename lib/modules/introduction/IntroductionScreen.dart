@@ -154,7 +154,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
             ),
           ),
           Positioned(
-            bottom: 10,
+            bottom: 40,
             child: Column(
               children: [
                 Container(
@@ -176,57 +176,6 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                         ),
                       );
                     }).toList(),
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Swipe to see how App works or click ",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: _current != 0 ? Colors.grey : Colors.white,
-                          letterSpacing: 0.2,
-                          fontFamily: "Rasa",
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                      TextSpan(
-                        text: "here ",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: _current != 0 ? Colors.grey : Colors.white,
-                          letterSpacing: 0.2,
-                          fontFamily: "Rasa",
-                          fontStyle: FontStyle.normal,
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: new TapGestureRecognizer()
-                          ..onTap = () async {
-                            await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return HowAppWorks(
-                                    videoLink:
-                                        "https://www.youtube.com/watch?v=zrVikZUqeH4",
-                                  );
-                                });
-                          },
-                      ),
-                      TextSpan(
-                        text: "for video",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: _current != 0 ? Colors.grey : Colors.white,
-                          letterSpacing: 0.2,
-                          fontFamily: "Rasa",
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
                 // GestureDetector(
@@ -266,7 +215,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                 //   ),
                 // ),
                 SizedBox(
-                  height: 10.0,
+                  height: 30.0,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -290,7 +239,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                         child: MaterialButton(
                           splashColor: Colors.grey,
                           child: Text(
-                            "Login",
+                            "Try For Free",
                             style: TextStyle(
                               color: _current != 0
                                   ? AllCoustomTheme.getTextThemeColors()
@@ -302,7 +251,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                             Navigator.of(context, rootNavigator: true).push(
                               CupertinoPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    SignInScreen(),
+                                    SignUpScreen(),
                               ),
                             );
                           },
@@ -324,7 +273,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                         child: MaterialButton(
                           splashColor: Colors.grey,
                           child: Text(
-                            "Try For Free",
+                            "Login",
                             style: TextStyle(
                               color: _current != 0
                                   ? Color(0xFFD8AF4F)
@@ -336,12 +285,64 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                             Navigator.of(context, rootNavigator: true).push(
                               CupertinoPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    SignUpScreen(),
+                                    SignInScreen(),
                               ),
                             );
                           },
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      // TextSpan(
+                      //   text: "Swipe to see how App works or click ",
+                      //   style: TextStyle(
+                      //     fontSize: 15,
+                      //     color: _current != 0 ? Colors.grey : Colors.white,
+                      //     letterSpacing: 0.2,
+                      //     fontFamily: "Rasa",
+                      //     fontStyle: FontStyle.normal,
+                      //   ),
+                      // ),
+                      TextSpan(
+                        text: "Why do I Need Auro.AI",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: _current != 0 ? Colors.grey : Colors.white,
+                          letterSpacing: 0.2,
+                          fontFamily: "Rasa",
+                          fontStyle: FontStyle.normal,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return HowAppWorks(
+                                  videoLink:
+                                      "https://www.youtube.com/watch?v=J_87M2qmie4",
+                                );
+                              },
+                            );
+                          },
+                      ),
+                      // TextSpan(
+                      //   text: "for video",
+                      //   style: TextStyle(
+                      //     fontSize: 15,
+                      //     color: _current != 0 ? Colors.grey : Colors.white,
+                      //     letterSpacing: 0.2,
+                      //     fontFamily: "Rasa",
+                      //     fontStyle: FontStyle.normal,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -420,32 +421,32 @@ class MySliderView extends StatelessWidget {
               ),
             ),
           ),
+          // Container(
+          //   margin: EdgeInsets.only(left: 50.0, right: 50.0),
+          //   padding: EdgeInsets.only(
+          //     bottom: 1, // space between underline and text
+          //   ),
+          //   decoration: BoxDecoration(
+          //       border: Border(
+          //           bottom: BorderSide(
+          //     color: Color(0xFFD8AF4F),
+          //     width: 1.5, // Underline width
+          //   ))),
+          // ),
           Container(
-            margin: EdgeInsets.only(left: 50.0, right: 50.0),
-            padding: EdgeInsets.only(
-              bottom: 1, // space between underline and text
+            margin: EdgeInsets.only(top: 7.0),
+            child: Text(
+              '${allFields["logoBottomLine"]}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE18,
+                  color:
+                      currentIndex == 0 ? Color(0xFFFFFFFF) : Color(0xFF060513),
+                  fontFamily: "Rasa",
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.2),
             ),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-              color: Color(0xFFD8AF4F),
-              width: 1.5, // Underline width
-            ))),
           ),
-          Container(
-              margin: EdgeInsets.only(top: 7.0),
-              child: Text(
-                '${allFields["logoBottomLine"]}',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: ConstanceData.SIZE_TITLE18,
-                    color: currentIndex == 0
-                        ? Color(0xFFFFFFFF)
-                        : Color(0xFF060513),
-                    fontFamily: "Rasa",
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0.2),
-              )),
           SizedBox(
             height: currentIndex != 0 ? 12 : 22,
           ),

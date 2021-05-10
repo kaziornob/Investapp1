@@ -1,20 +1,19 @@
 import 'dart:convert';
-
-import 'package:animator/animator.dart';
+import 'dart:ui';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/forgotPasswordScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/widgets/animated_widgets/animated_back_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
-
 import '../main.dart';
 import 'signUpScreen.dart';
 
@@ -24,367 +23,188 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  bool _visible = false;
   bool _isInProgress = false;
-  bool _isClickonSignUp = false;
-  bool _isClickonForgotPassword = false;
+  bool _obscureText = true;
 
+  ApiProvider request = ApiProvider();
 
-  ApiProvider request = new ApiProvider();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
-
-  animation() async {
-    await Future.delayed(const Duration(seconds: 1));
-    setState(() {
-      _visible = true;
-    });
-  }
+  final _signInFormKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    animation();
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
-
-  final _signInFormKey = new GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
-    return Stack(
-      children: <Widget>[
-        Scaffold(
-          // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
-          body: ModalProgressHUD(
-            inAsyncCall: _isInProgress,
-            opacity: 0,
-            progressIndicator: SizedBox(),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
-                height: MediaQuery.of(context).size.height*1.0,
-                child: GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).requestFocus(new FocusNode());
-                  },
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: appBarheight,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          InkWell(
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Animator(
-                              tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                              duration: Duration(milliseconds: 500),
-                              cycles: 0,
-                              builder: (anim) => FractionalTranslation(
-                                translation: anim.value,
-                                child: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: AllCoustomTheme.getTextThemeColor(),
-                                ),
-                              ),
-                            ),
+    return Scaffold(
+      backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+      body: SafeArea(
+        child: Container(
+          // decoration: BoxDecoration(border: Border.all()),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        AnimatedBackButton(),
+                        Text(
+                          "Sign In",
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
-                          !_isClickonSignUp
-                              ? GestureDetector(
-                            onTap: () async {
-                              setState(() {
-                                _isClickonSignUp = true;
-                              });
-                              await Future.delayed(const Duration(milliseconds: 700));
-
-                              Navigator.of(context, rootNavigator: true)
-                                  .push(
-                                CupertinoPageRoute<void>(
-                                  builder: (BuildContext context) => SignUpScreen(),
-                                ),
-                              )
-                                  .then((onValue) {
-                                setState(() {
-                                  _isClickonSignUp = false;
-                                });
-                              });
-                            },
-                            child: Animator(
-                              tween: Tween<double>(begin: 0.8, end: 1.1),
-                              curve: Curves.easeInToLinear,
-                              cycles: 0,
-                              builder: (anim) => Transform.scale(
-                                scale: anim.value,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: Text(
-                                    'Sign up',
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE20,
-                                        fontFamily: "Roboto",
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                              : Padding(
-                            padding: EdgeInsets.only(right: 14),
-                            child: CupertinoActivityIndicator(
-                              radius: 12,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Animator(
-                            tween: Tween<double>(begin: 0, end: 1),
-                            duration: Duration(milliseconds: 500),
-                            cycles: 1,
-                            builder: (anim) => SizeTransition(
-                              sizeFactor: anim,
-                              axis: Axis.horizontal,
-                              axisAlignment: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 16),
-                                child: Text(
-                                  'Sign In',
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE20,
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16),
-                        child: _visible
-                            ? Container(
-/*                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
-                            color: AllCoustomTheme.boxColor(),
-                          ),*/
-                          child: Form(
-                            key: _signInFormKey,
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 0.5,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 20),
-                                  child: Container(
-                                    height: 3,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                              color: Color(0xFFD8AF4F),
-                                              width: 1.6, // Underline width
-                                            )
-                                        )
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 14, top: 4,right: 20),
-                                        child: TextFormField(
-                                          validator: _validateEmail,
-                                          controller: emailController,
-                                          cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                          style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                          keyboardType: TextInputType.emailAddress,
-                                          decoration: new InputDecoration(
-                                            focusColor: AllCoustomTheme.getTextThemeColor(),
-                                            fillColor: AllCoustomTheme.getTextThemeColor(),
-                                            hintText: 'Enter email here...',
-                                            hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                            labelText: 'E-mail',
-                                            labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                          ),
-                                          //controller: lastnameController,
-                                          onSaved: (value) {
-                                            setState(() {
-                                              //lastnamesearchText = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
-                                        child: TextFormField(
-                                          controller: passwordController,
-                                          cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                          style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                          keyboardType: TextInputType.text,
-                                          obscureText: true,
-                                          decoration: new InputDecoration(
-                                            focusColor: AllCoustomTheme.getTextThemeColor(),
-                                            fillColor: AllCoustomTheme.getTextThemeColor(),
-                                            hintText: 'Enter password here...',
-                                            hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                            labelText: 'Password',
-                                            labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                          ),
-                                          validator: _validatePassword,
-                                          //controller: lastnameController,
-                                          onSaved: (value) {
-                                            setState(() {
-                                              //lastnamesearchText = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      !_isClickonForgotPassword
-                                          ? GestureDetector(
-                                        onTap: () async {
-                                          setState(() {
-                                            _isClickonForgotPassword = true;
-                                          });
-                                          await Future.delayed(const Duration(milliseconds: 700));
-
-                                          Navigator.of(context, rootNavigator: true)
-                                              .push(
-                                            CupertinoPageRoute<void>(
-                                              builder: (BuildContext context) => ForgotPasswordScreen(),
-                                            ),
-                                          )
-                                              .then((onValue) {
-                                            setState(() {
-                                              _isClickonForgotPassword = false;
-                                            });
-                                          });
-                                        },
-                                        child: Text(
-                                          'Forgot Password?',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Roboto",
-                                            color: AllCoustomTheme.getTextThemeColor(),
-                                          ),
-                                        ),
-                                      )
-                                          : Padding(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: CupertinoActivityIndicator(
-                                          radius: 12,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 50,
-                                        child: !_isInProgress
-                                            ? GestureDetector(
-                                          onTap: () {
-                                            _submit();
-                                          },
-                                          child: Animator(
-                                            tween: Tween<double>(begin: 0.8, end: 1.1),
-                                            curve: Curves.easeInToLinear,
-                                            cycles: 0,
-                                            builder: (anim) => Transform.scale(
-                                              scale: anim.value,
-                                              child: Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  border: new Border.all(color: Colors.white, width: 1.5),
-                                                  shape: BoxShape.circle,
-                                                  color: Color(0xFFD8AF4F)
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(left: 3),
-                                                  child: Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    size: 20,
-                                                    color: AllCoustomTheme.getTextThemeColors(),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                            : Padding(
-                                          padding: EdgeInsets.only(right: 14),
-                                          child: CupertinoActivityIndicator(
-                                            radius: 12,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                            : SizedBox(),
-                      ),
-                    ],
+                        ),
+                        SizedBox(),
+                      ],
+                    ),
                   ),
-                ),
+                  formWidget(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 20.0,
+                      bottom: 20,
+                      top: 20,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        forgotPassword(),
+                      ],
+                    ),
+                  ),
+                  signInButton(),
+                ],
               ),
-            )
+              bottomTextWidget(),
+            ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 
-  var myScreenFocusNode = FocusNode();
+  forgotPassword() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context, rootNavigator: true).push(
+          CupertinoPageRoute<void>(
+            builder: (BuildContext context) => ForgotPasswordScreen(),
+          ),
+        );
+      },
+      child: Text(
+        'Forgot Password?',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontFamily: "Roboto",
+          color: AllCoustomTheme.getTextThemeColor(),
+        ),
+      ),
+    );
+  }
+
+  formWidget() {
+    return Form(
+      key: _signInFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, top: 4, right: 20),
+                  child: TextFormField(
+                    validator: _validateEmail,
+                    controller: emailController,
+                    cursorColor: AllCoustomTheme.getTextThemeColor(),
+                    style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        focusColor: AllCoustomTheme.getTextThemeColor(),
+                        fillColor: AllCoustomTheme.getTextThemeColor(),
+                        hintText: 'Enter email here...',
+                        hintStyle: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: ConstanceData.SIZE_TITLE14),
+                        labelText: 'E-mail',
+                        labelStyle:
+                            AllCoustomTheme.getTextFormFieldLabelStyleTheme()),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, bottom: 15, right: 20),
+                  child: TextFormField(
+                    controller: passwordController,
+                    cursorColor: AllCoustomTheme.getTextThemeColor(),
+                    style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                    keyboardType: TextInputType.text,
+                    obscureText: _obscureText,
+                    decoration: InputDecoration(
+                      focusColor: AllCoustomTheme.getTextThemeColor(),
+                      fillColor: AllCoustomTheme.getTextThemeColor(),
+                      hintText: 'Enter password here...',
+                      hintStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: ConstanceData.SIZE_TITLE14),
+                      labelText: 'Password',
+                      labelStyle:
+                          AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                      suffix: IconButton(
+                        icon: _obscureText
+                            ? Icon(Icons.remove_red_eye)
+                            : Icon(Icons.remove_red_eye_outlined),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
+                    ),
+                    validator: _validatePassword,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   _submit() async {
+    Toast.show("Please Wait...", context,
+        duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     setState(() {
       _isInProgress = true;
     });
-    await Future.delayed(const Duration(milliseconds: 500));
 
-    FocusScope.of(context).requestFocus(myScreenFocusNode);
     if (_signInFormKey.currentState.validate() == false) {
       setState(() {
         _isInProgress = false;
@@ -392,52 +212,62 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Navigator.pushNamedAndRemoveUntil(context, Routes.Home, (Route<dynamic> route) => false);
 
     var email = emailController.text.trim();
     var password = passwordController.text.trim();
     // set up POST request arguments
 
-    var tempJsonReq = {"email":"$email","password":"$password"};
+    var tempJsonReq = {"email": "$email", "password": "$password"};
     String jsonReq = json.encode(tempJsonReq);
 
-    var response = await request.login('users/authenticate/me',jsonReq);
-    // print(response);
-    // var result = jsonDecode(response.body);
+    var response = await request.login('users/authenticate/me', jsonReq);
     print("login response: $response");
+    setState(() {
+      _isInProgress = false;
+    });
     if (response == true) {
-      // var now = new DateTime.now();
-      // final SharedPreferences prefs = await SharedPreferences.getInstance();
-      // prefs.setString('Session_token', result['token']);
-      // prefs.setString(
-      //   'DateTime',
-      //   new DateFormat("yyyy-MM-dd HH:mm").format(now),
-      // );
-      // Provider.of<UserDetails>(context).
       await getUserDetails();
       prefs.setString('InvestorType', userAllDetail["inv_status"]);
       globals.isGoldBlack = prefs != null &&
-          prefs.containsKey('InvestorType') &&
-          prefs.getString('InvestorType') != null &&
-          prefs.getString('InvestorType') == 'Accredited Investor'
+              prefs.containsKey('InvestorType') &&
+              prefs.getString('InvestorType') != null &&
+              prefs.getString('InvestorType') == 'Accredited Investor'
           ? false
           : true;
+      Toast.show("Successfully Signed In", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomeScreen()
-        ),
-        ModalRoute.withName("/Home")
-    );
-
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          ModalRoute.withName("/Home"));
     } else {
-      setState(() {
-        _isInProgress = false;
-      });
       Toast.show("Wrong Email OR Password", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
+  }
+
+  signInButton() {
+    return GestureDetector(
+      onTap: _isInProgress ? () {} : _submit,
+      child: Container(
+        height: 50,
+        width: MediaQuery.of(context).size.width - 40,
+        decoration: BoxDecoration(
+          color: Color(0xFFD8AF4F),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Center(
+          child: Text(
+            "Sign In",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   String _validateEmail(value) {
@@ -449,6 +279,41 @@ class _SignInScreenState extends State<SignInScreen> {
     return null;
   }
 
+  bottomTextWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Container(
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Don't Have An Account? ",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextSpan(
+                text: "Sign up",
+                style: TextStyle(
+                  color: Color(0xFFD8AF4F),
+                  fontWeight: FontWeight.bold,
+                ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.of(context, rootNavigator: true).pushReplacement(
+                      CupertinoPageRoute<void>(
+                        builder: (BuildContext context) => SignUpScreen(),
+                      ),
+                    );
+                  },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   getUserDetails() async {
     print("getting user Details");
@@ -468,16 +333,6 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   String _validatePassword(value) {
-    // if (value.isEmpty) {
-    //   return "Password cannot be empty";
-    // }
-    // else if (value.length < 5) {
-    //   return 'Password must contains ${5} characters';
-    // }
-    // else {
-    // return null;
-    //   }
-
     if (value.isEmpty) {
       return "Password cannot be empty";
     } else {

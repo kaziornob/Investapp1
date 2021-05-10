@@ -11,7 +11,8 @@ class LivePaperPortfolio extends StatefulWidget {
   final userName;
   final email;
 
-  const LivePaperPortfolio({Key key, this.userName,this.email}) : super(key: key);
+  const LivePaperPortfolio({Key key, this.userName, this.email})
+      : super(key: key);
 
   @override
   _LivePaperPortfolioState createState() => _LivePaperPortfolioState();
@@ -24,8 +25,8 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<PortfolioPitchProvider>(context).getPortfolioPitches(
-          widget.email);
+      Provider.of<PortfolioPitchProvider>(context)
+          .getPortfolioPitches(widget.email);
       _isInit = false;
     }
     super.didChangeDependencies();
@@ -56,20 +57,21 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                     child: ListView(
                       children: <Widget>[
                         Padding(
-                            padding: EdgeInsets.only(top: 5.0),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                title,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFFD8AF4F),
-                                  fontSize: ConstanceData.SIZE_TITLE18,
-                                  fontFamily: "Roboto",
-                                  package: 'Roboto-Regular',
-                                ),
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              title,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFFD8AF4F),
+                                fontSize: ConstanceData.SIZE_TITLE18,
+                                fontFamily: "Roboto",
+                                package: 'Roboto-Regular',
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                         Container(
                           margin: EdgeInsets.only(
                               right: MediaQuery.of(context).size.width * 0.22),
@@ -329,7 +331,7 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
                                                 Align(
                                                   alignment: Alignment.topLeft,
                                                   child: Text(
-                                                    'Return: ${portfolioProvider.allPortfolioPitches[index]["target_return"]}%',
+                                                    'Return: ${portfolioProvider.allPortfolioPitches[index]["realization_annual_return_perc"].toStringAsFixed(2)}%',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       color: AllCoustomTheme

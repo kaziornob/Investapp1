@@ -199,7 +199,7 @@ class ReturnDrawdownWidget extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 12.0),
                           child: Text(
-                              "${(data["realization_itd_perc"]).toStringAsFixed(2)} %"),
+                              "${(data["realization_annual_return_perc"]).toStringAsFixed(2)} %"),
                         ),
                         showMore
                             ? SizedBox()
@@ -212,7 +212,7 @@ class ReturnDrawdownWidget extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                              "${(data["realization_annual_return_perc"]).toStringAsFixed(2)} %"),
+                              "${(data["max_drawdown"]).toStringAsFixed(2)} %"),
                         ),
                         showMore
                             ? SizedBox()

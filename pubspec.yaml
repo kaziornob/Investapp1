@@ -47,6 +47,7 @@ dependencies:
   connectivity: ^2.0.0
   flutter_sparkline: ^0.1.0
   intl: ^0.16.1
+  timeago: ^2.0.24
 #  flutter_webview_plugin: ^0.3.11
 #  location: ^3.0.2
   firebase_core: ^0.5.0+1

@@ -16,6 +16,7 @@ import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoarding
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/crypto_coin_price_data.dart';
+import 'package:auroim/widgets/full_list_of_portfolio.dart';
 import 'package:auroim/widgets/payment_pages/payment_purchase.dart';
 import 'package:auroim/widgets/payment_pages/payment_types.dart';
 import 'package:auroim/widgets/public_company/auro_paper_portfolio_performance.dart';
@@ -1625,12 +1626,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => PaymentPurchaseScreen(),
-                                ),
                                 // MaterialPageRoute(
-                                //   builder: (context) => PaymentTypes(),
+                                //   builder: (context) => PaymentPurchaseScreen(),
                                 // ),
+                                MaterialPageRoute(
+                                  builder: (context) => FullListOfSecurities(
+                                    allSecurities: portfolioChartData["data"],
+                                  ),
+                                ),
                               );
                             },
                             child: Container(

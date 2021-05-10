@@ -40,7 +40,7 @@ class _StockPitchState extends State<StockPitch> {
   TextEditingController _stockPitchTitleController = TextEditingController();
   TextEditingController _investmentThesisController = TextEditingController();
   List<String> listOfFxs = [];
-  String selectedFx;
+  String selectedFx = "USD";
   List<String> pollDurationList = <String>['7 days', '14 days', '21 days'];
 
   // List<String> stockNameList = <String>["Listed", "Unlisted", "Crypto"];
@@ -156,7 +156,7 @@ class _StockPitchState extends State<StockPitch> {
       Provider.of<CurrencyRateProvider>(context, listen: false)
           .listOfAllFxs
           .forEach((element) {
-            listOfFxs.add(element["ccy_symbol"]);
+        listOfFxs.add(element["ccy_symbol"]);
       });
       _isInit = false;
     }
@@ -461,8 +461,7 @@ class _StockPitchState extends State<StockPitch> {
                                                     onChanged:
                                                         (String newValue) {
                                                       setState(() {
-                                                        selectedFx =
-                                                            newValue;
+                                                        selectedFx = newValue;
                                                       });
                                                     },
                                                     items: listOfFxs
@@ -856,7 +855,7 @@ class _StockPitchState extends State<StockPitch> {
                                               borderSide: BorderSide(
                                                   width: 1.0,
                                                   color: AllCoustomTheme
-                                                      .getTextThemeColor()),
+                                                      .getTextThemeColor(),),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(0.0))),
                                           focusedBorder: OutlineInputBorder(
@@ -865,8 +864,9 @@ class _StockPitchState extends State<StockPitch> {
                                           ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.black,
-                                                width: 1.0),
+                                              color: Colors.black,
+                                              width: 1.0,
+                                            ),
                                           ),
                                           hintStyle: TextStyle(
                                             color: Colors.grey,
@@ -1012,147 +1012,147 @@ class _StockPitchState extends State<StockPitch> {
                               ),
 
                               ////upload doc//
-                              new Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-/*                              new Padding(
-                                padding: const EdgeInsets.only(top: 20.0),
-                                child: new DropdownButton(
-                                    hint: new Text('Select file type'),
-                                    value: fileType,
-                                    items: <DropdownMenuItem>[
-                                      new DropdownMenuItem(
-                                        child: new Text('Audio'),
-                                        value: FileType.audio,
-                                      ),
-                                      new DropdownMenuItem(
-                                        child: new Text('Image'),
-                                        value: FileType.image,
-                                      ),
-                                      new DropdownMenuItem(
-                                        child: new Text('Video'),
-                                        value: FileType.video,
-                                      ),
-                                      new DropdownMenuItem(
-                                        child: new Text('Any'),
-                                        value: FileType.any,
-                                      ),
-                                    ],
-                                    onChanged: (value) => setState(() {
-                                      fileType = value;
-                                    })
-                                ),
-                              ),
-                              new ConstrainedBox(
-                                constraints: BoxConstraints.tightFor(width: 200.0),
-                                child: new SwitchListTile.adaptive(
-                                  title: new Text('Pick multiple files', textAlign: TextAlign.right),
-                                  onChanged: (bool value) => setState(() => isMultiPick = value),
-                                  value: isMultiPick,
-                                ),
-                              ),*/
-                                  new Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 50.0, bottom: 20.0),
-                                    child: new RaisedButton(
-                                      onPressed: () => _openFileExplorer(),
-                                      child: new Text(
-                                        "Investment Thesis doc",
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColors(),
-                                          fontSize: ConstanceData.SIZE_TITLE18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  new Builder(
-                                    builder: (BuildContext context) =>
-                                        isLoadingPath
-                                            ? Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 10.0),
-                                                child:
-                                                    const CircularProgressIndicator())
-                                            : path != null || paths != null
-                                                ? new Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 30.0),
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.50,
-                                                    child: new Scrollbar(
-                                                      child: new ListView
-                                                          .separated(
-                                                        itemCount: paths !=
-                                                                    null &&
-                                                                paths.isNotEmpty
-                                                            ? paths.length
-                                                            : 1,
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int index) {
-                                                          final bool
-                                                              isMultiPath =
-                                                              paths != null &&
-                                                                  paths
-                                                                      .isNotEmpty;
-                                                          final int fileNo =
-                                                              index + 1;
-                                                          final String name =
-                                                              'File $fileNo : ' +
-                                                                  (isMultiPath
-                                                                      ? paths.keys
-                                                                              .toList()[
-                                                                          index]
-                                                                      : fileName ??
-                                                                          '...');
-                                                          final filePath =
-                                                              isMultiPath
-                                                                  ? paths.values
-                                                                      .toList()[
-                                                                          index]
-                                                                      .toString()
-                                                                  : path;
-                                                          return new ListTile(
-                                                            title: new Text(
-                                                              name,
-                                                              style: TextStyle(
-                                                                color: AllCoustomTheme
-                                                                    .getTextThemeColor(),
-                                                                fontSize:
-                                                                    ConstanceData
-                                                                        .SIZE_TITLE14,
-                                                              ),
-                                                            ),
-                                                            subtitle: new Text(
-                                                              filePath,
-                                                              style: TextStyle(
-                                                                color: AllCoustomTheme
-                                                                    .getTextThemeColor(),
-                                                                fontSize:
-                                                                    ConstanceData
-                                                                        .SIZE_TITLE14,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                        separatorBuilder:
-                                                            (BuildContext
-                                                                        context,
-                                                                    int index) =>
-                                                                new Divider(),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : new Container(),
-                                  ),
-                                ],
-                              ),
+//                               new Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: <Widget>[
+// /*                              new Padding(
+//                                 padding: const EdgeInsets.only(top: 20.0),
+//                                 child: new DropdownButton(
+//                                     hint: new Text('Select file type'),
+//                                     value: fileType,
+//                                     items: <DropdownMenuItem>[
+//                                       new DropdownMenuItem(
+//                                         child: new Text('Audio'),
+//                                         value: FileType.audio,
+//                                       ),
+//                                       new DropdownMenuItem(
+//                                         child: new Text('Image'),
+//                                         value: FileType.image,
+//                                       ),
+//                                       new DropdownMenuItem(
+//                                         child: new Text('Video'),
+//                                         value: FileType.video,
+//                                       ),
+//                                       new DropdownMenuItem(
+//                                         child: new Text('Any'),
+//                                         value: FileType.any,
+//                                       ),
+//                                     ],
+//                                     onChanged: (value) => setState(() {
+//                                       fileType = value;
+//                                     })
+//                                 ),
+//                               ),
+//                               new ConstrainedBox(
+//                                 constraints: BoxConstraints.tightFor(width: 200.0),
+//                                 child: new SwitchListTile.adaptive(
+//                                   title: new Text('Pick multiple files', textAlign: TextAlign.right),
+//                                   onChanged: (bool value) => setState(() => isMultiPick = value),
+//                                   value: isMultiPick,
+//                                 ),
+//                               ),*/
+//                                   new Padding(
+//                                     padding: const EdgeInsets.only(
+//                                         top: 50.0, bottom: 20.0),
+//                                     child: new RaisedButton(
+//                                       onPressed: () => _openFileExplorer(),
+//                                       child: new Text(
+//                                         "Investment Thesis doc",
+//                                         style: TextStyle(
+//                                           color: AllCoustomTheme
+//                                               .getTextThemeColors(),
+//                                           fontSize: ConstanceData.SIZE_TITLE18,
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ),
+//                                   new Builder(
+//                                     builder: (BuildContext context) =>
+//                                         isLoadingPath
+//                                             ? Padding(
+//                                                 padding: const EdgeInsets.only(
+//                                                     bottom: 10.0),
+//                                                 child:
+//                                                     const CircularProgressIndicator())
+//                                             : path != null || paths != null
+//                                                 ? new Container(
+//                                                     padding:
+//                                                         const EdgeInsets.only(
+//                                                             bottom: 30.0),
+//                                                     height:
+//                                                         MediaQuery.of(context)
+//                                                                 .size
+//                                                                 .height *
+//                                                             0.50,
+//                                                     child: new Scrollbar(
+//                                                       child: new ListView
+//                                                           .separated(
+//                                                         itemCount: paths !=
+//                                                                     null &&
+//                                                                 paths.isNotEmpty
+//                                                             ? paths.length
+//                                                             : 1,
+//                                                         itemBuilder:
+//                                                             (BuildContext
+//                                                                     context,
+//                                                                 int index) {
+//                                                           final bool
+//                                                               isMultiPath =
+//                                                               paths != null &&
+//                                                                   paths
+//                                                                       .isNotEmpty;
+//                                                           final int fileNo =
+//                                                               index + 1;
+//                                                           final String name =
+//                                                               'File $fileNo : ' +
+//                                                                   (isMultiPath
+//                                                                       ? paths.keys
+//                                                                               .toList()[
+//                                                                           index]
+//                                                                       : fileName ??
+//                                                                           '...');
+//                                                           final filePath =
+//                                                               isMultiPath
+//                                                                   ? paths.values
+//                                                                       .toList()[
+//                                                                           index]
+//                                                                       .toString()
+//                                                                   : path;
+//                                                           return new ListTile(
+//                                                             title: new Text(
+//                                                               name,
+//                                                               style: TextStyle(
+//                                                                 color: AllCoustomTheme
+//                                                                     .getTextThemeColor(),
+//                                                                 fontSize:
+//                                                                     ConstanceData
+//                                                                         .SIZE_TITLE14,
+//                                                               ),
+//                                                             ),
+//                                                             subtitle: new Text(
+//                                                               filePath,
+//                                                               style: TextStyle(
+//                                                                 color: AllCoustomTheme
+//                                                                     .getTextThemeColor(),
+//                                                                 fontSize:
+//                                                                     ConstanceData
+//                                                                         .SIZE_TITLE14,
+//                                                               ),
+//                                                             ),
+//                                                           );
+//                                                         },
+//                                                         separatorBuilder:
+//                                                             (BuildContext
+//                                                                         context,
+//                                                                     int index) =>
+//                                                                 new Divider(),
+//                                                       ),
+//                                                     ),
+//                                                   )
+//                                                 : new Container(),
+//                                   ),
+//                                 ],
+//                               ),
 /*                          Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1273,13 +1273,20 @@ class _StockPitchState extends State<StockPitch> {
         allTags.add(element.tag);
       });
 
+      var currencyRate =
+          Provider.of<CurrencyRateProvider>(context, listen: false)
+              .listOfAllFxs
+              .firstWhere((element) => element["ccy_symbol"] == selectedFx);
+
       var body = {
         "email": Provider.of<UserDetails>(context, listen: false)
             .userDetails["email"],
         "stock_name": "Listed",
         "isLong": selectedLongShort == "Short" ? 0 : 1,
-        "price_base": double.parse(_priceBaseController.text),
-        "price_bear": double.parse(_priceBearController.text),
+        "price_base": double.parse(_priceBaseController.text) /
+            currencyRate["last_price"],
+        "price_bear": double.parse(_priceBearController.text) /
+            currencyRate["last_price"],
         "revenue": double.parse(_revenueController.text),
         "eps": double.parse(_epsController.text),
         "investment_thesis": _investmentThesisController.text,

@@ -7,6 +7,7 @@ import 'package:auroim/provider_abhinav/auro_stars_provider.dart';
 import 'package:auroim/provider_abhinav/crypto_coins_provider.dart';
 import 'package:auroim/provider_abhinav/listed_companies_provider.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
+import 'package:auroim/widgets/invest_tab/auro_rabbit_graph.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -410,159 +411,179 @@ class _TrendingTabState extends State<TrendingTab> {
   }
 
   bigItem(data) {
-    return Container(
-      margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-      decoration: new BoxDecoration(
-        color: Color(0xFFFFFFFF),
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        border: Border.all(
-          color: Color(0xff696969),
-          width: 1,
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+        decoration: new BoxDecoration(
+          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          border: Border.all(
+            color: Color(0xff696969),
+            width: 1,
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            // decoration: BoxDecoration(border: Border.all()),
-            width: MediaQuery.of(context).size.width * 0.454,
-            height: MediaQuery.of(context).size.height * 0.06,
-            child: Padding(
-              padding: EdgeInsets.only(top: 10.0),
-              child: Text(
-                '${data[0]["name"]}',
-                style: new TextStyle(
-                    fontFamily: "Poppins",
-                    color: Color(0xFF000000),
-                    fontSize: 15.0,
-                    letterSpacing: 0.2),
-                overflow: TextOverflow.clip,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          // Container(
-          //   width: MediaQuery.of(context).size.width * 0.454,
-          //   height: MediaQuery.of(context).size.height * 0.03,
-          //   child: Row(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     children: <Widget>[
-          //       Padding(
-          //         padding: EdgeInsets.only(top: 0.0, left: 8.0),
-          //         child: Text(
-          //           'CHANGE(1D)',
-          //           style: new TextStyle(
-          //               fontFamily: "Poppins",
-          //               color: Color(0xFF000000),
-          //               fontSize: 14.0,
-          //               letterSpacing: 0.2),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: EdgeInsets.only(top: 0.0, left: 15.0),
-          //         child: Text(
-          //           '27.18',
-          //           style: new TextStyle(
-          //               fontFamily: "Poppins",
-          //               color: Color(0xFFe70b31),
-          //               fontSize: 14.0,
-          //               letterSpacing: 0.2),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // Container(
+            //   // decoration: BoxDecoration(border: Border.all()),
+            //   width: MediaQuery.of(context).size.width * 0.454,
+            //   height: MediaQuery.of(context).size.height * 0.06,
+            //   child: Padding(
+            //     padding: EdgeInsets.only(top: 10.0),
+            //     child: Text(
+            //       '${data[0]["name"]}',
+            //       style: new TextStyle(
+            //           fontFamily: "Poppins",
+            //           color: Color(0xFF000000),
+            //           fontSize: 15.0,
+            //           letterSpacing: 0.2),
+            //       overflow: TextOverflow.clip,
+            //       textAlign: TextAlign.center,
+            //     ),
+            //   ),
+            // ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width * 0.454,
+            //   height: MediaQuery.of(context).size.height * 0.03,
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: <Widget>[
+            //       Padding(
+            //         padding: EdgeInsets.only(top: 0.0, left: 8.0),
+            //         child: Text(
+            //           'CHANGE(1D)',
+            //           style: new TextStyle(
+            //               fontFamily: "Poppins",
+            //               color: Color(0xFF000000),
+            //               fontSize: 14.0,
+            //               letterSpacing: 0.2),
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: EdgeInsets.only(top: 0.0, left: 15.0),
+            //         child: Text(
+            //           '27.18',
+            //           style: new TextStyle(
+            //               fontFamily: "Poppins",
+            //               color: Color(0xFFe70b31),
+            //               fontSize: 14.0,
+            //               letterSpacing: 0.2),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
 
-          Container(
-            width: MediaQuery.of(context).size.width * 0.454,
-            height: MediaQuery.of(context).size.height * 0.12,
-            child: Center(
-              child: Image.asset(
-                mapOfAuroStars[data[0]["name"]]["header_path"],
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 8.0, right: 8.0, bottom: 5.0, top: 5.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.454,
-              height: MediaQuery.of(context).size.height * 0.12,
-              child: YoutubePlayer(
-                controller: controller,
-                showVideoProgressIndicator: true,
-                onReady: () {},
-                onEnded: (YoutubeMetaData metaData) {
-                  controller.pause();
-                },
-              ),
-            ),
-          ),
-          Container(
-            // decoration: BoxDecoration(border: Border.all()),
-            padding: EdgeInsets.only(top: 10.0),
-            width: 180,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 80,
-                  height: 20,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      border: new Border.all(
-                          color: AllCoustomTheme.getChartBoxThemeColor(),
-                          width: 1.5),
-                      // color: AllCoustomTheme.getChartBoxThemeColor(),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 8.0, right: 8.0, bottom: 5.0, top: 5.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => AuroRabbitGraph(),
                     ),
-                    child: Center(
-                      child: Text(
-                        "BUY",
-                        style: TextStyle(
-                          color: AllCoustomTheme.getChartBoxTextThemeColor(),
-                          fontSize: ConstanceData.SIZE_TITLE13,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  );
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.454,
+                  height: MediaQuery.of(context).size.height * 0.12,
+                  child: Center(
+                    child: Image.asset(
+                      // mapOfAuroStars[data[0]["name"]]["header_path"],
+                      "assets/auro_rabbit_small.png",
+                      fit: BoxFit.fitWidth,
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 80,
-                  height: 20,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      border: new Border.all(
-                          color: AllCoustomTheme.getChartBoxThemeColor(),
-                          width: 1.5),
-                      // color: AllCoustomTheme.getChartBoxThemeColor(),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "SELL",
-                        style: TextStyle(
-                          color: AllCoustomTheme.getChartBoxTextThemeColor(),
-                          fontSize: ConstanceData.SIZE_TITLE13,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 8.0, right: 8.0, bottom: 5.0, top: 10.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.454,
+                height: MediaQuery.of(context).size.height * 0.12,
+                child: YoutubePlayer(
+                  controller: controller,
+                  showVideoProgressIndicator: true,
+                  onReady: () {},
+                  onEnded: (YoutubeMetaData metaData) {
+                    controller.pause();
+                  },
+                ),
+              ),
+            ),
+            Container(
+              // decoration: BoxDecoration(border: Border.all()),
+              padding: EdgeInsets.only(top: 10.0),
+              width: MediaQuery.of(context).size.width * 0.48,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 80,
+                    height: 20,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        border: new Border.all(
+                            color: AllCoustomTheme.getChartBoxThemeColor(),
+                            width: 1.5),
+                        // color: AllCoustomTheme.getChartBoxThemeColor(),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "BUY",
+                          style: TextStyle(
+                            color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE13,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 80,
+                    height: 20,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        border: new Border.all(
+                            color: AllCoustomTheme.getChartBoxThemeColor(),
+                            width: 1.5),
+                        // color: AllCoustomTheme.getChartBoxThemeColor(),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "SELL",
+                          style: TextStyle(
+                            color: AllCoustomTheme.getChartBoxTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE13,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-        ],
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
       ),
     );
   }

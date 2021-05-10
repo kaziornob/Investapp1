@@ -12,9 +12,7 @@ class _AnimatedBackButtonState extends State<AnimatedBackButton> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context,
-            rootNavigator: true)
-            .pop();
+        Navigator.of(context, rootNavigator: true).pop();
       },
       child: Animator(
         tween: Tween<Offset>(
@@ -23,15 +21,13 @@ class _AnimatedBackButtonState extends State<AnimatedBackButton> {
         ),
         duration: Duration(milliseconds: 500),
         cycles: 0,
-        builder: (anim) =>
-            FractionalTranslation(
-              translation: anim.value,
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: AllCoustomTheme
-                    .getTextThemeColor(),
-              ),
-            ),
+        builder: (anim) => FractionalTranslation(
+          translation: anim.value,
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: AllCoustomTheme.getTextThemeColor(),
+          ),
+        ),
       ),
     );
   }

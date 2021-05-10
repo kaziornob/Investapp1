@@ -1,7 +1,14 @@
+import 'dart:convert';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/home/add_comment_bottom_sheet_widget.dart';
 import 'package:auroim/provider_abhinav/long_short_provider.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/widgets/public_company/add_long_short_vote_comment.dart';
+import 'package:auroim/widgets/public_company/debate_tab_see_more.dart';
+import 'package:auroim/widgets/public_company/single_finbert_article.dart';
+import 'package:auroim/widgets/public_company/votes_quaterly_column_charts.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class SinglePublicCompaniesDebateTab extends StatefulWidget {
@@ -17,13 +24,16 @@ class SinglePublicCompaniesDebateTab extends StatefulWidget {
 class _SinglePublicCompaniesDebateTabState
     extends State<SinglePublicCompaniesDebateTab> {
   double _voteValue = 3.0;
+  double _totalVotes;
   bool _isinit = true;
 
   @override
   void didChangeDependencies() {
     if (_isinit) {
-      Provider.of<LongShortProvider>(context)
+      Provider.of<LongShortProvider>(context, listen: false)
           .getProConsForPublicCompany(widget.data["ticker"]);
+      Provider.of<LongShortProvider>(context, listen: false)
+          .getFinbertArticleForPublicCompany(widget.data["ticker"]);
       _isinit = false;
     }
     super.didChangeDependencies();
@@ -73,7 +83,7 @@ class _SinglePublicCompaniesDebateTabState
           child: Row(
             children: [
               Container(
-                width: 300,
+                // width: MediaQuery.of(context).size.width-20,
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -83,25 +93,164 @@ class _SinglePublicCompaniesDebateTabState
                   ),
                 ),
                 padding: EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  'Auro Sentiment Score - Voting Bar',
-                  style: new TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.black,
-                    fontSize: 18.0,
-                    letterSpacing: 0.2,
-                  ),
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: "Auro Sentiment Score - Voting Bar(",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        letterSpacing: 0.2,
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          "${(4 - (12 / DateTime.now().month)).ceil()}Q,${DateTime.now().year}",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.black,
+                        fontSize: 15.0,
+                        letterSpacing: 0.2,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => VotesQuarterlyColumnCharts(
+                                ticker: widget.data["ticker"],
+                              ),
+                            ),
+                          );
+                        },
+                    ),
+                    TextSpan(
+                      text: ")",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.black,
+                        fontSize: 15.0,
+                        letterSpacing: 0.2,
+                      ),
+                    ),
+                  ]),
                 ),
               ),
             ],
           ),
         ),
-        Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.05,
-              margin: EdgeInsets.all(7.0),
+        StatefulBuilder(
+          builder: (context, setSliderState) {
+            return FutureBuilder(
+              future: Provider.of<LongShortProvider>(context, listen: false)
+                  .getLongShortVotes(widget.data["ticker"]),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  print("in long short");
+                  _totalVotes = (snapshot.data["long_votes"] +
+                          snapshot.data["short_votes"])
+                      .toDouble();
+                  _voteValue = snapshot.data["long_votes"].toDouble();
+                  return Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        margin: EdgeInsets.all(7.0),
+                        decoration: new BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xff5A56B9),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(2.0),
+                          ),
+                        ),
+                        child: SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: Colors.green,
+                            inactiveTrackColor: Colors.red[100],
+                            trackShape: RoundedRectSliderTrackShape(),
+                            trackHeight: 4.0,
+                            thumbShape:
+                                RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                            thumbColor: Colors.green,
+                            overlayColor: Colors.red.withAlpha(32),
+                            overlayShape:
+                                RoundSliderOverlayShape(overlayRadius: 28.0),
+                            tickMarkShape: RoundSliderTickMarkShape(),
+                            activeTickMarkColor: Colors.green,
+                            inactiveTickMarkColor: Colors.red[100],
+                            valueIndicatorShape:
+                                PaddleSliderValueIndicatorShape(),
+                            valueIndicatorColor: Colors.green,
+                            valueIndicatorTextStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: Slider(
+                            value: _voteValue,
+                            min: 0,
+                            max: _totalVotes,
+                            divisions: 10,
+                            label:
+                                '${((_voteValue / _totalVotes) * 100).toString().split(".")[0]}% Voted Long,${(((_totalVotes - _voteValue) / _totalVotes) * 100).toString().split(".")[0]}% Voted Short',
+                            onChanged: (value) {},
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          button("Vote Long", Colors.green, 120.0, true,
+                              setSliderState),
+                          button("Vote Short", Colors.red, 120.0, false,
+                              setSliderState),
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            );
+          },
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Consumer<LongShortProvider>(
+          builder: (context, longShortProvider, _) {
+            if (longShortProvider.proConsForPublicCompany != null) {
+              return longShortSection(
+                  longShortProvider.proConsForPublicCompany);
+            } else {
+              return SizedBox();
+            }
+          },
+        ),
+        Consumer<LongShortProvider>(builder: (context, longShortProvider, _) {
+          if (longShortProvider.finbertArticles != null &&
+              longShortProvider.finbertArticles.length != 0) {
+            return finbertSection(
+              longShortProvider.finbertArticleWithMostNegetiveSentiment(),
+              longShortProvider.finbertArticleWithMostPositiveSentiment(),
+            );
+          } else {
+            return SizedBox();
+          }
+        }),
+        SizedBox(
+          height: 5,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width - 15,
+          height: MediaQuery.of(context).size.height * 0.06,
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.48,
               decoration: new BoxDecoration(
                 border: Border.all(
                   color: Color(0xff5A56B9),
@@ -111,156 +260,42 @@ class _SinglePublicCompaniesDebateTabState
                   Radius.circular(2.0),
                 ),
               ),
-              child: SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  activeTrackColor: Colors.green,
-                  inactiveTrackColor: Colors.red[100],
-                  trackShape: RoundedRectSliderTrackShape(),
-                  trackHeight: 4.0,
-                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                  thumbColor: Colors.green,
-                  overlayColor: Colors.red.withAlpha(32),
-                  overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-                  tickMarkShape: RoundSliderTickMarkShape(),
-                  activeTickMarkColor: Colors.green,
-                  inactiveTickMarkColor: Colors.red[100],
-                  valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                  valueIndicatorColor: Colors.green,
-                  valueIndicatorTextStyle: TextStyle(
-                    color: Colors.white,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DebateTabSeeMore(
+                        companyName: widget.data["company_name"],
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.10,
+                  margin: EdgeInsets.only(
+                      left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
+                  decoration: new BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xff5A56B9),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2.0),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'SEE MORE',
+                      style: new TextStyle(
+                        fontFamily: "WorkSansSemiBold",
+                        color: Colors.black,
+                        fontSize: 15.0,
+                      ),
+                    ),
                   ),
                 ),
-                child: Slider(
-                  value: _voteValue,
-                  min: 0,
-                  max: 100,
-                  divisions: 10,
-                  label: '$_voteValue',
-                  onChanged: (value) {
-                    // setVotingBarState(() {
-                    //   _voteValue = value;
-                    // });
-                  },
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                button("Vote Long", Colors.green, 120.0, true),
-                button("Vote Short", Colors.red, 120.0, false),
-              ],
-            ),
-          ],
+              )),
         ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Consumer<LongShortProvider>(builder: (context, longShortProvider, _) {
-          if (longShortProvider.proConsForPublicCompany != null) {
-            return longShortSection(longShortProvider.proConsForPublicCompany);
-          } else {
-            return SizedBox();
-          }
-        }),
-
-        // articleSection(""),
-        // Consumer<LongShortProvider>(
-        //   builder: (context, longShortProvider, _) {
-        //     if (longShortProvider.proConsForPublicCompany != null) {
-        //       return articleSection(longShortProvider.proConsForPublicCompany);
-        //     } else {
-        //       return SizedBox();
-        //     }
-        //   },
-        // ),
-        // Row(
-        //   children: [
-        //     Padding(
-        //       padding: EdgeInsets.only(top: 5.0, left: 10.0),
-        //       child: Container(
-        //         width: 200,
-        //         decoration: BoxDecoration(
-        //           border: Border(
-        //             bottom: BorderSide(
-        //               width: 2,
-        //               color: Color(0xFFfec20f),
-        //             ),
-        //           ),
-        //         ),
-        //         padding: EdgeInsets.only(bottom: 8.0),
-        //         child: Text(
-        //           'Auro News Score',
-        //           style: new TextStyle(
-        //             fontFamily: "Rosarivo",
-        //             color: Colors.black,
-        //             fontSize: 20.0,
-        //             letterSpacing: 0.2,
-        //             fontWeight: FontWeight.bold,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // SizedBox(
-        //   height: 10,
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //   children: [
-        //     button("Long News", Colors.green, 150.0, () {}),
-        //     button("Short News", Colors.red, 150.0, () {}),
-        //   ],
-        // ),
-        // SizedBox(
-        //   height: 10,
-        // ),
-        // articleSection(""),
-        // SizedBox(
-        //   height: 10,
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //   children: [
-        //     button("Long Trending", Colors.green, 150.0, () {}),
-        //     button("Short Trending", Colors.red, 150.0, () {}),
-        //   ],
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.only(top:10.0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: [
-        //       Container(
-        //         decoration: new BoxDecoration(
-        //           border: Border.all(
-        //             color: Color(0xff5A56B9),
-        //             width: 1,
-        //           ),
-        //           borderRadius: BorderRadius.all(
-        //             Radius.circular(2.0),
-        //           ),
-        //         ),
-        //         width: (MediaQuery.of(context).size.width/2)-10,
-        //         height: 80,
-        //       ),
-        //       Container(
-        //         decoration: new BoxDecoration(
-        //           border: Border.all(
-        //             color: Color(0xff5A56B9),
-        //             width: 1,
-        //           ),
-        //           borderRadius: BorderRadius.all(
-        //             Radius.circular(2.0),
-        //           ),
-        //         ),
-        //         width: (MediaQuery.of(context).size.width/2)-10,
-        //         height: 80,
-        //       )
-        //     ],
-        //   ),
-        // )
       ],
     );
 
@@ -268,20 +303,25 @@ class _SinglePublicCompaniesDebateTabState
     // );
   }
 
-  button(text, color, width, isLong) {
+  button(text, color, width, isLong, setSliderState) {
     return Container(
       width: width,
       height: 40,
       child: RaisedButton(
-        onPressed: () {
+        onPressed: () async {
           showModalBottomSheet(
             context: context,
             backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             builder: (builder) {
-              return AddCommentBottomSheetWidget(
+              return AddLongShortVoteComment(
                 heading: isLong
                     ? "If you are Positive on this stock’s return potential tell us why?"
                     : "If you are Negative on this stock’s return potential tell us why?",
+                ticker: widget.data["ticker"],
+                isLong: isLong,
+                callback: () {
+                  setSliderState(() {});
+                },
               );
             },
           );
@@ -298,6 +338,72 @@ class _SinglePublicCompaniesDebateTabState
           borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(color: color),
         ),
+      ),
+    );
+  }
+
+  finbertSection(negativeArticle, positiveArticle) {
+    print("negetive : ${negativeArticle["sentiment_score"].runtimeType}");
+    return Container(
+      width: MediaQuery.of(context).size.width - 15,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                // decoration: BoxDecoration(border: Border.all()),
+                width: (MediaQuery.of(context).size.width - 20) / 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SingleFinbertArticle(
+                      head: positiveArticle["subject"].toString().substring(3),
+                      icon: Icon(
+                        FontAwesomeIcons.newspaper,
+                        color: Colors.green,
+                      ),
+                      relatedLinks: jsonDecode(positiveArticle["related_links"]
+                          .toString()
+                          .replaceAll("\'", "\"")),
+                      sentimentScore: (positiveArticle["sentiment_score"] * 100)
+                          .toStringAsFixed(1),
+                      date: positiveArticle["article_date"],
+                      tickers: jsonDecode(positiveArticle["tickers"]),
+                      bloombergLink: positiveArticle["link"],
+                      peoples: jsonDecode(positiveArticle["people"]),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                // decoration: BoxDecoration(border: Border.all()),
+                width: (MediaQuery.of(context).size.width - 20) / 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SingleFinbertArticle(
+                      head: negativeArticle["subject"].toString().substring(3),
+                      icon: Icon(
+                        FontAwesomeIcons.newspaper,
+                        color: Colors.red,
+                      ),
+                      relatedLinks: jsonDecode(negativeArticle["related_links"]
+                          .toString()
+                          .replaceAll("\'", "\"")),
+                      sentimentScore: (negativeArticle["sentiment_score"] * 100)
+                          .toStringAsFixed(1),
+                      date: negativeArticle["article_date"],
+                      bloombergLink: negativeArticle["link"],
+                      tickers: jsonDecode(negativeArticle["tickers"]),
+                      peoples: jsonDecode(negativeArticle["people"]),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -337,11 +443,17 @@ class _SinglePublicCompaniesDebateTabState
                     //     ),
                     //   ),
                     // ),
-                    bulletPoints("${data["pro_one"]}","Pro One"),
-                    SizedBox(height: 5,),
-                    bulletPoints("${data["pro_two"]}","Pro Two"),
-                    SizedBox(height: 5,),
-                    bulletPoints("${data["pro_three"]}", "Pro Three"),
+                    bulletPoints(
+                      "${data["pro_one"]}",
+                      "Pro One",
+                      Icon(
+                        FontAwesomeIcons.checkDouble,
+                        color: Colors.green,
+                      ),
+                    ),
+                    // bulletPoints("${data["pro_two"]}","Pro Two"),
+                    // SizedBox(height: 5,),
+                    // bulletPoints("${data["pro_three"]}", "Pro Three"),
                   ],
                 ),
               ),
@@ -362,56 +474,65 @@ class _SinglePublicCompaniesDebateTabState
                     //     ),
                     //   ),
                     // ),
-                    bulletPoints("${data["con_one"]}","Con One"),
-                    SizedBox(height: 5,),
-                    bulletPoints("${data["con_two"]}","Con Two"),
-                    SizedBox(height: 5,),
-                    bulletPoints("${data["con_three"]}","Con Three"),
+                    bulletPoints(
+                      "${data["con_one"]}",
+                      "Con One",
+                      Icon(
+                        FontAwesomeIcons.timesCircle,
+                        color: Colors.red,
+                      ),
+                    ),
+                    // SizedBox(height: 5,),
+                    // bulletPoints("${data["con_two"]}","Con Two"),
+                    // SizedBox(height: 5,),
+                    // bulletPoints("${data["con_three"]}","Con Three"),
                   ],
                 ),
               ),
             ],
           ),
-          SizedBox(height: 5,),
-          Container(
-            width: MediaQuery.of(context).size.width - 15,
-            height: MediaQuery.of(context).size.height * 0.06,
-            child: Container(
-                width: MediaQuery.of(context).size.width * 0.48,
-                decoration: new BoxDecoration(
-                  border: Border.all(
-                    color: Color(0xff5A56B9),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(2.0),
-                  ),
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.10,
-                  margin: EdgeInsets.only(
-                      left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xff5A56B9),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'SEE MORE',
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Colors.black,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                )),
+          SizedBox(
+            height: 5,
           ),
+          // Container(
+          //   width: MediaQuery.of(context).size.width - 15,
+          //   height: MediaQuery.of(context).size.height * 0.06,
+          //   child: Container(
+          //       width: MediaQuery.of(context).size.width * 0.48,
+          //       decoration: new BoxDecoration(
+          //         border: Border.all(
+          //           color: Color(0xff5A56B9),
+          //           width: 1,
+          //         ),
+          //         borderRadius: BorderRadius.all(
+          //           Radius.circular(2.0),
+          //         ),
+          //       ),
+          //       child: Container(
+          //         width: MediaQuery.of(context).size.width * 0.10,
+          //         margin: EdgeInsets.only(
+          //             left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
+          //         decoration: new BoxDecoration(
+          //           border: Border.all(
+          //             color: Color(0xff5A56B9),
+          //             width: 1,
+          //           ),
+          //           borderRadius: BorderRadius.all(
+          //             Radius.circular(2.0),
+          //           ),
+          //         ),
+          //         child: Center(
+          //           child: Text(
+          //             'SEE MORE',
+          //             style: new TextStyle(
+          //               fontFamily: "WorkSansSemiBold",
+          //               color: Colors.black,
+          //               fontSize: 15.0,
+          //             ),
+          //           ),
+          //         ),
+          //       )),
+          // ),
         ],
       ),
     );
@@ -425,7 +546,7 @@ class _SinglePublicCompaniesDebateTabState
   //   );
   // }
 
-  bulletPoints(text,head) {
+  bulletPoints(text, head, icon) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -441,15 +562,27 @@ class _SinglePublicCompaniesDebateTabState
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              child: Text(
-                "$head",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Roboto",
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff1D6177),
-                ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  icon,
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    child: Text(
+                      "$head",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff1D6177),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
