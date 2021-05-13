@@ -73,6 +73,17 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
                       child: Text(
                           "Created on ${date.day}th ${monthList[date.month - 1]}, ${date.year}"),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Text(
+                        widget.portfolioData["isLong"] == 0
+                            ? "Short Pitch"
+                            : "Long Pitch",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 ReturnDrawdownWidget(
@@ -282,7 +293,7 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
               ),
               child: Center(
                 child: Text(
-                  "${(data["previous_weight"]*100).toStringAsFixed(2)}",
+                  "${(data["previous_weight"] * 100).toStringAsFixed(2)}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -296,7 +307,7 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
               ),
               child: Center(
                 child: Text(
-                  "${(data["current_weight"]*100).toStringAsFixed(2)}",
+                  "${(data["current_weight"] * 100).toStringAsFixed(2)}",
                   textAlign: TextAlign.center,
                 ),
               ),

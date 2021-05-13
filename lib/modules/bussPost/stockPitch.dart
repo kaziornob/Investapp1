@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+// import 'dart:html';
 
 import 'package:animator/animator.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
@@ -8,6 +11,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/provider_abhinav/currency_rate_provider.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +21,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class StockPitch extends StatefulWidget {
   @override
@@ -31,6 +36,7 @@ class _StockPitchState extends State<StockPitch> {
   bool _isInit = true;
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
+  AWSClient awsClient = AWSClient();
   TextEditingController _searchTopicController = TextEditingController();
   TextEditingController _priceBaseController = TextEditingController();
   TextEditingController _priceBearController = TextEditingController();
@@ -49,7 +55,7 @@ class _StockPitchState extends State<StockPitch> {
 
   String selectedStockId;
   String selectedLongShort;
-
+  String docUrl;
   String fileName;
   String path;
   Map<String, String> paths;
@@ -76,32 +82,75 @@ class _StockPitchState extends State<StockPitch> {
     });
   }
 
-  void _openFileExplorer() async {
-    setState(() => isLoadingPath = true);
+  Future<bool> _openFileExplorer() async {
+    // setState(() => isLoadingPath = true);
     try {
-      if (isMultiPick) {
-        path = null;
-        paths = await FilePicker.getMultiFilePath(
-            type: true ? fileType : FileType.any,
-            allowedExtensions: extensions);
+      // if (isMultiPick) {
+      //   path = null;
+      //   paths = await FilePicker.getMultiFilePath(
+      //     type: fileType,
+      //     allowedExtensions: extensions,
+      //   );
+      // } else {
+
+      path = await FilePicker.getFilePath(
+        type: fileType,
+        allowedExtensions: extensions,
+      );
+      if (path != null) {
+        print(path);
+        setState(() {
+          isLoadingPath = true;
+        });
+        Toast.show(
+          "Uploading Doc...",
+          context,
+        );
+        // get file from path and convert to byteData to send to aws
+        File file = File(path);
+        if (await file.length() == 0) {
+          return false;
+        }
+        Uint8List bytesData = file.readAsBytesSync();
+        docUrl = await awsClient.uploadData(
+          "Stock-Security Pitch",
+          DateTime.now().toIso8601String(),
+          bytesData,
+        );
+        //return true only when url is got
+        if (docUrl != null && docUrl != "") {
+          Toast.show(
+            "Doc Uploaded !! ",
+            context,
+            duration: 3,
+          );
+          setState(() {
+            isLoadingPath = false;
+            fileName = path;
+          });
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        path = await FilePicker.getFilePath(
-            type: true ? fileType : FileType.any,
-            allowedExtensions: extensions);
-        paths = null;
+        return false;
       }
+      // paths = null;
+      // }
     } on PlatformException catch (e) {
+      //on error return false
       print("Unsupported operation" + e.toString());
+      return false;
     }
-    if (!mounted) return;
-    setState(() {
-      isLoadingPath = false;
-      fileName = path != null
-          ? path.split('/').last
-          : paths != null
-              ? paths.keys.toString()
-              : '...';
-    });
+    // if (!mounted) return false;
+    // setState(() {
+    //   isLoadingPath = false;
+    //   fileName = path != null
+    //       ? path.split('/').last
+    //       : paths != null
+    //           ? paths.keys.toString()
+    //           : '...';
+    // });
   }
 
   Future<List> searchItems(query) async {
@@ -853,9 +902,10 @@ class _StockPitchState extends State<StockPitch> {
                                           hintText: 'Search Topic Tags',
                                           border: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  width: 1.0,
-                                                  color: AllCoustomTheme
-                                                      .getTextThemeColor(),),
+                                                width: 1.0,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                              ),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(0.0))),
                                           focusedBorder: OutlineInputBorder(
@@ -1051,143 +1101,27 @@ class _StockPitchState extends State<StockPitch> {
 //                                   value: isMultiPick,
 //                                 ),
 //                               ),*/
-//                                   new Padding(
-//                                     padding: const EdgeInsets.only(
-//                                         top: 50.0, bottom: 20.0),
-//                                     child: new RaisedButton(
-//                                       onPressed: () => _openFileExplorer(),
-//                                       child: new Text(
-//                                         "Investment Thesis doc",
-//                                         style: TextStyle(
-//                                           color: AllCoustomTheme
-//                                               .getTextThemeColors(),
-//                                           fontSize: ConstanceData.SIZE_TITLE18,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ),
-//                                   new Builder(
-//                                     builder: (BuildContext context) =>
-//                                         isLoadingPath
-//                                             ? Padding(
-//                                                 padding: const EdgeInsets.only(
-//                                                     bottom: 10.0),
-//                                                 child:
-//                                                     const CircularProgressIndicator())
-//                                             : path != null || paths != null
-//                                                 ? new Container(
-//                                                     padding:
-//                                                         const EdgeInsets.only(
-//                                                             bottom: 30.0),
-//                                                     height:
-//                                                         MediaQuery.of(context)
-//                                                                 .size
-//                                                                 .height *
-//                                                             0.50,
-//                                                     child: new Scrollbar(
-//                                                       child: new ListView
-//                                                           .separated(
-//                                                         itemCount: paths !=
-//                                                                     null &&
-//                                                                 paths.isNotEmpty
-//                                                             ? paths.length
-//                                                             : 1,
-//                                                         itemBuilder:
-//                                                             (BuildContext
-//                                                                     context,
-//                                                                 int index) {
-//                                                           final bool
-//                                                               isMultiPath =
-//                                                               paths != null &&
-//                                                                   paths
-//                                                                       .isNotEmpty;
-//                                                           final int fileNo =
-//                                                               index + 1;
-//                                                           final String name =
-//                                                               'File $fileNo : ' +
-//                                                                   (isMultiPath
-//                                                                       ? paths.keys
-//                                                                               .toList()[
-//                                                                           index]
-//                                                                       : fileName ??
-//                                                                           '...');
-//                                                           final filePath =
-//                                                               isMultiPath
-//                                                                   ? paths.values
-//                                                                       .toList()[
-//                                                                           index]
-//                                                                       .toString()
-//                                                                   : path;
-//                                                           return new ListTile(
-//                                                             title: new Text(
-//                                                               name,
-//                                                               style: TextStyle(
-//                                                                 color: AllCoustomTheme
-//                                                                     .getTextThemeColor(),
-//                                                                 fontSize:
-//                                                                     ConstanceData
-//                                                                         .SIZE_TITLE14,
-//                                                               ),
-//                                                             ),
-//                                                             subtitle: new Text(
-//                                                               filePath,
-//                                                               style: TextStyle(
-//                                                                 color: AllCoustomTheme
-//                                                                     .getTextThemeColor(),
-//                                                                 fontSize:
-//                                                                     ConstanceData
-//                                                                         .SIZE_TITLE14,
-//                                                               ),
-//                                                             ),
-//                                                           );
-//                                                         },
-//                                                         separatorBuilder:
-//                                                             (BuildContext
-//                                                                         context,
-//                                                                     int index) =>
-//                                                                 new Divider(),
-//                                                       ),
-//                                                     ),
-//                                                   )
-//                                                 : new Container(),
-//                                   ),
-//                                 ],
-//                               ),
-/*                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "Upload doc",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                    fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 50.0, bottom: 20.0),
+                                child: new RaisedButton(
+                                  onPressed: () {
+                                    // downloadFileAndSaveToLocal();
+                                    _openFileExplorer();
+                                  },
+                                  child: new Text(
+                                    "Investment Thesis doc",
+                                    style: TextStyle(
+                                      color:
+                                          AllCoustomTheme.getTextThemeColors(),
+                                      fontSize: ConstanceData.SIZE_TITLE18,
+                                    ),
                                   ),
                                 ),
-                                onPressed: () async {
-                                  Navigator.pop(context);
-                                },
                               ),
-                              MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "Upload model",
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          ),*/
-
+                              docUrl != null && docUrl != ""
+                                  ? Text("File Attached")
+                                  : Text("No Document Attached"),
                               SizedBox(
                                 height: 24.0,
                               ),
@@ -1243,9 +1177,11 @@ class _StockPitchState extends State<StockPitch> {
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              onPressed: () async {
-                                                onPressedDone();
-                                              },
+                                              onPressed: isLoadingPath
+                                                  ? () {}
+                                                  : () {
+                                                      onPressedDone();
+                                                    },
                                             ),
                                           ),
                                         ),
@@ -1293,9 +1229,10 @@ class _StockPitchState extends State<StockPitch> {
         "topic_tags": jsonEncode(allTags),
         "stock_id": selectedStockId,
         "title": _stockPitchTitleController.text,
+        "docUrl": docUrl == null ? "" : docUrl,
       };
 
-      print(body.toString());
+      print(body);
 
       bool done = await Provider.of<StockPitchProvider>(context, listen: false)
           .uploadStockPitch(body);

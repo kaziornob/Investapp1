@@ -3,6 +3,10 @@ import 'package:auroim/constance/themes.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedBackButton extends StatefulWidget {
+  final Color color;
+
+  const AnimatedBackButton({Key key, this.color}) : super(key: key);
+
   @override
   _AnimatedBackButtonState createState() => _AnimatedBackButtonState();
 }
@@ -21,13 +25,15 @@ class _AnimatedBackButtonState extends State<AnimatedBackButton> {
         ),
         duration: Duration(milliseconds: 500),
         cycles: 0,
-        builder: (anim) => FractionalTranslation(
-          translation: anim.value,
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: AllCoustomTheme.getTextThemeColor(),
-          ),
-        ),
+        builder: (anim) =>
+            FractionalTranslation(
+              translation: anim.value,
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: widget.color == null ? AllCoustomTheme
+                    .getTextThemeColor() : widget.color,
+              ),
+            ),
       ),
     );
   }

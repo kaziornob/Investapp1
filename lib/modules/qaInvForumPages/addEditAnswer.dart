@@ -12,10 +12,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter/services.dart';
+
 // import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // import 'package:keyboard_actions/keyboard_actions.dart';
 // import 'package:keyboard_actions/keyboard_actions_config.dart';
 // import 'package:keyboard_actions/keyboard_actions_item.dart';
@@ -27,7 +29,6 @@ import 'package:toast/toast.dart';
 // const String _markdownData = "*pooja* **pooja** # this is H1 http:github.com";
 
 class AddEditAnswer extends StatefulWidget {
-
   final allParams;
 
   const AddEditAnswer({Key key, @required this.allParams}) : super(key: key);
@@ -74,9 +75,7 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
       _isAddAnsInProgress = false;
     });
     // var txt = await keyEditor.currentState.getText();  to get editor text value
-
   }
-
 
   /// Creates the [KeyboardActionsConfig] to hook up the fields
   /// and their focus nodes to our [FormKeyboardActions].
@@ -200,95 +199,106 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
                   physics: BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16, left: 16),
-                    child: !_isAddAnsInProgress ? Container(
-                      child: Form(
-                        key: _addEditAnsFormKey,
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: appBarheight,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                InkWell(
-                                  highlightColor: Colors.transparent,
-                                  splashColor: Colors.transparent,
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Animator(
-                                    tween: Tween<Offset>(
-                                        begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                    duration: Duration(milliseconds: 500),
-                                    cycles: 0,
-                                    builder: (anim) => FractionalTranslation(
-                                      translation: anim.value,
-                                      child: Icon(
-                                        Icons.arrow_back_ios,
-                                        color:
-                                        AllCoustomTheme.getTextThemeColors(),
-                                      ),
-                                    ),
+                    child: !_isAddAnsInProgress
+                        ? Container(
+                            child: Form(
+                              key: _addEditAnsFormKey,
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: appBarheight,
                                   ),
-                                ),
-                                Expanded(
-                                  child: Animator(
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.decelerate,
-                                    cycles: 1,
-                                    builder: (anim) => Transform.scale(
-                                      scale: anim.value,
-                                      child: Text(
-                                        'Add Answer',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: AllCoustomTheme.getTextThemeColors(),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: ConstanceData.SIZE_TITLE20,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      InkWell(
+                                        highlightColor: Colors.transparent,
+                                        splashColor: Colors.transparent,
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Animator(
+                                          tween: Tween<Offset>(
+                                              begin: Offset(0, 0),
+                                              end: Offset(0.2, 0)),
+                                          duration: Duration(milliseconds: 500),
+                                          cycles: 0,
+                                          builder: (anim) =>
+                                              FractionalTranslation(
+                                            translation: anim.value,
+                                            child: Icon(
+                                              Icons.arrow_back_ios,
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 25,
-                                  width: 95,
-                                  decoration: BoxDecoration(
-                                    color: AllCoustomTheme.getThemeData()
-                                        .textSelectionColor,
-                                    border: new Border.all(
-                                        color: Colors.white, width: 1.0),
-                                  ),
-                                  child: _isAddAnsClickOnSubmit  ? Container(
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(right: 14),
-                                      child: CupertinoActivityIndicator(
-                                        radius: 12,
+                                      Expanded(
+                                        child: Animator(
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.decelerate,
+                                          cycles: 1,
+                                          builder: (anim) => Transform.scale(
+                                            scale: anim.value,
+                                            child: Text(
+                                              'Add Answer',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColors(),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ) : MaterialButton(
-                                    splashColor: Colors.grey,
-                                    child: Text(
-                                      "Preview",
-                                      style: TextStyle(
-                                        color: AllCoustomTheme
-                                            .getTextThemeColors(),
-                                        fontSize: ConstanceData.SIZE_TITLE12,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      _submit();
-                                    },
+                                      Container(
+                                        height: 25,
+                                        width: 95,
+                                        decoration: BoxDecoration(
+                                          color: AllCoustomTheme.getThemeData()
+                                              .textSelectionColor,
+                                          border: new Border.all(
+                                              color: Colors.white, width: 1.0),
+                                        ),
+                                        child: _isAddAnsClickOnSubmit
+                                            ? Container(
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: 14),
+                                                  child:
+                                                      CupertinoActivityIndicator(
+                                                    radius: 12,
+                                                  ),
+                                                ),
+                                              )
+                                            : MaterialButton(
+                                                splashColor: Colors.grey,
+                                                child: Text(
+                                                  "Preview",
+                                                  style: TextStyle(
+                                                    color: AllCoustomTheme
+                                                        .getTextThemeColors(),
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE12,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  _submit();
+                                                },
+                                              ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            // bottom fomatting section
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  // bottom fomatting section
 /*                        Container(
                           height: 200,
                           child: ChangeNotifierProvider<EditorProvider>(
@@ -366,35 +376,41 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
                               data: _markdownData,
                             ),
                           ),*/
-                            // ans body section
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.70,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                color: AllCoustomTheme.boxColor(),
-                              ),
-                              child: TextFormField(
-                                validator: _validateBody,
-                                maxLines: null,
-                                keyboardType: TextInputType.emailAddress,
-                                controller: _ansBodyController,
-                                focusNode: ansBodyFocusNode,
-                                style: TextStyle(
-                                  fontSize: ConstanceData.SIZE_TITLE14,
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'Write your answer here…',
-                                  hintStyle: TextStyle(
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                      color: AllCoustomTheme.getTextThemeColors()),
-                                  labelStyle: TextStyle(
-                                      fontSize: ConstanceData.SIZE_TITLE14,
-                                      color: AllCoustomTheme.getTextThemeColors()),
-                                ),
-                              ),
-                            ),
+                                  // ans body section
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.70,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      color: AllCoustomTheme.boxColor(),
+                                    ),
+                                    child: TextFormField(
+                                      validator: _validateBody,
+                                      maxLines: null,
+                                      keyboardType: TextInputType.emailAddress,
+                                      controller: _ansBodyController,
+                                      focusNode: ansBodyFocusNode,
+                                      style: TextStyle(
+                                        fontSize: ConstanceData.SIZE_TITLE14,
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText: 'Write your answer here…',
+                                        hintStyle: TextStyle(
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors()),
+                                        labelStyle: TextStyle(
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE14,
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors()),
+                                      ),
+                                    ),
+                                  ),
 /*                          Container(
                             height: 200,
                             decoration: BoxDecoration(
@@ -428,25 +444,23 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
                               ),
                             ),
                           ),*/
-                            SizedBox(
-                              height: 20,
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ) : SizedBox(),
+                          )
+                        : SizedBox(),
                   ),
                 ),
               ),
-            )
-        )
+            ))
       ],
     );
   }
 
-
   _submit() async {
-
     setState(() {
       _isAddAnsClickOnSubmit = true;
     });
@@ -460,18 +474,19 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
 
     var tempField = {
       "callingFrom": "add",
-      "body": _ansBodyController.text,
-      "qusID": widget.allParams['id']
+      "answer_body": _ansBodyController.text,
+      ...widget.allParams
     };
+    print("ghghghghh");
+    print(tempField);
 
     setState(() {
       _isAddAnsClickOnSubmit = false;
     });
 
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       CupertinoPageRoute(
-        builder: (BuildContext context) =>
-            AnsView(allParams : tempField),
+        builder: (BuildContext context) => AnsView(allParams: tempField),
       ),
     );
   }
@@ -483,9 +498,6 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
     return null;
   }
 }
-
-
-
 
 enum SmartTextType { BOLD, T, ITALIC, BULLET }
 
@@ -502,13 +514,12 @@ extension SmartTextStyle on SmartTextType {
         return TextStyle(
             fontSize: ConstanceData.SIZE_TITLE14,
             color: AllCoustomTheme.getTextThemeColors(),
-            fontWeight: FontWeight.bold
-        );
+            fontWeight: FontWeight.bold);
         break;
       default:
-        return TextStyle(fontSize: ConstanceData.SIZE_TITLE14,
-            color: AllCoustomTheme.getTextThemeColors()
-        );
+        return TextStyle(
+            fontSize: ConstanceData.SIZE_TITLE14,
+            color: AllCoustomTheme.getTextThemeColors());
     }
   }
 
@@ -567,19 +578,14 @@ class SmartTextField extends StatelessWidget {
             prefixText: type.prefix,
             prefixStyle: type.textStyle,
             isDense: true,
-            contentPadding: type.padding
-        ),
-        style: type.textStyle
-    );
+            contentPadding: type.padding),
+        style: type.textStyle);
   }
 }
 
-
-
-
-
 class Toolbar extends StatelessWidget {
-  const Toolbar({Key key, this.onSelected, this.selectedType}): super(key: key);
+  const Toolbar({Key key, this.onSelected, this.selectedType})
+      : super(key: key);
 
   final SmartTextType selectedType;
   final ValueChanged<SmartTextType> onSelected;
@@ -591,80 +597,69 @@ class Toolbar extends StatelessWidget {
       child: Material(
           elevation: 4.0,
           color: AllCoustomTheme.boxColor(),
-          child: Row(
-              children: <Widget>[
-                InkWell(
-                  onTap: ()
-                  {
-                    onSelected(SmartTextType.ITALIC);
-                  },
-                  child: Container(
-                    child: Icon(
-                      FontAwesomeIcons.italic,
-                      color: selectedType == SmartTextType.ITALIC
-                          ? Colors.teal
-                          : Colors.grey,
-                      size: MediaQuery.of(context).size.width * 0.05,
-                    ),
-                  ),
+          child: Row(children: <Widget>[
+            InkWell(
+              onTap: () {
+                onSelected(SmartTextType.ITALIC);
+              },
+              child: Container(
+                child: Icon(
+                  FontAwesomeIcons.italic,
+                  color: selectedType == SmartTextType.ITALIC
+                      ? Colors.teal
+                      : Colors.grey,
+                  size: MediaQuery.of(context).size.width * 0.05,
                 ),
-                IconButton(
-                    icon: Icon(
-                      FontAwesomeIcons.bold,
-                      color: selectedType == SmartTextType.BOLD
-                          ? Colors.teal
-                          : Colors.grey,
-                      size: MediaQuery.of(context).size.width * 0.05,
-                    ),
-                    onPressed: () => onSelected(SmartTextType.BOLD)
+              ),
+            ),
+            IconButton(
+                icon: Icon(
+                  FontAwesomeIcons.bold,
+                  color: selectedType == SmartTextType.BOLD
+                      ? Colors.teal
+                      : Colors.grey,
+                  size: MediaQuery.of(context).size.width * 0.05,
                 ),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.link,
-                    color: Colors.grey,
-                    size: MediaQuery.of(context).size.width * 0.05,
-
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.virus,
-                    color: Colors.grey,
-                    size: MediaQuery.of(context).size.width * 0.05,
-
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.book,
-                    color:  Colors.grey,
-                    size: MediaQuery.of(context).size.width * 0.05,
-
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.fileVideo,
-                    color: Colors.grey,
-                    size: MediaQuery.of(context).size.width * 0.05,
-
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.image,
-                    color: Colors.grey,
-                    size: MediaQuery.of(context).size.width * 0.05,
-
-                  ),
-                )
-              ]
-          )
-      ),
+                onPressed: () => onSelected(SmartTextType.BOLD)),
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.link,
+                color: Colors.grey,
+                size: MediaQuery.of(context).size.width * 0.05,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.virus,
+                color: Colors.grey,
+                size: MediaQuery.of(context).size.width * 0.05,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.book,
+                color: Colors.grey,
+                size: MediaQuery.of(context).size.width * 0.05,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.fileVideo,
+                color: Colors.grey,
+                size: MediaQuery.of(context).size.width * 0.05,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.image,
+                color: Colors.grey,
+                size: MediaQuery.of(context).size.width * 0.05,
+              ),
+            )
+          ])),
     );
   }
 }
-
 
 class EditorProvider extends ChangeNotifier {
   List<FocusNode> _nodes = [];
@@ -672,15 +667,19 @@ class EditorProvider extends ChangeNotifier {
   List<SmartTextType> _types = [];
   SmartTextType selectedType;
 
-  EditorProvider({SmartTextType defaultType = SmartTextType.T}){
+  EditorProvider({SmartTextType defaultType = SmartTextType.T}) {
     selectedType = defaultType;
     insert(index: 0);
   }
 
   int get length => _text.length;
+
   int get focus => _nodes.indexWhere((node) => node.hasFocus);
+
   FocusNode nodeAt(int index) => _nodes.elementAt(index);
+
   TextEditingController textAt(int index) => _text.elementAt(index);
+
   SmartTextType typeAt(int index) => _types.elementAt(index);
 
   void setType(SmartTextType type) {
@@ -710,40 +709,35 @@ class EditorProvider extends ChangeNotifier {
     _types.insert(index, type);
     _nodes.insert(index, FocusNode());*/
 
-
-    final TextEditingController controller = TextEditingController(
-        text: '\u200B' + (text ?? '')
-    );
+    final TextEditingController controller =
+        TextEditingController(text: '\u200B' + (text ?? ''));
     controller.addListener(() {
       if (!controller.text.startsWith('\u200B')) {
         final int index = _text.indexOf(controller);
         if (index > 0) {
-          textAt(index-1).text += controller.text;
-          textAt(index-1).selection= TextSelection.fromPosition(TextPosition(
-              offset: textAt(index-1).text.length - controller.text.length
-          ));
-          nodeAt(index-1).requestFocus();
+          textAt(index - 1).text += controller.text;
+          textAt(index - 1).selection = TextSelection.fromPosition(TextPosition(
+              offset: textAt(index - 1).text.length - controller.text.length));
+          nodeAt(index - 1).requestFocus();
           _text.removeAt(index);
           _nodes.removeAt(index);
           _types.removeAt(index);
           notifyListeners();
         }
       }
-      if(controller.text.contains('\n')) {
+      if (controller.text.contains('\n')) {
         final int index = _text.indexOf(controller);
         List<String> _split = controller.text.split('\n');
         controller.text = _split.first;
         insert(
-            index: index+1,
+            index: index + 1,
             text: _split.last,
             type: typeAt(index) == SmartTextType.BULLET
                 ? SmartTextType.BULLET
-                : SmartTextType.T
-        );
-        textAt(index+1).selection = TextSelection.fromPosition(
-            TextPosition(offset: 1)
-        );
-        nodeAt(index+1).requestFocus();
+                : SmartTextType.T);
+        textAt(index + 1).selection =
+            TextSelection.fromPosition(TextPosition(offset: 1));
+        nodeAt(index + 1).requestFocus();
         notifyListeners();
       }
     });

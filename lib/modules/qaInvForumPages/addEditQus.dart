@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:animator/animator.dart';
-import 'package:auroim/api/apiProvider.dart';
+
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
@@ -10,21 +8,13 @@ import 'package:auroim/modules/qaInvForumPages/qusView.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter/services.dart';
 
-// import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// import 'package:keyboard_actions/keyboard_actions.dart';
-// import 'package:keyboard_actions/keyboard_actions_config.dart';
-// import 'package:keyboard_actions/keyboard_actions_item.dart';
-// import 'package:html_editor/html_editor.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
 
 // const String _markdownData = "*pooja* **pooja** # this is H1 http:github.com";
 
@@ -36,14 +26,7 @@ class AddEditQus extends StatefulWidget {
 class _AddEditQusState extends State<AddEditQus> {
   bool _isInProgress = false;
   bool _isClickOnSubmit = false;
-
-  // bool italicActive = false;
-  // bool boldActive = false;
-
-/*  final controller = ScrollController();
-
-  @override
-  Future<String> get data => Future<String>.value(_markdownData);*/
+  bool giveBounty = false;
 
   final _addEditQusFormKey = new GlobalKey<FormState>();
   ScrollController _scrollController = ScrollController();
@@ -57,26 +40,11 @@ class _AddEditQusState extends State<AddEditQus> {
   TextEditingController _searchController = TextEditingController();
   TextEditingController _qusTitleController = TextEditingController();
   TextEditingController _qusBodyController = TextEditingController();
+  TextEditingController _bountyController = TextEditingController();
 
   bool searchingTags = true;
 
   final FocusNode qusBodyFocusNode = FocusNode();
-
-  // GlobalKey<HtmlEditorState> keyEditor = GlobalKey();
-
-  List<dynamic> relatedQusList = <dynamic>[
-    {
-      "qusText":
-          "Is now a good time to add to one’s Apple holdings or wait for a sell-off given sharp rally recently? ",
-      "measure": "741 XP"
-    },
-    {
-      "qusText":
-          "Apple stocks over Microsoft given the current market situation?",
-      "measure": "716 XP"
-    },
-    {"qusText": "tat 1 anna", "measure": "488 XP"}
-  ];
 
   @override
   void initState() {
@@ -410,57 +378,53 @@ class _AddEditQusState extends State<AddEditQus> {
                                             ),
                                           ),
                                         ),
-                                        Visibility(
-                                          visible: _qusTitleController.text !=
-                                                      '' &&
-                                                  _qusBodyController.text != ""
-                                              ? true
-                                              : false,
-                                          child: Container(
-                                            height: 25,
-                                            width: 95,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  AllCoustomTheme.getThemeData()
-                                                      .textSelectionColor,
-                                              border: new Border.all(
-                                                  color: Colors.white,
-                                                  width: 1.0),
+                                        Container(
+                                          height: 25,
+                                          width: 95,
+                                          decoration: BoxDecoration(
+                                            color:
+                                                AllCoustomTheme.getThemeData()
+                                                    .textSelectionColor,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 1.0,
                                             ),
-                                            child: _isClickOnSubmit
-                                                ? Container(
-                                                    color: Colors.white,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 14),
-                                                      child:
-                                                          CupertinoActivityIndicator(
-                                                        radius: 12,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : MaterialButton(
-                                                    splashColor: Colors.grey,
-                                                    child: Text(
-                                                      "Preview",
-                                                      style: TextStyle(
-                                                        color: AllCoustomTheme
-                                                            .getTextThemeColors(),
-                                                        fontSize: ConstanceData
-                                                            .SIZE_TITLE12,
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      _submit();
-                                                    },
-                                                  ),
                                           ),
+                                          child: _isClickOnSubmit
+                                              ? Container(
+                                                  color: Colors.white,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      right: 14,
+                                                    ),
+                                                    child:
+                                                        CupertinoActivityIndicator(
+                                                      radius: 12,
+                                                    ),
+                                                  ),
+                                                )
+                                              : MaterialButton(
+                                                  splashColor: Colors.grey,
+                                                  child: Text(
+                                                    "Preview",
+                                                    style: TextStyle(
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColors(),
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE12,
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    _submit();
+                                                  },
+                                                ),
                                         )
                                       ],
                                     ),
                                     SizedBox(
                                       height: 20,
                                     ),
+
                                     // ques title section
                                     Row(
                                       mainAxisAlignment:
@@ -469,7 +433,7 @@ class _AddEditQusState extends State<AddEditQus> {
                                         Container(
                                           child: CircleAvatar(
                                             radius: 15.0,
-                                            backgroundImage: new AssetImage(
+                                            backgroundImage: AssetImage(
                                                 'assets/download.jpeg'),
                                             backgroundColor: Colors.transparent,
                                           ),
@@ -517,54 +481,112 @@ class _AddEditQusState extends State<AddEditQus> {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    // related question section
+
                                     Visibility(
-                                      visible:
-                                          _qusTitleController.text != null &&
-                                              _qusTitleController.text != "",
-                                      child: ExpandablePanel(
-                                        header: Text(
-                                          'Related Questions:',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE16,
+                                      visible: !giveBounty,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          RaisedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                giveBounty = !giveBounty;
+                                                _bountyController.text = "";
+                                              });
+                                            },
+                                            color: Colors.lightBlue,
+                                            child: Text(
+                                              "Add Bounty",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    //add bounty section
+                                    Visibility(
+                                      visible: giveBounty,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 0.0,
+                                          bottom: 8.0,
                                         ),
-                                        expanded: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: [
+                                          children: <Widget>[
+                                            Container(
+                                              child: CircleAvatar(
+                                                radius: 15.0,
+                                                child:
+                                                    Icon(Icons.money_outlined),
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
                                             Expanded(
                                               child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10)),
-                                                    color: AllCoustomTheme
-                                                        .boxColor(),
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(10),
                                                   ),
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.35,
-                                                  child: Scrollbar(
-                                                    child: getRelatedQusView(
-                                                        relatedQusList),
-                                                  )),
+                                                  color: AllCoustomTheme
+                                                      .boxColor(),
+                                                ),
+                                                child: TextFormField(
+                                                  maxLines: 2,
+                                                  controller: _bountyController,
+                                                  validator: _validateTitle,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  style: TextStyle(
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE16,
+                                                    color: AllCoustomTheme
+                                                        .getTextThemeColors(),
+                                                  ),
+                                                  cursorColor: AllCoustomTheme
+                                                      .getTextThemeColors(),
+                                                  onChanged: (value) {},
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Give bounty to Question(50-500 auro coins)',
+                                                    hintStyle: TextStyle(
+                                                      fontSize: 14,
+                                                      color: AllCoustomTheme
+                                                          .getsecoundTextThemeColor(),
+                                                    ),
+                                                    border: InputBorder.none,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    giveBounty = !giveBounty;
+                                                    _bountyController.text = "";
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  Icons.close_rounded,
+                                                ),
+                                                color: Colors.white,
+                                              ),
+                                            )
                                           ],
                                         ),
-                                        tapHeaderToExpand: true,
-                                        hasIcon: true,
-                                        iconColor: Colors.white,
                                       ),
                                     ),
                                     Visibility(
@@ -575,84 +597,6 @@ class _AddEditQusState extends State<AddEditQus> {
                                         height: 30,
                                       ),
                                     ),
-                                    // bottom fomatting section
-/*                        Container(
-                            height: 200,
-                            child: ChangeNotifierProvider<EditorProvider>(
-                                create: (context) => EditorProvider(),
-                                builder: (context, child) {
-                                  return SafeArea(
-                                    child: Scaffold(
-                                        body: Container(
-                                          decoration: BoxDecoration(
-                                            color: AllCoustomTheme.boxColor(),
-                                          ),
-                                          child: Stack(
-                                            children: <Widget>[
-                                              Positioned(
-                                                  top: 16,
-                                                  left: 0,
-                                                  right: 0,
-                                                  bottom: 56,
-                                                  child: Consumer<EditorProvider>(
-                                                      builder: (context, state, _) {
-                                                        return ListView.builder(
-                                                            itemCount: state.length,
-                                                            itemBuilder: (context, index) {
-                                                              return Focus(
-                                                                  onFocusChange: (hasFocus) {
-                                                                    if (hasFocus) state.setFocus(state.typeAt(index));
-                                                                  },
-                                                                  child: Container(
-                                                                    child: SmartTextField(
-                                                                      type: state.typeAt(index),
-                                                                      controller: state.textAt(index),
-                                                                      focusNode: state.nodeAt(index),
-                                                                    ),
-                                                                  )
-                                                              );
-                                                            }
-                                                        );
-                                                      }
-                                                  )
-                                              ),
-                                              Positioned(
-                                                bottom: 0,
-                                                left: 0,
-                                                right: 0,
-                                                child: Selector<EditorProvider, SmartTextType>(
-                                                  selector: (buildContext, state) => state.selectedType,
-                                                  builder: (context, selectedType, _) {
-                                                    return Toolbar(
-                                                      selectedType: selectedType,
-                                                      onSelected: Provider.of<EditorProvider>(context,
-                                                          listen: false).setType,
-                                                    );
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                    ),
-                                  );
-                                }
-                            ),
-                          ),*/
-
-/*                          Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                color: AllCoustomTheme.boxColor(),
-                              ),
-                              child: Markdown(
-                                controller: controller,
-                                selectable: true,
-                                data: _markdownData,
-                              ),
-                            ),*/
                                     // ques body section
                                     Container(
                                       height: 200,
@@ -688,39 +632,6 @@ class _AddEditQusState extends State<AddEditQus> {
                                         ),
                                       ),
                                     ),
-/*                          Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                color: AllCoustomTheme.boxColor(),
-                              ),
-                              child: KeyboardActions(
-                                config: _buildConfig(context),
-                                child: TextField(
-                                  maxLines: null,
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: _qusBodyController,
-                                  focusNode: qusBodyFocusNode,
-                                  style: TextStyle(
-                                      fontSize: ConstanceData.SIZE_TITLE14,
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontStyle: italicActive ? FontStyle.italic : FontStyle.normal,
-                                      fontWeight: boldActive ? FontWeight.bold : FontWeight.normal,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Type your question here..',
-                                    hintStyle: TextStyle(
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        color:
-                                        AllCoustomTheme.getTextThemeColors()),
-                                    labelStyle: TextStyle(
-                                        fontSize: ConstanceData.SIZE_TITLE14,
-                                        color: AllCoustomTheme.getTextThemeColors()),
-                                  ),
-                                ),
-                              ),
-                            ),*/
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -853,22 +764,26 @@ class _AddEditQusState extends State<AddEditQus> {
                                               return suggestionsBox;
                                             },
                                             onSuggestionSelected: (suggestion) {
-                                              print("suggestion: ${suggestion['ticker']}");
-                                              print("suggestion name: ${suggestion['company_name']}");
+                                              print(
+                                                  "suggestion: ${suggestion['ticker']}");
+                                              print(
+                                                  "suggestion name: ${suggestion['company_name']}");
 
                                               _searchController.text = '';
-                                              setState(() {
-                                                itemList.add(
-                                                  TagData(
-                                                      suggestion['ticker'],
-                                                      suggestion[
-                                                          'company_name']),
-                                                );
-                                                tagListVisible =
-                                                    itemList.length == 0
-                                                        ? false
-                                                        : true;
-                                              },);
+                                              setState(
+                                                () {
+                                                  itemList.add(
+                                                    TagData(
+                                                        suggestion['ticker'],
+                                                        suggestion[
+                                                            'company_name']),
+                                                  );
+                                                  tagListVisible =
+                                                      itemList.length == 0
+                                                          ? false
+                                                          : true;
+                                                },
+                                              );
                                             },
                                           ),
                                         ),
@@ -898,155 +813,67 @@ class _AddEditQusState extends State<AddEditQus> {
                                                 StaggeredTile.fit(1),
                                             itemBuilder: (context, index) {
                                               return Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4.0),
-                                                      border: Border.all(
-                                                          color: Colors.grey,
-                                                          width: 1.0)),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0,
-                                                      vertical: 8.0),
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      Expanded(
-                                                        child: Text(
-                                                          '${itemList[index].tag}',
-                                                          style: TextStyle(
-                                                              color: AllCoustomTheme
-                                                                  .getTextThemeColors(),
-                                                              fontSize:
-                                                                  ConstanceData
-                                                                      .SIZE_TITLE16,
-                                                              fontStyle:
-                                                                  FontStyle
-                                                                      .normal,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              height: 1.3),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 10.0,
-                                                      ),
-                                                      InkWell(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              itemList.removeAt(
-                                                                  index);
-                                                              tagListVisible =
-                                                                  itemList.length ==
-                                                                          0
-                                                                      ? false
-                                                                      : true;
-                                                            });
-                                                          },
-                                                          child: Icon(
-                                                            Icons.close,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4.0),
+                                                    border: Border.all(
+                                                        color: Colors.grey,
+                                                        width: 1.0)),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10.0,
+                                                    vertical: 8.0),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${itemList[index].tag}',
+                                                        style: TextStyle(
                                                             color: AllCoustomTheme
                                                                 .getTextThemeColors(),
-                                                            size: 15.0,
-                                                          ))
-                                                    ],
-                                                  ));
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE16,
+                                                            fontStyle: FontStyle
+                                                                .normal,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            height: 1.3),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10.0,
+                                                    ),
+                                                    InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            itemList.removeAt(
+                                                                index);
+                                                            tagListVisible =
+                                                                itemList.length ==
+                                                                        0
+                                                                    ? false
+                                                                    : true;
+                                                          });
+                                                        },
+                                                        child: Icon(
+                                                          Icons.close,
+                                                          color: AllCoustomTheme
+                                                              .getTextThemeColors(),
+                                                          size: 15.0,
+                                                        ))
+                                                  ],
+                                                ),
+                                              );
                                             },
                                           ),
                                         ),
                                       ],
                                     ),
                                     // keyboard actions
-                                    /*                         Container(
-                              height: 100,
-                              child: KeyboardActions(
-                                config: _buildConfig(context),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: <Widget>[
-                                        TextField(
-                                          keyboardType: TextInputType.emailAddress,
-                                          focusNode: _nodeText3,
-                                          decoration: InputDecoration(
-                                            hintText: "Input Number with Custom Action",
-                                            hintStyle: new TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )*/
-
-/*                             SizedBox(height: MediaQuery.of(context).size.height * 0.10),
-                               Padding(
-                                 padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                                 child: Row(
-                                   mainAxisAlignment: MainAxisAlignment.center,
-                                   children: <Widget>[
-                                     SizedBox(
-                                       height: MediaQuery.of(context).size.height * 0.06,
-                                       child: Animator(
-                                         tween: Tween<double>(begin: 0.8, end: 1.1),
-                                         curve: Curves.easeInToLinear,
-                                         cycles: 0,
-                                         builder: (anim) => Transform.scale(
-                                           scale: anim.value,
-                                           child: Container(
-                                             height: MediaQuery.of(context).size.height * 0.06,
-                                             width: MediaQuery.of(context).size.width * 0.32,
-                                             decoration: BoxDecoration(
-                                               border: new Border.all(color: Colors.white, width: 1.5),
-                                               gradient: LinearGradient(
-                                                 begin: Alignment.topLeft,
-                                                 end: Alignment.bottomRight,
-                                                 colors: [
-                                                   globals.buttoncolor1,
-                                                   globals.buttoncolor2,
-                                                 ],
-                                               ),
-                                             ),
-                                             child: _isClickOnSubmit ?
-                                               Container(
-                                                 color: Colors.white,
-                                                 child: Padding(
-                                                   padding: EdgeInsets.only(right: 14),
-                                                   child: CupertinoActivityIndicator(
-                                                     radius: 12,
-                                                   ),
-                                                 ),
-                                               )
-                                              : MaterialButton(
-                                               splashColor: Colors.grey,
-                                               child: Text(
-                                                 "Submit",
-                                                 style: TextStyle(
-                                                   color: AllCoustomTheme.getTextThemeColors(),
-                                                   fontSize: ConstanceData.SIZE_TITLE18,
-                                                   fontWeight: FontWeight.bold,
-                                                 ),
-                                               ),
-                                               onPressed: () async {
-                                                 _submit();
-                                               },
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                     ),
-                                   ],
-                                 ),
-                               )*/
                                   ],
                                 ),
                               ),
@@ -1078,6 +905,9 @@ class _AddEditQusState extends State<AddEditQus> {
       "title": _qusTitleController.text,
       "body": _qusBodyController.text,
       "tags": itemList,
+      "bounty": _bountyController.text.isNotEmpty
+          ? int.parse(_bountyController.text)
+          : 0,
     };
 
     setState(() {

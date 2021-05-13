@@ -9,6 +9,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/chagePIN/changepin.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
 import 'package:auroim/modules/qaInvForumPages/qusDetail.dart';
+import 'package:auroim/modules/settings/user_profile_page.dart';
 import 'package:auroim/modules/underGroundSlider/notificationSlider.dart';
 import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:flutter/cupertino.dart';
@@ -56,7 +57,6 @@ class _MainExchangeTabState extends State<MainExchangeTab>
     getQuestionsData();
     super.initState();
   }
-
 
   onInitDisplayBootomSheet() async {
     // print();
@@ -660,7 +660,6 @@ class _MainExchangeTabState extends State<MainExchangeTab>
   }
 
   Widget month() {
-
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -838,7 +837,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
 
   Widget getQuestionsList(data) {
     if (data != null && data.length != 0) {
-      return new ListView.builder(
+      return ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: data.length,
         itemBuilder: (context, index) {
@@ -864,6 +863,12 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     "view": "${data[index]['view']}",
                     "totalAns": "${data[index]['no. of answer']}",
                     "tags": tagFinalData,
+                    "bounty": "${data[index]["bounty"]}",
+                    "user_score": "${data[index]["user_score"]}",
+                    "date": data[index]["date-time"],
+                    "email": data[index]["email"],
+                    "username": data[index]["username"],
+                    "is_approved": data[index]["is_approved"],
                   };
 
                   print("QusDetail tempField: $tempField");
@@ -904,17 +909,28 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   SizedBox(
                     width: 10.0,
                   ),
-                  Container(
-                    child: CircleAvatar(
-                      radius: 13.5,
-                      backgroundImage: new AssetImage('assets/download.jpeg'),
-                      backgroundColor: Colors.transparent,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => UserProfilePage(
+                            email: data[index]["email"],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      child: CircleAvatar(
+                        radius: 13.5,
+                        backgroundImage: new AssetImage('assets/download.jpeg'),
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 3.0),
-                    child: new Text(
-                      "10K",
+                    child: Text(
+                      "${data[index]['user_score']}",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: ConstanceData.SIZE_TITLE14,
@@ -932,7 +948,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 2.0),
-                    child: new Text(
+                    child: Text(
                       "${data[index]['no. of answer']}",
                       style: TextStyle(
                         color: Colors.black,
@@ -951,7 +967,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 3.0),
-                    child: new Text(
+                    child: Text(
                       data[index]['view'] != null
                           ? "${data[index]['view']}"
                           : '0',
@@ -972,8 +988,8 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 3.0),
-                    child: new Text(
-                      "100",
+                    child: Text(
+                      "${data[index]["bounty"] == null ? 0 : data[index]["bounty"]}",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: ConstanceData.SIZE_TITLE14,
@@ -983,31 +999,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   SizedBox(
                     width: 15,
                   ),
-                  Container(
-                    child: Icon(
-                      Icons.arrow_upward,
-                      color: AllCoustomTheme.getThemeData().textSelectionColor,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 3.0),
-                    child: new Text(
-                      "${data[index]['vote']}",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                    child: Icon(
-                      Icons.arrow_downward,
-                      color: AllCoustomTheme.getTextThemeColor(),
-                    ),
-                  ),
+                  upvotesDownvotesWidget(data[index]["vote"]),
                 ],
               ),
               SizedBox(
@@ -1028,32 +1020,34 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   staggeredTileBuilder: (int tagIndex) => StaggeredTile.fit(1),
                   itemBuilder: (context, tagIndex) {
                     return Container(
-                        decoration: BoxDecoration(
+                      decoration: BoxDecoration(
+                        color:
+                            AllCoustomTheme.getThemeData().textSelectionColor,
+                        borderRadius: BorderRadius.circular(4.0),
+                        border: Border.all(
                             color: AllCoustomTheme.getThemeData()
                                 .textSelectionColor,
-                            borderRadius: BorderRadius.circular(4.0),
-                            border: Border.all(
-                                color: AllCoustomTheme.getThemeData()
-                                    .textSelectionColor,
-                                width: 1.0)),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                tagFinalData[tagIndex]['tag'],
-                                style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColor(),
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.normal,
-                                    height: 1.3),
-                              ),
+                            width: 1.0),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              tagFinalData[tagIndex]['tag'],
+                              style: TextStyle(
+                                  color: AllCoustomTheme.getTextThemeColor(),
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1.3),
                             ),
-                          ],
-                        ));
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 ),
               ),
@@ -1076,5 +1070,36 @@ class _MainExchangeTabState extends State<MainExchangeTab>
         ),
       ));
     }
+  }
+
+  upvotesDownvotesWidget(votes) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          child: Icon(
+            Icons.arrow_upward,
+            color: AllCoustomTheme.getThemeData().textSelectionColor,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 3.0),
+          child: new Text(
+            "$votes",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE14,
+            ),
+          ),
+        ),
+        Container(
+          child: Icon(
+            Icons.arrow_downward,
+            color: AllCoustomTheme.getTextThemeColor(),
+          ),
+        ),
+      ],
+    );
   }
 }

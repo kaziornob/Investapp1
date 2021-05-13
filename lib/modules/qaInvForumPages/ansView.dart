@@ -14,7 +14,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
 class AnsView extends StatefulWidget {
-
   final allParams;
 
   const AnsView({Key key, @required this.allParams}) : super(key: key);
@@ -27,7 +26,6 @@ class _AnsViewState extends State<AnsView> {
   bool _isAnsViewInProgress = false;
   bool _isAnsViewClickOnSubmit = false;
   ApiProvider request = new ApiProvider();
-
 
   @override
   void initState() {
@@ -67,95 +65,107 @@ class _AnsViewState extends State<AnsView> {
                     padding: const EdgeInsets.only(right: 16, left: 16),
                     child: !_isAnsViewInProgress
                         ? Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: appBarheight,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Animator(
-                                tween: Tween<Offset>(
-                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                duration: Duration(milliseconds: 500),
-                                cycles: 0,
-                                builder: (anim) => FractionalTranslation(
-                                  translation: anim.value,
-                                  child: Icon(
-                                    Icons.arrow_back_ios,
-                                    color:
-                                    AllCoustomTheme.getTextThemeColors(),
-                                  ),
-                                ),
+                            children: <Widget>[
+                              SizedBox(
+                                height: appBarheight,
                               ),
-                            ),
-                            Visibility(
-                              visible: widget.allParams['callingFrom']=="add" ? true : false,
-                              child: Container(
-                                height: 25,
-                                width: 80,
-                                decoration: BoxDecoration(
-                                  color: AllCoustomTheme.getThemeData()
-                                      .textSelectionColor,
-                                  border: new Border.all(
-                                      color: Colors.white, width: 1.0),
-                                ),
-                                child: _isAnsViewClickOnSubmit ? Container(
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 14),
-                                    child: CupertinoActivityIndicator(
-                                      radius: 12,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  InkWell(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Animator(
+                                      tween: Tween<Offset>(
+                                          begin: Offset(0, 0),
+                                          end: Offset(0.2, 0)),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 0,
+                                      builder: (anim) => FractionalTranslation(
+                                        translation: anim.value,
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          color: AllCoustomTheme
+                                              .getTextThemeColors(),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                )  : MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Text(
-                                    "Post",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                  Visibility(
+                                    visible:
+                                        widget.allParams['callingFrom'] == "add"
+                                            ? true
+                                            : false,
+                                    child: Container(
+                                      height: 25,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        color: AllCoustomTheme.getThemeData()
+                                            .textSelectionColor,
+                                        border: new Border.all(
+                                            color: Colors.white, width: 1.0),
+                                      ),
+                                      child: _isAnsViewClickOnSubmit
+                                          ? Container(
+                                              color: Colors.white,
+                                              child: Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 14),
+                                                child:
+                                                    CupertinoActivityIndicator(
+                                                  radius: 12,
+                                                ),
+                                              ),
+                                            )
+                                          : MaterialButton(
+                                              splashColor: Colors.grey,
+                                              child: Text(
+                                                "Post",
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColors(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE12,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                _submit(context);
+                                              },
+                                            ),
                                     ),
-                                  ),
-                                  onPressed: () {
-                                    _submit(context);
-                                  },
-                                ),
+                                  )
+                                ],
                               ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    "${widget.allParams['body']}",
-                                    style: new TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                    ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Text(
+                                          "${widget.allParams['answer_body']}",
+                                          style: new TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            // answer attributes section
-                            /*Row(
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  // answer attributes section
+                                  /*Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
@@ -236,43 +246,42 @@ class _AnsViewState extends State<AnsView> {
                             Divider(
                               color: Colors.grey,
                             ),*/
-                          ],
-                        ),
-                      ],
-                    )
+                                ],
+                              ),
+                            ],
+                          )
                         : SizedBox(),
                   ),
                 ),
               ),
-            )
-        )
+            ))
       ],
     );
   }
 
-  _submit (context) async
-  {
-    HelperClass.showLoading(context,null,false);
+  _submit(context) async {
+    HelperClass.showLoading(context, null, false);
 
-    var tempJsonReq = {"question_id":"${widget.allParams['qusID']}","answer":"${widget.allParams['body']}"};
+    var tempJsonReq = {
+      "question_id": "${widget.allParams['id']}",
+      "answer": "${widget.allParams['answer_body']}",
+    };
     print("create answer tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmit('forum/create_answer',jsonReq);
+    var jsonReqResp = await request.postSubmit('forum/create_answer', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("ans add/edit response: $result");
 
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
-
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true) {
         Navigator.pop(context);
         // ${result['message']}
         Toast.show("Answer added successfully", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
         setState(() {
           _isAnsViewClickOnSubmit = false;
@@ -285,38 +294,35 @@ class _AnsViewState extends State<AnsView> {
         };
         setDataBack(backData);*/
 
-        var tempField = {
-          "id":"${widget.allParams['qusID']}",
-        };
+        // var tempField = {
+        //   // "id":"${widget.allParams['qusID']}",
+        //   ...,
+        // };
 
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           CupertinoPageRoute(
             builder: (BuildContext context) =>
-                QusDetail(allParams : tempField),
+                QusDetail(allParams: widget.allParams),
           ),
         );
       }
-    }
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
-
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
       Navigator.pop(context);
       Toast.show("oops! answer not added", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       setState(() {
         _isAnsViewClickOnSubmit = false;
       });
-    }
-    else{
+    } else {
       Navigator.pop(context);
       setState(() {
         _isAnsViewClickOnSubmit = false;
       });
       Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
 

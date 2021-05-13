@@ -1,9 +1,11 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/return_drawdown_widget.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_return_chart.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/topic_tags.dart';
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 
 class ShowStockPitchPage extends StatefulWidget {
   final stockPitchData;
@@ -29,6 +31,8 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
     "Nov",
     "Dec"
   ];
+
+  AWSClient awsClient = AWSClient();
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +76,23 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
                           "Created on ${date.day}th ${monthList[date.month - 1]}, ${date.year}"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Text(
+                        widget.stockPitchData["isLong"] == 0
+                            ? "Short Pitch"
+                            : "Long Pitch",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -119,17 +135,56 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                           widget.stockPitchData["topic_tags"],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Download investment thesis PDF doc"),
+                      Visibility(
+                        visible: widget.stockPitchData["docUrl"] == ""
+                            ? false
+                            : true,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () async {
+                              print("download file save");
+                              Toast.show(
+                                "Downloading...",
+                                context,
+                              );
+                              File file = await awsClient.downloadFile("",
+                                  "auro_stock_pitch${widget.stockPitchData["pitch_number"]}");
+                              if (await file.length() != 0) {
+                                Toast.show(
+                                  "File Successfully Downloaded",
+                                  context,
+                                );
+                              } else {
+                                Toast.show(
+                                  "Some Error Occurred",
+                                  context,
+                                );
+                              }
+                              print(file.path);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Download investment thesis PDF doc",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Icon(Icons.download_sharp),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 StockPitchReturnChart(
                   userEmail: widget.stockPitchData["email"],
-                  userInceptionDate:  widget.stockPitchData["date"],
-                  pitchNumber:  widget.stockPitchData["pitch_number"],
+                  userInceptionDate: widget.stockPitchData["date"],
+                  pitchNumber: widget.stockPitchData["pitch_number"],
                 ),
               ],
             ),

@@ -134,7 +134,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                         CarouselSlider.builder(
                           itemCount: listPaths.length,
                           options: CarouselOptions(
-                              height: MediaQuery.of(context).size.height * 0.92,
+                              height: MediaQuery.of(context).size.height * 0.83,
                               autoPlay: false,
                               viewportFraction: 0.95,
                               onPageChanged: (index, reason) {
@@ -154,7 +154,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
             ),
           ),
           Positioned(
-            bottom: 40,
+            bottom: MediaQuery.of(context).size.height / 50,
             child: Column(
               children: [
                 Container(
@@ -215,7 +215,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                 //   ),
                 // ),
                 SizedBox(
-                  height: 30.0,
+                  height: MediaQuery.of(context).size.height / 50,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -232,18 +232,14 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                           ),
                           border: new Border.all(
                               color: Color(0xFFD8AF4F), width: 1.5),
-                          color: _current != 0
-                              ? Color(0xFFD8AF4F)
-                              : Colors.transparent,
+                          color: Colors.transparent,
                         ),
                         child: MaterialButton(
                           splashColor: Colors.grey,
                           child: Text(
                             "Try For Free",
                             style: TextStyle(
-                              color: _current != 0
-                                  ? AllCoustomTheme.getTextThemeColors()
-                                  : Color(0xFFD8AF4F),
+                              color: Color(0xFFD8AF4F),
                               fontSize: ConstanceData.SIZE_TITLE14,
                             ),
                           ),
@@ -264,20 +260,19 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                         height: 40,
                         width: (MediaQuery.of(context).size.width / 2) - 50,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            border: new Border.all(
-                                color: Color(0xFFD8AF4F), width: 1.5),
-                            color: _current == 0
-                                ? Color(0xFFFFB300)
-                                : Colors.transparent),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          border: new Border.all(
+                            color: Color(0xFFD8AF4F),
+                            width: 1.5,
+                          ),
+                          color: Color(0xFFFFB300),
+                        ),
                         child: MaterialButton(
                           splashColor: Colors.grey,
                           child: Text(
                             "Login",
                             style: TextStyle(
-                              color: _current != 0
-                                  ? Color(0xFFD8AF4F)
-                                  : Colors.black,
+                              color: Colors.black,
                               fontSize: ConstanceData.SIZE_TITLE14,
                             ),
                           ),
@@ -295,7 +290,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: MediaQuery.of(context).size.height / 50,
                 ),
                 RichText(
                   text: TextSpan(
@@ -380,140 +375,161 @@ class MySliderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 30.0),
-            height: MediaQuery.of(context).size.height * 0.09,
-            // decoration: BoxDecoration(border: Border.all(color: Colors.white),),
-            child: Center(
+    return SafeArea(
+      child: Container(
+        // decoration: BoxDecoration(
+        //   border: Border.all(color: Colors.white),
+        // ),
+        child: Column(
+          children: [
+            Container(
+              // margin: EdgeInsets.only(top: 30.0),
+              height: MediaQuery.of(context).size.height * 0.09,
+              // decoration: BoxDecoration(
+              //   border: Border.all(color: Colors.white),
+              // ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Image(
-                      height: 50,
-                      width: 150.0,
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/logo.png'),
-                    ),
-                  ),
                   Container(
-                    // height: MediaQuery.of(context).size.height * 0.11,
-                    // margin: EdgeInsets.only(bottom: 10),
-                    // decoration: BoxDecoration(border: Border.all(color: Colors.white),),
-                    child: Text(
-                      "AI",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 60,
-                        color: Color(0xFFD8AF4F),
-                        fontFamily: "Scheherazade",
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                      ),
+                    // decoration: BoxDecoration(
+                    //   border: Border.all(color: Colors.white),
+                    // ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image(
+                          height: 50,
+                          width: 150.0,
+                          fit: BoxFit.fill,
+                          image: AssetImage('assets/logo.png'),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          // height: 50,
+                          // width: 50,
+                          // margin:,
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(color: Colors.white),
+                          // ),
+                          child: Text(
+                            "AI",
+                            style: TextStyle(
+                              fontSize: 60,
+                              color: Color(0xFFD8AF4F),
+                              fontFamily: "Scheherazade",
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          // Container(
-          //   margin: EdgeInsets.only(left: 50.0, right: 50.0),
-          //   padding: EdgeInsets.only(
-          //     bottom: 1, // space between underline and text
-          //   ),
-          //   decoration: BoxDecoration(
-          //       border: Border(
-          //           bottom: BorderSide(
-          //     color: Color(0xFFD8AF4F),
-          //     width: 1.5, // Underline width
-          //   ))),
-          // ),
-          Container(
-            margin: EdgeInsets.only(top: 7.0),
-            child: Text(
-              '${allFields["logoBottomLine"]}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: ConstanceData.SIZE_TITLE18,
-                  color:
-                      currentIndex == 0 ? Color(0xFFFFFFFF) : Color(0xFF060513),
-                  fontFamily: "Rasa",
-                  fontStyle: FontStyle.normal,
-                  letterSpacing: 0.2),
-            ),
-          ),
-          SizedBox(
-            height: currentIndex != 0 ? 12 : 22,
-          ),
-          Visibility(
-            visible: currentIndex != 0,
-            child: LayoutBuilder(builder: (context, constraints) {
-              return Container(
-                width: currentIndex == 1
-                    ? constraints.maxWidth * 0.67
-                    : constraints.maxWidth * 0.73,
-                child: Text(
-                  "${allFields["firstPara"]}",
-                  style: TextStyle(
-                    fontSize: ConstanceData.SIZE_TITLE14,
-                    color: Color(0xFF060513),
-                    letterSpacing: 0.2,
+            // Container(
+            //   margin: EdgeInsets.only(left: 50.0, right: 50.0),
+            //   padding: EdgeInsets.only(
+            //     bottom: 1, // space between underline and text
+            //   ),
+            //   decoration: BoxDecoration(
+            //       border: Border(
+            //           bottom: BorderSide(
+            //     color: Color(0xFFD8AF4F),
+            //     width: 1.5, // Underline width
+            //   ))),
+            // ),
+            Container(
+              margin: EdgeInsets.only(top: 7.0),
+              child: Text(
+                '${allFields["logoBottomLine"]}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                    color: currentIndex == 0
+                        ? Color(0xFFFFFFFF)
+                        : Color(0xFF060513),
                     fontFamily: "Rasa",
                     fontStyle: FontStyle.normal,
+                    letterSpacing: 0.2),
+              ),
+            ),
+            SizedBox(
+              height: currentIndex != 0 ? 12 : 22,
+            ),
+            Visibility(
+              visible: currentIndex != 0,
+              child: LayoutBuilder(builder: (context, constraints) {
+                return Container(
+                  width: currentIndex == 1
+                      ? constraints.maxWidth * 0.67
+                      : constraints.maxWidth * 0.73,
+                  child: Text(
+                    "${allFields["firstPara"]}",
+                    style: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: Color(0xFF060513),
+                      letterSpacing: 0.2,
+                      fontFamily: "Rasa",
+                      fontStyle: FontStyle.normal,
+                    ),
                   ),
-                ),
-              );
-            }),
-          ),
-          Container(
-            height: currentIndex == 0
-                ? MediaQuery.of(context).size.height * 0.38
-                : MediaQuery.of(context).size.height * 0.37,
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(left: currentIndex == 0 ? 10.0 : 0.0),
-            child: Image(
+                );
+              }),
+            ),
+            Container(
+              height: currentIndex == 0
+                  ? MediaQuery.of(context).size.height * 0.35
+                  : MediaQuery.of(context).size.height * 0.37,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.only(left: currentIndex == 0 ? 10.0 : 0.0),
+              child: Image(
                 fit: BoxFit.contain,
-                image: new AssetImage('${allFields["image"]}')),
-          ),
-          LayoutBuilder(builder: (context, constraints) {
-            return Container(
-              // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-              width: currentIndex == 0
-                  ? constraints.maxWidth * 0.85
-                  : constraints.maxWidth * 0.85,
-              child: currentIndex == 0
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 40.0),
-                      child: Text(
+                image: AssetImage('${allFields["image"]}'),
+              ),
+            ),
+            LayoutBuilder(builder: (context, constraints) {
+              // print("layout builder :: ${constraints.maxWidth} ::: ${constraints.maxHeight}");
+              return Container(
+                // decoration: BoxDecoration(
+                //   border: Border.all(color: Colors.green),
+                // ),
+                width: currentIndex == 0
+                    ? constraints.maxWidth * 0.85
+                    : constraints.maxWidth * 0.85,
+                child: currentIndex == 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: Text(
+                          "${allFields["lastPara"]}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            color: Color(0xFFFFFFFF),
+                            fontFamily: "RedHatDisplay",
+                            letterSpacing: 0.2,
+                            fontStyle: FontStyle.normal,
+                          ),
+                        ),
+                      )
+                    : Text(
                         "${allFields["lastPara"]}",
-                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          color: Color(0xFFFFFFFF),
-                          fontFamily: "RedHatDisplay",
+                          fontSize: ConstanceData.SIZE_TITLE14,
+                          color: Color(0xFF060513),
+                          fontFamily: "Rasa",
                           letterSpacing: 0.2,
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                    )
-                  : Text(
-                      "${allFields["lastPara"]}",
-                      style: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                        color: Color(0xFF060513),
-                        fontFamily: "Rasa",
-                        letterSpacing: 0.2,
-                        fontStyle: FontStyle.normal,
-                      ),
-                    ),
-            );
-          }),
-        ],
+              );
+            }),
+          ],
+        ),
       ),
     );
   }

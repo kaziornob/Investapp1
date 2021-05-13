@@ -12,7 +12,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
 class QusView extends StatefulWidget {
-
   final allParams;
 
   const QusView({Key key, @required this.allParams}) : super(key: key);
@@ -25,7 +24,6 @@ class _QusViewState extends State<QusView> {
   bool _isInProgress = false;
   bool _isClickOnSubmit = false;
   ApiProvider request = new ApiProvider();
-
 
   @override
   void initState() {
@@ -65,130 +63,167 @@ class _QusViewState extends State<QusView> {
                     padding: const EdgeInsets.only(right: 16, left: 16),
                     child: !_isInProgress
                         ? Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: appBarheight,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Animator(
-                                tween: Tween<Offset>(
-                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
-                                duration: Duration(milliseconds: 500),
-                                cycles: 0,
-                                builder: (anim) => FractionalTranslation(
-                                  translation: anim.value,
-                                  child: Icon(
-                                    Icons.arrow_back_ios,
-                                    color:
-                                    AllCoustomTheme.getTextThemeColors(),
-                                  ),
-                                ),
+                            children: <Widget>[
+                              SizedBox(
+                                height: appBarheight,
                               ),
-                            ),
-                            Expanded(
-                              child: Animator(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.decelerate,
-                                cycles: 1,
-                                builder: (anim) => Transform.scale(
-                                  scale: anim.value,
-                                  child: Text(
-                                    widget.allParams['title'].length==28 ? "${(widget.allParams['title'].substring(0, 28) + '...')}" : "${widget.allParams['title']}",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  InkWell(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Animator(
+                                      tween: Tween<Offset>(
+                                          begin: Offset(0, 0),
+                                          end: Offset(0.2, 0)),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 0,
+                                      builder: (anim) => FractionalTranslation(
+                                        translation: anim.value,
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          color: AllCoustomTheme
+                                              .getTextThemeColors(),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Visibility(
-                              visible: widget.allParams['callingFrom']=="add" ? true : false,
-                              child: Container(
-                                height: 25,
-                                width: 80,
-                                decoration: BoxDecoration(
-                                  color: AllCoustomTheme.getThemeData()
-                                      .textSelectionColor,
-                                  border: new Border.all(
-                                      color: Colors.white, width: 1.0),
-                                ),
-                                child: _isClickOnSubmit ? Container(
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 14),
-                                    child: CupertinoActivityIndicator(
-                                      radius: 12,
+                                  Expanded(
+                                    child: Animator(
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.decelerate,
+                                      cycles: 1,
+                                      builder: (anim) => Transform.scale(
+                                        scale: anim.value,
+                                        child: Text(
+                                          widget.allParams['title'].length == 28
+                                              ? "${(widget.allParams['title'].substring(0, 28) + '...')}"
+                                              : "${widget.allParams['title']}",
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                )  : MaterialButton(
-                                  splashColor: Colors.grey,
-                                  child: Text(
-                                    "Post",
-                                    style: TextStyle(
-                                      color: AllCoustomTheme
-                                          .getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE12,
+                                  Visibility(
+                                    visible:
+                                        widget.allParams['callingFrom'] == "add"
+                                            ? true
+                                            : false,
+                                    child: Container(
+                                      height: 25,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        color: AllCoustomTheme.getThemeData()
+                                            .textSelectionColor,
+                                        border: new Border.all(
+                                            color: Colors.white, width: 1.0),
+                                      ),
+                                      child: _isClickOnSubmit
+                                          ? Container(
+                                              color: Colors.white,
+                                              child: Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 14),
+                                                child:
+                                                    CupertinoActivityIndicator(
+                                                  radius: 12,
+                                                ),
+                                              ),
+                                            )
+                                          : MaterialButton(
+                                              splashColor: Colors.grey,
+                                              child: Text(
+                                                "Post",
+                                                style: TextStyle(
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColors(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE12,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                _submit();
+                                              },
+                                            ),
                                     ),
-                                  ),
-                                  onPressed: () {
-                                    _submit();
-                                  },
+                                  )
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 18.0,
+                                  left: 20,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Bounty : ${widget.allParams["bounty"]}",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        // title section
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                "Title: " +  " "+ "${widget.allParams['title']}",
-                                style: TextStyle(
-                                  color: AllCoustomTheme.getTextThemeColors(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              SizedBox(
+                                height: 40,
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    "Body: " + " " + "${widget.allParams['body']}",
-                                    style: new TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
+                              // title section
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text(
+                                      "Title: " +
+                                          " " +
+                                          "${widget.allParams['title']}",
+                                      style: TextStyle(
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            // question attributes section
-                           /* Row(
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Text(
+                                          "Body: " +
+                                              " " +
+                                              "${widget.allParams['body']}",
+                                          style: new TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  // question attributes section
+                                  /* Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
@@ -290,95 +325,113 @@ class _QusViewState extends State<QusView> {
                             Divider(
                               color: Colors.grey,
                             ),*/
-                          ],
-                        ),
-                        //tags section
-                        Container(
-                          // margin: EdgeInsets.only(left: 15.0),
-                          child: StaggeredGridView.countBuilder(
-                            itemCount: widget.allParams['tags'] != null ? widget.allParams['tags'].length : 0,
-                            physics: NeverScrollableScrollPhysics(),
-                            crossAxisCount: 4,
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 8.0,
-                            shrinkWrap: true,
-                            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                            itemBuilder: (context, index){
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      color: AllCoustomTheme.getThemeData().textSelectionColor,
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      border: Border.all(color: AllCoustomTheme.getThemeData().textSelectionColor, width: 1.0)),
-                                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          '${widget.allParams['tags'][index].tag}',
-                                          style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.normal,
-                                              height: 1.3
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    )
+                                ],
+                              ),
+                              //tags section
+                              Container(
+                                // margin: EdgeInsets.only(left: 15.0),
+                                child: StaggeredGridView.countBuilder(
+                                  itemCount: widget.allParams['tags'] != null
+                                      ? widget.allParams['tags'].length
+                                      : 0,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  crossAxisCount: 4,
+                                  crossAxisSpacing: 8.0,
+                                  mainAxisSpacing: 8.0,
+                                  shrinkWrap: true,
+                                  staggeredTileBuilder: (int index) =>
+                                      StaggeredTile.fit(1),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                        decoration: BoxDecoration(
+                                            color:
+                                                AllCoustomTheme.getThemeData()
+                                                    .textSelectionColor,
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            border: Border.all(
+                                                color: AllCoustomTheme
+                                                        .getThemeData()
+                                                    .textSelectionColor,
+                                                width: 1.0)),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 8.0),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: Text(
+                                                '${widget.allParams['tags'][index].tag}',
+                                                style: TextStyle(
+                                                    color: AllCoustomTheme
+                                                        .getTextThemeColors(),
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE16,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    height: 1.3),
+                                              ),
+                                            ),
+                                          ],
+                                        ));
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
                         : SizedBox(),
                   ),
                 ),
               ),
-            )
-        )
+            ))
       ],
     );
   }
 
-  _submit () async
-  {
+  _submit() async {
     var qusTitle = widget.allParams['title'];
     var qusBody = widget.allParams['body'];
     // var tagData= [];
 
     Map<String, String> tagData = {};
 
-    for(var i=0; i<widget.allParams['tags'].length;i++)
-    {
+    for (var i = 0; i < widget.allParams['tags'].length; i++) {
       // tagData.add({"tickerId": "${widget.allParams['tags'][i].id}","name": "${widget.allParams['tags'][i].tag}"});
 
-      tagData.addAll({"${widget.allParams['tags'][i].id}": '${widget.allParams['tags'][i].tag}'});
+      tagData.addAll({
+        "${widget.allParams['tags'][i].id}":
+            '${widget.allParams['tags'][i].tag}'
+      });
     }
 
     print("tags: $tagData");
 
-    var tempJsonReq = {"question_title":"$qusTitle","body":"$qusBody","tags": tagData,"bounty": 2};
+    var tempJsonReq = {
+      "question_title": "$qusTitle",
+      "body": "$qusBody",
+      "tags": tagData,
+      "bounty": widget.allParams["bounty"],
+    };
     String jsonReq = json.encode(tempJsonReq);
 
     print("jsonReq: $jsonReq");
 
-    var jsonReqResp = await request.postSubmit('forum/create_question',jsonReq);
+    var jsonReqResp =
+        await request.postSubmit('forum/create_question', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("qus add/edit response: $result");
 
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
-
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true &&
+          result["message"]["message"] == "Question created successfully") {
         // ${result['message']}
-        Toast.show("Question added successfully", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+        Toast.show(result["message"]["message"], context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
         setState(() {
           _isClickOnSubmit = false;
@@ -386,31 +439,36 @@ class _QusViewState extends State<QusView> {
 
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen()
-            ),
-            ModalRoute.withName("/Home")
-        );
-      }
-    }
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            ModalRoute.withName("/Home"));
+        // Navigator.of(context).pop();
+        // Navigator.of(context).pop();
+        // setState(() {
+        //   print("hhhhhhhhhhhh");
+        // });
+      } else {
+        Toast.show(result["message"]["message"], context,
+            duration: 3, gravity: Toast.BOTTOM);
 
+        setState(() {
+          _isClickOnSubmit = false;
+        });
+      }
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
       Toast.show("oops! question not added", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       setState(() {
         _isClickOnSubmit = false;
       });
-    }
-    else{
+    } else {
       setState(() {
         _isClickOnSubmit = false;
       });
       Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
 }
