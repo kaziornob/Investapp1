@@ -880,21 +880,51 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     ),
                   );
                 },
-                child: Row(
+                child: Column(
                   children: [
-                    Expanded(
-                        child: Padding(
-                      padding: EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        "${data[index]['question']}",
-                        style: TextStyle(
-                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Rosarivo",
-                            fontStyle: FontStyle.normal,
-                            letterSpacing: 0.2),
-                      ),
-                    ))
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              "${data[index]['title']}",
+                              style: TextStyle(
+                                color: AllCoustomTheme
+                                    .getNewSecondTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                fontFamily: "Rosarivo",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              "${data[index]['question']}",
+                              style: TextStyle(
+                                  color: AllCoustomTheme
+                                      .getNewSecondTextThemeColor(),
+                                  fontSize: ConstanceData.SIZE_TITLE16,
+                                  fontFamily: "Rosarivo",
+                                  fontStyle: FontStyle.normal,
+                                  letterSpacing: 0.2),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/long_short_provider.dart';
-import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/public_company/add_long_short_vote_comment.dart';
 import 'package:auroim/widgets/public_company/debate_tab_see_more.dart';
 import 'package:auroim/widgets/public_company/single_finbert_article.dart';
@@ -34,6 +33,8 @@ class _SinglePublicCompaniesDebateTabState
           .getProConsForPublicCompany(widget.data["ticker"]);
       Provider.of<LongShortProvider>(context, listen: false)
           .getFinbertArticleForPublicCompany(widget.data["ticker"]);
+      Provider.of<LongShortProvider>(context, listen: false)
+          .getComments(widget.data["ticker"]);
       _isinit = false;
     }
     super.didChangeDependencies();
@@ -232,17 +233,19 @@ class _SinglePublicCompaniesDebateTabState
             }
           },
         ),
-        Consumer<LongShortProvider>(builder: (context, longShortProvider, _) {
-          if (longShortProvider.finbertArticles != null &&
-              longShortProvider.finbertArticles.length != 0) {
-            return finbertSection(
-              longShortProvider.finbertArticleWithMostNegetiveSentiment(),
-              longShortProvider.finbertArticleWithMostPositiveSentiment(),
-            );
-          } else {
-            return SizedBox();
-          }
-        }),
+        Consumer<LongShortProvider>(
+          builder: (context, longShortProvider, _) {
+            if (longShortProvider.finbertArticles != null &&
+                longShortProvider.finbertArticles.length != 0) {
+              return finbertSection(
+                longShortProvider.finbertArticleWithMostNegetiveSentiment(),
+                longShortProvider.finbertArticleWithMostPositiveSentiment(),
+              );
+            } else {
+              return SizedBox();
+            }
+          },
+        ),
         SizedBox(
           height: 5,
         ),
@@ -250,51 +253,61 @@ class _SinglePublicCompaniesDebateTabState
           width: MediaQuery.of(context).size.width - 15,
           height: MediaQuery.of(context).size.height * 0.06,
           child: Container(
-              width: MediaQuery.of(context).size.width * 0.48,
-              decoration: new BoxDecoration(
-                border: Border.all(
-                  color: Color(0xff5A56B9),
-                  width: 1,
+            width: MediaQuery.of(context).size.width * 0.48,
+            decoration: new BoxDecoration(
+              border: Border.all(
+                color: Color(0xff5A56B9),
+                width: 1,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(2.0),
+              ),
+            ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DebateTabSeeMore(
+                      companyName: widget.data["company_name"],
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.10,
+                margin: EdgeInsets.only(
+                    left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xff5A56B9),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2.0),
+                  ),
                 ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(2.0),
+                child: Center(
+                  child: Text(
+                    'SEE MORE',
+                    style: new TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      color: Colors.black,
+                      fontSize: 15.0,
+                    ),
+                  ),
                 ),
               ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DebateTabSeeMore(
-                        companyName: widget.data["company_name"],
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.10,
-                  margin: EdgeInsets.only(
-                      left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
-                  decoration: new BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xff5A56B9),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2.0),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'SEE MORE',
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Colors.black,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                ),
-              )),
+            ),
+          ),
+        ),
+        Consumer<LongShortProvider>(
+          builder: (context, longShortProvider, _) {
+            if (longShortProvider.longShortComments != null) {
+              return consensusSection(longShortProvider.longShortComments);
+            } else {
+              return SizedBox();
+            }
+          },
         ),
       ],
     );
@@ -408,6 +421,98 @@ class _SinglePublicCompaniesDebateTabState
     );
   }
 
+  consensusSection(data) {
+    return Container(
+      // height: 400,
+      width: MediaQuery.of(context).size.width - 15,
+      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              data["comments_long"].length == 0
+                  ? SizedBox()
+                  : Container(
+                      decoration: new BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xff5A56B9),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(2.0),
+                        ),
+                      ),
+                      // decoration: BoxDecoration(border:Border.all()),
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      width: (MediaQuery.of(context).size.width - 20) / 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: Text(
+                              "Consensus +",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff1D6177),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          smallBulletPoints(data["comments_long"]),
+                        ],
+                      ),
+                    ),
+              data["comments_short"].length == 0
+                  ? SizedBox()
+                  : Container(
+                      decoration: new BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xff5A56B9),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(2.0),
+                        ),
+                      ),
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      // decoration: BoxDecoration(border:Border.all()),
+                      width: (MediaQuery.of(context).size.width - 20) / 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: Text(
+                              "Consensus -",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff1D6177),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          smallBulletPoints(data["comments_short"]),
+                        ],
+                      ),
+                    ),
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+        ],
+      ),
+    );
+  }
+
   longShortSection(data) {
     return Container(
       // height: 400,
@@ -451,9 +556,6 @@ class _SinglePublicCompaniesDebateTabState
                         color: Colors.green,
                       ),
                     ),
-                    // bulletPoints("${data["pro_two"]}","Pro Two"),
-                    // SizedBox(height: 5,),
-                    // bulletPoints("${data["pro_three"]}", "Pro Three"),
                   ],
                 ),
               ),
@@ -482,10 +584,6 @@ class _SinglePublicCompaniesDebateTabState
                         color: Colors.red,
                       ),
                     ),
-                    // SizedBox(height: 5,),
-                    // bulletPoints("${data["con_two"]}","Con Two"),
-                    // SizedBox(height: 5,),
-                    // bulletPoints("${data["con_three"]}","Con Three"),
                   ],
                 ),
               ),
@@ -494,57 +592,54 @@ class _SinglePublicCompaniesDebateTabState
           SizedBox(
             height: 5,
           ),
-          // Container(
-          //   width: MediaQuery.of(context).size.width - 15,
-          //   height: MediaQuery.of(context).size.height * 0.06,
-          //   child: Container(
-          //       width: MediaQuery.of(context).size.width * 0.48,
-          //       decoration: new BoxDecoration(
-          //         border: Border.all(
-          //           color: Color(0xff5A56B9),
-          //           width: 1,
-          //         ),
-          //         borderRadius: BorderRadius.all(
-          //           Radius.circular(2.0),
-          //         ),
-          //       ),
-          //       child: Container(
-          //         width: MediaQuery.of(context).size.width * 0.10,
-          //         margin: EdgeInsets.only(
-          //             left: 47.0, top: 7.0, right: 47.0, bottom: 3.0),
-          //         decoration: new BoxDecoration(
-          //           border: Border.all(
-          //             color: Color(0xff5A56B9),
-          //             width: 1,
-          //           ),
-          //           borderRadius: BorderRadius.all(
-          //             Radius.circular(2.0),
-          //           ),
-          //         ),
-          //         child: Center(
-          //           child: Text(
-          //             'SEE MORE',
-          //             style: new TextStyle(
-          //               fontFamily: "WorkSansSemiBold",
-          //               color: Colors.black,
-          //               fontSize: 15.0,
-          //             ),
-          //           ),
-          //         ),
-          //       )),
-          // ),
         ],
       ),
     );
   }
 
-  // prosConsList(text1) {
-  //   return Column(
-  //     children: [
-  //       bulletPoints("$text1"),
-  //     ],
-  //   );
-  // }
+  smallBulletPoints(List allComments) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.45,
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: ListView(
+        children: allComments.map<Widget>((comment) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: CircleAvatar(
+                  backgroundColor: Color(0xff5A56B9),
+                  radius: 5,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Container(
+                // decoration: BoxDecoration(
+                //   border: Border.all(),
+                // ),
+                width: MediaQuery.of(context).size.width * 0.45 - 15,
+                child: Expanded(
+                  child: Text(
+                    "${comment["comment"]}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey[700],
+                      fontSize: 14,
+                    ),
+                    // textAlign: TextAlign.center,
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
 
   bulletPoints(text, head, icon) {
     return Container(
@@ -558,7 +653,7 @@ class _SinglePublicCompaniesDebateTabState
         ),
       ),
       height: MediaQuery.of(context).size.height * 0.2,
-      width: MediaQuery.of(context).size.height * 0.48,
+      width: MediaQuery.of(context).size.width * 0.48,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -567,7 +662,7 @@ class _SinglePublicCompaniesDebateTabState
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  icon,
+                  icon == null ? SizedBox() : icon,
                   SizedBox(
                     width: 5,
                   ),

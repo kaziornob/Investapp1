@@ -216,4 +216,54 @@ class StaticData{
     "+260",
     "+263",
   ];
+
+  static List introductionScreenData = [
+    {
+      "logoBottomLine": "YOUR PERSONAL ASSET MANAGER",
+      "firstPara": "",
+      "image": "assets/landing_page_stars.png",
+      "lastPara":
+      "Invest with confidence on world’s leading Robo and Social Investment App.Built by licenced asset-manager with strong track record of outperforming markets"
+    },
+    {
+      "logoBottomLine": "PERSONALIZED PORTFOLIOS",
+      "firstPara":
+      "Let globally licensed (SEC, SFC,  SEBI FPI) asset manager build a personalized portfolio for you based on your risk appetite and goals",
+      "image": "assets/personalizedPortfolio.png",
+      "lastPara":
+      "…hire professional money managers with a great track record to build an institutional grade portfolio for you."
+    },
+    {
+      "logoBottomLine": "MULTIPLE ASSET CLASSES",
+      "firstPara":
+      "Tell us if you have any preferences and we’ll customize your portfolio across global stocks, bonds, "
+          "commodities, crypto, private equity, hedge fund, venture capital, impact investing and private deals.",
+      "image": "assets/multipleAssets.png",
+      "lastPara": "..and Yes! we pick  securities that you can engage with, "
+          "not just mutual funds and ETFs like other Robos…and so no double fees on those."
+    },
+    {
+      "logoBottomLine": "LEARN HOW TO INVEST BETTER",
+      "firstPara":
+      "Master investment concepts with our Adaptive Learning Investment module. "
+          "Ask questions and participate in discussions while earning Auro Coins that can be redeemed for free stocks.",
+      "image": "assets/invest.png",
+      "lastPara": "…Learn investment principles used by the all-time greats"
+    },
+    {
+      "logoBottomLine": "PITCH STOCK & PORTFOLIOS",
+      "firstPara":
+      "Pitch stocks and portfolios while building your own investment track record",
+      "image": "assets/pitchStock.png",
+      "lastPara":
+      "…allow others to follow your investments and earn a cut of their profits"
+    },
+    {
+      "logoBottomLine": "FOLLOW STAR INVESTORS",
+      "firstPara":
+      "Choose from and Invest in a wide selection of professionally managed portfolios.",
+      "image": "assets/starInvestor.png",
+      "lastPara": "…while you sit back and watch your wealth grow"
+    }
+  ];
 }

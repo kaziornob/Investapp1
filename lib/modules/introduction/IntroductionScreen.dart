@@ -103,7 +103,6 @@ class _IntroductionScreenState extends State<IntroductionScreen>
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
       height: height,
       child: Stack(
         children: <Widget>[

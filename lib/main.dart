@@ -41,6 +41,8 @@ import 'constance/themes.dart';
 import 'modules/home/homeScreen.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
+import 'modules/introduction/introduction_screen2.dart';
+
 // Thanks for signing up to Auro. Please wait as we allow our AI engine to custom build your portfolio.
 Map portfolioMap;
 List marketListData = [];
@@ -249,7 +251,8 @@ class _MyAppState extends State<MyApp> {
 
       return new HomeScreen();
     } else {
-      return new IntroductionScreen();
+      // return new IntroductionScreen();
+      return new IntroductionScreen2();
     }
   }
 
@@ -293,7 +296,8 @@ class _MyAppState extends State<MyApp> {
         return new HomeScreen();
       }
     } else {
-      return new IntroductionScreen();
+      // return new IntroductionScreen();
+      return IntroductionScreen2();
     }
   }
 
@@ -380,7 +384,8 @@ class _MyAppState extends State<MyApp> {
 
   var routes = <String, WidgetBuilder>{
     Routes.SPLASH: (BuildContext context) => SplashScreen(),
-    Routes.Introdution: (BuildContext context) => IntroductionScreen(),
+    // Routes.Introdution: (BuildContext context) => IntroductionScreen(),
+    Routes.Introdution: (BuildContext context) => IntroductionScreen2(),
     Routes.Home: (BuildContext context) => HomeScreen(),
   };
 

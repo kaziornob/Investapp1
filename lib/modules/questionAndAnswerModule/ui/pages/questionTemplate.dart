@@ -612,6 +612,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
       }
 
       print("answerid: $answerId");
+      print("optionsResult : " + optionsResult.toString());
 
       questionJson = {
         "result": optionsResult,

@@ -1,10 +1,8 @@
-import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
+import 'package:auroim/widgets/public_company/public_company_historical_performance_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import '../auro_paper_portfolio_performace_chart.dart';
 import '../crypto_coin_price_data.dart';
 
 class PublicCompanyHistoricalPerformance extends StatefulWidget {
@@ -20,15 +18,15 @@ class PublicCompanyHistoricalPerformance extends StatefulWidget {
 class _PublicCompanyHistoricalPerformanceState
     extends State<PublicCompanyHistoricalPerformance> {
   Map<String, bool> selectedTabMap = {
-    "1d": true,
-    "3d": false,
+    "3d": true,
+    "10d": false,
     "1m": false,
     "6m": false,
     "1y": false,
     "5y": false,
   };
 
-  int noOfDays = 1;
+  int noOfDays = 3;
   List<CryptoCoinPriceData> allPriceData = [];
 
   @override
@@ -65,7 +63,8 @@ class _PublicCompanyHistoricalPerformanceState
                 ),
                 Consumer<PublicCompanyHistoricalPricing>(
                   builder: (context, historicalPricingProvider, _) {
-                    if (historicalPricingProvider.historicalPriceData[widget.ticker] ==
+                    if (historicalPricingProvider
+                            .historicalPriceData[widget.ticker] ==
                         null) {
                       return Container(
                         child: Center(
@@ -74,17 +73,23 @@ class _PublicCompanyHistoricalPerformanceState
                       );
                     } else {
                       allPriceData = [];
-                      historicalPricingProvider.historicalPriceData[widget.ticker]
+                      historicalPricingProvider
+                          .historicalPriceData[widget.ticker]
                           .forEach((element) {
                         DateTime date =
                             DateFormat("yyyy-MM-dd").parse(element["date"]);
-                        allPriceData.add(
+                        allPriceData.insert(
+                          0,
                           CryptoCoinPriceData(
                               x: date, y: element["price"].toDouble()),
                         );
                       });
 
-                      return AuroPaperPortfolioPerformaceChart(
+                      allPriceData.forEach((element) {
+                        print(element.x.toString());
+                      });
+
+                      return PublicCompanyHistoricalPerformanceChart(
                         pricesData: allPriceData,
                       );
                     }
@@ -103,8 +108,9 @@ class _PublicCompanyHistoricalPerformanceState
                     ),
                     child: Row(
                       children: [
-                        selectedTab("1d", selectedTabMap["1d"], setChartState),
                         selectedTab("3d", selectedTabMap["3d"], setChartState),
+                        selectedTab(
+                            "10d", selectedTabMap["10d"], setChartState),
                         selectedTab("1m", selectedTabMap["1m"], setChartState),
                         selectedTab("6m", selectedTabMap["6m"], setChartState),
                         selectedTab("1y", selectedTabMap["1y"], setChartState),
@@ -123,10 +129,10 @@ class _PublicCompanyHistoricalPerformanceState
 
   getNoOfDays(text) {
     switch (text) {
-      case "1d":
-        return 1;
       case "3d":
         return 3;
+      case "10d":
+        return 10;
       case "1m":
         return 30;
       case "6m":

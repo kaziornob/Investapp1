@@ -9,6 +9,7 @@ import 'package:auroim/main.dart';
 import 'package:auroim/modules/deposite/depositeCurrency.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/modules/introduction/IntroductionScreen.dart';
+import 'package:auroim/modules/introduction/introduction_screen2.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/muitisig/multisig.dart';
 import 'package:auroim/modules/myWallet/wallet.dart';
@@ -1226,12 +1227,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                         builder: (context) {
                                           return HowAppWorks(
                                             videoLink:
-                                            "https://www.youtube.com/watch?v=RWFXn2Dsb9E",
+                                                "https://www.youtube.com/watch?v=RWFXn2Dsb9E",
                                           );
                                         });
                                   },
-
-
                                   child: Row(
                                     children: <Widget>[
                                       Animator(
@@ -1267,7 +1266,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                               color: AllCoustomTheme
                                                   .getTextThemeColor(),
                                               fontSize:
-                                              ConstanceData.SIZE_TITLE14,
+                                                  ConstanceData.SIZE_TITLE14,
                                             ),
                                             overflow: TextOverflow.clip,
                                           ),
@@ -1276,7 +1275,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
@@ -1559,7 +1560,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               await prefs.remove('Session_token');
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => IntroductionScreen(),
+                                  builder: (context) => IntroductionScreen2(),
                                 ),
                               );
                             },

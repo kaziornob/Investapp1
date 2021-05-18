@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-// import 'dart:html';
-
-import 'package:animator/animator.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/dialog_widgets/dialog1.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/provider_abhinav/currency_rate_provider.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +21,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
+
+import '../../reusable_widgets/customButton.dart';
 
 class StockPitch extends StatefulWidget {
   @override
@@ -68,7 +69,7 @@ class _StockPitchState extends State<StockPitch> {
   void initState() {
     super.initState();
     loadUserDetails();
-    getTagList();
+    // getTagList();
     fileType = FileType.any;
   }
 
@@ -164,25 +165,25 @@ class _StockPitchState extends State<StockPitch> {
     return resultList;
   }
 
-  Future getTagList() async {
-/*    var response = await request.getRequest("get_tags");
-    setState(() {
-      tagList = response['message'];
-    });
-    return response['message'];*/
-
-    var resp = [
-      {"tage": "Math", "_id": "1"},
-      {"tage": "Science", "_id": "2"},
-      {"tage": "Physics", "_id": "3"}
-    ];
-
-    setState(() {
-      tagList = resp;
-    });
-
-    return resp;
-  }
+//   Future getTagList() async {
+// /*    var response = await request.getRequest("get_tags");
+//     setState(() {
+//       tagList = response['message'];
+//     });
+//     return response['message'];*/
+//
+//     var resp = [
+//       {"tage": "Math", "_id": "1"},
+//       {"tage": "Science", "_id": "2"},
+//       {"tage": "Physics", "_id": "3"}
+//     ];
+//
+//     setState(() {
+//       tagList = resp;
+//     });
+//
+//     return resp;
+//   }
 
   @override
   void dispose() {
@@ -207,997 +208,735 @@ class _StockPitchState extends State<StockPitch> {
           .forEach((element) {
         listOfFxs.add(element["ccy_symbol"]);
       });
+      setState(() {});
       _isInit = false;
     }
     super.didChangeDependencies();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // AppBar appBar = AppBar();
-    // double appBarheight = appBar.preferredSize.height;
-    return Stack(
-      children: <Widget>[
-        SafeArea(
-            bottom: true,
-            child: Scaffold(
-              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
-              body: ModalProgressHUD(
-                inAsyncCall: _isInProgress,
-                opacity: 0,
-                progressIndicator: CupertinoActivityIndicator(
-                  radius: 12,
-                ),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16, left: 16),
-                    child: !_isInProgress
-                        ? Column(
-                            children: <Widget>[
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  InkWell(
-                                    highlightColor: Colors.transparent,
-                                    splashColor: Colors.transparent,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Animator(
-                                      tween: Tween<Offset>(
-                                          begin: Offset(0, 0),
-                                          end: Offset(0.2, 0)),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
-                                        translation: anim.value,
-                                        child: Icon(
-                                          Icons.arrow_back_ios,
-                                          color: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Animator(
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.decelerate,
-                                      cycles: 1,
-                                      builder: (anim) => Transform.scale(
-                                        scale: anim.value,
-                                        child: Text(
-                                          'Stock Pitch',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE20,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: new FormField(
-                                      builder: (FormFieldState state) {
-                                        return InputDecorator(
-                                          decoration: InputDecoration(
-                                            labelText: 'Stock Name',
-                                            labelStyle: AllCoustomTheme
-                                                .getDropDownFieldLabelStyleTheme(),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.white,
-                                                  width: 1.0),
-                                            ),
-                                            errorText: state.hasError
-                                                ? state.errorText
-                                                : null,
-                                          ),
-                                          isEmpty: selectedStockId == '',
-                                          child: Container(
-                                            margin: EdgeInsets.only(top: 8.0),
-                                            child: TypeAheadFormField(
-                                              textFieldConfiguration:
-                                                  TextFieldConfiguration(
-                                                controller:
-                                                    _searchStockNameController,
-                                                textInputAction:
-                                                    TextInputAction.done,
-                                                textAlign: TextAlign.start,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    color: Colors.black),
-                                                inputFormatters: [
-                                                  LengthLimitingTextInputFormatter(
-                                                      30)
-                                                ],
-                                                decoration: InputDecoration(
-                                                  hintText: 'Search Stock Name',
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          width: 1.0,
-                                                          color: AllCoustomTheme
-                                                              .getTextThemeColor()),
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  0.0))),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 1.0),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.black,
-                                                        width: 1.0),
-                                                  ),
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 15.0,
-                                                  ),
-                                                ),
-                                              ),
-                                              suggestionsCallback:
-                                                  (pattern) async {
-                                                print("pattern : $pattern");
-                                                return await _featuredCompaniesProvider
-                                                    .searchPublicCompanyList(
-                                                        pattern);
-                                              },
-                                              itemBuilder:
-                                                  (context, suggestion) {
-                                                return ListTile(
-                                                  title: Text(
-                                                    suggestion["company_name"],
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              transitionBuilder: (context,
-                                                  suggestionsBox, controller) {
-                                                return suggestionsBox;
-                                              },
-                                              onSuggestionSelected:
-                                                  (suggestion) {
-                                                setState(() {
-                                                  _searchStockNameController
-                                                          .text =
-                                                      suggestion[
-                                                          'company_name'];
-                                                  selectedStockId =
-                                                      suggestion['ticker'];
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      validator: (val) {
-                                        return ((val != null && val != '') ||
-                                                (selectedStockId != null &&
-                                                    selectedStockId != ''))
-                                            ? null
-                                            : 'choose one';
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                      child: new FormField(
-                                    builder: (FormFieldState state) {
-                                      return InputDecorator(
-                                        decoration: InputDecoration(
-                                          labelText: 'Long/Short',
-                                          labelStyle: AllCoustomTheme
-                                              .getDropDownFieldLabelStyleTheme(),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 1.0),
-                                          ),
-                                          errorText: state.hasError
-                                              ? state.errorText
-                                              : null,
-                                        ),
-                                        isEmpty: selectedLongShort == '',
-                                        child: new DropdownButtonHideUnderline(
-                                            child: ButtonTheme(
-                                                alignedDropdown: true,
-                                                child: Container(
-                                                  height: 18.0,
-                                                  child: new DropdownButton(
-                                                    value: selectedLongShort,
-                                                    dropdownColor: Colors.white,
-                                                    isExpanded: true,
-                                                    onChanged:
-                                                        (String newValue) {
-                                                      setState(() {
-                                                        selectedLongShort =
-                                                            newValue;
-                                                      });
-                                                    },
-                                                    items: longShortList
-                                                        .map((String value) {
-                                                      return new DropdownMenuItem(
-                                                        value: value,
-                                                        child: new Text(
-                                                          value,
-                                                          style: TextStyle(
-                                                            color: AllCoustomTheme
-                                                                .getTextThemeColor(),
-                                                            fontSize:
-                                                                ConstanceData
-                                                                    .SIZE_TITLE16,
-                                                            fontFamily:
-                                                                "Roboto",
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                ))),
-                                      );
-                                    },
-                                    validator: (val) {
-                                      return ((val != null && val != '') ||
-                                              (selectedLongShort != null &&
-                                                  selectedLongShort != ''))
-                                          ? null
-                                          : 'choose one';
-                                    },
-                                  ))
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: new FormField(
-                                    builder: (FormFieldState state) {
-                                      return InputDecorator(
-                                        decoration: InputDecoration(
-                                          labelText: 'Select Currency',
-                                          labelStyle: AllCoustomTheme
-                                              .getDropDownFieldLabelStyleTheme(),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 1.0),
-                                          ),
-                                          errorText: state.hasError
-                                              ? state.errorText
-                                              : null,
-                                        ),
-                                        isEmpty: selectedFx == '',
-                                        child: new DropdownButtonHideUnderline(
-                                            child: ButtonTheme(
-                                                alignedDropdown: true,
-                                                child: Container(
-                                                  height: 18.0,
-                                                  child: new DropdownButton(
-                                                    value: selectedFx,
-                                                    dropdownColor: Colors.white,
-                                                    isExpanded: true,
-                                                    onChanged:
-                                                        (String newValue) {
-                                                      setState(() {
-                                                        selectedFx = newValue;
-                                                      });
-                                                    },
-                                                    items: listOfFxs
-                                                        .map((String value) {
-                                                      return DropdownMenuItem(
-                                                        value: value,
-                                                        child: Text(
-                                                          value,
-                                                          style: TextStyle(
-                                                            color: AllCoustomTheme
-                                                                .getTextThemeColor(),
-                                                            fontSize:
-                                                                ConstanceData
-                                                                    .SIZE_TITLE16,
-                                                            fontFamily:
-                                                                "Roboto",
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                ))),
-                                      );
-                                    },
-                                    validator: (val) {
-                                      return ((val != null && val != '') ||
-                                              (selectedLongShort != null &&
-                                                  selectedLongShort != ''))
-                                          ? null
-                                          : 'choose one';
-                                    },
-                                  )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                height: 60,
-                                child: TextField(
-                                  controller: _stockPitchTitleController,
-                                  maxLines: 4,
-                                  decoration: InputDecoration(
-                                    labelText: 'Stock Pitch Title',
-                                    hintText: 'Stock Pitch Title: ',
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: ConstanceData.SIZE_TITLE14),
-                                    labelStyle: AllCoustomTheme
-                                        .getTextFormFieldLabelStyleTheme(),
-                                    focusColor:
-                                        AllCoustomTheme.getTextThemeColor(),
-                                    fillColor:
-                                        AllCoustomTheme.getTextThemeColor(),
-                                    suffixIcon: questionMark(
-                                        "Can be a listed stock,private company or a crypto coin that you think will go up (Long Pitch) or go down (Short Pitch) on value?"),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.black,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 1.0),
-                                    ),
-                                  ),
-                                  cursorColor:
-                                      AllCoustomTheme.getTextThemeColor(),
-                                  style: AllCoustomTheme
-                                      .getTextFormFieldBaseStyleTheme(),
-                                ),
-                              ),
+  textFieldInputDecoration(hintText, labelText, suffixText) {
+    return InputDecoration(
+      labelText: labelText,
+      hintText: hintText,
+      hintStyle: TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE14,
+        color: Colors.black,
+      ),
+      labelStyle: TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE16,
+        color: Colors.black,
+      ),
+      suffixIcon: suffixText == null ? null : questionMark(suffixText),
+      fillColor: Colors.white,
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+      ),
+    );
+  }
 
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 0),
-                                        child: Text(
-                                          '1-year target',
-                                          style: TextStyle(
-                                              fontSize:
-                                                  ConstanceData.SIZE_TITLE18,
-                                              color: AllCoustomTheme
-                                                  .getTextThemeColor()),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Container(
-/*                                  height: 60,
-                                  width: 150,*/
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.11,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.45,
-                                        child: TextField(
-                                          controller: _priceBaseController,
-                                          keyboardType: TextInputType.number,
-                                          maxLines: 4,
-                                          decoration: InputDecoration(
-                                            labelText: 'Price-Base',
-                                            hintText: 'Price-Base',
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE14),
-                                            labelStyle: AllCoustomTheme
-                                                .getTextFormFieldLabelStyleTheme(),
-                                            focusColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fillColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            suffixIcon: questionMark(
-                                                "This is you target price in 1-year's time for this security.For a \'long\' pitch should be higher than current value of security, and lower if this is \'short\' pitch"),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                            ),
-                                          ),
-                                          cursorColor: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          style: AllCoustomTheme
-                                              .getTextFormFieldBaseStyleTheme(),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Container(
-/*                                  height: 60,
-                                  width: 150,*/
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.11,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.45,
-                                        child: TextField(
-                                          controller: _priceBearController,
-                                          keyboardType: TextInputType.number,
-                                          maxLines: 4,
-                                          cursorColor: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          style: AllCoustomTheme
-                                              .getTextFormFieldBaseStyleTheme(),
-                                          decoration: new InputDecoration(
-                                            focusColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fillColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            labelText: 'Price-Bear',
-                                            hintText: 'Price-Bear',
-                                            suffixIcon: questionMark(
-                                                "This is your target price in 1-years's time if your investment thesis didn't work and the security goes in the opposite direction of your prediction"),
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE14),
-                                            labelStyle: AllCoustomTheme
-                                                .getTextFormFieldLabelStyleTheme(),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 0),
-                                        child: Text(
-                                          '1-year fwd',
-                                          style: TextStyle(
-                                              fontSize:
-                                                  ConstanceData.SIZE_TITLE18,
-                                              color: AllCoustomTheme
-                                                  .getTextThemeColor()),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.11,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.45,
-                                        child: TextField(
-                                          controller: _revenueController,
-                                          keyboardType: TextInputType.number,
-                                          maxLines: 4,
-                                          cursorColor: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          style: AllCoustomTheme
-                                              .getTextFormFieldBaseStyleTheme(),
-                                          decoration: new InputDecoration(
-                                            focusColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fillColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            labelText: 'Revenue',
-                                            hintText: 'Revenue',
-                                            suffixIcon: questionMark(
-                                                "This is your estimate of this security's Revenue in 1 years's time."),
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE14),
-                                            labelStyle: AllCoustomTheme
-                                                .getTextFormFieldLabelStyleTheme(),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.11,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.45,
-                                        child: TextField(
-                                          controller: _epsController,
-                                          maxLines: 4,
-                                          cursorColor: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          style: AllCoustomTheme
-                                              .getTextFormFieldBaseStyleTheme(),
-                                          keyboardType: TextInputType.number,
-                                          decoration: new InputDecoration(
-                                            focusColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fillColor: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            labelText: 'Eps',
-                                            hintText: 'Eps',
-                                            suffixIcon: questionMark(
-                                                "This is your estimate of this security's Earnings Per Share in 1 years's time."),
-                                            hintStyle: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE14),
-                                            labelStyle: AllCoustomTheme
-                                                .getTextFormFieldLabelStyleTheme(),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 1.0),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                height: 120,
-                                child: TextField(
-                                  controller: _investmentThesisController,
-                                  maxLines: 10,
-                                  cursorColor:
-                                      AllCoustomTheme.getTextThemeColor(),
-                                  style: AllCoustomTheme
-                                      .getTextFormFieldBaseStyleTheme(),
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: new InputDecoration(
-                                    focusColor:
-                                        AllCoustomTheme.getTextThemeColor(),
-                                    fillColor:
-                                        AllCoustomTheme.getTextThemeColor(),
-                                    labelText: 'Investment Thesis',
-                                    hintText: 'Investment Thesis: ',
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: ConstanceData.SIZE_TITLE14),
-                                    labelStyle: AllCoustomTheme
-                                        .getTextFormFieldLabelStyleTheme(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.black, width: 1.0),
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 1.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              //search Tags
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Search Topic Tags',
-                                    style: TextStyle(
-                                      color:
-                                          AllCoustomTheme.getTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE16,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8.0),
-                                    child: TypeAheadFormField(
-                                      textFieldConfiguration:
-                                          TextFieldConfiguration(
-                                        controller: _searchTopicController,
-                                        textInputAction: TextInputAction.done,
-                                        textAlign: TextAlign.start,
-                                        keyboardType: TextInputType.text,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.black),
-                                        inputFormatters: [
-                                          LengthLimitingTextInputFormatter(30)
-                                        ],
-                                        decoration: InputDecoration(
-                                          hintText: 'Search Topic Tags',
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                width: 1.0,
-                                                color: AllCoustomTheme
-                                                    .getTextThemeColor(),
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(0.0))),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey, width: 1.0),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.black,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 15.0,
-                                          ),
-                                        ),
-                                      ),
-                                      suggestionsCallback: (pattern) async {
-                                        print("pattern : $pattern");
-                                        return await _featuredCompaniesProvider
-                                            .searchPublicCompanyList(pattern);
-                                      },
-                                      itemBuilder: (context, suggestion) {
-                                        return ListTile(
-                                          title: Text(
-                                            suggestion["company_name"],
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      transitionBuilder: (context,
-                                          suggestionsBox, controller) {
-                                        return suggestionsBox;
-                                      },
-                                      onSuggestionSelected: (suggestion) {
-                                        print(
-                                            "suggestion: ${suggestion['ticker']}");
-                                        print(
-                                            "suggestion name: ${suggestion['company_name']}");
-
-                                        _searchTopicController.text = '';
-                                        setState(
-                                          () {
-                                            itemList.add(
-                                              TagData(suggestion['ticker'],
-                                                  suggestion['company_name']),
-                                            );
-                                            tagListVisible =
-                                                itemList.length == 0
-                                                    ? false
-                                                    : true;
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              /////////////Topic Tag list////////
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Visibility(
-                                      visible: tagListVisible,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 20.0),
-                                        child: Text(
-                                          'Topic Tags',
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE16,
-                                          ),
-                                        ),
-                                      )),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      top: 8.0,
-                                      bottom: tagListVisible ? 24.0 : 0.0,
-                                    ),
-                                    child: StaggeredGridView.countBuilder(
-                                      itemCount: itemList != null
-                                          ? itemList.length
-                                          : 0,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 8.0,
-                                      mainAxisSpacing: 8.0,
-                                      shrinkWrap: true,
-                                      staggeredTileBuilder: (int index) =>
-                                          StaggeredTile.fit(1),
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(4.0),
-                                              border: Border.all(
-                                                color: Colors.grey,
-                                                width: 1.0,
-                                              ),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0,
-                                                vertical: 8.0),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: Text(
-                                                    '${itemList[index].tag}',
-                                                    style: TextStyle(
-                                                        color: AllCoustomTheme
-                                                            .getTextThemeColor(),
-                                                        fontSize: ConstanceData
-                                                            .SIZE_TITLE16,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        height: 1.3),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10.0,
-                                                ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        itemList
-                                                            .removeAt(index);
-                                                        tagListVisible =
-                                                            itemList.length == 0
-                                                                ? false
-                                                                : true;
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColor(),
-                                                      size: 15.0,
-                                                    ))
-                                              ],
-                                            ));
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              ////upload doc//
-//                               new Column(
-//                                 crossAxisAlignment: CrossAxisAlignment.start,
-//                                 children: <Widget>[
-// /*                              new Padding(
-//                                 padding: const EdgeInsets.only(top: 20.0),
-//                                 child: new DropdownButton(
-//                                     hint: new Text('Select file type'),
-//                                     value: fileType,
-//                                     items: <DropdownMenuItem>[
-//                                       new DropdownMenuItem(
-//                                         child: new Text('Audio'),
-//                                         value: FileType.audio,
-//                                       ),
-//                                       new DropdownMenuItem(
-//                                         child: new Text('Image'),
-//                                         value: FileType.image,
-//                                       ),
-//                                       new DropdownMenuItem(
-//                                         child: new Text('Video'),
-//                                         value: FileType.video,
-//                                       ),
-//                                       new DropdownMenuItem(
-//                                         child: new Text('Any'),
-//                                         value: FileType.any,
-//                                       ),
-//                                     ],
-//                                     onChanged: (value) => setState(() {
-//                                       fileType = value;
-//                                     })
-//                                 ),
-//                               ),
-//                               new ConstrainedBox(
-//                                 constraints: BoxConstraints.tightFor(width: 200.0),
-//                                 child: new SwitchListTile.adaptive(
-//                                   title: new Text('Pick multiple files', textAlign: TextAlign.right),
-//                                   onChanged: (bool value) => setState(() => isMultiPick = value),
-//                                   value: isMultiPick,
-//                                 ),
-//                               ),*/
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 50.0, bottom: 20.0),
-                                child: new RaisedButton(
-                                  onPressed: () {
-                                    // downloadFileAndSaveToLocal();
-                                    _openFileExplorer();
-                                  },
-                                  child: new Text(
-                                    "Investment Thesis doc",
-                                    style: TextStyle(
-                                      color:
-                                          AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE18,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              docUrl != null && docUrl != ""
-                                  ? Text("File Attached")
-                                  : Text("No Document Attached"),
-                              SizedBox(
-                                height: 24.0,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 20, left: 14, right: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      child: Animator(
-                                        tween:
-                                            Tween<double>(begin: 0.8, end: 1.1),
-                                        curve: Curves.easeInToLinear,
-                                        cycles: 0,
-                                        builder: (anim) => Transform.scale(
-                                          scale: anim.value,
-                                          child: Container(
-                                            /*height: 50,
-                                      width: 100,*/
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.06,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.27,
-                                            decoration: BoxDecoration(
-                                              border: new Border.all(
-                                                  color: Colors.black,
-                                                  width: 1.5),
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                                colors: [
-                                                  globals.buttoncolor1,
-                                                  globals.buttoncolor2,
-                                                ],
-                                              ),
-                                            ),
-                                            child: MaterialButton(
-                                              splashColor: Colors.grey,
-                                              child: Text(
-                                                "Done",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: ConstanceData
-                                                      .SIZE_TITLE18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              onPressed: isLoadingPath
-                                                  ? () {}
-                                                  : () {
-                                                      onPressedDone();
-                                                    },
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
-                        : SizedBox(),
+  searchStockName() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            'Stock Name*',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE14,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+          ),
+          child: Container(
+            child: TypeAheadFormField(
+              textFieldConfiguration: TextFieldConfiguration(
+                controller: _searchStockNameController,
+                textInputAction: TextInputAction.done,
+                textAlign: TextAlign.start,
+                keyboardType: TextInputType.text,
+                maxLines: 1,
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                inputFormatters: [LengthLimitingTextInputFormatter(30)],
+                decoration:
+                    textFieldInputDecoration("Search Stock Name", "", null),
+              ),
+              suggestionsCallback: (pattern) async {
+                print("pattern : $pattern");
+                return await _featuredCompaniesProvider
+                    .searchPublicCompanyList(pattern);
+              },
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(
+                    suggestion["company_name"],
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
                   ),
+                );
+              },
+              transitionBuilder: (context, suggestionsBox, controller) {
+                return suggestionsBox;
+              },
+              onSuggestionSelected: (suggestion) {
+                setState(() {
+                  _searchStockNameController.text = suggestion['company_name'];
+                  selectedStockId = suggestion['ticker'];
+                });
+              },
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  longShortSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            bottom: 12,
+          ),
+          child: Text(
+            "Strategy*",
+            style: TextStyle(
+              fontFamily: "WorkSansSemiBold",
+              color: Colors.black,
+              fontSize: 16.0,
+              letterSpacing: 0.1,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Container(
+            height: 60,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey,
+                width: 1.0,
+              ),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            width: (MediaQuery.of(context).size.width / 2) - 20,
+            child: FormField(
+              builder: (FormFieldState state) {
+                return InputDecorator(
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: Colors.black,
+                    ),
+                    errorText: state.hasError ? state.errorText : null,
+                  ),
+                  isEmpty: selectedLongShort == '',
+                  child: DropdownButtonHideUnderline(
+                    child: ButtonTheme(
+                      alignedDropdown: true,
+                      child: DropdownButton(
+                        value: selectedLongShort,
+                        dropdownColor: Colors.white,
+                        isExpanded: true,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            selectedLongShort = newValue;
+                          });
+                        },
+                        items: longShortList.map((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: ConstanceData.SIZE_TITLE14,
+                                fontFamily: "Roboto",
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              validator: (val) {
+                return ((val != null && val != '') ||
+                        (selectedLongShort != null && selectedLongShort != ''))
+                    ? null
+                    : 'choose one';
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  selectCurrencySection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            bottom: 12,
+          ),
+          child: Text(
+            "Select Currency*",
+            style: TextStyle(
+              fontFamily: "WorkSansSemiBold",
+              color: Colors.black,
+              fontSize: 16.0,
+              letterSpacing: 0.1,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 12.0),
+          child: Container(
+            height: 60,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey,
+                width: 1.0,
+              ),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            width: (MediaQuery.of(context).size.width / 2) - 20,
+            child: FormField(
+              builder: (FormFieldState state) {
+                return InputDecorator(
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE14,
+                      color: Colors.black,
+                    ),
+                    errorText: state.hasError ? state.errorText : null,
+                  ),
+                  isEmpty: selectedFx == '',
+                  child: DropdownButtonHideUnderline(
+                    child: ButtonTheme(
+                      alignedDropdown: true,
+                      child: DropdownButton(
+                        value: selectedFx,
+                        dropdownColor: Colors.white,
+                        // isExpanded: true,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            selectedFx = newValue;
+                          });
+                        },
+                        items: listOfFxs.map((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                color: AllCoustomTheme.getTextThemeColor(),
+                                fontSize: ConstanceData.SIZE_TITLE16,
+                                fontFamily: "Roboto",
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              validator: (val) {
+                return ((val != null && val != '') ||
+                        (selectedLongShort != null && selectedLongShort != ''))
+                    ? null
+                    : 'choose one';
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  stockPitchTitle() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            'Stock Pitch Title*',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE14,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+          ),
+          child: Container(
+            height: 60,
+            child: TextField(
+              controller: _stockPitchTitleController,
+              maxLines: 4,
+              decoration: textFieldInputDecoration(
+                "Enter title",
+                "",
+                "Can be a listed stock,private company or a crypto coin that you think will go up (Long Pitch) or go down (Short Pitch) on value?",
+              ),
+              cursorColor: Colors.black,
+              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  smallTextField(title, controller, isMust, suffixText) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            bottom: 12.0,
+            top: 12.0,
+          ),
+          child: Text(
+            isMust ? "$title*" : "$title",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE14,
+            ),
+          ),
+        ),
+        Container(
+          height: 60,
+          width: (MediaQuery.of(context).size.width / 2) - 20,
+          child: TextField(
+            controller: controller,
+            maxLines: 4,
+            keyboardType: TextInputType.number,
+            decoration: textFieldInputDecoration("", "", suffixText),
+            cursorColor: Colors.black,
+            style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+          ),
+        )
+      ],
+    );
+  }
+
+  investmentThesis() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text("Investment thesis*"),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+          ),
+          child: Container(
+            height: 120,
+            child: TextField(
+              controller: _investmentThesisController,
+              maxLines: 10,
+              decoration: textFieldInputDecoration("", '', null),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: ConstanceData.SIZE_TITLE16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  topicTags() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            'Tags*',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE14,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+          ),
+          child: Container(
+            child: TypeAheadFormField(
+              textFieldConfiguration: TextFieldConfiguration(
+                controller: _searchTopicController,
+                textInputAction: TextInputAction.done,
+                textAlign: TextAlign.start,
+                keyboardType: TextInputType.text,
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+                inputFormatters: [LengthLimitingTextInputFormatter(30)],
+                decoration: textFieldInputDecoration("Input tags", "", null),
+              ),
+              suggestionsCallback: (pattern) async {
+                print("pattern : $pattern");
+                return await _featuredCompaniesProvider
+                    .searchPublicCompanyList(pattern);
+              },
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(
+                    suggestion["company_name"],
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                );
+              },
+              transitionBuilder: (context, suggestionsBox, controller) {
+                return suggestionsBox;
+              },
+              onSuggestionSelected: (suggestion) {
+                print("suggestion: ${suggestion['ticker']}");
+                print("suggestion name: ${suggestion['company_name']}");
+
+                _searchTopicController.text = '';
+                setState(
+                  () {
+                    itemList.add(
+                      TagData(suggestion['ticker'], suggestion['company_name']),
+                    );
+                    tagListVisible = itemList.length == 0 ? false : true;
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  showAllSelectedTags() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: tagListVisible,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 20.0,
+                bottom: 8.0,
+              ),
+              child: Text(
+                'Topic Tags',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: ConstanceData.SIZE_TITLE16,
                 ),
               ),
-            ))
-      ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 8.0,
+              bottom: tagListVisible ? 24.0 : 0.0,
+            ),
+            child: StaggeredGridView.countBuilder(
+              itemCount: itemList != null ? itemList.length : 0,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              shrinkWrap: true,
+              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(
+                      color: globals.isGoldBlack
+                          ? Color(0xFFD8AF4F)
+                          : Color(0xFF1D6177),
+                      width: 1.0,
+                    ),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          '${itemList[index].tag}',
+                          style: TextStyle(
+                            color: globals.isGoldBlack
+                                ? Color(0xFFD8AF4F)
+                                : Color(0xFF1D6177),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.normal,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            itemList.removeAt(index);
+                            tagListVisible =
+                                itemList.length == 0 ? false : true;
+                          });
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: globals.isGoldBlack
+                              ? Color(0xFFD8AF4F)
+                              : Color(0xFF1D6177),
+                          size: 15.0,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  uploadButton(text) {
+    return Container(
+      width: (MediaQuery.of(context).size.width / 2) - 20,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.0),
+        border: Border.all(
+          color: globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF1D6177),
+          width: 1.0,
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                color:
+                    globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF1D6177),
+                fontSize: ConstanceData.SIZE_TITLE16,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+      body: SafeArea(
+        bottom: true,
+        child: ModalProgressHUD(
+          inAsyncCall: _isInProgress,
+          opacity: 0,
+          progressIndicator: CupertinoActivityIndicator(
+            radius: 12,
+          ),
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: !_isInProgress
+                ? Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ScreenTitleAppbar(
+                        title: 'STOCK PITCH',
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      searchStockName(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          longShortSection(),
+                          selectCurrencySection(),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      stockPitchTitle(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "1-year target price",
+                              style: TextStyle(
+                                color: globals.isGoldBlack
+                                    ? Color(0xFFD8AF4F)
+                                    : Color(0xFF7499C6),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          smallTextField(
+                            "Base Case",
+                            _priceBaseController,
+                            true,
+                            "This is you target price in 1-year's time for this security.For a \'long\' pitch should be higher than current value of security, and lower if this is \'short\' pitch",
+                          ),
+                          smallTextField(
+                            "Bear Case",
+                            _priceBearController,
+                            true,
+                            "This is your target price in 1-years's time if your investment thesis didn't work and the security goes in the opposite direction of your prediction",
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "1-year forward estimate",
+                              style: TextStyle(
+                                color: globals.isGoldBlack
+                                    ? Color(0xFFD8AF4F)
+                                    : Color(0xFF7499C6),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          smallTextField(
+                            "Revenue forecast",
+                            _revenueController,
+                            false,
+                            "This is your estimate of this security's Revenue in 1 years's time.",
+                          ),
+                          smallTextField(
+                            "Earning per share forecast",
+                            _epsController,
+                            false,
+                            "This is your estimate of this security's Earnings Per Share in 1 years's time.",
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      investmentThesis(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      topicTags(),
+                      showAllSelectedTags(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: _openFileExplorer,
+                            child: uploadButton("Upload pitch document"),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: uploadButton("Upload pitch video"),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      docUrl != null && docUrl != ""
+                          ? Text("Contains Attachment")
+                          : Text("No Attachments"),
+                      SizedBox(
+                        height: 24.0,
+                      ),
+                      CustomButton(
+                        text: "Done",
+                        callback: isLoadingPath ? () {} : onPressedDone,
+                        color: globals.isGoldBlack
+                            ? Color(0xFFD8AF4F)
+                            : Color(0xFF1D6177),
+                        textColor: Colors.white,
+                        borderColor: globals.isGoldBlack
+                            ? Color(0xFFD8AF4F)
+                            : Color(0xFF1D6177),
+                      ),
+                    ],
+                  )
+                : SizedBox(),
+          ),
+        ),
+      ),
     );
   }
 
@@ -1250,44 +989,9 @@ class _StockPitchState extends State<StockPitch> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-            title: Text(
-              "",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AllCoustomTheme.getTextThemeColors(),
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE18,
-              ),
-            ),
-            content: Text(
-              "$text",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AllCoustomTheme.getTextThemeColors(),
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE18,
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  'Ok',
-                  style: TextStyle(
-                    color: AllCoustomTheme.getTextThemeColors(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: ConstanceData.SIZE_TITLE18,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  if (cancel) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ],
+          return Dialog1(
+            text: text,
+            doublePop: cancel,
           );
         });
   }
@@ -1296,7 +1000,7 @@ class _StockPitchState extends State<StockPitch> {
     return Tooltip(
       child: Icon(
         Icons.help,
-        color: Colors.black,
+        color: Colors.grey,
       ),
       message: text,
     );

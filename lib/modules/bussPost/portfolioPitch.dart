@@ -1,22 +1,22 @@
 import 'dart:convert';
-
-import 'package:animator/animator.dart';
+import 'package:auroim/constance/global.dart' as globals;
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/dialog_widgets/dialog1.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/search_security.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
+import '../../reusable_widgets/customButton.dart';
 
 class SecurityOption {
   final String id;
@@ -33,7 +33,6 @@ class PortfolioPitch extends StatefulWidget {
 
 class _PortfolioPitchState extends State<PortfolioPitch> {
   double stockHeight = 0.0;
-  bool _isInProgress = false;
   List tagList = List();
   bool tagListVisible = false;
   List<TagData> itemList = List();
@@ -55,23 +54,6 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
 
   String selectedLongShort;
 
-  @override
-  void initState() {
-    super.initState();
-    loadUserDetails();
-    getTagList();
-  }
-
-  loadUserDetails() async {
-    setState(() {
-      _isInProgress = true;
-    });
-    await Future.delayed(const Duration(milliseconds: 700));
-    setState(() {
-      _isInProgress = false;
-    });
-  }
-
   Future<List> searchItems(query) async {
     List resultList = List();
     for (var i = 0; i < tagList.length; i++) {
@@ -81,20 +63,6 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
     }
 
     return resultList;
-  }
-
-  Future getTagList() async {
-    var resp = [
-      {"tage": "Math", "_id": "1"},
-      {"tage": "Science", "_id": "2"},
-      {"tage": "Physics", "_id": "3"}
-    ];
-
-    setState(() {
-      tagList = resp;
-    });
-
-    return resp;
   }
 
   void takeSecurityNumber(String text, String from, String itemId) {
@@ -128,779 +96,602 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
-    return Stack(
-      children: <Widget>[
-        Container(
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
-                HexColor(globals.primaryColorString).withOpacity(0.6),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                ScreenTitleAppbar(
+                  title: 'PORTFOLIO PITCH',
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                longShortDropdown(),
+                SizedBox(
+                  height: 20,
+                ),
+                enterValueWidget(
+                  "Target return (%)",
+                  _targetReturnPercController,
+                  "",
+                  "",
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                enterValueWidget(
+                  "Target max drawdown",
+                  _targetMaxDrawdownController,
+                  "",
+                  "",
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                portfolioStrategy(),
+                SizedBox(
+                  height: 20,
+                ),
+                topicTags(),
+                showAllSelectedTags(),
+                SizedBox(
+                  height: 20,
+                ),
+                showListOfSelectedSecurities(),
+                addSecurity(),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomButton(
+                  color: globals.isGoldBlack
+                      ? Color(0xFFD8AF4F)
+                      : Color(0xFF1D6177),
+                  text: "Done",
+                  callback: () async {
+                    submitPortfolio();
+                  },
+                  borderColor: globals.isGoldBlack
+                      ? Color(0xFFD8AF4F)
+                      : Color(0xFF1D6177),
+                  textColor: Colors.white,
+                ),
               ],
             ),
           ),
         ),
-        SafeArea(
-            bottom: true,
-            child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-              body: ModalProgressHUD(
-                inAsyncCall: _isInProgress,
-                opacity: 0,
-                progressIndicator: CupertinoActivityIndicator(
-                  radius: 12,
+      ),
+    );
+  }
+
+  textFieldInputDecoration(hintText, labelText) {
+    return InputDecoration(
+      labelText: labelText,
+      hintText: hintText,
+      hintStyle: TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE14,
+        color: Colors.black,
+      ),
+      labelStyle: TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE16,
+        color: Colors.black,
+      ),
+      fillColor: Colors.white,
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+      ),
+    );
+  }
+
+  enterValueWidget(title, controller, hintText, labelText) {
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            height: 60,
+            width: (MediaQuery.of(context).size.width / 2) - 10,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Row(
+                  children: [
+                    Text(
+                      title,
+                      style: new TextStyle(
+                        fontFamily: "WorkSansSemiBold",
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        letterSpacing: 0.1,
+                      ),
+                    ),
+                  ],
                 ),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16, left: 16),
-                    child: !_isInProgress
-                        ? Column(
-                            children: <Widget>[
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  InkWell(
-                                    highlightColor: Colors.transparent,
-                                    splashColor: Colors.transparent,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Animator(
-                                      tween: Tween<Offset>(
-                                          begin: Offset(0, 0),
-                                          end: Offset(0.2, 0)),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
-                                        translation: anim.value,
-                                        child: Icon(
-                                          Icons.arrow_back_ios,
-                                          color: AllCoustomTheme
-                                              .getTextThemeColors(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Animator(
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.decelerate,
-                                      cycles: 1,
-                                      builder: (anim) => Transform.scale(
-                                        scale: anim.value,
-                                        child: Text(
-                                          'Portfolio Pitch',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColors(),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE20,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Container(
-                                // decoration: BoxDecoration(
-                                //   border: Border.all(
-                                //     color: Colors.white,
-                                //   ),
-                                // ),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.20,
-                                width: MediaQuery.of(context).size.width,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            // decoration: BoxDecoration(
-                                            //   border: Border.all(
-                                            //     color: Colors.white,
-                                            //   ),
-                                            // ),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.40,
-                                            child: Center(
-                                              child: Text(
-                                                "Target return (%)",
-                                                style: new TextStyle(
-                                                    fontFamily:
-                                                        "WorkSansSemiBold",
-                                                    color: AllCoustomTheme
-                                                        .getTextThemeColors(),
-                                                    fontSize: 16.0,
-                                                    letterSpacing: 0.1),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.05),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.44,
-                                            decoration: new BoxDecoration(
-                                              color: AllCoustomTheme.boxColor(),
-                                            ),
-                                            child: TextFormField(
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              controller:
-                                                  _targetReturnPercController,
-                                              style: TextStyle(
-                                                color: AllCoustomTheme
-                                                    .getTextThemeColors(),
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE14,
-                                              ),
-                                              // initialValue: "",
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.40,
-                                            child: Center(
-                                              child: Text(
-                                                "Target Max Drawdown : ",
-                                                style: new TextStyle(
-                                                    fontFamily:
-                                                        "WorkSansSemiBold",
-                                                    color: AllCoustomTheme
-                                                        .getTextThemeColors(),
-                                                    fontSize: 16.0,
-                                                    letterSpacing: 0.1),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.05),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.44,
-                                            decoration: new BoxDecoration(
-                                              color: AllCoustomTheme.boxColor(),
-                                            ),
-                                            child: TextFormField(
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              controller:
-                                                  _targetMaxDrawdownController,
-                                              style: TextStyle(
-                                                color: AllCoustomTheme
-                                                    .getTextThemeColors(),
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE14,
-                                              ),
-                                              // initialValue: "",
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.40,
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: AllCoustomTheme.boxColor(),
-                                            ),
-                                            padding: EdgeInsets.only(left: 10),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.44,
-                                            child: FormField(
-                                              builder: (FormFieldState state) {
-                                                return InputDecorator(
-                                                  decoration: InputDecoration(
-                                                    labelStyle: TextStyle(
-                                                        fontSize: ConstanceData
-                                                            .SIZE_TITLE14,
-                                                        color: AllCoustomTheme
-                                                            .getTextThemeColors()),
-                                                    errorText: state.hasError
-                                                        ? state.errorText
-                                                        : null,
-                                                  ),
-                                                  isEmpty:
-                                                      selectedLongShort == '',
-                                                  child:
-                                                      new DropdownButtonHideUnderline(
-                                                    child: new DropdownButton(
-                                                      value: selectedLongShort,
-                                                      dropdownColor:
-                                                          AllCoustomTheme
-                                                                  .getThemeData()
-                                                              .primaryColor,
-                                                      isExpanded: true,
-                                                      onChanged:
-                                                          (String newValue) {
-                                                        setState(
-                                                          () {
-                                                            selectedLongShort =
-                                                                newValue;
-                                                          },
-                                                        );
-                                                      },
-                                                      items: targetMaxList
-                                                          .map((String value) {
-                                                        return new DropdownMenuItem(
-                                                          value: value,
-                                                          child: new Text(
-                                                            value,
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize:
-                                                                  ConstanceData
-                                                                      .SIZE_TITLE14,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }).toList(),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              validator: (val) {
-                                                return ((val != null &&
-                                                            val != '') ||
-                                                        (selectedLongShort !=
-                                                                null &&
-                                                            selectedLongShort !=
-                                                                ''))
-                                                    ? null
-                                                    : 'Please select field';
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: Container(
+              height: 60,
+              width: (MediaQuery.of(context).size.width / 2) - 10,
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: controller,
+                decoration: textFieldInputDecoration(hintText, labelText),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                height: 120,
-                                child: TextField(
-                                  controller: _portfolioStrategyController,
-                                  maxLines: 10,
-                                  decoration: InputDecoration(
-                                    labelText: 'Portfolio strategy',
-                                    hintText:
-                                        'Example: Focus mostly on US indices, tech and pharma. '
-                                        'Trades will be based on technical analysis using machine learning to understand patterns and trends in the markets. '
-                                        'Keep a diverse portfolio to spread risk.',
-                                    hintStyle: TextStyle(
-                                      fontSize: ConstanceData.SIZE_TITLE14,
-                                      color:
-                                          AllCoustomTheme.getTextThemeColors(),
-                                    ),
-                                    labelStyle: TextStyle(
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                        color: AllCoustomTheme
-                                            .getTextThemeColors()),
-                                    fillColor: Colors.white,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 1.0),
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.white, width: 1.0),
-                                    ),
-                                  ),
-                                  style: TextStyle(
-                                    color: AllCoustomTheme.getTextThemeColors(),
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                  ),
+  longShortDropdown() {
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            height: 60,
+            width: (MediaQuery.of(context).size.width / 2) - 10,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    Text(
+                      "Strategy",
+                      style: TextStyle(
+                        fontFamily: "WorkSansSemiBold",
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        letterSpacing: 0.1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              width: (MediaQuery.of(context).size.width / 2) - 10,
+              child: FormField(
+                builder: (FormFieldState state) {
+                  return InputDecorator(
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        color: Colors.black,
+                      ),
+                      errorText: state.hasError ? state.errorText : null,
+                    ),
+                    isEmpty: selectedLongShort == '',
+                    child: DropdownButtonHideUnderline(
+                      child: ButtonTheme(
+                        alignedDropdown: true,
+                        child: DropdownButton(
+                          value: selectedLongShort,
+                          // isExpanded: true,
+                          onChanged: (String newValue) {
+                            setState(() {
+                              selectedLongShort = newValue;
+                            });
+                          },
+                          items: targetMaxList.map((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: ConstanceData.SIZE_TITLE14,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              //search Tags
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Search Topic Tags',
-                                    style: TextStyle(
-                                      color:
-                                          AllCoustomTheme.getTextThemeColors(),
-                                      fontSize: ConstanceData.SIZE_TITLE14,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8.0),
-                                    child: TypeAheadFormField(
-                                      textFieldConfiguration:
-                                          TextFieldConfiguration(
-                                        controller: _searchTopicTagsController,
-                                        textInputAction: TextInputAction.done,
-                                        textAlign: TextAlign.start,
-                                        keyboardType: TextInputType.text,
-                                        maxLines: 1,
-                                        style: TextStyle(fontSize: 16.0),
-                                        inputFormatters: [
-                                          LengthLimitingTextInputFormatter(30)
-                                        ],
-                                        decoration: InputDecoration(
-                                          hintText: 'Search Topic Tags',
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1.0,
-                                                  color: AllCoustomTheme
-                                                      .getTextThemeColors()),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(0.0))),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey, width: 1.0),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 1.0),
-                                          ),
-                                          hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 15.0,
-                                          ),
-                                        ),
-                                      ),
-                                      suggestionsCallback: (pattern) async {
-                                        print("pattern : $pattern");
-                                        return await _featuredCompaniesProvider
-                                            .searchPublicCompanyList(pattern);
-                                      },
-                                      itemBuilder: (context, suggestion) {
-                                        return ListTile(
-                                          title: Text(
-                                            suggestion["company_name"],
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      transitionBuilder: (context,
-                                          suggestionsBox, controller) {
-                                        return suggestionsBox;
-                                      },
-                                      onSuggestionSelected: (suggestion) {
-                                        print(
-                                            "suggestion: ${suggestion['ticker']}");
-                                        print(
-                                            "suggestion name: ${suggestion['company_name']}");
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                validator: (val) {
+                  return ((val != null && val != '') ||
+                          (selectedLongShort != null &&
+                              selectedLongShort != ''))
+                      ? null
+                      : 'Please select field';
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-                                        _searchTopicTagsController.text = '';
-                                        setState(
-                                          () {
-                                            itemList.add(
-                                              TagData(suggestion['ticker'],
-                                                  suggestion['company_name']),
-                                            );
-                                            tagListVisible =
-                                                itemList.length == 0
-                                                    ? false
-                                                    : true;
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              /////////////Topic Tag list////////
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Visibility(
-                                      visible: tagListVisible,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 20.0),
-                                        child: Text(
-                                          'Topic Tags',
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColors(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE16,
-                                          ),
-                                        ),
-                                      )),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        top: 8.0,
-                                        bottom: tagListVisible ? 24.0 : 0.0),
-                                    child: StaggeredGridView.countBuilder(
-                                      itemCount: itemList != null
-                                          ? itemList.length
-                                          : 0,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 8.0,
-                                      mainAxisSpacing: 8.0,
-                                      shrinkWrap: true,
-                                      staggeredTileBuilder: (int index) =>
-                                          StaggeredTile.fit(1),
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.0),
-                                                border: Border.all(
-                                                    color: Colors.grey,
-                                                    width: 1.0)),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0,
-                                                vertical: 8.0),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: Text(
-                                                    '${itemList[index].tag}',
-                                                    style: TextStyle(
-                                                        color: AllCoustomTheme
-                                                            .getTextThemeColors(),
-                                                        fontSize: ConstanceData
-                                                            .SIZE_TITLE16,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        height: 1.3),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10.0,
-                                                ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        itemList
-                                                            .removeAt(index);
-                                                        tagListVisible =
-                                                            itemList.length == 0
-                                                                ? false
-                                                                : true;
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      size: 15.0,
-                                                    ))
-                                              ],
-                                            ));
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                height: securityList.length != 0
-                                    ? stockHeight
-                                    : 0.0,
-                                child: ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: securityList.length,
-                                    itemBuilder: (context, index) {
-                                      if (securityList.isEmpty) {
-                                        return Row();
-                                      } else {
-                                        return Dismissible(
-                                          key: Key(securityList[index]
-                                              .id
-                                              .toString()),
-                                          direction:
-                                              DismissDirection.startToEnd,
-                                          child: Stack(
-                                            children: <Widget>[
-                                              Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 5.0, bottom: 9.0),
-                                                child: Container(
-                                                  height: 60,
-                                                  child: addSecurityRow(index),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 0,
-                                                right: 0,
-                                                child: GestureDetector(
-                                                  child: IconButton(
-                                                    icon: Icon(
-                                                      Icons.delete,
-                                                      size: 20.0,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                  onTap: () {
-                                                    _showConfirmation(
-                                                        'option', index);
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }
-                                    }),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 40),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.09,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.45,
-                                      decoration: BoxDecoration(
-                                        color: AllCoustomTheme.getThemeData()
-                                            .textSelectionColor,
-                                        border: new Border.all(
-                                            color: Colors.white, width: 1.5),
-                                      ),
-                                      child: MaterialButton(
-                                        splashColor: Colors.grey,
-                                        child: Text(
-                                          "Add Security",
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColors(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          print("tapped add security");
-                                          showModalBottomSheet(
-                                            context: context,
-                                            builder: (context) =>
-                                                SearchSecurity(
-                                              callBack: searchSecurityCallback,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.11,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.45,
-                                      child: TextFormField(
-                                        controller:
-                                            _initialAmountInvestedController,
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                          border: new OutlineInputBorder(
-                                              borderSide: new BorderSide(
-                                                  color: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
-                                                  width: 12.0)),
-                                          fillColor: Colors.white,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Colors.white,
-                                                width: 1.0),
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          prefix: Text(
-                                            "\$",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 1.0),
-                                          ),
-                                        ),
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColors(),
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 20, left: 14, right: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 50,
-                                      child: Animator(
-                                        tween:
-                                            Tween<double>(begin: 0.8, end: 1.1),
-                                        curve: Curves.easeInToLinear,
-                                        cycles: 0,
-                                        builder: (anim) => Transform.scale(
-                                          scale: anim.value,
-                                          child: Container(
-                                            height: 50,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              border: new Border.all(
-                                                  color: Colors.white,
-                                                  width: 1.5),
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                                colors: [
-                                                  globals.buttoncolor1,
-                                                  globals.buttoncolor2,
-                                                ],
-                                              ),
-                                            ),
-                                            child: MaterialButton(
-                                              splashColor: Colors.grey,
-                                              child: Text(
-                                                "Done",
-                                                style: TextStyle(
-                                                  color: AllCoustomTheme
-                                                      .getTextThemeColors(),
-                                                  fontSize: ConstanceData
-                                                      .SIZE_TITLE18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                submitPortfolio();
-                                                // Navigator.pop(context);
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
-                        : SizedBox(),
+  portfolioStrategy() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text("Portfolio strategy"),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+          ),
+          child: Container(
+            height: 120,
+            child: TextField(
+              controller: _portfolioStrategyController,
+              maxLines: 10,
+              decoration: textFieldInputDecoration(
+                'Example: Focus mostly on US indices, tech and pharma. '
+                    'Trades will be based on technical analysis using machine learning to understand patterns and trends in the markets. '
+                    'Keep a diverse portfolio to spread risk.',
+                '',
+              ),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: ConstanceData.SIZE_TITLE16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  topicTags() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            'Search topic tags',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE14,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+          ),
+          child: Container(
+            child: TypeAheadFormField(
+              textFieldConfiguration: TextFieldConfiguration(
+                controller: _searchTopicTagsController,
+                textInputAction: TextInputAction.done,
+                textAlign: TextAlign.start,
+                keyboardType: TextInputType.text,
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+                inputFormatters: [LengthLimitingTextInputFormatter(30)],
+                decoration: textFieldInputDecoration(
+                  "Search topic tags",
+                  "",
+                ),
+              ),
+              suggestionsCallback: (pattern) async {
+                print("pattern : $pattern");
+                return await _featuredCompaniesProvider
+                    .searchPublicCompanyList(pattern);
+              },
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(
+                    suggestion["company_name"],
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                );
+              },
+              transitionBuilder: (context, suggestionsBox, controller) {
+                return suggestionsBox;
+              },
+              onSuggestionSelected: (suggestion) {
+                print("suggestion: ${suggestion['ticker']}");
+                print("suggestion name: ${suggestion['company_name']}");
+
+                _searchTopicTagsController.text = '';
+                setState(
+                  () {
+                    itemList.add(
+                      TagData(suggestion['ticker'], suggestion['company_name']),
+                    );
+                    tagListVisible = itemList.length == 0 ? false : true;
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  showAllSelectedTags() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: tagListVisible,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 20.0,
+                bottom: 8.0,
+              ),
+              child: Text(
+                'Topic Tags',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 8.0,
+              bottom: tagListVisible ? 24.0 : 0.0,
+            ),
+            child: StaggeredGridView.countBuilder(
+              itemCount: itemList != null ? itemList.length : 0,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              shrinkWrap: true,
+              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(
+                      color: globals.isGoldBlack
+                          ? Color(0xFFD8AF4F)
+                          : Color(0xFF1D6177),
+                      width: 1.0,
+                    ),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          '${itemList[index].tag}',
+                          style: TextStyle(
+                            color: globals.isGoldBlack
+                                ? Color(0xFFD8AF4F)
+                                : Color(0xFF1D6177),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.normal,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            itemList.removeAt(index);
+                            tagListVisible =
+                                itemList.length == 0 ? false : true;
+                          });
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: globals.isGoldBlack
+                              ? Color(0xFFD8AF4F)
+                              : Color(0xFF1D6177),
+                          size: 15.0,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  showListOfSelectedSecurities() {
+    return Container(
+      height: securityList.length != 0 ? stockHeight : 0.0,
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: securityList.length,
+        itemBuilder: (context, index) {
+          if (securityList.isEmpty) {
+            return Row();
+          } else {
+            return Dismissible(
+              key: Key(securityList[index].id.toString()),
+              direction: DismissDirection.startToEnd,
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0, bottom: 9.0),
+                    child: Container(
+                      height: 60,
+                      child: addSecurityRow(index),
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 12,
+                    child: GestureDetector(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          size: 20.0,
+                          color: Colors.red,
+                        ),
+                      ),
+                      onTap: () {
+                        _showConfirmation('option', index);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  addSecurity() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 40,
+        left: 12,
+        right: 12,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width * 0.45,
+            decoration: BoxDecoration(
+              color: Color(0xFF1A3263),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: MaterialButton(
+              splashColor: Colors.grey,
+              shape: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFF1A3263),
+                  width: 1.5,
+                ),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                "Add Security",
+                style: TextStyle(
+                  color: AllCoustomTheme.getTextThemeColors(),
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => SearchSecurity(
+                    callBack: searchSecurityCallback,
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width * 0.45,
+            child: TextFormField(
+              controller: _initialAmountInvestedController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 12.0,
+                  ),
+                ),
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: globals.isGoldBlack
+                        ? Color(0xFF1A3263)
+                        : Color(0xFF7499C6),
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                prefix: Text(
+                  "\$",
+                  style: TextStyle(
+                    color: globals.isGoldBlack
+                        ? Color(0xFF1A3263)
+                        : Color(0xFF7499C6),
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: globals.isGoldBlack
+                        ? Color(0xFF1A3263)
+                        : Color(0xFF7499C6),
+                    width: 1.0,
                   ),
                 ),
               ),
-            ))
-      ],
+              style: TextStyle(
+                color:
+                    globals.isGoldBlack ? Color(0xFF1A3263) : Color(0xFF7499C6),
+                fontSize: ConstanceData.SIZE_TITLE16,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -970,137 +761,68 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-            title: Text(
-              "",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AllCoustomTheme.getTextThemeColors(),
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE18,
-              ),
-            ),
-            content: Text(
-              "$text",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AllCoustomTheme.getTextThemeColors(),
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE18,
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  'Ok',
-                  style: TextStyle(
-                    color: AllCoustomTheme.getTextThemeColors(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: ConstanceData.SIZE_TITLE18,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  if (cancel) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ],
+          return Dialog1(
+            text: text,
+            doublePop: cancel,
           );
         });
   }
 
   addSecurityRow(index) {
-    return Row(
-      children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height * 0.11,
-          width: MediaQuery.of(context).size.width * 0.45,
-          child: TextFormField(
-            controller: listOfSecuritiesControllers[index],
-            onChanged: (text) {
-              takeSecurityNumber(text, 'security', securityList[index].id);
-            },
-            // initialValue: securityList[index].textSecurity,
-            decoration: InputDecoration(
-              border: new OutlineInputBorder(
-                borderSide: new BorderSide(
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
-                    width: 12.0),
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 12.0,
+        right: 12.0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width * 0.45,
+            child: TextFormField(
+              controller: listOfSecuritiesControllers[index],
+              onChanged: (text) {
+                takeSecurityNumber(text, 'security', securityList[index].id);
+              },
+              decoration: textFieldInputDecoration(
+                'Securities',
+                'Security ${index + 1}',
               ),
-              // labelText: 'Option 1',
-              hintText: 'Securities',
-              hintStyle: TextStyle(
-                  fontSize: ConstanceData.SIZE_TITLE14,
-                  color: AllCoustomTheme.getTextThemeColors()),
-              labelText: 'Security ${index + 1}',
-              labelStyle: TextStyle(
-                  fontSize: ConstanceData.SIZE_TITLE16,
-                  color: AllCoustomTheme.getTextThemeColors()),
-              fillColor: Colors.white,
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                borderRadius: BorderRadius.circular(5.0),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: ConstanceData.SIZE_TITLE16,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 1.0),
-              ),
-            ),
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE16,
             ),
           ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.11,
-          width: MediaQuery.of(context).size.width * 0.45,
-          // margin: EdgeInsets.only(left: 5.0),
-          child: TextFormField(
-            controller: listOfWeightControllers[index],
-            onChanged: (text) {
-              takeSecurityNumber(text, 'weight', securityList[index].id);
-            },
-            keyboardType: TextInputType.number,
-            // initialValue: securityList[index].textSecurity,
-            decoration: InputDecoration(
-              border: new OutlineInputBorder(
-                borderSide: new BorderSide(
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
-                    width: 12.0),
-              ),
-              // labelText: 'Option 1',
-              hintText: 'Weightage',
-              hintStyle: TextStyle(
-                fontSize: ConstanceData.SIZE_TITLE14,
-                color: AllCoustomTheme.getTextThemeColors(),
-              ),
-
-              labelText: 'Weightage(%)',
-              labelStyle: TextStyle(
-                  fontSize: ConstanceData.SIZE_TITLE16,
-                  color: AllCoustomTheme.getTextThemeColors()),
-              fillColor: Colors.white,
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.white, width: 1.0),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 1.0),
-              ),
-            ),
-            style: TextStyle(
-              color: AllCoustomTheme.getTextThemeColors(),
-              fontSize: ConstanceData.SIZE_TITLE16,
-            ),
+          SizedBox(
+            width: 10,
           ),
-        )
-      ],
+          Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width * 0.45,
+            child: TextFormField(
+              controller: listOfWeightControllers[index],
+              onChanged: (text) {
+                takeSecurityNumber(
+                  text,
+                  'weight',
+                  securityList[index].id,
+                );
+              },
+              keyboardType: TextInputType.number,
+              decoration: textFieldInputDecoration(
+                'Weightage',
+                'Weightage(%)',
+              ),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: ConstanceData.SIZE_TITLE16,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 

@@ -1,22 +1,22 @@
-import 'package:animator/animator.dart';
-
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/modules/qaInvForumPages/qusView.dart';
-import 'package:expandable/expandable.dart';
+import 'package:auroim/reusable_widgets/customButton.dart';
+import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
+import 'package:auroim/reusable_widgets/text_field_with_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'dart:convert';
+import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-
-// const String _markdownData = "*pooja* **pooja** # this is H1 http:github.com";
+import 'package:toast/toast.dart';
 
 class AddEditQus extends StatefulWidget {
   @override
@@ -27,6 +27,7 @@ class _AddEditQusState extends State<AddEditQus> {
   bool _isInProgress = false;
   bool _isClickOnSubmit = false;
   bool giveBounty = false;
+  ApiProvider request = ApiProvider();
 
   final _addEditQusFormKey = new GlobalKey<FormState>();
   ScrollController _scrollController = ScrollController();
@@ -48,31 +49,7 @@ class _AddEditQusState extends State<AddEditQus> {
 
   @override
   void initState() {
-    // _searchController.addListener(() {
-    //   if (_searchController.text.length > 0) {
-    //     print(_searchController.text);
-    //     setState(() {
-    //       searchingTags = true;
-    //     });
-    //   } else {
-    //     setState(() {
-    //       searchingTags = false;
-    //     });
-    //   }
-    // });
     super.initState();
-    loadDetails();
-  }
-
-  loadDetails() async {
-    setState(() {
-      _isInProgress = true;
-    });
-    await Future.delayed(const Duration(milliseconds: 700));
-    setState(() {
-      _isInProgress = false;
-    });
-    // var txt = await keyEditor.currentState.getText();  to get editor text value
   }
 
   Future<List> searchItems(query) async {
@@ -84,26 +61,6 @@ class _AddEditQusState extends State<AddEditQus> {
     }
 
     return resultList;
-  }
-
-  Future getTagList() async {
-/*    var response = await request.getRequest("get_tags");
-    setState(() {
-      tagList = response['message'];
-    });
-    return response['message'];*/
-
-    var resp = [
-      {"tage": "Math", "_id": "1"},
-      {"tage": "Science", "_id": "2"},
-      {"tage": "Physics", "_id": "3"}
-    ];
-
-    setState(() {
-      tagList = resp;
-    });
-
-    return resp;
   }
 
   Widget getRelatedQusView(data) {
@@ -185,108 +142,6 @@ class _AddEditQusState extends State<AddEditQus> {
     );
   }
 
-  /// Creates the [KeyboardActionsConfig] to hook up the fields
-  /// and their focus nodes to our [FormKeyboardActions].
-  /* KeyboardActionsConfig _buildConfig(BuildContext context) {
-    return KeyboardActionsConfig(
-      keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-      keyboardBarColor: Colors.grey[200],
-      actions: [
-        KeyboardActionsItem(
-            focusNode: qusBodyFocusNode,
-            toolbarButtons: [
-            (node){
-              return InkWell(
-                onTap: ()
-                {
-                    setState(() {
-                      italicActive = !italicActive;
-                    });
-                },
-                child: Container(
-                  margin: EdgeInsets.only(left: 13.0),
-                  child: Icon(
-                    FontAwesomeIcons.italic,
-                    color: italicActive ? AllCoustomTheme.boxColor() : Colors.grey,
-                    size: 20,
-                  ),
-                ),
-              );
-            }, (node){
-                return InkWell(
-                  onTap: ()
-                  {
-                    setState(() {
-                      boldActive = !boldActive;
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(left: 13.0),
-                    child: Icon(
-                      FontAwesomeIcons.bold,
-                      color: boldActive ? AllCoustomTheme.boxColor() : Colors.grey,
-                      size: 20,
-                    ),
-                  ),
-                );
-            },(node){
-              return InkWell(
-                onTap: () {
-
-                },
-                child: Container(
-                  margin: EdgeInsets.only(left: 13.0),
-                  child: Icon(
-                    FontAwesomeIcons.link,
-                    color: AllCoustomTheme.boxColor(),
-                    size: 20,
-                  ),
-                ),
-              );
-            },(node){
-              return Container(
-                margin: EdgeInsets.only(left: 13.0),
-                child: Icon(
-                  FontAwesomeIcons.virus,
-                  color: AllCoustomTheme.boxColor(),
-                  size: 20,
-                ),
-              );
-              }, (node){
-                return Container(
-                  margin: EdgeInsets.only(left: 13.0),
-                  child: Icon(
-                    FontAwesomeIcons.book,
-                    color: AllCoustomTheme.boxColor(),
-                    size: 20,
-                  ),
-                );
-              },(node){
-                return Container(
-                  margin: EdgeInsets.only(left: 13.0),
-                  child: Icon(
-                    FontAwesomeIcons.fileVideo,
-                    color: AllCoustomTheme.boxColor(),
-                    size: 20,
-                  ),
-                );
-              }, (node){
-                return Container(
-                  margin: EdgeInsets.only(left: 13.0),
-                  child: Icon(
-                    FontAwesomeIcons.image,
-                    color: AllCoustomTheme.boxColor(),
-                    size: 20,
-                  ),
-                );
-              }
-          ]
-
-        ),
-      ],
-    );
-  }*/
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -296,607 +151,396 @@ class _AddEditQusState extends State<AddEditQus> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
-    return Stack(
-      children: <Widget>[
-        SafeArea(
-            bottom: true,
-            child: Scaffold(
-              backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
-              body: ModalProgressHUD(
-                inAsyncCall: _isInProgress,
-                opacity: 0,
-                progressIndicator: CupertinoActivityIndicator(
-                  radius: 12,
+  textFieldInputDecoration(hintText, labelText) {
+    return InputDecoration(
+      labelText: labelText,
+      hintText: hintText,
+      hintStyle: TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE14,
+        color: Colors.black,
+      ),
+      labelStyle: TextStyle(
+        fontSize: ConstanceData.SIZE_TITLE16,
+        color: Colors.black,
+      ),
+      fillColor: Colors.white,
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+      ),
+    );
+  }
+
+  topicTags() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            'Search Question tags',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: ConstanceData.SIZE_TITLE14,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+          ),
+          child: Container(
+            child: TypeAheadFormField(
+              textFieldConfiguration: TextFieldConfiguration(
+                controller: _searchController,
+                textInputAction: TextInputAction.done,
+                textAlign: TextAlign.start,
+                keyboardType: TextInputType.text,
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
                 ),
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  physics: BouncingScrollPhysics(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16, left: 16),
-                      child: !_isInProgress
-                          ? Container(
-                              child: Form(
-                                key: _addEditQusFormKey,
-                                child: Column(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: appBarheight,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        InkWell(
-                                          highlightColor: Colors.transparent,
-                                          splashColor: Colors.transparent,
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Animator(
-                                            tween: Tween<Offset>(
-                                                begin: Offset(0, 0),
-                                                end: Offset(0.2, 0)),
-                                            duration:
-                                                Duration(milliseconds: 500),
-                                            cycles: 0,
-                                            builder: (anim) =>
-                                                FractionalTranslation(
-                                              translation: anim.value,
-                                              child: Icon(
-                                                Icons.arrow_back_ios,
-                                                color: AllCoustomTheme
-                                                    .getTextThemeColors(),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Animator(
-                                            duration:
-                                                Duration(milliseconds: 500),
-                                            curve: Curves.decelerate,
-                                            cycles: 1,
-                                            builder: (anim) => Transform.scale(
-                                              scale: anim.value,
-                                              child: Text(
-                                                'Ask a question',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: AllCoustomTheme
-                                                      .getTextThemeColors(),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData
-                                                      .SIZE_TITLE20,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 25,
-                                          width: 95,
-                                          decoration: BoxDecoration(
-                                            color:
-                                                AllCoustomTheme.getThemeData()
-                                                    .textSelectionColor,
-                                            border: Border.all(
-                                              color: Colors.white,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          child: _isClickOnSubmit
-                                              ? Container(
-                                                  color: Colors.white,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      right: 14,
-                                                    ),
-                                                    child:
-                                                        CupertinoActivityIndicator(
-                                                      radius: 12,
-                                                    ),
-                                                  ),
-                                                )
-                                              : MaterialButton(
-                                                  splashColor: Colors.grey,
-                                                  child: Text(
-                                                    "Preview",
-                                                    style: TextStyle(
-                                                      color: AllCoustomTheme
-                                                          .getTextThemeColors(),
-                                                      fontSize: ConstanceData
-                                                          .SIZE_TITLE12,
-                                                    ),
-                                                  ),
-                                                  onPressed: () {
-                                                    _submit();
-                                                  },
-                                                ),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-
-                                    // ques title section
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: CircleAvatar(
-                                            radius: 15.0,
-                                            backgroundImage: AssetImage(
-                                                'assets/download.jpeg'),
-                                            backgroundColor: Colors.transparent,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)),
-                                              color: AllCoustomTheme.boxColor(),
-                                            ),
-                                            child: TextFormField(
-                                              maxLines: 2,
-                                              controller: _qusTitleController,
-                                              validator: _validateTitle,
-                                              style: TextStyle(
-                                                fontSize:
-                                                    ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme
-                                                    .getTextThemeColors(),
-                                              ),
-                                              cursorColor: AllCoustomTheme
-                                                  .getTextThemeColors(),
-                                              onChanged: (value) {},
-                                              decoration: InputDecoration(
-                                                hintText:
-                                                    'Title of your question',
-                                                hintStyle: TextStyle(
-                                                  fontSize: ConstanceData
-                                                      .SIZE_TITLE16,
-                                                  color: AllCoustomTheme
-                                                      .getsecoundTextThemeColor(),
-                                                ),
-                                                border: InputBorder.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-
-                                    Visibility(
-                                      visible: !giveBounty,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          RaisedButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                giveBounty = !giveBounty;
-                                                _bountyController.text = "";
-                                              });
-                                            },
-                                            color: Colors.lightBlue,
-                                            child: Text(
-                                              "Add Bounty",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    //add bounty section
-                                    Visibility(
-                                      visible: giveBounty,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 0.0,
-                                          bottom: 8.0,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Container(
-                                              child: CircleAvatar(
-                                                radius: 15.0,
-                                                child:
-                                                    Icon(Icons.money_outlined),
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Expanded(
-                                              child: Container(
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(10),
-                                                  ),
-                                                  color: AllCoustomTheme
-                                                      .boxColor(),
-                                                ),
-                                                child: TextFormField(
-                                                  maxLines: 2,
-                                                  controller: _bountyController,
-                                                  validator: _validateTitle,
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  style: TextStyle(
-                                                    fontSize: ConstanceData
-                                                        .SIZE_TITLE16,
-                                                    color: AllCoustomTheme
-                                                        .getTextThemeColors(),
-                                                  ),
-                                                  cursorColor: AllCoustomTheme
-                                                      .getTextThemeColors(),
-                                                  onChanged: (value) {},
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Give bounty to Question(50-500 auro coins)',
-                                                    hintStyle: TextStyle(
-                                                      fontSize: 14,
-                                                      color: AllCoustomTheme
-                                                          .getsecoundTextThemeColor(),
-                                                    ),
-                                                    border: InputBorder.none,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0),
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    giveBounty = !giveBounty;
-                                                    _bountyController.text = "";
-                                                  });
-                                                },
-                                                icon: Icon(
-                                                  Icons.close_rounded,
-                                                ),
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Visibility(
-                                      visible:
-                                          _qusTitleController.text != null &&
-                                              _qusTitleController.text != "",
-                                      child: SizedBox(
-                                        height: 30,
-                                      ),
-                                    ),
-                                    // ques body section
-                                    Container(
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        color: AllCoustomTheme.boxColor(),
-                                      ),
-                                      child: TextFormField(
-                                        validator: _validateBody,
-                                        maxLines: null,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        controller: _qusBodyController,
-                                        focusNode: qusBodyFocusNode,
-                                        style: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE14,
-                                          color: AllCoustomTheme
-                                              .getTextThemeColors(),
-                                        ),
-                                        decoration: InputDecoration(
-                                          hintText: 'Type your question here..',
-                                          hintStyle: TextStyle(
-                                              fontSize:
-                                                  ConstanceData.SIZE_TITLE16,
-                                              color: AllCoustomTheme
-                                                  .getTextThemeColors()),
-                                          labelStyle: TextStyle(
-                                              fontSize:
-                                                  ConstanceData.SIZE_TITLE14,
-                                              color: AllCoustomTheme
-                                                  .getTextThemeColors()),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    // question Tags
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Search Question Tags',
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColors(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE16,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(top: 8.0),
-                                          child: TypeAheadFormField(
-                                            textFieldConfiguration:
-                                                TextFieldConfiguration(
-                                                    // onTap: () {
-                                                    //   print(
-                                                    //       "this got tapped hard");
-                                                    //   _scrollController
-                                                    //       .animateTo(
-                                                    //     0.0,
-                                                    //     curve: Curves.easeOut,
-                                                    //     duration:
-                                                    //         const Duration(
-                                                    //       milliseconds: 300,
-                                                    //     ),
-                                                    //   );
-                                                    // },
-                                                    controller:
-                                                        _searchController,
-                                                    textInputAction:
-                                                        TextInputAction.done,
-                                                    textAlign: TextAlign.start,
-                                                    keyboardType:
-                                                        TextInputType.text,
-                                                    maxLines: 1,
-                                                    style: TextStyle(
-                                                      fontSize: 16.0,
-                                                    ),
-                                                    inputFormatters: [
-                                                      LengthLimitingTextInputFormatter(
-                                                          30)
-                                                    ],
-                                                    decoration: InputDecoration(
-                                                      hintText:
-                                                          'Search Question Tags',
-                                                      border: OutlineInputBorder(
-                                                          borderSide: BorderSide(
-                                                              width: 1.0,
-                                                              color: AllCoustomTheme
-                                                                  .getTextThemeColors()),
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          0.0))),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1.0),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.white,
-                                                            width: 1.0),
-                                                      ),
-                                                      hintStyle: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 15.0,
-                                                      ),
-                                                    ),
-                                                    onSubmitted: (value) {
-                                                      // setState(() {
-                                                      //   itemList.add(TagData(
-                                                      //       _searchController
-                                                      //           .text,
-                                                      //       _searchController
-                                                      //           .text));
-                                                      //   tagListVisible =
-                                                      //       itemList.length == 0
-                                                      //           ? false
-                                                      //           : true;
-                                                      // });
-                                                      // _searchController.text =
-                                                      //     '';
-                                                    }),
-                                            suggestionsCallback:
-                                                (pattern) async {
-                                              print("pattern : $pattern");
-                                              return await _featuredCompaniesProvider
-                                                  .searchPublicCompanyList(
-                                                      pattern);
-                                              // if (pattern
-                                              //         .toString()
-                                              //         .trim()
-                                              //         .length <
-                                              //     2) {
-                                              //   return null;
-                                              // } else {
-                                              //   return searchItems(pattern);
-                                              // }
-                                            },
-                                            itemBuilder: (context, suggestion) {
-                                              // if (_searchController
-                                              //     .text.isNotEmpty) {
-                                              // print(suggestion);
-                                              return ListTile(
-                                                title: Text(
-                                                  suggestion["company_name"],
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              );
-                                              //   );
-                                              // } else
-                                              //   return Container();
-                                            },
-                                            transitionBuilder: (context,
-                                                suggestionsBox, controller) {
-                                              return suggestionsBox;
-                                            },
-                                            onSuggestionSelected: (suggestion) {
-                                              print(
-                                                  "suggestion: ${suggestion['ticker']}");
-                                              print(
-                                                  "suggestion name: ${suggestion['company_name']}");
-
-                                              _searchController.text = '';
-                                              setState(
-                                                () {
-                                                  itemList.add(
-                                                    TagData(
-                                                        suggestion['ticker'],
-                                                        suggestion[
-                                                            'company_name']),
-                                                  );
-                                                  tagListVisible =
-                                                      itemList.length == 0
-                                                          ? false
-                                                          : true;
-                                                },
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    /////////////question Tag list////////
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              top: 8.0,
-                                              bottom:
-                                                  tagListVisible ? 24.0 : 0.0),
-                                          child: StaggeredGridView.countBuilder(
-                                            itemCount: itemList != null
-                                                ? itemList.length
-                                                : 0,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            crossAxisCount: 2,
-                                            crossAxisSpacing: 8.0,
-                                            mainAxisSpacing: 8.0,
-                                            shrinkWrap: true,
-                                            staggeredTileBuilder: (int index) =>
-                                                StaggeredTile.fit(1),
-                                            itemBuilder: (context, index) {
-                                              return Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4.0),
-                                                    border: Border.all(
-                                                        color: Colors.grey,
-                                                        width: 1.0)),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0,
-                                                    vertical: 8.0),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Expanded(
-                                                      child: Text(
-                                                        '${itemList[index].tag}',
-                                                        style: TextStyle(
-                                                            color: AllCoustomTheme
-                                                                .getTextThemeColors(),
-                                                            fontSize:
-                                                                ConstanceData
-                                                                    .SIZE_TITLE16,
-                                                            fontStyle: FontStyle
-                                                                .normal,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                            height: 1.3),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10.0,
-                                                    ),
-                                                    InkWell(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            itemList.removeAt(
-                                                                index);
-                                                            tagListVisible =
-                                                                itemList.length ==
-                                                                        0
-                                                                    ? false
-                                                                    : true;
-                                                          });
-                                                        },
-                                                        child: Icon(
-                                                          Icons.close,
-                                                          color: AllCoustomTheme
-                                                              .getTextThemeColors(),
-                                                          size: 15.0,
-                                                        ))
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // keyboard actions
-                                  ],
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
+                inputFormatters: [LengthLimitingTextInputFormatter(30)],
+                decoration: textFieldInputDecoration("Search topic tags", ""),
+              ),
+              suggestionsCallback: (pattern) async {
+                print("pattern : $pattern");
+                return await _featuredCompaniesProvider
+                    .searchPublicCompanyList(pattern);
+              },
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(
+                    suggestion["company_name"],
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
                   ),
-                ),
-              ),
-            ))
+                );
+              },
+              transitionBuilder: (context, suggestionsBox, controller) {
+                return suggestionsBox;
+              },
+              onSuggestionSelected: (suggestion) {
+                print("suggestion: ${suggestion['ticker']}");
+                print("suggestion name: ${suggestion['company_name']}");
+
+                _searchController.text = '';
+                setState(
+                  () {
+                    itemList.add(
+                      TagData(suggestion['ticker'], suggestion['company_name']),
+                    );
+                    tagListVisible = itemList.length == 0 ? false : true;
+                  },
+                );
+              },
+            ),
+          ),
+        ),
       ],
     );
   }
 
-  _submit() async {
-    setState(() {
-      _isClickOnSubmit = true;
-    });
-    await Future.delayed(const Duration(milliseconds: 700));
+  showAllSelectedTags() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: tagListVisible,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 20.0,
+                bottom: 8.0,
+              ),
+              child: Text(
+                'Topic Tags',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 8.0,
+              bottom: tagListVisible ? 24.0 : 0.0,
+            ),
+            child: StaggeredGridView.countBuilder(
+              itemCount: itemList != null ? itemList.length : 0,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              shrinkWrap: true,
+              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(
+                      color: globals.isGoldBlack
+                          ? Color(0xFFD8AF4F)
+                          : Color(0xFF1D6177),
+                      width: 1.0,
+                    ),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          '${itemList[index].tag}',
+                          style: TextStyle(
+                            color: globals.isGoldBlack
+                                ? Color(0xFFD8AF4F)
+                                : Color(0xFF1D6177),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.normal,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            itemList.removeAt(index);
+                            tagListVisible =
+                                itemList.length == 0 ? false : true;
+                          });
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: globals.isGoldBlack
+                              ? Color(0xFFD8AF4F)
+                              : Color(0xFF1D6177),
+                          size: 15.0,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        bottom: true,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Container(
+              child: Form(
+                key: _addEditQusFormKey,
+                child: Column(
+                  children: <Widget>[
+                    ScreenTitleAppbar(
+                      title: "ASK A QUESTION",
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFieldWithTitle(
+                      title: "Title",
+                      isMust: false,
+                      height: 60,
+                      hintText: "Enter title of your question",
+                      labelText: "",
+                      controller: _qusTitleController,
+                      maxLines: 2,
+                      validator: _validateTitle,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    Visibility(
+                      visible: !giveBounty,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            RaisedButton(
+                              onPressed: () {
+                                setState(() {
+                                  giveBounty = !giveBounty;
+                                  _bountyController.text = "";
+                                });
+                              },
+                              color: globals.isGoldBlack
+                                  ? Color(0xFF1A3263)
+                                  : Color(0xFF7499C6),
+                              child: Text(
+                                "Add Bounty",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.help_outline_rounded,
+                              color: globals.isGoldBlack
+                                  ? Color(0xFF1A3263)
+                                  : Color(0xFF7499C6),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    // add bounty section
+                    Visibility(
+                      visible: giveBounty,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              "Set bounty",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: ConstanceData.SIZE_TITLE14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    height: 60,
+                                    child: TextFormField(
+                                      maxLines: 1,
+                                      controller: _bountyController,
+                                      validator: _validateBounty,
+                                      keyboardType: TextInputType.number,
+                                      style: TextStyle(
+                                        fontSize: ConstanceData.SIZE_TITLE16,
+                                        color: Colors.black,
+                                      ),
+                                      cursorColor: Colors.black,
+                                      decoration: textFieldInputDecoration(
+                                        "Give bounty to Question(50-500 auro coins)",
+                                        "",
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4.0),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        giveBounty = !giveBounty;
+                                        _bountyController.text = "";
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.delete_forever,
+                                    ),
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    TextFieldWithTitle(
+                      title: "Question",
+                      isMust: false,
+                      height: 120,
+                      hintText: "Enter Your Question Here",
+                      labelText: "",
+                      controller: _qusBodyController,
+                      maxLines: 10,
+                      validator: _validateBody,
+                    ),
+
+                    SizedBox(
+                      height: 20,
+                    ),
+                    topicTags(),
+                    showAllSelectedTags(),
+                    CustomButton(
+                      textColor: globals.isGoldBlack
+                          ? Color(0xFFD8AF4F)
+                          : Color(0xFF1D6177),
+                      borderColor: globals.isGoldBlack
+                          ? Color(0xFFD8AF4F)
+                          : Color(0xFF1D6177),
+                      color: Colors.white,
+                      text: "Preview",
+                      callback: _preview,
+                    ),
+                    CustomButton(
+                      textColor: Colors.white,
+                      borderColor: globals.isGoldBlack
+                          ? Color(0xFFD8AF4F)
+                          : Color(0xFF1D6177),
+                      color: globals.isGoldBlack
+                          ? Color(0xFFD8AF4F)
+                          : Color(0xFF1D6177),
+                      text: "Submit",
+                      callback: _submit,
+                    ),
+                    // keyboard actions
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _preview() async {
+    // setState(() {
+    //   _isClickOnSubmit = true;
+    // });
+    // await Future.delayed(const Duration(milliseconds: 700));
     if (_addEditQusFormKey.currentState.validate() == false) {
-      setState(() {
-        _isClickOnSubmit = false;
-      });
+      // setState(() {
+      //   _isClickOnSubmit = false;
+      // });
       return;
     }
 
@@ -910,9 +554,9 @@ class _AddEditQusState extends State<AddEditQus> {
           : 0,
     };
 
-    setState(() {
-      _isClickOnSubmit = false;
-    });
+    // setState(() {
+    //   _isClickOnSubmit = false;
+    // });
 
     Navigator.of(context).push(
       CupertinoPageRoute(
@@ -921,9 +565,74 @@ class _AddEditQusState extends State<AddEditQus> {
     );
   }
 
+  _submit() async {
+    if (_addEditQusFormKey.currentState.validate() == false) {
+      return;
+    }
+
+    Map<String, String> tagData = {};
+
+    for (var i = 0; i < itemList.length; i++) {
+      tagData.addAll({"${itemList[i].id}": '${itemList[i].tag}'});
+    }
+
+    print("tags: $tagData");
+
+    var tempJsonReq = {
+      "question_title": _qusTitleController.text,
+      "body": _qusBodyController.text,
+      "tags": tagData,
+      "bounty": _bountyController.text.isNotEmpty
+          ? int.parse(_bountyController.text)
+          : 0,
+    };
+    String jsonReq = json.encode(tempJsonReq);
+
+    print("jsonReq: $jsonReq");
+
+    var jsonReqResp =
+        await request.postSubmit('forum/create_question', jsonReq);
+    var result = json.decode(jsonReqResp.body);
+
+    print("qus add/edit response: $result");
+
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true &&
+          result["message"]["message"] == "Question created successfully") {
+        // ${result['message']}
+        Toast.show(result["message"]["message"], context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            ModalRoute.withName("/Home"));
+      } else {
+        Toast.show(result["message"]["message"], context,
+            duration: 3, gravity: Toast.BOTTOM);
+      }
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
+      Toast.show("oops! question not added", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    } else {
+      Toast.show("Something went wrong!", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    }
+  }
+
   String _validateTitle(value) {
     if (value.isEmpty) {
       return "Title cannot be empty";
+    }
+    return null;
+  }
+
+  String _validateBounty(value) {
+    if (value.isEmpty) {
+      return "Bounty should be 0 or from 50-500";
     }
     return null;
   }
@@ -962,9 +671,6 @@ extension SmartTextStyle on SmartTextType {
 
   EdgeInsets get padding {
     switch (this) {
-/*      case SmartTextType.BOLD:
-        return EdgeInsets.fromLTRB(16, 24, 16, 8);
-        break;*/
       case SmartTextType.BULLET:
         return EdgeInsets.fromLTRB(24, 8, 16, 8);
       default:
@@ -989,198 +695,5 @@ extension SmartTextStyle on SmartTextType {
         break;
       default:
     }
-  }
-}
-
-class SmartTextField extends StatelessWidget {
-  const SmartTextField({Key key, this.type, this.controller, this.focusNode})
-      : super(key: key);
-
-  final SmartTextType type;
-  final TextEditingController controller;
-  final FocusNode focusNode;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-        controller: controller,
-        focusNode: focusNode,
-        autofocus: true,
-        keyboardType: TextInputType.multiline,
-        maxLines: null,
-        cursorColor: Colors.teal,
-        textAlign: type.align,
-        decoration: InputDecoration(
-            border: InputBorder.none,
-            prefixText: type.prefix,
-            prefixStyle: type.textStyle,
-            isDense: true,
-            contentPadding: type.padding),
-        style: type.textStyle);
-  }
-}
-
-class Toolbar extends StatelessWidget {
-  const Toolbar({Key key, this.onSelected, this.selectedType})
-      : super(key: key);
-
-  final SmartTextType selectedType;
-  final ValueChanged<SmartTextType> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(56),
-      child: Material(
-          elevation: 4.0,
-          color: AllCoustomTheme.boxColor(),
-          child: Row(children: <Widget>[
-            InkWell(
-              onTap: () {
-                onSelected(SmartTextType.ITALIC);
-              },
-              child: Container(
-                child: Icon(
-                  FontAwesomeIcons.italic,
-                  color: selectedType == SmartTextType.ITALIC
-                      ? Colors.teal
-                      : Colors.grey,
-                  size: MediaQuery.of(context).size.width * 0.05,
-                ),
-              ),
-            ),
-            IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.bold,
-                  color: selectedType == SmartTextType.BOLD
-                      ? Colors.teal
-                      : Colors.grey,
-                  size: MediaQuery.of(context).size.width * 0.05,
-                ),
-                onPressed: () => onSelected(SmartTextType.BOLD)),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.link,
-                color: Colors.grey,
-                size: MediaQuery.of(context).size.width * 0.05,
-              ),
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.virus,
-                color: Colors.grey,
-                size: MediaQuery.of(context).size.width * 0.05,
-              ),
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.book,
-                color: Colors.grey,
-                size: MediaQuery.of(context).size.width * 0.05,
-              ),
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.fileVideo,
-                color: Colors.grey,
-                size: MediaQuery.of(context).size.width * 0.05,
-              ),
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.image,
-                color: Colors.grey,
-                size: MediaQuery.of(context).size.width * 0.05,
-              ),
-            )
-          ])),
-    );
-  }
-}
-
-class EditorProvider extends ChangeNotifier {
-  List<FocusNode> _nodes = [];
-  List<TextEditingController> _text = [];
-  List<SmartTextType> _types = [];
-  SmartTextType selectedType;
-
-  EditorProvider({SmartTextType defaultType = SmartTextType.T}) {
-    selectedType = defaultType;
-    insert(index: 0);
-  }
-
-  int get length => _text.length;
-
-  int get focus => _nodes.indexWhere((node) => node.hasFocus);
-
-  FocusNode nodeAt(int index) => _nodes.elementAt(index);
-
-  TextEditingController textAt(int index) => _text.elementAt(index);
-
-  SmartTextType typeAt(int index) => _types.elementAt(index);
-
-  void setType(SmartTextType type) {
-    if (selectedType == type) {
-      selectedType = SmartTextType.T;
-    } else {
-      selectedType = type;
-    }
-    _types.removeAt(focus);
-    _types.insert(focus, selectedType);
-    notifyListeners();
-  }
-
-  void setFocus(SmartTextType type) {
-    selectedType = type;
-    notifyListeners();
-  }
-
-  void insert({int index, String text, SmartTextType type = SmartTextType.T}) {
-    /*final TextEditingController controller = TextEditingController(
-        text: text?? ''
-    );
-    controller.addListener(() {
-      // TODO
-    });
-    _text.insert(index, controller);
-    _types.insert(index, type);
-    _nodes.insert(index, FocusNode());*/
-
-    final TextEditingController controller =
-        TextEditingController(text: '\u200B' + (text ?? ''));
-    controller.addListener(() {
-      if (!controller.text.startsWith('\u200B')) {
-        final int index = _text.indexOf(controller);
-        if (index > 0) {
-          textAt(index - 1).text += controller.text;
-          textAt(index - 1).selection = TextSelection.fromPosition(TextPosition(
-              offset: textAt(index - 1).text.length - controller.text.length));
-          nodeAt(index - 1).requestFocus();
-          _text.removeAt(index);
-          _nodes.removeAt(index);
-          _types.removeAt(index);
-          notifyListeners();
-        }
-      }
-      if (controller.text.contains('\n')) {
-        final int index = _text.indexOf(controller);
-        List<String> _split = controller.text.split('\n');
-        controller.text = _split.first;
-        insert(
-            index: index + 1,
-            text: _split.last,
-            type: typeAt(index) == SmartTextType.BULLET
-                ? SmartTextType.BULLET
-                : SmartTextType.T);
-        textAt(index + 1).selection =
-            TextSelection.fromPosition(TextPosition(offset: 1));
-        nodeAt(index + 1).requestFocus();
-        notifyListeners();
-      }
-    });
-
-    _text.insert(index, controller);
-    _types.insert(index, type);
-    _nodes.insert(index, FocusNode());
   }
 }

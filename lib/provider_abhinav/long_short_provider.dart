@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 class LongShortProvider with ChangeNotifier {
   var proConsForPublicCompany;
   List finbertArticles;
+  var longShortComments;
 
   getProConsForPublicCompany(ticker) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,6 +37,35 @@ class LongShortProvider with ChangeNotifier {
         proConsForPublicCompany = result["message"];
         notifyListeners();
       }
+    }
+  }
+
+  getComments(ticker) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+
+    String filterPath = "long_short/get_all_comments";
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken'
+    };
+
+    String url = GlobalInstance.apiBaseUrl + filterPath;
+    print("get comments url: $url");
+    // print("session token: $sessionToken");
+
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode({"ticker": ticker}),
+    );
+    print("get long short comments response: ${jsonDecode(response.body)}");
+    var result = jsonDecode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      longShortComments = result["message"];
+      notifyListeners();
     }
   }
 

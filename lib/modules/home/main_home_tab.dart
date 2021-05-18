@@ -1627,7 +1627,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                             onTap: () {
                               Navigator.of(context).push(
                                 // MaterialPageRoute(
-                                //   builder: (context) => PaymentPurchaseScreen(),
+                                //   builder: (context) => InvestorType(),
                                 // ),
                                 MaterialPageRoute(
                                   builder: (context) => FullListOfSecurities(
