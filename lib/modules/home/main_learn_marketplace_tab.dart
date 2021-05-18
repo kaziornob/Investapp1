@@ -5,6 +5,7 @@ import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/home/investment_masterclass.dart';
+import 'package:auroim/investment_masterclass/retail_learn_tab.dart';
 import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
 import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
@@ -226,7 +227,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
 
     return SingleChildScrollView(
       controller: _scrollController,
-      child: Column(
+      child: globals.isGoldBlack ? RetailLeanTab() : Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(
@@ -411,9 +412,9 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
-                    color: AllCoustomTheme.getHeadingThemeColors(),
-                    width: 1.0, // Underline width
-                  ))),
+                            color: AllCoustomTheme.getHeadingThemeColors(),
+                            width: 1.0, // Underline width
+                          ))),
                 ),
                 SizedBox(
                   height: 4,
@@ -450,7 +451,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                               right: MediaQuery.of(context).size.width * 0.10,
                               top: MediaQuery.of(context).size.height * 0.04,
                               bottom:
-                                  MediaQuery.of(context).size.height * 0.04),
+                              MediaQuery.of(context).size.height * 0.04),
                           decoration: new BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
@@ -568,11 +569,11 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                     DoughnutSeries<ChartData, String>(
                                       dataSource: renderedChartData,
                                       pointColorMapper: (ChartData data, _) =>
-                                          data.color,
+                                      data.color,
                                       xValueMapper: (ChartData data, _) =>
-                                          data.x,
+                                      data.x,
                                       yValueMapper: (ChartData data, _) =>
-                                          data.y,
+                                      data.y,
                                       dataLabelSettings: DataLabelSettings(
                                         showZeroValue: true,
                                         isVisible: true,
@@ -586,8 +587,8 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           top: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
+                                              .size
+                                              .height *
                                               0.11),
                                       child: Column(
                                         children: [
@@ -599,7 +600,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                 color: AllCoustomTheme
                                                     .getTextThemeColor(),
                                                 fontSize:
-                                                    ConstanceData.SIZE_TITLE16,
+                                                ConstanceData.SIZE_TITLE16,
                                                 fontFamily: "Roboto",
                                                 package: 'Roboto-Regular',
                                               ),
@@ -613,7 +614,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                 color: AllCoustomTheme
                                                     .getTextThemeColor(),
                                                 fontSize:
-                                                    ConstanceData.SIZE_TITLE16,
+                                                ConstanceData.SIZE_TITLE16,
                                                 fontFamily: "Roboto",
                                                 package: 'Roboto-Regular',
                                               ),
@@ -650,7 +651,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                   .getsecoundTextThemeColor(),
                                               fontWeight: FontWeight.bold,
                                               fontSize:
-                                                  ConstanceData.SIZE_TITLE16,
+                                              ConstanceData.SIZE_TITLE16,
                                               fontFamily: "Roboto",
                                               package: 'Roboto-Regular',
                                             ),
@@ -685,7 +686,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize:
-                                                ConstanceData.SIZE_TITLE15,
+                                            ConstanceData.SIZE_TITLE15,
                                             fontFamily: "Roboto",
                                             package: 'Roboto-Regular',
                                           ),
@@ -749,7 +750,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                               color: AllCoustomTheme.getsecoundTextThemeColor(),
                               border: Border.all(
                                 color:
-                                    AllCoustomTheme.getsecoundTextThemeColor(),
+                                AllCoustomTheme.getsecoundTextThemeColor(),
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.all(
@@ -1356,16 +1357,16 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                             Container(
                               margin: EdgeInsets.only(
                                   right:
-                                      MediaQuery.of(context).size.width * 0.42),
+                                  MediaQuery.of(context).size.width * 0.42),
                               padding: EdgeInsets.only(
                                 bottom: 3, // space between underline and text
                               ),
                               decoration: BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
-                                color: AllCoustomTheme.getHeadingThemeColors(),
-                                width: 1.0, // Underline width
-                              ))),
+                                        color: AllCoustomTheme.getHeadingThemeColors(),
+                                        width: 1.0, // Underline width
+                                      ))),
                             ),
                           ],
                         ),
@@ -1410,11 +1411,11 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                                 radius: 25.0,
                                                 backgroundImage: index == 0
                                                     ? new AssetImage(
-                                                        'assets/filledweeklyAuroBadge.png')
+                                                    'assets/filledweeklyAuroBadge.png')
                                                     : new AssetImage(
-                                                        'assets/weeklyAuroBadge.png'),
+                                                    'assets/weeklyAuroBadge.png'),
                                                 backgroundColor:
-                                                    Colors.transparent,
+                                                Colors.transparent,
                                               ),
                                               Positioned(
                                                 bottom: 25,
@@ -1499,7 +1500,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                               // margin: EdgeInsets.only(right: 210.0),
                               margin: EdgeInsets.only(
                                   right:
-                                      MediaQuery.of(context).size.width * 0.55),
+                                  MediaQuery.of(context).size.width * 0.55),
                               padding: EdgeInsets.only(
                                 bottom: 3, // space between underline and text
                               ),
@@ -1507,7 +1508,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                 border: Border(
                                   bottom: BorderSide(
                                     color:
-                                        AllCoustomTheme.getHeadingThemeColors(),
+                                    AllCoustomTheme.getHeadingThemeColors(),
                                     width: 1.0, // Underline width
                                   ),
                                 ),
@@ -1537,7 +1538,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
                                   labelStyle: AllCoustomTheme
                                       .getDropDownFieldLabelStyleTheme(),
                                   errorText:
-                                      state.hasError ? state.errorText : null,
+                                  state.hasError ? state.errorText : null,
                                 ),
                                 isEmpty: selectedWeeklyLeague == '',
                                 child: new DropdownButtonHideUnderline(

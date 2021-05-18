@@ -1,31 +1,25 @@
-import 'dart:math';
+
 import 'dart:ui';
 
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/api/future_return.dart';
 import 'package:auroim/api/reusable_functions.dart';
-import 'package:auroim/auth/investorType.dart';
 import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/bussPost/wishList.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/golive_screen.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
-import 'package:auroim/widgets/crypto_coin_price_data.dart';
 import 'package:auroim/widgets/full_list_of_portfolio.dart';
 import 'package:auroim/widgets/payment_pages/payment_purchase.dart';
-import 'package:auroim/widgets/payment_pages/payment_types.dart';
 import 'package:auroim/widgets/public_company/auro_paper_portfolio_performance.dart';
 import 'package:auroim/widgets/small_get_area_chart_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -152,38 +146,6 @@ class _MainHomeTabState extends State<MainHomeTab> {
         if (portfolioProvider.portfolioData != null) {
           homeDonutArray = [1, 2, 3, 4, 5, 6, 7];
           setHomeDoughnutChartData(portfolioProvider.portfolioData);
-
-          // var allPriceData = [];
-          // var allPriceUsDollar = [];
-          // var allReturnPerc = [];
-          // portfolioProvider.dailyPortfolioReturnData.forEach((element) {
-          //   DateTime date =
-          //       DateFormat("yyyy-MM-ddTHH:mm:ss").parse(element["date"]);
-          //   if (element["cumm_return_perc"] != null) {
-          //     allPriceData.add(
-          //       CryptoCoinPriceData(
-          //           x: date, y: element["cumm_return_perc"] * 100),
-          //     );
-          //     allPriceUsDollar.add(
-          //       CryptoCoinPriceData(x: date, y: element["cumm_return"]),
-          //     );
-          //     allReturnPerc.add(
-          //       CryptoCoinPriceData(x: date, y: element["daily_return"]),
-          //     );
-          //   }
-          // });
-
-          // var inception_to_date_return_pct = allPriceData.length == 0
-          //     ? 0.0
-          //     : allPriceData[allPriceData.length - 1].y;
-          // var inception_to_date_return_dollar =
-          //     inception_to_date_return_pct * 1000000;
-          // DateTime date_of_creation =
-          //     allPriceData.length == 0 ? DateTime.now() : allPriceData[0].x;
-          // var days_diff = DateTime.now().difference(date_of_creation).inDays;
-          // print("days diff : " + days_diff.toString());
-          // var inceptionToDateAnnualizedReturnPct =
-          //     (pow(1 + inception_to_date_return_pct, (365 / days_diff)) - 1);
           return SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Column(

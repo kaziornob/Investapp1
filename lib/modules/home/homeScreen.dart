@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen>
           bottom: true,
           child: Scaffold(
             key: _homeScaffoldKey,
-            appBar: isSelect1 || isSelect2 || isSelect4 || isSelect5
+            appBar: isSelect1 || isSelect2 || isSelect4
                 ? PreferredSize(
                     preferredSize: Size.fromHeight(65.0),
                     child: AppBar(

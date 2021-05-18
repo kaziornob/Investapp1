@@ -57,6 +57,7 @@ class _StockPitchState extends State<StockPitch> {
   String selectedStockId;
   String selectedLongShort;
   String docUrl;
+  String videoUrl;
   String fileName;
   String path;
   Map<String, String> paths;
@@ -81,6 +82,56 @@ class _StockPitchState extends State<StockPitch> {
     setState(() {
       _isInProgress = false;
     });
+  }
+
+  Future<bool> _openVideoExplorer() async {
+    try {
+      path = await FilePicker.getFilePath(
+        type: FileType.video,
+      );
+      if (path != null) {
+        print(path);
+        setState(() {
+          isLoadingPath = true;
+        });
+        Toast.show(
+          "Uploading Video...",
+          context,
+        );
+        // get file from path and convert to byteData to send to aws
+        File file = File(path);
+        if (await file.length() == 0) {
+          return false;
+        }
+        Uint8List bytesData = file.readAsBytesSync();
+        videoUrl = await awsClient.uploadData(
+          "Stock-Security Pitch",
+          DateTime.now().toIso8601String(),
+          bytesData,
+        );
+        //return true only when url is got
+        if (videoUrl != null && videoUrl != "") {
+          Toast.show(
+            "Video Uploaded !! ",
+            context,
+            duration: 3,
+          );
+          setState(() {
+            isLoadingPath = false;
+            fileName = path;
+          });
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } on PlatformException catch (err) {
+      //on error return false
+      print("Unsupported operation" + err.toString());
+      return false;
+    }
   }
 
   Future<bool> _openFileExplorer() async {
@@ -906,7 +957,7 @@ class _StockPitchState extends State<StockPitch> {
                             child: uploadButton("Upload pitch document"),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: _openVideoExplorer,
                             child: uploadButton("Upload pitch video"),
                           ),
                         ],
