@@ -189,9 +189,9 @@ class AWSClient {
   }
 
   Future<File> downloadFile(String url1, String filename) async {
-    String url =
-        "https://auro-invest.s3-us-west-2.amazonaws.com/Stock-Security+Pitch%2F2021-05-13T11%3A10%3A00.822912";
-    var request = await httpClient.getUrl(Uri.parse(url));
+    // String url =
+    //     "https://auro-invest.s3-us-west-2.amazonaws.com/Stock-Security+Pitch%2F2021-05-13T11%3A10%3A00.822912";
+    var request = await httpClient.getUrl(Uri.parse(url1));
     var response = await request.close();
     var bytes = await consolidateHttpClientResponseBytes(response);
     String dir = (await getApplicationDocumentsDirectory()).path;

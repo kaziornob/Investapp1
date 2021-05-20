@@ -148,7 +148,8 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                                 "Downloading...",
                                 context,
                               );
-                              File file = await awsClient.downloadFile("",
+                              File file = await awsClient.downloadFile(
+                                  widget.stockPitchData["docUrl"],
                                   "auro_stock_pitch${widget.stockPitchData["pitch_number"]}");
                               if (await file.length() != 0) {
                                 Toast.show(

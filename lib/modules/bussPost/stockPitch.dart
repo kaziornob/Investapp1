@@ -164,16 +164,16 @@ class _StockPitchState extends State<StockPitch> {
           return false;
         }
         Uint8List bytesData = file.readAsBytesSync();
-        docUrl = await awsClient.fileUploadMultipart(
-          file: file,
-          folderName: "Stock-Security Pitch",
-          fileName: DateTime.now().toIso8601String(),
-        );
-        // docUrl = await awsClient.uploadData(
-        //   "Stock-Security Pitch",
-        //   DateTime.now().toIso8601String(),
-        //   bytesData,
+        // docUrl = await awsClient.fileUploadMultipart(
+        //   file: file,
+        //   folderName: "Stock-Security Pitch",
+        //   fileName: DateTime.now().toIso8601String(),
         // );
+        docUrl = await awsClient.uploadData(
+          "Stock-Security Pitch",
+          DateTime.now().toIso8601String(),
+          bytesData,
+        );
         //return true only when url is got
         if (docUrl != null && docUrl != "") {
           Toast.show(
