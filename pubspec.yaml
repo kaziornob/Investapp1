@@ -69,6 +69,7 @@ dependencies:
   super_tooltip: ^0.9.6
   http_auth: ^0.3.1
   url_launcher: ^5.7.10
+  flutter_rating_bar:
   auto_size_text: ^2.1.0
   #  keyboard_actions: 3.3.1+1
   #  flutter_markdown: 0.5.2
@@ -127,9 +128,19 @@ flutter:
         - asset: fonts/Ubuntu-Medium.ttf
         - asset: fonts/Ubuntu-MediumItalic.ttf
         - asset: fonts/Ubuntu-Regular.ttf
+
     - family: Rosarivo
       fonts:
         - asset: fonts/Rosarivo-Regular.ttf
+    - family: RosarioMedium
+      fonts:
+        - asset: fonts/Rosario-Medium.ttf
+    - family: RosarioRegular
+      fonts:
+        - asset: fonts/Rosario-Regular.ttf
+    - family: RosarioSemiBold
+      fonts:
+        - asset: fonts/Rosario-SemiBold.ttf
     - family: Rasa
       fonts:
         - asset: fonts/Rasa-Light.ttf

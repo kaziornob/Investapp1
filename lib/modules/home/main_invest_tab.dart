@@ -27,7 +27,7 @@ class _MainInvestTabState extends State<MainInvestTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SearchFirstPage(),
+          SearchFirstPage(callingFrom: "",),
           // personal sleeve section
           PersonalSleeve(
             goToPersonalSleeveCallback: () {

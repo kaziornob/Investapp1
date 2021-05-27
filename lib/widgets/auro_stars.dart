@@ -15,6 +15,7 @@ class _AuroStarsState extends State<AuroStars> {
 
   @override
   void initState() {
+    print("Auro stars init");
     controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
           "https://www.youtube.com/watch?v=XgZMW7es3KY&t=4s"),

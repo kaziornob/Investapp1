@@ -17,6 +17,12 @@ class _PublicCompaniesListState extends State<PublicCompaniesList> {
       FeaturedCompaniesProvider();
 
   @override
+  void initState() {
+    print("Public companies listed init");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _featuredCompaniesProvider.getPublicCompanyList(),

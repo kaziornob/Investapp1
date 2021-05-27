@@ -26,7 +26,7 @@ class _SampleFeaturedCompaniesListState
       child: FutureBuilder(
         future: getData(),
         builder: (context, snapshot) {
-          print(snapshot.data);
+          // print(snapshot.data);
           if (snapshot.hasData) {
             return dd(snapshot.data);
           } else {
@@ -61,7 +61,7 @@ class _SampleFeaturedCompaniesListState
   }
 
   getData() async {
-    print("in get data");
+    print("sample featured in get data");
     var tempJsonReq = {};
 
     String jsonReq = jsonEncode(tempJsonReq);

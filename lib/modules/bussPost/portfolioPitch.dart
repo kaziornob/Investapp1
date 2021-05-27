@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
@@ -6,14 +7,18 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/dialog_widgets/dialog1.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
+import 'package:auroim/provider_abhinav/progress.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
+import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/search_security.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../reusable_widgets/customButton.dart';
@@ -34,6 +39,8 @@ class PortfolioPitch extends StatefulWidget {
 class _PortfolioPitchState extends State<PortfolioPitch> {
   double stockHeight = 0.0;
   List tagList = List();
+  LinearGradient progressGradient;
+  AWSClient awsClient = AWSClient();
   bool tagListVisible = false;
   List<TagData> itemList = List();
   List<TextEditingController> listOfWeightControllers = [];
@@ -51,6 +58,10 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
 
   List<SecurityOption> securityList = [];
   int _optionIndex = 1;
+  String videoUrl;
+  String fileName;
+  String path;
+  bool isLoadingPath = false;
 
   String selectedLongShort;
 
@@ -63,6 +74,96 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
     }
 
     return resultList;
+  }
+
+  uploadButton(text) {
+    return Container(
+      width: (MediaQuery.of(context).size.width / 2) - 20,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.0),
+        border: Border.all(
+          color: globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF1D6177),
+          width: 1.0,
+        ),
+      ),
+      padding: EdgeInsets.all(
+        8.0,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                color:
+                    globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF1D6177),
+                fontSize: 14,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<bool> _openVideoExplorer() async {
+    try {
+      path = await FilePicker.getFilePath(
+        type: FileType.video,
+      );
+      if (path != null) {
+        print(path);
+        setState(() {
+          isLoadingPath = true;
+        });
+        Toast.show(
+          "Uploading Video...",
+          context,
+        );
+        // get file from path and convert to byteData to send to aws
+        File file = File(path);
+        if (await file.length() == 0) {
+          return false;
+        }
+        // Uint8List bytesData = file.readAsBytesSync();
+        // videoUrl = await awsClient.fileUploadMultipart(
+        //  file: file,
+        // );
+        // var videoUrl = await awsClient.getUploadUrl();
+        String extension =
+            path.split("/")[path.split("/").length - 1].split(".")[1];
+        videoUrl = await awsClient.uploadFile(file, "." + extension, context);
+        // videoUrl = await awsClient.uploadData(
+        //   "Stock-Security Pitch",
+        //   DateTime.now().toIso8601String(),
+        //   bytesData,
+        // );
+        //return true only when url is got
+        if (videoUrl != null && videoUrl != "") {
+          Toast.show(
+            "Video Uploaded !! ",
+            context,
+            duration: 3,
+          );
+          setState(() {
+            isLoadingPath = false;
+            fileName = path;
+          });
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } on PlatformException catch (err) {
+      //on error return false
+      print("Unsupported operation" + err.toString());
+      return false;
+    }
   }
 
   void takeSecurityNumber(String text, String from, String itemId) {
@@ -148,6 +249,28 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                 ),
                 showListOfSelectedSecurities(),
                 addSecurity(),
+                GestureDetector(
+                  onTap: _openVideoExplorer,
+                  child: uploadButton("Upload pitch video"),
+                ),
+                Consumer<UploadDownloadProgress>(
+                  builder: (context, awsProgressProvider, _) {
+                    // print("${awsProgressProvider.percentage}" + "%");
+                    return awsProgressProvider.percentage == 100.0 ||
+                            awsProgressProvider.percentage == 0.0
+                        ? SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: progressBar(
+                                MediaQuery.of(context).size.width - 80,
+                                awsProgressProvider.percentage,
+                              ),
+                            ),
+                          );
+                  },
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -169,6 +292,23 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
           ),
         ),
       ),
+    );
+  }
+
+  progressBar(width, percent) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        LinearPercentIndicator(
+          // restartAnimation: false,
+          // animation: true,
+          percent: percent / 100,
+          linearGradient: progressGradient,
+          lineHeight: 9,
+          width: width,
+          trailing: Text("${percent.toString().split(".")[0]}%"),
+        ),
+      ],
     );
   }
 
@@ -215,13 +355,16 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Row(
                   children: [
-                    Text(
-                      title,
-                      style: new TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        color: Colors.black,
-                        fontSize: 18.0,
-                        letterSpacing: 0.1,
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: new TextStyle(
+                          fontFamily: "WorkSansSemiBold",
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          letterSpacing: 0.1,
+                        ),
+                        overflow: TextOverflow.clip,
                       ),
                     ),
                   ],
@@ -583,6 +726,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                           size: 20.0,
                           color: Colors.red,
                         ),
+                        onPressed: () {},
                       ),
                       onTap: () {
                         _showConfirmation('option', index);

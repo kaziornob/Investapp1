@@ -277,7 +277,7 @@ class _CryptoCoinBuyItemState extends State<CryptoCoinBuyItem> {
   }
 
   getCoinData(context) async {
-    print("in get data");
+    print("crypto coin in get data");
     print(widget.coinDetails["id"]);
     // var tempJsonReq = {"coin": "${coinDetails["id"]}"};
     //

@@ -14,6 +14,14 @@ class CryptoMarketplace extends StatefulWidget {
 }
 
 class _CryptoMarketplaceState extends State<CryptoMarketplace> {
+
+
+  @override
+  void initState() {
+    print("Crypto Marketplace init");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

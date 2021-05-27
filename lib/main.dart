@@ -20,6 +20,7 @@ import 'package:auroim/provider_abhinav/long_short_provider.dart';
 import 'package:auroim/provider_abhinav/personal_sleeve_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
+import 'package:auroim/provider_abhinav/progress.dart';
 import 'package:auroim/provider_abhinav/public_company_historical_pricing.dart';
 import 'package:auroim/provider_abhinav/search_all_securities_provider.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
@@ -27,6 +28,7 @@ import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
 import 'package:auroim/splash/SplashScreen.dart';
+import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -369,6 +371,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => CurrencyRateProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => UploadDownloadProgress(),
           ),
         ],
         child: MaterialApp(

@@ -1,3 +1,4 @@
+import 'package:auroim/investment_masterclass/style.dart';
 import 'package:auroim/reusable_widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -107,57 +108,66 @@ class _UserMasterclassProgressScreenState
   }
 
   singleBox(width, height, title, percent) {
-    return Material(
-      elevation: 5,
-      shape: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(width * 0.05),
-        borderSide: BorderSide(
-          color: Color(0xFFE8E7E7),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => StyleScreen(),
+          ),
+        );
+      },
+      child: Material(
+        elevation: 5,
+        shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(width * 0.05),
+          borderSide: BorderSide(
+            color: Color(0xFFE8E7E7),
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-              color: Color(0xFFE8E7E7),
-              borderRadius: BorderRadius.circular(width * 0.05),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            left: height / 2,
-            child: progressBar(width * 0.7, percent),
-          ),
-          Positioned(
-            top: height * 0.25,
-            left: ((height / 2) * 2) + 10,
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: "Roboto",
-                color: Colors.black,
+        child: Stack(
+          children: [
+            Container(
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                color: Color(0xFFE8E7E7),
+                borderRadius: BorderRadius.circular(width * 0.05),
               ),
             ),
-          ),
-          Positioned(
-            left: 2.0,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                radius: (height / 2) - 8,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                  radius: (height / 2) - 22,
-                  backgroundColor: Colors.white,
-                  backgroundImage: AssetImage("assets/play_button.png"),
+            Positioned(
+              bottom: 20,
+              left: height / 2,
+              child: progressBar(width * 0.7, percent),
+            ),
+            Positioned(
+              top: height * 0.25,
+              left: ((height / 2) * 2) + 10,
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: "Roboto",
+                  color: Colors.black,
                 ),
               ),
             ),
-          ),
-        ],
+            Positioned(
+              left: 2.0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  radius: (height / 2) - 8,
+                  backgroundColor: Colors.white,
+                  child: CircleAvatar(
+                    radius: (height / 2) - 22,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage("assets/play_button.png"),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

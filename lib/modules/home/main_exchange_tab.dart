@@ -1,4 +1,6 @@
 // import 'package:admob_flutter/admob_flutter.dart';
+import 'dart:convert';
+
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/reusable_functions.dart';
@@ -150,111 +152,12 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     );
                   },
                 )
-/*                GestureDetector(
-                  onTap: () {
-                    _scaffoldKey.currentState.openDrawer();
-                  },
-                  child: Icon(
-                    Icons.sort,
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
-                  ),
-                ),*/
-/*                Container(
-                  margin: EdgeInsets.only(left: 150),
-                  height: 30,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: AllCoustomTheme.getThemeData().textSelectionColor,
-                    border: new Border.all(color: Colors.white, width: 1.5),
-                  ),
-                  child: MaterialButton(
-                    splashColor: Colors.grey,
-                    child: Text(
-                      "Ask question",
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          builder: (BuildContext context) => AddEditQus(),
-                        ),
-                      );
-                    },
-                  ),
-                ),*/
               ],
             ),
           ),
           SizedBox(
             height: 10,
           ),
-/*          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  child: CircleAvatar(
-                    radius: 15.0,
-                    backgroundImage: new AssetImage('assets/download.jpeg'),
-                    backgroundColor: Colors.transparent,
-                  ),
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: AllCoustomTheme.boxColor(),
-                    ),
-                    child: TextFormField(
-                      style: TextStyle(
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        color: AllCoustomTheme.getTextThemeColors(),
-                      ),
-                      cursorColor: AllCoustomTheme.getTextThemeColors(),
-                      onChanged: (value) {
-                        filterSearchResults(value);
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        prefixIcon: Icon(
-                          Icons.search,
-                          size: 20,
-                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                        ),
-                        hintStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Container(
-                  child: CircleAvatar(
-                    radius: 15.0,
-                    backgroundImage: new AssetImage('assets/appIcon.jpg'),
-                    backgroundColor: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 4,
-          ),*/
           Container(
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(left: 10.0, right: 3.0),
@@ -596,114 +499,104 @@ class _MainExchangeTabState extends State<MainExchangeTab>
   }
 
   Widget trending() {
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              // height: MediaQuery.of(context).size.height * 0.50,
-              child: Scrollbar(
-                child: getQuestionsList(questionsList),
-              ),
-            ),
-          ),
-        ],
+    return FutureBuilder(
+      future: ApiProvider().postSubmit(
+        'forum/get_question_specific',
+        jsonEncode({"type": "coined"}),
       ),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          print(snapshot.data);
+          return Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height * 0.50,
+                    child: Scrollbar(
+                      child: getQuestionsList(snapshot.data['message']),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return Center(
+          child: Text('Fetching Data...'),
+        );
+      },
     );
-    // Container(
-    //   child: Padding(
-    //     padding: EdgeInsets.only(left: 20.0),
-    //     child: Text(
-    //       'Coming Soon... ',
-    //       textAlign: TextAlign.center,
-    //       style: TextStyle(
-    //         color: AllCoustomTheme.getTextThemeColor(),
-    //         fontSize: ConstanceData.SIZE_TITLE18,
-    //       ),
-    //     ),
-    //   ));
   }
 
   Widget week() {
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              // height: MediaQuery.of(context).size.height * 0.50,
-              child: Scrollbar(
-                child: getQuestionsList(questionsList),
-              ),
-            ),
-          ),
-        ],
+    return FutureBuilder(
+      future: ApiProvider().postSubmit(
+        'forum/get_question_specific',
+        jsonEncode({"type": "buzzing"}),
       ),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height * 0.50,
+                    child: Scrollbar(
+                      child: getQuestionsList(snapshot.data['message']),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return Center(
+          child: Text('No Data Available'),
+        );
+      },
     );
-    // return Container(
-    //     child: Padding(
-    //   padding: EdgeInsets.only(left: 20.0),
-    //   child: Text(
-    //     'Coming Soon... ',
-    //     textAlign: TextAlign.center,
-    //     style: TextStyle(
-    //       color: AllCoustomTheme.getTextThemeColor(),
-    //       fontSize: ConstanceData.SIZE_TITLE18,
-    //     ),
-    //   ),
-    // ));
+    ;
   }
 
   Widget month() {
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              // height: MediaQuery.of(context).size.height * 0.50,
-              child: Scrollbar(
-                child: getQuestionsList(questionsList),
-              ),
+    return FutureBuilder(
+      future: ApiProvider().postSubmit(
+        'forum/get_question_specific',
+        jsonEncode({"type": "Month"}),
+      ),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height * 0.50,
+                    child: Scrollbar(
+                      child: getQuestionsList(snapshot.data['message']),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
+          );
+        }
+        return Center(
+          child: Text('No Data Available'),
+        );
+      },
     );
-    // return Container(
-    //     child: Padding(
-    //   padding: EdgeInsets.only(left: 20.0),
-    //   child: Text(
-    //     'Coming Soon... ',
-    //     textAlign: TextAlign.center,
-    //     style: TextStyle(
-    //       color: AllCoustomTheme.getTextThemeColor(),
-    //       fontSize: ConstanceData.SIZE_TITLE18,
-    //     ),
-    //   ),
-    // ));
-  }
-
-  Widget weekly() {
-    return Container(
-        child: Padding(
-      padding: EdgeInsets.only(left: 20.0),
-      child: Text(
-        'Coming Soon... ',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: AllCoustomTheme.getTextThemeColors(),
-          fontSize: ConstanceData.SIZE_TITLE18,
-        ),
-      ),
-    ));
   }
 
   Widget recommended() {
@@ -737,11 +630,12 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      new Image(
-                          height: 70,
-                          width: 85.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/language.png')),
+                      Image(
+                        height: 70,
+                        width: 85.0,
+                        fit: BoxFit.fill,
+                        image: AssetImage('assets/language.png'),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -751,66 +645,72 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      new Image(
-                          height: 40,
-                          width: 40.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/android.png')),
+                      Image(
+                        height: 40,
+                        width: 40.0,
+                        fit: BoxFit.fill,
+                        image: AssetImage('assets/android.png'),
+                      ),
                       SizedBox(
                         width: 5,
                       ),
-                      new Image(
-                          height: 40,
-                          width: 40.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/askUbuntu.png')),
+                      Image(
+                        height: 40,
+                        width: 40.0,
+                        fit: BoxFit.fill,
+                        image: AssetImage('assets/askUbuntu.png'),
+                      ),
                     ],
                   )
                 ],
               )),
               Container(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      new Image(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image(
                           height: 40,
                           width: 40.0,
                           fit: BoxFit.fill,
-                          image: new AssetImage('assets/askUbuntu.png')),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      new Image(
+                          image: AssetImage('assets/askUbuntu.png'),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Image(
                           height: 40,
                           width: 40.0,
                           fit: BoxFit.fill,
-                          image: new AssetImage('assets/android.png')),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      new Image(
+                          image: AssetImage('assets/android.png'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image(
                           height: 70,
                           width: 85.0,
                           fit: BoxFit.fill,
-                          image: new AssetImage('assets/arqade.jpeg')),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                ],
-              )),
+                          image: AssetImage('assets/arqade.jpeg'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           SizedBox(
@@ -822,11 +722,12 @@ class _MainExchangeTabState extends State<MainExchangeTab>
             children: [
               Expanded(
                 child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.50,
-                    child: Scrollbar(
-                      child: getQuestionsList(questionsList),
-                    )),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.50,
+                  child: Scrollbar(
+                    child: getQuestionsList(questionsList),
+                  ),
+                ),
               ),
             ],
           ),
@@ -1091,7 +992,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
     } else {
       return Center(
           child: Text(
-        "No data available yet",
+        "Fetching Data",
         textAlign: TextAlign.center,
         style: new TextStyle(
           color: AllCoustomTheme.getTextThemeColor(),

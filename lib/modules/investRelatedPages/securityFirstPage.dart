@@ -56,7 +56,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
 
   @override
   void initState() {
-    _tabController = new TabController(vsync: this, length: tabList.length);
+    _tabController = TabController(vsync: this, length: tabList.length);
     super.initState();
     // loadDetails();
   }
@@ -71,6 +71,8 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
   @override
   void dispose() {
     _scrollController.dispose();
+
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -79,8 +81,8 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
     AppBar appBar = AppBar();
     double appBarheight = appBar.preferredSize.height;
     return FutureBuilder(
-      future: _featuredCompaniesProvider
-          .getSinglePublicCompanyData(widget.companyTicker,"all"),
+      future: _featuredCompaniesProvider.getSinglePublicCompanyData(
+          widget.companyTicker, "all"),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return dd(snapshot.data);
@@ -95,91 +97,92 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
     return Stack(
       children: <Widget>[
         SafeArea(
-            bottom: true,
-            child: Scaffold(
-              backgroundColor: Colors.white,
-              body: SingleChildScrollView(
-                controller: _scrollController,
-                // physics: BouncingScrollPhysics(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 2.3,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SinglePublicCompanyAppBar(
-                        companyName: data["company_name"] ,
-                        companyImageUrl: data["logo_img_name"],
-                      ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      SinglePublicCompanyHeader(
-                        marketCapital: data["market_cap_usd_mn"],
-                        netDebt: data["net_debt_usd_mn"],
-                        roe3yr: data["roe_3yr"],
-                        currency: data["currency"],
-                        equityBeta: data["equity_beta"],
-                        marketCapLocal: data["market_cap_local_mn"],
-                        fixRate: data["fx_rate"],
-                        ticker: data["ticker"],
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.only(left: 10.0, right: 3.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            TabBar(
-                              controller: _tabController,
-                              onTap: (index) {
-                                selectedTabIndex = index;
-                              },
-                              labelColor: Colors.black,
-                              labelStyle: TextStyle(
-                                fontSize: 17.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              indicatorColor:
-                                  AllCoustomTheme.getTextThemeColors(),
-                              indicatorWeight: 4.0,
-                              isScrollable: true,
-                              unselectedLabelColor: Colors.grey,
-                              tabs: <Widget>[
-                                Tab(text: 'Overview'),
-                                Tab(text: 'Debate'),
-                                Tab(text: 'Fundamental'),
-                                Tab(text: 'Technical'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                        // flex: 1,
-                        child: Container(
-                          // padding: EdgeInsets.only(top: 10.0),
-                          child: TabBarView(
+          bottom: true,
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+              controller: _scrollController,
+              // physics: BouncingScrollPhysics(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 2.3,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SinglePublicCompanyAppBar(
+                      companyName: data["company_name"],
+                      companyImageUrl: data["logo_img_name"],
+                    ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    SinglePublicCompanyHeader(
+                      marketCapital: data["market_cap_usd_mn"],
+                      netDebt: data["net_debt_usd_mn"],
+                      roe3yr: data["roe_3yr"],
+                      currency: data["currency"],
+                      equityBeta: data["equity_beta"],
+                      marketCapLocal: data["market_cap_local_mn"],
+                      fixRate: data["fx_rate"],
+                      ticker: data["ticker"],
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(left: 10.0, right: 3.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          TabBar(
                             controller: _tabController,
-                            children: tabList.map((Tab tab) {
-                              return _getPage(tab, data);
-                            }).toList(),
-                            physics: ScrollPhysics(),
+                            onTap: (index) {
+                              selectedTabIndex = index;
+                            },
+                            labelColor: Colors.black,
+                            labelStyle: TextStyle(
+                              fontSize: 17.0,
+                              letterSpacing: 0.2,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            indicatorColor:
+                                AllCoustomTheme.getTextThemeColors(),
+                            indicatorWeight: 4.0,
+                            isScrollable: true,
+                            unselectedLabelColor: Colors.grey,
+                            tabs: <Widget>[
+                              Tab(text: 'Overview'),
+                              Tab(text: 'Debate'),
+                              Tab(text: 'Fundamental'),
+                              Tab(text: 'Technical'),
+                            ],
                           ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      // flex: 1,
+                      child: Container(
+                        // padding: EdgeInsets.only(top: 10.0),
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: tabList.map((Tab tab) {
+                            return _getPage(tab, data);
+                          }).toList(),
+                          physics: ScrollPhysics(),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ))
+            ),
+          ),
+        ),
       ],
     );
   }

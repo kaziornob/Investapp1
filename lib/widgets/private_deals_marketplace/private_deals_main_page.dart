@@ -114,7 +114,7 @@ class _PrivateDealsMarketplaceMainPageState
   }
 
   getSearchData() async {
-    print("in get data");
+    print("private deals main page in get data");
     var tempJsonReq = {};
 
     String jsonReq = jsonEncode(tempJsonReq);

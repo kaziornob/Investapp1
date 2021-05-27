@@ -3,12 +3,19 @@ import 'dart:convert';
 import 'package:auroim/constance/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-// import 'package:toast/toast.dart';
 
 class FeaturedCompaniesProvider {
   Future companyDetails(path, body) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("company detaols ");
+    final SharedPreferences prefs =
+        await SharedPreferences.getInstance().catchError((err) {
+      print(err.toString());
+    }).whenComplete(() => print("completed"));
+
+    print("company detaols 1");
     final String sessionToken = prefs.getString('Session_token');
+    print("company detaols 2");
+    print(sessionToken);
 
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -379,14 +386,14 @@ class FeaturedCompaniesProvider {
     // print("session token: $sessionToken");
 
     var response = await http.get(url, headers: headers);
-    print("get public company list response: ${response.statusCode}");
+    // print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
-    print("search compaiessssss");
-    print(result.toString());
+    // print("search compaiessssss");
+    // print(result.toString());
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("ggggg");
-      print("results ${result["messsage"]}");
+      // print("results ${result["messsage"]}");
       return result["message"];
       // return result["message"];
       // return getCompaniesList(result["message"]);
@@ -613,7 +620,7 @@ class FeaturedCompaniesProvider {
 
     if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
       return result["prices"];
-    } else{
+    } else {
       return [];
     }
   }

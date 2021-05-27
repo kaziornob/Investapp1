@@ -75,7 +75,7 @@ class _SingleCryptoCurrencyDetailsByIdState
   }
 
   getData(coinId) async {
-    print("in get data");
+    print("coin detail id in get data");
     var jsonReqResp = await _featuredCompaniesProvider
         .getSingleCoinDetails('company_details/cryptoInfo?coin_id=$coinId');
 

@@ -17,15 +17,17 @@ class SinglePublicCompanyVideos extends StatefulWidget {
 class _SinglePublicCompanyVideosState extends State<SinglePublicCompanyVideos> {
   List videoLink = [];
   List<YoutubePlayerController> allControllers = [];
-  bool _isInit = true;
+  // bool _isInit = true;
 
   @override
   void initState() {
-    print("single videos init");
+    // print("single videos init");
     print(jsonDecode(widget.allVideosLinkString.replaceAll("\'", "\""))
         .runtimeType);
-    print(widget.allVideosLinkString);
-    videoLink = widget.allVideosLinkString == "0" ? [] : jsonDecode(widget.allVideosLinkString.replaceAll("\'", "\""));
+    // print(widget.allVideosLinkString);
+    videoLink = widget.allVideosLinkString == "0"
+        ? []
+        : jsonDecode(widget.allVideosLinkString.replaceAll("\'", "\""));
     // print(videoLink[0]);
 
     for (int i = 0; i < videoLink.length; i++) {

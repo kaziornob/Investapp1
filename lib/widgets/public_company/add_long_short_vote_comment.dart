@@ -32,72 +32,83 @@ class _AddLongShortVoteCommentState extends State<AddLongShortVoteComment> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: new Wrap(
-        children: <Widget>[
-          widget.heading == null
-              ? SizedBox()
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "${widget.heading}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+      padding: EdgeInsets.only(
+        bottom: 20,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            widget.heading == null
+                ? SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${widget.heading}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-          Container(
-            height: 100,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _textEditingController,
-                keyboardType: TextInputType.number,
-                maxLines: 4,
-                cursorColor: Colors.grey,
-                style: TextStyle(
-                    color: Colors.white, fontSize: ConstanceData.SIZE_TITLE14),
-                decoration: InputDecoration(
-                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                  labelText: 'Comment',
-                  hintText: 'Write Comment Here....',
-                  hintStyle: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: ConstanceData.SIZE_TITLE14),
-                  labelStyle: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: ConstanceData.SIZE_TITLE14,
-                      fontWeight: FontWeight.bold),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[600], width: 1.0),
-                    borderRadius: BorderRadius.circular(5.0),
+            Container(
+              height: 100,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: TextField(
+                  controller: _textEditingController,
+                  keyboardType: TextInputType.text,
+                  maxLines: 4,
+                  cursorColor: Colors.grey,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: ConstanceData.SIZE_TITLE14,
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[600], width: 1.0),
+                  decoration: InputDecoration(
+                    focusColor: AllCoustomTheme.getTextThemeColor(),
+                    fillColor: AllCoustomTheme.getTextThemeColor(),
+                    labelText: 'Comment',
+                    hintText: 'Write Comment Here....',
+                    hintStyle: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: ConstanceData.SIZE_TITLE14),
+                    labelStyle: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        fontWeight: FontWeight.bold),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey[600], width: 1.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey[600], width: 1.0),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Container(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                RaisedButton(
-                  onPressed: submit,
-                  child: Text("ADD"),
-                ),
-                RaisedButton(
-                  onPressed: submit,
-                  child: Text("SKIP"),
-                ),
-              ],
+            Container(
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  RaisedButton(
+                    onPressed: submit,
+                    child: Text("ADD"),
+                  ),
+                  RaisedButton(
+                    onPressed: submit,
+                    child: Text("SKIP"),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -112,6 +123,10 @@ class _AddLongShortVoteCommentState extends State<AddLongShortVoteComment> {
     );
     Navigator.of(context).pop();
     widget.callback();
-    Toast.show("$mess", context);
+    Toast.show(
+      "$mess",
+      context,
+      duration: 4,
+    );
   }
 }

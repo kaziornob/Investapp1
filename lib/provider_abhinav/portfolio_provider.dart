@@ -15,7 +15,7 @@ class PortfolioProvider with ChangeNotifier {
     print("getDoughnutPortfolioData provider called");
     var response =
         await request.getRunAlgoExistingPortfolio('users/create_portfolio');
-    print("portfolio chart list: $response");
+    // print("portfolio chart list: $response");
     if (response != null &&
         response != false &&
         response.containsKey('auth') &&

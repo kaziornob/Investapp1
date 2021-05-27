@@ -3,6 +3,7 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/bussPost/createPoll.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
+import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,16 +27,16 @@ class _AddCommentBottomSheetWidgetState
           widget.heading == null
               ? SizedBox()
               : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
                     "${widget.heading}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),
-                  textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
                   ),
-              ),
+                ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -134,14 +135,23 @@ class _AddCommentBottomSheetWidgetState
           Divider(
             color: AllCoustomTheme.getsecoundTextThemeColor(),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 10.0),
-            child: Center(
-              child: Text(
-                'Ask a question',
-                style: TextStyle(
-                  color: AllCoustomTheme.getTextThemeColors(),
-                  fontSize: ConstanceData.SIZE_TITLE18,
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => AddEditQus(),
+                ),
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: Center(
+                child: Text(
+                  'Ask a question',
+                  style: TextStyle(
+                    color: AllCoustomTheme.getTextThemeColors(),
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                  ),
                 ),
               ),
             ),

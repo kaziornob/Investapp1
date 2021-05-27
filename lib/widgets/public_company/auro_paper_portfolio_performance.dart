@@ -93,7 +93,7 @@ class _AuroPaperPortfolioPerformaceState
                 (e) => CryptoCoinPriceData(x: e.x, y: e.y * 100),
               )
               .toList();
-          print("length: ${allPriceData.length}");
+          // print("length: ${allPriceData.length}");
           double lastItem = allPriceData.length == 0
               ? 0.0
               : allPriceData[allPriceData.length - 1].y;
@@ -106,25 +106,25 @@ class _AuroPaperPortfolioPerformaceState
           double secondLastItemUsDollar = allPriceUsDollar.length <= 1
               ? 0.0
               : allPriceUsDollar[allPriceUsDollar.length - 2].y;
-          print(secondLastItem);
+          // print(secondLastItem);
           var companyPrice = lastItem;
           var companyPriceDifference =
               secondLastItem != 0 ? (lastItem - secondLastItem) : 0.0;
           var companyPriceDifferenceUsDollar = secondLastItemUsDollar != 0
               ? (lastItemUsDollar - secondLastItemUsDollar)
               : 0.0;
-          print(companyPriceDifference);
-          print(companyPrice);
-          print("seconds: $secondLastItemUsDollar");
+          // print(companyPriceDifference);
+          // print(companyPrice);
+          // print("seconds: $secondLastItemUsDollar");
           var companyPercentageDifference = companyPriceDifference == 0.0
               ? 0.0
               : (lastItemUsDollar - secondLastItemUsDollar) /
                   secondLastItemUsDollar;
 
           // last return perc value
-          var last_1_day_return_pct = companyPercentageDifference;
+          // var last_1_day_return_pct = companyPercentageDifference;
           // cum return t - cumm return t-1
-          var last_1_day_return_dollar = companyPriceDifference;
+          // var last_1_day_return_dollar = companyPriceDifference;
           // cumm return pct last value of time series
           var inception_to_date_return_pct = allPriceData.length == 0
               ? 0.0
@@ -148,8 +148,8 @@ class _AuroPaperPortfolioPerformaceState
 
           // print(
           //     "inception to date annualized return : ${pow(1 + inception_to_date_return_pct, (365 / days_diff))}");
-          print(
-              "inception to date annualized return : $inceptionToDateAnnualizedReturnPct");
+          // print(
+          //     "inception to date annualized return : $inceptionToDateAnnualizedReturnPct");
           // var h = [];
           // portfolioProvider.dailyPortfolioReturnData.forEach((element) {
           //   h.add(1 + element["daily_return"] / 100);

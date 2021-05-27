@@ -6,4 +6,5 @@
 -keepattributes SourceFile,LineNumberTable
 # prevent Crashlytics obfuscation
 -keep class com.crashlytics.** { *; }
+-keep class androidx.lifecycle.DefaultLifecycleObserver
 -dontwarn com.crashlytics.**

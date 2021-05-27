@@ -317,12 +317,10 @@ class _CreatePollState extends State<CreatePoll> {
                                           top: 0,
                                           right: 0,
                                           child: GestureDetector(
-                                            child: IconButton(
-                                              icon: Icon(
-                                                Icons.delete,
-                                                size: 20.0,
-                                                color: Colors.red,
-                                              ),
+                                            child: Icon(
+                                              Icons.delete,
+                                              size: 20.0,
+                                              color: Colors.red,
                                             ),
                                             onTap: ()
                                             {

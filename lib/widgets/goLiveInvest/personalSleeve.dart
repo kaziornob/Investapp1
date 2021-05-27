@@ -53,12 +53,14 @@ class _PersonalSleeveState extends State<PersonalSleeve>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: tabList.length,initialIndex: 1);
+    _tabController =
+        new TabController(vsync: this, length: tabList.length, initialIndex: 1);
   }
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      print("personal sleeve");
       Provider.of<PersonalSleeveProvider>(context, listen: false)
           .getPortfolioData();
       // Provider.of<PersonalSleeveProvider>(context, listen: false)
@@ -92,8 +94,9 @@ class _PersonalSleeveState extends State<PersonalSleeve>
           ),
           Container(
             margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.18,
-                right: MediaQuery.of(context).size.width * 0.18),
+              left: MediaQuery.of(context).size.width * 0.18,
+              right: MediaQuery.of(context).size.width * 0.18,
+            ),
             padding: EdgeInsets.only(
               bottom: 3, // space between underline and text
             ),

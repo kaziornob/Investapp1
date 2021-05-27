@@ -46,6 +46,8 @@ class _AuroPaperPortfolioPerformaceChartState
     super.initState();
   }
 
+
+
   calculate() {
     print("calculate");
     List<CryptoCoinPriceData> listOfChartData = [];
@@ -83,6 +85,7 @@ class _AuroPaperPortfolioPerformaceChartState
     return listOfChartData;
   }
 
+
   @override
   Widget build(BuildContext context) {
     // double val = 0.0;
@@ -104,6 +107,7 @@ class _AuroPaperPortfolioPerformaceChartState
     // print("cummulative sum : $ff");
     return Container(
       height: 200,
+      width: MediaQuery.of(context).size.width - 20,
       child: SfCartesianChart(
         zoomPanBehavior: _zoomPanBehavior,
         tooltipBehavior: _tooltipBehavior,
@@ -124,6 +128,7 @@ class _AuroPaperPortfolioPerformaceChartState
               fontSize: 10,
             ),
           ),
+
         ),
         axes: <ChartAxis>[
           // DateTimeAxis(
@@ -164,12 +169,12 @@ class _AuroPaperPortfolioPerformaceChartState
             name: "Price On",
             dataSource: widget.pricesData,
             xValueMapper: (CryptoCoinPriceData data, _) => data.x,
-            yValueMapper: (CryptoCoinPriceData data, _) => data.y ?? 0.0,
+            yValueMapper: (CryptoCoinPriceData data, _) => data.y,
             // opacity: 0.5,
             color: Color(0xff5A56B9),
             // gradient: gradientColors,
           ),
-         SplineSeries<CryptoCoinPriceData, dynamic>(
+          SplineSeries<CryptoCoinPriceData, dynamic>(
             name: "Return on",
             dataSource: calculate(),
             xValueMapper: (CryptoCoinPriceData data, _) => data.x,

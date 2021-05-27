@@ -86,7 +86,7 @@ class ApiProvider {
 
     var response = await http.post(url, headers: headers, body: body);
     print("post submit response: ${response.statusCode}");
-    return response;
+    return jsonDecode(response.body);
   }
 
   Future getRunAlgoExistingPortfolio(funName) async {
@@ -123,7 +123,7 @@ class ApiProvider {
   }
 
   Future getRequest(funName) async {
-    print("getting the portfolio algo response");
+    // print("getting the portfolio algo response");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
     print("session token: $sessionToken");

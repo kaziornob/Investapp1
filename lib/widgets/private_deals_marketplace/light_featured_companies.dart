@@ -60,7 +60,7 @@ class _FeaturedCompaniesListState extends State<FeaturedCompaniesList> {
   }
 
   getData() async {
-    print("in get data");
+    print("light featured in get data");
     var tempJsonReq = {};
 
     String jsonReq = jsonEncode(tempJsonReq);

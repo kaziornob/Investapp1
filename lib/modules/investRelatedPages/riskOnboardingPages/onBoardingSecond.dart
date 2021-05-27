@@ -51,6 +51,106 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
     });
   }
 
+  // Widget getSliderListView(Map data) {
+  //   return Stack(
+  //     children: [
+  //       Container(
+  //         // decoration: BoxDecoration(border: Border.all()),
+  //         child: Column(
+  //           children: data.keys.toList().map<Widget>(
+  //             (key) {
+  //               return Row(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: <Widget>[
+  //                   Container(
+  //                     // decoration: BoxDecoration(border: Border.all()),
+  //                     // margin: EdgeInsets.only(top: 8.0),
+  //                     width: MediaQuery.of(context).size.width * 0.30,
+  //                     height: 40,
+  //                     child: Row(
+  //                       children: [
+  //                         Expanded(
+  //                           child: Text(
+  //                             "$key",
+  //                             style: TextStyle(
+  //                               color: Colors.black,
+  //                               fontSize: ConstanceData.SIZE_TITLE15,
+  //                               fontFamily: "RobotoLight",
+  //                               letterSpacing: 0.1,
+  //                             ),
+  //                             textAlign: TextAlign.start,
+  //                             overflow: TextOverflow.clip,
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   Container(
+  //                     // decoration: BoxDecoration(border: Border.all()),
+  //                     width: MediaQuery.of(context).size.width * 0.58,
+  //                     height: 40,
+  //                     child: SliderTheme(
+  //                       data: SliderThemeData(
+  //                         thumbColor: Color(0xFFD8AF4F),
+  //                         // activeTrackColor: Colors.black,
+  //                         inactiveTrackColor: Colors.black,
+  //                         trackShape: RectangularSliderTrackShape(),
+  //                       ),
+  //                       child: Slider(
+  //                         value: data[key].toDouble(),
+  //                         min: 0.0,
+  //                         max: 20.0,
+  //                         divisions: 2,
+  //                         label: sliderLabel(data[key].toDouble()),
+  //                         onChanged: (double newValue) {
+  //                           setState(() {
+  //                             data[key] = newValue.round();
+  //                           });
+  //                         },
+  //                         semanticFormatterCallback: (double newValue) {
+  //                           return '${newValue.round()} dollars';
+  //                         },
+  //                       ),
+  //                     ),
+  //                   )
+  //                 ],
+  //               );
+  //             },
+  //           ).toList(),
+  //         ),
+  //       ),
+  //       Positioned(
+  //         left: MediaQuery.of(context).size.width * 0.36,
+  //         child: DottedLine(
+  //           direction: Axis.vertical,
+  //           lineLength: 280,
+  //           lineThickness: 1.0,
+  //           dashLength: 4.0,
+  //           dashColor: Colors.black,
+  //           dashRadius: 0.0,
+  //           dashGapLength: 4.0,
+  //           dashGapColor: Colors.transparent,
+  //           dashGapRadius: 0.0,
+  //         ),
+  //       ),
+  //       Positioned(
+  //         right: MediaQuery.of(context).size.width * 0.1,
+  //         child: DottedLine(
+  //           direction: Axis.vertical,
+  //           lineLength: 280,
+  //           lineThickness: 1.0,
+  //           dashLength: 4.0,
+  //           dashColor: Colors.black,
+  //           dashRadius: 0.0,
+  //           dashGapLength: 4.0,
+  //           dashGapColor: Colors.transparent,
+  //           dashGapRadius: 0.0,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
   Widget getSliderListView(Map data) {
     return Stack(
       children: [
@@ -91,9 +191,9 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                       height: 40,
                       child: SliderTheme(
                         data: SliderThemeData(
-                          thumbColor: Color(0xFFD8AF4F),
-                          // activeTrackColor: Colors.black,
-                          inactiveTrackColor: Colors.black,
+                          thumbColor: Colors.white,
+                          activeTrackColor: Color(0xffFFB200),
+                          inactiveTrackColor: Color(0xffFFB200),
                           trackShape: RectangularSliderTrackShape(),
                         ),
                         child: Slider(
@@ -117,34 +217,6 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                 );
               },
             ).toList(),
-          ),
-        ),
-        Positioned(
-          left: MediaQuery.of(context).size.width * 0.36,
-          child: DottedLine(
-            direction: Axis.vertical,
-            lineLength: 280,
-            lineThickness: 1.0,
-            dashLength: 4.0,
-            dashColor: Colors.black,
-            dashRadius: 0.0,
-            dashGapLength: 4.0,
-            dashGapColor: Colors.transparent,
-            dashGapRadius: 0.0,
-          ),
-        ),
-        Positioned(
-          right: MediaQuery.of(context).size.width * 0.1,
-          child: DottedLine(
-            direction: Axis.vertical,
-            lineLength: 280,
-            lineThickness: 1.0,
-            dashLength: 4.0,
-            dashColor: Colors.black,
-            dashRadius: 0.0,
-            dashGapLength: 4.0,
-            dashGapColor: Colors.transparent,
-            dashGapRadius: 0.0,
           ),
         ),
       ],
@@ -183,8 +255,6 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                          // width: MediaQuery.of(context).size.width,
-                          // height: MediaQuery.of(context).size.height*1.3,
                           child: Column(
                             children: <Widget>[
                               SizedBox(
@@ -198,55 +268,20 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Animator(
-                                      tween: Tween<Offset>(
-                                          begin: Offset(0, 0),
-                                          end: Offset(0.2, 0)),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
-                                        translation: anim.value,
-                                        child: Icon(
-                                          Icons.arrow_back_ios,
-                                          color: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                        ),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 10.0),
+                                      child: Icon(
+                                        Icons.arrow_back,
+                                        color: AllCoustomTheme
+                                            .getTextThemeColor(),
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.099,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.90,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            child: Center(
-                                          child: new Image(
-                                              width: 150.0,
-                                              fit: BoxFit.fill,
-                                              image: new AssetImage(
-                                                  'assets/logo.png')),
-                                        )),
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              left: 70.0, right: 70.0),
-                                          padding: EdgeInsets.only(
-                                            bottom:
-                                                1, // space between underline and text
-                                          ),
-                                          decoration: BoxDecoration(
-                                              border: Border(
-                                                  bottom: BorderSide(
-                                            color: Color(0xFFD8AF4F),
-                                            width: 1.5, // Underline width
-                                          ))),
-                                        ),
-                                      ],
-                                    ),
-                                  )
                                 ],
+                              ),
+                              SizedBox(
+                                height: 20,
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -265,7 +300,7 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                           left: 15.0,
                                           right: 3.0),
                                       child: Text(
-                                        "A well-diversified portfolio should include all of below. However, Auro can customize based on your preferences. Move the gold circle to Exclude OR Include any of these asset classes, to make your selection below:",
+                                        "A well-diversified portfolio should include all of below. However, Auro can customize based on your preference.",
                                         style: new TextStyle(
                                             color: Colors.black,
                                             fontSize:
@@ -274,22 +309,48 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                             letterSpacing: 0.1),
                                       ),
                                     ),
-                                    // Container(
-                                    //   margin: EdgeInsets.only(
-                                    //       top: 5.0,
-                                    //       bottom: 10.0,
-                                    //       left: 15.0,
-                                    //       right: 3.0),
-                                    //   child: Text(
-                                    //     "However, let us know if you want Auro to exclude or definitely include any one",
-                                    //     style: new TextStyle(
-                                    //         color: Colors.black,
-                                    //         fontSize:
-                                    //             ConstanceData.SIZE_TITLE16,
-                                    //         fontFamily: "RobotoLight",
-                                    //         letterSpacing: 0.1),
-                                    //   ),
-                                    // ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: EdgeInsets.only(
+                                          top: 5.0,
+                                          bottom: 5.0,
+                                          left: 15.0,
+                                          right: 3.0),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: "Move the ",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontFamily: "Rosarivo",
+                                                  letterSpacing: 0.1),
+                                            ),
+                                            WidgetSpan(
+                                              child: CircleAvatar(
+                                                radius: 7,
+                                                backgroundColor:
+                                                    Color(0xffFFB200),
+                                                child: CircleAvatar(
+                                                  radius: 6,
+                                                  backgroundColor: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  " to EXCLUDE or INCLUDE any of the asset classes:",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontFamily: "Rosarivo",
+                                                  letterSpacing: 0.1),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                     Container(
                                       height: 20,
                                       // decoration: BoxDecoration(border: Border.all(),),
@@ -356,13 +417,13 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                           children: <Widget>[
                                             Container(
                                               child: Text(
-                                                "Don't worry if this question sounds like greek or latin to you. You can skip this question and change it later in settings whenever you want!!",
+                                                "If you’re not quite sure, you can skip this and change it later.",
                                                 style: new TextStyle(
                                                     // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
                                                     color: Colors.black,
                                                     fontSize: ConstanceData
                                                         .SIZE_TITLE16,
-                                                    fontFamily: "RobotoLight",
+                                                    fontFamily: "Rosario",
                                                     letterSpacing: 0.1),
                                               ),
                                             ),
@@ -376,35 +437,16 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        SizedBox(
-                                          height: 35,
-                                          child: Container(
-                                            height: 35,
-                                            width: 120,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(20)),
-                                                border: new Border.all(
-                                                    color: Color(0xFFD8AF4F),
-                                                    width: 1.5),
-                                                color: Color(0xFFD8AF4F)),
-                                            child: MaterialButton(
-                                              splashColor: Colors.grey,
-                                              child: Text(
-                                                sliderData.containsValue(0) ||
-                                                        sliderData
-                                                            .containsValue(20)
-                                                    ? "NEXT"
-                                                    : "SKIP",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: ConstanceData
-                                                      .SIZE_TITLE16,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                submit();
-                                              },
+                                        InkWell(
+                                          onTap: () {
+                                            submit();
+                                          },
+                                          child: CircleAvatar(
+                                            radius: 30,
+                                            backgroundColor: Color(0xFFD8AF4F),
+                                            child: Icon(
+                                              Icons.arrow_forward_sharp,
+                                              color: Colors.white,
                                             ),
                                           ),
                                         ),
@@ -423,6 +465,268 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
       ],
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   AppBar appBar = AppBar();
+  //   double appBarheight = appBar.preferredSize.height;
+  //   return Stack(
+  //     children: <Widget>[
+  //       SafeArea(
+  //           bottom: true,
+  //           child: Scaffold(
+  //             // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+  //             backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+  //             body: ModalProgressHUD(
+  //               inAsyncCall: _isInProgress,
+  //               opacity: 0,
+  //               progressIndicator: CupertinoActivityIndicator(
+  //                 radius: 12,
+  //               ),
+  //               child: SingleChildScrollView(
+  //                 physics: BouncingScrollPhysics(),
+  //                 child: !_isInProgress
+  //                     ? Container(
+  //                         // width: MediaQuery.of(context).size.width,
+  //                         // height: MediaQuery.of(context).size.height*1.3,
+  //                         child: Column(
+  //                           children: <Widget>[
+  //                             SizedBox(
+  //                               height: 20,
+  //                             ),
+  //                             Row(
+  //                               children: <Widget>[
+  //                                 InkWell(
+  //                                   highlightColor: Colors.transparent,
+  //                                   splashColor: Colors.transparent,
+  //                                   onTap: () {
+  //                                     Navigator.pop(context);
+  //                                   },
+  //                                   child: Animator(
+  //                                     tween: Tween<Offset>(
+  //                                         begin: Offset(0, 0),
+  //                                         end: Offset(0.2, 0)),
+  //                                     duration: Duration(milliseconds: 500),
+  //                                     cycles: 0,
+  //                                     builder: (anim) => FractionalTranslation(
+  //                                       translation: anim.value,
+  //                                       child: Icon(
+  //                                         Icons.arrow_back_ios,
+  //                                         color: AllCoustomTheme
+  //                                             .getTextThemeColor(),
+  //                                       ),
+  //                                     ),
+  //                                   ),
+  //                                 ),
+  //                                 Container(
+  //                                   height: MediaQuery.of(context).size.height *
+  //                                       0.099,
+  //                                   width: MediaQuery.of(context).size.width *
+  //                                       0.90,
+  //                                   child: Column(
+  //                                     children: [
+  //                                       Container(
+  //                                           child: Center(
+  //                                         child: new Image(
+  //                                             width: 150.0,
+  //                                             fit: BoxFit.fill,
+  //                                             image: new AssetImage(
+  //                                                 'assets/logo.png')),
+  //                                       )),
+  //                                       Container(
+  //                                         margin: EdgeInsets.only(
+  //                                             left: 70.0, right: 70.0),
+  //                                         padding: EdgeInsets.only(
+  //                                           bottom:
+  //                                               1, // space between underline and text
+  //                                         ),
+  //                                         decoration: BoxDecoration(
+  //                                             border: Border(
+  //                                                 bottom: BorderSide(
+  //                                           color: Color(0xFFD8AF4F),
+  //                                           width: 1.5, // Underline width
+  //                                         ))),
+  //                                       ),
+  //                                     ],
+  //                                   ),
+  //                                 )
+  //                               ],
+  //                             ),
+  //                             Container(
+  //                               width: MediaQuery.of(context).size.width,
+  //                               height:
+  //                                   MediaQuery.of(context).size.height * 1.1,
+  //                               /*decoration: new BoxDecoration(
+  //                             color: widget.callingFrom=="Accredited Investor"
+  //                                 ?  StyleTheme.Colors.accScreenBackgroundColor : StyleTheme.Colors.retailScreenBackgroundColor,
+  //                           ),*/
+  //                               child: Column(
+  //                                 children: <Widget>[
+  //                                   Container(
+  //                                     margin: EdgeInsets.only(
+  //                                         top: 5.0,
+  //                                         bottom: 5.0,
+  //                                         left: 15.0,
+  //                                         right: 3.0),
+  //                                     child: Text(
+  //                                       "A well-diversified portfolio should include all of below. However, Auro can customize based on your preferences. Move the gold circle to Exclude OR Include any of these asset classes, to make your selection below:",
+  //                                       style: new TextStyle(
+  //                                           color: Colors.black,
+  //                                           fontSize:
+  //                                               ConstanceData.SIZE_TITLE16,
+  //                                           fontFamily: "Rosarivo",
+  //                                           letterSpacing: 0.1),
+  //                                     ),
+  //                                   ),
+  //                                   // Container(
+  //                                   //   margin: EdgeInsets.only(
+  //                                   //       top: 5.0,
+  //                                   //       bottom: 10.0,
+  //                                   //       left: 15.0,
+  //                                   //       right: 3.0),
+  //                                   //   child: Text(
+  //                                   //     "However, let us know if you want Auro to exclude or definitely include any one",
+  //                                   //     style: new TextStyle(
+  //                                   //         color: Colors.black,
+  //                                   //         fontSize:
+  //                                   //             ConstanceData.SIZE_TITLE16,
+  //                                   //         fontFamily: "RobotoLight",
+  //                                   //         letterSpacing: 0.1),
+  //                                   //   ),
+  //                                   // ),
+  //                                   Container(
+  //                                     height: 20,
+  //                                     // decoration: BoxDecoration(border: Border.all(),),
+  //                                     margin: EdgeInsets.only(
+  //                                       left: 20.0,
+  //                                       right: 10.0,
+  //                                     ),
+  //                                     child: Row(
+  //                                       mainAxisAlignment:
+  //                                           MainAxisAlignment.spaceEvenly,
+  //                                       children: [
+  //                                         SizedBox(
+  //                                           width: MediaQuery.of(context)
+  //                                                   .size
+  //                                                   .width *
+  //                                               0.18,
+  //                                         ),
+  //                                         Text(
+  //                                           "EXCLUDE",
+  //                                           style: TextStyle(
+  //                                             fontSize: 10,
+  //                                             fontWeight: FontWeight.bold,
+  //                                           ),
+  //                                         ),
+  //                                         Text(
+  //                                           "ALGO DECIDES",
+  //                                           style: TextStyle(
+  //                                             fontSize: 10,
+  //                                             fontWeight: FontWeight.bold,
+  //                                           ),
+  //                                         ),
+  //                                         Text(
+  //                                           "INCLUDE",
+  //                                           style: TextStyle(
+  //                                             fontSize: 10,
+  //                                             fontWeight: FontWeight.bold,
+  //                                           ),
+  //                                         ),
+  //                                       ],
+  //                                     ),
+  //                                   ),
+  //                                   Container(
+  //                                     height: 290,
+  //                                     // decoration: BoxDecoration(border: Border.all(),),
+  //                                     margin: EdgeInsets.only(
+  //                                       left: 20.0,
+  //                                       right: 10.0,
+  //                                     ),
+  //                                     child: Scrollbar(
+  //                                       child: getSliderListView(sliderData),
+  //                                     ),
+  //                                   ),
+  //                                   SizedBox(
+  //                                     height: 100,
+  //                                     child: Container(
+  //                                       margin: EdgeInsets.only(
+  //                                           left: 20.0,
+  //                                           right: 10.0,
+  //                                           top: 5,
+  //                                           bottom: 20),
+  //                                       child: ListView(
+  //                                         physics:
+  //                                             NeverScrollableScrollPhysics(),
+  //                                         children: <Widget>[
+  //                                           Container(
+  //                                             child: Text(
+  //                                               "Don't worry if this question sounds like greek or latin to you. You can skip this question and change it later in settings whenever you want!!",
+  //                                               style: new TextStyle(
+  //                                                   // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
+  //                                                   color: Colors.black,
+  //                                                   fontSize: ConstanceData
+  //                                                       .SIZE_TITLE16,
+  //                                                   fontFamily: "RobotoLight",
+  //                                                   letterSpacing: 0.1),
+  //                                             ),
+  //                                           ),
+  //                                         ],
+  //                                       ),
+  //                                     ),
+  //                                   ),
+  //                                   Row(
+  //                                     crossAxisAlignment:
+  //                                         CrossAxisAlignment.start,
+  //                                     mainAxisAlignment:
+  //                                         MainAxisAlignment.center,
+  //                                     children: <Widget>[
+  //                                       SizedBox(
+  //                                         height: 35,
+  //                                         child: Container(
+  //                                           height: 35,
+  //                                           width: 120,
+  //                                           decoration: BoxDecoration(
+  //                                               borderRadius: BorderRadius.all(
+  //                                                   Radius.circular(20)),
+  //                                               border: new Border.all(
+  //                                                   color: Color(0xFFD8AF4F),
+  //                                                   width: 1.5),
+  //                                               color: Color(0xFFD8AF4F)),
+  //                                           child: MaterialButton(
+  //                                             splashColor: Colors.grey,
+  //                                             child: Text(
+  //                                               sliderData.containsValue(0) ||
+  //                                                       sliderData
+  //                                                           .containsValue(20)
+  //                                                   ? "NEXT"
+  //                                                   : "SKIP",
+  //                                               style: TextStyle(
+  //                                                 color: Colors.white,
+  //                                                 fontSize: ConstanceData
+  //                                                     .SIZE_TITLE16,
+  //                                               ),
+  //                                             ),
+  //                                             onPressed: () async {
+  //                                               submit();
+  //                                             },
+  //                                           ),
+  //                                         ),
+  //                                       ),
+  //                                     ],
+  //                                   ),
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       )
+  //                     : SizedBox(),
+  //               ),
+  //             ),
+  //           ))
+  //     ],
+  //   );
+  // }
 
   Future submit() async {
     var dataToSave = {};

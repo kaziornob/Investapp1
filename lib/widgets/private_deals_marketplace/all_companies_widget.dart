@@ -564,7 +564,7 @@ class _AllCompaniesState extends State<AllCompanies> {
   }
 
   getData() async {
-    print("in get data");
+    print("all companiesin get data");
     var tempJsonReq = {};
 
     String jsonReq = jsonEncode(tempJsonReq);

@@ -1,11 +1,9 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSix.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
@@ -191,73 +189,37 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
     }
   }
 
-  // void setSelectionArea() {
-  //   var val;
-  //   var exist = false;
-  //
-  //   if (selectedCountry != null &&
-  //       selectedCountry != "" &&
-  //       selectedSector != null &&
-  //       selectedSector != "" &&
-  //       selectedCountrySector != null &&
-  //       selectedCountrySector != "") {
-  //     val = "$selectedCountry" +
-  //         " - " +
-  //         "$selectedSector" +
-  //         " - " +
-  //         "$selectedCountrySector";
-  //   } else if ((selectedCountry != null && selectedCountry != "") &&
-  //       (selectedSector == null || selectedSector == "")) {
-  //     val = "$selectedCountry";
-  //   } else if ((selectedSector != null && selectedSector != "") &&
-  //       (selectedCountry == null || selectedCountry == "")) {
-  //     val = "$selectedSector";
-  //   }
-  //
-  //   if (selectionList != null && selectionList.length != 0) {
-  //     for (var i = 0; i < selectionList.length; i++) {
-  //       print("val: $val");
-  //       print("selectionList: ${selectionList[i]}");
-  //       if (selectionList[i].toLowerCase().contains(val.toLowerCase().trim())) {
-  //         setState(() {
-  //           exist = true;
-  //         });
-  //         break;
-  //       }
-  //     }
-  //   }
-  //
-  //   // check value exist or not
-  //   if (exist == false) {
-  //     setState(() {
-  //       selectionList.add(val.trim());
-  //     });
-  //   } else {
-  //     Toast.show("Already exist", context,
-  //         duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-  //   }
-  // }
-
   Widget getCountryDropDownList() {
     if (countryList != null && countryList.length != 0) {
-      return DropdownButtonHideUnderline(
-        child: DropdownButton(
-          value: selectedCountry,
-          dropdownColor: Colors.white,
-          isExpanded: true,
-          onChanged: (String newValue) {
-            setState(() {
-              selectedCountry = newValue;
-            });
-          },
-          items: countryList.map((String value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Text(value,
-                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
-            );
-          }).toList(),
+      return DropdownButton(
+        // value: selectedCountry,
+        hint: Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: Text(
+            'ADD PREFRENCE',
+            style: TextStyle(color: Color(0xffD8AF4F), fontSize: 14),
+          ),
         ),
+        dropdownColor: Colors.white,
+        isExpanded: true,
+        onChanged: (String newValue) {
+          setState(() {
+            selectedCountry = newValue;
+            if (selectedCountry == "") {
+              Toast.show("No value selected", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+            } else if (listOfCountriesSelected.contains("equity-" + selectedCountry.toLowerCase())) {
+              Toast.show("Already Added", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+            } else {
+              addCountryPreference();
+            }
+          });
+        },
+        items: countryList.map((String value) {
+          return DropdownMenuItem(
+            value: value,
+            child: Text(value, style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
+          );
+        }).toList(),
       );
     } else {
       return Container(
@@ -291,24 +253,34 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
 
   Widget getCombinedDropDownList() {
     if (sectorList != null && sectorList.length != 0) {
-      return DropdownButtonHideUnderline(
-        child: DropdownButton(
-          value: selectedCountrySector,
-          dropdownColor: Colors.white,
-          isExpanded: true,
-          onChanged: (String newValue) {
-            setState(() {
-              selectedCountrySector = newValue;
-            });
-          },
-          items: countrySectorList.map((String value) {
-            return new DropdownMenuItem(
-              value: value,
-              child: new Text(value,
-                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
-            );
-          }).toList(),
+      return DropdownButton(
+        hint: Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: Text(
+            'ADD PREFRENCE',
+            style: TextStyle(color: Color(0xffD8AF4F), fontSize: 14),
+          ),
         ),
+        dropdownColor: Colors.white,
+        isExpanded: true,
+        onChanged: (String newValue) {
+          setState(() {
+            selectedCountrySector = newValue;
+            if (selectedCountrySector == "") {
+              Toast.show("No value selected", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+            } else if (listOfCountrySectorSelected.contains("equity-" + selectedCountrySector.toLowerCase())) {
+              Toast.show("Already Added", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+            } else {
+              addCountrySectorPreference();
+            }
+          });
+        },
+        items: countrySectorList.map((String value) {
+          return new DropdownMenuItem(
+            value: value,
+            child: new Text(value, style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
+          );
+        }).toList(),
       );
     } else {
       return Container(
@@ -320,24 +292,35 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
 
   Widget getSectorDropDownList() {
     if (sectorList != null && sectorList.length != 0) {
-      return DropdownButtonHideUnderline(
-        child: DropdownButton(
-          value: selectedSector,
-          dropdownColor: Colors.white,
-          isExpanded: true,
-          onChanged: (String newValue) {
-            setState(() {
-              selectedSector = newValue;
-            });
-          },
-          items: sectorList.map((String value) {
-            return new DropdownMenuItem(
-              value: value,
-              child: new Text(value,
-                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
-            );
-          }).toList(),
+      return DropdownButton(
+        // value: selectedSector,
+        hint: Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: Text(
+            'ADD PREFRENCE',
+            style: TextStyle(color: Color(0xffD8AF4F), fontSize: 14),
+          ),
         ),
+        dropdownColor: Colors.white,
+        isExpanded: true,
+        onChanged: (String newValue) {
+          setState(() {
+            selectedSector = newValue;
+            if (selectedSector == "") {
+              Toast.show("No value selected", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+            } else if (listOfSectorsSelected.contains(selectedSector)) {
+              Toast.show("Already Added", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+            } else {
+              addSectorPreference();
+            }
+          });
+        },
+        items: sectorList.map((String value) {
+          return new DropdownMenuItem(
+            value: value,
+            child: new Text(value, style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
+          );
+        }).toList(),
       );
     } else {
       return Container(
@@ -381,76 +364,36 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Animator(
-                                    tween: Tween<Offset>(
-                                        begin: Offset(0, 0),
-                                        end: Offset(0.2, 0)),
-                                    duration: Duration(milliseconds: 500),
-                                    cycles: 0,
-                                    builder: (anim) => FractionalTranslation(
-                                      translation: anim.value,
-                                      child: Icon(
-                                        Icons.arrow_back_ios,
-                                        color:
-                                            AllCoustomTheme.getTextThemeColor(),
-                                      ),
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 10.0),
+                                    child: Icon(
+                                      Icons.arrow_back,
+                                      color: AllCoustomTheme
+                                          .getTextThemeColor(),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.099,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.90,
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        child: Center(
-                                          child: new Image(
-                                            width: 150.0,
-                                            fit: BoxFit.fill,
-                                            image: new AssetImage(
-                                                'assets/logo.png'),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 70.0, right: 70.0),
-                                        padding: EdgeInsets.only(
-                                          bottom:
-                                              1, // space between underline and text
-                                        ),
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            bottom: BorderSide(
-                                              color: Color(0xFFD8AF4F),
-                                              width: 1.5, // Underline width
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
                               ],
                             ),
                             SizedBox(
-                              height: 5,
+                              height: 20,
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 15.0, right: 3.0),
+                              margin: EdgeInsets.only(left: 15.0, right: 15.0),
                               child: Text(
-                                "Auro allows you to customize your portfolio across your preferences for not only Country (e.g. US) and Sector (e.g. Tech) but also the combination of Country-Sector (e.g. US Tech). You can make multiple selection for all 3 and Auro will take that into account:",
+                                "Auro allows you to customize your portfolio across not only Country (e.g. US), Sector (e.g. Tech), but also combination of Country-Sector (e.g. China Healthcare). \n\nYou can select multiple preferences for each by clicking on Add Preference:",
                                 style: new TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontFamily: "Rosarivo",
-                                    letterSpacing: 0.1),
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontFamily: "Rosarivo",
+                                  letterSpacing: 0.1,
+                                ),
+                                textAlign: TextAlign.justify,
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 15,
                             ),
                             Container(
                               child: Column(
@@ -490,48 +433,6 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 10),
-                              height: 30,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
-                                border: new Border.all(
-                                    color: Color(0xFFD8AF4F), width: 1.5),
-                                color: Color(0xFFD8AF4F),
-                              ),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "ADD PREFERENCE",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if (selectedCountry == "") {
-                                    Toast.show("No value selected", context,
-                                        duration: Toast.LENGTH_LONG,
-                                        gravity: Toast.BOTTOM);
-                                  } else if (listOfCountriesSelected.contains(
-                                      "equity-" +
-                                          selectedCountry.toLowerCase())) {
-                                    Toast.show("Already Added", context,
-                                        duration: Toast.LENGTH_LONG,
-                                        gravity: Toast.BOTTOM);
-                                  } else {
-                                    addCountryPreference();
-                                  }
-                                },
-                              ),
-                            ),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -565,45 +466,6 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                   ),
                                 ],
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              height: 30,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(
-                                      color: Color(0xFFD8AF4F), width: 1.5),
-                                  color: Color(0xFFD8AF4F)),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "ADD PREFERENCE",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  if (selectedSector == "") {
-                                    Toast.show("No value selected", context,
-                                        duration: Toast.LENGTH_LONG,
-                                        gravity: Toast.BOTTOM);
-                                  } else if (listOfSectorsSelected
-                                      .contains(selectedSector)) {
-                                    Toast.show("Already Added", context,
-                                        duration: Toast.LENGTH_LONG,
-                                        gravity: Toast.BOTTOM);
-                                  } else {
-                                    addSectorPreference();
-                                  }
-                                },
-                              ),
-                            ),
-                            Divider(
-                              thickness: 2,
                             ),
                             Container(
                               child: Column(
@@ -641,47 +503,6 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                   ),
                                 ],
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              height: 30,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  border: new Border.all(
-                                      color: Color(0xFFD8AF4F), width: 1.5),
-                                  color: Color(0xFFD8AF4F)),
-                              child: MaterialButton(
-                                splashColor: Colors.grey,
-                                child: Text(
-                                  "ADD PREFERENCE",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  if (selectedCountrySector == "") {
-                                    Toast.show("No value selected", context,
-                                        duration: Toast.LENGTH_LONG,
-                                        gravity: Toast.BOTTOM);
-                                  } else if (listOfCountrySectorSelected
-                                      .contains("equity-" +
-                                          selectedCountrySector
-                                              .toLowerCase())) {
-                                    Toast.show("Already Added", context,
-                                        duration: Toast.LENGTH_LONG,
-                                        gravity: Toast.BOTTOM);
-                                  } else {
-                                    addCountrySectorPreference();
-                                  }
-                                },
-                              ),
-                            ),
-                            Divider(
-                              thickness: 2,
                             ),
                             Container(
                               child: Column(
@@ -727,7 +548,8 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                             borderRadius:
                                                 BorderRadius.circular(4.0),
                                             border: Border.all(
-                                                color: Colors.grey, width: 1.0),
+                                                color: Color(0xffD8AF4F),
+                                                width: 1.0),
                                           ),
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 8.0),
@@ -784,7 +606,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 // ),
                                 width: MediaQuery.of(context).size.width - 30,
                                 child: Text(
-                                  "Don't worry if this question sounds like greek or latin to you. You can skip this question and change it later in settings whenever you want!!",
+                                  "If you’re not quite sure, you can skip this and change it later.",
                                   style: new TextStyle(
                                       // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
                                       color: Colors.black,
@@ -795,7 +617,7 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                               ),
                             ),
                             SizedBox(
-                              height: 5.0,
+                              height: 20.0,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -804,40 +626,16 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
                                 SizedBox(
                                   width: 20,
                                 ),
-                                SizedBox(
-                                  height: 35,
-                                  child: Container(
-                                    height: 35,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(20),
-                                      ),
-                                      border: new Border.all(
-                                          color: Color(0xFFD8AF4F), width: 1.5),
-                                      color: Color(0xFFD8AF4F),
-                                    ),
-                                    child: MaterialButton(
-                                      splashColor: Colors.grey,
-                                      child: Text(
-                                        selectionList.length == 0
-                                            ? "SKIP"
-                                            : "NEXT",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: ConstanceData.SIZE_TITLE16,
-                                        ),
-                                      ),
-                                      onPressed: () async {
-                                        submit();
-                                        // selectionList.length == 0
-                                        //     ? Toast.show(
-                                        //         "Please select atleast one",
-                                        //         context,
-                                        //         duration: Toast.LENGTH_LONG,
-                                        //         gravity: Toast.BOTTOM)
-                                        //     : submit();
-                                      },
+                                InkWell(
+                                  onTap: () {
+                                    submit();
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Color(0xFFD8AF4F),
+                                    child: Icon(
+                                      Icons.arrow_forward_sharp,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),

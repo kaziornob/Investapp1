@@ -1,16 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/dialog_widgets/dialog1.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/provider_abhinav/currency_rate_provider.dart';
+import 'package:auroim/provider_abhinav/progress.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
+import 'package:auroim/widgets/stock_and_portfolio_pitch/pitch_templates.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
@@ -49,6 +51,8 @@ class _StockPitchState extends State<StockPitch> {
   List<String> listOfFxs = [];
   String selectedFx = "USD";
   List<String> pollDurationList = <String>['7 days', '14 days', '21 days'];
+  LinearGradient progressGradient;
+  final _stockPitchFormKey = new GlobalKey<FormState>();
 
   // List<String> stockNameList = <String>["Listed", "Unlisted", "Crypto"];
 
@@ -71,6 +75,12 @@ class _StockPitchState extends State<StockPitch> {
     super.initState();
     loadUserDetails();
     // getTagList();
+    progressGradient = LinearGradient(
+      colors: [
+        Color(0xFF235E77),
+        Color(0xFF1A3263),
+      ],
+    );
     fileType = FileType.any;
   }
 
@@ -103,12 +113,19 @@ class _StockPitchState extends State<StockPitch> {
         if (await file.length() == 0) {
           return false;
         }
-        Uint8List bytesData = file.readAsBytesSync();
-        videoUrl = await awsClient.uploadData(
-          "Stock-Security Pitch",
-          DateTime.now().toIso8601String(),
-          bytesData,
-        );
+        // Uint8List bytesData = file.readAsBytesSync();
+        // videoUrl = await awsClient.fileUploadMultipart(
+        //  file: file,
+        // );
+        // var videoUrl = await awsClient.getUploadUrl();
+        String extension =
+            path.split("/")[path.split("/").length - 1].split(".")[1];
+        videoUrl = await awsClient.uploadFile(file, "." + extension, context);
+        // videoUrl = await awsClient.uploadData(
+        //   "Stock-Security Pitch",
+        //   DateTime.now().toIso8601String(),
+        //   bytesData,
+        // );
         //return true only when url is got
         if (videoUrl != null && videoUrl != "") {
           Toast.show(
@@ -144,7 +161,6 @@ class _StockPitchState extends State<StockPitch> {
       //     allowedExtensions: extensions,
       //   );
       // } else {
-
       path = await FilePicker.getFilePath(
         type: fileType,
         allowedExtensions: extensions,
@@ -163,17 +179,15 @@ class _StockPitchState extends State<StockPitch> {
         if (await file.length() == 0) {
           return false;
         }
-        Uint8List bytesData = file.readAsBytesSync();
-        // docUrl = await awsClient.fileUploadMultipart(
-        //   file: file,
-        //   folderName: "Stock-Security Pitch",
-        //   fileName: DateTime.now().toIso8601String(),
+        // Uint8List bytesData = file.readAsBytesSync();
+        String extension =
+            path.split("/")[path.split("/").length - 1].split(".")[1];
+        docUrl = await awsClient.uploadFile(file, "." + extension, context);
+        // docUrl = await awsClient.uploadData(
+        //   "Stock-Security Pitch",
+        //   DateTime.now().toIso8601String(),
+        //   bytesData,
         // );
-        docUrl = await awsClient.uploadData(
-          "Stock-Security Pitch",
-          DateTime.now().toIso8601String(),
-          bytesData,
-        );
         //return true only when url is got
         if (docUrl != null && docUrl != "") {
           Toast.show(
@@ -297,6 +311,18 @@ class _StockPitchState extends State<StockPitch> {
           width: 1.0,
         ),
       ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+          width: 1.0,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+          width: 1.0,
+        ),
+      ),
     );
   }
 
@@ -337,6 +363,7 @@ class _StockPitchState extends State<StockPitch> {
                 return await _featuredCompaniesProvider
                     .searchPublicCompanyList(pattern);
               },
+              validator: _validateStockName,
               itemBuilder: (context, suggestion) {
                 return ListTile(
                   title: Text(
@@ -448,6 +475,62 @@ class _StockPitchState extends State<StockPitch> {
     );
   }
 
+  String _validateStockName(value) {
+    if (value.isEmpty) {
+      return "Please Select Stock";
+    }
+    return null;
+  }
+
+  String _validateStrategy(value) {
+    if (value.isEmpty) {
+      return "Please Select Strategy";
+    }
+    return null;
+  }
+
+  String _validateCurrency(value) {
+    if (value.isEmpty) {
+      return "This Field cannot be empty";
+    }
+    return null;
+  }
+
+  String _validateStockTitle(value) {
+    if (value.isEmpty) {
+      return "This Field cannot be empty";
+    }
+    return null;
+  }
+
+  String _validateBaseCase(value) {
+    if (value.isEmpty) {
+      return "This Field cannot be empty";
+    }
+    return null;
+  }
+
+  String _validateBearCase(value) {
+    if (value.isEmpty) {
+      return "This Field cannot be empty";
+    }
+    return null;
+  }
+
+  String _validateInvestmentThesis(value) {
+    if (value.isEmpty) {
+      return "This Field cannot be empty";
+    }
+    return null;
+  }
+
+  String _validateTags(value) {
+    if (tagList.length == 0) {
+      return "Add Tags to proceed";
+    }
+    return null;
+  }
+
   selectCurrencySection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -520,12 +603,7 @@ class _StockPitchState extends State<StockPitch> {
                   ),
                 );
               },
-              validator: (val) {
-                return ((val != null && val != '') ||
-                        (selectedLongShort != null && selectedLongShort != ''))
-                    ? null
-                    : 'choose one';
-              },
+              // validator: _validateCurrency,
             ),
           ),
         ),
@@ -554,16 +632,19 @@ class _StockPitchState extends State<StockPitch> {
           ),
           child: Container(
             height: 60,
-            child: TextField(
+            child: TextFormField(
               controller: _stockPitchTitleController,
-              maxLines: 4,
               decoration: textFieldInputDecoration(
                 "Enter title",
                 "",
                 "Can be a listed stock,private company or a crypto coin that you think will go up (Long Pitch) or go down (Short Pitch) on value?",
               ),
               cursorColor: Colors.black,
-              style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+              validator: _validateStockTitle,
             ),
           ),
         )
@@ -571,7 +652,7 @@ class _StockPitchState extends State<StockPitch> {
     );
   }
 
-  smallTextField(title, controller, isMust, suffixText) {
+  smallTextField(title, controller, isMust, suffixText, validator) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -591,13 +672,16 @@ class _StockPitchState extends State<StockPitch> {
         Container(
           height: 60,
           width: (MediaQuery.of(context).size.width / 2) - 20,
-          child: TextField(
+          child: TextFormField(
             controller: controller,
-            maxLines: 4,
             keyboardType: TextInputType.number,
             decoration: textFieldInputDecoration("", "", suffixText),
             cursorColor: Colors.black,
-            style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+            ),
+            validator: validator,
           ),
         )
       ],
@@ -619,7 +703,7 @@ class _StockPitchState extends State<StockPitch> {
           ),
           child: Container(
             height: 120,
-            child: TextField(
+            child: TextFormField(
               controller: _investmentThesisController,
               maxLines: 10,
               decoration: textFieldInputDecoration("", '', null),
@@ -627,6 +711,7 @@ class _StockPitchState extends State<StockPitch> {
                 color: Colors.black,
                 fontSize: ConstanceData.SIZE_TITLE16,
               ),
+              validator: _validateInvestmentThesis,
             ),
           ),
         ),
@@ -674,11 +759,13 @@ class _StockPitchState extends State<StockPitch> {
                     .searchPublicCompanyList(pattern);
               },
               itemBuilder: (context, suggestion) {
-                return ListTile(
-                  title: Text(
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
                     suggestion["company_name"],
                     style: TextStyle(
                       color: Colors.black,
+                      fontSize: 15,
                     ),
                   ),
                 );
@@ -686,6 +773,7 @@ class _StockPitchState extends State<StockPitch> {
               transitionBuilder: (context, suggestionsBox, controller) {
                 return suggestionsBox;
               },
+              // validator: _validateTags,
               onSuggestionSelected: (suggestion) {
                 print("suggestion: ${suggestion['ticker']}");
                 print("suggestion name: ${suggestion['company_name']}");
@@ -812,7 +900,9 @@ class _StockPitchState extends State<StockPitch> {
           width: 1.0,
         ),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+      padding: EdgeInsets.all(
+        8.0,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -822,7 +912,7 @@ class _StockPitchState extends State<StockPitch> {
               style: TextStyle(
                 color:
                     globals.isGoldBlack ? Color(0xFFD8AF4F) : Color(0xFF1D6177),
-                fontSize: ConstanceData.SIZE_TITLE16,
+                fontSize: 14,
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.normal,
               ),
@@ -830,6 +920,23 @@ class _StockPitchState extends State<StockPitch> {
           ),
         ],
       ),
+    );
+  }
+
+  progressBar(width, percent) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        LinearPercentIndicator(
+          // restartAnimation: false,
+          // animation: true,
+          percent: percent / 100,
+          linearGradient: progressGradient,
+          lineHeight: 9,
+          width: width,
+          trailing: Text("${percent.toString().split(".")[0]}%"),
+        ),
+      ],
     );
   }
 
@@ -848,146 +955,238 @@ class _StockPitchState extends State<StockPitch> {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: !_isInProgress
-                ? Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ScreenTitleAppbar(
-                        title: 'STOCK PITCH',
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      searchStockName(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          longShortSection(),
-                          selectCurrencySection(),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      stockPitchTitle(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Row(
+                ? Form(
+                    key: _stockPitchFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ScreenTitleAppbar(
+                          title: 'STOCK PITCH',
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        searchStockName(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "1-year target price",
-                              style: TextStyle(
-                                color: globals.isGoldBlack
-                                    ? Color(0xFFD8AF4F)
-                                    : Color(0xFF7499C6),
+                            longShortSection(),
+                            selectCurrencySection(),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        stockPitchTitle(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "1-year target price",
+                                style: TextStyle(
+                                  color: globals.isGoldBlack
+                                      ? Color(0xFFD8AF4F)
+                                      : Color(0xFF7499C6),
+                                ),
                               ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            smallTextField(
+                              "Base Case",
+                              _priceBaseController,
+                              true,
+                              "This is you target price in 1-year's time for this security.For a \'long\' pitch should be higher than current value of security, and lower if this is \'short\' pitch",
+                              _validateBaseCase,
+                            ),
+                            smallTextField(
+                              "Bear Case",
+                              _priceBearController,
+                              true,
+                              "This is your target price in 1-years's time if your investment thesis didn't work and the security goes in the opposite direction of your prediction",
+                              _validateBearCase,
                             ),
                           ],
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          smallTextField(
-                            "Base Case",
-                            _priceBaseController,
-                            true,
-                            "This is you target price in 1-year's time for this security.For a \'long\' pitch should be higher than current value of security, and lower if this is \'short\' pitch",
-                          ),
-                          smallTextField(
-                            "Bear Case",
-                            _priceBearController,
-                            true,
-                            "This is your target price in 1-years's time if your investment thesis didn't work and the security goes in the opposite direction of your prediction",
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "1-year forward estimate",
-                              style: TextStyle(
-                                color: globals.isGoldBlack
-                                    ? Color(0xFFD8AF4F)
-                                    : Color(0xFF7499C6),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "1-year forward estimate",
+                                style: TextStyle(
+                                  color: globals.isGoldBlack
+                                      ? Color(0xFFD8AF4F)
+                                      : Color(0xFF7499C6),
+                                ),
                               ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            smallTextField(
+                              "Revenue forecast",
+                              _revenueController,
+                              false,
+                              "This is your estimate of this security's Revenue in 1 years's time.",
+                              (value) {
+                                return null;
+                              },
+                            ),
+                            smallTextField(
+                              "Earning per share forecast",
+                              _epsController,
+                              false,
+                              "This is your estimate of this security's Earnings Per Share in 1 years's time.",
+                              (value) {
+                                return null;
+                              },
                             ),
                           ],
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          smallTextField(
-                            "Revenue forecast",
-                            _revenueController,
-                            false,
-                            "This is your estimate of this security's Revenue in 1 years's time.",
+                        SizedBox(
+                          height: 20,
+                        ),
+                        investmentThesis(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        topicTags(),
+                        showAllSelectedTags(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: _openFileExplorer,
+                              child: uploadButton("Upload pitch document"),
+                            ),
+                            GestureDetector(
+                              onTap: _openVideoExplorer,
+                              child: uploadButton("Upload pitch video"),
+                            ),
+                          ],
+                        ),
+                        docUrl != null && docUrl != ""
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Pitch Doc Attached",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: globals.isGoldBlack
+                                            ? Color(0xFFD8AF4F)
+                                            : Color(0xFF1D6177),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.attach_file_rounded,
+                                      color: globals.isGoldBlack
+                                          ? Color(0xFFD8AF4F)
+                                          : Color(0xFF1D6177),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : SizedBox(),
+                        videoUrl != null && videoUrl != ""
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Pitch Video Attached",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: globals.isGoldBlack
+                                            ? Color(0xFFD8AF4F)
+                                            : Color(0xFF1D6177),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.attach_file_rounded,
+                                      color: globals.isGoldBlack
+                                          ? Color(0xFFD8AF4F)
+                                          : Color(0xFF1D6177),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : SizedBox(),
+                        Consumer<UploadDownloadProgress>(
+                          builder: (context, awsProgressProvider, _) {
+                            // print("${awsProgressProvider.percentage}" + "%");
+                            return awsProgressProvider.percentage == 100.0 ||
+                                    awsProgressProvider.percentage == 0.0
+                                ? SizedBox()
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: progressBar(
+                                        MediaQuery.of(context).size.width - 80,
+                                        awsProgressProvider.percentage,
+                                      ),
+                                    ),
+                                  );
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => PitchTemplates(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "See Auro stock pitch templates here",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.grey,
+                              ),
+                            ),
                           ),
-                          smallTextField(
-                            "Earning per share forecast",
-                            _epsController,
-                            false,
-                            "This is your estimate of this security's Earnings Per Share in 1 years's time.",
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      investmentThesis(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      topicTags(),
-                      showAllSelectedTags(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: _openFileExplorer,
-                            child: uploadButton("Upload pitch document"),
-                          ),
-                          GestureDetector(
-                            onTap: _openVideoExplorer,
-                            child: uploadButton("Upload pitch video"),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      docUrl != null && docUrl != ""
-                          ? Text("Contains Attachment")
-                          : Text("No Attachments"),
-                      SizedBox(
-                        height: 24.0,
-                      ),
-                      CustomButton(
-                        text: "Done",
-                        callback: isLoadingPath ? () {} : onPressedDone,
-                        color: globals.isGoldBlack
-                            ? Color(0xFFD8AF4F)
-                            : Color(0xFF1D6177),
-                        textColor: Colors.white,
-                        borderColor: globals.isGoldBlack
-                            ? Color(0xFFD8AF4F)
-                            : Color(0xFF1D6177),
-                      ),
-                    ],
+                        ),
+                        SizedBox(
+                          height: 24.0,
+                        ),
+                        CustomButton(
+                          text: "Done",
+                          callback: onPressedDone,
+                          color: globals.isGoldBlack
+                              ? Color(0xFFD8AF4F)
+                              : Color(0xFF1D6177),
+                          textColor: Colors.white,
+                          borderColor: globals.isGoldBlack
+                              ? Color(0xFFD8AF4F)
+                              : Color(0xFF1D6177),
+                        ),
+                      ],
+                    ),
                   )
                 : SizedBox(),
           ),
@@ -997,6 +1196,10 @@ class _StockPitchState extends State<StockPitch> {
   }
 
   onPressedDone() async {
+    if (_stockPitchFormKey.currentState.validate() == false) {
+      return;
+    }
+
     if (_priceBaseController.text.isNotEmpty &&
         _priceBearController.text.isNotEmpty) {
       List allTags = [];
@@ -1025,6 +1228,7 @@ class _StockPitchState extends State<StockPitch> {
         "stock_id": selectedStockId,
         "title": _stockPitchTitleController.text,
         "docUrl": docUrl == null ? "" : docUrl,
+        "videoUrl": videoUrl == null ? "" : videoUrl,
       };
 
       print(body);
@@ -1043,13 +1247,14 @@ class _StockPitchState extends State<StockPitch> {
 
   void getDialog(text, cancel) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog1(
-            text: text,
-            doublePop: cancel,
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog1(
+          text: text,
+          doublePop: cancel,
+        );
+      },
+    );
   }
 
   questionMark(text) {

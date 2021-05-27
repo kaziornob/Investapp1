@@ -134,6 +134,8 @@ class LongShortProvider with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return result["message"];
+    }else{
+      return result["message"];
     }
   }
 
