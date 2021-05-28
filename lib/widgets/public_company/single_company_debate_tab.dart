@@ -82,48 +82,51 @@ class _SinglePublicCompaniesDebateTabState
               Container(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: "Auro Sentiment Score - Voting Bar(",
-                      style: TextStyle(
-                        fontFamily: "RosarioRegular",
-                        color: Colors.black,
-                        fontSize: 18.0,
-                        letterSpacing: 0.2,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Auro Sentiment Score - Voting Bar(",
+                        style: TextStyle(
+                          fontFamily: "RosarioRegular",
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          letterSpacing: 0.2,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text:
-                          "${(4 - (12 / DateTime.now().month)).ceil()}Q,${DateTime.now().year}",
-                      style: TextStyle(
-                        fontFamily: "RosarioRegular",
-                        color: Colors.black,
-                        fontSize: 18.0,
-                        letterSpacing: 0.2,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => VotesQuarterlyColumnCharts(
-                                ticker: widget.data["ticker"],
+                      TextSpan(
+                        text:
+                            "${(4 - (12 / DateTime.now().month)).ceil()}Q,${DateTime.now().year}",
+                        style: TextStyle(
+                          fontFamily: "RosarioRegular",
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          letterSpacing: 0.2,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    VotesQuarterlyColumnCharts(
+                                  ticker: widget.data["ticker"],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                    ),
-                    TextSpan(
-                      text: ")",
-                      style: TextStyle(
-                        fontFamily: "RosarioRegular",
-                        color: Colors.black,
-                        fontSize: 18.0,
-                        letterSpacing: 0.2,
+                            );
+                          },
                       ),
-                    ),
-                  ]),
+                      TextSpan(
+                        text: ")",
+                        style: TextStyle(
+                          fontFamily: "RosarioRegular",
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -221,7 +224,10 @@ class _SinglePublicCompaniesDebateTabState
                                 trackShape: RoundedRectSliderTrackShape(),
                                 trackHeight: 4.0,
                                 thumbShape: CustomSliderThumbCircle(
-                                    thumbRadius: 12, min: 0, max: 100),
+                                  thumbRadius: 12,
+                                  min: 0,
+                                  max: 100,
+                                ),
                                 thumbColor: Color(0xFF1D6177),
                                 overlayColor: Color(0xFFFAB95B),
                                 overlayShape: RoundSliderOverlayShape(

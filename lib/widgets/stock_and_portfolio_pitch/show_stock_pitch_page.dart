@@ -1,22 +1,34 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:auroim/api/featured_companies_provider.dart';
+import 'package:auroim/reusable_widgets/customButton.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
-import 'package:auroim/widgets/stock_and_portfolio_pitch/return_drawdown_widget.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_return_chart.dart';
+import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_return_drawdown.dart';
+import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_social_info.dart';
+import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_video.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/topic_tags.dart';
 import 'package:flutter/material.dart';
+import 'package:auroim/constance/global.dart' as globals;
 import 'package:toast/toast.dart';
 
 class ShowStockPitchPage extends StatefulWidget {
   final stockPitchData;
+  final String userEmail;
 
-  const ShowStockPitchPage({Key key, this.stockPitchData}) : super(key: key);
+  const ShowStockPitchPage({
+    Key key,
+    this.stockPitchData,
+    this.userEmail,
+  }) : super(key: key);
 
   @override
   _ShowStockPitchPageState createState() => _ShowStockPitchPageState();
 }
 
 class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
+  FeaturedCompaniesProvider _featuredCompaniesProvider =
+      FeaturedCompaniesProvider();
   List monthList = [
     "Jan",
     "Feb",
@@ -41,6 +53,7 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
+          color: Colors.white,
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             child: Column(
@@ -52,7 +65,7 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                       children: [
                         IconButton(
                           icon: Icon(
-                            Icons.arrow_back_ios_rounded,
+                            Icons.arrow_back,
                             color: Colors.black,
                           ),
                           onPressed: () {
@@ -60,45 +73,72 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                           },
                         ),
                         Text(
-                          "${widget.stockPitchData["title"]}",
+                          "${widget.stockPitchData["company_name"]} : ${widget.stockPitchData["title"]}"
+                              .toUpperCase(),
                           style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            fontFamily: "RosarioSemiBold",
                           ),
                         ),
                       ],
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 3,
-                      height: 60,
-                      child: Image.asset('assets/logo.png'),
                     ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                          "Created on ${date.day}th ${monthList[date.month - 1]}, ${date.year}"),
+                    FutureBuilder(
+                      future:
+                          _featuredCompaniesProvider.getSinglePublicCompanyData(
+                        widget.stockPitchData["stock_id"],
+                        "head",
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          print(snapshot.data);
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Container(
+                              width: 100,
+                              child: Image.network(
+                                  "${snapshot.data["logo_img_name"]}"),
+                            ),
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 20.0),
                       child: Text(
                         widget.stockPitchData["isLong"] == 0
-                            ? "Short Pitch"
-                            : "Long Pitch",
+                            ? "Short / SELL"
+                            : "Long / BUY",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: Color(0xFFD8AF4F),
+                          fontFamily: "RosarioSemiBold",
+                          fontSize: 14,
                         ),
                       ),
                     ),
                   ],
                 ),
-                ReturnDrawdownWidget(
-                  showMore: false,
-                  data: widget.stockPitchData,
+                StockPitchSocialInfo(
+                  email: widget.userEmail,
+                ),
+                StockPitchReturnDrawdown(
+                  date: date,
+                  pitchData: widget.stockPitchData,
+                ),
+                Visibility(
+                  visible:
+                      widget.stockPitchData["videoUrl"] == "" ? false : true,
+                  child: StockPitchVideo(
+                    videoLink: widget.stockPitchData["videoUrl"],
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,19 +147,28 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                       padding: const EdgeInsets.all(15.0),
                       child: Row(
                         children: [
-                          Text("Investment Thesis"),
+                          Text(
+                            "Investment Thesis",
+                            style: TextStyle(
+                              fontFamily: "RosarioSemiBold",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(3),
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "${widget.stockPitchData["investment_thesis"]}",
+                          style: TextStyle(
+                            fontFamily: "Roboto",
+                          ),
                         ),
                       ),
                       width: MediaQuery.of(context).size.width - 30,
@@ -127,59 +176,13 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      TopicTags(
-                        listOfTags: jsonDecode(
-                          widget.stockPitchData["topic_tags"],
-                        ),
-                      ),
-                      Visibility(
-                        visible: widget.stockPitchData["docUrl"] == ""
-                            ? false
-                            : true,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () async {
-                              print("download file save");
-                              Toast.show(
-                                "Downloading...",
-                                context,
-                              );
-                              File file = await awsClient.downloadFile(
-                                  widget.stockPitchData["docUrl"],
-                                  "auro_stock_pitch${widget.stockPitchData["pitch_number"]}");
-                              if (await file.length() != 0) {
-                                Toast.show(
-                                  "File Successfully Downloaded",
-                                  context,
-                                );
-                              } else {
-                                Toast.show(
-                                  "Some Error Occurred",
-                                  context,
-                                );
-                              }
-                              print(file.path);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Download investment thesis PDF doc",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Icon(Icons.download_sharp),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  padding: const EdgeInsets.only(
+                    top: 15.0,
+                  ),
+                  child: TopicTags(
+                    listOfTags: jsonDecode(
+                      widget.stockPitchData["topic_tags"],
+                    ),
                   ),
                 ),
                 StockPitchReturnChart(
@@ -187,11 +190,47 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                   userInceptionDate: widget.stockPitchData["date"],
                   pitchNumber: widget.stockPitchData["pitch_number"],
                 ),
+                Visibility(
+                  visible: widget.stockPitchData["docUrl"] == "" ? false : true,
+                  child: CustomButton(
+                    textColor: Colors.white,
+                    borderColor: globals.isGoldBlack
+                        ? Color(0xFFD8AF4F)
+                        : Color(0xFF1D6177),
+                    color: globals.isGoldBlack
+                        ? Color(0xFFD8AF4F)
+                        : Color(0xFF1D6177),
+                    text: "View Pitch Doc",
+                    callback: _download,
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  _download() async {
+    print("download file save");
+    Toast.show(
+      "Downloading...",
+      context,
+    );
+    File file = await awsClient.downloadFile(widget.stockPitchData["docUrl"],
+        "auro_stock_pitch${widget.stockPitchData["pitch_number"]}");
+    if (await file.length() != 0) {
+      Toast.show(
+        "File Successfully Downloaded",
+        context,
+      );
+    } else {
+      Toast.show(
+        "Some Error Occurred",
+        context,
+      );
+    }
+    print(file.path);
   }
 }

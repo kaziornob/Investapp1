@@ -1,32 +1,13 @@
-import 'dart:convert';
-
 import 'package:animator/animator.dart';
-import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/qaInvForumPages/ansView.dart';
-import 'package:auroim/modules/qaInvForumPages/qusView.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter/services.dart';
-
-// import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-// import 'package:keyboard_actions/keyboard_actions.dart';
-// import 'package:keyboard_actions/keyboard_actions_config.dart';
-// import 'package:keyboard_actions/keyboard_actions_item.dart';
-// import 'package:html_editor/html_editor.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
-
-// const String _markdownData = "*pooja* **pooja** # this is H1 http:github.com";
 
 class AddEditAnswer extends StatefulWidget {
   final allParams;

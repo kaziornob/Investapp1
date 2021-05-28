@@ -1,4 +1,4 @@
-import 'package:auroim/api/featured_companies_provider.dart';
+
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';

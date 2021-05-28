@@ -6,6 +6,7 @@ import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/settings/show_list_of_following.dart';
 import 'package:auroim/modules/socialInvestRelatedPages/InvestedAssetModule.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/static_data/static_data.dart';
 import 'package:auroim/widgets/myProfile/Qus_ans.dart';
 import 'package:auroim/widgets/myProfile/live_paper_portfolio.dart';
 import 'package:auroim/widgets/myProfile/profile_background.dart';
@@ -220,8 +221,8 @@ class _MyProfileState extends State<MyProfile>
                                       .getUserBadge(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
-                                      print("badge data got");
-                                      print(snapshot.data);
+                                      // print("badge data got");
+                                      // print(snapshot.data);
                                       switch (snapshot.data) {
                                         case "Challenger":
                                           badgeImagePath =
@@ -244,13 +245,15 @@ class _MyProfileState extends State<MyProfile>
                                               'assets/buttonBadge.png';
                                       }
                                       return Image(
-                                        image: AssetImage(badgeImagePath),
+                                        image: AssetImage(
+                                            StaticData.badges[snapshot.data]
+                                                ["asset_path"]),
                                         fit: BoxFit.fill,
                                         height: 50,
                                         width: 50,
                                       );
                                     } else {
-                                      print("No badge data");
+                                      // print("No badge data");
                                       return SizedBox();
                                     }
                                   },

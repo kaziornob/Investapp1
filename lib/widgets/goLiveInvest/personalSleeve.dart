@@ -1,4 +1,4 @@
-import 'dart:collection';
+
 
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/reusable_functions.dart';
@@ -7,7 +7,6 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/provider_abhinav/personal_sleeve_provider.dart';
-import 'package:auroim/widgets/goLiveInvest/SecurityBuySell.dart';
 import 'package:auroim/widgets/invest_tab/personal_sleeve_return_chart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 var securityBoxChartData;
@@ -527,7 +525,7 @@ class _PersonalSleeveState extends State<PersonalSleeve>
                                           .replaceAll("_", " ")
                                           .toLowerCase();
                                       // print("legend");
-                                      DoughnutSeriesRenderer ss = series;
+                                      // DoughnutSeriesRenderer ss = series;
                                       ChartPoint<dynamic> dd = point;
                                       // print(series.runtimeType.toString());
                                       // print(point.runtimeType.toString());

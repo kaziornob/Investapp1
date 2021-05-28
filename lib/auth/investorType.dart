@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:auroim/api/apiProvider.dart';
-import 'package:auroim/auth/empStatus.dart';
 import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';

@@ -47,8 +47,6 @@ class StockPitchProvider with ChangeNotifier {
       'Authorization': 'Token $sessionToken'
     };
 
-    print(body);
-
 
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get stock pitch daily Return url: $url");
@@ -58,10 +56,10 @@ class StockPitchProvider with ChangeNotifier {
       headers: headers,
       body: jsonEncode(body),
     );
-    print(response.body);
+
     print("get stock pitch daily Return response: ${response.statusCode}");
+    // print(response.body);
     var result = jsonDecode(response.body);
-    print(result.toString());
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return result["returns"];

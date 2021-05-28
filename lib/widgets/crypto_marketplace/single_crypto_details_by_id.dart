@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
 import 'package:auroim/provider_abhinav/follow_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
@@ -13,12 +12,10 @@ import 'package:auroim/widgets/investors_in_your_network.dart';
 import 'package:auroim/widgets/long_short.dart';
 import 'package:auroim/widgets/voting_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 import '../../main.dart';
-import '../crypto_coin_chart.dart';
 import '../crypto_coin_price_data.dart';
 import '../private_deals_marketplace/appbar_widget.dart';
 

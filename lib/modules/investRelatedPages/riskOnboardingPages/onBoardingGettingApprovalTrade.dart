@@ -1,11 +1,9 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/constance/routes.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 
@@ -82,8 +80,8 @@ class _OnBoardingGettingApprovalTradeState extends State<OnBoardingGettingApprov
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
+    // AppBar appBar = AppBar();
+    // double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(

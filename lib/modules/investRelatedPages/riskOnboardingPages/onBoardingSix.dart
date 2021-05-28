@@ -3,12 +3,11 @@ import 'package:auroim/api/future_return.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSevenMarginApproved.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
-import 'package:auroim/widgets/future_return_chart.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
+
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
@@ -48,8 +47,8 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
+    // AppBar appBar = AppBar();
+    // double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(

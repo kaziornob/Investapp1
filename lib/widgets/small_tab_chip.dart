@@ -1,6 +1,5 @@
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 
 class SmallTabChip extends StatelessWidget {
   final bool selected;

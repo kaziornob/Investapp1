@@ -1,20 +1,14 @@
 import 'dart:convert';
 
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/private_deals_marketplace/all_companies_widget.dart';
 import 'package:auroim/widgets/private_deals_marketplace/appbar_widget.dart';
-import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/private_deals_marketplace/get_single_company_details.dart';
 import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';
-import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
-
-// import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:toast/toast.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PrivateDealsMarketplaceMainPage extends StatefulWidget {
   @override

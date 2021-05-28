@@ -1,6 +1,4 @@
 import 'package:animator/animator.dart';
-import 'package:auroim/constance/constance.dart';
-import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 
 class WidgetScaleAnimation extends StatefulWidget {

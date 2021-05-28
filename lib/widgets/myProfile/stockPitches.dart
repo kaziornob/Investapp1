@@ -61,6 +61,7 @@ class _StockPitchesState extends State<StockPitches> {
                             MaterialPageRoute(
                               builder: (context) => ShowStockPitchPage(
                                 stockPitchData: data[index],
+                                userEmail: widget.email,
                               ),
                             ),
                           );

@@ -9,11 +9,12 @@ class StockPitchChart extends StatefulWidget {
   StockPitchChart({
     this.pricesData,
   });
+
   @override
   _StockPitchChartState createState() => _StockPitchChartState();
 }
 
-class _StockPitchChartState extends State<StockPitchChart>{
+class _StockPitchChartState extends State<StockPitchChart> {
   ZoomPanBehavior _zoomPanBehavior;
   TooltipBehavior _tooltipBehavior;
 
@@ -28,8 +29,6 @@ class _StockPitchChartState extends State<StockPitchChart>{
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,11 +37,12 @@ class _StockPitchChartState extends State<StockPitchChart>{
         zoomPanBehavior: _zoomPanBehavior,
         tooltipBehavior: _tooltipBehavior,
         primaryXAxis: DateTimeAxis(
-          title: AxisTitle(text: "Date"),
-          maximum: widget.pricesData.length == 0
-              ? null
-              : widget.pricesData[0].x.add(
-            Duration(days: 365),
+          title: AxisTitle(
+            text: "Date",
+            textStyle: TextStyle(
+              color: Color(0xff1D6177),
+              fontSize: 10,
+            ),
           ),
           interval: 1,
         ),
@@ -50,21 +50,18 @@ class _StockPitchChartState extends State<StockPitchChart>{
           title: AxisTitle(
             text: "Inception-to-date Annualized Return %",
             textStyle: TextStyle(
-              color: Color(0xff5A56B9),
+              color: Color(0xff1D6177),
               fontSize: 10,
             ),
           ),
         ),
-
         series: <ChartSeries>[
-          SplineSeries<CryptoCoinPriceData, dynamic>(
+          SplineAreaSeries<CryptoCoinPriceData, dynamic>(
             name: "Price On",
             dataSource: widget.pricesData,
             xValueMapper: (CryptoCoinPriceData data, _) => data.x,
             yValueMapper: (CryptoCoinPriceData data, _) => data.y,
-            // opacity: 0.5,
-            color: Color(0xff5A56B9),
-            // gradient: gradientColors,
+            color: Color(0xFFE2EFDB),
           ),
         ],
       ),

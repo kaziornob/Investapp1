@@ -1,4 +1,4 @@
-import 'package:animator/animator.dart';
+
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
@@ -332,8 +332,8 @@ class _OnBoardingThirdState extends State<OnBoardingThird> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
+    // AppBar appBar = AppBar();
+    // double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(

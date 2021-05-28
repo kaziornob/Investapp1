@@ -1,4 +1,80 @@
-class StaticData{
+class StaticData {
+  static const List monthList = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "April",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
+  static Map badges = {
+    "Guru": {
+      "asset_path": "assets/guru.png",
+    },
+    "Bull of Wall Street": {
+      "asset_path": "assets/bull_of_wall_street.png",
+    },
+    "Genius": {
+      "asset_path": "assets/genius.png",
+    },
+    "Trusted User": {
+      "asset_path": "assets/trusted_user.png",
+    },
+    "Challenger": {
+      "asset_path": "assets/challenger.png",
+    },
+  };
+
+  static Map leagues = {
+    1: {
+      "name": "Warren Buffet",
+      "asset_path": "assets/warren_buffet.png",
+    },
+    2: {
+      "name": "Jim Simmons",
+      "asset_path": "assets/jim_simmons.png",
+    },
+    3: {
+      "name": "Benjamin Graham",
+      "asset_path": "assets/benjamin_graham.png",
+    },
+    4: {
+      "name": "Bill Gross",
+      "asset_path": "assets/bill_gross.png",
+    },
+    5: {
+      "name": "John Templeton",
+      "asset_path": "assets/john_templeton.png",
+    },
+    6: {
+      "name": "Steve Mandel",
+      "asset_path": "assets/steve_mandel.png",
+    },
+    7: {
+      "name": "Peter Lynch",
+      "asset_path": "assets/peter_lynch.png",
+    },
+    8: {
+      "name": "George Soros",
+      "asset_path": "assets/george_soros.png",
+    },
+    9: {
+      "name": "Lei Zhang",
+      "asset_path": "assets/lei_zhang.png",
+    },
+    10: {
+      "name": "Rakesh Jhunjhunwala",
+      "asset_path": "assets/rakesh_jhunjhunwala.png",
+    },
+  };
+
   static const callingCodes = [
     "+93",
     "+355",
@@ -223,21 +299,21 @@ class StaticData{
       "firstPara": "",
       "image": "assets/landing_page_stars.png",
       "lastPara":
-      "Invest with confidence on world’s leading Robo and Social Investment App.Built by licenced asset-manager with strong track record of outperforming markets"
+          "Invest with confidence on world’s leading Robo and Social Investment App.Built by licenced asset-manager with strong track record of outperforming markets"
     },
     {
       "logoBottomLine": "PERSONALIZED PORTFOLIOS",
       "firstPara":
-      "Let globally licensed (SEC, SFC,  SEBI FPI) asset manager build a personalized portfolio for you based on your risk appetite and goals",
+          "Let globally licensed (SEC, SFC,  SEBI FPI) asset manager build a personalized portfolio for you based on your risk appetite and goals",
       "image": "assets/personalizedPortfolio.png",
       "lastPara":
-      "…hire professional money managers with a great track record to build an institutional grade portfolio for you."
+          "…hire professional money managers with a great track record to build an institutional grade portfolio for you."
     },
     {
       "logoBottomLine": "MULTIPLE ASSET CLASSES",
       "firstPara":
-      "Tell us if you have any preferences and we’ll customize your portfolio across global stocks, bonds, "
-          "commodities, crypto, private equity, hedge fund, venture capital, impact investing and private deals.",
+          "Tell us if you have any preferences and we’ll customize your portfolio across global stocks, bonds, "
+              "commodities, crypto, private equity, hedge fund, venture capital, impact investing and private deals.",
       "image": "assets/multipleAssets.png",
       "lastPara": "..and Yes! we pick  securities that you can engage with, "
           "not just mutual funds and ETFs like other Robos…and so no double fees on those."
@@ -245,23 +321,23 @@ class StaticData{
     {
       "logoBottomLine": "LEARN HOW TO INVEST BETTER",
       "firstPara":
-      "Master investment concepts with our Adaptive Learning Investment module. "
-          "Ask questions and participate in discussions while earning Auro Coins that can be redeemed for free stocks.",
+          "Master investment concepts with our Adaptive Learning Investment module. "
+              "Ask questions and participate in discussions while earning Auro Coins that can be redeemed for free stocks.",
       "image": "assets/invest.png",
       "lastPara": "…Learn investment principles used by the all-time greats"
     },
     {
       "logoBottomLine": "PITCH STOCK & PORTFOLIOS",
       "firstPara":
-      "Pitch stocks and portfolios while building your own investment track record",
+          "Pitch stocks and portfolios while building your own investment track record",
       "image": "assets/pitchStock.png",
       "lastPara":
-      "…allow others to follow your investments and earn a cut of their profits"
+          "…allow others to follow your investments and earn a cut of their profits"
     },
     {
       "logoBottomLine": "FOLLOW STAR INVESTORS",
       "firstPara":
-      "Choose from and Invest in a wide selection of professionally managed portfolios.",
+          "Choose from and Invest in a wide selection of professionally managed portfolios.",
       "image": "assets/starInvestor.png",
       "lastPara": "…while you sit back and watch your wealth grow"
     }

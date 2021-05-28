@@ -1,8 +1,7 @@
-import 'package:auroim/api/featured_companies_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class SingleFinbertArticle extends StatefulWidget {
   final String head;
@@ -31,8 +30,8 @@ class SingleFinbertArticle extends StatefulWidget {
 }
 
 class _SingleFinbertArticleState extends State<SingleFinbertArticle> {
-  FeaturedCompaniesProvider _featuredCompaniesProvider =
-      FeaturedCompaniesProvider();
+  // FeaturedCompaniesProvider _featuredCompaniesProvider =
+  //     FeaturedCompaniesProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -127,28 +126,31 @@ class _SingleFinbertArticleState extends State<SingleFinbertArticle> {
                 children: widget.relatedLinks
                     .map<Widget>(
                       (e) => IconButton(
-                        icon: Icon(FontAwesomeIcons.link),
+                        icon: Icon(
+                          FontAwesomeIcons.link,
+                          size: 15,
+                        ),
                         onPressed: () => launch(e),
                       ),
                     )
                     .toList(),
               ),
             ),
-            widget.relatedLinks.length != 0
-                ? Container(
-                    height: 50,
-                    child: Row(
-                      children: widget.relatedLinks
-                          .map<Widget>(
-                            (e) => IconButton(
-                              icon: Icon(FontAwesomeIcons.link),
-                              onPressed: () => launch(e),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  )
-                : SizedBox(),
+            // widget.relatedLinks.length != 0
+            //     ? Container(
+            //         height: 50,
+            //         child: Row(
+            //           children: widget.relatedLinks
+            //               .map<Widget>(
+            //                 (e) => IconButton(
+            //                   icon: Icon(FontAwesomeIcons.link),
+            //                   onPressed: () => launch(e),
+            //                 ),
+            //               )
+            //               .toList(),
+            //         ),
+            //       )
+            //     : SizedBox(),
             widget.tickers.length != 0
                 ? Container(
                     child: Column(
@@ -186,13 +188,15 @@ class _SingleFinbertArticleState extends State<SingleFinbertArticle> {
                                         backgroundColor: Color(0xFF555555),
                                       ),
                                     ),
-                                    Text(
-                                      "${widget.tickers[ticker]}",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Color(0xFF555555),
+                                    Expanded(
+                                      child: Text(
+                                        "${widget.tickers[ticker]}",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFF555555),
+                                        ),
+                                        textAlign: TextAlign.start,
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
                                   ],
                                 ),
@@ -241,13 +245,15 @@ class _SingleFinbertArticleState extends State<SingleFinbertArticle> {
                                         backgroundColor: Color(0xFF555555),
                                       ),
                                     ),
-                                    Text(
-                                      "${widget.peoples[person]}",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Color(0xFF555555),
+                                    Expanded(
+                                      child: Text(
+                                        "${widget.peoples[person]}",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFF555555),
+                                        ),
+                                        textAlign: TextAlign.start,
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
                                   ],
                                 ),

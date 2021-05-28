@@ -1,7 +1,5 @@
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchSecurity extends StatefulWidget {
   final callBack;

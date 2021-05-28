@@ -1,17 +1,14 @@
-import 'dart:convert';
+
 
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
-import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
-import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 import 'confirm_new_password.dart';
@@ -32,10 +29,10 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
 
   var height = 0.0;
   var width = 0.0;
-  bool isSelectbutton1 = false;
-  bool isSelectbutton2 = false;
-  bool isSelectbutton3 = false;
-  bool isSelectbutton4 = false;
+  bool isSelectButton1 = false;
+  bool isSelectButton2 = false;
+  bool isSelectButton3 = false;
+  bool isSelectButton4 = false;
 
   TextEditingController controller1 = TextEditingController();
   TextEditingController controller2 = TextEditingController();
@@ -168,25 +165,25 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  isSelectbutton1
+                                  isSelectButton1
                                       ? pinWidget(controller1)
                                       : PinDisable(),
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  isSelectbutton2
+                                  isSelectButton2
                                       ? pinWidget(controller2)
                                       : PinDisable(),
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  isSelectbutton3
+                                  isSelectButton3
                                       ? pinWidget(controller3)
                                       : PinDisable(),
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  isSelectbutton4
+                                  isSelectButton4
                                       ? pinWidget(controller4)
                                       : PinDisable(),
                                 ],
@@ -343,19 +340,19 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            isSelectbutton1 ? PinEnable() : PinDisable(),
+            isSelectButton1 ? PinEnable() : PinDisable(),
             SizedBox(
               width: 16,
             ),
-            isSelectbutton2 ? PinEnable() : PinDisable(),
+            isSelectButton2 ? PinEnable() : PinDisable(),
             SizedBox(
               width: 16,
             ),
-            isSelectbutton3 ? PinEnable() : PinDisable(),
+            isSelectButton3 ? PinEnable() : PinDisable(),
             SizedBox(
               width: 16,
             ),
-            isSelectbutton4 ? PinEnable() : PinDisable(),
+            isSelectButton4 ? PinEnable() : PinDisable(),
           ],
         ),
       ),
@@ -468,30 +465,30 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
   }
 
   isPressNumberButton1(String str) {
-    if (!isSelectbutton1) {
+    if (!isSelectButton1) {
       setState(() {
-        isSelectbutton1 = true;
+        isSelectButton1 = true;
         controller1.text = str;
         currController = controller2;
       });
       totalPinNumber++;
-    } else if (!isSelectbutton2) {
+    } else if (!isSelectButton2) {
       setState(() {
-        isSelectbutton2 = true;
+        isSelectButton2 = true;
         controller2.text = str;
         currController = controller3;
       });
       totalPinNumber++;
-    } else if (!isSelectbutton3) {
+    } else if (!isSelectButton3) {
       setState(() {
-        isSelectbutton3 = true;
+        isSelectButton3 = true;
         controller3.text = str;
         currController = controller4;
       });
       totalPinNumber++;
-    } else if (!isSelectbutton4) {
+    } else if (!isSelectButton4) {
       setState(() {
-        isSelectbutton4 = true;
+        isSelectButton4 = true;
         controller4.text = str;
         currController = controller5;
       });
@@ -503,30 +500,30 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
   int totalPinNumber = 0;
 
   removePin() {
-    isSelectbutton4
+    isSelectButton4
         ? setState(() {
-            isSelectbutton4 = false;
+            isSelectButton4 = false;
             controller4.text = "";
             currController = controller3;
             totalPinNumber--;
           })
-        : isSelectbutton3
+        : isSelectButton3
             ? setState(() {
-                isSelectbutton3 = false;
+                isSelectButton3 = false;
                 controller3.text = "";
                 currController = controller2;
                 totalPinNumber--;
               })
-            : isSelectbutton2
+            : isSelectButton2
                 ? setState(() {
-                    isSelectbutton2 = false;
+                    isSelectButton2 = false;
                     controller2.text = "";
                     currController = controller1;
                     totalPinNumber--;
                   })
-                : isSelectbutton1
+                : isSelectButton1
                     ? setState(() {
-                        isSelectbutton1 = false;
+                        isSelectButton1 = false;
                         controller1.text = "";
                         totalPinNumber--;
                       })

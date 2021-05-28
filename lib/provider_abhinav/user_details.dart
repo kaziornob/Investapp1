@@ -15,11 +15,11 @@ class UserDetails extends ChangeNotifier {
     // notifyListeners();
   }
 
-  getUserBadge() async {
+  Future<dynamic> getUserBadge() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
-    String filterPath = "qa/badge";
+    String filterPath = "forum/get_badge";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -30,10 +30,10 @@ class UserDetails extends ChangeNotifier {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.post(url, headers: headers);
     print("get user badge response: ${response.statusCode}");
     var result = jsonDecode(response.body);
-    print(result.toString());
+    // print(result.toString());
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       // print("ggggg");

@@ -1,13 +1,14 @@
 import 'package:animator/animator.dart';
-import 'package:auroim/constance/constance.dart';
-import 'package:auroim/constance/themes.dart';
 import 'package:flutter/material.dart';
 
 class SinglePublicCompanyAppBar extends StatefulWidget {
   final companyName;
   final companyImageUrl;
 
-  SinglePublicCompanyAppBar({this.companyName,this.companyImageUrl,});
+  SinglePublicCompanyAppBar({
+    this.companyName,
+    this.companyImageUrl,
+  });
 
   @override
   _SinglePublicCompanyAppBarState createState() =>
@@ -15,6 +16,12 @@ class SinglePublicCompanyAppBar extends StatefulWidget {
 }
 
 class _SinglePublicCompanyAppBarState extends State<SinglePublicCompanyAppBar> {
+  @override
+  void initState() {
+    print("single company appbar : ${widget.companyImageUrl}");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,9 +69,13 @@ class _SinglePublicCompanyAppBarState extends State<SinglePublicCompanyAppBar> {
                         // color: Color(0xFFfec20f),
                         shape: BoxShape.rectangle,
                       ),
-                      child: Image.network(widget.companyImageUrl),
+                      child: Image.network(
+                          "https://auro-invest.s3-us-west-2.amazonaws.com/" +
+                              widget.companyImageUrl),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Text(
                       widget.companyName,
                       textAlign: TextAlign.center,

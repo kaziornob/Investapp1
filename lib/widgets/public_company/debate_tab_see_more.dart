@@ -34,28 +34,21 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
       body: Container(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: 5,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "${widget.companyName} Pros and Cons",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ),
               longShortSection(longShortProvider.proConsForPublicCompany),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "${widget.companyName} Related Articles",
+                  "Auro News",
                   style: TextStyle(
-                    fontSize: 15,
+                    color: Colors.black,
+                    fontFamily: "Roboto",
                     fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -65,6 +58,7 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
                 longShortProvider
                     .sortedFinbertArticleByPositiveSentimentScore(),
               ),
+              consensusSection(longShortProvider.longShortComments),
             ],
           ),
         ),
@@ -72,67 +66,64 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
     );
   }
 
-  longShortSection(data) {
-    return Center(
+  consensusSection(data) {
+    return data["comments_long"].length == 0 &&
+        data["comments_short"].length == 0
+        ? SizedBox()
+        : Padding(
+      padding: const EdgeInsets.only(
+        bottom: 10.0,
+        top: 10,
+      ),
       child: Container(
-        // height: 400,
         width: MediaQuery.of(context).size.width - 15,
-        // decoration: new BoxDecoration(
-        //   border: Border.all(
-        //     color: Color(0xff5A56B9),
-        //     width: 1,
-        //   ),
-        //   borderRadius: BorderRadius.all(
-        //     Radius.circular(2.0),
-        //   ),
-        // ),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Color(0xFFFAB95B),
+            width: 1,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(3.0),
+          ),
+        ),
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Auro Consensus",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                data["comments_long"].length == 0
+                    ? SizedBox()
+                    : data["comments_long"][0]["comment"].length == 0
+                    ? SizedBox()
+                    : Container(
                   // decoration: BoxDecoration(border:Border.all()),
-                  width: (MediaQuery.of(context).size.width - 20) / 2,
+                  width:
+                  (MediaQuery.of(context).size.width - 20) /
+                      2,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment:
+                    CrossAxisAlignment.center,
                     children: [
-                      // Container(
-                      //   child: Text(
-                      //     "Pros",
-                      //     style: TextStyle(
-                      //       fontSize: 16,
-                      //       fontFamily: "Roboto",
-                      //       fontWeight: FontWeight.bold,
-                      //       color: Color(0xff1D6177),
-                      //     ),
-                      //   ),
-                      // ),
                       bulletPoints(
-                        "${data["pro_one"]}",
+                        "${data["comments_long"][0]["comment"]}",
                         "Pro One",
-                        Icon(
-                          FontAwesomeIcons.checkDouble,
-                          color: Colors.green,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      bulletPoints(
-                        "${data["pro_two"]}",
-                        "Pro Two",
-                        Icon(
-                          FontAwesomeIcons.checkDouble,
-                          color: Colors.green,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      bulletPoints(
-                        "${data["pro_three"]}",
-                        "Pro Three",
                         Icon(
                           FontAwesomeIcons.checkDouble,
                           color: Colors.green,
@@ -141,50 +132,24 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
                     ],
                   ),
                 ),
-                Container(
+                data["comments_short"].length == 0
+                    ? SizedBox()
+                    : data["comments_short"][0]["comment"].length == 0
+                    ? SizedBox()
+                    : Container(
                   // decoration: BoxDecoration(border:Border.all()),
-                  width: (MediaQuery.of(context).size.width - 20) / 2,
+                  width:
+                  (MediaQuery.of(context).size.width - 20) /
+                      2,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment:
+                    CrossAxisAlignment.center,
                     children: [
-                      // Container(
-                      //   child: Text(
-                      //     "Cons",
-                      //     style: TextStyle(
-                      //       fontSize: 16,
-                      //       fontFamily: "Roboto",
-                      //       fontWeight: FontWeight.bold,
-                      //       color: Color(0xff1D6177),
-                      //     ),
-                      //   ),
-                      // ),
                       bulletPoints(
-                        "${data["con_one"]}",
+                        "${data["comments_short"][0]["comment"]}",
                         "Con One",
                         Icon(
-                          FontAwesomeIcons.timesCircle,
-                          color: Colors.red,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      bulletPoints(
-                        "${data["con_two"]}",
-                        "Con Two",
-                        Icon(
-                          FontAwesomeIcons.timesCircle,
-                          color: Colors.red,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      bulletPoints(
-                        "${data["con_three"]}",
-                        "Con Three",
-                        Icon(
-                          FontAwesomeIcons.timesCircle,
+                          FontAwesomeIcons.checkDouble,
                           color: Colors.red,
                         ),
                       ),
@@ -193,10 +158,119 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 5,
-            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  longShortSection(data) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width - 15,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Color(0xFFFAB95B),
+              width: 1,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(3.0),
+            ),
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Analyst Debate",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    // decoration: BoxDecoration(border:Border.all()),
+                    width: (MediaQuery.of(context).size.width - 20) / 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        bulletPoints(
+                          "${data["pro_one"]}",
+                          "Pro One",
+                          Icon(
+                            FontAwesomeIcons.checkDouble,
+                            color: Colors.green,
+                          ),
+                        ),
+                        bulletPoints(
+                          "${data["pro_two"]}",
+                          "Pro One",
+                          Icon(
+                            FontAwesomeIcons.checkDouble,
+                            color: Colors.green,
+                          ),
+                        ),
+                        bulletPoints(
+                          "${data["pro_three"]}",
+                          "Pro One",
+                          Icon(
+                            FontAwesomeIcons.checkDouble,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    // decoration: BoxDecoration(border:Border.all()),
+                    width: (MediaQuery.of(context).size.width - 20) / 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        bulletPoints(
+                          "${data["con_one"]}",
+                          "Con One",
+                          Icon(
+                            FontAwesomeIcons.checkDouble,
+                            color: Colors.red,
+                          ),
+                        ),
+                        bulletPoints(
+                          "${data["con_two"]}",
+                          "Con One",
+                          Icon(
+                            FontAwesomeIcons.checkDouble,
+                            color: Colors.red,
+                          ),
+                        ),
+                        bulletPoints(
+                          "${data["con_three"]}",
+                          "Con One",
+                          Icon(
+                            FontAwesomeIcons.checkDouble,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -206,15 +280,17 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
     return Container(
       width: MediaQuery.of(context).size.width - 15,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                // decoration: BoxDecoration(border: Border.all()),
                 width: (MediaQuery.of(context).size.width - 20) / 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: positiveArticles
                       .map<Widget>(
                         (positiveArticle) => Padding(
@@ -248,6 +324,7 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
                 width: (MediaQuery.of(context).size.width - 20) / 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: negativeArticles
                       .map<Widget>(
                         (negativeArticle) => Padding(
@@ -285,87 +362,85 @@ class _DebateTabSeeMoreState extends State<DebateTabSeeMore> {
 
   bulletPoints(text, head, icon) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Color(0xff5A56B9),
-          width: 1,
-        ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(2.0),
-        ),
-      ),
       height: MediaQuery.of(context).size.height * 0.2,
-      width: MediaQuery.of(context).size.height * 0.48,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  icon,
-                  SizedBox(
-                    width: 5,
+      width: MediaQuery.of(context).size.width * 0.48,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  left: 6,
+                  top: 10.0,
+                ),
+                width: MediaQuery.of(context).size.height * 0.45,
+                height: MediaQuery.of(context).size.height * 0.18,
+                child: SingleChildScrollView(
+                  child: Text(
+                    "            $text",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey[700],
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.clip,
                   ),
-                  Container(
-                    child: Text(
-                      "$head",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "Roboto",
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff1D6177),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 6,
+                child: icon,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xFF868686),
+                        width: 1,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 6),
-              width: MediaQuery.of(context).size.height * 0.45,
-              child: Text(
-                // text.length > 60
-                //     ? "${text.toString().substring(0, 60)}"
-                //     :
-                "$text",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey[700],
-                  fontSize: 14,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 3.0),
+                        child: CircleAvatar(
+                          radius: 3,
+                          backgroundColor: Color(0xFF868686),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3, bottom: 3.0),
+                        child: CircleAvatar(
+                          radius: 3,
+                          backgroundColor: Color(0xFF868686),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3, bottom: 3.0),
+                        child: CircleAvatar(
+                          radius: 3,
+                          backgroundColor: Color(0xFF868686),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.clip,
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
-    //   Padding(
-    //   padding: const EdgeInsets.all(4.0),
-    //   child: Row(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       Container(
-    //         // decoration: BoxDecoration(border: Border.all()),
-    //         padding: EdgeInsets.only(top: 6),
-    //         child: Column(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             CircleAvatar(
-    //               backgroundColor: Color(0xff5A56B9),
-    //               radius: 3.0,
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //
-    //       ,
-    //     ],
-    //   ),
-    // );
   }
 }

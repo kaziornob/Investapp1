@@ -59,6 +59,7 @@ class _StockPitchState extends State<StockPitch> {
   List<String> longShortList = <String>['Long', 'Short'];
 
   String selectedStockId;
+  String selectedStockName;
   String selectedLongShort;
   String docUrl;
   String videoUrl;
@@ -365,8 +366,9 @@ class _StockPitchState extends State<StockPitch> {
               },
               validator: _validateStockName,
               itemBuilder: (context, suggestion) {
-                return ListTile(
-                  title: Text(
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
                     suggestion["company_name"],
                     style: TextStyle(
                       color: Colors.black,
@@ -381,6 +383,7 @@ class _StockPitchState extends State<StockPitch> {
                 setState(() {
                   _searchStockNameController.text = suggestion['company_name'];
                   selectedStockId = suggestion['ticker'];
+                  selectedStockName = suggestion['company_name'];
                 });
               },
             ),
@@ -476,25 +479,12 @@ class _StockPitchState extends State<StockPitch> {
   }
 
   String _validateStockName(value) {
-    if (value.isEmpty) {
+    if (value.isEmpty || selectedStockId == null) {
       return "Please Select Stock";
     }
     return null;
   }
 
-  String _validateStrategy(value) {
-    if (value.isEmpty) {
-      return "Please Select Strategy";
-    }
-    return null;
-  }
-
-  String _validateCurrency(value) {
-    if (value.isEmpty) {
-      return "This Field cannot be empty";
-    }
-    return null;
-  }
 
   String _validateStockTitle(value) {
     if (value.isEmpty) {
@@ -1229,6 +1219,8 @@ class _StockPitchState extends State<StockPitch> {
         "title": _stockPitchTitleController.text,
         "docUrl": docUrl == null ? "" : docUrl,
         "videoUrl": videoUrl == null ? "" : videoUrl,
+        "currencySelected": selectedFx,
+        "company_name": selectedStockName,
       };
 
       print(body);

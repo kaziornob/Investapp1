@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/widgets/private_deals_marketplace/single_company_details.dart';
 import 'package:auroim/widgets/private_deals_marketplace/single_company_details_page.dart';
 
 import 'package:flutter/material.dart';

@@ -1,21 +1,13 @@
-import 'package:animator/animator.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/widgets/public_company/single_company_debate_tab.dart';
 import 'package:auroim/widgets/public_company/single_company_overview_tab.dart';
 import 'package:auroim/widgets/public_company/single_public_company_appbar.dart';
 import 'package:auroim/widgets/public_company/single_public_company_fundamental_tab.dart';
 import 'package:auroim/widgets/public_company/single_public_company_header.dart';
 import 'package:auroim/widgets/public_company/single_public_company_technical_tab.dart';
-import 'package:auroim/widgets/single_public_company_videos.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SecurityPageFirst extends StatefulWidget {
   final String callingFrom;

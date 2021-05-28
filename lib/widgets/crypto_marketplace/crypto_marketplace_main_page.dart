@@ -1,12 +1,10 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/crypto_marketplace/all_crypto_list.dart';
-import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/crypto_marketplace/all_cryptocurrencies_list.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
-import '../go_to_marketplace_button.dart';
 
 class CryptoMarketplace extends StatefulWidget {
   @override

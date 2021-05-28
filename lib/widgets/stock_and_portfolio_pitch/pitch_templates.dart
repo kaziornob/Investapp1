@@ -64,7 +64,7 @@ class PitchTemplates extends StatelessWidget {
               top: MediaQuery.of(context).size.height / 4,
               right: 19,
               child: Container(
-                height: MediaQuery.of(context).size.height / 3,
+                height: MediaQuery.of(context).size.height / 2.4,
                 width: MediaQuery.of(context).size.width - 38,
                 decoration: BoxDecoration(
                   color: Colors.black,
@@ -77,7 +77,7 @@ class PitchTemplates extends StatelessWidget {
               top: MediaQuery.of(context).size.height / 4,
               right: 20,
               child: Container(
-                height: MediaQuery.of(context).size.height / 3,
+                height: MediaQuery.of(context).size.height / 2.4,
                 width: MediaQuery.of(context).size.width - 40,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -108,9 +108,27 @@ class PitchTemplates extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () => launch(
-                            "https://drive.google.com/file/d/18WQYI7EcjMrVNtLjsKRY-TfFTHJ0ktp5/view"),
+                            "https://drive.google.com/file/d/18WQYI7EcjMrVNtLjsKRY-TfFTHJ0ktp5/view?usp=sharing  "),
                         child: Text(
-                          "-  Auro Stock Pitch - Short Form",
+                          "-  Short-form China",
+                          style: TextStyle(
+                            color: Color(0xFFD8AF4F),
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width * 0.03,
+                        left: MediaQuery.of(context).size.width * 0.04,
+                      ),
+                      child: GestureDetector(
+                        onTap: () => launch(
+                            "https://drive.google.com/file/d/1U-1ggq0MRlOd9lqCVIipVvIzgZOSsHs0/view?usp=sharing"),
+                        child: Text(
+                          "-  Long-form India",
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),
                             fontSize: 17,
@@ -126,9 +144,9 @@ class PitchTemplates extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () => launch(
-                            "https://drive.google.com/file/d/1U-1ggq0MRlOd9lqCVIipVvIzgZOSsHs0/view?usp=sharing"),
+                            "https://drive.google.com/file/d/1CRsaJJRz5x5nhtpQgbsDKgG95OI_pIaV/view?usp=sharing"),
                         child: Text(
-                          "-  Auro Stock Pitch - Long Form",
+                          "-  Long-form US",
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),
                             fontSize: 17,
@@ -175,9 +193,27 @@ class PitchTemplates extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () => launch(
-                            "https://drive.google.com/file/d/1dJ91dYQmyXXFlqLMuJYelwoPqzbCPdKB/view?usp=sharing"),
+                            "https://drive.google.com/file/d/14NhWx1dT4rBOVQSaGb01M71p-0qFJz3Y/view"),
                         child: Text(
                           "-  Long Form Template",
+                          style: TextStyle(
+                            color: Color(0xFFD8AF4F),
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width * 0.02,
+                        left: MediaQuery.of(context).size.width * 0.04,
+                      ),
+                      child: GestureDetector(
+                        onTap: () => launch(
+                            "https://drive.google.com/file/d/1dJ91dYQmyXXFlqLMuJYelwoPqzbCPdKB/view"),
+                        child: Text(
+                          "-  Long Form Template 2",
                           style: TextStyle(
                             color: Color(0xFFD8AF4F),
                             fontSize: 17,

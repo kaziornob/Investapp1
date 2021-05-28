@@ -4,17 +4,12 @@ import 'package:auroim/api/future_return.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSevenMarginApproved.dart';
-import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:auroim/widgets/future_return_chart.dart';
-import 'package:auroim/widgets/public_company/auro_paper_portfolio_performance.dart';
-import 'package:auroim/widgets/user_portfolio_performance.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:provider/provider.dart';
 
 class GoLiveScreen extends StatefulWidget {
   final String callingFrom;
@@ -70,8 +65,8 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
+    // AppBar appBar = AppBar();
+    // double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(

@@ -1,11 +1,8 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/constance/global.dart' as globals;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ManagementFeeOptions extends StatefulWidget {
@@ -36,8 +33,8 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar();
-    double appBarheight = appBar.preferredSize.height;
+    // AppBar appBar = AppBar();
+    // double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         Scaffold(

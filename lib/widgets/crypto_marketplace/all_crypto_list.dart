@@ -100,12 +100,13 @@ class _AllCryptoListBlackState extends State<AllCryptoListBlack> {
 // }
 }
 
+// ignore: must_be_immutable
 class CryptocurrencyItem extends StatelessWidget {
   // ApiProvider request = new ApiProvider();
   // var userAllDetail;
 
-  FeaturedCompaniesProvider _featuredCompaniesProvider =
-      FeaturedCompaniesProvider();
+  // FeaturedCompaniesProvider _featuredCompaniesProvider =
+  //     FeaturedCompaniesProvider();
 
   final coinDetails;
 

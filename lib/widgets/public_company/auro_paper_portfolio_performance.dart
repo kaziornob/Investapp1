@@ -33,8 +33,8 @@ class AuroPaperPortfolioPerformace extends StatefulWidget {
 class _AuroPaperPortfolioPerformaceState
     extends State<AuroPaperPortfolioPerformace> {
   List<CryptoCoinPriceData> allPriceData = [];
-  FeaturedCompaniesProvider _featuredCompaniesProvider =
-      FeaturedCompaniesProvider();
+  // FeaturedCompaniesProvider _featuredCompaniesProvider =
+  //     FeaturedCompaniesProvider();
   ReusableFunctions _reusableFunctions = ReusableFunctions();
   bool _isinit = true;
   var lastItem;

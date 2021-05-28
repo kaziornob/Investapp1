@@ -413,7 +413,7 @@ class FeaturedCompaniesProvider {
     }
   }
 
-  getUserDetailsByUserId(email) async {
+  Future<dynamic> getUserDetailsByUserId(email) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 

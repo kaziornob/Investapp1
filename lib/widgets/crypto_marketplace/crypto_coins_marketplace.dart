@@ -1,13 +1,12 @@
-import 'dart:convert';
+
 
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coin_buy_item.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
 import 'package:auroim/widgets/private_deals_marketplace/appbar_widget.dart';
-import 'package:auroim/widgets/tab_chip.dart';
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+
 
 class CryptoCoinsMarketplace extends StatefulWidget {
   @override
