@@ -71,6 +71,24 @@ class ApiProvider {
     return responseData;
   }
 
+  Future postSubmitResponse(funName, body) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+
+    String url = GlobalInstance.apiBaseUrl + funName;
+    print("post req url: $url");
+    print("session token: $sessionToken");
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken',
+    };
+
+    var response = await http.post(url, headers: headers, body: body);
+    // print("post submit response: ${response.statusCode}");
+    return response;
+  }
+
   Future postSubmit(funName, body) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');

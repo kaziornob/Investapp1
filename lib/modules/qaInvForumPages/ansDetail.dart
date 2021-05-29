@@ -530,7 +530,7 @@ class _AnsDetailState extends State<AnsDetail> {
     print("create comment tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmit('forum/create_comment', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('forum/create_comment', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("comment add response: $result");
@@ -614,7 +614,7 @@ class _AnsDetailState extends State<AnsDetail> {
     print("update vote tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmit('forum/update_votes', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('forum/update_votes', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("votes update response: $result");

@@ -90,35 +90,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: CircularProgressIndicator(),
                 ),
               )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            AnimatedBackButton(),
-                            Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              AnimatedBackButton(),
+                              Text(
+                                "Sign Up",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            SizedBox(),
-                          ],
+                              SizedBox(),
+                            ],
+                          ),
                         ),
-                      ),
-                      formWidget(),
-                      signUpButton(),
-                    ],
-                  ),
-                  bottomTextWidget(),
-                ],
+                        formWidget(),
+                        signUpButton(),
+                      ],
+                    ),
+                    bottomTextWidget(),
+                  ],
+                ),
               ),
       ),
     );
@@ -323,20 +325,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Row(
             children: <Widget>[
               Expanded(
-                  child: Padding(
-                padding: EdgeInsets.only(left: 20, bottom: 0, right: 20),
-                child: InternationalPhoneInput(
-                  labelText: 'Phone',
-                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
-                  style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                  onPhoneNumberChange: onPhoneNumberChange,
-                  initialPhoneNumber: phoneNumber,
-                  initialSelection: phoneIsoCode,
-                  enabledCountries: callingCodes,
-                  showCountryCodes: true,
-                  showCountryFlags: true,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, bottom: 0, right: 20),
+                  child: InternationalPhoneInput(
+                    labelText: 'Phone',
+                    labelStyle:
+                        AllCoustomTheme.getTextFormFieldLabelStyleTheme(),
+                    style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
+                    onPhoneNumberChange: onPhoneNumberChange,
+                    initialPhoneNumber: phoneNumber,
+                    initialSelection: phoneIsoCode,
+                    enabledCountries: callingCodes,
+                    showCountryCodes: true,
+                    showCountryFlags: true,
+                  ),
                 ),
-              )),
+              ),
             ],
           ),
           Visibility(

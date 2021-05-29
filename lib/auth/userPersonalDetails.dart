@@ -659,7 +659,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
       return ;
     }
 
-    var jsonReqResp = await request.postSubmit('users/add_details', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('users/add_details', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit userdetails response: $result");

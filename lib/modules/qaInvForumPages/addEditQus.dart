@@ -591,7 +591,7 @@ class _AddEditQusState extends State<AddEditQus> {
     print("jsonReq: $jsonReq");
 
     var jsonReqResp =
-        await request.postSubmit('forum/create_question', jsonReq);
+        await request.postSubmitResponse('forum/create_question', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("qus add/edit response: $result");

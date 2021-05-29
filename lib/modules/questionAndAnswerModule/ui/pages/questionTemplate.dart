@@ -626,7 +626,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
 
     String jsonReq = json.encode(questionJson);
 
-    var jsonReqResp = await request.postSubmit('qa/user_answer', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('qa/user_answer', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("question and answers response: $result");

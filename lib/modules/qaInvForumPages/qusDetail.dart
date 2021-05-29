@@ -621,7 +621,7 @@ class _QusDetailState extends State<QusDetail> {
     print("update vote tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmit('forum/update_votes', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('forum/update_votes', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("votes update response: $result");

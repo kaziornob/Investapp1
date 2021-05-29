@@ -710,7 +710,7 @@ class _AddEditEducationState extends State<AddEditEducation> {
 
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmit('users/add_employment', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('users/add_employment', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit response: $result");

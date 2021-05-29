@@ -500,7 +500,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
     };
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmit('users/otp', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('users/otp', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("otp  response: $result");

@@ -269,7 +269,7 @@ class _AnsViewState extends State<AnsView> {
     print("create answer tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmit('forum/create_answer', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('forum/create_answer', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("ans add/edit response: $result");

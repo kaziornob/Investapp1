@@ -303,7 +303,7 @@ class _InvestorTypeState extends State<InvestorType> {
 
     String jsonReq = json.encode(tempJsonReq);
     // print()
-    var jsonReqResp = await request.postSubmit('users/add_invtype', jsonReq);
+    var jsonReqResp = await request.postSubmitResponse('users/add_invtype', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit response: $result");

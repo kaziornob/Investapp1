@@ -320,7 +320,7 @@ class _RadioQusTemplateState extends State<RadioQusTemplate> {
 
         String jsonReq = json.encode(GlobalInstance.riskInfoQusAns);
 
-        var jsonReqResp = await request.postSubmit('users/add_risk', jsonReq);
+        var jsonReqResp = await request.postSubmitResponse('users/add_risk', jsonReq);
 
         var result = json.decode(jsonReqResp.body);
         print("post submit response: $result");
