@@ -7,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final Color borderColor;
+  final width;
 
   const CustomButton({
     Key key,
@@ -15,6 +16,7 @@ class CustomButton extends StatelessWidget {
     this.color,
     this.textColor,
     this.borderColor,
+    this.width,
   }) : super(key: key);
 
   @override

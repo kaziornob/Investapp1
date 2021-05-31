@@ -140,6 +140,9 @@ flutter:
     - family: RosarioSemiBold
       fonts:
         - asset: fonts/Rosario-SemiBold.ttf
+    - family: RosarioBold
+      fonts:
+        - asset: fonts/Rosario-Bold.ttf
     - family: Rasa
       fonts:
         - asset: fonts/Rasa-Light.ttf

@@ -200,7 +200,7 @@ class StockPitchReturnDrawdown extends StatelessWidget {
                     false,
                   ),
                   textWidget(
-                    "7.71%",
+                    "${double.parse(pitchData["drawdown"]).toStringAsFixed(2)}%",
                     "Roboto",
                     false,
                   ),

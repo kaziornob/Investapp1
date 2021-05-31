@@ -26,6 +26,7 @@ import 'package:auroim/provider_abhinav/search_all_securities_provider.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/provider_abhinav/user_posts_provider.dart';
 import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
 import 'package:auroim/splash/SplashScreen.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
@@ -374,6 +375,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => UploadDownloadProgress(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => UserPostsProvider(),
           ),
         ],
         child: MaterialApp(

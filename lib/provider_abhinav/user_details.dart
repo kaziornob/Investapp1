@@ -40,17 +40,6 @@ class UserDetails extends ChangeNotifier {
       print("results ${result["message"]}");
       userBadge = result["message"]["badge"];
       return userBadge;
-      // notifyListeners();
-      // return result["message"];
-      // return result["message"];
-      // return getCompaniesList(result["message"]);
-
-      // if (result != null &&a
-      //     result.containsKey('auth') &&
-      //     result['auth'] == true) {
-      //   Toast.show("${result['message']}", context,
-      //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      // }
     } else if (result != null &&
         result.containsKey('auth') &&
         result['auth'] != true) {

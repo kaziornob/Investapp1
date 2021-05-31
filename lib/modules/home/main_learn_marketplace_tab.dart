@@ -124,39 +124,9 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
     },
   };
 
-  // onInitDisplayBootomSheet() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //     await showDialog(
-  //       context: context,
-  //       builder: (builder) {
-  //         return AlertDialog(
-  //           content: Text(
-  //             "Welcome to Auro’s Adaptive Learning. You will get Questions teaching you investment concepts based on your difficulty level, and allow you to earn Auro Coins, based on which you'll become a member of different investment clubs!",
-  //             style: TextStyle(color: Colors.white,fontSize: 20,letterSpacing: 0.8,),
-  //             textAlign: TextAlign.center,
-  //           ),
-  //           backgroundColor: Color(0xff161946),
-  //           actions: [
-  //             FlatButton(
-  //               child: Text(
-  //                 "OK",
-  //                 style: TextStyle(
-  //                   color: Colors.white,
-  //                 ),
-  //               ),
-  //               onPressed: () => Navigator.of(context).pop(),
-  //             ),
-  //           ],
-  //         );
-  //       },
-  //     );
-  //   });
-  // }
-
   onInitDisplayBootomSheet() async {
-    // print();
     int showPopupData = await _reusableFunctions.learnMarketplacePagePopupGetData();
-    print("learn marketplace tab popppopop $showPopupData}");
+    // print("learn marketplace tab popppopop $showPopupData}");
     if (showPopupData == null || showPopupData == 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await showDialog(
@@ -227,7 +197,8 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
 
     return SingleChildScrollView(
       controller: _scrollController,
-      child: globals.isGoldBlack ? RetailLeanTab() : Column(
+      child:
+      !globals.isGoldBlack ? RetailLeanTab() : Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(

@@ -236,25 +236,6 @@ class _StockPitchState extends State<StockPitch> {
     return resultList;
   }
 
-//   Future getTagList() async {
-// /*    var response = await request.getRequest("get_tags");
-//     setState(() {
-//       tagList = response['message'];
-//     });
-//     return response['message'];*/
-//
-//     var resp = [
-//       {"tage": "Math", "_id": "1"},
-//       {"tage": "Science", "_id": "2"},
-//       {"tage": "Physics", "_id": "3"}
-//     ];
-//
-//     setState(() {
-//       tagList = resp;
-//     });
-//
-//     return resp;
-//   }
 
   @override
   void dispose() {

@@ -130,12 +130,6 @@ class _AuroPaperPortfolioPerformaceChartState
 
         ),
         axes: <ChartAxis>[
-          // DateTimeAxis(
-          //   name: 'xAxis',
-          //   opposedPosition: false,
-          //   interval: 1,
-          //   // title: AxisTitle(text: 'Year'),
-          // ),
           NumericAxis(
             name: 'yAxis',
             opposedPosition: true,

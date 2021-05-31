@@ -1,12 +1,21 @@
-import 'package:animator/animator.dart';
+import 'dart:io';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/add_comment_bottom_sheet_widget.dart';
+import 'package:auroim/provider_abhinav/progress.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/provider_abhinav/user_posts_provider.dart';
+import 'package:auroim/reusable_widgets/customButton.dart';
+import 'package:auroim/reusable_widgets/progress_bar.dart';
+import 'package:auroim/reusables/local_pick_file.dart';
+import 'package:auroim/widgets/aws/aws_client.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:auroim/constance/global.dart' as globals;
 import 'package:provider/provider.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MainPlusTab extends StatefulWidget {
   @override
@@ -14,237 +23,319 @@ class MainPlusTab extends StatefulWidget {
 }
 
 class _MainPlusTabState extends State<MainPlusTab> {
-  bool _isInProgress = false;
-  List<String> userList = ["",];
-
-  String selectedUser = "";
-  List<String> tagItemList = <String>['native', 'fixed'];
+  TextEditingController _textEditingController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+  final _captionFormKey = new GlobalKey<FormState>();
+  String videoUrl;
+  String docUrl;
+  String imageUrl;
+  AWSClient _awsClient = AWSClient();
 
   @override
   void initState() {
-    // displayModalBottomSheet(context);
     super.initState();
     onInitDisplayBootomSheet();
-    loadUserDetails();
-  }
-
-
-
-  loadUserDetails() async {
-    setState(() {
-      _isInProgress = true;
-    });
-    await Future.delayed(const Duration(milliseconds: 700));
-    setState(() {
-      _isInProgress = false;
-    });
-  }
-
-  Widget getUserField() {
-    return new FormField(
-      builder: (FormFieldState state) {
-        return InputDecorator(
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black, width: 1.0),
-            ),
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: ConstanceData.SIZE_TITLE20,
-                color: AllCoustomTheme.getTextThemeColor()),
-            errorText: state.hasError ? state.errorText : null,
-          ),
-          isEmpty: selectedUser == '',
-          child: getUserDropDownList(),
-        );
-      },
-      validator: (val) {
-        return ((val != null && val != '') ||
-                (selectedUser != null && selectedUser != ''))
-            ? null
-            : 'choose One';
-      },
-    );
-  }
-
-  Widget getUserDropDownList() {
-    if (userList != null && userList.length != 0) {
-      return new DropdownButtonHideUnderline(
-        child: ButtonTheme(
-            alignedDropdown: true,
-            child: Container(
-              height: 20.0,
-              child: new DropdownButton(
-                value: selectedUser,
-                dropdownColor: Colors.white,
-                isExpanded: true,
-                onChanged: (String newValue) {
-                  setState(() {
-                    selectedUser = newValue;
-                  });
-                },
-                items: userList.map((String value) {
-                  return new DropdownMenuItem(
-                    value: value,
-                    child: new Text(
-                      value,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColor(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        fontFamily: "Roboto",
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            )),
-      );
-    } else {
-      return Container(
-        height: 0.0,
-        width: 0.0,
-      );
-    }
   }
 
   @override
-  void didChangeDependencies() {
-    userList.add(Provider.of<UserDetails>(context).userDetails["f_name"]);
-    setState(() {
-      selectedUser = Provider.of<UserDetails>(context).userDetails["f_name"];
-    });
-    super.didChangeDependencies();
+  void dispose() {
+    _textEditingController.dispose();
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        SafeArea(
-            bottom: true,
-            child: Scaffold(
-              backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () async {
-                  displayModalBottomSheet(context);
-                },
-                child: Icon(
-                  Icons.more_vert_outlined,
-                  color: AllCoustomTheme.getTextThemeColors(),
-                  size: 30.0,
-                ),
-                backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-              ),
-              body: ModalProgressHUD(
-                inAsyncCall: _isInProgress,
-                opacity: 0,
-                progressIndicator: CupertinoActivityIndicator(
-                  radius: 12,
-                ),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16, left: 16),
-                    child: !_isInProgress
-                        ? Column(
+        Scaffold(
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              displayModalBottomSheet(context);
+            },
+            child: Icon(
+              Icons.more_vert_outlined,
+              color: Color(0xFFD8AF4F),
+              size: 40.0,
+            ),
+            backgroundColor: Colors.white,
+          ),
+          body: Stack(
+            children: [
+              GestureDetector(
+                onTap: () => _focusNode.unfocus(),
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 16, left: 16),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Row(
-                                children: <Widget>[
-                                  InkWell(
-                                    highlightColor: Colors.transparent,
-                                    splashColor: Colors.transparent,
-                                    onTap: () {
-                                      //   _homeScaffoldKey.currentState.openDrawer();
-                                    },
-                                    child: Animator(
-                                      tween: Tween<Offset>(
-                                          begin: Offset(0, 0),
-                                          end: Offset(0.2, 0)),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
-                                        translation: anim.value,
-                                        child: Icon(
-                                          Icons.sort,
-                                          color: AllCoustomTheme
-                                              .getsecoundTextThemeColor(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Animator(
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.decelerate,
-                                      cycles: 1,
-                                      builder: (anim) => Transform.scale(
-                                        scale: anim.value,
-                                        child: Text(
-                                          'Start Post',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE20,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  CircleAvatar(
-                                    radius: 14,
-                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8),
+                                    padding: const EdgeInsets.only(
+                                      right: 15.0,
+                                    ),
+                                    child: Image.asset(
+                                      "assets/speaker_gold.png",
+                                      width: 40,
+                                      height: 40,
+                                    ),
                                   ),
-                                  Expanded(
-                                    child: getUserField(),
+                                  Text(
+                                    'Start a Conversation',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "RosarioSemiBold",
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
                                   ),
                                 ],
-                              ),
-                              SizedBox(
-                                height: 10,
                               ),
                               Container(
-                                child: TextField(
-                                  maxLines: 50,
-                                  decoration: InputDecoration(
-                                    hintText: 'What do you want to talk about?',
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: ConstanceData.SIZE_TITLE14),
-                                    labelStyle: AllCoustomTheme
-                                        .getTextFormFieldLabelStyleTheme(),
-                                    focusColor:
-                                        AllCoustomTheme.getTextThemeColor(),
-                                    fillColor:
-                                        AllCoustomTheme.getTextThemeColor(),
+                                height: 30,
+                                width: MediaQuery.of(context).size.width / 4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: globals.isGoldBlack
+                                      ? Color(0xFFD8AF4F)
+                                      : Color(0xFF1D6177),
+                                ),
+                                child: MaterialButton(
+                                  shape: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: globals.isGoldBlack
+                                          ? Color(0xFFD8AF4F)
+                                          : Color(0xFF1D6177),
+                                    ),
+                                    borderRadius: BorderRadius.circular(6),
                                   ),
-                                  cursorColor:
-                                      AllCoustomTheme.getTextThemeColor(),
-                                  style: AllCoustomTheme
-                                      .getTextFormFieldBaseStyleTheme(),
+                                  child: Text(
+                                    "Post",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  onPressed: _submit,
                                 ),
                               ),
                             ],
-                          )
-                        : SizedBox(),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          (videoUrl != null ||
+                                  docUrl != null ||
+                                  imageUrl != null)
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Contains Attachments",
+                                        style: TextStyle(
+                                          color: globals.isGoldBlack
+                                              ? Color(0xFFD8AF4F)
+                                              : Color(0xFF1D6177),
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                      Icon(
+                                        FontAwesomeIcons.paperclip,
+                                        size: 18,
+                                        color: globals.isGoldBlack
+                                            ? Color(0xFFD8AF4F)
+                                            : Color(0xFF1D6177),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : SizedBox(),
+                          Consumer<UploadDownloadProgress>(
+                            builder: (context, awsProgressProvider, _) {
+                              // print("${awsProgressProvider.percentage}" + "%");
+                              return awsProgressProvider.percentage == 100.0 ||
+                                      awsProgressProvider.percentage == 0.0
+                                  ? SizedBox()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: CustomProgressBar(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              80,
+                                          percentage:
+                                              awsProgressProvider.percentage,
+                                        ),
+                                      ),
+                                    );
+                            },
+                          ),
+                          Form(
+                            key: _captionFormKey,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height / 2,
+                              child: TextFormField(
+                                maxLines: 10,
+                                controller: _textEditingController,
+                                focusNode: _focusNode,
+                                decoration: InputDecoration(
+                                  hintText:
+                                      'You can talk anything on your mind. Could be investment or non- investment related',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: ConstanceData.SIZE_TITLE14,
+                                  ),
+                                  labelStyle: AllCoustomTheme
+                                      .getTextFormFieldLabelStyleTheme(),
+                                  fillColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  focusColor:
+                                      AllCoustomTheme.getTextThemeColor(),
+                                ),
+                                cursorColor:
+                                    AllCoustomTheme.getTextThemeColor(),
+                                style: AllCoustomTheme
+                                    .getTextFormFieldBaseStyleTheme(),
+                                validator: (String value) {
+                                  if (value.isEmpty) {
+                                    return "This Field Cannot be Empty";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ))
+              _focusNode.hasFocus
+                  ? Positioned(
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 8,
+                      left: 8.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          circleWidget(FontAwesomeIcons.filePdf, FileType.any),
+                          circleWidget(Icons.video_call, FileType.video),
+                          circleWidget(FontAwesomeIcons.image, FileType.image),
+                        ],
+                      ),
+                    )
+                  : SizedBox(),
+            ],
+          ),
+        )
       ],
+    );
+  }
+
+  _submit() async {
+    if (_captionFormKey.currentState.validate() == false) {
+      return;
+    }
+
+    var body = {
+      "email":
+          Provider.of<UserDetails>(context, listen: false).userDetails["email"],
+      "videoUrl": videoUrl == null ? "" : videoUrl,
+      "docUrl": docUrl == null ? "" : docUrl,
+      "photoUrl": imageUrl == null ? "" : imageUrl,
+      "caption": _textEditingController.text.trim(),
+    };
+
+    await Provider.of<UserPostsProvider>(context, listen: false)
+        .uploadPost(body, context);
+
+    _textEditingController.clear();
+    _focusNode.unfocus();
+    imageUrl = null;
+    videoUrl = null;
+    docUrl = null;
+  }
+
+  _attachFileCallback(fileType) async {
+    String path = await LocalPickFile.openFileExplorer(fileType);
+    if (path != "" && path != null) {
+      File file = File(path);
+      if (await file.length() == 0) {
+        return false;
+      }
+      String extension =
+          path.split("/")[path.split("/").length - 1].split(".")[1];
+      if (fileType == FileType.image) {
+        imageUrl = await _awsClient.uploadFile(file, "." + extension, context);
+      } else if (fileType == FileType.video) {
+        videoUrl = await _awsClient.uploadFile(file, "." + extension, context);
+      } else {
+        docUrl = await _awsClient.uploadFile(file, "." + extension, context);
+      }
+      setState(() {});
+    }
+  }
+
+  circleWidget(icon, FileType fileType) {
+    return GestureDetector(
+      onTap: () async {
+        await _attachFileCallback(fileType);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: CircleAvatar(
+          backgroundColor: Color(0xFFD8AF4F),
+          radius: 20,
+          child: CircleAvatar(
+            radius: 19,
+            backgroundColor: Colors.white,
+            child: Icon(
+              icon,
+              color: Color(0xFFD8AF4F),
+              size: 20,
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -253,7 +344,9 @@ class _MainPlusTabState extends State<MainPlusTab> {
       context: context,
       backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
       builder: (builder) {
-        return AddCommentBottomSheetWidget();
+        return AddCommentBottomSheetWidget(
+          attackFileCallback: _attachFileCallback,
+        );
       },
     );
   }
@@ -261,10 +354,18 @@ class _MainPlusTabState extends State<MainPlusTab> {
   onInitDisplayBootomSheet() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8.0),
+            topRight: Radius.circular(8.0),
+          ),
+        ),
         context: context,
         backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
         builder: (builder) {
-          return AddCommentBottomSheetWidget();
+          return AddCommentBottomSheetWidget(
+            attackFileCallback: _attachFileCallback,
+          );
         },
       );
     });
