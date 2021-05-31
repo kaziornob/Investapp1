@@ -1,5 +1,7 @@
+import 'package:auroim/auth/otp.dart';
 import 'package:auroim/auth/signInScreen.dart';
 import 'package:auroim/auth/signUpScreen.dart';
+import 'package:auroim/auth/userPersonalDetails.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/widgets/how_app_works.dart';
@@ -125,7 +127,10 @@ class _IntroductionScreen2State extends State<IntroductionScreen2> {
                     onPressed: () async {
                       Navigator.of(context, rootNavigator: true).push(
                         CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => SignUpScreen(),
+                          builder: (BuildContext context) =>
+                              // SignUpScreen(),
+                          // EnterOtpScreen(),
+                          UserPersonalDetails()
                         ),
                       );
                     },

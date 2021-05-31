@@ -318,7 +318,7 @@ class PinDisable extends StatelessWidget {
       width: 25,
       decoration: BoxDecoration(
         border: Border.all(
-          color: AllCoustomTheme.getsecoundTextThemeColor(),
+          color: Color(0xffD8AF4F),
           width: 1.5,
         ),
         borderRadius: BorderRadius.all(
@@ -340,7 +340,7 @@ class PinNumberStyle extends StatelessWidget {
       digit,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: AllCoustomTheme.getTextThemeColors(),
+        color: Colors.black,
         fontWeight: FontWeight.bold,
         fontSize: ConstanceData.SIZE_TITLE25,
       ),

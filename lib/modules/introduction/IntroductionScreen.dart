@@ -1,3 +1,4 @@
+import 'package:auroim/auth/otp.dart';
 import 'package:auroim/widgets/how_app_works.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:auroim/auth/signInScreen.dart';
@@ -246,7 +247,8 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                             Navigator.of(context, rootNavigator: true).push(
                               CupertinoPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    SignUpScreen(),
+                                    SignInScreen(),
+
                               ),
                             );
                           },
