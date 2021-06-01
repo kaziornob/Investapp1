@@ -198,14 +198,13 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
     return SingleChildScrollView(
       controller: _scrollController,
       child:
-      !globals.isGoldBlack ? RetailLeanTab() : Column(
+      globals.isGoldBlack ? RetailLeanTab() : Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(
             height: 10,
           ),
           // auro stars section
-
           Visibility(
             visible: globals.isGoldBlack ? false : true,
             child: Column(

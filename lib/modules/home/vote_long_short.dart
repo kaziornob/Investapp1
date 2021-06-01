@@ -1,11 +1,15 @@
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
+import 'package:auroim/provider_abhinav/long_short_provider.dart';
+import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/reusable_widgets/customButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class VoteLongShort extends StatefulWidget {
   const VoteLongShort({Key key}) : super(key: key);
@@ -20,6 +24,7 @@ class _VoteLongShortState extends State<VoteLongShort> {
   TextEditingController _commentController = TextEditingController();
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
+  final _voteLongShortFormKey = GlobalKey<FormState>();
   var selectedLongShort;
   var selectedStockId;
   var selectedStockName;
@@ -79,9 +84,16 @@ class _VoteLongShortState extends State<VoteLongShort> {
                     ],
                   ),
                 ),
-                searchStockName(),
-                longShortSection(),
-                commentSection(),
+                Form(
+                  key: _voteLongShortFormKey,
+                  child: Column(
+                    children: [
+                      searchStockName(),
+                      longShortSection(),
+                      commentSection(),
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: CustomButton(
@@ -104,7 +116,24 @@ class _VoteLongShortState extends State<VoteLongShort> {
     );
   }
 
-  _submit() {}
+  _submit() async {
+    if (_voteLongShortFormKey.currentState.validate() == false) {
+      return;
+    }
+    var mess = await Provider.of<LongShortProvider>(context, listen: false)
+        .castLongShortVote(
+      Provider.of<UserDetails>(context, listen: false).userDetails["email"],
+      selectedStockId,
+      selectedLongShort == "Long" ? 1 : 0,
+      _commentController.text.isNotEmpty ? _commentController.text : "",
+    );
+    Navigator.of(context).pop();
+    Toast.show(
+      "$mess",
+      context,
+      duration: 4,
+    );
+  }
 
   textFieldInputDecoration(
       hintText, labelText, suffixText, radius, contentPadding) {

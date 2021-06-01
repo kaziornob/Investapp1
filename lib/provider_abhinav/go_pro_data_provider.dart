@@ -70,7 +70,6 @@ class GoProDataProvider with ChangeNotifier {
 
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get static url: $url");
-    // print("session token: $sessionToken");
 
     var response =
         await http.post(url, headers: headers, body: jsonEncode(body));
@@ -113,7 +112,6 @@ class GoProDataProvider with ChangeNotifier {
     var result = jsonDecode(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      // print("ggggg");
       Navigator.pop(context);
       print("results ${result["message"]}");
       Toast.show("${result['message']}", context,
@@ -123,7 +121,6 @@ class GoProDataProvider with ChangeNotifier {
         MaterialPageRoute(builder: (context) => HomeScreen()),
         ModalRoute.withName("/Home"),
       );
-      // return result["message"];
     } else {
       Navigator.pop(context);
 

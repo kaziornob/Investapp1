@@ -626,6 +626,12 @@ class _AppDrawerState extends State<AppDrawer> {
                                         splashColor: Colors.transparent,
                                         onTap: () {
                                           Navigator.pop(context);
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OnBoardingFirst(),
+                                            ),
+                                          );
                                         },
                                         child: Row(
                                           children: <Widget>[
@@ -659,6 +665,12 @@ class _AppDrawerState extends State<AppDrawer> {
                                         splashColor: Colors.transparent,
                                         onTap: () {
                                           Navigator.pop(context);
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OnBoardingFirst(),
+                                            ),
+                                          );
                                         },
                                         child: Row(
                                           children: <Widget>[

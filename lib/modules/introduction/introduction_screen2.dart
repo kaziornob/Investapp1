@@ -128,9 +128,7 @@ class _IntroductionScreen2State extends State<IntroductionScreen2> {
                       Navigator.of(context, rootNavigator: true).push(
                         CupertinoPageRoute<void>(
                           builder: (BuildContext context) =>
-                              // SignUpScreen(),
-                          // EnterOtpScreen(),
-                          UserPersonalDetails()
+                              SignUpScreen(),
                         ),
                       );
                     },

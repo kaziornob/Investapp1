@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/reusable_functions.dart';
+import 'package:auroim/auth/investorType.dart';
+import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
@@ -147,7 +149,9 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     // print("gschascvkajsc");
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (BuildContext context) => AddEditQus(),
+                        builder: (BuildContext context) =>
+                            // AddEditQus(),
+                        InvestorType(),
                       ),
                     );
                   },

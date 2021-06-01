@@ -1,4 +1,3 @@
-
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingSecond.dart';
@@ -133,116 +132,129 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
                   physics: BouncingScrollPhysics(),
                   child: !_isInProgress
                       ? Container(
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(left:10.0),
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: AllCoustomTheme.getTextThemeColor(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          // height: MediaQuery.of(context).size.height*1.17,
                           child: Column(
                             children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 40.0,
-                                  left: 15.0,
-                                  right: 3.0,
-                                ),
-                                child: Text(
-                                  'Please select if Auro should customize your portfolio including:',
-                                  style: new TextStyle(
-                                    color: Colors.black,
-                                    fontSize: ConstanceData.SIZE_TITLE16,
-                                    fontFamily: "Rosarivo",
-                                    letterSpacing: 0.1,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                                  child: getOptionList(),
-                                ),
-                              ),
                               SizedBox(
-                                height: 40,
-                              ),
-                              SizedBox(
-                                height: 80,
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                                  child: ListView(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(left: 10.0, right: 3.0),
-                                        child: Text(
-                                          'If you’re not quite sure, you can skip this and change it later.',
-                                          style: new TextStyle(
-                                            // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
-                                              color: Colors.black,
-                                              fontSize: ConstanceData.SIZE_TITLE16,
-                                              fontFamily: "RobotoLight",
-                                              letterSpacing: 0.1),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 40,
+                                height: 20,
                               ),
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   InkWell(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
                                     onTap: () {
-                                      if (!allSelectedValues.values.toList().contains(true)) {
-                                        Toast.show("Select Atleast One", context,
-                                            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                                      } else {
-                                        submit();
-                                      }
+                                      Navigator.pop(context);
                                     },
-                                    child: CircleAvatar(
-                                      radius: 30,
-                                      backgroundColor: Color(0xFFD8AF4F),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 10.0),
                                       child: Icon(
-                                        Icons.arrow_forward_sharp,
-                                        color: Colors.white,
+                                        Icons.arrow_back,
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                // height: MediaQuery.of(context).size.height*1.17,
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 20.0,
+                                        bottom: 40.0,
+                                        left: 15.0,
+                                        right: 3.0,
+                                      ),
+                                      child: Text(
+                                        'Please select if Auro should customize your portfolio including:',
+                                        style: new TextStyle(
+                                          color: Colors.black,
+                                          fontSize: ConstanceData.SIZE_TITLE16,
+                                          fontFamily: "Rosarivo",
+                                          letterSpacing: 0.1,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 10.0, right: 10.0),
+                                        child: getOptionList(),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 40,
+                                    ),
+                                    SizedBox(
+                                      height: 80,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            left: 10.0, right: 10.0),
+                                        child: ListView(
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 10.0, right: 3.0),
+                                              child: Text(
+                                                'If you’re not quite sure, you can skip this and change it later.',
+                                                style: new TextStyle(
+                                                    // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
+                                                    color: Colors.black,
+                                                    fontSize: ConstanceData
+                                                        .SIZE_TITLE16,
+                                                    fontFamily: "RobotoLight",
+                                                    letterSpacing: 0.1),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 40,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        InkWell(
+                                          onTap: () {
+                                            if (!allSelectedValues.values
+                                                .toList()
+                                                .contains(true)) {
+                                              Toast.show(
+                                                  "Select Atleast One", context,
+                                                  duration: Toast.LENGTH_LONG,
+                                                  gravity: Toast.BOTTOM);
+                                            } else {
+                                              submit();
+                                            }
+                                          },
+                                          child: CircleAvatar(
+                                            radius: 30,
+                                            backgroundColor: Color(0xFFD8AF4F),
+                                            child: Icon(
+                                              Icons.arrow_forward_sharp,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  )
+                        )
                       : SizedBox(),
                 ),
               ),
@@ -488,8 +500,8 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
     Provider.of<GoProDataProvider>(context, listen: false)
         .setFirstPagePreferences(dataToSave);
     Navigator.of(context).push(
-      new MaterialPageRoute(
-        builder: (BuildContext context) => new OnBoardingSecond(
+      MaterialPageRoute(
+        builder: (BuildContext context) => OnBoardingSecond(
           logo: widget.logo,
           callingFrom: widget.callingFrom,
         ),
