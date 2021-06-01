@@ -1,11 +1,13 @@
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/widgets/animated_widgets/animated_back_button.dart';
 import 'package:flutter/material.dart';
 
 class ScreenTitleAppbar extends StatefulWidget {
   final String title;
+  final Color colorText;
 
-  const ScreenTitleAppbar({Key key, this.title}) : super(key: key);
+  const ScreenTitleAppbar({Key key, this.title, this.colorText})
+      : super(key: key);
+
   @override
   _ScreenTitleAppbarState createState() => _ScreenTitleAppbarState();
 }
@@ -20,15 +22,18 @@ class _ScreenTitleAppbarState extends State<ScreenTitleAppbar> {
           padding: const EdgeInsets.only(
             left: 10.0,
           ),
-          child: AnimatedBackButton(
-            color: Colors.black,
+          child: GestureDetector(
+            child: Icon(
+              Icons.arrow_back_ios,
+            ),
+            onTap: () => Navigator.of(context).pop(),
           ),
         ),
         Text(
           widget.title,
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.black,
+            color: widget.colorText == null ? Colors.black : widget.colorText,
             fontWeight: FontWeight.bold,
             fontSize: ConstanceData.SIZE_TITLE20,
           ),

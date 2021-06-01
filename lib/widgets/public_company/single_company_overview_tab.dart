@@ -560,6 +560,7 @@ class _SinglePublicCompanyOverviewTabState
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               SecurityPageFirst(
+                                                callingFrom: "",
                                             companyTicker: snapshot.data[index]
                                                 ["ticker"],
                                           ),

@@ -608,6 +608,7 @@ class Toolbar extends StatelessWidget {
                 color: Colors.grey,
                 size: MediaQuery.of(context).size.width * 0.05,
               ),
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(
@@ -615,6 +616,7 @@ class Toolbar extends StatelessWidget {
                 color: Colors.grey,
                 size: MediaQuery.of(context).size.width * 0.05,
               ),
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(
@@ -622,6 +624,7 @@ class Toolbar extends StatelessWidget {
                 color: Colors.grey,
                 size: MediaQuery.of(context).size.width * 0.05,
               ),
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(
@@ -629,6 +632,7 @@ class Toolbar extends StatelessWidget {
                 color: Colors.grey,
                 size: MediaQuery.of(context).size.width * 0.05,
               ),
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(
@@ -636,6 +640,7 @@ class Toolbar extends StatelessWidget {
                 color: Colors.grey,
                 size: MediaQuery.of(context).size.width * 0.05,
               ),
+              onPressed: () {},
             )
           ])),
     );

@@ -629,7 +629,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  OnBoardingFirst(),
+                                                  OnBoardingFirst(callingFrom: "",),
                                             ),
                                           );
                                         },
@@ -668,7 +668,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  OnBoardingFirst(),
+                                                  OnBoardingFirst(callingFrom: "",),
                                             ),
                                           );
                                         },

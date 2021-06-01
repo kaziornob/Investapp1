@@ -5,6 +5,7 @@ import 'package:auroim/main.dart';
 import 'package:auroim/modules/home/main_exchange_tab.dart';
 import 'package:auroim/modules/home/main_learn_marketplace_tab.dart';
 import 'package:auroim/modules/home/main_plus_tab.dart';
+import 'package:auroim/modules/home/new_main_home_tab.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/modules/settings/user_profile_page.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
@@ -709,7 +710,8 @@ class _HomeScreenState extends State<HomeScreen>
                           ),
                           Expanded(
                             child: isSelect1
-                                ? MainHomeTab()
+                                ? NewMainHomeTab()
+                            // MainHomeTab()
                                 : isSelect2
                                     ? MainInvestTab()
                                     : (isSelect3
@@ -969,6 +971,7 @@ class _HomeScreenState extends State<HomeScreen>
                     email: itemData["email"],
                   )
                 : SecurityPageFirst(
+              callingFrom: "",
                     companyTicker: itemData["ticker"],
                   ),
           ),
