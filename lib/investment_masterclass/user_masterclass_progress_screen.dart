@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class UserMasterclassProgressScreen extends StatefulWidget {
+  final List allClasses;
+
+  const UserMasterclassProgressScreen({
+    Key key,
+    this.allClasses,
+  }) : super(key: key);
+
   @override
   _UserMasterclassProgressScreenState createState() =>
       _UserMasterclassProgressScreenState();
@@ -65,27 +72,16 @@ class _UserMasterclassProgressScreenState
                 ),
                 heading("Investment Masterclass"),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
-                singleBox(
-                    width * 0.87, height * 0.1, "Stylistic Investing", 80),
-                SizedBox(
-                  height: 25,
+                Column(
+                  children: widget.allClasses
+                      .map<Widget>(
+                        (className) => singleBox(
+                            width * 0.87, height * 0.1, className, 80),
+                      )
+                      .toList(),
                 ),
-                singleBox(width * 0.87, height * 0.1, "Angel/ Seed", 40),
-                SizedBox(
-                  height: 25,
-                ),
-                singleBox(width * 0.87, height * 0.1, "Venture Capital", 50),
-                SizedBox(
-                  height: 25,
-                ),
-                singleBox(width * 0.87, height * 0.1, "Private Equity", 60),
-                SizedBox(
-                  height: 25,
-                ),
-                singleBox(
-                    width * 0.87, height * 0.1, "Fixed Income and Bond", 90),
               ],
             ),
           ),
@@ -116,57 +112,73 @@ class _UserMasterclassProgressScreenState
           ),
         );
       },
-      child: Material(
-        elevation: 5,
-        shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(width * 0.05),
-          borderSide: BorderSide(
-            color: Color(0xFFE8E7E7),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25.0),
+        child: Material(
+          elevation: 5,
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(width * 0.05),
+            borderSide: BorderSide(
+              color: Color(0xFFE8E7E7),
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Container(
-              width: width,
-              height: height,
-              decoration: BoxDecoration(
-                color: Color(0xFFE8E7E7),
-                borderRadius: BorderRadius.circular(width * 0.05),
-              ),
-            ),
-            Positioned(
-              bottom: 20,
-              left: height / 2,
-              child: progressBar(width * 0.7, percent),
-            ),
-            Positioned(
-              top: height * 0.25,
-              left: ((height / 2) * 2) + 10,
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: "Roboto",
-                  color: Colors.black,
+          child: Stack(
+            children: [
+              Container(
+                width: width,
+                height: height,
+                decoration: BoxDecoration(
+                  color: Color(0xFFE8E7E7),
+                  borderRadius: BorderRadius.circular(width * 0.05),
                 ),
               ),
-            ),
-            Positioned(
-              left: 2.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: (height / 2) - 8,
-                  backgroundColor: Colors.white,
-                  child: CircleAvatar(
-                    radius: (height / 2) - 22,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage("assets/play_button.png"),
+              Positioned(
+                bottom: 20,
+                left: height / 2,
+                child: progressBar(width * 0.7, percent),
+              ),
+              Positioned(
+                top: 0,
+                left: ((height / 2) * 2) + 10,
+                child: Container(
+                  // decoration: BoxDecoration(border: Border.all()),
+                  width: width * 0.7,
+                  height: height * 0.6,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: "Roboto",
+                            color: Colors.black,
+                          ),
+                          overflow: TextOverflow.clip,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                left: 2.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    radius: (height / 2) - 8,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: (height / 2) - 22,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage("assets/play_button.png"),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

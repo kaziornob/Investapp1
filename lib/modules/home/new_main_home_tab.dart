@@ -1,6 +1,8 @@
+import 'package:auroim/modules/home/auro_ai_portfolio.dart';
 import 'package:auroim/modules/home/auro_portfolio_mix.dart';
 import 'package:auroim/modules/home/auro_portfolio_return.dart';
 import 'package:auroim/modules/home/widgets/auroai_portfolio_values.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/golive_screen.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,7 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
     2: {
       "asset": "assets/auro_portfolio.png",
       "text": "VIEW AURO PORTFOLIO",
-    }
+    },
   };
 
   @override
@@ -101,7 +103,15 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
                         color: Color(0xFFD8AF4F),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => GoLiveScreen(
+                            callingFrom: "",
+                          ),
+                        ),
+                      );
+                    },
                     color: Color(0xFFD8AF4F),
                     child: Text(
                       "LIVE",
@@ -125,7 +135,13 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
                         color: Colors.black,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => AuroAiPortfolio(),
+                        ),
+                      );
+                    },
                     color: Colors.black,
                     child: Text(
                       "PAPER",
@@ -151,28 +167,43 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              radius: 5,
-              backgroundColor:
-                  carouselIndex == 0 ? Color(0xFFD8AF4F) : Colors.grey,
+          GestureDetector(
+            onTap: () {
+              _carouselController.animateToPage(0);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                radius: 5,
+                backgroundColor:
+                    carouselIndex == 0 ? Color(0xFFD8AF4F) : Colors.grey,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              _carouselController.animateToPage(1);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                radius: 5,
+                backgroundColor:
+                    carouselIndex == 1 ? Color(0xFFD8AF4F) : Colors.grey,
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              radius: 5,
-              backgroundColor:
-                  carouselIndex == 1 ? Color(0xFFD8AF4F) : Colors.grey,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              radius: 5,
-              backgroundColor:
-                  carouselIndex == 2 ? Color(0xFFD8AF4F) : Colors.grey,
+            child: GestureDetector(
+              onTap: () {
+                _carouselController.animateToPage(2);
+              },
+              child: CircleAvatar(
+                radius: 5,
+                backgroundColor:
+                    carouselIndex == 2 ? Color(0xFFD8AF4F) : Colors.grey,
+              ),
             ),
           ),
         ],
@@ -183,22 +214,22 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
   sliderItem(index) {
     return GestureDetector(
       onTap: () {
-        if(index == 0){
+        if (index == 0) {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => AuroPortfolioMix(),
             ),
           );
-        }else if(index == 1){
+        } else if (index == 1) {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => AuroPortfolioReturn(),
             ),
           );
-        }else{
+        } else {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => AuroPortfolioMix(),
+              builder: (context) => AuroAiPortfolio(),
             ),
           );
         }

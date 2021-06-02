@@ -133,11 +133,6 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Container(
-                              // decoration: BoxDecoration(
-                              //   border: Border.all(
-                              //     color: Colors.black,
-                              //   ),
-                              // ),
                               height: 70,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,17 +384,19 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                   List<double> onlyPriceList = [];
                                   historicalPricingProvider
                                       .historicalPriceData[widget.ticker]
-                                      .forEach((element) {
-                                    DateTime date = DateFormat("yyyy-MM-dd")
-                                        .parse(element["date"]);
-                                    allPriceData.add(
-                                      CryptoCoinPriceData(
-                                          x: date,
-                                          y: element["price"].toDouble()),
-                                    );
-                                    onlyPriceList
-                                        .add(element["price"].toDouble());
-                                  });
+                                      .forEach(
+                                    (element) {
+                                      DateTime date = DateFormat("yyyy-MM-dd")
+                                          .parse(element["date"]);
+                                      allPriceData.add(
+                                        CryptoCoinPriceData(
+                                            x: date,
+                                            y: element["price"].toDouble()),
+                                      );
+                                      onlyPriceList
+                                          .add(element["price"].toDouble());
+                                    },
+                                  );
                                   double maxVal = onlyPriceList.reduce(max);
                                   double minVal = onlyPriceList.reduce(min);
                                   return Center(
@@ -408,8 +405,6 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
                                           0.85,
                                       height: 90,
                                       child: Container(
-                                        // decoration: BoxDecoration(border: Border.al),
-                                        // margin: EdgeInsets.only(left: 10.0),
                                         child: SfCartesianChart(
                                             tooltipBehavior: _tooltipBehavior,
                                             zoomPanBehavior: _zoomPanBehavior,

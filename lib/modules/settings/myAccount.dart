@@ -1,6 +1,5 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';

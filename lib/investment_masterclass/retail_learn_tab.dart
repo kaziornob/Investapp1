@@ -24,6 +24,7 @@ class _RetailLeanTabState extends State<RetailLeanTab> {
         FocusScope.of(context).unfocus();
       },
       child: Container(
+        padding: EdgeInsets.only(bottom: 10,),
         child: Column(
           children: [
             SizedBox(
@@ -71,7 +72,7 @@ class _RetailLeanTabState extends State<RetailLeanTab> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                box("Global Market", context, width * 0.4),
+                box("Global Macro", context, width * 0.4),
                 box("AI", context, width * 0.4),
               ],
             ),
@@ -81,8 +82,8 @@ class _RetailLeanTabState extends State<RetailLeanTab> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                box("Hedge Fund", context, width * 0.4),
-                box("Financial Market", context, width * 0.4),
+                box("Hedge Funds", context, width * 0.4),
+                box("Financial Modelling", context, width * 0.4),
               ],
             ),
           ],
@@ -96,7 +97,7 @@ class _RetailLeanTabState extends State<RetailLeanTab> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => MasterClassCoursesScreen(),
+            builder: (context) => MasterClassCoursesScreen(type: text,),
           ),
         );
       },

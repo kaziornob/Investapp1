@@ -40,34 +40,49 @@ class _PortfolioReturnChartState extends State<PortfolioReturnChart> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      width: MediaQuery.of(context).size.width - 20,
-      child: SfCartesianChart(
-        title: ChartTitle(
-          text: "Realized Return",
-          textStyle: TextStyle(
-            fontWeight: FontWeight.w300,
+    return Padding(
+      padding: const EdgeInsets.only(top:20.0),
+      child: Container(
+        height: 300,
+        width: MediaQuery.of(context).size.width - 20,
+        child: SfCartesianChart(
+          title: ChartTitle(
+            text: "Realized Return",
+            textStyle: TextStyle(
+              fontWeight: FontWeight.w300,
+            ),
           ),
-        ),
-        zoomPanBehavior: _zoomPanBehavior,
-        tooltipBehavior: _tooltipBehavior,
-        primaryXAxis: DateTimeAxis(),
-        primaryYAxis: NumericAxis(
-          isVisible: false,
-        ),
-        series: <ChartSeries>[
-          SplineAreaSeries<CryptoCoinPriceData, dynamic>(
-            name: "Price On",
-            dataSource: widget.pricesData,
-            xValueMapper: (CryptoCoinPriceData data, _) => data.x,
-            yValueMapper: (CryptoCoinPriceData data, _) => data.y,
-            gradient: _linearGradient,
+          zoomPanBehavior: _zoomPanBehavior,
+          tooltipBehavior: _tooltipBehavior,
+          primaryXAxis: DateTimeAxis(
+            majorGridLines: MajorGridLines(
+              color: Colors.white,
+            ),
+            majorTickLines: MajorTickLines(
+              color: Colors.white,
+            ),
           ),
-        ],
+          primaryYAxis: NumericAxis(
+            majorTickLines: MajorTickLines(
+              color: Colors.white,
+            ),
+            labelFormat: "{value}%",
+            minorTickLines: MinorTickLines(
+              color: Colors.white,
+            ),
+          ),
+          series: <ChartSeries>[
+            SplineAreaSeries<CryptoCoinPriceData, dynamic>(
+              name: "Price On",
+              dataSource: widget.pricesData,
+              xValueMapper: (CryptoCoinPriceData data, _) => data.x,
+              yValueMapper: (CryptoCoinPriceData data, _) => data.y,
+              gradient: _linearGradient,
+            ),
+          ],
+        ),
       ),
     );
   }

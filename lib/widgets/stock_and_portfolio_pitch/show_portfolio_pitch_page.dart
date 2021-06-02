@@ -222,6 +222,9 @@ class _ShowPortfolioPitchPageState extends State<ShowPortfolioPitchPage> {
                                 Text(
                                   "Equity Invested",
                                   textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
                                 ),
                                 Tooltip(
                                   message: "",

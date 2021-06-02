@@ -1,17 +1,20 @@
+import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
+import 'package:auroim/modules/settings/add_about_info.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/myProfile/addEditEducation.dart';
 import 'package:auroim/widgets/myProfile/addEditEmployment.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ProfileBackground extends StatefulWidget {
   final userName;
 
   const ProfileBackground({Key key, this.userName}) : super(key: key);
-
 
   @override
   _ProfileBackgroundState createState() => _ProfileBackgroundState();
@@ -47,10 +50,11 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
         // scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return Card(
+            elevation: 5,
             child: ListTile(
               leading: CircleAvatar(
-                radius: 15.0,
-                backgroundImage: new AssetImage('assets/download.jpeg'),
+                radius: 20.0,
+                backgroundImage: new AssetImage('assets/user_outline.png'),
                 backgroundColor: Colors.transparent,
               ),
               title: Row(
@@ -80,43 +84,6 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
               ),
             ),
           );
-/*          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // edu section
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 5.0),
-                    child: CircleAvatar(
-                      radius: 20.0,
-                      backgroundImage: new AssetImage('assets/download.jpeg'),
-                      backgroundColor: Colors.transparent,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "${data[index]['qus']}",
-                      style: TextStyle(
-                          color: AllCoustomTheme.getTextThemeColor(),
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          fontFamily: "Roboto",
-                          package: 'Roboto-Regular',
-                          letterSpacing: 0.2
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-            ],
-          );*/
         },
       );
     } else {
@@ -143,10 +110,11 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
         // scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return Card(
+            elevation: 5,
             child: ListTile(
               leading: CircleAvatar(
-                radius: 15.0,
-                backgroundImage: new AssetImage('assets/download.jpeg'),
+                radius: 20.0,
+                backgroundImage: new AssetImage('assets/user_outline.png'),
                 backgroundColor: Colors.transparent,
               ),
               title: Row(
@@ -196,62 +164,37 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserDetails>(context, listen: false);
-    if (widget.userName == null) {
-      title = userProvider.userDetails["f_name"] != null &&
-          userProvider.userDetails != null
-          ? "${userProvider.userDetails["f_name"]}\'s Background"
-          : 'Background';
-    } else {
-      title = "${widget.userName}\'s Background";
-    }
     return Column(
       children: [
+        Divider(
+          thickness: 1,
+        ),
         Padding(
-          padding: const EdgeInsets.only(left: 16, right: 5.0),
+          padding: const EdgeInsets.only(
+            left: 16,
+            right: 5.0,
+            top: 10.0,
+          ),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.09,
-            child: ListView(
-              children: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(top: 5.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFFD8AF4F),
-                          fontSize: ConstanceData.SIZE_TITLE18,
-                          fontFamily: "Roboto",
-                          package: 'Roboto-Regular',
-                        ),
-                      ),
-                    )),
-                Container(
-                  margin: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.width * 0.43),
-                  padding: EdgeInsets.only(
-                    bottom: 3, // space between underline and text
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: AllCoustomTheme.getHeadingThemeColors(),
-                        width: 1.0, // Underline width
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            child: Text(
+              "Your Background",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: ConstanceData.SIZE_TITLE18,
+                fontFamily: "Roboto",
+                package: 'Roboto-Regular',
+                fontWeight: FontWeight.w300,
+              ),
             ),
           ),
         ),
-        SizedBox(
-          height: 20.0,
-        ),
         Padding(
-          padding: const EdgeInsets.only(left: 16, right: 15.0),
+          padding: const EdgeInsets.only(
+            left: 16,
+            right: 15.0,
+            top: 20.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -260,17 +203,15 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Current Employer',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColor(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        fontFamily: "Roboto",
-                        package: 'Roboto-Regular',
-                      ),
+                  Text(
+                    'Current Employer',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AllCoustomTheme.getTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      package: 'Roboto-Regular',
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                   InkWell(
@@ -282,16 +223,13 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                         ),
                       );
                     },
-                    child: Icon(
-                      empList.length == 0 ? Icons.add_box_sharp : Icons.edit,
-                      color: AllCoustomTheme.getSeeMoreThemeColor(),
-                      size: 25,
+                    child: Image.asset(
+                      "assets/pen_outline.png",
+                      width: 20,
+                      height: 20,
                     ),
                   )
                 ],
-              ),
-              SizedBox(
-                height: 20.0,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,14 +238,11 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                   Expanded(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.20,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: getEmpList(empList),
                     ),
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 20.0,
               ),
             ],
           ),
@@ -322,17 +257,15 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Highest Education Qualification',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getTextThemeColor(),
-                        fontSize: ConstanceData.SIZE_TITLE16,
-                        fontFamily: "Roboto",
-                        package: 'Roboto-Regular',
-                      ),
+                  Text(
+                    'Highest Education Qualification',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AllCoustomTheme.getTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      package: 'Roboto-Regular',
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                   InkWell(
@@ -343,16 +276,13 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                         ),
                       );
                     },
-                    child: Icon(
-                      eduList.length == 0 ? Icons.add_box_sharp : Icons.edit,
-                      color: AllCoustomTheme.getSeeMoreThemeColor(),
-                      size: 25,
+                    child: Image.asset(
+                      "assets/pen_outline.png",
+                      width: 20,
+                      height: 20,
                     ),
                   )
                 ],
-              ),
-              SizedBox(
-                height: 10.0,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -360,8 +290,11 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
                 children: [
                   Expanded(
                     child: Container(
+                      // decoration: BoxDecoration(
+                      //   border: Border.all(),
+                      // ),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.20,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: getEduList(eduList),
                     ),
                   ),
@@ -375,6 +308,111 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
         ),
         SizedBox(
           height: 10.0,
+        ),
+        ExpandablePanel(
+          header: Padding(
+            padding: const EdgeInsets.only(
+              left: 15.0,
+              right: 20,
+            ),
+            child: Container(
+              // decoration: BoxDecoration(border: Border.all()),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'About',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AllCoustomTheme.getTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      package: 'Roboto-Regular',
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  Material(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.white,
+                      ),
+                    ),
+                    elevation: 10,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Colors.grey,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          hasIcon: false,
+          expanded: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "My name is Tatras and I am a Developer who is working to be an entrepreneur.",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                trailing: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AddAboutInfo(),
+                      ),
+                    );
+                  },
+                  child: Image.asset(
+                    "assets/pen_outline.png",
+                    width: 20,
+                    height: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            leading: Icon(
+              FontAwesomeIcons.edit,
+              color: Colors.black,
+            ),
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                "Request a recommendation",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  fontFamily: "Roboto",
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            subtitle: Text(
+              "Request a recommendation From Auro.AI on any topic",
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: "Roboto",
+                color: Colors.black,
+              ),
+            ),
+          ),
         ),
       ],
     );

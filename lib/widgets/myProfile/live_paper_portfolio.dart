@@ -34,15 +34,15 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserDetails>(context, listen: false);
-    if (widget.userName == null) {
-      title = userProvider.userDetails["f_name"] != null &&
-              userProvider.userDetails != null
-          ? "${userProvider.userDetails["f_name"]}\'s Portfolio Track Record"
-          : 'Portfolio Track Record';
-    } else {
-      title = "${widget.userName}\'s Portfolio Track Record";
-    }
+    // var userProvider = Provider.of<UserDetails>(context, listen: false);
+    // if (widget.userName == null) {
+    //   title = userProvider.userDetails["f_name"] != null &&
+    //           userProvider.userDetails != null
+    //       ? "${userProvider.userDetails["f_name"]}\'s Portfolio Track Record"
+    //       : 'Portfolio Track Record';
+    // } else {
+    //   title = "${widget.userName}\'s Portfolio Track Record";
+    // }
 
     return Consumer<PortfolioPitchProvider>(
       builder: (context, portfolioProvider, _) {
@@ -50,47 +50,31 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
             portfolioProvider.allPortfolioPitches.length != 0) {
           return Column(
             children: [
-              Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 5.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.09,
-                    child: ListView(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              title,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFFD8AF4F),
-                                fontSize: ConstanceData.SIZE_TITLE18,
-                                fontFamily: "Roboto",
-                                package: 'Roboto-Regular',
-                              ),
-                            ),
-                          ),
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Your Portfolio Track Record",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: ConstanceData.SIZE_TITLE18,
+                          fontFamily: "Roboto",
+                          package: 'Roboto-Regular',
+                          fontWeight: FontWeight.w300,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              right: MediaQuery.of(context).size.width * 0.22),
-                          padding: EdgeInsets.only(
-                            bottom: 3, // space between underline and text
-                          ),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                            color: AllCoustomTheme.getHeadingThemeColors(),
-                            width: 1.0, // Underline width
-                          ))),
-                        ),
-                      ],
-                    ),
-                  )),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 10.0,
               ),
+              Divider(thickness: 1,),
               Container(
                 height: 300,
                 child: ListView.builder(

@@ -55,31 +55,121 @@ class _PortfolioReturnBarChartState extends State<PortfolioReturnBarChart> {
 
   @override
   Widget build(BuildContext context) {
-    var chartData = [
-      ChartData("Q4", calculate().y, Colors.green),
-      // ChartData("Q4", 100000, Colors.red),
+    var chartDataExpectedDollars = [
+      ChartData(
+        "Expected",
+        calculate().y-1000000,
+        Color(0xFFCCDBED),
+      ),
     ];
-    return Container(
-      child: SfCartesianChart(
-        primaryXAxis: CategoryAxis(),
-        series: <ChartSeries>[
-          ColumnSeries<ChartData, String>(
-            dataSource: chartData,
-            xValueMapper: (ChartData data, _) => data.x,
-            yValueMapper: (ChartData data, _) => data.y,
-            pointColorMapper: (ChartData data, _) => data.color,
-            name: "Q1",
-          ),
-          ColumnSeries<ChartData, String>(
-            dataSource: [ChartData("Q4", 100000, Colors.red)],
-            xValueMapper: (ChartData data, _) => data.x,
-            yValueMapper: (ChartData data, _) => data.y,
-            pointColorMapper: (ChartData data, _) => data.color,
-            name: "Q1",
-          ),
-        ],
+    var chartDataAnnualizedDollars = [
+      ChartData(
+        "Annualized",
+        double.parse(widget.userAnnualizedReturnDollar),
+        Color(0xFF71BBF6),
+      ),
+    ];
+    var chartDataAnnualizedExpectedPerc = [
+      ChartData(
+        "Expected",
+        ((calculate().y - 1000000) / 1000000) * 100,
+        Color(0xFFCCDBED),
+      ),
+    ];
+    var chartDataAnnualizedPerc = [
+      ChartData(
+        "Annualized",
+        double.parse(widget.userAnnualizedReturnPerc),
+        Color(0xFF71BBF6),
+      ),
+    ];
+    return Padding(
+      padding: const EdgeInsets.only(top:20.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          children: [
+            Expanded(
+              child: SfCartesianChart(
+                primaryXAxis: CategoryAxis(
+                  labelStyle: TextStyle(
+                    fontSize: 10,
+                  ),
+                  majorGridLines: MajorGridLines(
+                    color: Colors.white,
+                  ),
+                  majorTickLines: MajorTickLines(
+                    color: Colors.white,
+                  ),
+                  labelAlignment: LabelAlignment.end,
+                ),
+                primaryYAxis: NumericAxis(
+                  labelStyle: TextStyle(
+                    fontSize: 10,
+                  ),
+                  majorTickLines: MajorTickLines(
+                    color: Colors.white,
+                  ),
+                ),
+                series: <ChartSeries>[
+                  ColumnSeries<ChartData, String>(
+                    dataSource: chartDataAnnualizedDollars,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y,
+                    pointColorMapper: (ChartData data, _) => data.color,
+                  ),
+                  ColumnSeries<ChartData, String>(
+                    dataSource: chartDataExpectedDollars,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y,
+                    pointColorMapper: (ChartData data, _) => data.color,
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: SfCartesianChart(
+                primaryXAxis: CategoryAxis(
+                  labelStyle: TextStyle(
+                    fontSize: 10,
+                  ),
+                  majorTickLines: MajorTickLines(
+                    color: Colors.white,
+                  ),
+                  majorGridLines: MajorGridLines(
+                    color: Colors.white,
+                  ),
+                  labelAlignment: LabelAlignment.end,
+
+                ),
+                primaryYAxis: NumericAxis(
+                  labelStyle: TextStyle(
+                    fontSize: 10,
+                  ),
+                  majorTickLines: MajorTickLines(
+                    color: Colors.white,
+                  ),
+                  labelFormat: "{value}%",
+                ),
+                series: <ChartSeries>[
+                  ColumnSeries<ChartData, String>(
+                    dataSource: chartDataAnnualizedPerc,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y,
+                    pointColorMapper: (ChartData data, _) => data.color,
+                  ),
+                  ColumnSeries<ChartData, String>(
+                    dataSource: chartDataAnnualizedExpectedPerc,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y,
+                    pointColorMapper: (ChartData data, _) => data.color,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-

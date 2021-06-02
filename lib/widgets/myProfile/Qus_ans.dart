@@ -42,13 +42,14 @@ class _QusAnsState extends State<QusAns> {
               // question section
               GestureDetector(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: 5.0),
                       child: Icon(
                         Icons.circle,
-                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                        size: 8,
+                        color: Colors.black,
+                        size: 15,
                       ),
                     ),
                     SizedBox(
@@ -107,8 +108,8 @@ class _QusAnsState extends State<QusAns> {
                       padding: EdgeInsets.only(top: 5.0),
                       child: Icon(
                         Icons.circle,
-                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                        size: 8,
+                        color: Colors.black,
+                        size: 15,
                       ),
                     ),
                     SizedBox(
@@ -118,11 +119,12 @@ class _QusAnsState extends State<QusAns> {
                       child: Text(
                         "${data[index]['ans']}",
                         style: TextStyle(
-                            color: AllCoustomTheme.getTextThemeColor(),
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                            letterSpacing: 0.2),
+                          color: AllCoustomTheme.getTextThemeColor(),
+                          fontSize: ConstanceData.SIZE_TITLE16,
+                          fontFamily: "Roboto",
+                          package: 'Roboto-Regular',
+                          letterSpacing: 0.2,
+                        ),
                       ),
                     )
                   ],
@@ -137,68 +139,50 @@ class _QusAnsState extends State<QusAns> {
       );
     } else {
       return Center(
-          child: Text(
-        "No data available yet",
-        textAlign: TextAlign.center,
-        style: new TextStyle(
-          color: AllCoustomTheme.getTextThemeColor(),
-          fontSize: ConstanceData.SIZE_TITLE18,
-          fontFamily: "Rasa",
+        child: Text(
+          "No data available yet",
+          textAlign: TextAlign.center,
+          style: new TextStyle(
+            color: AllCoustomTheme.getTextThemeColor(),
+            fontSize: ConstanceData.SIZE_TITLE18,
+            fontFamily: "Rasa",
+          ),
         ),
-      ));
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserDetails>(context, listen: false);
-    if (widget.userName == null) {
-      title = userProvider.userDetails["f_name"] != null &&
-              userProvider.userDetails != null
-          ? "${userProvider.userDetails["f_name"]}\'s Investment Q&A"
-          : 'Investment Q&A';
-    } else {
-      title = "${widget.userName}\'s Investment Q&A";
-    }
     return Column(
       children: [
         Padding(
-            padding: const EdgeInsets.only(left: 16, right: 5.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.09,
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFD8AF4F),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                          ),
-                        ),
-                      )),
-                  Container(
-                    margin: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width * 0.35),
-                    padding: EdgeInsets.only(
-                      bottom: 3, // space between underline and text
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                      color: AllCoustomTheme.getHeadingThemeColors(),
-                      width: 1.0, // Underline width
-                    ))),
-                  ),
-                ],
+          padding: const EdgeInsets.only(
+            left: 16,
+            right: 5.0,
+            top: 20.0,
+            bottom: 20.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Your investment questions",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: "Roboto",
+                  package: 'Roboto-Regular',
+                  fontWeight: FontWeight.w300,
+                ),
               ),
-            )),
+            ],
+          ),
+        ),
+        Divider(
+          thickness: 1,
+        ),
         SizedBox(
           height: 10.0,
         ),
@@ -210,30 +194,28 @@ class _QusAnsState extends State<QusAns> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                  padding: EdgeInsets.only(top: 5.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Question',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getSeeMoreThemeColor(),
-                        decoration: TextDecoration.underline,
-                        fontSize: ConstanceData.SIZE_TITLE18,
-                        fontFamily: "Roboto",
-                        package: 'Roboto-Regular',
-                      ),
-                    ),
-                  )),
+                padding: EdgeInsets.only(top: 5.0),
+                child: Text(
+                  'Questions',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: ConstanceData.SIZE_TITLE18,
+                    fontFamily: "Roboto",
+                    package: 'Roboto-Regular',
+                  ),
+                ),
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.18,
-                        child: getQuestionsList(qusList)),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      child: getQuestionsList(qusList),
+                    ),
                   ),
                 ],
               ),
@@ -245,33 +227,13 @@ class _QusAnsState extends State<QusAns> {
                     ),
                   );
                 },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 40.0,
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Show More",
-                        style: TextStyle(
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                            decoration: TextDecoration.underline,
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                            letterSpacing: 0.2),
-                      ),
-                    )
-                  ],
-                ),
+                child: moreButton(),
               )
             ],
           ),
         ),
         SizedBox(
-          height: 40.0,
+          height: 10.0,
         ),
         // answer section
         Padding(
@@ -281,30 +243,31 @@ class _QusAnsState extends State<QusAns> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                  padding: EdgeInsets.only(top: 5.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Answer',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AllCoustomTheme.getSeeMoreThemeColor(),
-                        decoration: TextDecoration.underline,
-                        fontSize: ConstanceData.SIZE_TITLE18,
-                        fontFamily: "Roboto",
-                        package: 'Roboto-Regular',
-                      ),
+                padding: EdgeInsets.only(top: 5.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Answer',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: ConstanceData.SIZE_TITLE18,
+                      fontFamily: "Roboto",
+                      package: 'Roboto-Regular',
                     ),
-                  )),
+                  ),
+                ),
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.18,
-                        child: getAnsList(ansList)),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      child: getAnsList(ansList),
+                    ),
                   ),
                 ],
               ),
@@ -316,31 +279,33 @@ class _QusAnsState extends State<QusAns> {
                     ),
                   );
                 },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 40.0,
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Show More",
-                        style: TextStyle(
-                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                            decoration: TextDecoration.underline,
-                            fontSize: ConstanceData.SIZE_TITLE16,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                            letterSpacing: 0.2),
-                      ),
-                    )
-                  ],
-                ),
+                child: moreButton(),
               )
             ],
           ),
         )
+      ],
+    );
+  }
+
+  moreButton() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "More",
+          style: TextStyle(
+            color: Color(0xFF77969D),
+            fontSize: 18,
+            fontFamily: "Roboto",
+            package: 'Roboto-Regular',
+            letterSpacing: 0.2,
+          ),
+        ),
+        Icon(
+          Icons.arrow_right_alt,
+          color: Colors.black,
+        ),
       ],
     );
   }

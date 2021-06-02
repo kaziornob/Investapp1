@@ -103,61 +103,46 @@ class _StockPitchesState extends State<StockPitches> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserDetails>(context, listen: false);
-    if (widget.userName == null) {
-      title = userProvider.userDetails["f_name"] != null &&
-              userProvider.userDetails != null
-          ? "${userProvider.userDetails["f_name"]}\'s Stock Pitches"
-          : 'Stock Pitches';
-    } else {
-      title = "${widget.userName}\'s Stock Pitches";
-    }
+    // var userProvider = Provider.of<UserDetails>(context, listen: false);
+    // if (widget.userName == null) {
+    //   title = userProvider.userDetails["f_name"] != null &&
+    //           userProvider.userDetails != null
+    //       ? "${userProvider.userDetails["f_name"]}\'s Stock Pitches"
+    //       : 'Stock Pitches';
+    // } else {
+    //   title = "${widget.userName}\'s Stock Pitches";
+    // }
     return Consumer<StockPitchProvider>(builder: (context, pitchProvider, _) {
       if (pitchProvider.allStockPitches != null &&
           pitchProvider.allStockPitches.length != 0) {
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 5.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.09,
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFD8AF4F),
-                            fontSize: ConstanceData.SIZE_TITLE18,
-                            fontFamily: "Roboto",
-                            package: 'Roboto-Regular',
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width * 0.40),
-                      padding: EdgeInsets.only(
-                        bottom: 3, // space between underline and text
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AllCoustomTheme.getHeadingThemeColors(),
-                            width: 1.0, // Underline width
-                          ),
-                        ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.09,
+              child: Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Your Stock Pitches",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ConstanceData.SIZE_TITLE18,
+                        fontFamily: "Roboto",
+                        package: 'Roboto-Regular',
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Divider(thickness: 1,),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 5.0),
               child: Row(

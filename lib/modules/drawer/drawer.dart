@@ -1,12 +1,19 @@
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
+import 'package:auroim/auro_clubs/investment_titles.dart';
+import 'package:auroim/auro_clubs/weekly_league.dart';
+import 'package:auroim/auro_coins/auro_coins_info.dart';
 import 'package:auroim/constance/constance.dart';
 
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/main.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
+import 'package:auroim/modules/home/auro_ai_portfolio.dart';
+import 'package:auroim/modules/home/auro_portfolio_mix.dart';
+import 'package:auroim/modules/home/auro_portfolio_return.dart';
 import 'package:auroim/modules/introduction/introduction_screen2.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/golive_screen.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/modules/settings/myAccount.dart';
 import 'package:auroim/modules/settings/myProfile.dart';
@@ -458,7 +465,11 @@ class _AppDrawerState extends State<AppDrawer> {
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => AuroPortfolioMix(),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -550,7 +561,12 @@ class _AppDrawerState extends State<AppDrawer> {
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AuroPortfolioReturn(),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -583,7 +599,11 @@ class _AppDrawerState extends State<AppDrawer> {
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => AuroAiPortfolio(),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -629,7 +649,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  OnBoardingFirst(callingFrom: "",),
+                                                  OnBoardingFirst(
+                                                callingFrom: "",
+                                              ),
                                             ),
                                           );
                                         },
@@ -668,7 +690,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  OnBoardingFirst(callingFrom: "",),
+                                                  OnBoardingFirst(
+                                                callingFrom: "",
+                                              ),
                                             ),
                                           );
                                         },
@@ -738,7 +762,14 @@ class _AppDrawerState extends State<AppDrawer> {
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          GoLiveScreen(
+                                        callingFrom: "",
+                                      ),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -771,7 +802,12 @@ class _AppDrawerState extends State<AppDrawer> {
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          AuroAiPortfolio(),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -894,65 +930,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               SizedBox(
                                 height: 10,
                               ),
-                              // InkWell(
-                              //   highlightColor: Colors.transparent,
-                              //   splashColor: Colors.transparent,
-                              //   onTap: () {
-                              //     Navigator.pop(context);
-                              //     Navigator.of(context).push(
-                              //       CupertinoPageRoute(
-                              //         builder: (BuildContext context) =>
-                              //             MyProfile(),
-                              //       ),
-                              //     );
-                              //   },
-                              //   child: Row(
-                              //     children: <Widget>[
-                              //       Animator(
-                              //         tween: Tween<double>(begin: 0, end: 1),
-                              //         duration: Duration(milliseconds: 500),
-                              //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
-                              //           axis: Axis.horizontal,
-                              //           axisAlignment: 1,
-                              //           child: Icon(
-                              //             Icons.circle,
-                              //             color: AllCoustomTheme
-                              //                 .getsecoundTextThemeColor(),
-                              //             size: 8,
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       SizedBox(
-                              //         width: 14,
-                              //       ),
-                              //       Animator(
-                              //         tween: Tween<double>(begin: 0, end: 1),
-                              //         duration: Duration(milliseconds: 500),
-                              //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
-                              //           axis: Axis.horizontal,
-                              //           axisAlignment: 1,
-                              //           child: Text(
-                              //             'Listed',
-                              //             style: TextStyle(
-                              //               color: AllCoustomTheme
-                              //                   .getTextThemeColor(),
-                              //               fontSize:
-                              //               ConstanceData.SIZE_TITLE14,
-                              //             ),
-                              //           ),
-                              //
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              // SizedBox(
-                              //   height: 10,
-                              // ),
                               InkWell(
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
@@ -1158,65 +1135,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               SizedBox(
                                 height: 10,
                               ),
-                              // InkWell(
-                              //   highlightColor: Colors.transparent,
-                              //   splashColor: Colors.transparent,
-                              //   onTap: () {
-                              //     Navigator.pop(context);
-                              //     Navigator.of(context).push(
-                              //       CupertinoPageRoute(
-                              //         builder: (BuildContext context) =>
-                              //             MyProfile(),
-                              //       ),
-                              //     );
-                              //   },
-                              //   child: Row(
-                              //     children: <Widget>[
-                              //       Animator(
-                              //         tween: Tween<double>(begin: 0, end: 1),
-                              //         duration: Duration(milliseconds: 500),
-                              //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
-                              //           axis: Axis.horizontal,
-                              //           axisAlignment: 1,
-                              //           child: Icon(
-                              //             Icons.circle,
-                              //             color: AllCoustomTheme
-                              //                 .getsecoundTextThemeColor(),
-                              //             size: 8,
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       SizedBox(
-                              //         width: 14,
-                              //       ),
-                              //       Animator(
-                              //         tween: Tween<double>(begin: 0, end: 1),
-                              //         duration: Duration(milliseconds: 500),
-                              //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
-                              //           axis: Axis.horizontal,
-                              //           axisAlignment: 1,
-                              //           child: Text(
-                              //             'Listed',
-                              //             style: TextStyle(
-                              //               color: AllCoustomTheme
-                              //                   .getTextThemeColor(),
-                              //               fontSize:
-                              //               ConstanceData.SIZE_TITLE14,
-                              //             ),
-                              //           ),
-                              //
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              // SizedBox(
-                              //   height: 10,
-                              // ),
                               InkWell(
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
@@ -1740,12 +1658,12 @@ class _AppDrawerState extends State<AppDrawer> {
                                 splashColor: Colors.transparent,
                                 onTap: () {
                                   Navigator.pop(context);
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (BuildContext context) =>
-                                          QusAns(),
-                                    ),
-                                  );
+                                  // Navigator.of(context).push(
+                                  //   CupertinoPageRoute(
+                                  //     builder: (BuildContext context) =>
+                                  //         QusAns(),
+                                  //   ),
+                                  // );
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -2027,55 +1945,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               SizedBox(
                                 height: 10,
                               ),
-                              // InkWell(
-                              //   highlightColor: Colors.transparent,
-                              //   splashColor: Colors.transparent,
-                              //   onTap: () {
-                              //     Navigator.pop(context);
-                              //   },
-                              //   child: Row(
-                              //     children: <Widget>[
-                              //       Animator(
-                              //         tween: Tween<double>(begin: 0, end: 1),
-                              //         duration: Duration(milliseconds: 500),
-                              //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
-                              //           axis: Axis.horizontal,
-                              //           axisAlignment: 1,
-                              //           child: Icon(
-                              //             Icons.circle,
-                              //             color: AllCoustomTheme
-                              //                 .getsecoundTextThemeColor(),
-                              //             size: 8,
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       SizedBox(
-                              //         width: 14,
-                              //       ),
-                              //       Animator(
-                              //         tween: Tween<double>(begin: 0, end: 1),
-                              //         duration: Duration(milliseconds: 500),
-                              //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
-                              //           axis: Axis.horizontal,
-                              //           axisAlignment: 1,
-                              //           child: Text(
-                              //             'Trending Questions',
-                              //             style: TextStyle(
-                              //               color: AllCoustomTheme
-                              //                   .getTextThemeColor(),
-                              //               fontSize:
-                              //                   ConstanceData.SIZE_TITLE14,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
                             ],
                           ),
                           tapHeaderToExpand: true,
@@ -2142,13 +2011,14 @@ class _AppDrawerState extends State<AppDrawer> {
                                 splashColor: Colors.transparent,
                                 onTap: () async {
                                   await showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return HowAppWorks(
-                                          videoLink:
-                                              "https://www.youtube.com/watch?v=RWFXn2Dsb9E",
-                                        );
-                                      });
+                                    context: context,
+                                    builder: (context) {
+                                      return HowAppWorks(
+                                        videoLink:
+                                            "https://www.youtube.com/watch?v=RWFXn2Dsb9E",
+                                      );
+                                    },
+                                  );
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -2167,6 +2037,126 @@ class _AppDrawerState extends State<AppDrawer> {
                                                 .getTextThemeColor(),
                                             fontSize:
                                                 ConstanceData.SIZE_TITLE14,
+                                          ),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          AuroCoins(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Animator(
+                                      tween: Tween<double>(begin: 0, end: 1),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 1,
+                                      builder: (anim) => SizeTransition(
+                                        sizeFactor: anim,
+                                        axis: Axis.horizontal,
+                                        axisAlignment: 1,
+                                        child: Text(
+                                          'Auro Coins',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE14,
+                                          ),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          InvestmentTitles(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Animator(
+                                      tween: Tween<double>(begin: 0, end: 1),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 1,
+                                      builder: (anim) => SizeTransition(
+                                        sizeFactor: anim,
+                                        axis: Axis.horizontal,
+                                        axisAlignment: 1,
+                                        child: Text(
+                                          'Auro Investment Titles',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE14,
+                                          ),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          WeeklyLeague(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Animator(
+                                      tween: Tween<double>(begin: 0, end: 1),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 1,
+                                      builder: (anim) => SizeTransition(
+                                        sizeFactor: anim,
+                                        axis: Axis.horizontal,
+                                        axisAlignment: 1,
+                                        child: Text(
+                                          'Auro Weekly Leagues',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontSize:
+                                            ConstanceData.SIZE_TITLE14,
                                           ),
                                           overflow: TextOverflow.clip,
                                         ),

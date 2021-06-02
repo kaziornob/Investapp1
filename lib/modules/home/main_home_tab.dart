@@ -644,7 +644,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                                     .getOtherTabButtonNonSelectedTextStyleTheme()),
                                             onPressed: () async {
                                               Navigator.of(context).push(
-                                                new MaterialPageRoute(
+                                                MaterialPageRoute(
                                                   builder:
                                                       (BuildContext context) =>
                                                           new OnBoardingFirst(
@@ -1388,28 +1388,11 @@ class _MainHomeTabState extends State<MainHomeTab> {
   // }
 
   setHomeDoughnutChartData(portfolioChartData) {
-    // print("portfolioChartData: $portfolioChartData");
-    // print("homeDonutCurrentIndex: $homeDonutCurrentIndex");
-
     if (portfolioChartData != null && portfolioChartData != false) {
       print("herererer");
       if (homeDonutCurrentIndex == 0 && portfolioChartData["data"] != null) {
-        // var tempWeightsData =
-        //     portfolioChartData['weights_assetclass']['weights'];
         print("in bro index 0");
         homeChartData = [];
-        // Map countMap = {};
-        //
-        // portfolioChartData["data"].forEach(
-        //   (element) {
-        //     if (countMap.containsKey(element["asset_class"])) {
-        //       int earlyCount = countMap[element["asset_class"]];
-        //       countMap[element["asset_class"]] = earlyCount + 1;
-        //     } else {
-        //       countMap[element["asset_class"]] = 1;
-        //     }
-        //   },
-        // );
 
         portfolioChartData["assetClass"].forEach((key, value) {
           homeChartData.add(ChartData(
@@ -1424,18 +1407,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
       } else if (homeDonutCurrentIndex == 2) {
         print("in bro index 1");
         homeChartData = [];
-        // Map countMap = {};
-        //
-        // portfolioChartData["data"].forEach(
-        //   (element) {
-        //     if (countMap.containsKey(element["country"])) {
-        //       int earlyCount = countMap[element["country"]];
-        //       countMap[element["country"]] = earlyCount + 1;
-        //     } else {
-        //       countMap[element["country"]] = 1;
-        //     }
-        //   },
-        // );
+
         portfolioChartData["country"].forEach((key, value) {
           homeChartData.add(ChartData(
               '$key',
@@ -1444,28 +1416,9 @@ class _MainHomeTabState extends State<MainHomeTab> {
               globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
         });
         return homeChartData;
-        // countMap.forEach((key, value) {
-        //   homeChartData.add(ChartData(
-        //       '$key',
-        //       value.toDouble(),
-        //       // double.parse(tempDouble.toStringAsFixed(4)),
-        //       globals.isGoldBlack ? Color(0xFFE8E2DB) : Color(0xFF1D6177)));
-        // });
       } else if (homeDonutCurrentIndex == 1) {
         print("in bro index 2");
         homeChartData = [];
-        // Map countMap = {};
-        //
-        // portfolioChartData["data"].forEach(
-        //   (element) {
-        //     if (countMap.containsKey(element["sector"])) {
-        //       int earlyCount = countMap[element["sector"]];
-        //       countMap[element["sector"]] = earlyCount + 1;
-        //     } else {
-        //       countMap[element["sector"]] = 1;
-        //     }
-        //   },
-        // );
 
         portfolioChartData["sector"].forEach((key, value) {
           homeChartData.add(ChartData(
