@@ -41,18 +41,18 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.black,
-            // globals.isGoldBlack
-            //     ? AllCoustomTheme.getAppBarBackgroundThemeColors()
-            // // : Color(0xFF7499C6)
-            //     : Color(0xFF7499C6),
-            title: _buildAppBar(context),
-          ),
-        ),
+        // appBar: PreferredSize(
+        //   preferredSize: Size.fromHeight(65.0),
+        //   child: AppBar(
+        //     automaticallyImplyLeading: false,
+        //     backgroundColor: Colors.black,
+        //     // globals.isGoldBlack
+        //     //     ? AllCoustomTheme.getAppBarBackgroundThemeColors()
+        //     // // : Color(0xFF7499C6)
+        //     //     : Color(0xFF7499C6),
+        //     title: _buildAppBar(context),
+        //   ),
+        // ),
         body: SingleChildScrollView(
           child: Column(
             children: [

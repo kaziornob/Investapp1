@@ -46,24 +46,28 @@ class _QuantanmentState extends State<Quantanment> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(65.0),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor:
-              // globals.isGoldBlack
-              //     ?
-              Colors.black,
-          // : Color(0xFF7499C6)
-          //     : Color(0xFF7499C6),
-          title: _buildAppBar(context),
-        ),
-      ),
+      key: homeScaffoldKey,
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(65.0),
+      //   child: AppBar(
+      //     automaticallyImplyLeading: false,
+      //     backgroundColor:
+      //         // globals.isGoldBlack
+      //         //     ?
+      //         Colors.black,
+      //     // : Color(0xFF7499C6)
+      //     //     : Color(0xFF7499C6),
+      //     title: _buildAppBar(context),
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.black,
           child: Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
               Column(
                 children: [
                   Row(

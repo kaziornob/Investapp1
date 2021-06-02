@@ -28,18 +28,27 @@ class _AuroStarState extends State<AuroStar> {
           color: Colors.black,
           height: MediaQuery.of(context).size.height,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              PreferredSize(
-                preferredSize: Size.fromHeight(65.0),
-                child: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.black,
-                  // globals.isGoldBlack
-                  //     ? AllCoustomTheme.getAppBarBackgroundThemeColors()
-                  //     // : Color(0xFF7499C6)
-                  //     : Color(0xFF7499C6),
-                  title: _buildAppBar(context),
-                ),
+              // PreferredSize(
+              //   preferredSize: Size.fromHeight(65.0),
+              //   child: AppBar(
+              //     automaticallyImplyLeading: false,
+              //     backgroundColor: Colors.black,
+              //     // globals.isGoldBlack
+              //     //     ? AllCoustomTheme.getAppBarBackgroundThemeColors()
+              //     //     // : Color(0xFF7499C6)
+              //     //     : Color(0xFF7499C6),
+              //     title: _buildAppBar(context),
+              //   ),
+              // ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+                ],
               ),
               SingleChildScrollView(
                 child: Column(
