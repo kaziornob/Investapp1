@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomSliderThumbCircle extends SliderComponentShape {
   final double thumbRadius;
+  final borderColor;
   final int min;
   final int max;
 
@@ -9,6 +10,7 @@ class CustomSliderThumbCircle extends SliderComponentShape {
     @required this.thumbRadius,
     this.min = 0,
     this.max = 10,
+    this.borderColor,
   });
 
   @override
@@ -35,7 +37,7 @@ class CustomSliderThumbCircle extends SliderComponentShape {
 
     Paint paintCircle = Paint()..color = Colors.white;
     Paint paintBorder = Paint()
-      ..color = Color(0xFF1D6177)
+      ..color = borderColor == null ? Color(0xFF1D6177) : borderColor
       ..strokeWidth = thumbRadius * .1
       ..style = PaintingStyle.stroke;
 

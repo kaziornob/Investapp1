@@ -149,9 +149,8 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     // print("gschascvkajsc");
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            // AddEditQus(),
-                        InvestorType(),
+                        builder: (BuildContext context) => AddEditQus(),
+                        // InvestorType(),
                       ),
                     );
                   },

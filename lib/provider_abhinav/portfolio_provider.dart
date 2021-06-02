@@ -28,6 +28,10 @@ class PortfolioProvider with ChangeNotifier {
     }
   }
 
+  changeStateOfListener(){
+    notifyListeners();
+  }
+
   getDailyReturnPortfolio() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');

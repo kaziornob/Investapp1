@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:auroim/constance/global.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
@@ -116,6 +118,7 @@ class GoProDataProvider with ChangeNotifier {
       print("results ${result["message"]}");
       Toast.show("${result['message']}", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      Provider.of<PortfolioProvider>(context).changeStateOfListener();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),

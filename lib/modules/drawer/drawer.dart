@@ -22,6 +22,7 @@ import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/auro_stars.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/how_app_works.dart';
+import 'package:auroim/widgets/invest_tab/auro_star/auro_stars.dart';
 import 'package:auroim/widgets/myProfile/Qus_ans.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
 import 'package:auroim/widgets/public_company/public_company_marketplace.dart';
@@ -1016,7 +1017,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                   Navigator.of(context).push(
                                     CupertinoPageRoute(
                                       builder: (BuildContext context) =>
-                                          AuroStars(),
+                                          // AuroStars(),
+                                          AuroStar(),
                                     ),
                                   );
                                 },
@@ -2156,7 +2158,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                             color: AllCoustomTheme
                                                 .getTextThemeColor(),
                                             fontSize:
-                                            ConstanceData.SIZE_TITLE14,
+                                                ConstanceData.SIZE_TITLE14,
                                           ),
                                           overflow: TextOverflow.clip,
                                         ),

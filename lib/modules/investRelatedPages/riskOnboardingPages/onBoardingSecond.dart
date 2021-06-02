@@ -1,9 +1,9 @@
-
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingThird.dart';
 import 'package:auroim/provider_abhinav/go_pro_data_provider.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
+import 'package:auroim/widgets/public_company/custom_slider_thumb_circle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -193,6 +193,10 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                           activeTrackColor: Color(0xffFFB200),
                           inactiveTrackColor: Color(0xffFFB200),
                           trackShape: RectangularSliderTrackShape(),
+                          thumbShape: CustomSliderThumbCircle(
+                            thumbRadius: 12,
+                            borderColor: Color(0xffFFB200),
+                          ),
                         ),
                         child: Slider(
                           value: data[key].toDouble(),
@@ -268,11 +272,11 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                                     },
                                     child: Padding(
                                       padding:
-                                      const EdgeInsets.only(left: 10.0),
+                                          const EdgeInsets.only(left: 10.0),
                                       child: Icon(
                                         Icons.arrow_back,
-                                        color: AllCoustomTheme
-                                            .getTextThemeColor(),
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                       ),
                                     ),
                                   ),

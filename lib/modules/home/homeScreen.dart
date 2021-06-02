@@ -25,6 +25,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'main_home_tab.dart';
 import 'main_invest_tab.dart';
 
+
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -34,7 +36,7 @@ const String testDevice = 'YOUR_DEVICE_ID';
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  var _homeScaffoldKey = new GlobalKey<ScaffoldState>();
+  var homeScaffoldKey = new GlobalKey<ScaffoldState>();
   ApiProvider request = new ApiProvider();
 
   TextEditingController _appbarTextController = TextEditingController();
@@ -128,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen>
               size: 28,
               color: isSelect2 ? Colors.white : Colors.black,
             ),
-            onPressed: () => _homeScaffoldKey.currentState.openDrawer(),
+            onPressed: () => homeScaffoldKey.currentState.openDrawer(),
           ),
           // CircleAvatar(
           //   radius: 20.0,
@@ -263,17 +265,19 @@ class _HomeScreenState extends State<HomeScreen>
         SafeArea(
           bottom: true,
           child: Scaffold(
-            key: _homeScaffoldKey,
+            key: homeScaffoldKey,
             appBar: isSelect1 || isSelect2 || isSelect4
                 ? PreferredSize(
                     preferredSize: Size.fromHeight(65.0),
                     child: AppBar(
                       automaticallyImplyLeading: false,
-                      backgroundColor: globals.isGoldBlack
-                          ? isSelect2 == true
-                              ? AllCoustomTheme.getAppBarBackgroundThemeColors()
-                              : Color(0xFF7499C6)
-                          : Color(0xFF7499C6),
+                      backgroundColor:
+                          isSelect2 == true ? Colors.black : Color(0xFF7499C6),
+                      // globals.isGoldBlack
+                      //     ? isSelect2 == true
+                      //         ? Colors.black
+                      //         : Color(0xFF7499C6)
+                      //     : Color(0xFF7499C6),
                       title: _buildAppBar(context),
                     ),
                   )
@@ -711,7 +715,7 @@ class _HomeScreenState extends State<HomeScreen>
                           Expanded(
                             child: isSelect1
                                 ? NewMainHomeTab()
-                            // MainHomeTab()
+                                // MainHomeTab()
                                 : isSelect2
                                     ? MainInvestTab()
                                     : (isSelect3
@@ -971,7 +975,7 @@ class _HomeScreenState extends State<HomeScreen>
                     email: itemData["email"],
                   )
                 : SecurityPageFirst(
-              callingFrom: "",
+                    callingFrom: "",
                     companyTicker: itemData["ticker"],
                   ),
           ),

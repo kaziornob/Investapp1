@@ -1,5 +1,7 @@
-
+import 'package:auroim/investment_masterclass/quiz.dart';
 import 'package:flutter/material.dart';
+
+import 'masterclass_popup_dialog.dart';
 
 class ContentScreen extends StatefulWidget {
   const ContentScreen({Key key}) : super(key: key);
@@ -44,23 +46,31 @@ class _ContentScreenState extends State<ContentScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                // showDialog(
-                                //   context: context,
-                                //   child: AlertDialog(
-                                //     contentPadding: EdgeInsets.all(0),
-                                //     content: MasterClassPopupDialogScreen(),
-                                //   ),
-                                // );
+                                showDialog(
+                                  context: context,
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height/2,
+                                    child: AlertDialog(
+                                      contentPadding: EdgeInsets.all(0),
+                                      content: MasterClassPopupDialogScreen(),
+                                    ),
+                                  ),
+                                );
                               },
                               child: Card(
                                 elevation: 5,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
                                 child: Column(
                                   children: [
                                     Row(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 0.0, top: 30),
+                                          padding: const EdgeInsets.only(
+                                              left: 15.0,
+                                              right: 15.0,
+                                              bottom: 0.0,
+                                              top: 30),
                                           child: Image.asset(
                                             'assets/play.png',
                                             width: 50,
@@ -69,8 +79,11 @@ class _ContentScreenState extends State<ContentScreen> {
                                         ),
                                         Flexible(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 0.0, top: 30),
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0,
+                                                right: 15.0,
+                                                bottom: 0.0,
+                                                top: 30),
                                             child: Text(
                                               'What is value investing?',
                                               style: TextStyle(fontSize: 20),
@@ -85,7 +98,8 @@ class _ContentScreenState extends State<ContentScreen> {
                                     Align(
                                       alignment: Alignment.centerRight,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(right: 15.0),
+                                        padding:
+                                            const EdgeInsets.only(right: 15.0),
                                         child: Text('5:12m'),
                                       ),
                                     ),
@@ -97,22 +111,33 @@ class _ContentScreenState extends State<ContentScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 8, bottom: 8),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text('Take Chapter Quiz'),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Image.asset(
-                                        'assets/trophy.png',
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                    ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => QuizScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text('Take Chapter Quiz'),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Image.asset(
+                                          'assets/trophy.png',
+                                          width: 30,
+                                          height: 30,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   Image.asset(
                                     'assets/like.png',
@@ -134,7 +159,8 @@ class _ContentScreenState extends State<ContentScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0, top: 15, right: 8, bottom: 15),
+                      padding: const EdgeInsets.only(
+                          left: 30.0, top: 15, right: 8, bottom: 15),
                       child: Row(
                         children: [
                           Image.asset(
@@ -147,7 +173,8 @@ class _ContentScreenState extends State<ContentScreen> {
                           ),
                           Text(
                             'Take a test',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           )
                         ],
                       ),
@@ -155,14 +182,16 @@ class _ContentScreenState extends State<ContentScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
                   child: Card(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0, top: 15, right: 8, bottom: 15),
+                      padding: const EdgeInsets.only(
+                          left: 30.0, top: 15, right: 8, bottom: 15),
                       child: Row(
                         children: [
                           Image.asset(
@@ -175,7 +204,8 @@ class _ContentScreenState extends State<ContentScreen> {
                           ),
                           Text(
                             'Get a certificate',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           )
                         ],
                       ),

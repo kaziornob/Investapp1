@@ -71,7 +71,9 @@ class StockPitchSocialInfo extends StatelessWidget {
                         ),
                         SizedBox(width: 5.0),
                         Image.asset(
-                          StaticData.badges[userBadge]["asset_path"],
+                          StaticData.badges[userBadge] == null
+                              ? StaticData.badges["Challenger"]["asset_path"]
+                              : StaticData.badges[userBadge]["asset_path"],
                           height: 30,
                           width: 50,
                           fit: BoxFit.contain,
