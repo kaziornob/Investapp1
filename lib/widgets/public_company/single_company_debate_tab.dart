@@ -227,6 +227,7 @@ class _SinglePublicCompaniesDebateTabState
                                   thumbRadius: 12,
                                   min: 0,
                                   max: 100,
+                                  borderColor: Color(0xFF1D6177),
                                 ),
                                 thumbColor: Color(0xFF1D6177),
                                 overlayColor: Color(0xFFFAB95B),
