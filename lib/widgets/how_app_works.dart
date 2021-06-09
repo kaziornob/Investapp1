@@ -20,11 +20,21 @@ class _HowAppWorksState extends State<HowAppWorks> {
   void initState() {
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(widget.videoLink),
+
       flags: YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
+        forceHD: true,
       ),
+
     );
+    // _controller = YoutubePlayerController(
+    //   initialVideoId: 'iLnmTe5Q2Qw',
+    //   flags: YoutubePlayerFlags(
+    //     mute: false,
+    //     autoPlay: true,
+    //   ),
+    // );
     super.initState();
   }
 
@@ -41,6 +51,7 @@ class _HowAppWorksState extends State<HowAppWorks> {
       child: AlertDialog(
         content: Container(
           child: YoutubePlayer(
+
             controller: _controller,
             showVideoProgressIndicator: true,
             onReady: () {},

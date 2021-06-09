@@ -26,8 +26,16 @@ class _FullListOfSecuritiesState extends State<FullListOfSecurities> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  Divider(
+                    thickness: 1,
+                    indent: 5,
+                  ),
                   singleRow(context, "Security", 'Weight', 'In-Price',
-                      'Current Price', '% Return', Colors.indigo[100], 15.0),
+                      'Current Price', '% Return', Color(0xFFD8AF4F), 15.0),
+                  Divider(
+                    thickness: 1,
+                    indent: 5,
+                  ),
                   Container(
                     height: MediaQuery.of(context).size.height - 60,
                     child: ListView(
@@ -47,103 +55,13 @@ class _FullListOfSecuritiesState extends State<FullListOfSecurities> {
                                             1) *
                                         100)
                                     .toStringAsFixed(2),
-                            index % 2 == 0
-                                ? Colors.indigo[100]
-                                : Colors.indigo[50],
+                            Colors.black,
                             12.0,
                           );
                         },
                       ).toList(),
                     ),
                   ),
-                  // Center(
-                  //   child: Container(
-                  //     height: 360,
-                  //     child: Stack(
-                  //       fit: StackFit.expand,
-                  //       children: [
-                  //         Center(
-                  //           child: Column(
-                  //             children: (portfolioChartData["lowest_securities"] +
-                  //                 portfolioChartData["lowest_securities"])
-                  //                 .map<Widget>(
-                  //                   (rowData) {
-                  //                 index = index + 1;
-                  //                 return singleRow(
-                  //                   context,
-                  //                   rowData["ticker"],
-                  //                   (rowData["weight"] * 100).toStringAsFixed(2),
-                  //                   rowData["inprice"].toStringAsFixed(2),
-                  //                   rowData["current_price"].toStringAsFixed(2),
-                  //                   rowData["return"] == null
-                  //                       ? "0.00"
-                  //                       : rowData["return"].toStringAsFixed(2),
-                  //                   index % 2 == 0
-                  //                       ? Colors.indigo[100]
-                  //                       : Colors.indigo[50],
-                  //                   12.0,
-                  //                 );
-                  //               },
-                  //             ).toList(),
-                  //           ),
-                  //         ),
-                  //         Container(
-                  //           width: MediaQuery.of(context).size.width - 15,
-                  //           child: ClipRect(
-                  //             child: BackdropFilter(
-                  //               filter: ImageFilter.blur(
-                  //                 sigmaX: 5.0,
-                  //                 sigmaY: 5.0,
-                  //               ),
-                  //               child: Container(
-                  //                 color: Colors.grey.withOpacity(0.1),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         Center(
-                  //           child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.center,
-                  //             children: [
-                  //               Container(
-                  //                 width: MediaQuery.of(context).size.width * 0.55,
-                  //                 child: Image.asset('assets/logo.png'),
-                  //               ),
-                  //               GestureDetector(
-                  //                 onTap: () {
-                  //                   Navigator.of(context).push(
-                  //                     MaterialPageRoute(
-                  //                       builder: (context) => PaymentPurchaseScreen(),
-                  //                     ),
-                  //                     // MaterialPageRoute(
-                  //                     //   builder: (context) => PaymentTypes(),
-                  //                     // ),
-                  //                   );
-                  //                 },
-                  //                 child: Container(
-                  //                   decoration: BoxDecoration(
-                  //                     border: Border(
-                  //                       bottom: BorderSide(
-                  //                         color: Colors.blue,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   child: Text(
-                  //                     "Click here to see entire portfolio",
-                  //                     style: TextStyle(
-                  //                       color: Colors.blue,
-                  //                       fontWeight: FontWeight.bold,
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         )
-                  //       ],
-                  //     ),
-                  //   ),
-                  // )
                 ],
               ),
             ),
@@ -162,16 +80,13 @@ class _FullListOfSecuritiesState extends State<FullListOfSecurities> {
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 60,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
           child: Center(
             child: Text(
               "$security",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: fontSize,
+                color: color,
               ),
             ),
           ),
@@ -179,16 +94,13 @@ class _FullListOfSecuritiesState extends State<FullListOfSecurities> {
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 60,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
           child: Center(
             child: Text(
               "$share",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: fontSize,
+                color: color,
               ),
             ),
           ),
@@ -196,16 +108,13 @@ class _FullListOfSecuritiesState extends State<FullListOfSecurities> {
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 60,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
           child: Center(
             child: Text(
               "$ip",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: fontSize,
+                color: color,
               ),
             ),
           ),
@@ -213,16 +122,13 @@ class _FullListOfSecuritiesState extends State<FullListOfSecurities> {
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 60,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
           child: Center(
             child: Text(
               cp,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: fontSize,
+                color: color,
               ),
             ),
           ),
@@ -230,15 +136,12 @@ class _FullListOfSecuritiesState extends State<FullListOfSecurities> {
         Container(
           width: (MediaQuery.of(context).size.width - 20) / 5,
           height: 60,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: color,
-          ),
           child: Center(
             child: Text(
               perReturn,
               style: TextStyle(
                 fontSize: fontSize,
+                color: color,
               ),
               textAlign: TextAlign.center,
             ),

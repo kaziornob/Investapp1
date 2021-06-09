@@ -146,32 +146,59 @@ class _ShowListOfFollowingState extends State<ShowListOfFollowing> {
                                           break;
                                       }
                                     },
-                                    child: Container(
-                                      width: 80.0,
-                                      height: 80.0,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: snapshot.data[index]
-                                                      ["img_url"] ==
-                                                  null
-                                              ? AssetImage(
-                                                  'assets/download.jpeg')
-                                              : NetworkImage(snapshot
-                                                  .data[index]["img_url"]),
-                                          fit: BoxFit.contain,
+                                    child: CircleAvatar(
+                                      radius: 40,
+                                      child: CircleAvatar(
+                                        radius: 38,
+                                        backgroundColor: Colors.white,
+                                        backgroundImage: NetworkImage(
+                                          snapshot.data[index]["img_url"],
                                         ),
-                                        shape: BoxShape.circle,
-                                        // borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
-                                        border: new Border.all(
-                                          color: Color(0xff5A56B9),
-                                          width: 2.0,
-                                        ),
+                                        onBackgroundImageError:
+                                            (err, stackTrace) {
+                                          print("Image error");
+                                        },
+                                        // child: Image.network(
+                                        //   snapshot.data[index]["img_url"],
+                                        //   errorBuilder: (BuildContext context,
+                                        //       Object exception,
+                                        //       StackTrace stackTrace) {
+                                        //     return Image.asset(
+                                        //       "assets/full_globe.png",
+                                        //     );
+                                        //   },
+                                        //   fit: BoxFit.fill,
+                                        //
+                                        // ),
                                       ),
-                                      // child: Center(
-                                      //   child: Text(
-                                      //       "${snapshot.data[index]["value"]}"),
-                                      // ),
                                     ),
+
+                                    // Container(
+                                    //   width: 80.0,
+                                    //   height: 80.0,
+                                    //   decoration: BoxDecoration(
+                                    //     image: DecorationImage(
+                                    //       image: snapshot.data[index]
+                                    //                   ["img_url"] ==
+                                    //               null
+                                    //           ? AssetImage(
+                                    //               'assets/download.jpeg')
+                                    //           : NetworkImage(snapshot
+                                    //               .data[index]["img_url"]),
+                                    //       fit: BoxFit.contain,
+                                    //     ),
+                                    //     shape: BoxShape.circle,
+                                    //     // borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                                    //     border: new Border.all(
+                                    //       color: Color(0xff5A56B9),
+                                    //       width: 2.0,
+                                    //     ),
+                                    //   ),
+                                    //   // child: Center(
+                                    //   //   child: Text(
+                                    //   //       "${snapshot.data[index]["value"]}"),
+                                    //   // ),
+                                    // ),
                                   ),
                                 );
                               },

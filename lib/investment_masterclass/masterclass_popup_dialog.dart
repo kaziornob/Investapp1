@@ -18,6 +18,7 @@ class _MasterClassPopupDialogScreenState extends State<MasterClassPopupDialogScr
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
+        forceHD: true,
       ),
     );
     super.initState();

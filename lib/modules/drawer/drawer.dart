@@ -4,7 +4,6 @@ import 'package:auroim/auro_clubs/investment_titles.dart';
 import 'package:auroim/auro_clubs/weekly_league.dart';
 import 'package:auroim/auro_coins/auro_coins_info.dart';
 import 'package:auroim/constance/constance.dart';
-
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/main.dart';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
@@ -19,11 +18,9 @@ import 'package:auroim/modules/settings/myAccount.dart';
 import 'package:auroim/modules/settings/myProfile.dart';
 import 'package:auroim/modules/settings/setting.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
-import 'package:auroim/widgets/auro_stars.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/how_app_works.dart';
 import 'package:auroim/widgets/invest_tab/auro_star/auro_stars.dart';
-import 'package:auroim/widgets/myProfile/Qus_ans.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
 import 'package:auroim/widgets/public_company/public_company_marketplace.dart';
 import 'package:expandable/expandable.dart';
@@ -197,23 +194,12 @@ class _AppDrawerState extends State<AppDrawer> {
                               print("No User Data to set");
                               return Text("Not Found");
                             } else {
-                              print("Set Score");
-                              int acoins =
-                                  userDetailsProvider.userDetails["score"];
-                              int acoinsk = (acoins ~/ 1000);
-                              String sc;
-                              if (acoinsk > 0) {
-                                sc = acoinsk.toString() + 'K';
-                              } else {
-                                sc = acoinsk.toString();
-                                //sc = '17K';
-                              }
                               return Text(
-                                sc,
+                                "${userDetailsProvider.userDetails["score"]}",
                                 style: TextStyle(
                                   fontFamily: "RosarioBold",
                                   color: Color(0xffD8AF4F),
-                                  fontSize: 25,
+                                  fontSize: 20,
                                 ),
                               );
                             }

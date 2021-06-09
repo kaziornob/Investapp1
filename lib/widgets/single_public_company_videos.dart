@@ -35,6 +35,7 @@ class _SinglePublicCompanyVideosState extends State<SinglePublicCompanyVideos> {
         YoutubePlayerController(
           initialVideoId: YoutubePlayer.convertUrlToId(videoLink[i]),
           flags: YoutubePlayerFlags(
+            forceHD: true,
             autoPlay: false,
             mute: false,
           ),
@@ -98,6 +99,7 @@ class _SinglePublicCompanyVideosState extends State<SinglePublicCompanyVideos> {
                                 width: 180,
                                 child: YoutubePlayer(
                                   controller: allControllers[index],
+
                                   // showVideoProgressIndicator: true,
                                   onReady: () {
                                     print("on ready");

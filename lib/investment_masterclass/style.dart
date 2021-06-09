@@ -28,6 +28,7 @@ class _StyleScreenState extends State<StyleScreen>
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
+        forceHD: true,
       ),
     );
   }

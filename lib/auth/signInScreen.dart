@@ -45,10 +45,9 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
       body: SafeArea(
-        child: Container(
-          // decoration: BoxDecoration(border: Border.all()),
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
@@ -281,7 +280,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
   bottomTextWidget() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.only(
+        bottom: 20.0,
+        top: 20.0,
+      ),
       child: Container(
         child: RichText(
           text: TextSpan(

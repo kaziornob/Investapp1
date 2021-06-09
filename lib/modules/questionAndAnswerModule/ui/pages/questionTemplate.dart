@@ -211,6 +211,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
           autoPlay: true,
           mute: false,
           loop: false,
+          forceHD: true,
         ),
       );
 

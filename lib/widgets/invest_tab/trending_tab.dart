@@ -81,9 +81,8 @@ class _TrendingTabState extends State<TrendingTab> {
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
-
+        forceHD: true,
       ),
-
     );
     color.add(Colors.blue[50]);
     color.add(Colors.blue[200]);

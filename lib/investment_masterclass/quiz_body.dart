@@ -26,6 +26,7 @@ class _QuizPageBodyState extends State<QuizPageBody> {
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
+        forceHD: true,
       ),
     );
   }

@@ -97,7 +97,7 @@ class _SecurityPageFirstState extends State<SecurityPageFirst>
               // physics: BouncingScrollPhysics(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 2.3,
+                height: MediaQuery.of(context).size.height * 2.5,
                 child: Column(
                   children: <Widget>[
                     SizedBox(

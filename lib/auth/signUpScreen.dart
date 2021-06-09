@@ -137,7 +137,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               TextSpan(
                 text: "Have an account? ",
                 style: TextStyle(
-                    color: Colors.black, fontFamily: 'Roboto', fontSize: 16),
+                  color: Colors.black,
+                  fontFamily: 'Roboto',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               TextSpan(
                 text: "Sign In",

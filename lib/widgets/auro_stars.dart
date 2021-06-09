@@ -22,6 +22,7 @@ class _AuroStarsState extends State<AuroStars> {
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
+        forceHD: true,
       ),
     );
     super.initState();

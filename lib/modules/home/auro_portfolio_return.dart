@@ -56,31 +56,33 @@ class _AuroPortfolioReturnState extends State<AuroPortfolioReturn> {
                       .map((e) => CryptoCoinPriceData(x: e.x, y: e.y * 100))
                       .toList();
                   return Container(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 20.0,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 20.0,
+                            ),
+                            child: ScreenTitleAppbar(
+                              colorText: Color(0xFFD8AF4F),
+                              title: "PORTFOLIO MIX",
+                            ),
                           ),
-                          child: ScreenTitleAppbar(
-                            colorText: Color(0xFFD8AF4F),
-                            title: "PORTFOLIO MIX",
+                          PortfolioReturnChart(
+                            pricesData: allPriceData2,
+                            userExpectedRiskData: userExpectedReturnData,
                           ),
-                        ),
-                        PortfolioReturnChart(
-                          pricesData: allPriceData2,
-                          userExpectedRiskData: userExpectedReturnData,
-                        ),
-                        PortfolioReturnBarChart(
-                          userExpectedRiskData: userExpectedReturnData,
-                          userAnnualizedReturnDollar: portfolioProvider
-                              .portfolioData["portfolio_return_dollar"]
-                              .toStringAsFixed(2),
-                          userAnnualizedReturnPerc: portfolioProvider
-                              .portfolioData["portfolio_return"]
-                              .toStringAsFixed(2),
-                        ),
-                      ],
+                          PortfolioReturnBarChart(
+                            userExpectedRiskData: userExpectedReturnData,
+                            userAnnualizedReturnDollar: portfolioProvider
+                                .portfolioData["portfolio_return_dollar"]
+                                .toStringAsFixed(2),
+                            userAnnualizedReturnPerc: portfolioProvider
+                                .portfolioData["portfolio_return"]
+                                .toStringAsFixed(2),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

@@ -133,6 +133,9 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                   date: date,
                   pitchData: widget.stockPitchData,
                 ),
+                // StockPitchVideo(
+                //   videoLink: "",
+                // ),
                 Visibility(
                   visible:
                       widget.stockPitchData["videoUrl"] == "" ? false : true,

@@ -32,6 +32,7 @@ class _QuantanmentState extends State<Quantanment> {
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
+        forceHD: true,
       ),
     );
   }
