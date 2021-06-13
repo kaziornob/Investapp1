@@ -6,6 +6,8 @@ import 'package:auroim/modules/home/widgets/company_price_charts.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:auroim/widgets/full_list_of_portfolio.dart';
+import 'package:auroim/widgets/payment_pages/payment_purchase.dart';
+import 'package:auroim/widgets/payment_pages/payment_types.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -402,10 +404,14 @@ class _AuroAiPortfolioState extends State<AuroAiPortfolio> {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => FullListOfSecurities(
-                                    allSecurities: portfolioChartData["data"],
-                                  ),
+                                  builder: (context) => PaymentTypes(),
                                 ),
+                                // MaterialPageRoute(
+                                //   builder: (context) =>
+                                //       FullListOfSecurities(
+                                //     allSecurities: portfolioChartData["data"],
+                                //   ),
+                                // ),
                               );
                             },
                             child: Container(

@@ -150,8 +150,8 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            // AddEditQus(),
-                        InvestorType(),
+                            AddEditQus(),
+                        // InvestorType(),
                       ),
                     );
                   },
@@ -948,7 +948,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                       ? tagFinalData.length
                       : 0,
                   physics: NeverScrollableScrollPhysics(),
-                  crossAxisCount: 4,
+                  crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
                   shrinkWrap: true,

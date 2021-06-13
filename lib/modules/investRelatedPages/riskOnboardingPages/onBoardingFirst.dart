@@ -24,7 +24,7 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
   String selectedValue;
   Map allSelectedValues = {
     "Exchange Traded Fund\'s": true,
-    // "Mutual Fund\'s": true,
+    "apply_ESG_filter": true,
     "Individual Securities": true,
   };
 
@@ -70,24 +70,24 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
               });
             },
           ),
-          // CheckboxListTile(
-          //   controlAffinity: ListTileControlAffinity.leading,
-          //   title: Text(
-          //     "Mutual Fund's",
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //       fontSize: ConstanceData.SIZE_TITLE15,
-          //       fontFamily: "RobotoLight",
-          //     ),
-          //   ),
-          //   value: allSelectedValues["Mutual Fund\'s"],
-          //   activeColor: Color(0xFFD8AF4F),
-          //   onChanged: (value) {
-          //     setState(() {
-          //       allSelectedValues["Mutual Fund\'s"] = value;
-          //     });
-          //   },
-          // ),
+          CheckboxListTile(
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text(
+              "ESG",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: ConstanceData.SIZE_TITLE15,
+                fontFamily: "RobotoLight",
+              ),
+            ),
+            value: allSelectedValues["apply_ESG_filter"],
+            activeColor: Color(0xFFD8AF4F),
+            onChanged: (value) {
+              setState(() {
+                allSelectedValues["apply_ESG_filter"] = value;
+              });
+            },
+          ),
           CheckboxListTile(
             controlAffinity: ListTileControlAffinity.leading,
             title: Text(
@@ -113,8 +113,6 @@ class _OnBoardingFirstState extends State<OnBoardingFirst> {
 
   @override
   Widget build(BuildContext context) {
-    // AppBar appBar = AppBar();
-    // double appBarheight = appBar.preferredSize.height;
     return Stack(
       children: <Widget>[
         SafeArea(

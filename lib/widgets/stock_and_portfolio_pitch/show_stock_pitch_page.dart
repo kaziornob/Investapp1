@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/reusable_widgets/customButton.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
+import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_comments_section.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_return_chart.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_return_drawdown.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_social_info.dart';
@@ -50,6 +51,7 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
   Widget build(BuildContext context) {
     DateTime date = DateTime.parse(widget.stockPitchData["date"]);
     print("date : ${date.year}");
+    print(widget.stockPitchData["videoUrl"]);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -206,6 +208,10 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                     text: "View Pitch Doc",
                     callback: _download,
                   ),
+                ),
+                StockPitchCommentsSection(
+                  userEmail: widget.userEmail,
+                  pitchNumber: widget.stockPitchData["pitch_number"],
                 ),
               ],
             ),

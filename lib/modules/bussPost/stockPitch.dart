@@ -16,6 +16,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
+import 'package:path/path.dart' as exten;
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -119,9 +120,11 @@ class _StockPitchState extends State<StockPitch> {
         //  file: file,
         // );
         // var videoUrl = await awsClient.getUploadUrl();
-        String extension =
-            path.split("/")[path.split("/").length - 1].split(".")[1];
-        videoUrl = await awsClient.uploadFile(file, "." + extension, context);
+        // String extension =
+        //     path.split("/")[path.split("/").length - 1].split(".")[1];
+        print(exten.extension(path));
+        videoUrl =
+            await awsClient.uploadFile(file, exten.extension(path), context);
         // videoUrl = await awsClient.uploadData(
         //   "Stock-Security Pitch",
         //   DateTime.now().toIso8601String(),
@@ -181,9 +184,10 @@ class _StockPitchState extends State<StockPitch> {
           return false;
         }
         // Uint8List bytesData = file.readAsBytesSync();
-        String extension =
-            path.split("/")[path.split("/").length - 1].split(".")[1];
-        docUrl = await awsClient.uploadFile(file, "." + extension, context);
+        // String extension =
+        //     path.split("/")[path.split("/").length - 1].split(".")[1];
+        docUrl =
+            await awsClient.uploadFile(file, exten.extension(path), context);
         // docUrl = await awsClient.uploadData(
         //   "Stock-Security Pitch",
         //   DateTime.now().toIso8601String(),
@@ -235,7 +239,6 @@ class _StockPitchState extends State<StockPitch> {
 
     return resultList;
   }
-
 
   @override
   void dispose() {
@@ -465,7 +468,6 @@ class _StockPitchState extends State<StockPitch> {
     }
     return null;
   }
-
 
   String _validateStockTitle(value) {
     if (value.isEmpty) {
@@ -1167,22 +1169,25 @@ class _StockPitchState extends State<StockPitch> {
   }
 
   onPressedDone() async {
+    print("done pressed");
     if (_stockPitchFormKey.currentState.validate() == false) {
+      print("hghsgdhsgdhs");
       return;
     }
-
-    if (_priceBaseController.text.isNotEmpty &&
-        _priceBearController.text.isNotEmpty) {
+    print("done pressed2");
+    try {
       List allTags = [];
       itemList.forEach((element) {
         allTags.add(element.tag);
       });
-
+      print(allTags);
       var currencyRate =
           Provider.of<CurrencyRateProvider>(context, listen: false)
               .listOfAllFxs
               .firstWhere((element) => element["ccy_symbol"] == selectedFx);
 
+      print(double.parse(_priceBaseController.text));
+      print(double.parse(_priceBearController.text));
       var body = {
         "email": Provider.of<UserDetails>(context, listen: false)
             .userDetails["email"],
@@ -1192,8 +1197,12 @@ class _StockPitchState extends State<StockPitch> {
             currencyRate["last_price"],
         "price_bear": double.parse(_priceBearController.text) /
             currencyRate["last_price"],
-        "revenue": double.parse(_revenueController.text),
-        "eps": double.parse(_epsController.text),
+        "revenue": _revenueController.text.isEmpty
+            ? 0.0
+            : double.parse(_revenueController.text),
+        "eps": _epsController.text.isEmpty
+            ? 0.0
+            : double.parse(_epsController.text),
         "investment_thesis": _investmentThesisController.text,
         "topic_tags": jsonEncode(allTags),
         "stock_id": selectedStockId,
@@ -1213,9 +1222,16 @@ class _StockPitchState extends State<StockPitch> {
       } else {
         getDialog("Some Error Occurred", true);
       }
-    } else {
-      getDialog("Price-Bear/Price-Base cannot be empty", false);
+    } catch (err) {
+      print(err.toString());
+      Toast.show("Some Error Occurred", context);
     }
+    // if (_priceBaseController.text.isNotEmpty &&
+    //     _priceBearController.text.isNotEmpty) {
+    //
+    // } else {
+    //   getDialog("Price-Bear/Price-Base cannot be empty", false);
+    // }
   }
 
   void getDialog(text, cancel) {

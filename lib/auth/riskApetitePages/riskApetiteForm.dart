@@ -89,107 +89,121 @@ class _RiskAptFormState extends State<RiskAptForm> {
             inAsyncCall: _isRadioQusInProgress,
             opacity: 0,
             progressIndicator: SizedBox(),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
-                  color: AllCoustomTheme.getBodyContainerThemeColor(),
-                  // height: MediaQuery.of(context).size.height *1.03,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 40,
-                        ),
-                        _visibleRadioQus
-                            ? Container(
-                                child: Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 14,
-                                            bottom: 10,
-                                            top: 15.0,
-                                            right: 10.0,
-                                          ),
-                                          child: Text(
-                                            '${widget.optionData[0].qusHeadline}',
-                                            style: new TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "RosarioSemiBold",
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 14, bottom: 10),
-                                          child: getOptionList(options),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 20,
-                                        left: 14,
-                                        right: 10,
-                                        top: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Container(
+                    color: AllCoustomTheme.getBodyContainerThemeColor(),
+                    // height: MediaQuery.of(context).size.height *1.03,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "YOUR ATTITUDE TO RISK",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 25,
+                              fontFamily: "Roboto"
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          _visibleRadioQus
+                              ? Container(
+                                  child: Column(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
                                       children: <Widget>[
-                                        InkWell(
-                                          onTap: () {
-                                            if (selectedValue != null &&
-                                                selectedValue != "")
-                                              _submit();
-                                            else {
-                                              Toast.show(
-                                                  "Choose Any Option First",
-                                                  context,
-                                                  duration: Toast.LENGTH_LONG,
-                                                  gravity: Toast.BOTTOM);
-                                            }
-                                          },
-                                          child: CircleAvatar(
-                                            radius: 30,
-                                            backgroundColor: Color(0xFFD8AF4F),
-                                            child: Icon(
-                                              Icons.arrow_forward_sharp,
-                                              color: Colors.white,
-                                              size: 32,
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              left: 14,
+                                              bottom: 10,
+                                              top: 15.0,
+                                              right: 10.0,
+                                            ),
+                                            child: Text(
+                                              '${widget.optionData[0].qusHeadline}',
+                                              style: new TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: "RosarioSemiBold",
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                  )
-                                ],
-                              ))
-                            : SizedBox()
-                      ],
-                    ),
-                  )),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 14, bottom: 10),
+                                            child: getOptionList(options),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 20,
+                                          left: 14,
+                                          right: 10,
+                                          top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          InkWell(
+                                            onTap: () {
+                                              if (selectedValue != null &&
+                                                  selectedValue != "")
+                                                _submit();
+                                              else {
+                                                Toast.show(
+                                                    "Choose Any Option First",
+                                                    context,
+                                                    duration: Toast.LENGTH_LONG,
+                                                    gravity: Toast.BOTTOM);
+                                              }
+                                            },
+                                            child: CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor: Color(0xFFD8AF4F),
+                                              child: Icon(
+                                                Icons.arrow_forward_sharp,
+                                                color: Colors.white,
+                                                size: 32,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ))
+                              : SizedBox()
+                        ],
+                      ),
+                    )),
+              ),
             ),
           ),
         )

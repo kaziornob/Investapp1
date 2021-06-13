@@ -1522,14 +1522,14 @@ class _MainHomeTabState extends State<MainHomeTab> {
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                // MaterialPageRoute(
-                                //   builder: (context) => InvestorType(),
-                                // ),
                                 MaterialPageRoute(
-                                  builder: (context) => FullListOfSecurities(
-                                    allSecurities: portfolioChartData["data"],
-                                  ),
+                                  builder: (context) => PaymentPurchaseScreen(),
                                 ),
+                                // MaterialPageRoute(
+                                //   builder: (context) => FullListOfSecurities(
+                                //     allSecurities: portfolioChartData["data"],
+                                //   ),
+                                // ),
                               );
                             },
                             child: Container(

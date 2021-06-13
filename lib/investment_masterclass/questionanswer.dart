@@ -58,104 +58,121 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 5, left: 10),
                             hintText: "Add Comment",
-                            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-                            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25))),
                       ),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: questionList.length,
-                        itemBuilder: (c, i) {
-                          return Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 10, right: 10),
-                                decoration:
-                                    BoxDecoration(color: Color(0xFFECECEC), borderRadius: BorderRadius.circular(10)),
-                                child: Container(
-                                  padding:EdgeInsets.all(8),
-                                  margin: EdgeInsets.only(left: 15, right: 15, top: 5),
-                                  child: Text(questionList[i].text),
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: questionList.length,
+                      itemBuilder: (c, i) {
+                        return Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFECECEC),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                margin: EdgeInsets.only(
+                                  left: 15,
+                                  right: 15,
+                                  top: 5,
                                 ),
+                                child: Text(questionList[i].text),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 10, right: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: Image.asset(
-                                            "assets/person_avatar.png",
-                                            height: 30,
-                                            width: 30,
-                                          ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 10, right: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                          "assets/person_avatar.png",
+                                          height: 30,
+                                          width: 30,
                                         ),
-                                      ],
-                                    ),
-                                    Text(
-                                      "15K",
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                        "assets/person_avatar.png",
-                                        height: 30,
-                                        width: 30,
                                       ),
-                                    ),
-                                    Image.asset(
-                                      "assets/idea.png",
+                                    ],
+                                  ),
+                                  Text(
+                                    "15K",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                      "assets/person_avatar.png",
                                       height: 30,
                                       width: 30,
                                     ),
-                                    Image.asset(
-                                      "assets/like.png",
+                                  ),
+                                  Image.asset(
+                                    "assets/idea.png",
+                                    height: 30,
+                                    width: 30,
+                                  ),
+                                  Image.asset(
+                                    "assets/like.png",
+                                    height: 30,
+                                    width: 30,
+                                  ),
+                                  Image.asset(
+                                    "assets/dislike.png",
+                                    height: 30,
+                                    width: 30,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        questionList[i].hasComment =
+                                            !questionList[i].hasComment;
+                                      });
+                                    },
+                                    child: Image.asset(
+                                      "assets/comment.png",
                                       height: 30,
                                       width: 30,
                                     ),
-                                    Image.asset(
-                                      "assets/dislike.png",
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          questionList[i].hasComment = !questionList[i].hasComment;
-                                        });
-                                      },
-                                      child: Image.asset(
-                                        "assets/comment.png",
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                  )
+                                ],
                               ),
-                              Container(
-                                margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  "Username",
-                                  style: TextStyle(fontSize: 10),
-                                ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 10),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Username",
+                                style: TextStyle(fontSize: 10),
                               ),
-                              questionList[i].hasComment ? showComment() : Container()
-                            ],
-                          );
-                        }),
+                            ),
+                            questionList[i].hasComment
+                                ? showComment()
+                                : Container()
+                          ],
+                        );
+                      },
+                    ),
                     SizedBox(
                       height: kToolbarHeight + kToolbarHeight,
                     ),
@@ -168,7 +185,8 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
         bottomSheet: Container(
           margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,7 +195,9 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20), border: Border.all(width: 1, color: Colors.yellow)),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(width: 1, color: Colors.yellow),
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Icon(Icons.arrow_back),
@@ -188,16 +208,19 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width / 2.5,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(width: 1, color: Colors.yellow)),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(width: 1, color: Colors.yellow),
+                ),
                 child: Text("Ask Auro"),
               ),
               Container(
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20), border: Border.all(width: 1, color: Colors.yellow)),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(width: 1, color: Colors.yellow),
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Icon(Icons.arrow_forward),
@@ -219,15 +242,20 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
           child: TextFormField(
             controller: showCommentController,
             decoration: InputDecoration(
-                fillColor: Color(0xffECECEC),
-                filled: true,
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                contentPadding: EdgeInsets.only(top: 0, left: 20),
-                hintText: 'Reply',
-                hintStyle: TextStyle(
-                  fontSize: 15,
-                ),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+              fillColor: Color(0xffECECEC),
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              contentPadding: EdgeInsets.only(top: 0, left: 20),
+              hintText: 'Reply',
+              hintStyle: TextStyle(
+                fontSize: 15,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
           ),
         ),
         Padding(
@@ -255,15 +283,16 @@ class _QuestionAnswerScreenState extends State<QuestionAnswerScreen> {
                 ],
               ),
               Container(
-                  margin: EdgeInsets.only(right: 10),
-                  width: MediaQuery.of(context).size.width * 0.18,
-                  height: 25,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Color(0xffECECEC),
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(width: 1, color: Colors.black)),
-                  child: Text("Post"))
+                margin: EdgeInsets.only(right: 10),
+                width: MediaQuery.of(context).size.width * 0.18,
+                height: 25,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Color(0xffECECEC),
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(width: 1, color: Colors.black)),
+                child: Text("Post"),
+              )
             ],
           ),
         ),

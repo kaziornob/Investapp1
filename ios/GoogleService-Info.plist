@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>239207144494-mte6hmn53gflhceeqn3puctm6uiolr9t.apps.googleusercontent.com</string>
+	<string>239207144494-7dkd7qq220cbnin24bekd52ecba1la9m.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.239207144494-mte6hmn53gflhceeqn3puctm6uiolr9t</string>
+	<string>com.googleusercontent.apps.239207144494-7dkd7qq220cbnin24bekd52ecba1la9m</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>239207144494-qhq8urd1rq3npk86bs1kvqma3ulvtbbj.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.auro.investapp</string>
+	<string>com.auro.aurorabbit</string>
 	<key>PROJECT_ID</key>
 	<string>investapp-e67b3</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:239207144494:ios:68374d2c6ab6ab7bf013bf</string>
+	<string>1:239207144494:ios:9402c1af7063c6e2f013bf</string>
 </dict>
 </plist>

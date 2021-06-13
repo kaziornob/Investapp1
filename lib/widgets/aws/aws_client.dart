@@ -119,6 +119,8 @@ class AWSClient {
     String downloadUrl = result["downloadUrl"];
     String uploadUrl = result["uploadUrl"];
 
+    print(downloadUrl);
+
     var response = await Dio().put(
       uploadUrl,
       data: file.openRead(),

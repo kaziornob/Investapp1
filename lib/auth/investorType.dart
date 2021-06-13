@@ -90,22 +90,23 @@ class _InvestorTypeState extends State<InvestorType> {
                                 bottom: 10.0, left: 30.0, right: 30.0),
                             width: MediaQuery.of(context).size.width * 0.9,
                             decoration: BoxDecoration(
-                                border: new Border.all(
-                                    color: Color(0xFFD8AF4F), width: 1.5),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFD8AF4F).withOpacity(0.3),
-                                    offset: const Offset(
-                                      0.0,
-                                      0.0,
-                                    ),
-                                    blurRadius: 5.0,
-                                    spreadRadius: 5.0,
-                                  )
-                                ]),
+                              border: new Border.all(
+                                  color: Color(0xFFD8AF4F), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30.0)),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFFD8AF4F).withOpacity(0.3),
+                                  offset: const Offset(
+                                    0.0,
+                                    0.0,
+                                  ),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 5.0,
+                                )
+                              ],
+                            ),
                             child: MaterialButton(
                               splashColor: Colors.grey,
                               child: Text(
@@ -151,18 +152,19 @@ class _InvestorTypeState extends State<InvestorType> {
                                           padding: const EdgeInsets.only(
                                               bottom: 2.0, left: 10),
                                           child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  descTextShowFlag =
-                                                      !descTextShowFlag;
-                                                  print(
-                                                      "descTextShowFlag: $descTextShowFlag");
-                                                });
-                                              },
-                                              child: Icon(
-                                                  CupertinoIcons
-                                                      .question_circle,
-                                                  size: 14)),
+                                            onTap: () {
+                                              setState(() {
+                                                descTextShowFlag =
+                                                    !descTextShowFlag;
+                                                print(
+                                                    "descTextShowFlag: $descTextShowFlag");
+                                              });
+                                            },
+                                            child: Icon(
+                                              CupertinoIcons.question_circle,
+                                              size: 14,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       if (descTextShowFlag)
@@ -200,7 +202,7 @@ class _InvestorTypeState extends State<InvestorType> {
                     ),
                     singleInvestorType(
                       "Research Analyst",
-                      "If you're a research analyst with current or prior buyside",
+                      "If you're a research analyst with current or prior buyside or sellside experience or even a financial advisor",
                       "",
                     ),
                   ],
@@ -254,6 +256,7 @@ class _InvestorTypeState extends State<InvestorType> {
                     fontWeight: FontWeight.w600,
                     fontSize: 22,
                   ),
+
                 ),
                 onPressed: () async {
                   _submit("$investorType");
@@ -272,6 +275,7 @@ class _InvestorTypeState extends State<InvestorType> {
                   fontFamily: "Rosario",
                   fontStyle: FontStyle.normal,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           ],
@@ -299,7 +303,7 @@ class _InvestorTypeState extends State<InvestorType> {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('InvestorType', '$status');
 
-        Toast.show("${result['message']}", context,
+        Toast.show("Please Wait...", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
         goToNextScreen();

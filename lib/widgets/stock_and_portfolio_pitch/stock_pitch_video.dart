@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+// import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 
 class StockPitchVideo extends StatefulWidget {
@@ -12,16 +15,29 @@ class StockPitchVideo extends StatefulWidget {
 
 class _StockPitchVideoState extends State<StockPitchVideo> {
   VideoPlayerController _controller;
+  ChewieController chewieController;
 
   @override
   void initState() {
+    print(widget.videoLink);
     super.initState();
-    _controller = VideoPlayerController.network(
-        'https://auro-invest.s3-us-west-2.amazonaws.com/Stock-Security+Pitch/One+Piece+Nami+Funny+Moments+English+Dub.mp4')
+    _controller = VideoPlayerController.network(widget.videoLink)
       ..initialize().then((_) {
+        print("hghvhvhvhvh");
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
-      });
+      }).catchError((err) {
+        print("video player");
+        print(err.toString());
+      }).whenComplete(
+        () => print("Video Completed"),
+      );
+    chewieController = ChewieController(
+      videoPlayerController: _controller,
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+    );
     super.initState();
   }
 
@@ -33,6 +49,7 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
 
   @override
   Widget build(BuildContext context) {
+    // print("Controller value initial : ${_controller.value.initialized}");
     return Container(
       child: Column(
         children: [
@@ -81,10 +98,15 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                AspectRatio(
-                                  aspectRatio: _controller.value.aspectRatio,
-                                  child: VideoPlayer(_controller),
+                                Chewie(
+                                  controller: chewieController,
                                 ),
+                                // AspectRatio(
+                                //   aspectRatio: _controller.value.aspectRatio,
+                                //   child: VideoPlayer(
+                                //     _controller,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
