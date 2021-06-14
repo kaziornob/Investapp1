@@ -103,15 +103,7 @@ class _StockPitchesState extends State<StockPitches> {
 
   @override
   Widget build(BuildContext context) {
-    // var userProvider = Provider.of<UserDetails>(context, listen: false);
-    // if (widget.userName == null) {
-    //   title = userProvider.userDetails["f_name"] != null &&
-    //           userProvider.userDetails != null
-    //       ? "${userProvider.userDetails["f_name"]}\'s Stock Pitches"
-    //       : 'Stock Pitches';
-    // } else {
-    //   title = "${widget.userName}\'s Stock Pitches";
-    // }
+
     return Consumer<StockPitchProvider>(builder: (context, pitchProvider, _) {
       if (pitchProvider.allStockPitches != null &&
           pitchProvider.allStockPitches.length != 0) {

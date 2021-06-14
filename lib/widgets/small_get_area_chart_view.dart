@@ -595,12 +595,14 @@ class _SmallGetAreaChartViewState extends State<SmallGetAreaChartView> {
         userEmail,
         "listed",
         widget.companyData["ticker"],
+        context,
       );
     } else {
       Provider.of<FollowProvider>(context, listen: false).setFollowing(
         userEmail,
         "listed",
         widget.companyData["ticker"],
+        context,
       );
     }
   }

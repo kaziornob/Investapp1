@@ -4,6 +4,7 @@ import 'package:auroim/constance/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:toast/toast.dart';
 
 class FollowProvider with ChangeNotifier {
   Map<String, bool> mapOfFollowingListedCompanies = {};
@@ -45,7 +46,7 @@ class FollowProvider with ChangeNotifier {
     }
   }
 
-  setFollowing(userEmail, type, uniqueTypeIdentifier) async {
+  setFollowing(userEmail, type, uniqueTypeIdentifier,context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -67,6 +68,8 @@ class FollowProvider with ChangeNotifier {
     print("results ${result["message"]}");
     if ((response.statusCode == 200 || response.statusCode == 201) &&
         result["message"] == "Following added successfully") {
+      Toast.show("Followed Successfully", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       // print("ggggg");
 
       // Toast.show("${result['data']}", context,
@@ -123,7 +126,7 @@ class FollowProvider with ChangeNotifier {
     }
   }
 
-  unfollowSingleItem(userEmail, type, uniqueId) async {
+  unfollowSingleItem(userEmail, type, uniqueId,context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -149,6 +152,8 @@ class FollowProvider with ChangeNotifier {
         result["message"] == "Unfollowed Successfully") {
       setUnfollowToItems(type, uniqueId);
       notifyListeners();
+      Toast.show("Unfollowed Successfully", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       // return result["message"];
     } else {
       print("Error occurred checking follow");
@@ -181,6 +186,7 @@ class FollowProvider with ChangeNotifier {
         result["message"] != "User does not follow anything for type $type") {
       // print("ggggg");
       print("user following $type list length : ${result["message"].length}");
+
       // Toast.show("${result['data']}", context,
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 

@@ -370,7 +370,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
         return;
       }
-
+      FocusScope.of(context).unfocus();
       var email = emailController.text.trim();
       var password = signUpPasswordController.text.trim();
       var tempJsonReq;

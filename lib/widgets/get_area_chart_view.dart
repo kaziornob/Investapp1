@@ -543,12 +543,14 @@ class _GetAreaChartViewState extends State<GetAreaChartView> {
         userEmail,
         "listed",
         widget.companyData["ticker"],
+        context,
       );
     } else {
       Provider.of<FollowProvider>(context, listen: false).setFollowing(
         userEmail,
         "listed",
         widget.companyData["ticker"],
+        context,
       );
     }
   }

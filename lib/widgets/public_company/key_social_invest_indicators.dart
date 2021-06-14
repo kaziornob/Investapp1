@@ -265,12 +265,14 @@ class _KeySocialInvestIndicatorsState extends State<KeySocialInvestIndicators> {
         userEmail,
         "listed",
         widget.companyTicker,
+        context,
       );
     } else {
       Provider.of<FollowProvider>(context, listen: false).setFollowing(
         userEmail,
         "listed",
         widget.companyTicker,
+        context,
       );
     }
   }

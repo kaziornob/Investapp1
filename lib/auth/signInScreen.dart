@@ -210,6 +210,7 @@ class _SignInScreenState extends State<SignInScreen> {
       });
       return;
     }
+    FocusScope.of(context).unfocus();
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var email = emailController.text.trim();

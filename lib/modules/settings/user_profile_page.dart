@@ -847,12 +847,14 @@ class _UserProfilePageState extends State<UserProfilePage>
         userEmail,
         "user",
         userDetails["email"],
+        context,
       );
     } else {
       Provider.of<FollowProvider>(context, listen: false).setFollowing(
         userEmail,
         "user",
         userDetails["email"],
+        context,
       );
     }
   }

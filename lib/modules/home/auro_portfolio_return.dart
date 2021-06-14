@@ -1,6 +1,7 @@
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/modules/home/widgets/portfolio_return_bar_chart.dart';
 import 'package:auroim/modules/home/widgets/portfolio_return_chart.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:auroim/widgets/crypto_coin_price_data.dart';
@@ -88,7 +89,35 @@ class _AuroPortfolioReturnState extends State<AuroPortfolioReturn> {
                 },
               );
             } else {
-              return SizedBox();
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Auro Portfolio Not Created"),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                OnBoardingFirst(callingFrom: ""),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Customize Your Portfolio",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
             }
           },
         ),

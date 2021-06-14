@@ -1,5 +1,6 @@
 import 'package:auroim/api/reusable_functions.dart';
 import 'package:auroim/model/tagAndChartData.dart';
+import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoardingFirst.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,35 @@ class _AuroPortfolioMixState extends State<AuroPortfolioMix> {
                 ),
               );
             } else {
-              return SizedBox();
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Auro Portfolio Not Created"),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                OnBoardingFirst(callingFrom: ""),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Customize Your Portfolio",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
             }
           },
         ),

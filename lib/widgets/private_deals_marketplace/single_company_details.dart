@@ -571,12 +571,14 @@ class _SingleCompanyDetailsState extends State<SingleCompanyDetails> {
         userEmail,
         "private",
         widget.companyDetails["company_name"],
+        context,
       );
     } else {
       Provider.of<FollowProvider>(context, listen: false).setFollowing(
         userEmail,
         "private",
         widget.companyDetails["company_name"],
+        context,
       );
     }
   }

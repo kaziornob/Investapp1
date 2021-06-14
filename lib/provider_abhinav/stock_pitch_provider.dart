@@ -36,6 +36,82 @@ class StockPitchProvider with ChangeNotifier {
     }
   }
 
+
+  likePitch(like,pitchNumber,email)async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+
+    String filterPath = "stock_pitch/like_pitch";
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken'
+    };
+
+    var body = {
+      "no_of_like": like,
+      "pitch_number": pitchNumber,
+      "email": email
+    };
+    print(body.toString());
+    String url = GlobalInstance.apiBaseUrl + filterPath;
+    print("post stock pitch likes: $url");
+
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    print("post stock pitch likes response: ${response.statusCode}");
+    // print(response.body);
+    var result = jsonDecode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return result["message"];
+    } else {
+      return result["message"];
+    }
+  }
+
+
+  likeCommentReply(category,categoryId,vote)async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String sessionToken = prefs.getString('Session_token');
+
+    String filterPath = "forum/like_stock_pitch_comments";
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      'Authorization': 'Token $sessionToken'
+    };
+
+    var body = {
+      "category": "$category",
+      "category_id" : "$categoryId",
+      "vote": "$vote"
+    };
+    String url = GlobalInstance.apiBaseUrl + filterPath;
+    print("get stock pitch comments: $url");
+
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    print("get stock pitch comments response: ${response.statusCode}");
+    // print(response.body);
+    var result = jsonDecode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return result["message"]["message"];
+    } else {
+      return "Error in like/dislike";
+    }
+  }
+
+
   addComment(email, pitchNumber, answer) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');

@@ -786,6 +786,7 @@ class _SingleCryptoCurrencyDetailsByIdState
       userEmail,
       "crypto",
       widget.coinId,
+      context,
     );
   }
 

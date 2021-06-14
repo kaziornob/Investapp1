@@ -1,4 +1,3 @@
-import 'package:auroim/api/future_return.dart';
 import 'package:auroim/widgets/crypto_coin_price_data.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

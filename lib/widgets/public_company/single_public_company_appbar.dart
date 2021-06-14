@@ -34,20 +34,9 @@ class _SinglePublicCompanyAppBarState extends State<SinglePublicCompanyAppBar> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Animator(
-              tween: Tween<Offset>(
-                begin: Offset(0, 0),
-                end: Offset(0.2, 0),
-              ),
-              duration: Duration(milliseconds: 500),
-              cycles: 0,
-              builder: (anim) => FractionalTranslation(
-                translation: anim.value,
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                ),
-              ),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
             ),
           ),
           Expanded(

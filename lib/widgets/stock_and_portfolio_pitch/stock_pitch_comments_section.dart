@@ -1,4 +1,5 @@
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
+import 'package:auroim/static_data/static_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
@@ -54,7 +55,8 @@ class _StockPitchCommentsSectionState extends State<StockPitchCommentsSection> {
                 ),
               ),
               onFieldSubmitted: (String value) async {
-                await Provider.of<StockPitchProvider>(context,listen: false).addComment(
+                await Provider.of<StockPitchProvider>(context, listen: false)
+                    .addComment(
                   widget.userEmail,
                   widget.pitchNumber,
                   value,
@@ -142,7 +144,7 @@ class _StockPitchCommentsSectionState extends State<StockPitchCommentsSection> {
                 width: 10,
               ),
               Text(
-                "Username",
+                "${data["user_name"]}",
                 style: TextStyle(fontSize: 10),
               ),
             ],
@@ -283,7 +285,7 @@ class _StockPitchCommentsSectionState extends State<StockPitchCommentsSection> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
+                Row(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
@@ -293,11 +295,14 @@ class _StockPitchCommentsSectionState extends State<StockPitchCommentsSection> {
                         width: 30,
                       ),
                     ),
+                    SizedBox(
+                      width: 6.0,
+                    ),
+                    Text(
+                      "${data["user_score"]}",
+                      style: TextStyle(fontSize: 15),
+                    ),
                   ],
-                ),
-                Text(
-                  "15K",
-                  style: TextStyle(fontSize: 15),
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
@@ -308,19 +313,57 @@ class _StockPitchCommentsSectionState extends State<StockPitchCommentsSection> {
                   ),
                 ),
                 Image.asset(
-                  "assets/idea.png",
+                  StaticData.badges["${data["user_badge"]}"] == null
+                      ? StaticData.badges["Challenger"]["asset_path"]
+                      : StaticData.badges["${data["user_badge"]}"]
+                          ["asset_path"],
                   height: 30,
-                  width: 30,
+                  width: 50,
+                  fit: BoxFit.contain,
                 ),
-                Image.asset(
-                  "assets/like.png",
-                  height: 30,
-                  width: 30,
+                InkWell(
+                  onTap: () => likeDislike(
+                    "stock_pitch_answers",
+                    data["id_answer"],
+                    1,
+                    setStateComment,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        "assets/like.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                      SizedBox(
+                        width: 6.0,
+                      ),
+                      Text("${data["likes"]}"),
+                    ],
+                  ),
                 ),
-                Image.asset(
-                  "assets/dislike.png",
-                  height: 30,
-                  width: 30,
+                InkWell(
+                  onTap: () => likeDislike(
+                    "stock_pitch_answers",
+                    data["id_answer"],
+                    -1,
+                    setStateComment,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        "assets/dislike.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                      SizedBox(
+                        width: 6.0,
+                      ),
+                      Text("${data["dislikes"]}"),
+                    ],
+                  ),
                 ),
                 InkWell(
                   onTap: () {
@@ -374,5 +417,13 @@ class _StockPitchCommentsSectionState extends State<StockPitchCommentsSection> {
         ],
       );
     });
+  }
+
+  likeDislike(category, id, vote, state) async {
+    // print(vote);
+   var message = await Provider.of<StockPitchProvider>(context,listen: false)
+        .likeCommentReply(category, id, vote);
+   Toast.show(message, context,duration: 3);
+    setState(() {});
   }
 }
