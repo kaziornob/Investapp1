@@ -22,10 +22,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'add_comment_bottom_sheet_widget.dart';
 import 'main_home_tab.dart';
 import 'main_invest_tab.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -1004,4 +1003,24 @@ class _HomeScreenState extends State<HomeScreen>
           : null,
     );
   }
+
+  // onInitDisplayBootomSheet() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     await showModalBottomSheet(
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.only(
+  //           topLeft: Radius.circular(8.0),
+  //           topRight: Radius.circular(8.0),
+  //         ),
+  //       ),
+  //       context: context,
+  //       backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+  //       builder: (builder) {
+  //         return AddCommentBottomSheetWidget(
+  //           attackFileCallback: _attachFileCallback,
+  //         );
+  //       },
+  //     );
+  //   });
+  // }
 }

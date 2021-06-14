@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 // import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class StockPitchVideo extends StatefulWidget {
   final String videoLink;
+  final bool isYoutubeVideo;
 
-  const StockPitchVideo({Key key, this.videoLink}) : super(key: key);
+  const StockPitchVideo({
+    Key key,
+    this.videoLink,
+    this.isYoutubeVideo,
+  }) : super(key: key);
 
   @override
   _StockPitchVideoState createState() => _StockPitchVideoState();
@@ -15,6 +21,7 @@ class StockPitchVideo extends StatefulWidget {
 
 class _StockPitchVideoState extends State<StockPitchVideo> {
   VideoPlayerController _controller;
+  YoutubePlayerController _youtubePlayerController;
   ChewieController chewieController;
 
   @override
@@ -32,18 +39,27 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
       }).whenComplete(
         () => print("Video Completed"),
       );
-    chewieController = ChewieController(
-      videoPlayerController: _controller,
-      aspectRatio: 3 / 2,
-      autoPlay: true,
-      looping: true,
+    _youtubePlayerController = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoLink),
+      flags: YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+        forceHD: true,
+      ),
     );
+    // chewieController = ChewieController(
+    //   videoPlayerController: _controller,
+    //   aspectRatio: 3 / 2,
+    //   autoPlay: true,
+    //   looping: true,
+    // );
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _youtubePlayerController.dispose();
     super.dispose();
   }
 
@@ -98,14 +114,24 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Chewie(
-                                  controller: chewieController,
-                                ),
-                                // AspectRatio(
-                                //   aspectRatio: _controller.value.aspectRatio,
-                                //   child: VideoPlayer(
-                                //     _controller,
-                                //   ),
+                                widget.isYoutubeVideo
+                                    ? YoutubePlayer(
+                                        controller: _youtubePlayerController,
+                                        showVideoProgressIndicator: true,
+                                        onReady: () {},
+                                        onEnded: (YoutubeMetaData metaData) {
+                                          _controller.pause();
+                                        },
+                                      )
+                                    : AspectRatio(
+                                        aspectRatio:
+                                            _controller.value.aspectRatio,
+                                        child: VideoPlayer(
+                                          _controller,
+                                        ),
+                                      ),
+                                // Chewie(
+                                //   controller: chewieController,
                                 // ),
                               ],
                             ),
