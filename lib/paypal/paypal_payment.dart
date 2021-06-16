@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:auroim/paypal/paypal_services.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaypalPayment extends StatefulWidget {
@@ -48,6 +48,8 @@ class PaypalPaymentState extends State<PaypalPayment> {
         final res =
             await services.createPaypalPayment(transactions, accessToken);
         if (res != null) {
+          print("checkout : ${res["approvalUrl"]}");
+          print("executeUrl : ${res["executeUrl"]}");
           setState(() {
             checkoutUrl = res["approvalUrl"];
             executeUrl = res["executeUrl"];
@@ -156,17 +158,22 @@ class PaypalPaymentState extends State<PaypalPayment> {
           initialUrl: checkoutUrl,
           javascriptMode: JavascriptMode.unrestricted,
           navigationDelegate: (NavigationRequest request) {
+            print("webview");
+            print(request.url);
             if (request.url.contains(returnURL)) {
               final uri = Uri.parse(request.url);
               final payerID = uri.queryParameters['PayerID'];
               if (payerID != null) {
+                print("payer id not null");
                 services
                     .executePayment(executeUrl, payerID, accessToken)
                     .then((id) {
                   widget.onFinish(id);
-                  Navigator.of(context).pop();
+                  Toast.show("Payment completed for orderid : $id", context);
+                  // Navigator.of(context).pop();
                 });
               } else {
+                print("payer id null");
                 Navigator.of(context).pop();
               }
               Navigator.of(context).pop();

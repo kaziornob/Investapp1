@@ -648,7 +648,9 @@ class _StockPitchState extends State<StockPitch> {
           width: (MediaQuery.of(context).size.width / 2) - 20,
           child: TextFormField(
             controller: controller,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.numberWithOptions(
+              decimal: true,
+            ),
             decoration: textFieldInputDecoration("", "", suffixText),
             cursorColor: Colors.black,
             style: TextStyle(
@@ -1223,11 +1225,11 @@ class _StockPitchState extends State<StockPitch> {
       } else {
         getDialog("Some Error Occurred", true);
       }
-    } catch (err,stackTrace) {
+    } catch (err, stackTrace) {
       FirebaseCrashlytics.instance.recordError(
-          err,
-          stackTrace,
-          reason: 'Stock Pitch upload',
+        err,
+        stackTrace,
+        reason: 'Stock Pitch upload',
       );
       print(err.toString());
       Toast.show("Some Error Occurred", context);
