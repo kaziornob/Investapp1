@@ -6,6 +6,7 @@ import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/empStatus.dart';
 import 'package:auroim/auth/investorType.dart';
 import 'package:auroim/auth/userPersonalDetails.dart';
+import 'package:auroim/investment_masterclass/provider/ivm_chapter_quiz.dart';
 import 'package:auroim/model/listingsModel.dart';
 import 'package:auroim/provider_abhinav/auro_stars_provider.dart';
 import 'package:auroim/provider_abhinav/coin_url.dart';
@@ -376,6 +377,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => UserPostsProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => IVMChapterQuizProvider(),
           ),
         ],
         child: MaterialApp(

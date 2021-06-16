@@ -1,6 +1,7 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/widgets/invest_tab/auro_star/static_auro_rabbit_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -36,6 +37,7 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
   TextEditingController _appbarTextController = TextEditingController();
   FocusNode _focusNode = FocusNode();
   var homeScaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -78,7 +80,10 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
                     child: Text(
                       'Portfolio Statistics',
                       style: TextStyle(
-                          color: Color(0xffd8af4f), fontWeight: FontWeight.w400, fontFamily: 'Rosario', fontSize: 18),
+                          color: Color(0xffd8af4f),
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Rosario',
+                          fontSize: 18),
                     ),
                   )
                 ],
@@ -88,21 +93,27 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
               ),
               const Text(
                 'Return',
-                style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Rosario', fontWeight: FontWeight.w400),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Rosario',
+                    fontWeight: FontWeight.w400),
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 width: MediaQuery.of(context).size.width,
-                decoration:
-                    BoxDecoration(color: Color(0xffc4c4c4).withOpacity(0.06), borderRadius: BorderRadius.circular(15)),
+                decoration: BoxDecoration(
+                    color: Color(0xffc4c4c4).withOpacity(0.06),
+                    borderRadius: BorderRadius.circular(15)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     rowWidget(title: 'Inception Date', value: 'May 2017'),
                     rowWidget(title: 'Return', value: 'Balanced'),
                     rowWidget(title: 'Annualized Return', value: '15%'),
-                    rowWidget(title: 'Benchmark', value: 'MSCI Asia Pac (MXAS US)'),
+                    rowWidget(
+                        title: 'Benchmark', value: 'MSCI Asia Pac (MXAS US)'),
                     rowWidget(title: 'Alpha', value: '10%'),
                   ],
                 ),
@@ -112,7 +123,11 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
               ),
               const Text(
                 'Risk Adjusted',
-                style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Rosario', fontWeight: FontWeight.w400),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Rosario',
+                    fontWeight: FontWeight.w400),
               ),
               const SizedBox(
                 height: 10,
@@ -121,8 +136,9 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 width: MediaQuery.of(context).size.width,
-                decoration:
-                    BoxDecoration(color: Color(0xffc4c4c4).withOpacity(0.06), borderRadius: BorderRadius.circular(15)),
+                decoration: BoxDecoration(
+                    color: Color(0xffc4c4c4).withOpacity(0.06),
+                    borderRadius: BorderRadius.circular(15)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -137,7 +153,11 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
               ),
               const Text(
                 'Charts',
-                style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Rosario', fontWeight: FontWeight.w400),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Rosario',
+                    fontWeight: FontWeight.w400),
               ),
               const SizedBox(
                 height: 10,
@@ -188,21 +208,23 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
                     // interval: 2,
 
                     majorGridLines: MajorGridLines(width: 0)),
-                primaryYAxis:
-                    NumericAxis(labelFormat: '{value}%', majorTickLines: MajorTickLines(color: Colors.transparent)),
+                primaryYAxis: NumericAxis(
+                    labelFormat: '{value}%',
+                    majorTickLines: MajorTickLines(color: Colors.transparent)),
                 series: _getDefaultLineSeries(),
                 tooltipBehavior: TooltipBehavior(
                   enable: true,
                 ),
                 axes: [
                   NumericAxis(
-                      opposedPosition: true,
-                      name: 'yAxis1',
-                      majorGridLines: MajorGridLines(width: 0),
-                      labelFormat: '{value}K',
-                      minimum: 10,
-                      maximum: 100,
-                      interval: 10)
+                    opposedPosition: true,
+                    name: 'yAxis1',
+                    majorGridLines: MajorGridLines(width: 0),
+                    labelFormat: '{value}K',
+                    minimum: 10,
+                    maximum: 100,
+                    interval: 10,
+                  )
                 ],
               )
             ],
@@ -368,63 +390,54 @@ class _PortfolioStatisticsState extends State<PortfolioStatistics> {
     );
   }
 
-  List<LineSeries<_ChartData, DateTime>> _getDefaultLineSeries() {
-    final List<_ChartData> chartData = <_ChartData>[
-      _ChartData(DateTime(2019, 1, 1), 10, 12, 15, 11),
-      _ChartData(DateTime(2019, 2, 1), 20, 25, 22, 23),
-      _ChartData(DateTime(2019, 3, 1), 30, 32, 39, 37),
-      _ChartData(DateTime(2019, 4, 1), 40, 36, 41, 49),
-      _ChartData(DateTime(2019, 5, 1), 50, 56, 58, 55),
-      _ChartData(DateTime(2019, 6, 1), 60, 64, 63, 25),
-      _ChartData(DateTime(2019, 7, 1), 70, 78, 73, 75)
-    ];
-    return <LineSeries<_ChartData, DateTime>>[
-      LineSeries<_ChartData, DateTime>(
+  List<LineSeries<ChartData, DateTime>> _getDefaultLineSeries() {
+    return <LineSeries<ChartData, DateTime>>[
+      LineSeries<ChartData, DateTime>(
           animationDuration: 2500,
           dataSource: chartData,
-          yAxisName: 'yAxis1',
-          xValueMapper: (_ChartData sales, _) => sales.x,
-          yValueMapper: (_ChartData sales, _) => sales.y,
+          // yAxisName: 'yAxis1',
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.y,
           width: 2,
           color: Colors.purple,
           name: 'Auro Rabbit',
-          markerSettings: MarkerSettings(isVisible: true)),
-      LineSeries<_ChartData, DateTime>(
+          markerSettings: MarkerSettings(isVisible: false)),
+      LineSeries<ChartData, DateTime>(
           animationDuration: 2500,
           dataSource: chartData,
-          yAxisName: 'yAxis1',
+          // yAxisName: 'yAxis1',
           width: 2,
           name: 'BTC Return',
           color: Colors.cyan,
-          xValueMapper: (_ChartData sales, _) => sales.x,
-          yValueMapper: (_ChartData sales, _) => sales.y2,
-          markerSettings: MarkerSettings(isVisible: true)),
-      LineSeries<_ChartData, DateTime>(
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.y2,
+          markerSettings: MarkerSettings(isVisible: false)),
+      LineSeries<ChartData, DateTime>(
           animationDuration: 2500,
           dataSource: chartData,
-          yAxisName: 'yAxis1',
+          // yAxisName: 'yAxis1',
           width: 2,
           name: 'Alpha',
           color: Colors.yellow,
-          xValueMapper: (_ChartData sales, _) => sales.x,
-          yValueMapper: (_ChartData sales, _) => sales.y3,
-          markerSettings: MarkerSettings(isVisible: true)),
-      LineSeries<_ChartData, DateTime>(
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.y3,
+          markerSettings: MarkerSettings(isVisible: false)),
+      LineSeries<ChartData, DateTime>(
           animationDuration: 2500,
           dataSource: chartData,
           yAxisName: 'yAxis1',
           width: 2,
           name: 'BTC Dose Price',
           color: Colors.blue,
-          xValueMapper: (_ChartData sales, _) => sales.x,
-          yValueMapper: (_ChartData sales, _) => sales.y4,
-          markerSettings: MarkerSettings(isVisible: true))
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.y4,
+          markerSettings: MarkerSettings(isVisible: false))
     ];
   }
 }
 
-class _ChartData {
-  _ChartData(this.x, this.y, this.y2, this.y3, this.y4);
+class ChartData {
+  ChartData(this.x, this.y, this.y2, this.y3, this.y4);
 
   final DateTime x;
   final double y;

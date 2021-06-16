@@ -40,7 +40,7 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
         () => print("Video Completed"),
       );
     _youtubePlayerController = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoLink),
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoLink) ?? "",
       flags: YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
@@ -161,7 +161,11 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
                       ),
                     ),
                   )
-                : Container(),
+                : Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
           ),
         ],
       ),

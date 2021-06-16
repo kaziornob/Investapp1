@@ -3,6 +3,7 @@ import 'package:auroim/modules/home/auro_portfolio_mix.dart';
 import 'package:auroim/modules/home/auro_portfolio_return.dart';
 import 'package:auroim/modules/home/widgets/auroai_portfolio_values.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/golive_screen.dart';
+import 'package:auroim/paypal/paypal_payment.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -106,11 +107,23 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (BuildContext context) => GoLiveScreen(
-                            callingFrom: "",
+                          builder: (BuildContext context) => PaypalPayment(
+                            onFinish: (number) async {
+
+                              // payment done
+                              print('order id: '+number);
+
+                            },
                           ),
                         ),
                       );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (BuildContext context) => GoLiveScreen(
+                      //       callingFrom: "",
+                      //     ),
+                      //   ),
+                      // );
                     },
                     color: Color(0xFFD8AF4F),
                     child: Text(

@@ -733,7 +733,7 @@ class HelperClass {
         return LoadingDialogWithTimer(
           text: text,
           showTimer: showTimer,
-          secondaryText: "Please Wait...",
+          secondaryText: "",
         );
       },
     );

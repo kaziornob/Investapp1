@@ -4,6 +4,8 @@ class FutureReturn {
   var expectedReturn = 0.07;
 
   calculate(expectedReturn, nYears, pmt, v_0) {
+    print("expected return ");
+    print(expectedReturn);
     var rate = pow(1 + expectedReturn, 1 / 12) - 1;
     var nPer = nYears * 12;
 

@@ -58,7 +58,7 @@ class _PortfolioReturnBarChartState extends State<PortfolioReturnBarChart> {
     var chartDataExpectedDollars = [
       ChartData(
         "Expected",
-        calculate().y-1000000,
+        calculate().y-1000000.0,
         Color(0xFFCCDBED),
       ),
     ];

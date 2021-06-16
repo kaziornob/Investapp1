@@ -164,11 +164,11 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                 child: Text(
                                   'Personal Details'.toUpperCase(),
                                   style: TextStyle(
-                                      color:
-                                          AllCoustomTheme.getTextThemeColor(),
-                                      fontSize: 22,
-                                      fontFamily: "Rosario",
-                                      fontWeight: FontWeight.w600),
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: 22,
+                                    fontFamily: "Rosario",
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),
@@ -311,28 +311,28 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                         padding: EdgeInsets.only(
                                             left: 20, right: 20, top: 4),
                                         child: Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.error_outline,
-                                                    color: usernameValid
-                                                        ? Colors.green
-                                                        : Color(0xffff0000),
-                                                    size: 13,
-                                                  ),
-                                                  Text(
-                                                    usernameValid
-                                                        ? "  Unique Username"
-                                                        : '  Username exists',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Roboto',
-                                                      fontSize: 12,
-                                                      color: usernameValid
-                                                          ? Colors.green
-                                                          : Color(0xffff0000),
-                                                    ),
-                                                  ),
-                                                ],
+                                          children: [
+                                            Icon(
+                                              Icons.error_outline,
+                                              color: usernameValid
+                                                  ? Colors.green
+                                                  : Color(0xffff0000),
+                                              size: 13,
+                                            ),
+                                            Text(
+                                              usernameValid
+                                                  ? "  Unique Username"
+                                                  : '  Username exists',
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 12,
+                                                color: usernameValid
+                                                    ? Colors.green
+                                                    : Color(0xffff0000),
                                               ),
+                                            ),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
@@ -548,7 +548,8 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
       return;
     }
 
-    var jsonReqResp = await request.postSubmitResponse('users/add_details', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('users/add_details', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit userdetails response: $result");

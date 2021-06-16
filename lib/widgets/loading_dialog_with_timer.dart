@@ -84,7 +84,7 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
                   ? Row(
                       children: [
                         Image.asset(
-                          'assets/hourglass.png',
+                          'assets/hourglass_bw.png',
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,
@@ -279,3 +279,6 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
 //     });
 //   }
 // }
+
+
+// http://172.31.14.80:8088/run_algo?volatility=0.25&drawdown=0.24&client_id=1447&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ0NywiaWF0IjoxNjIzNzM4NjcyfQ.l_1obhGl5eNkpXJn99t_N0nf7xo-lPo_qTUbowwE9iU

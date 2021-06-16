@@ -1,5 +1,11 @@
+import 'package:auroim/constance/themes.dart';
+import 'package:auroim/provider_abhinav/long_short_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'add_long_short_vote_comment.dart';
+import 'custom_slider_thumb_circle.dart';
 
 class SinglePublicCompanyAllStatsList extends StatefulWidget {
   final marketCapital;
@@ -9,6 +15,7 @@ class SinglePublicCompanyAllStatsList extends StatefulWidget {
   final equityBeta;
   final marketCapLocal;
   final fixRate;
+  final ticker;
 
   SinglePublicCompanyAllStatsList({
     this.marketCapital,
@@ -18,6 +25,7 @@ class SinglePublicCompanyAllStatsList extends StatefulWidget {
     this.roe3yr,
     this.marketCapLocal,
     this.fixRate,
+    this.ticker,
   });
 
   @override
@@ -30,6 +38,7 @@ class _SinglePublicCompanyAllStatsListState
   int slideIndex = 0;
   List slideArray;
   bool _isInit = true;
+  double _totalVotes;
 
   @override
   void initState() {
@@ -262,6 +271,7 @@ class _SinglePublicCompanyAllStatsListState
           height: 40,
           child: Center(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -273,121 +283,140 @@ class _SinglePublicCompanyAllStatsListState
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 5.0, left: 8.0),
-          child: Row(
-            children: [
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 2,
-                      color: Color(0xFFfec20f),
-                    ),
-                  ),
-                ),
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: Center(
-                  child: Text(
-                    'Voting bar',
-                    style: new TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      letterSpacing: 0.2,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        StatefulBuilder(
+          builder: (context, setSliderState) {
+            return FutureBuilder(
+              future: Provider.of<LongShortProvider>(context, listen: false)
+                  .getLongShortVotes(widget.ticker),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  print("in long short");
+                  _totalVotes = (snapshot.data["long_votes"] +
+                      snapshot.data["short_votes"])
+                      .toDouble();
+                  _voteValue = snapshot.data["long_votes"].toDouble();
+                  // print(_voteValue);
+                  // print(_totalVotes);
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          button(
+                            "Vote Long",
+                            Color(0xFF1D6177),
+                            MediaQuery.of(context).size.width / 3,
+                            true,
+                            setSliderState,
+                          ),
+                          button(
+                            "Vote Short",
+                            Color(0xFFFAB95B),
+                            MediaQuery.of(context).size.width / 3,
+                            false,
+                            setSliderState,
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width*0.7,
+                        height: 70,
+                        // decoration: BoxDecoration(border: Border.all()),
+                        margin: EdgeInsets.all(7.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width:
+                                  (MediaQuery.of(context).size.width*0.7) *
+                                      (_voteValue / _totalVotes),
+                                  height: 30,
+                                  child: (_voteValue / _totalVotes) == 0.0
+                                      ? null
+                                      : Center(
+                                    child: Text(
+                                      "${((_voteValue / _totalVotes) * 100).toStringAsFixed(0).split(".")[0]}%",
+                                      style: TextStyle(
+                                        color: Color(0xFF414141),
+                                        fontSize: 16,
+                                        fontFamily: "RosarioMedium",
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  width:
+                                  (MediaQuery.of(context).size.width*0.7) *
+                                      (1 - (_voteValue / _totalVotes)),
+                                  child: (1 - (_voteValue / _totalVotes)) == 0.0
+                                      ? null
+                                      : Center(
+                                    child: Text(
+                                      "${((_voteValue / _totalVotes) * 100).toStringAsFixed(0).split(".")[0]}%",
+                                      style: TextStyle(
+                                        color: Color(0xFF414141),
+                                        fontSize: 16,
+                                        fontFamily: "RosarioMedium",
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                activeTrackColor: Color(0xFF1D6177),
+                                inactiveTrackColor: Color(0xFFFAB95B),
+                                trackShape: RoundedRectSliderTrackShape(),
+                                trackHeight: 4.0,
+                                thumbShape: CustomSliderThumbCircle(
+                                  thumbRadius: 12,
+                                  min: 0,
+                                  max: 100,
+                                  borderColor: Color(0xFF1D6177),
+                                ),
+                                thumbColor: Color(0xFF1D6177),
+                                overlayColor: Color(0xFFFAB95B),
+                                overlayShape: RoundSliderOverlayShape(
+                                    overlayRadius: 12.0),
+                                tickMarkShape: RoundSliderTickMarkShape(),
+                                activeTickMarkColor: Color(0xFF1D6177),
+                                inactiveTickMarkColor: Color(0xFFFAB95B),
+                                valueIndicatorShape:
+                                PaddleSliderValueIndicatorShape(),
+                                valueIndicatorColor: Color(0xFF1D6177),
+                                valueIndicatorTextStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                disabledThumbColor: Color(0xFF1D6177),
+                              ),
+                              child: Slider(
+                                value: _voteValue,
+                                min: 0,
+                                max: _totalVotes,
+                                label:
+                                '${((_voteValue / _totalVotes) * 100).toString().split(".")[0]}% Voted Long,${(((_totalVotes - _voteValue) / _totalVotes) * 100).toString().split(".")[0]}% Voted Short',
+                                onChanged: (value) {},
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            );
+          },
         ),
-        StatefulBuilder(builder: (context, setVotingBarState) {
-          return Column(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.05,
-                margin: EdgeInsets.all(7.0),
-                decoration: new BoxDecoration(
-                  border: Border.all(
-                    color: Color(0xFFfec20f),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(2.0),
-                  ),
-                ),
-                child: SliderTheme(
-                  data: SliderTheme.of(context).copyWith(
-                    activeTrackColor: Colors.green,
-                    inactiveTrackColor: Colors.red[100],
-                    trackShape: RoundedRectSliderTrackShape(),
-                    trackHeight: 4.0,
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                    thumbColor: Colors.green,
-                    overlayColor: Colors.red.withAlpha(32),
-                    overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-                    tickMarkShape: RoundSliderTickMarkShape(),
-                    activeTickMarkColor: Colors.green,
-                    inactiveTickMarkColor: Colors.red[100],
-                    valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                    valueIndicatorColor: Colors.green,
-                    valueIndicatorTextStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  child: Slider(
-                    value: _voteValue,
-                    min: 0,
-                    max: 100,
-                    divisions: 10,
-                    label: '$_voteValue',
-                    onChanged: (value) {
-                      setVotingBarState(() {
-                        _voteValue = value;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  RaisedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Long",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    color: Colors.green,
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: Colors.green),
-                    ),
-                  ),
-                  RaisedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Short",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    color: Colors.red,
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: Colors.red),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          );
-        }),
+
       ],
     );
   }
@@ -650,6 +679,55 @@ class _SinglePublicCompanyAllStatsListState
               child: Center(child: Text(value)),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  button(text, color, width, isLong, setSliderState) {
+    return Container(
+      width: width,
+      height: 40,
+      child: RaisedButton(
+        onPressed: () async {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
+            builder: (builder) {
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  child: AddLongShortVoteComment(
+                    heading: isLong
+                        ? "If you are Positive on this stock’s return potential tell us why?"
+                        : "If you are Negative on this stock’s return potential tell us why?",
+                    ticker: widget.ticker,
+                    isLong: isLong,
+                    callback: () {
+                      setSliderState(() {});
+                    },
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        child: Text(
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+            fontFamily: "Roboto",
+            color: Colors.white,
+          ),
+        ),
+        color: color,
+        shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: color),
         ),
       ),
     );

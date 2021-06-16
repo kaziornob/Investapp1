@@ -13,6 +13,7 @@ import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/pitch_templates.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -1222,7 +1223,12 @@ class _StockPitchState extends State<StockPitch> {
       } else {
         getDialog("Some Error Occurred", true);
       }
-    } catch (err) {
+    } catch (err,stackTrace) {
+      FirebaseCrashlytics.instance.recordError(
+          err,
+          stackTrace,
+          reason: 'Stock Pitch upload',
+      );
       print(err.toString());
       Toast.show("Some Error Occurred", context);
     }

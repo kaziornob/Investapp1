@@ -36,6 +36,7 @@ class _SinglePublicCompanyOverviewTabState
             equityBeta: widget.data["equity_beta"],
             marketCapLocal: widget.data["market_cap_local_mn"],
             fixRate: widget.data["fx_rate"],
+            ticker: widget.data["ticker"],
           ),
           //compare section
           CompareChartForPublicCompany(
