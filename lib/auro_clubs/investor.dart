@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:animator/animator.dart';
 import 'package:flutter_arc_text/flutter_arc_text.dart';
+import 'package:auroim/widgets/how_app_works.dart';
 
 class Investor extends StatefulWidget {
   final String person;
@@ -26,6 +26,7 @@ class _InvestorState extends State<Investor> {
       "name": "Warren Buffet",
       'networth': '\$100.6 Billion',
       'pic': 'assets/buffet.png',
+      'vid': 'https://youtu.be/SEZwkbliJr8',
     },
     "Jim Simons": {
       "text1":
@@ -35,6 +36,7 @@ class _InvestorState extends State<Investor> {
       "name": "Jim Simons",
       'networth': '\$25.2 Billion',
       'pic': 'assets/simons.png',
+      'vid': 'https://www.youtube.com/watch?v=97syDoaluOw',
     },
     "Ray Dalio": {
       "text1":
@@ -44,6 +46,7 @@ class _InvestorState extends State<Investor> {
       "name": "Ray Dalio",
       'networth': '\$5  Billion',
       'pic': 'assets/dalio.png',
+      'vid': 'https://www.youtube.com/watch?v=9RrMcq-zJcU',
     },
     "Masayoshi Son": {
       "text1":
@@ -53,6 +56,7 @@ class _InvestorState extends State<Investor> {
       "name": "Masayoshi Son",
       'networth': '\$35.8 Billion',
       'pic': 'assets/son.png',
+      'vid':'https://www.youtube.com/watch?v=Sa2_VBu0d7k&t=251s',
     },
     "John Templeton": {
       "text1":
@@ -62,6 +66,7 @@ class _InvestorState extends State<Investor> {
       "name": "John Templeton",
       'networth': '\$270 Billion',
       'pic': 'assets/templeton.png',
+      'vid':'',
     },
     "Michael Novogratz": {
       "text1":
@@ -71,6 +76,7 @@ class _InvestorState extends State<Investor> {
       "name": "Michael Novogratz",
       'networth': '\$7.3 Billion',
       'pic': 'assets/novogratz.png',
+      'vid':'https://youtu.be/AXYqrqtlMXM',
     },
     "Steve Mandel": {
       "text1":
@@ -80,6 +86,7 @@ class _InvestorState extends State<Investor> {
       "name": "Steve Mandel",
       'networth': '\$25.2 Billion',
       'pic': 'assets/mandel.png',
+      'vid':'https://www.youtube.com/watch?v=3HNG4ZxIebc&t=1405s',
     },
     "George Soros": {
       "text1":
@@ -89,6 +96,7 @@ class _InvestorState extends State<Investor> {
       "name": "George Soros",
       'networth': '\$25.2 Billion',
       'pic': 'assets/soros.png',
+      'vid':'https://www.youtube.com/watch?v=_ONOAJYwaEY',
     },
     "Lei Zhang": {
       "text1":
@@ -97,6 +105,7 @@ class _InvestorState extends State<Investor> {
           "Hillhouse has achieved investment returns of up to 52% annualized from inception in 2005 until 2012, even in spite of a 37% drop in 2008, making Hillhouse among the most profitable funds of its size in the world, and the leading fund in Asia",
       "name": "Lei Zhang",
       'pic': 'assets/zhang.png',
+      'vid':'https://www.youtube.com/watch?v=vel780M-udE&t=466s'
     },
     "Rakesh Jhunjhunwala": {
       "text1":
@@ -106,6 +115,7 @@ class _InvestorState extends State<Investor> {
       "name": "Rakesh Jhunjhunwala",
       'networth': '\$4.2 Billion',
       'pic': 'assets/jhunhjhunwala.png',
+      'vid': 'https://www.youtube.com/watch?v=r8nl0NTQ0NY',
     },
   };
 
@@ -252,7 +262,73 @@ class _InvestorState extends State<Investor> {
                           color: Colors.black,
                         ),
                       ),
-                    ],
+                      SizedBox(height: 20),
+                    InkWell(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      onTap: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return HowAppWorks(
+                                videoLink:alldetailsForClubs[person]['vid'],
+                              );
+                            });
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              height:38,
+                              width: 65.33,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: Colors.red,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black,
+                                      blurRadius: 2.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(0.0, 3.0), // shadow direction: bottom right
+                                    ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(9, 6, 4, 2),
+                                child: Image(
+                                    image: AssetImage('assets/right_triangle.png'),
+                                    height: 22,
+                                    width: 22.37,
+                                ),
+                              ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Meet The Investor',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontFamily: "Rosario"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Source: Auro Research Wikipedia',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                          fontFamily: "Rosario"),
+                    ),
+                  ]
                   ),
                 ),
               ],

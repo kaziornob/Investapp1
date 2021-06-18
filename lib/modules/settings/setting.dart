@@ -29,15 +29,11 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
 
   final internationalPhoneInput = InternationalPhoneInput();
 
-
   String phoneNumber;
   String phoneIsoCode;
   String confirmedNumber = '';
   bool phoneError = true;
   bool visible = false;
-
-
-
 
   @override
   void initState() {

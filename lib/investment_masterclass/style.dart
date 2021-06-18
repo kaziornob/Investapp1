@@ -2,6 +2,7 @@ import 'package:auroim/investment_masterclass/api/investment_masterclass_present
 import 'package:auroim/investment_masterclass/invesment_masterclass_models/module_details_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -10,7 +11,12 @@ import 'overview.dart';
 import 'questionanswer.dart';
 
 class StyleScreen extends StatefulWidget {
-  const StyleScreen({Key key}) : super(key: key);
+  final title;
+
+  const StyleScreen({
+    Key key,
+    this.title,
+  }) : super(key: key);
 
   @override
   _StyleScreenState createState() => _StyleScreenState();
@@ -20,12 +26,13 @@ class _StyleScreenState extends State<StyleScreen>
     with TickerProviderStateMixin {
   TabController tabController;
   YoutubePlayerController _controller;
-  ValueNotifier<String> heading = ValueNotifier("Stylistic Investing");
+  ValueNotifier<String> heading;
   ValueNotifier<int> currentSelectedClassId = ValueNotifier(0);
 
   @override
   void initState() {
     super.initState();
+    heading =  ValueNotifier(widget.title);
     tabController = TabController(length: 3, vsync: this);
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
@@ -141,12 +148,13 @@ class _StyleScreenState extends State<StyleScreen>
                                   Container(
                                     margin: EdgeInsets.only(right: 40),
                                     child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                          "assets/person_avatar.png",
-                                          height: 35,
-                                          width: 35,
-                                        )),
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                        "assets/person_avatar.png",
+                                        height: 35,
+                                        width: 35,
+                                      ),
+                                    ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(right: 20),
@@ -160,12 +168,13 @@ class _StyleScreenState extends State<StyleScreen>
                                   ),
                                   Container(
                                     child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                          "assets/person_avatar.png",
-                                          height: 35,
-                                          width: 35,
-                                        )),
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                        "assets/person_avatar.png",
+                                        height: 35,
+                                        width: 35,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),

@@ -108,7 +108,7 @@ class _UserMasterclassProgressScreenState
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => StyleScreen(),
+            builder: (context) => StyleScreen(title: title,),
           ),
         );
       },

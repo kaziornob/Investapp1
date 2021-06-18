@@ -280,10 +280,13 @@ class _MasterClassCoursesScreenState extends State<MasterClassCoursesScreen> {
       onTap: () async {
         Question questions = await getQuestions();
         if (questions == null) {
-          Navigator.of(context).push(CupertinoPageRoute(
+          Navigator.of(context).push(
+            CupertinoPageRoute(
               builder: (_) => ErrorPage(
-                    message: "There are not enough questions yet.",
-                  )));
+                message: "There are not enough questions yet.",
+              ),
+            ),
+          );
           return;
         }
         Navigator.of(context).push(
