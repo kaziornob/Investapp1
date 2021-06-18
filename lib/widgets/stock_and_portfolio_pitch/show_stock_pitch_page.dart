@@ -159,7 +159,7 @@ class _ShowStockPitchPageState extends State<ShowStockPitchPage> {
                   child: StockPitchVideo(
                     videoLink: widget.stockPitchData["videoUrl"],
                     isYoutubeVideo:
-                        widget.stockPitchData["is_youtube_video"] ?? false,
+                        widget.stockPitchData["is_youtube_video"] ?? 0,
                   ),
                 ),
                 Column(

@@ -158,8 +158,11 @@ class _ContentScreenState extends State<ContentScreen> {
                               ),*/
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (context) => ChapterQuizScreen(classId: widget.moduleDetailsResponseModel.message[index].classId,)));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ChapterQuizScreen(
+                                            classId: widget.moduleDetailsResponseModel.message[index].classId,
+                                        classTitle: widget.moduleDetailsResponseModel.message[index].classTopic,
+                                          )));
                                 },
                                 child: Text(
                                   'Chapter Quiz',

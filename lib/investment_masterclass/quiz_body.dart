@@ -1,6 +1,7 @@
-import 'package:auroim/investment_masterclass/quiz.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import 'invesment_masterclass_models/quiz_model.dart';
 
 class QuizPageBody extends StatefulWidget {
   final PageController pageController;

@@ -30,7 +30,6 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
     super.initState();
     _controller = VideoPlayerController.network(widget.videoLink)
       ..initialize().then((_) {
-        print("hghvhvhvhvh");
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       }).catchError((err) {
@@ -91,81 +90,86 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
             ),
             height: 180,
             width: MediaQuery.of(context).size.width - 30,
-            child: _controller.value.initialized
-                ? GestureDetector(
-                    onTap: () {
-                      if (_controller.value.isPlaying) {
-                        setState(() {
-                          _controller.pause();
-                        });
-                      } else {
-                        setState(() {
-                          _controller.play();
-                        });
-                      }
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width - 30,
-                      height: 180,
-                      child: Stack(
-                        children: [
-                          Container(
-                            color: Colors.black,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                widget.isYoutubeVideo
-                                    ? YoutubePlayer(
-                                        controller: _youtubePlayerController,
-                                        showVideoProgressIndicator: true,
-                                        onReady: () {},
-                                        onEnded: (YoutubeMetaData metaData) {
-                                          _controller.pause();
-                                        },
-                                      )
-                                    : AspectRatio(
-                                        aspectRatio:
-                                            _controller.value.aspectRatio,
-                                        child: VideoPlayer(
-                                          _controller,
-                                        ),
-                                      ),
-                                // Chewie(
-                                //   controller: chewieController,
-                                // ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: !_controller.value.isPlaying,
-                            child: Positioned(
-                              top: 90 - 37.0,
-                              left: ((MediaQuery.of(context).size.width - 30) /
-                                      2) -
-                                  37,
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _controller.play();
-                                  });
-                                },
-                                child: Image.asset(
-                                  "assets/youtube-logo.png",
-                                  width: 74,
-                                  height: 74,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+            child: widget.isYoutubeVideo
+                ? Container(
+                    width: MediaQuery.of(context).size.width - 30,
+                    height: 180,
+                    child: YoutubePlayer(
+                      controller: _youtubePlayerController,
+                      showVideoProgressIndicator: true,
+                      onReady: () {},
+                      onEnded: (YoutubeMetaData metaData) {
+                        _controller.pause();
+                      },
                     ),
                   )
-                : Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
+                : _controller.value.initialized
+                    ? GestureDetector(
+                        onTap: () {
+                          if (_controller.value.isPlaying) {
+                            setState(() {
+                              _controller.pause();
+                            });
+                          } else {
+                            setState(() {
+                              _controller.play();
+                            });
+                          }
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width - 30,
+                          height: 180,
+                          child: Stack(
+                            children: [
+                              Container(
+                                color: Colors.black,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    AspectRatio(
+                                      aspectRatio:
+                                          _controller.value.aspectRatio,
+                                      child: VideoPlayer(
+                                        _controller,
+                                      ),
+                                    ),
+                                    // Chewie(
+                                    //   controller: chewieController,
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                              Visibility(
+                                visible: !_controller.value.isPlaying,
+                                child: Positioned(
+                                  top: 90 - 37.0,
+                                  left: ((MediaQuery.of(context).size.width -
+                                              30) /
+                                          2) -
+                                      37,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _controller.play();
+                                      });
+                                    },
+                                    child: Image.asset(
+                                      "assets/youtube-logo.png",
+                                      width: 74,
+                                      height: 74,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
           ),
         ],
       ),

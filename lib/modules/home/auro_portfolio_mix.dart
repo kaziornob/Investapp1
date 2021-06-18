@@ -213,9 +213,11 @@ class _AuroPortfolioMixState extends State<AuroPortfolioMix> {
           DoughnutSeries<ChartData, String>(
             radius: "110%",
             innerRadius: '60%',
+
             dataSource: chartData,
             xValueMapper: (ChartData data, _) => data.x,
             yValueMapper: (ChartData data, _) => data.y,
+
             dataLabelSettings: DataLabelSettings(
               isVisible: true,
               useSeriesColor: true,

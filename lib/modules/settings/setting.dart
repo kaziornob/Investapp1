@@ -1,10 +1,7 @@
-import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter/painting.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -20,12 +17,8 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
   var globalContext;
   TextEditingController _passwordTextFieldController = TextEditingController();
   TextEditingController _confirmPasswordTextFieldController = TextEditingController();
-
-
   TextEditingController _newEmailTextFieldController = TextEditingController();
   TextEditingController _confirmEmailTextFieldController = TextEditingController();
-
-
 
   final List<Tab> tabList = <Tab>[
     new Tab(text: 'Account'),

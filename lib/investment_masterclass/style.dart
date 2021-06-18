@@ -52,6 +52,8 @@ class _StyleScreenState extends State<StyleScreen>
     _controller.pause();
     _controller.load(YoutubePlayer.convertUrlToId(msg.link));
     heading.value = msg.classTopic;
+    tabController.animateTo(2,
+        duration: Duration(milliseconds: 500), curve: Curves.linear);
   }
 
   void pause() {

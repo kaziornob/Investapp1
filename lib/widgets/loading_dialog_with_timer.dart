@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class LoadingDialogWithTimer extends StatefulWidget {
@@ -24,23 +27,33 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
   double percentage = 0.0;
   YoutubePlayerController _controller;
 
-
-
   void startTimer(loadingSetState) {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
         oneSec,
         (Timer timer) => loadingSetState(() {
-              if (_start >= 120) {
-                timer.cancel();
+              if (_start >= 130) {
+                print("timer completed");
+                // Navigator.of(context).pushReplacement(
+                //   MaterialPageRoute(
+                //     builder: (context) => HomeScreen(),
+                //   ),
+                // );
+                Provider.of<PortfolioProvider>(context,listen: false).changeStateOfListener();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  ModalRoute.withName("/Home"),
+                );
+                // timer.cancel();
               } else {
                 _start = _start + 1;
                 setState(() {
-                  percentage = _start / 120;
+                  percentage = _start / 130;
                 });
-                print(_start / 120);
+                print(_start / 130);
               }
-            }));
+            }),);
   }
 
   @override
@@ -82,11 +95,12 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
             children: [
               widget.showTimer
                   ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Image.asset(
                           'assets/hourglass_bw.png',
-                          width: 100,
-                          height: 100,
+                          width: 60,
+                          height: 60,
                           fit: BoxFit.cover,
                         ),
                         Expanded(
@@ -97,7 +111,7 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      "${120 - _start}",
+                                      "${130 - _start}",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 30,
@@ -155,32 +169,34 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
                   ),
                 ),
               ),
-              widget.secondaryText != null
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          widget.secondaryText == null
-                              ? "Please wait..."
-                              : widget.secondaryText,
-                          style: TextStyle(color: Colors.black, fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
+              // widget.secondaryText != null
+              //     ? Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Center(
+              //           child: Text(
+              //             widget.secondaryText == null
+              //                 ? "Please wait..."
+              //                 : widget.secondaryText,
+              //             style: TextStyle(color: Colors.black, fontSize: 14),
+              //             textAlign: TextAlign.center,
+              //           ),
+              //         ),
+              //       )
+              //     : Container(),
+              widget.text == null
+                  ? SizedBox()
+                  : Container(
+                      padding: EdgeInsets.all(20),
+                      height: MediaQuery.of(context).size.height * 0.30,
+                      child: YoutubePlayer(
+                        controller: _controller,
+                        showVideoProgressIndicator: true,
+                        onReady: () {},
+                        onEnded: (YoutubeMetaData metaData) {
+                          _controller.pause();
+                        },
                       ),
-                    )
-                  : Container(),
-              Container(
-                padding: EdgeInsets.all(20),
-                height: MediaQuery.of(context).size.height * 0.30,
-                child: YoutubePlayer(
-                  controller: _controller,
-                  showVideoProgressIndicator: true,
-                  onReady: () {},
-                  onEnded: (YoutubeMetaData metaData) {
-                    _controller.pause();
-                  },
-                ),
-              ),
+                    ),
             ],
           ),
         ),
@@ -279,6 +295,5 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
 //     });
 //   }
 // }
-
 
 // http://172.31.14.80:8088/run_algo?volatility=0.25&drawdown=0.24&client_id=1447&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ0NywiaWF0IjoxNjIzNzM4NjcyfQ.l_1obhGl5eNkpXJn99t_N0nf7xo-lPo_qTUbowwE9iU

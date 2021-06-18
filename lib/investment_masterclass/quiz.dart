@@ -2,12 +2,7 @@ import 'package:auroim/investment_masterclass/quiz_body.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class QuizDemo {
-  String title;
-  int answerValue;
 
-  QuizDemo({this.title, this.answerValue});
-}
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key key}) : super(key: key);

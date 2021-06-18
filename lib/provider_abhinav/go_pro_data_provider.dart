@@ -119,7 +119,7 @@ class GoProDataProvider with ChangeNotifier {
       print("results ${result["message"]}");
       Toast.show("${result['message']}", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      Provider.of<PortfolioProvider>(context).changeStateOfListener();
+      Provider.of<PortfolioProvider>(context,listen: false).changeStateOfListener();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),

@@ -39,7 +39,10 @@ dependencies:
   keyboard_visibility: 0.5.4
   path_provider: ^1.6.22
   font_awesome_flutter: ^8.10.0
-  syncfusion_flutter_charts: 18.3.53
+  syncfusion_flutter_charts:
+#    git:
+#      url: https://github.com/abhinav503/flutter-widgets/packages/syncfusion_flutter_charts.git
+#      ref: master
   cached_network_image: ^2.3.3
   shimmer: ^1.1.2
   screen: ^0.0.5

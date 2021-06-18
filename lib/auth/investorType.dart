@@ -50,6 +50,7 @@ class _InvestorTypeState extends State<InvestorType> {
                     // borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30)),
                     // color: AllCoustomTheme.boxColor(),
                     ),
+
                 child: Column(
                   children: <Widget>[
                     SizedBox(

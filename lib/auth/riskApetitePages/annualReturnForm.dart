@@ -291,7 +291,9 @@ class _AnnualReturnFormState extends State<AnnualReturnForm> {
                               child: Text(
                                 "These are expectation's of potential gains and loses from our model. Actual gains and loose can vary significantly from thse levels.",
                                 style: TextStyle(
-                                    fontSize: 12, color: Color(0xFF5E5E5E)),
+                                  fontSize: 12,
+                                  color: Color(0xFF5E5E5E),
+                                ),
                               ),
                             ),
                             InkWell(
