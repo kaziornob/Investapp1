@@ -623,7 +623,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     height: 115,
                     width: 150.0,
                     fit: BoxFit.fill,
-                    image: new AssetImage('assets/arqade.jpeg')),
+                    image: new AssetImage('assets/arqade.jpeg'),),
               ),
               Container(
                   child: Column(

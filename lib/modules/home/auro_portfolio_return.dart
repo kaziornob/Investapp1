@@ -30,6 +30,8 @@ class _AuroPortfolioReturnState extends State<AuroPortfolioReturn> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var userExpectedReturnData = snapshot.data;
+              print("future builder");
+              print(userExpectedReturnData.toString());
               return Consumer<PortfolioProvider>(
                 builder: (context, portfolioProvider, _) {
                   print("daily portfolio data gott");
