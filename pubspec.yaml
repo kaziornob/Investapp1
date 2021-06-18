@@ -29,7 +29,7 @@ dependencies:
   dio: ^3.0.10
   webview_flutter: ^1.0.7
   cupertino_icons: ^1.0.0
-#  flutter_facebook_login: ^1.2.0
+  #  flutter_facebook_login: ^1.2.0
   animator: ^1.0.0+3
   flutter_page_indicator: ^0.0.3
   gradient_text: ^1.0.2
@@ -51,8 +51,8 @@ dependencies:
   flutter_sparkline: ^0.1.0
   intl: ^0.16.1
   timeago: ^2.0.24
-#  flutter_webview_plugin: ^0.3.11
-#  location: ^3.0.2
+  #  flutter_webview_plugin: ^0.3.11
+  #  location: ^3.0.2
   firebase_core: ^0.5.0+1
   toast: ^0.1.5
   international_phone_input: ^1.0.4
@@ -66,9 +66,9 @@ dependencies:
   chewie: 0.9.10
   dotted_line: ^2.0.2
   youtube_player_flutter: 7.0.0
-#  youtube_player_flutter: ^8.0.0
+  #  youtube_player_flutter: ^8.0.0
   video_player: 0.10.11+2
-#  chewie: 0.9.10
+  #  chewie: 0.9.10
   super_tooltip: ^0.9.6
   http_auth: ^0.3.1
   url_launcher: ^5.7.10
@@ -160,7 +160,6 @@ flutter:
       fonts:
         - asset: fonts/Roboto-Regular.ttf
           weight: 700
-
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
