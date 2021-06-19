@@ -41,7 +41,7 @@ class _AuroAiPortfolioState extends State<AuroAiPortfolio> {
                         ),
                         child: ScreenTitleAppbar(
                           colorText: Color(0xFFD8AF4F),
-                          title: "AURO.AI PORTFOLIO",
+                          title: "AURO.AI PORTFOLIO ",
                         ),
                       ),
                       Padding(
