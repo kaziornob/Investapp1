@@ -35,7 +35,7 @@ class StaticData {
   static Map leagues = {
     1: {
       "name": "Warren Buffet",
-      "asset_path": "assets/warren_buffet.png",
+      "asset_path": "assets/warren_buffet_avatar.png",
     },
     2: {
       "name": "Jim Simmons",
@@ -43,19 +43,19 @@ class StaticData {
     },
     3: {
       "name": "Benjamin Graham",
-      "asset_path": "assets/benjamin_graham.png",
+      "asset_path": "assets/benjamin_graham_avatar.png",
     },
     4: {
       "name": "Bill Gross",
-      "asset_path": "assets/bill_gross.png",
+      "asset_path": "assets/bill_gross_avatar.png",
     },
     5: {
       "name": "John Templeton",
-      "asset_path": "assets/john_templeton.png",
+      "asset_path": "assets/john_templeton_avatar.png",
     },
     6: {
       "name": "Steve Mandel",
-      "asset_path": "assets/steve_mandel.png",
+      "asset_path": "assets/steve_mandel_avatar.png",
     },
     7: {
       "name": "Peter Lynch",
@@ -63,7 +63,7 @@ class StaticData {
     },
     8: {
       "name": "George Soros",
-      "asset_path": "assets/george_soros.png",
+      "asset_path": "assets/george_soros_avatar_avatar.png",
     },
     9: {
       "name": "Lei Zhang",

@@ -4,12 +4,9 @@ import 'dart:convert';
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/reusable_functions.dart';
-import 'package:auroim/auth/investorType.dart';
-import 'package:auroim/auth/riskApetitePages/riskApetiteForm.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/modules/chagePIN/changepin.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
 import 'package:auroim/modules/qaInvForumPages/qusDetail.dart';
@@ -149,8 +146,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                     // print("gschascvkajsc");
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            AddEditQus(),
+                        builder: (BuildContext context) => AddEditQus(),
                         // InvestorType(),
                       ),
                     );
@@ -620,10 +616,11 @@ class _MainExchangeTabState extends State<MainExchangeTab>
             children: [
               Container(
                 child: new Image(
-                    height: 115,
-                    width: 150.0,
-                    fit: BoxFit.fill,
-                    image: new AssetImage('assets/arqade.jpeg'),),
+                  height: 115,
+                  width: 150.0,
+                  fit: BoxFit.fill,
+                  image: new AssetImage('assets/arqade.jpeg'),
+                ),
               ),
               Container(
                   child: Column(

@@ -33,6 +33,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screen/screen.dart';
@@ -191,7 +192,6 @@ class _MyAppState extends State<MyApp> {
     // print(widget.prefs.containsKey('InvestorType'));
     // print("In Main Main : "+widget.prefs.getString('InvestorType'));
 
-
     // if(userAllDetail["inv_status"] == "Accredited Investor"){
     //   globals.isGoldBlack  = false;
     // }else{
@@ -339,9 +339,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(
             create: (_) => PortfolioProvider(),
           ),
-          ChangeNotifierProvider(
-            create: (_) => LongShortProvider()
-          ),
+          ChangeNotifierProvider(create: (_) => LongShortProvider()),
           ChangeNotifierProvider(
             create: (_) => ForgotPasswordProvider(),
           ),
@@ -382,13 +380,17 @@ class _MyAppState extends State<MyApp> {
             create: (_) => IVMChapterQuizProvider(),
           ),
         ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Auro',
-          home: _decideMainPage(context),
-          // routes: routes,
-          theme: AllCoustomTheme.getThemeData(),
-        ),
+        child: ScreenUtilInit(
+            designSize: const Size(490.9, 1036.4),
+            builder: () {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Auro',
+                home: _decideMainPage(context),
+                // routes: routes,
+                theme: AllCoustomTheme.getThemeData(),
+              );
+            }),
       ),
     );
   }

@@ -1,0 +1,22 @@
+{
+  "generate_tests": false,
+  "no_comments": true,
+  "export": true,
+  "use_part_of": true,
+  "package": "resources",
+  "groups": [
+    {
+      "path": "assets",
+      "class_name": "Assets",
+      "types": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp",
+        "gif",
+        "bmp",
+        "wbmp"
+      ]
+    }
+  ]
+}

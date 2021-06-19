@@ -23,78 +23,63 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  dio: ^3.0.10
-  webview_flutter: ^1.0.7
-  cupertino_icons: ^1.0.0
-  #  flutter_facebook_login: ^1.2.0
   animator: ^1.0.0+3
-  flutter_page_indicator: ^0.0.3
-  gradient_text: ^1.0.2
-  modal_progress_hud: ^0.1.3
-  http: ^0.12.2
-  shared_preferences: ^0.5.1+2
-  keyboard_visibility: 0.5.4
-  path_provider: ^1.6.22
-  font_awesome_flutter: ^8.10.0
-  syncfusion_flutter_charts:
-#    git:
-#      url: https://github.com/abhinav503/flutter-widgets/packages/syncfusion_flutter_charts.git
-#      ref: master
-  cached_network_image: ^2.3.3
-  shimmer: ^1.1.2
-  screen: ^0.0.5
-  percent_indicator: ^2.1.8
-  connectivity: ^2.0.0
-  flutter_sparkline: ^0.1.0
-  intl: ^0.16.1
-  timeago: ^2.0.24
-  #  flutter_webview_plugin: ^0.3.11
-  #  location: ^3.0.2
-  firebase_core: ^0.5.0+1
-  toast: ^0.1.5
-  international_phone_input: ^1.0.4
-  dropdown_date_picker: 0.1.1+2
-  carousel_slider: 2.3.1
-  flutter_staggered_grid_view: ^0.3.1
-  flutter_typeahead: ^1.8.6
-  file_picker: "^1.12.0"
-  horizontal_data_table: ^2.5.0
-  expandable: 3.0.1
-  chewie: 0.9.10
-  dotted_line: ^2.0.2
-  youtube_player_flutter: 7.0.0
-  #  youtube_player_flutter: ^8.0.0
-  video_player: 0.10.11+2
-  #  chewie: 0.9.10
-  super_tooltip: ^0.9.6
-  http_auth: ^0.3.1
-  url_launcher: ^5.7.10
-  flutter_rating_bar:
   auto_size_text: ^2.1.0
-  #  keyboard_actions: 3.3.1+1
-  #  flutter_markdown: 0.5.2
-  provider: ^4.1.3
-  google_sign_in: ^4.5.6
+  cached_network_image: ^2.3.3
+  carousel_slider: 2.3.1
+  chewie: 0.9.10
+  connectivity: ^2.0.0
+  country_code_picker: null
+  cupertino_icons: ^1.0.0
+  dio: ^3.0.10
+  dotted_line: ^2.0.2
+  dropdown_date_picker: 0.1.1+2
+  expandable: 3.0.1
+  file_picker: ^1.12.0
+  firebase_core: ^0.5.0+1
   firebase_crashlytics: ^0.2.3
-  amazon_cognito_identity_dart: ^0.0.22
-  country_code_picker:
-  flutter_svg:
   flutter_arc_text: ^0.3.2
+  flutter_page_indicator: ^0.0.3
+  flutter_rating_bar: null
+  flutter_screenutil: ^4.0.2
+  flutter_sparkline: ^0.1.0
+  flutter_staggered_grid_view: ^0.3.1
+  flutter_svg: null
+  flutter_typeahead: ^1.8.6
+  font_awesome_flutter: ^8.10.0
+  google_sign_in: ^4.5.6
+  gradient_text: ^1.0.2
+  horizontal_data_table: ^2.5.0
+  http: ^0.12.2
+  http_auth: ^0.3.1
+  international_phone_input: ^1.0.4
+  intl: ^0.16.1
+  keyboard_visibility: 0.5.4
+  modal_progress_hud: ^0.1.3
+  path_provider: ^1.6.22
+  percent_indicator: ^2.1.8
+  provider: ^4.1.3
+  screen: ^0.0.5
+  shared_preferences: ^0.5.1+2
+  shimmer: ^1.1.2
+  super_tooltip: ^0.9.6
+  syncfusion_flutter_charts: null
+  timeago: ^2.0.24
+  toast: ^0.1.5
+  url_launcher: ^5.7.10
+  video_player: 0.10.11+2
+  webview_flutter: ^1.0.7
+  youtube_player_flutter: 7.0.0
 #  flutter_facebook_login:
 #    git:
 #      url: https://github.com/roughike/flutter_facebook_login
 #      ref: '79ff08a'
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -108,10 +93,8 @@ flutter:
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -160,6 +143,5 @@ flutter:
       fonts:
         - asset: fonts/Roboto-Regular.ttf
           weight: 700
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

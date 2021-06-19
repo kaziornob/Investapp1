@@ -2,7 +2,6 @@ import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auro_clubs/investment_titles.dart';
 import 'package:auroim/auro_clubs/weekly_league.dart';
-import 'package:auroim/auro_coins/auro_coins_info.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/main.dart';
@@ -17,6 +16,7 @@ import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoarding
 import 'package:auroim/modules/settings/myAccount.dart';
 import 'package:auroim/modules/settings/myProfile.dart';
 import 'package:auroim/modules/settings/setting.dart';
+import 'package:auroim/presentation/pages/help/coins/auro_coins_info.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
 import 'package:auroim/widgets/how_app_works.dart';
