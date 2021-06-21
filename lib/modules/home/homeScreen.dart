@@ -2,15 +2,14 @@ import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/main.dart';
-import 'package:auroim/modules/home/main_exchange_tab.dart';
 import 'package:auroim/modules/home/main_learn_marketplace_tab.dart';
 import 'package:auroim/modules/home/main_plus_tab.dart';
 import 'package:auroim/modules/home/new_main_home_tab.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/modules/settings/user_profile_page.dart';
+import 'package:auroim/presentation/pages/app/exchange/main_exchange_tab.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
-import 'package:auroim/widgets/user_profile/other_user_profile.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
@@ -22,8 +21,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'add_comment_bottom_sheet_widget.dart';
-import 'main_home_tab.dart';
 import 'main_invest_tab.dart';
 
 class HomeScreen extends StatefulWidget {

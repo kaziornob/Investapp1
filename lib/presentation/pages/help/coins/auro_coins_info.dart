@@ -1,5 +1,7 @@
 import 'package:auroim/presentation/common/auro_scaffold.dart';
+import 'package:auroim/presentation/pages/help/coins/coins_table_page.dart';
 import 'package:auroim/presentation/pages/help/coins/widget/coins_info_button.dart';
+import 'package:auroim/presentation/pages/help/data/coins_data.dart';
 import 'package:auroim/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,17 +70,41 @@ class _AuroCoinsState extends State<AuroCoins> {
                       children: <Widget>[
                         CoinsInfoButton(
                           image: Assets.portfolioInvest,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CoinsTablePage(
+                                          title: "Investment Track Record",
+                                          data: CoinsData.investmentTrackRecord,
+                                        )));
+                          },
                           text: 'PORTFOLIO INVEST',
                         ),
                         CoinsInfoButton(
                           image: Assets.securityInvest,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CoinsTablePage(
+                                          title: "InvestmentStockPitch",
+                                          data: CoinsData.investmentStockPitch,
+                                        )));
+                          },
                           text: 'SECURITY INVEST',
                         ),
                         CoinsInfoButton(
                           image: Assets.wikiInvest,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CoinsTablePage(
+                                          title: 'Investment Q&A',
+                                          data: CoinsData.investmentQA,
+                                        )));
+                          },
                           text: 'WIKI INVEST',
                         ),
                       ],
@@ -90,45 +116,35 @@ class _AuroCoinsState extends State<AuroCoins> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Column(children: <Widget>[
-                          new Image(
-                              height: 100.h,
-                              fit: BoxFit.cover,
-                              image: new AssetImage(Assets.eduInvest)),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Text(
-                            'EDU INVEST',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ]),
+                        CoinsInfoButton(
+                          image: Assets.eduInvest,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CoinsTablePage(
+                                          title: 'Engagement',
+                                          data: CoinsData.enagagement,
+                                        )));
+                          },
+                          text: 'EDU INVEST',
+                        ),
                         // SizedBox(
                         //     width: 10
                         // ),
-                        Column(children: <Widget>[
-                          new Image(
-                              height: 100.h,
-                              fit: BoxFit.cover,
-                              image: new AssetImage(Assets.socialInvest)),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Text(
-                            'SOCIAL INVEST',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ]),
+                        CoinsInfoButton(
+                          image: Assets.socialInvest,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CoinsTablePage(
+                                          title: 'Engagement',
+                                          data: CoinsData.enagagement,
+                                        )));
+                          },
+                          text: 'SOCIAL INVEST',
+                        ),
                       ],
                     ),
                     SizedBox(

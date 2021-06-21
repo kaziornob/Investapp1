@@ -13,6 +13,8 @@ import 'package:auroim/modules/qaInvForumPages/qusDetail.dart';
 import 'package:auroim/modules/settings/user_profile_page.dart';
 import 'package:auroim/modules/underGroundSlider/notificationSlider.dart';
 import 'package:auroim/modules/userProfile/userProfile.dart';
+import 'package:auroim/presentation/common/auro_text.dart';
+import 'package:auroim/resources/resources.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -37,7 +39,18 @@ class _MainExchangeTabState extends State<MainExchangeTab>
   // AdmobBannerController admobBannerController;
   List<dynamic> questionsList;
   ApiProvider request = new ApiProvider();
-
+  List<String> topCompanies = [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/480px-Microsoft_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1GRirgS0LMYCFM1ZoNzQVzdiKCRtyLw7sUityC-fFwIayHo45qSjdNUglcLyb-eG2Pbw&usqp=CAU",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2pqL5gGZeOUfrH-BKx8qvVArzJGsmjTheCBUCtEuO5pfFArTz5Xodg2z7-mirLCekooQ&usqp=CAU",
+    "https://cdn.dribbble.com/users/1857/screenshots/729847/attachments/69548/fitch-ebay-revision.png?compress=1&resize=400x300",
+    "https://iconape.com/wp-content/files/vk/369251/svg/adobe-logo-icon-png-svg.png",
+    "https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0005/6612/brand.gif?itok=8ZBniu-q",
+    "https://thumbs.dreamstime.com/b/amazon-logo-editorial-vector-illustration-market-136495269.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/1024px-HP_logo_2012.svg.png",
+  ];
   List<String> tagItemList = <String>['native', 'fixed'];
 
   //fifth screen params
@@ -56,6 +69,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
     onInitDisplayBootomSheet();
     _tabController = new TabController(vsync: this, length: tabList.length);
     getQuestionsData();
+    selectedTabIndex = 0;
     super.initState();
   }
 
@@ -125,34 +139,30 @@ class _MainExchangeTabState extends State<MainExchangeTab>
       // height: graphHeight,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                RaisedButton(
-                  child: Text(
-                    "Ask question",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AllCoustomTheme.getSeeMoreThemeColor(),
-                      fontSize: ConstanceData.SIZE_TITLE16,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w900,
-                    ),
+            child: RaisedButton(
+              child: Text(
+                "Ask question",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AllCoustomTheme.getSeeMoreThemeColor(),
+                  fontSize: ConstanceData.SIZE_TITLE16,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              onPressed: () {
+                // print("gschascvkajsc");
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => AddEditQus(),
+                    // InvestorType(),
                   ),
-                  onPressed: () {
-                    // print("gschascvkajsc");
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => AddEditQus(),
-                        // InvestorType(),
-                      ),
-                    );
-                  },
-                )
-              ],
+                );
+              },
             ),
           ),
           SizedBox(
@@ -169,7 +179,9 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   controller: _tabController,
                   isScrollable: true,
                   onTap: (index) {
-                    selectedTabIndex = index;
+                    setState(() {
+                      selectedTabIndex = index;
+                    });
                   },
                   labelColor: AllCoustomTheme.getTextThemeColor(),
                   labelStyle: TextStyle(fontSize: 14.0, letterSpacing: 0.2),
@@ -507,21 +519,11 @@ class _MainExchangeTabState extends State<MainExchangeTab>
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           print(snapshot.data);
-          return Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    // height: MediaQuery.of(context).size.height * 0.50,
-                    child: Scrollbar(
-                      child: getQuestionsList(snapshot.data['message']),
-                    ),
-                  ),
-                ),
-              ],
+          return SingleChildScrollView(
+            // width: MediaQuery.of(context).size.width,
+            // height: MediaQuery.of(context).size.height * 0.50,
+            child: Scrollbar(
+              child: getQuestionsList(snapshot.data['message']),
             ),
           );
         }
@@ -540,21 +542,11 @@ class _MainExchangeTabState extends State<MainExchangeTab>
       ),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    // height: MediaQuery.of(context).size.height * 0.50,
-                    child: Scrollbar(
-                      child: getQuestionsList(snapshot.data['message']),
-                    ),
-                  ),
-                ),
-              ],
+          return SingleChildScrollView(
+            // width: MediaQuery.of(context).size.width,
+            // height: MediaQuery.of(context).size.height * 0.50,
+            child: Scrollbar(
+              child: getQuestionsList(snapshot.data['message']),
             ),
           );
         }
@@ -563,7 +555,6 @@ class _MainExchangeTabState extends State<MainExchangeTab>
         );
       },
     );
-    ;
   }
 
   Widget month() {
@@ -574,21 +565,10 @@ class _MainExchangeTabState extends State<MainExchangeTab>
       ),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    // height: MediaQuery.of(context).size.height * 0.50,
-                    child: Scrollbar(
-                      child: getQuestionsList(snapshot.data['message']),
-                    ),
-                  ),
-                ),
-              ],
+          return SingleChildScrollView(
+            // height: MediaQuery.of(context).size.height * 0.50,
+            child: Scrollbar(
+              child: getQuestionsList(snapshot.data['message']),
             ),
           );
         }
@@ -600,146 +580,61 @@ class _MainExchangeTabState extends State<MainExchangeTab>
   }
 
   Widget recommended() {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            height: 8.0,
-          ),
-          // random images
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: new Image(
-                  height: 115,
-                  width: 150.0,
-                  fit: BoxFit.fill,
-                  image: new AssetImage('assets/arqade.jpeg'),
-                ),
-              ),
-              Container(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Image(
-                        height: 70,
-                        width: 85.0,
-                        fit: BoxFit.fill,
-                        image: AssetImage('assets/language.png'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Image(
-                        height: 40,
-                        width: 40.0,
-                        fit: BoxFit.fill,
-                        image: AssetImage('assets/android.png'),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Image(
-                        height: 40,
-                        width: 40.0,
-                        fit: BoxFit.fill,
-                        image: AssetImage('assets/askUbuntu.png'),
-                      ),
-                    ],
-                  )
-                ],
-              )),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image(
-                          height: 40,
-                          width: 40.0,
-                          fit: BoxFit.fill,
-                          image: AssetImage('assets/askUbuntu.png'),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Image(
-                          height: 40,
-                          width: 40.0,
-                          fit: BoxFit.fill,
-                          image: AssetImage('assets/android.png'),
-                        ),
-                      ],
+    return ListView(
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          height: 8.0,
+        ),
+        // random images
+        StaggeredGridView.countBuilder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          crossAxisCount: 4,
+          itemCount: topCompanies.length,
+          itemBuilder: (BuildContext context, int index) => new Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[800]),
+                image: DecorationImage(
+                    image: NetworkImage(
+                      topCompanies[index],
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image(
-                          height: 70,
-                          width: 85.0,
-                          fit: BoxFit.fill,
-                          image: AssetImage('assets/arqade.jpeg'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                    fit: BoxFit.contain)),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.50,
-                  child: Scrollbar(
-                    child: getQuestionsList(questionsList),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+          staggeredTileBuilder: (int index) {
+            if (index == 0 ||
+                index == 2 ||
+                index == 4 ||
+                index == 5 ||
+                index == 6) {
+              return StaggeredTile.count(1, 1);
+            } else if (index == 1) {
+              return StaggeredTile.count(2, 1);
+            } else if (index == 3) {
+              return StaggeredTile.count(1, 2);
+            } else {
+              return StaggeredTile.count(1, 1);
+            }
+          },
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Scrollbar(
+          child: getQuestionsList(questionsList),
+        ),
+      ],
     );
   }
 
   Widget getQuestionsList(data) {
     if (data != null && data.length != 0) {
       return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         itemCount: data.length,
         itemBuilder: (context, index) {
@@ -750,6 +645,31 @@ class _MainExchangeTabState extends State<MainExchangeTab>
             final value = tagData[name];
             tagFinalData.add({"id": name, "tag": value});
           }
+
+          // return QuestionWidget(onTap: () {  var tempField = {
+          //           "id": "${data[index]['id']}",
+          //           "title": "${data[index]['title']}",
+          //           "body": "${data[index]['question']}",
+          //           "vote": "${data[index]['vote']}",
+          //           "view": "${data[index]['view']}",
+          //           "totalAns": "${data[index]['no. of answer']}",
+          //           "tags": tagFinalData,
+          //           "bounty": "${data[index]["bounty"]}",
+          //           "user_score": "${data[index]["user_score"]}",
+          //           "date": data[index]["date-time"],
+          //           "email": data[index]["email"],
+          //           "username": data[index]["username"],
+          //           "is_approved": data[index]["is_approved"],
+          //         };
+
+          //         print("QusDetail tempField: $tempField");
+          //         // data[index]
+          //         Navigator.of(context).push(
+          //           CupertinoPageRoute(
+          //             builder: (BuildContext context) =>
+          //                 QusDetail(allParams: tempField),
+          //           ),
+          //         ); }, title: "${data[index]['title']}", answers: null, comments: null, question:  "${data[index]['question']}", likes: null, onUserTap: () {  },);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -783,154 +703,131 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                   );
                 },
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 15.0),
-                            child: Text(
-                              "${data[index]['title']}",
-                              style: TextStyle(
-                                color: AllCoustomTheme
-                                    .getNewSecondTextThemeColor(),
-                                fontSize: ConstanceData.SIZE_TITLE16,
-                                fontFamily: "Rosarivo",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.2,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    AuroText(
+                      "${data[index]['title']}",
+                      padding: EdgeInsets.only(left: 30),
+                      color: Colors.black,
+                      textType: TextType.headLine5,
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 15.0),
-                            child: Text(
-                              "${data[index]['question']}",
-                              style: TextStyle(
-                                  color: AllCoustomTheme
-                                      .getNewSecondTextThemeColor(),
-                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                  fontFamily: "Rosarivo",
-                                  fontStyle: FontStyle.normal,
-                                  letterSpacing: 0.2),
-                            ),
-                          ),
-                        ),
-                      ],
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.all(15.0),
+                      child: Text(
+                        "${data[index]['question']}",
+                        style: TextStyle(
+                            color: AllCoustomTheme.getNewSecondTextThemeColor(),
+                            fontSize: ConstanceData.SIZE_TITLE16,
+                            fontFamily: "Rosarivo",
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: 0.2),
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20.0,
-              ),
+
               // question attributes section
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => UserProfilePage(
-                            email: data[index]["email"],
-                          ),
+                  // SizedBox(
+                  //   width: 10.0,
+                  // ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => UserProfilePage(
+                                email: data[index]["email"],
+                              ),
+                            ),
+                          );
+                        },
+                        child: Image.asset(
+                          Assets.usersOutline,
+                          height: 40,
                         ),
-                      );
-                    },
-                    child: Container(
-                      child: CircleAvatar(
-                        radius: 13.5,
-                        backgroundImage: new AssetImage('assets/download.jpeg'),
-                        backgroundColor: Colors.transparent,
                       ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 3.0),
-                    child: Text(
-                      "${data[index]['user_score']}",
-                      style: TextStyle(
+                      SizedBox(width: 5),
+                      AuroText(
+                        "${data[index]['user_score']}",
                         color: Colors.black,
-                        fontSize: ConstanceData.SIZE_TITLE14,
+                        fontWeight: FontWeight.w300,
+                        textType: TextType.headLine5,
                       ),
-                    ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                    child: Icon(
-                      Icons.comment_bank_sharp,
-                      color: AllCoustomTheme.getTextThemeColor(),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 2.0),
-                    child: Text(
-                      "${data[index]['no. of answer']}",
-                      style: TextStyle(
+
+                  Row(
+                    children: [
+                      Image.asset(
+                        Assets.comment,
+                        height: 40,
+                      ),
+                      SizedBox(width: 5),
+                      AuroText(
+                        "${data[index]['no. of answer']}",
                         color: Colors.black,
-                        fontSize: ConstanceData.SIZE_TITLE14,
+                        fontWeight: FontWeight.w300,
+                        textType: TextType.headLine5,
                       ),
-                    ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                    child: Icon(
-                      Icons.remove_red_eye_outlined,
-                      color: AllCoustomTheme.getTextThemeColor(),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 3.0),
-                    child: Text(
-                      data[index]['view'] != null
-                          ? "${data[index]['view']}"
-                          : '0',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                    child: Icon(
-                      Icons.add,
-                      color: AllCoustomTheme.getTextThemeColor(),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 3.0),
-                    child: Text(
-                      "${data[index]["bounty"] == null ? 0 : data[index]["bounty"]}",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: ConstanceData.SIZE_TITLE14,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
+
+                  // SizedBox(
+                  //   width: 15,
+                  // ),
+                  // Container(
+                  //   child: Icon(
+                  //     Icons.remove_red_eye_outlined,
+                  //     color: AllCoustomTheme.getTextThemeColor(),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 3.0),
+                  //   child: Text(
+                  //     data[index]['view'] != null
+                  //         ? "${data[index]['view']}"
+                  //         : '0',
+                  //     style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontSize: ConstanceData.SIZE_TITLE14,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // SizedBox(
+                  //   width: 15,
+                  // ),
+                  // Container(
+                  //   child: Icon(
+                  //     Icons.add,
+                  //     color: AllCoustomTheme.getTextThemeColor(),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 3.0),
+                  //   child: Text(
+                  //     "${data[index]["bounty"] == null ? 0 : data[index]["bounty"]}",
+                  //     style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontSize: ConstanceData.SIZE_TITLE14,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: 15,
+                  // ),
                   upvotesDownvotesWidget(data[index]["vote"]),
                 ],
               ),
@@ -1006,30 +903,22 @@ class _MainExchangeTabState extends State<MainExchangeTab>
 
   upvotesDownvotesWidget(votes) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          child: Icon(
-            Icons.arrow_upward,
-            color: AllCoustomTheme.getThemeData().textSelectionColor,
-          ),
+        Image.asset(
+          Assets.like,
+          height: 40,
         ),
-        Container(
-          margin: EdgeInsets.only(top: 3.0),
-          child: new Text(
-            "$votes",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: ConstanceData.SIZE_TITLE14,
-            ),
-          ),
+        AuroText(
+          "$votes",
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          color: Colors.black,
+          fontWeight: FontWeight.w300,
+          textType: TextType.headLine5,
         ),
-        Container(
-          child: Icon(
-            Icons.arrow_downward,
-            color: AllCoustomTheme.getTextThemeColor(),
-          ),
+        Image.asset(
+          Assets.dislike,
+          height: 40,
         ),
       ],
     );
