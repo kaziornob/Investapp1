@@ -14,6 +14,7 @@ import 'package:auroim/modules/settings/user_profile_page.dart';
 import 'package:auroim/modules/underGroundSlider/notificationSlider.dart';
 import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:auroim/presentation/common/auro_text.dart';
+import 'package:auroim/presentation/pages/app/exchange/company_profile.dart';
 import 'package:auroim/resources/resources.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -593,14 +594,20 @@ class _MainExchangeTabState extends State<MainExchangeTab>
           physics: NeverScrollableScrollPhysics(),
           crossAxisCount: 4,
           itemCount: topCompanies.length,
-          itemBuilder: (BuildContext context, int index) => new Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[800]),
-                image: DecorationImage(
-                    image: NetworkImage(
-                      topCompanies[index],
-                    ),
-                    fit: BoxFit.contain)),
+          itemBuilder: (BuildContext context, int index) => InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CompanyProfile()));
+            },
+            child: new Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[800]),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                        topCompanies[index],
+                      ),
+                      fit: BoxFit.contain)),
+            ),
           ),
           staggeredTileBuilder: (int index) {
             if (index == 0 ||
