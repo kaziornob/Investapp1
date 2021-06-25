@@ -18,95 +18,121 @@ class _EsgScreenState extends State<EsgScreen> {
   ApiProvider request = new ApiProvider();
   String selected =
       "If you ascribe high importance to these factors alongside financial factors in your investment decision making, then click here";
-
+  String skipSelected = "";
   String valueSelected = "";
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/esg.png",
-                height: 60,
-                width: MediaQuery.of(context).size.width * 0.4,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 10.0,
-              bottom: 10.0,
-              left: 20.0,
-              right: 20.0,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
             ),
-            child: Container(
-              child: Text(
-                "Auro AI’s proprietary ESG framework measures the environmental, social and governance factors that your investment in each security/company can have",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: "Roboto",
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ),
-          RadioListTile(
-            title: Text(
-              "If you ascribe high importance to these factors alongside financial factors in your investment decision making, then click here",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: "Roboto",
-                fontSize: 15,
-              ),
-            ),
-            value: selected,
-            activeColor: Color(0xFFD8AF4F),
-            groupValue: valueSelected,
-            onChanged: (value) {
-              // print("newValue: $value");
-              setState(() {
-                valueSelected = value;
-              });
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              bottom: 20,
-              left: 14,
-              right: 10,
-              top: 10,
-            ),
-            child: Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                InkWell(
-                  onTap: _submit,
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Color(0xFFD8AF4F),
-                    child: Icon(
-                      Icons.arrow_forward_sharp,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                  ),
+              children: [
+                Image.asset(
+                  "assets/esg.png",
+                  height: 60,
+                  width: MediaQuery.of(context).size.width * 0.4,
                 ),
               ],
             ),
-          )
-        ],
+            SizedBox(
+              height: 40,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      bottom: 10.0,
+                      left: 20.0,
+                      right: 20.0,
+                    ),
+                    child: Container(
+                      child: Text(
+                        "Auro AI’s proprietary ESG framework measures the environmental, social and governance factors that your investment in each security/company can have",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Roboto",
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                  RadioListTile(
+                    title: Text(
+                      "If you ascribe high importance to these factors alongside financial factors in your investment decision making, then click here",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Roboto",
+                        fontSize: 15,
+                      ),
+                    ),
+                    value: selected,
+                    activeColor: Color(0xFFD8AF4F),
+                    groupValue: valueSelected,
+                    onChanged: (value) {
+                      // print("newValue: $value");
+                      setState(() {
+                        valueSelected = value;
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text(
+                      "Skip for now",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Roboto",
+                        fontSize: 15,
+                      ),
+                    ),
+                    value: selected,
+                    activeColor: Color(0xFFD8AF4F),
+                    groupValue: skipSelected,
+                    onChanged: (value) {
+                      // print("newValue: $value");
+                      setState(() {
+                        skipSelected = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 20,
+                left: 14,
+                right: 10,
+                top: 10,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  InkWell(
+                    onTap: _submit,
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Color(0xFFD8AF4F),
+                      child: Icon(
+                        Icons.arrow_forward_sharp,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -165,7 +191,6 @@ class _EsgScreenState extends State<EsgScreen> {
       if (result != null &&
           result.containsKey('auth') &&
           result['auth'] == true) {
-
         HelperClass.showLoading(
           context,
           "Thanks for signing up to Auro. Please wait as we allow our AI engine to custom build your portfolio.Given the complex analytics involved, this could take a few minutes, so please be patient.",
@@ -174,7 +199,7 @@ class _EsgScreenState extends State<EsgScreen> {
 
         createPortfolioData();
       }
-    }else{
+    } else {
       Toast.show("Some Error Occurred", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }

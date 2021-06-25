@@ -1,20 +1,44 @@
+import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/presentation/common/auro_text.dart';
 import 'package:auroim/resources/resources.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class CompanyProfile extends StatelessWidget {
-  CompanyProfile({Key key}) : super(key: key);
+class CompanyProfile extends StatefulWidget {
+  final List<String> data;
+  final Map videoData;
+  CompanyProfile({Key key, @required this.data, @required this.videoData})
+      : super(key: key);
+  @override
+  _CompanyProfileState createState() => _CompanyProfileState();
+}
 
-  final YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: 'Z2MyXuHstIs',
-    flags: YoutubePlayerFlags(
-      autoPlay: false,
-      mute: false,
-    ),
-  );
+class _CompanyProfileState extends State<CompanyProfile> {
+  ApiProvider request = new ApiProvider();
+  YoutubePlayerController _controller;
+  @override
+  void initState() {
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.videoData.isNotEmpty &&
+              widget.videoData["youtube videos"].isNotEmpty
+          ? (widget.videoData["youtube videos"].first as String).split('/').last
+          : 'Z2MyXuHstIs',
+      flags: YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+    if (widget.videoData.isNotEmpty &&
+        widget.videoData["youtube videos"].isNotEmpty) {
+      print("video data");
+      print((widget.videoData["youtube videos"].first as String));
+    }
+    super.initState();
+  }
 
   final Color goldColor = Color(0xffD8AF4F);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +51,20 @@ class CompanyProfile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.network(
-                    "https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png",
+                  CachedNetworkImage(
                     height: 50,
+                    width: 50,
+                    imageUrl: widget.data[1],
+                    placeholder: (context, str) => Center(
+                      child: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.blue,
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, str, _) => Text('Eror'),
                   ),
                   AuroText(
                     'User Review',
@@ -39,10 +74,12 @@ class CompanyProfile extends StatelessWidget {
                 ],
               ),
             ),
-            YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-            ),
+            if (widget.videoData.isNotEmpty &&
+                widget.videoData["youtube videos"].isNotEmpty)
+              YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+              ),
             Container(
               margin: EdgeInsets.all(15),
               padding: EdgeInsets.all(15),

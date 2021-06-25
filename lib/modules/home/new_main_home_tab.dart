@@ -3,6 +3,7 @@ import 'package:auroim/modules/home/auro_portfolio_mix.dart';
 import 'package:auroim/modules/home/auro_portfolio_return.dart';
 import 'package:auroim/modules/home/widgets/auroai_portfolio_values.dart';
 import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/golive_screen.dart';
+import 'package:auroim/presentation/common/auro_text.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,90 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
     return Container(
       child: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 3.5,
+                  child: RaisedButton(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Color(0xFFD8AF4F),
+                      ),
+                    ),
+                    onPressed: () {
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (BuildContext context) => PaypalPayment(
+                      //       onFinish: (number) async {
+                      //
+                      //         // payment done
+                      //         print('order id: '+number);
+                      //         // Toast.show("Payment completed for orderid : $number", context);
+                      //       },
+                      //     ),
+                      //   ),
+                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => GoLiveScreen(
+                            callingFrom: "",
+                          ),
+                        ),
+                      );
+                    },
+                    color: Color(0xFFD8AF4F),
+                    child: Text(
+                      "Invest",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 3.5,
+                  child: RaisedButton(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => AuroAiPortfolio(),
+                        ),
+                      );
+                    },
+                    color: Colors.black,
+                    child: Text(
+                      "Customize",
+                      style: TextStyle(
+                        color: Color(0xFFD8AF4F),
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Roboto",
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          AuroText(
+            "Goals Portfolio allows you to create customized portfolios to achieve specific goals (e.g. Home Purchase, Retirement, Children Fund)",
+            color: Colors.black,
+          ),
+          Divider(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

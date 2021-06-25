@@ -16,6 +16,7 @@ import 'package:auroim/modules/userProfile/userProfile.dart';
 import 'package:auroim/presentation/common/auro_text.dart';
 import 'package:auroim/presentation/pages/app/exchange/company_profile.dart';
 import 'package:auroim/resources/resources.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
@@ -126,6 +127,17 @@ class _MainExchangeTabState extends State<MainExchangeTab>
         // _AnswerList = response['answers'];
         questionsList = response['message'];
       });
+    }
+  }
+
+  Future<List> getStockLogo() async {
+    questionsList = [];
+    var response = await request.getRequest('forum/get_stock_logos');
+    print("qus list: $response");
+    if (response != null && response != false) {
+      return response['message']['logo_images'];
+    } else {
+      return [];
     }
   }
 
@@ -589,44 +601,88 @@ class _MainExchangeTabState extends State<MainExchangeTab>
           height: 8.0,
         ),
         // random images
-        StaggeredGridView.countBuilder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          crossAxisCount: 4,
-          itemCount: topCompanies.length,
-          itemBuilder: (BuildContext context, int index) => InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CompanyProfile()));
-            },
-            child: new Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[800]),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                        topCompanies[index],
+        FutureBuilder<List>(
+            future: getStockLogo(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return StaggeredGridView.countBuilder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 4,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) => InkWell(
+                    onTap: () async {
+                      var response = await request.postSubmit(
+                          'forum/get_stock_videos',
+                          jsonEncode({"ticker": snapshot.data[index].first}));
+                      print("pitch list: $response");
+                      //   if (response != null && response != false) {
+                      //     return response['message'];
+                      //   } else {
+                      //     return {};
+                      //   }
+                      // }
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CompanyProfile(
+                                    data:
+                                        List<String>.from(snapshot.data[index]),
+                                    videoData:
+                                        response != null && response != false
+                                            ? response['message']
+                                            : {},
+                                  )));
+                    },
+                    child: new Container(
+                      child: CachedNetworkImage(
+                        imageUrl: snapshot.data[index][1],
+                        placeholder: (context, str) => Center(
+                          child: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.blue,
+                            ),
+                          ),
+                        ),
+                        errorWidget: (context, str, _) => Text('Eror'),
                       ),
-                      fit: BoxFit.contain)),
-            ),
-          ),
-          staggeredTileBuilder: (int index) {
-            if (index == 0 ||
-                index == 2 ||
-                index == 4 ||
-                index == 5 ||
-                index == 6) {
-              return StaggeredTile.count(1, 1);
-            } else if (index == 1) {
-              return StaggeredTile.count(2, 1);
-            } else if (index == 3) {
-              return StaggeredTile.count(1, 2);
-            } else {
-              return StaggeredTile.count(1, 1);
-            }
-          },
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
-        ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey[800]),
+                        // image: DecorationImage(
+                        //     image: NetworkImage(
+                        //       topCompanies[index],
+                        //     ),
+                        //     onError: (_, __) {
+                        //       print("Facing error");
+                        //     },
+                        //     fit: BoxFit.contain)
+                      ),
+                    ),
+                  ),
+                  staggeredTileBuilder: (int index) {
+                    if (index == 0 ||
+                        index == 2 ||
+                        index == 4 ||
+                        index == 5 ||
+                        index == 6) {
+                      return StaggeredTile.count(1, 1);
+                    } else if (index == 1) {
+                      return StaggeredTile.count(2, 1);
+                    } else if (index == 3) {
+                      return StaggeredTile.count(1, 2);
+                    } else {
+                      return StaggeredTile.count(1, 1);
+                    }
+                  },
+                  mainAxisSpacing: 4.0,
+                  crossAxisSpacing: 4.0,
+                );
+              } else {
+                return Text('Fetching');
+              }
+            }),
         SizedBox(
           height: 20,
         ),
