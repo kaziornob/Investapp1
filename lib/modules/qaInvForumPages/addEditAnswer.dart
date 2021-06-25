@@ -205,7 +205,7 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
                                               end: Offset(0.2, 0)),
                                           duration: Duration(milliseconds: 500),
                                           cycles: 0,
-                                          builder: (anim) =>
+                                          builder: (_, anim, __) =>
                                               FractionalTranslation(
                                             translation: anim.value,
                                             child: Icon(
@@ -221,7 +221,8 @@ class _AddEditAnswerState extends State<AddEditAnswer> {
                                           duration: Duration(milliseconds: 500),
                                           curve: Curves.decelerate,
                                           cycles: 1,
-                                          builder: (anim) => Transform.scale(
+                                          builder: (_, anim, __) =>
+                                              Transform.scale(
                                             scale: anim.value,
                                             child: Text(
                                               'Add Answer',

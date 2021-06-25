@@ -1,7 +1,6 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/routes.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/bussPost/wishList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;

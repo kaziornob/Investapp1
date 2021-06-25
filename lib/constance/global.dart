@@ -117,10 +117,10 @@ String getRewardBasedVideoAdUnitId() {
 // }
 
 Future<List<CryptoCoinDetail>> getData1(int start) async {
-  List<CryptoCoinDetail> lstCryptoCoinDetail = new List<CryptoCoinDetail>();
+  List<CryptoCoinDetail> lstCryptoCoinDetail = [];
   try {
     var response = await http.get(
-      Uri.encodeFull(coinMarketcap + start.toString()),
+      Uri.parse(coinMarketcap + start.toString()),
       headers: {
         "Accept": "application/json",
         "X-CMC_PRO_API_KEY": "41939c64-03af-467f-8e62-f150722470e0",
@@ -245,7 +245,7 @@ class AnimatedForwardArrow extends StatelessWidget {
       ),
       duration: Duration(milliseconds: 500),
       cycles: 0,
-      builder: (anim) => FractionalTranslation(
+      builder: (_, anim, __) => FractionalTranslation(
         translation: anim.value,
         child: isShowingarroeForward
             ? Icon(
@@ -266,8 +266,9 @@ class AnimatedDivider extends StatelessWidget {
       tween: Tween<double>(begin: 0, end: 1),
       duration: Duration(milliseconds: 500),
       cycles: 1,
-      builder: (anim) => SizeTransition(
-        sizeFactor: anim,
+      builder: (_, anim, __) => SizeTransition(
+        sizeFactor: CurvedAnimation(
+            curve: Curves.fastOutSlowIn, parent: anim.controller),
         axis: Axis.horizontal,
         axisAlignment: 1,
         child: Divider(

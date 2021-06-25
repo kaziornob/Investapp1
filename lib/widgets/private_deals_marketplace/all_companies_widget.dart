@@ -2,17 +2,12 @@ import 'dart:convert';
 
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/constance/themes.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/select_industry.dart';
 import 'package:auroim/widgets/private_deals_marketplace/all_companies_single_item.dart';
-import 'package:auroim/widgets/private_deals_marketplace/sample_featured_companies_list.dart';
 import 'package:auroim/widgets/search_industry.dart';
 import 'package:auroim/widgets/tab_chip.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
@@ -544,7 +539,6 @@ class _AllCompaniesState extends State<AllCompanies> {
                     "&industry_list=${Provider.of<SelectIndustry>(context, listen: false).industriesSelected.join(",")}";
                 print(filterCompaniesString);
                 setState(() {});
-
               },
               color: Color(0xff7499C6),
               child: Text(

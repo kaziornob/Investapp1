@@ -23,53 +23,54 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  animator: ^1.0.0+3
+  animator: ^3.1.0
   auto_size_text: ^2.1.0
-  cached_network_image: ^2.3.3
-  carousel_slider: 2.3.1
-  chewie: 0.9.10
-  connectivity: ^2.0.0
+  cached_network_image: ^3.0.0
+  carousel_slider: ^4.0.0
+  chewie: ^1.2.2
+  connectivity: ^3.0.6
   country_code_picker: null
-  cupertino_icons: ^1.0.0
-  dio: ^3.0.10
-  dotted_line: ^2.0.2
+  cupertino_icons: ^1.0.3
+  dio: ^4.0.0
+  dotted_line: ^3.0.0
   dropdown_date_picker: 0.1.1+2
-  expandable: 3.0.1
-  file_picker: ^1.12.0
-  firebase_core: ^0.5.0+1
-  firebase_crashlytics: ^0.2.3
-  flutter_arc_text: ^0.3.2
+  expandable: ^5.0.1
+  file_picker: ^3.0.3
+  firebase_core: ^1.3.0
+  firebase_crashlytics: ^2.0.6
+  flutter_arc_text: ^0.5.0
   flutter_page_indicator: ^0.0.3
   flutter_rating_bar: null
-  flutter_screenutil: ^4.0.2
+  flutter_screenutil: ^5.0.0+2
   flutter_sparkline: ^0.1.0
-  flutter_staggered_grid_view: ^0.3.1
-  flutter_svg: null
-  flutter_typeahead: ^1.8.6
-  font_awesome_flutter: ^8.10.0
-  google_sign_in: ^4.5.6
+  flutter_staggered_grid_view: ^0.4.0
+  flutter_typeahead: ^3.1.3
+  font_awesome_flutter: ^9.1.0
+  get: ^4.1.4
+  google_sign_in: ^5.0.4
   gradient_text: ^1.0.2
-  horizontal_data_table: ^2.5.0
-  http: ^0.12.2
-  http_auth: ^0.3.1
+  horizontal_data_table: ^3.4.1
+  http: ^0.13.3
+  http_auth: ^1.0.0
   international_phone_input: ^1.0.4
-  intl: ^0.16.1
-  keyboard_visibility: 0.5.4
+  intl: ^0.17.0
+  keyboard_visibility: ^0.5.6
   modal_progress_hud: ^0.1.3
-  path_provider: ^1.6.22
-  percent_indicator: ^2.1.8
-  provider: ^4.1.3
+  path_provider: ^2.0.2
+  percent_indicator: ^3.0.1
+  provider: ^5.0.0
   screen: ^0.0.5
-  shared_preferences: ^0.5.1+2
-  shimmer: ^1.1.2
-  super_tooltip: ^0.9.6
-  syncfusion_flutter_charts: null
-  timeago: ^2.0.24
+  shared_preferences: ^2.0.6
+  shimmer: ^2.0.0
+  super_tooltip: ^1.0.1
+  syncfusion_flutter_charts: ^19.1.69+1
+  timeago: ^3.1.0
   toast: ^0.1.5
-  url_launcher: ^5.7.10
-  video_player: 0.10.11+2
-  webview_flutter: ^1.0.7
-  youtube_player_flutter: 7.0.0
+  universal_platform: ^1.0.0+1
+  url_launcher: ^6.0.6
+  video_player: ^2.1.6
+  webview_flutter: ^2.0.8
+  youtube_player_flutter: ^8.0.0
 #  flutter_facebook_login:
 #    git:
 #      url: https://github.com/roughike/flutter_facebook_login

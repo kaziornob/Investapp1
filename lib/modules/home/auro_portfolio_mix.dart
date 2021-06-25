@@ -73,7 +73,7 @@ class _AuroPortfolioMixState extends State<AuroPortfolioMix> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text("Auro Portfolio Not Created"),
-                    FlatButton(
+                    TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
@@ -213,11 +213,9 @@ class _AuroPortfolioMixState extends State<AuroPortfolioMix> {
           DoughnutSeries<ChartData, String>(
             radius: "110%",
             innerRadius: '60%',
-
             dataSource: chartData,
             xValueMapper: (ChartData data, _) => data.x,
             yValueMapper: (ChartData data, _) => data.y,
-
             dataLabelSettings: DataLabelSettings(
               isVisible: true,
               useSeriesColor: true,

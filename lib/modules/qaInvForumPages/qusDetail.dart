@@ -250,7 +250,8 @@ class _QusDetailState extends State<QusDetail> {
                                           end: Offset(0.2, 0)),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
+                                      builder: (_, anim, __) =>
+                                          FractionalTranslation(
                                         translation: anim.value,
                                         child: Icon(
                                           Icons.arrow_back_ios,
@@ -621,7 +622,8 @@ class _QusDetailState extends State<QusDetail> {
     print("update vote tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmitResponse('forum/update_votes', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('forum/update_votes', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("votes update response: $result");

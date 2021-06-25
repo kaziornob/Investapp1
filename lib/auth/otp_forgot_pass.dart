@@ -1,5 +1,3 @@
-
-
 import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
@@ -119,7 +117,8 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
                                       begin: Offset(0, 0), end: Offset(0.2, 0)),
                                   duration: Duration(milliseconds: 500),
                                   cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
+                                  builder: (_, anim, __) =>
+                                      FractionalTranslation(
                                     translation: anim.value,
                                     child: Icon(
                                       Icons.arrow_back_ios,
@@ -142,7 +141,7 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
                               duration: Duration(milliseconds: 500),
                               curve: Curves.decelerate,
                               cycles: 1,
-                              builder: (anim) => Transform.scale(
+                              builder: (_, anim, __) => Transform.scale(
                                 scale: anim.value,
                                 child: Text(
                                   'Enter OTP',
@@ -217,7 +216,7 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
                             duration: Duration(milliseconds: 500),
                             curve: Curves.decelerate,
                             cycles: 1,
-                            builder: (anim) => Transform.scale(
+                            builder: (_, anim, __) => Transform.scale(
                               scale: anim.value,
                               child: Column(
                                 children: <Widget>[
@@ -335,7 +334,7 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
       ),
       duration: Duration(milliseconds: 500),
       cycles: 2,
-      builder: (anim) => Transform(
+      builder: (_, anim, __) => Transform(
         transform: Matrix4.translationValues(anim.value.dx, 0, 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -407,7 +406,7 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
 
   // otp verify process
   submit(otp) async {
-    HelperClass.showLoading(context, null , false);
+    HelperClass.showLoading(context, null, false);
 
     // var tempJsonReq = {"email": "${widget.email}", "otp": "$otp"};
 

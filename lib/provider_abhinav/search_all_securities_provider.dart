@@ -21,7 +21,7 @@ class SearchAllSecuritiesProvider with ChangeNotifier {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get search all securities response: ${jsonDecode(response.body)}");
     var result = jsonDecode(response.body);
 

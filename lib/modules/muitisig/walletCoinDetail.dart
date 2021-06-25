@@ -20,7 +20,8 @@ class WalletCoinDetail extends StatefulWidget {
   final String coinName;
   final String shortName;
 
-  const WalletCoinDetail({Key key, this.coinName, this.shortName}) : super(key: key);
+  const WalletCoinDetail({Key key, this.coinName, this.shortName})
+      : super(key: key);
   @override
   _WalletCoinDetailState createState() => _WalletCoinDetailState();
 }
@@ -61,7 +62,8 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
     });
   }
 
-  Future<Null> changeHistory(String type, String amt, String total, String agg) async {
+  Future<Null> changeHistory(
+      String type, String amt, String total, String agg) async {
     setState(() {
       _high = "0";
       _low = "0";
@@ -113,14 +115,16 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
 
   Future<Null> getHistoryOHLCV() async {
     var response = await http.get(
-        Uri.encodeFull("https://min-api.cryptocompare.com/data/histo" +
+        Uri.parse("https://min-api.cryptocompare.com/data/histo" +
             ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][3] +
             "?fsym=" +
             widget.shortName +
             "&tsym=USD&limit=" +
-            (ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][1] - 1).toString() +
+            (ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][1] - 1)
+                .toString() +
             "&aggregate=" +
-            ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][2].toString()),
+            ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][2]
+                .toString()),
         headers: {"Accept": "application/json"});
     setState(() {
       historyOHLCV = new JsonDecoder().convert(response.body)["Data"];
@@ -179,10 +183,11 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                 Navigator.pop(context);
                               },
                               child: Animator(
-                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                tween: Tween<Offset>(
+                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
-                                builder: (anim) => FractionalTranslation(
+                                builder: (_, anim, __) => FractionalTranslation(
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
@@ -196,12 +201,15 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.decelerate,
                                     cycles: 1,
-                                    builder: (anim) => Transform.scale(
+                                    builder: (_, anim, __) => Transform.scale(
                                       scale: anim.value,
                                       child: Text(
-                                        widget.coinName + ',' + widget.shortName,
+                                        widget.coinName +
+                                            ',' +
+                                            widget.shortName,
                                         style: TextStyle(
-                                          color: AllCoustomTheme.getTextThemeColors(),
+                                          color: AllCoustomTheme
+                                              .getTextThemeColors(),
                                           fontSize: ConstanceData.SIZE_TITLE18,
                                         ),
                                       ),
@@ -228,7 +236,7 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.decelerate,
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Row(
                                     children: <Widget>[
@@ -236,13 +244,17 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                         height: 50,
                                         width: 50,
                                         child: CachedNetworkImage(
-                                          errorWidget: (context, url, error) => CircleAvatar(
-                                            backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                                          errorWidget: (context, url, error) =>
+                                              CircleAvatar(
+                                            backgroundColor: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             child: Text(
                                               widget.shortName.substring(0, 1),
                                             ),
                                           ),
-                                          imageUrl: coinImageURL + widget.shortName.toLowerCase() + "@2x.png",
+                                          imageUrl: coinImageURL +
+                                              widget.shortName.toLowerCase() +
+                                              "@2x.png",
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -252,12 +264,14 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                       Column(
                                         children: <Widget>[
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: <Widget>[
                                               Text(
                                                 '\$',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColors(),
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -266,9 +280,11 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                   generalStats.price,
                                                 ),
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColors(),
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColors(),
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: ConstanceData.SIZE_TITLE25,
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE25,
                                                 ),
                                               )
                                             ],
@@ -279,10 +295,16 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                         child: SizedBox(),
                                       ),
                                       Text(
-                                        generalStats.percentChange1h.toString() + '%',
+                                        generalStats.percentChange1h
+                                                .toString() +
+                                            '%',
                                         textAlign: TextAlign.end,
                                         style: TextStyle(
-                                          color: generalStats.percentChange1h.toString().contains('-') ? Colors.red : Colors.green,
+                                          color: generalStats.percentChange1h
+                                                  .toString()
+                                                  .contains('-')
+                                              ? Colors.red
+                                              : Colors.green,
                                           fontSize: ConstanceData.SIZE_TITLE14,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -307,13 +329,14 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.decelerate,
                                       cycles: 1,
-                                      builder: (anim) => Transform.scale(
+                                      builder: (_, anim, __) => Transform.scale(
                                         scale: anim.value,
                                         child: OHLCVGraph(
                                           data: historyOHLCV,
                                           enableGridLines: true,
                                           gridLineColor: globals.buttoncolor1,
-                                          gridLineLabelColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                                          gridLineLabelColor: AllCoustomTheme
+                                              .getsecoundTextThemeColor(),
                                           gridLineAmount: 4,
                                           volumeProp: 0.3,
                                           lineWidth: 1,
@@ -324,7 +347,10 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                     )
                                   : Container(
                                       alignment: Alignment.topCenter,
-                                      child: Text("No OHLCV data found :(", style: Theme.of(context).textTheme.caption),
+                                      child: Text("No OHLCV data found :(",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption),
                                     )
                               : Container(
                                   child: Center(
@@ -341,7 +367,7 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                   duration: Duration(seconds: 1),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: QuickPercentChangeBar(
                                       snapshot: generalStats,
@@ -364,11 +390,12 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.decelerate,
                                       cycles: 1,
-                                      builder: (anim) => Transform.scale(
+                                      builder: (_, anim, __) => Transform.scale(
                                         scale: anim.value,
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20)),
                                             color: AllCoustomTheme.boxColor(),
                                           ),
                                           child: SingleChildScrollView(
@@ -379,17 +406,25 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                   height: 20,
                                                 ),
                                                 Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
                                                   children: <Widget>[
                                                     Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Text(
                                                           'Wallet',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                                            color: AllCoustomTheme
+                                                                .getsecoundTextThemeColor(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE18,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -398,9 +433,13 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Text(
                                                           '+19.8%',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getTextThemeColors(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE20,
+                                                            color: AllCoustomTheme
+                                                                .getTextThemeColors(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE20,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -409,28 +448,40 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Row(
                                                           children: <Widget>[
                                                             LinearPercentIndicator(
-                                                              padding: EdgeInsets.all(0),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(0),
                                                               width: 100.0,
                                                               lineHeight: 2,
                                                               percent: 0.8,
-                                                              backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                              progressColor: Colors.blue,
+                                                              backgroundColor:
+                                                                  AllCoustomTheme
+                                                                      .getsecoundTextThemeColor(),
+                                                              progressColor:
+                                                                  Colors.blue,
                                                               animation: true,
-                                                              animationDuration: 2500,
+                                                              animationDuration:
+                                                                  2500,
                                                             ),
                                                           ],
                                                         ),
                                                       ],
                                                     ),
                                                     Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Text(
                                                           'Market',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                                            color: AllCoustomTheme
+                                                                .getsecoundTextThemeColor(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE18,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -439,9 +490,13 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Text(
                                                           '+10.4%',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getTextThemeColors(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE20,
+                                                            color: AllCoustomTheme
+                                                                .getTextThemeColors(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE20,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -450,14 +505,20 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Row(
                                                           children: <Widget>[
                                                             LinearPercentIndicator(
-                                                              padding: EdgeInsets.all(0),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(0),
                                                               width: 100.0,
                                                               lineHeight: 2,
                                                               percent: 0.4,
-                                                              backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                              progressColor: Colors.green,
+                                                              backgroundColor:
+                                                                  AllCoustomTheme
+                                                                      .getsecoundTextThemeColor(),
+                                                              progressColor:
+                                                                  Colors.green,
                                                               animation: true,
-                                                              animationDuration: 2500,
+                                                              animationDuration:
+                                                                  2500,
                                                             ),
                                                           ],
                                                         ),
@@ -469,17 +530,25 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                   height: 20,
                                                 ),
                                                 Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
                                                   children: <Widget>[
                                                     Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Text(
                                                           'Market Value',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                                            color: AllCoustomTheme
+                                                                .getsecoundTextThemeColor(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE18,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -488,9 +557,13 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Text(
                                                           '+89.1%',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getTextThemeColors(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE20,
+                                                            color: AllCoustomTheme
+                                                                .getTextThemeColors(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE20,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -499,28 +572,40 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Row(
                                                           children: <Widget>[
                                                             LinearPercentIndicator(
-                                                              padding: EdgeInsets.all(0),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(0),
                                                               width: 100.0,
                                                               lineHeight: 2,
                                                               percent: 0.9,
-                                                              backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                              progressColor: Colors.red,
+                                                              backgroundColor:
+                                                                  AllCoustomTheme
+                                                                      .getsecoundTextThemeColor(),
+                                                              progressColor:
+                                                                  Colors.red,
                                                               animation: true,
-                                                              animationDuration: 2500,
+                                                              animationDuration:
+                                                                  2500,
                                                             ),
                                                           ],
                                                         ),
                                                       ],
                                                     ),
                                                     Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Text(
                                                           'Coin Value',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                                            color: AllCoustomTheme
+                                                                .getsecoundTextThemeColor(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE18,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -529,9 +614,13 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Text(
                                                           '+90.7%',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getTextThemeColors(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE20,
+                                                            color: AllCoustomTheme
+                                                                .getTextThemeColors(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE20,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -540,14 +629,20 @@ class _WalletCoinDetailState extends State<WalletCoinDetail> {
                                                         Row(
                                                           children: <Widget>[
                                                             LinearPercentIndicator(
-                                                              padding: EdgeInsets.all(0),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(0),
                                                               width: 100.0,
                                                               lineHeight: 2,
                                                               percent: 0.6,
-                                                              backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                              progressColor: Colors.orange,
+                                                              backgroundColor:
+                                                                  AllCoustomTheme
+                                                                      .getsecoundTextThemeColor(),
+                                                              progressColor:
+                                                                  Colors.orange,
                                                               animation: true,
-                                                              animationDuration: 2500,
+                                                              animationDuration:
+                                                                  2500,
                                                             ),
                                                           ],
                                                         ),

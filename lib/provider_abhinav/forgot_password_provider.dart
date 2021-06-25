@@ -29,7 +29,7 @@ class ForgotPasswordProvider with ChangeNotifier {
     // print("session token: $sessionToken");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -69,7 +69,7 @@ class ForgotPasswordProvider with ChangeNotifier {
     // print("session token: $sessionToken");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );

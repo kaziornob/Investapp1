@@ -105,7 +105,8 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                                       ),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
+                                      builder: (_, anim, __) =>
+                                          FractionalTranslation(
                                         translation: anim.value,
                                         child: Icon(
                                           Icons.arrow_back_ios,
@@ -502,7 +503,6 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                                       //     ),
                                       //   ),
                                       // ),
-
                                     ],
                                   ),
                                 ),
@@ -584,7 +584,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
             ),
           ),
           actions: [
-            FlatButton(
+            TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text("OK"),
             )

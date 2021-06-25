@@ -4,7 +4,6 @@ import 'package:auroim/constance/themes.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter/painting.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -39,24 +38,24 @@ class _MyAccountState extends State<MyAccount> {
     return Stack(
       children: <Widget>[
         SafeArea(
-          child: Scaffold(
-            backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
-            appBar: new AppBar(
-              backgroundColor: Color(0xFF5CA2F4),
-              title: Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.20),
-                child: new Text(
-                  'My Account',
-                  style: TextStyle(
-                    color: AllCoustomTheme.getTextThemeColors(),
-                    fontSize: ConstanceData.SIZE_TITLE18,
-                  ),
+            child: Scaffold(
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+          appBar: new AppBar(
+            backgroundColor: Color(0xFF5CA2F4),
+            title: Padding(
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.20),
+              child: new Text(
+                'My Account',
+                style: TextStyle(
+                  color: AllCoustomTheme.getTextThemeColors(),
+                  fontSize: ConstanceData.SIZE_TITLE18,
                 ),
               ),
-              iconTheme: new IconThemeData(color: Colors.white),
             ),
-            body: ModalProgressHUD(
+            iconTheme: new IconThemeData(color: Colors.white),
+          ),
+          body: ModalProgressHUD(
               inAsyncCall: _isMyAccountInProgress,
               opacity: 0,
               progressIndicator: CupertinoActivityIndicator(
@@ -78,7 +77,8 @@ class _MyAccountState extends State<MyAccount> {
                               margin: EdgeInsets.only(left: 10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
                                     height: 5.0,
@@ -86,12 +86,12 @@ class _MyAccountState extends State<MyAccount> {
                                   Text(
                                     "My purchases",
                                     style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Roboto",
                                         fontStyle: FontStyle.normal,
-                                        letterSpacing: 0.2
-                                    ),
+                                        letterSpacing: 0.2),
                                   ),
                                   SizedBox(
                                     height: 5.0,
@@ -106,7 +106,8 @@ class _MyAccountState extends State<MyAccount> {
                               margin: EdgeInsets.only(left: 10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
                                     height: 5.0,
@@ -114,12 +115,12 @@ class _MyAccountState extends State<MyAccount> {
                                   Text(
                                     "My Subscriptions",
                                     style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColor(),
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
                                         fontSize: ConstanceData.SIZE_TITLE16,
                                         fontFamily: "Roboto",
                                         fontStyle: FontStyle.normal,
-                                        letterSpacing: 0.2
-                                    ),
+                                        letterSpacing: 0.2),
                                   ),
                                   SizedBox(
                                     height: 5.0,
@@ -131,7 +132,7 @@ class _MyAccountState extends State<MyAccount> {
                               color: Colors.grey,
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 10.0,top: 10.0),
+                              margin: EdgeInsets.only(left: 10.0, top: 10.0),
                               child: ExpandablePanel(
                                 header: Text(
                                   'Portfolio Return',
@@ -141,28 +142,42 @@ class _MyAccountState extends State<MyAccount> {
                                     fontSize: ConstanceData.SIZE_TITLE16,
                                   ),
                                 ),
+                                collapsed: Text(
+                                  'Portfolio Return',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                  ),
+                                ),
                                 expanded: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       highlightColor: Colors.transparent,
                                       splashColor: Colors.transparent,
-                                      onTap: () {
-                                      },
+                                      onTap: () {},
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -171,19 +186,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Auro',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -203,16 +224,22 @@ class _MyAccountState extends State<MyAccount> {
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -221,19 +248,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Personal',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -243,17 +276,13 @@ class _MyAccountState extends State<MyAccount> {
                                     ),
                                   ],
                                 ),
-                                tapHeaderToExpand: true,
-                                hasIcon: true,
-                                iconColor: Colors.blueGrey,
-
                               ),
                             ),
                             SizedBox(
                               height: 20.0,
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 10.0,top: 10.0),
+                              margin: EdgeInsets.only(left: 10.0, top: 10.0),
                               child: ExpandablePanel(
                                 header: Text(
                                   'My Fund balance',
@@ -263,9 +292,18 @@ class _MyAccountState extends State<MyAccount> {
                                     fontSize: ConstanceData.SIZE_TITLE16,
                                   ),
                                 ),
+                                collapsed: Text(
+                                  'My Fund balance',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                  ),
+                                ),
                                 expanded: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       highlightColor: Colors.transparent,
@@ -276,16 +314,22 @@ class _MyAccountState extends State<MyAccount> {
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -294,19 +338,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Cash Balance',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -326,16 +376,22 @@ class _MyAccountState extends State<MyAccount> {
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -344,19 +400,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Auro Account balance',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -376,16 +438,22 @@ class _MyAccountState extends State<MyAccount> {
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -394,19 +462,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Personal account balance',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -426,16 +500,22 @@ class _MyAccountState extends State<MyAccount> {
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -444,19 +524,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Add/Redeem funds',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -466,17 +552,13 @@ class _MyAccountState extends State<MyAccount> {
                                     ),
                                   ],
                                 ),
-                                tapHeaderToExpand: true,
-                                hasIcon: true,
-                                iconColor: Colors.blueGrey,
-
                               ),
                             ),
                             SizedBox(
                               height: 20.0,
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 10.0,top: 10.0),
+                              margin: EdgeInsets.only(left: 10.0, top: 10.0),
                               child: ExpandablePanel(
                                 header: Text(
                                   'Portfolio Holding details',
@@ -486,9 +568,18 @@ class _MyAccountState extends State<MyAccount> {
                                     fontSize: ConstanceData.SIZE_TITLE16,
                                   ),
                                 ),
+                                collapsed: Text(
+                                  'Portfolio Holding details',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColor(),
+                                    fontSize: ConstanceData.SIZE_TITLE16,
+                                  ),
+                                ),
                                 expanded: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       highlightColor: Colors.transparent,
@@ -499,16 +590,22 @@ class _MyAccountState extends State<MyAccount> {
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -517,19 +614,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Auro',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -549,16 +652,22 @@ class _MyAccountState extends State<MyAccount> {
                                       child: Row(
                                         children: <Widget>[
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Icon(
                                                 Icons.circle,
-                                                color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                color: AllCoustomTheme
+                                                    .getsecoundTextThemeColor(),
                                                 size: 8,
                                               ),
                                             ),
@@ -567,19 +676,25 @@ class _MyAccountState extends State<MyAccount> {
                                             width: 14,
                                           ),
                                           Animator(
-                                            tween: Tween<double>(begin: 0, end: 1),
-                                            duration: Duration(milliseconds: 500),
+                                            tween:
+                                                Tween<double>(begin: 0, end: 1),
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
                                                 'Personal',
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
-
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -589,10 +704,6 @@ class _MyAccountState extends State<MyAccount> {
                                     ),
                                   ],
                                 ),
-                                tapHeaderToExpand: true,
-                                hasIcon: true,
-                                iconColor: Colors.blueGrey,
-
                               ),
                             ),
 /*                            Container(
@@ -628,8 +739,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Icon(
@@ -646,8 +759,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -678,8 +793,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Icon(
@@ -696,8 +813,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -728,8 +847,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Icon(
@@ -746,8 +867,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -778,8 +901,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Icon(
@@ -796,8 +921,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -838,8 +965,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Icon(
@@ -856,8 +985,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -888,8 +1019,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Icon(
@@ -906,8 +1039,10 @@ class _MyAccountState extends State<MyAccount> {
                                               tween: Tween<double>(begin: 0, end: 1),
                                               duration: Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_,anim,__) => SizeTransition(
+                                                 sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -979,8 +1114,7 @@ class _MyAccountState extends State<MyAccount> {
                       : SizedBox(),
                 ),
               )),
-          )
-        )
+        ))
       ],
     );
   }

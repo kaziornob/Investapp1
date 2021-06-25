@@ -104,7 +104,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
               ),
               backgroundColor: Color(0xff161946),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text(
                     "OK",
                     style: TextStyle(
@@ -240,7 +240,7 @@ class _MainHomeTabState extends State<MainHomeTab> {
                                         }
                                       });
                                     }),
-                                itemBuilder: (context, index) {
+                                itemBuilder: (context, index, _) {
                                   print("itembuilder $index");
                                   if (index == 6) {
                                     return Container(

@@ -1,11 +1,9 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/myProfile/all_ans_list.dart';
 import 'package:auroim/widgets/myProfile/all_qus_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class QusAns extends StatefulWidget {
   final userName;

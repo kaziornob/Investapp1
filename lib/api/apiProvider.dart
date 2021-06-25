@@ -16,7 +16,8 @@ class ApiProvider {
 
     try {
       Map<String, String> headers = {"Content-type": "application/json"};
-      var response = await http.post(url, headers: headers, body: body);
+      var response =
+          await http.post(Uri.parse(url), headers: headers, body: body);
 
       print("req statusCode: ${response.statusCode}");
 
@@ -51,7 +52,8 @@ class ApiProvider {
     Map<String, String> headers = {"Content-type": "application/json"};
     print("json req Body: $body");
 
-    var response = await http.post(url, headers: headers, body: body);
+    var response =
+        await http.post(Uri.parse(url), headers: headers, body: body);
 
     print("signup submit response: ${response.statusCode}");
 
@@ -84,7 +86,8 @@ class ApiProvider {
       'Authorization': 'Token $sessionToken',
     };
 
-    var response = await http.post(url, headers: headers, body: body);
+    var response =
+        await http.post(Uri.parse(url), headers: headers, body: body);
     // print("post submit response: ${response.statusCode}");
     return response;
   }
@@ -102,7 +105,8 @@ class ApiProvider {
       'Authorization': 'Token $sessionToken',
     };
 
-    var response = await http.post(url, headers: headers, body: body);
+    var response =
+        await http.post(Uri.parse(url), headers: headers, body: body);
     print("post submit response: ${response.statusCode}");
     return jsonDecode(response.body);
   }
@@ -122,7 +126,7 @@ class ApiProvider {
 
     // make get request
     var response = await http
-        .get(url, headers: headers)
+        .get(Uri.parse(url), headers: headers)
         .whenComplete(() => {print("response complete")})
         .catchError((error) {
       print(error.toString());
@@ -156,7 +160,7 @@ class ApiProvider {
 
     // make get request
     var response = await http
-        .get(url, headers: headers)
+        .get(Uri.parse(url), headers: headers)
         .whenComplete(() => {print("response complete")})
         .catchError((error) {
       print(error.toString());
@@ -176,9 +180,9 @@ class ApiProvider {
 
   Future<List<TradingPair>> getTradingPairsDetail() async {
     String urlString = ConstanceData.LiveTradingPairs;
-    List<TradingPair> responseData = List<TradingPair>();
+    List<TradingPair> responseData = [];
     try {
-      var response = await http.get(Uri.encodeFull(urlString), headers: {
+      var response = await http.get(Uri.parse(urlString), headers: {
         "Accept": "application/json",
       });
       if (response.statusCode == 200) {
@@ -197,8 +201,7 @@ class ApiProvider {
     String urlString = ConstanceData.PairsDetail;
     PairDetailInfo responseData;
     try {
-      var response =
-          await http.get(Uri.encodeFull(urlString + pairName), headers: {
+      var response = await http.get(Uri.parse(urlString + pairName), headers: {
         "Accept": "application/json",
       });
       if (response.statusCode == 200) {
@@ -213,10 +216,9 @@ class ApiProvider {
   Future<List<TransactionDetail>> getPairsTransactionDetail(
       String pairName) async {
     String urlString = ConstanceData.PairsTransaction;
-    List<TransactionDetail> responseData = List<TransactionDetail>();
+    List<TransactionDetail> responseData = [];
     try {
-      var response =
-          await http.get(Uri.encodeFull(urlString + pairName), headers: {
+      var response = await http.get(Uri.parse(urlString + pairName), headers: {
         "Accept": "application/json",
       });
       if (response.statusCode == 200) {
@@ -236,7 +238,7 @@ class ApiProvider {
         'https://newsapi.org/v2/everything?q=$pairName&apiKey=dc47f2d8143a4a24b6935f7ea7413c63';
     CryptoNewsLive responseData;
     try {
-      var response = await http.get(Uri.encodeFull(urlString), headers: {
+      var response = await http.get(Uri.parse(urlString), headers: {
         "Accept": "application/json",
       });
       if (response.statusCode == 200) {

@@ -95,7 +95,8 @@ class _ChangePINCodeState extends State<ChangePINCode> {
                                       begin: Offset(0, 0), end: Offset(0.2, 0)),
                                   duration: Duration(milliseconds: 500),
                                   cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
+                                  builder: (_, anim, __) =>
+                                      FractionalTranslation(
                                     translation: anim.value,
                                     child: Icon(
                                       Icons.arrow_back_ios,
@@ -118,7 +119,7 @@ class _ChangePINCodeState extends State<ChangePINCode> {
                               duration: Duration(milliseconds: 500),
                               curve: Curves.decelerate,
                               cycles: 1,
-                              builder: (anim) => Transform.scale(
+                              builder: (_, anim, __) => Transform.scale(
                                 scale: anim.value,
                                 child: Text(
                                   'Enter PIN-Code',
@@ -142,7 +143,7 @@ class _ChangePINCodeState extends State<ChangePINCode> {
                                     begin: Offset(-3, 0), end: Offset(3, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 2,
-                                builder: (anim) => Transform(
+                                builder: (_, anim, __) => Transform(
                                   transform: Matrix4.translationValues(
                                       anim.value.dx, 0, 0),
                                   child: Row(
@@ -216,7 +217,7 @@ class _ChangePINCodeState extends State<ChangePINCode> {
                             duration: Duration(milliseconds: 500),
                             curve: Curves.decelerate,
                             cycles: 1,
-                            builder: (anim) => Transform.scale(
+                            builder: (_, anim, __) => Transform.scale(
                               scale: anim.value,
                               child: Column(
                                 children: <Widget>[

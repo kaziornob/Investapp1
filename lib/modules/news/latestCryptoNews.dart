@@ -97,10 +97,11 @@ class _CryptoNewsState extends State<CryptoNews> {
                                 Navigator.pop(context);
                               },
                               child: Animator(
-                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                tween: Tween<Offset>(
+                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
-                                builder: (anim) => FractionalTranslation(
+                                builder: (_, anim, __) => FractionalTranslation(
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
@@ -113,7 +114,7 @@ class _CryptoNewsState extends State<CryptoNews> {
                               duration: Duration(milliseconds: 500),
                               curve: Curves.decelerate,
                               cycles: 1,
-                              builder: (anim) => Transform.scale(
+                              builder: (_, anim, __) => Transform.scale(
                                 scale: anim.value,
                                 child: Text(
                                   'Live Crypto News',
@@ -158,7 +159,7 @@ class _CryptoNewsState extends State<CryptoNews> {
                             return Animator(
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => Transform.scale(
+                              builder: (_, anim, __) => Transform.scale(
                                 scale: anim.value,
                                 child: InkWell(
                                   highlightColor: Colors.transparent,
@@ -166,9 +167,12 @@ class _CryptoNewsState extends State<CryptoNews> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       CupertinoPageRoute(
-                                        builder: (BuildContext context) => NewsDescription(
-                                          title: cryptoNewsLive.articles[index].title,
-                                          url: cryptoNewsLive.articles[index].url,
+                                        builder: (BuildContext context) =>
+                                            NewsDescription(
+                                          title: cryptoNewsLive
+                                              .articles[index].title,
+                                          url: cryptoNewsLive
+                                              .articles[index].url,
                                         ),
                                       ),
                                     );
@@ -189,24 +193,40 @@ class _CryptoNewsState extends State<CryptoNews> {
                                           children: <Widget>[
                                             Card(
                                               semanticContainer: true,
-                                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft: Radius.circular(20),
+                                                  bottomLeft:
+                                                      Radius.circular(20),
                                                 ),
                                               ),
                                               margin: EdgeInsets.all(0),
-                                              child: cryptoNewsLive.articles[index] != null &&
-                                                      cryptoNewsLive.articles[index].urlToImage != null &&
-                                                      cryptoNewsLive.articles[index].urlToImage != ''
+                                              child: cryptoNewsLive.articles[
+                                                              index] !=
+                                                          null &&
+                                                      cryptoNewsLive
+                                                              .articles[index]
+                                                              .urlToImage !=
+                                                          null &&
+                                                      cryptoNewsLive
+                                                              .articles[index]
+                                                              .urlToImage !=
+                                                          ''
                                                   ? CachedNetworkImage(
-                                                      errorWidget: (context, url, error) => CircleAvatar(
-                                                        backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          CircleAvatar(
+                                                        backgroundColor:
+                                                            AllCoustomTheme
+                                                                .getsecoundTextThemeColor(),
                                                         child: Icon(
                                                           Icons.error_outline,
                                                         ),
                                                       ),
-                                                      imageUrl: cryptoNewsLive.articles[index].urlToImage,
+                                                      imageUrl: cryptoNewsLive
+                                                          .articles[index]
+                                                          .urlToImage,
                                                       fit: BoxFit.fill,
                                                     )
                                                   : SizedBox(),
@@ -215,30 +235,49 @@ class _CryptoNewsState extends State<CryptoNews> {
                                               height: 6,
                                             ),
                                             Text(
-                                              cryptoNewsLive.articles[index].title != null && cryptoNewsLive.articles[index].title != ""
-                                                  ? cryptoNewsLive.articles[index].title
+                                              cryptoNewsLive.articles[index]
+                                                              .title !=
+                                                          null &&
+                                                      cryptoNewsLive
+                                                              .articles[index]
+                                                              .title !=
+                                                          ""
+                                                  ? cryptoNewsLive
+                                                      .articles[index].title
                                                   : "",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColors(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
                                               ),
                                             ),
                                             SizedBox(
                                               height: 6,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
                                               child: Text(
-                                                cryptoNewsLive.articles[index].description != null &&
-                                                        cryptoNewsLive.articles[index].description != ""
-                                                    ? cryptoNewsLive.articles[index].description
+                                                cryptoNewsLive.articles[index]
+                                                                .description !=
+                                                            null &&
+                                                        cryptoNewsLive
+                                                                .articles[index]
+                                                                .description !=
+                                                            ""
+                                                    ? cryptoNewsLive
+                                                        .articles[index]
+                                                        .description
                                                     : "",
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
-                                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                  fontSize: ConstanceData.SIZE_TITLE14,
+                                                  color: AllCoustomTheme
+                                                      .getsecoundTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE14,
                                                 ),
                                               ),
                                             ),
@@ -246,74 +285,122 @@ class _CryptoNewsState extends State<CryptoNews> {
                                               height: 10,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                                              padding: const EdgeInsets.only(
+                                                  left: 10,
+                                                  right: 10,
+                                                  bottom: 10),
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: <Widget>[
                                                   Column(
                                                     children: <Widget>[
                                                       Text(
                                                         'Author',
                                                         style: TextStyle(
-                                                          color: AllCoustomTheme.getTextThemeColors(),
-                                                          fontSize: ConstanceData.SIZE_TITLE14,
-                                                          fontWeight: FontWeight.bold,
+                                                          color: AllCoustomTheme
+                                                              .getTextThemeColors(),
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE14,
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                         ),
                                                       ),
                                                       SizedBox(
                                                         height: 2,
                                                       ),
                                                       Text(
-                                                        cryptoNewsLive.articles[index].author != null &&
-                                                                cryptoNewsLive.articles[index].author != ""
-                                                            ? cryptoNewsLive.articles[index].author
+                                                        cryptoNewsLive
+                                                                        .articles[
+                                                                            index]
+                                                                        .author !=
+                                                                    null &&
+                                                                cryptoNewsLive
+                                                                        .articles[
+                                                                            index]
+                                                                        .author !=
+                                                                    ""
+                                                            ? cryptoNewsLive
+                                                                .articles[index]
+                                                                .author
                                                             : "",
                                                         style: TextStyle(
-                                                          color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                          fontSize: ConstanceData.SIZE_TITLE14,
+                                                          color: AllCoustomTheme
+                                                              .getsecoundTextThemeColor(),
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE14,
                                                         ),
                                                       )
                                                     ],
                                                   ),
                                                   Padding(
-                                                    padding: const EdgeInsets.only(right: 18),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 18),
                                                     child: Text(
                                                       getConvertTime(
-                                                        cryptoNewsLive.articles[index].publishedAt.toString(),
+                                                        cryptoNewsLive
+                                                            .articles[index]
+                                                            .publishedAt
+                                                            .toString(),
                                                       ),
                                                       style: TextStyle(
-                                                        color: AllCoustomTheme.getTextThemeColors(),
-                                                        fontSize: ConstanceData.SIZE_TITLE12,
+                                                        color: AllCoustomTheme
+                                                            .getTextThemeColors(),
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE12,
                                                       ),
                                                     ),
                                                   ),
                                                   Animator(
-                                                    tween: Tween<double>(begin: 0.8, end: 1.1),
-                                                    curve: Curves.easeInToLinear,
+                                                    tween: Tween<double>(
+                                                        begin: 0.8, end: 1.1),
+                                                    curve:
+                                                        Curves.easeInToLinear,
                                                     cycles: 0,
-                                                    builder: (anim) => Transform.scale(
+                                                    builder: (_, anim, __) =>
+                                                        Transform.scale(
                                                       scale: anim.value,
                                                       child: Container(
                                                         height: 28,
                                                         width: 28,
-                                                        decoration: BoxDecoration(
-                                                          border: new Border.all(color: Colors.white, width: 1.5),
-                                                          shape: BoxShape.circle,
-                                                          gradient: LinearGradient(
-                                                            begin: Alignment.topLeft,
-                                                            end: Alignment.bottomRight,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border:
+                                                              new Border.all(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  width: 1.5),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          gradient:
+                                                              LinearGradient(
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight,
                                                             colors: [
-                                                              globals.buttoncolor1,
-                                                              globals.buttoncolor2,
+                                                              globals
+                                                                  .buttoncolor1,
+                                                              globals
+                                                                  .buttoncolor2,
                                                             ],
                                                           ),
                                                         ),
                                                         child: Padding(
-                                                          padding: const EdgeInsets.only(left: 3),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 3),
                                                           child: Icon(
-                                                            Icons.arrow_forward_ios,
+                                                            Icons
+                                                                .arrow_forward_ios,
                                                             size: 14,
-                                                            color: AllCoustomTheme.getTextThemeColors(),
+                                                            color: AllCoustomTheme
+                                                                .getTextThemeColors(),
                                                           ),
                                                         ),
                                                       ),

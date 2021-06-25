@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
 import 'package:auroim/reusable_widgets/customButton.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_comments_section.dart';
@@ -12,7 +11,6 @@ import 'package:auroim/widgets/stock_and_portfolio_pitch/stock_pitch_video.dart'
 import 'package:auroim/widgets/stock_and_portfolio_pitch/topic_tags.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/global.dart' as globals;
-import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class ShowStockPitchPage extends StatefulWidget {

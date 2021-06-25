@@ -168,7 +168,8 @@ class _PairDescriptionState extends State<PairDescription> {
                                       begin: Offset(0, 0), end: Offset(0.2, 0)),
                                   duration: Duration(milliseconds: 500),
                                   cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
+                                  builder: (_, anim, __) =>
+                                      FractionalTranslation(
                                     translation: anim.value,
                                     child: Icon(
                                       Icons.arrow_back_ios,
@@ -182,7 +183,7 @@ class _PairDescriptionState extends State<PairDescription> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.decelerate,
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Text(
                                     widget.tradingPair.name,
@@ -199,8 +200,10 @@ class _PairDescriptionState extends State<PairDescription> {
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: InkWell(
@@ -240,7 +243,7 @@ class _PairDescriptionState extends State<PairDescription> {
                                     Animator(
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => Transform.scale(
+                                      builder: (_, anim, __) => Transform.scale(
                                         scale: anim.value,
                                         child: Padding(
                                           padding:
@@ -282,8 +285,9 @@ class _PairDescriptionState extends State<PairDescription> {
                                                         curve: Curves
                                                             .fastOutSlowIn,
                                                         cycles: 0,
-                                                        builder: (anim) =>
-                                                            Transform.scale(
+                                                        builder:
+                                                            (_, anim, __) =>
+                                                                Transform.scale(
                                                           scale: anim.value,
                                                           child: Text(
                                                             pairDetailInfo.last
@@ -348,7 +352,7 @@ class _PairDescriptionState extends State<PairDescription> {
                                           end: Offset(10, 0)),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => Transform(
+                                      builder: (_, anim, __) => Transform(
                                         transform: Matrix4.translationValues(
                                             anim.value.dx, 0, 0),
                                         child: Padding(
@@ -400,7 +404,8 @@ class _PairDescriptionState extends State<PairDescription> {
                                                         duration: Duration(
                                                             milliseconds: 500),
                                                         cycles: 0,
-                                                        builder: (anim) =>
+                                                        builder: (_, anim,
+                                                                __) =>
                                                             FractionalTranslation(
                                                           translation:
                                                               anim.value,
@@ -452,7 +457,8 @@ class _PairDescriptionState extends State<PairDescription> {
                                                         duration: Duration(
                                                             milliseconds: 500),
                                                         cycles: 0,
-                                                        builder: (anim) =>
+                                                        builder: (_, anim,
+                                                                __) =>
                                                             FractionalTranslation(
                                                           translation:
                                                               anim.value,
@@ -620,9 +626,10 @@ class _PairDescriptionState extends State<PairDescription> {
                                     buyColumn != null || sellColumn != null
                                         ? Expanded(
                                             child: Animator(
-                                              duration: Duration(milliseconds: 500),
+                                              duration:
+                                                  Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) =>
+                                              builder: (_, anim, __) =>
                                                   Transform.scale(
                                                 scale: anim.value,
                                                 child: Row(
@@ -793,9 +800,10 @@ class _PairDescriptionState extends State<PairDescription> {
                                             padding: const EdgeInsets.only(
                                                 left: 16, right: 16),
                                             child: Animator(
-                                              duration: Duration(milliseconds: 500),
+                                              duration:
+                                                  Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) =>
+                                              builder: (_, anim, __) =>
                                                   Transform.scale(
                                                 scale: anim.value,
                                                 child: SizedBox(
@@ -812,8 +820,9 @@ class _PairDescriptionState extends State<PairDescription> {
                                                         curve: Curves
                                                             .fastOutSlowIn,
                                                         cycles: 0,
-                                                        builder: (anim) =>
-                                                            Transform.scale(
+                                                        builder:
+                                                            (_, anim, __) =>
+                                                                Transform.scale(
                                                           scale: anim.value,
                                                           child: FlatButton(
                                                             padding:
@@ -956,7 +965,7 @@ class _PairDescriptionState extends State<PairDescription> {
                                           Tween<double>(begin: 0, end: 2 * pi),
                                       duration: Duration(milliseconds: 500),
                                       repeats: 0,
-                                      builder: (anim) => Transform(
+                                      builder: (_, anim, __) => Transform(
                                         transform:
                                             Matrix4.rotationZ(anim.value),
                                         alignment: Alignment.center,
@@ -976,7 +985,7 @@ class _PairDescriptionState extends State<PairDescription> {
                                     Animator(
                                       duration: Duration(seconds: 1),
                                       cycles: 1,
-                                      builder: (anim) => Transform.scale(
+                                      builder: (_, anim, __) => Transform.scale(
                                         scale: anim.value,
                                         child: Text(
                                           'Something Wents To Wrong\nPlease try Again',

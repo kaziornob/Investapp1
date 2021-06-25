@@ -25,7 +25,7 @@ class LongShortProvider with ChangeNotifier {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get pro cons response: ${jsonDecode(response.body)}");
     var result = jsonDecode(response.body);
 
@@ -56,7 +56,7 @@ class LongShortProvider with ChangeNotifier {
     // print("session token: $sessionToken");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode({"ticker": ticker}),
     );
@@ -85,7 +85,7 @@ class LongShortProvider with ChangeNotifier {
     // print("session token: $sessionToken");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode({"ticker": ticker}),
     );
@@ -125,7 +125,7 @@ class LongShortProvider with ChangeNotifier {
     };
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -134,7 +134,7 @@ class LongShortProvider with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return result["message"];
-    }else{
+    } else {
       return result["message"];
     }
   }
@@ -155,7 +155,7 @@ class LongShortProvider with ChangeNotifier {
     // print("session token: $sessionToken");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode({"ticker": ticker}),
     );
@@ -236,7 +236,7 @@ class LongShortProvider with ChangeNotifier {
     print("get finbert url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("finbert response: ${jsonDecode(response.body)}");
     var result = jsonDecode(response.body);
 

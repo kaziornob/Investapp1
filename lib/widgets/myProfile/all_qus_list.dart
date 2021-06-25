@@ -130,7 +130,7 @@ class _AllQusListState extends State<AllQusList> {
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.decelerate,
                                       cycles: 1,
-                                      builder: (anim) => Transform.scale(
+                                      builder: (_, anim, __) => Transform.scale(
                                         scale: anim.value,
                                         child: Text(
                                           'All Question',

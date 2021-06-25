@@ -36,7 +36,9 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
   void initState() {
     super.initState();
     checkConnection();
-    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
       if (result.index != 2) {
         showInSnackBar(ConstanceData.GotInternet, isGreeen: true);
         loadUserDetails();
@@ -110,7 +112,9 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
         Scaffold(
           key: _tradingPairScaffoldKey,
           drawer: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
+            width: MediaQuery.of(context).size.width * 0.75 < 400
+                ? MediaQuery.of(context).size.width * 0.75
+                : 350,
             child: Drawer(
               child: AppDrawer(
                 selectItemName: 'tradingpair',
@@ -157,8 +161,10 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                       tween: Tween<double>(begin: 0, end: 1),
                       duration: Duration(milliseconds: 500),
                       cycles: 1,
-                      builder: (anim) => SizeTransition(
-                        sizeFactor: anim,
+                      builder: (_, anim, __) => SizeTransition(
+                        sizeFactor: CurvedAnimation(
+                            curve: Curves.fastOutSlowIn,
+                            parent: anim.controller),
                         axis: Axis.horizontal,
                         axisAlignment: 1,
                         child: Padding(
@@ -250,7 +256,9 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                             child: ListView.builder(
                               padding: EdgeInsets.only(top: 4),
                               physics: BouncingScrollPhysics(),
-                              itemCount: _isSearch ? searchTradingPair.length : tradingPair.length,
+                              itemCount: _isSearch
+                                  ? searchTradingPair.length
+                                  : tradingPair.length,
                               itemBuilder: (context, index) {
                                 if (index % 11 == 0) {
                                   return Column(
@@ -273,7 +281,9 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                     ],
                                   );
                                 }
-                                var finalTradingPair = _isSearch ? searchTradingPair[index] : tradingPair[index];
+                                var finalTradingPair = _isSearch
+                                    ? searchTradingPair[index]
+                                    : tradingPair[index];
                                 return Padding(
                                   padding: EdgeInsets.only(
                                     left: 16,
@@ -281,7 +291,7 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                   child: Animator(
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => Transform.scale(
+                                    builder: (_, anim, __) => Transform.scale(
                                       scale: anim.value,
                                       child: Column(
                                         children: <Widget>[
@@ -289,7 +299,9 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                           Container(
                                             height: 85,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20)),
+                                              borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(20)),
                                               color: AllCoustomTheme.boxColor(),
                                             ),
                                             child: Padding(
@@ -297,22 +309,34 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                               child: Column(
                                                 children: <Widget>[
                                                   Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: <Widget>[
                                                       Text(
-                                                        finalTradingPair.name.toString() + ' (' + finalTradingPair.urlSymbol + ')',
+                                                        finalTradingPair.name
+                                                                .toString() +
+                                                            ' (' +
+                                                            finalTradingPair
+                                                                .urlSymbol +
+                                                            ')',
                                                         style: TextStyle(
-                                                          color: AllCoustomTheme.getTextThemeColors(),
-                                                          fontWeight: FontWeight.bold,
+                                                          color: AllCoustomTheme
+                                                              .getTextThemeColors(),
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                         ),
                                                       ),
                                                       Expanded(
                                                         child: SizedBox(),
                                                       ),
                                                       Text(
-                                                        finalTradingPair.minimumOrder.toString(),
+                                                        finalTradingPair
+                                                            .minimumOrder
+                                                            .toString(),
                                                         style: TextStyle(
-                                                          color: AllCoustomTheme.getTextThemeColors(),
+                                                          color: AllCoustomTheme
+                                                              .getTextThemeColors(),
                                                         ),
                                                       ),
                                                     ],
@@ -321,13 +345,20 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                                     height: 6,
                                                   ),
                                                   Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: <Widget>[
                                                       Text(
-                                                        finalTradingPair.description.toString(),
+                                                        finalTradingPair
+                                                            .description
+                                                            .toString(),
                                                         style: TextStyle(
-                                                          color: AllCoustomTheme.getTextThemeColors(),
-                                                          fontSize: ConstanceData.SIZE_TITLE12,
+                                                          color: AllCoustomTheme
+                                                              .getTextThemeColors(),
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE12,
                                                         ),
                                                       ),
                                                     ],
@@ -338,11 +369,14 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                                   Row(
                                                     children: <Widget>[
                                                       Padding(
-                                                        padding: const EdgeInsets.only(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
                                                           top: 2,
                                                         ),
                                                         child: Icon(
-                                                          Icons.check_circle_outline,
+                                                          Icons
+                                                              .check_circle_outline,
                                                           size: 14,
                                                           color: Colors.green,
                                                         ),
@@ -351,29 +385,41 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                                         width: 4,
                                                       ),
                                                       Text(
-                                                        finalTradingPair.trading,
+                                                        finalTradingPair
+                                                            .trading,
                                                         style: TextStyle(
-                                                          color: AllCoustomTheme.getTextThemeColors(),
-                                                          fontSize: ConstanceData.SIZE_TITLE12,
+                                                          color: AllCoustomTheme
+                                                              .getTextThemeColors(),
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE12,
                                                         ),
                                                       ),
                                                       Expanded(
                                                         child: SizedBox(),
                                                       ),
                                                       InkWell(
-                                                        highlightColor: Colors.transparent,
-                                                        splashColor: Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        splashColor:
+                                                            Colors.transparent,
                                                         onTap: () {
-                                                          Navigator.of(context).push(
+                                                          Navigator.of(context)
+                                                              .push(
                                                             CupertinoPageRoute(
-                                                              builder: (BuildContext context) => PairDescription(
-                                                                tradingPair: finalTradingPair,
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  PairDescription(
+                                                                tradingPair:
+                                                                    finalTradingPair,
                                                               ),
                                                             ),
                                                           );
                                                         },
-                                                        child: AnimatedForwardArrow(
-                                                          isShowingarroeForward: true,
+                                                        child:
+                                                            AnimatedForwardArrow(
+                                                          isShowingarroeForward:
+                                                              true,
                                                         ),
                                                       ),
                                                     ],
@@ -401,7 +447,7 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                   tween: Tween<double>(begin: 0, end: 2 * pi),
                                   duration: Duration(milliseconds: 500),
                                   repeats: 0,
-                                  builder: (anim) => Transform(
+                                  builder: (_, anim, __) => Transform(
                                     transform: Matrix4.rotationZ(anim.value),
                                     alignment: Alignment.center,
                                     child: SizedBox(
@@ -420,13 +466,14 @@ class _LiveTradingPairState extends State<LiveTradingPair> {
                                 Animator(
                                   duration: Duration(milliseconds: 500),
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: Text(
                                       'Something Wents To Wrong\nPlease try Again',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
                                       ),
                                     ),
                                   ),

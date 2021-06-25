@@ -16,9 +16,11 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
   int selectedTabIndex;
   var globalContext;
   TextEditingController _passwordTextFieldController = TextEditingController();
-  TextEditingController _confirmPasswordTextFieldController = TextEditingController();
+  TextEditingController _confirmPasswordTextFieldController =
+      TextEditingController();
   TextEditingController _newEmailTextFieldController = TextEditingController();
-  TextEditingController _confirmEmailTextFieldController = TextEditingController();
+  TextEditingController _confirmEmailTextFieldController =
+      TextEditingController();
 
   final List<Tab> tabList = <Tab>[
     new Tab(text: 'Account'),
@@ -52,8 +54,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
     });
   }
 
-  Widget account()
-  {
+  Widget account() {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -64,11 +65,10 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
             color: Colors.grey,
           ),
           InkWell(
-            onTap: ()
-            {
+            onTap: () {
               _addEmailDialogBox(globalContext);
             },
-            child:  Container(
+            child: Container(
               margin: EdgeInsets.only(left: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,8 +84,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
-                        letterSpacing: 0.2
-                    ),
+                        letterSpacing: 0.2),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -110,11 +109,10 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
             color: Colors.grey,
           ),
           InkWell(
-            onTap: ()
-            {
+            onTap: () {
               _addPhoneDialogBox(globalContext);
             },
-            child:  Container(
+            child: Container(
               margin: EdgeInsets.only(left: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,8 +128,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
-                        letterSpacing: 0.2
-                    ),
+                        letterSpacing: 0.2),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -152,13 +149,11 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-
           Divider(
             color: Colors.grey,
           ),
           InkWell(
-            onTap: ()
-            {
+            onTap: () {
               _changePasswordDialogBox(globalContext);
             },
             child: Container(
@@ -177,8 +172,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
-                        letterSpacing: 0.2
-                    ),
+                        letterSpacing: 0.2),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -203,11 +197,10 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
             color: Colors.grey,
           ),
           InkWell(
-            onTap: ()
-            {
+            onTap: () {
               _profileDialogBox(context);
             },
-            child:  Container(
+            child: Container(
               margin: EdgeInsets.only(left: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,8 +216,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                         fontSize: ConstanceData.SIZE_TITLE16,
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.normal,
-                        letterSpacing: 0.2
-                    ),
+                        letterSpacing: 0.2),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -248,14 +240,12 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
           Divider(
             color: Colors.grey,
           ),
-
         ],
       ),
     );
   }
 
-  Widget privacy()
-  {
+  Widget privacy() {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -281,8 +271,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                       fontSize: ConstanceData.SIZE_TITLE16,
                       fontFamily: "Roboto",
                       fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2
-                  ),
+                      letterSpacing: 0.2),
                 ),
                 SizedBox(
                   height: 5.0,
@@ -321,8 +310,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                       fontSize: ConstanceData.SIZE_TITLE16,
                       fontFamily: "Roboto",
                       fontStyle: FontStyle.normal,
-                      letterSpacing: 0.2
-                  ),
+                      letterSpacing: 0.2),
                 ),
                 SizedBox(
                   height: 5.0,
@@ -345,7 +333,6 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
           Divider(
             color: Colors.grey,
           ),
-
         ],
       ),
     );
@@ -359,23 +346,24 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
     return Stack(
       children: <Widget>[
         SafeArea(
-          child: Scaffold(
-            backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
-            appBar: new AppBar(
-              backgroundColor: Color(0xFF5CA2F4),
-              title: Padding(
-                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.20),
-                child: new Text(
-                  'Settings',
-                  style: TextStyle(
-                    color: AllCoustomTheme.getTextThemeColors(),
-                    fontSize: ConstanceData.SIZE_TITLE18,
-                  ),
+            child: Scaffold(
+          backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
+          appBar: new AppBar(
+            backgroundColor: Color(0xFF5CA2F4),
+            title: Padding(
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.20),
+              child: new Text(
+                'Settings',
+                style: TextStyle(
+                  color: AllCoustomTheme.getTextThemeColors(),
+                  fontSize: ConstanceData.SIZE_TITLE18,
                 ),
               ),
-              iconTheme: new IconThemeData(color: Colors.white),
             ),
-            body: ModalProgressHUD(
+            iconTheme: new IconThemeData(color: Colors.white),
+          ),
+          body: ModalProgressHUD(
               inAsyncCall: _isSettingInProgress,
               opacity: 0,
               progressIndicator: CupertinoActivityIndicator(
@@ -384,67 +372,67 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
               child: Container(
                 child: !_isSettingInProgress
                     ? Column(
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.only(left: 10.0,right: 3.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          TabBar(
-                            controller: _tabController,
-                            isScrollable: true,
-                            onTap: (index)
-                            {
-                              selectedTabIndex = index;
-                            },
-                            labelColor: Color(0xFF5CA2F4),
-                            labelStyle: TextStyle(fontSize: 18.0,letterSpacing: 0.2),
-                            indicatorColor: Color(0xFF5CA2F4),
-                            indicatorWeight: 4.0,
-                            // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
-                            tabs: <Widget>[
-                              new Tab(text: 'Account'),
-                              new Tab(text: 'Privacy'),
-                            ],
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.only(left: 10.0, right: 3.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                TabBar(
+                                  controller: _tabController,
+                                  isScrollable: true,
+                                  onTap: (index) {
+                                    selectedTabIndex = index;
+                                  },
+                                  labelColor: Color(0xFF5CA2F4),
+                                  labelStyle: TextStyle(
+                                      fontSize: 18.0, letterSpacing: 0.2),
+                                  indicatorColor: Color(0xFF5CA2F4),
+                                  indicatorWeight: 4.0,
+                                  // unselectedLabelColor: StyleTheme.Colors.AppBarTabTextColor,
+                                  tabs: <Widget>[
+                                    new Tab(text: 'Account'),
+                                    new Tab(text: 'Privacy'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.only(top: 10.0),
+                              child: new TabBarView(
+                                controller: _tabController,
+                                children: tabList.map((Tab tab) {
+                                  return _getPage(tab);
+                                }).toList(),
+                                physics: ScrollPhysics(),
+                              ),
+                            ),
                           ),
                         ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: new TabBarView(
-                          controller: _tabController,
-                          children: tabList.map((Tab tab) {
-                            return _getPage(tab);
-                          }).toList(),
-                          physics: ScrollPhysics(),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
+                      )
                     : SizedBox(),
-              )
-            ),
-          )
-        )
+              )),
+        ))
       ],
     );
   }
 
   // ignore: missing_return
-  Widget _getPage(Tab tab){
-    switch(tab.text){
-      case 'Account': return account();
-      case 'Privacy': return privacy();
+  Widget _getPage(Tab tab) {
+    switch (tab.text) {
+      case 'Account':
+        return account();
+      case 'Privacy':
+        return privacy();
     }
   }
 
-  Future<void> _addEmailDialogBox (BuildContext context) async {
+  Future<void> _addEmailDialogBox(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -457,43 +445,40 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                 fontFamily: "Roboto",
               ),
             ),
-            content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  TextField(
-                    controller: _newEmailTextFieldController,
-                    style: TextStyle(
+            content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              TextField(
+                controller: _newEmailTextFieldController,
+                style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: AllCoustomTheme.getTextThemeColor(),
+                ),
+                decoration: InputDecoration(
+                  hintText: "New Email Address",
+                  hintStyle: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      color: AllCoustomTheme.getTextThemeColor()),
+                  labelStyle: TextStyle(
                       fontSize: ConstanceData.SIZE_TITLE14,
-                      color: AllCoustomTheme.getTextThemeColor(),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: "New Email Address",
-                      hintStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          color: AllCoustomTheme.getTextThemeColor()),
-                      labelStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE14,
-                          color: AllCoustomTheme.getTextThemeColor()),
-                    ),
-                  ),
-                  TextField(
-                    controller: _confirmEmailTextFieldController,
-                    style: TextStyle(
+                      color: AllCoustomTheme.getTextThemeColor()),
+                ),
+              ),
+              TextField(
+                controller: _confirmEmailTextFieldController,
+                style: TextStyle(
+                  fontSize: ConstanceData.SIZE_TITLE14,
+                  color: AllCoustomTheme.getTextThemeColor(),
+                ),
+                decoration: InputDecoration(
+                  hintText: "Confirm Email Address",
+                  hintStyle: TextStyle(
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      color: AllCoustomTheme.getTextThemeColor()),
+                  labelStyle: TextStyle(
                       fontSize: ConstanceData.SIZE_TITLE14,
-                      color: AllCoustomTheme.getTextThemeColor(),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: "Confirm Email Address",
-                      hintStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE16,
-                          color: AllCoustomTheme.getTextThemeColor()),
-                      labelStyle: TextStyle(
-                          fontSize: ConstanceData.SIZE_TITLE14,
-                          color: AllCoustomTheme.getTextThemeColor()),
-                    ),
-                  ),
-                ]
-            ),
+                      color: AllCoustomTheme.getTextThemeColor()),
+                ),
+              ),
+            ]),
             actions: <Widget>[
               FlatButton(
                 color: Colors.red,
@@ -531,32 +516,31 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
         });
   }
 
-  Future<void> _addPhoneDialogBox (BuildContext context) async {
+  Future<void> _addPhoneDialogBox(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: ListTile(
-              title: Text(
-                'Your Phone Number',
-                style: new TextStyle(
-                  color: AllCoustomTheme.getTextThemeColor(),
-                  fontSize: ConstanceData.SIZE_TITLE18,
-                  fontFamily: "Roboto",
-                ),
-              ),
-              subtitle: Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Text(
-                  'You can add more phone numbers later',
+                title: Text(
+                  'Your Phone Number',
                   style: new TextStyle(
-                    color: AllCoustomTheme.getsecoundTextThemeColor(),
-                    fontSize: ConstanceData.SIZE_TITLE16,
+                    color: AllCoustomTheme.getTextThemeColor(),
+                    fontSize: ConstanceData.SIZE_TITLE18,
                     fontFamily: "Roboto",
                   ),
                 ),
-              )
-            ),
+                subtitle: Padding(
+                  padding: EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    'You can add more phone numbers later',
+                    style: new TextStyle(
+                      color: AllCoustomTheme.getsecoundTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                    ),
+                  ),
+                )),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -619,7 +603,6 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
       phoneIsoCode = isoCode;
       confirmedNumber = internationalizedPhoneNumber;
       print("internationalNum $confirmedNumber");
-
     });
   }
 
@@ -631,8 +614,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
     });
   }
 
-
-  Future<void> _changePasswordDialogBox (BuildContext context) async {
+  Future<void> _changePasswordDialogBox(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -719,8 +701,7 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
         });
   }
 
-
-  Future<void> _profileDialogBox (BuildContext context) async {
+  Future<void> _profileDialogBox(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -803,7 +784,6 @@ class _SettingState extends State<Setting> with SingleTickerProviderStateMixin {
                         fontFamily: "Roboto",
                       ),
                     ),
-
                   ],
                 )
               ],

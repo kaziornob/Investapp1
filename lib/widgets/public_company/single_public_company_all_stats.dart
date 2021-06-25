@@ -85,7 +85,7 @@ class _SinglePublicCompanyAllStatsListState
                         slideIndex = index;
                       });
                     }),
-                itemBuilder: (context, index) {
+                itemBuilder: (context, index, _) {
                   return Container(
                     // decoration:
                     //     BoxDecoration(border: Border.all(color: Colors.black)),
@@ -292,7 +292,7 @@ class _SinglePublicCompanyAllStatsListState
                 if (snapshot.hasData) {
                   print("in long short");
                   _totalVotes = (snapshot.data["long_votes"] +
-                      snapshot.data["short_votes"])
+                          snapshot.data["short_votes"])
                       .toDouble();
                   _voteValue = snapshot.data["long_votes"].toDouble();
                   // print(_voteValue);
@@ -319,7 +319,7 @@ class _SinglePublicCompanyAllStatsListState
                         ],
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width*0.7,
+                        width: MediaQuery.of(context).size.width * 0.7,
                         height: 70,
                         // decoration: BoxDecoration(border: Border.all()),
                         margin: EdgeInsets.all(7.0),
@@ -329,42 +329,42 @@ class _SinglePublicCompanyAllStatsListState
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  width:
-                                  (MediaQuery.of(context).size.width*0.7) *
+                                  width: (MediaQuery.of(context).size.width *
+                                          0.7) *
                                       (_voteValue / _totalVotes),
                                   height: 30,
                                   child: (_voteValue / _totalVotes) == 0.0
                                       ? null
                                       : Center(
-                                    child: Text(
-                                      "${((_voteValue / _totalVotes) * 100).toStringAsFixed(0).split(".")[0]}%",
-                                      style: TextStyle(
-                                        color: Color(0xFF414141),
-                                        fontSize: 16,
-                                        fontFamily: "RosarioMedium",
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
+                                          child: Text(
+                                            "${((_voteValue / _totalVotes) * 100).toStringAsFixed(0).split(".")[0]}%",
+                                            style: TextStyle(
+                                              color: Color(0xFF414141),
+                                              fontSize: 16,
+                                              fontFamily: "RosarioMedium",
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                                 ),
                                 Container(
                                   height: 40,
-                                  width:
-                                  (MediaQuery.of(context).size.width*0.7) *
+                                  width: (MediaQuery.of(context).size.width *
+                                          0.7) *
                                       (1 - (_voteValue / _totalVotes)),
                                   child: (1 - (_voteValue / _totalVotes)) == 0.0
                                       ? null
                                       : Center(
-                                    child: Text(
-                                      "${((_voteValue / _totalVotes) * 100).toStringAsFixed(0).split(".")[0]}%",
-                                      style: TextStyle(
-                                        color: Color(0xFF414141),
-                                        fontSize: 16,
-                                        fontFamily: "RosarioMedium",
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
+                                          child: Text(
+                                            "${((_voteValue / _totalVotes) * 100).toStringAsFixed(0).split(".")[0]}%",
+                                            style: TextStyle(
+                                              color: Color(0xFF414141),
+                                              fontSize: 16,
+                                              fontFamily: "RosarioMedium",
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                                 ),
                               ],
                             ),
@@ -388,7 +388,7 @@ class _SinglePublicCompanyAllStatsListState
                                 activeTickMarkColor: Color(0xFF1D6177),
                                 inactiveTickMarkColor: Color(0xFFFAB95B),
                                 valueIndicatorShape:
-                                PaddleSliderValueIndicatorShape(),
+                                    PaddleSliderValueIndicatorShape(),
                                 valueIndicatorColor: Color(0xFF1D6177),
                                 valueIndicatorTextStyle: TextStyle(
                                   color: Colors.white,
@@ -400,7 +400,7 @@ class _SinglePublicCompanyAllStatsListState
                                 min: 0,
                                 max: _totalVotes,
                                 label:
-                                '${((_voteValue / _totalVotes) * 100).toString().split(".")[0]}% Voted Long,${(((_totalVotes - _voteValue) / _totalVotes) * 100).toString().split(".")[0]}% Voted Short',
+                                    '${((_voteValue / _totalVotes) * 100).toString().split(".")[0]}% Voted Long,${(((_totalVotes - _voteValue) / _totalVotes) * 100).toString().split(".")[0]}% Voted Short',
                                 onChanged: (value) {},
                               ),
                             ),
@@ -416,7 +416,6 @@ class _SinglePublicCompanyAllStatsListState
             );
           },
         ),
-
       ],
     );
   }

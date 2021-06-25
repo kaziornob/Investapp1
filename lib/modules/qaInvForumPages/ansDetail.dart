@@ -108,7 +108,9 @@ class _AnsDetailState extends State<AnsDetail> {
                     margin: EdgeInsets.only(left: 5.0),
                     child: Icon(
                       Icons.thumb_up,
-                      color: AllCoustomTheme.getThemeData().textSelectionColor,
+                      color: AllCoustomTheme.getThemeData()
+                          .textSelectionTheme
+                          .selectionColor,
                     ),
                   ),
                   Container(
@@ -420,7 +422,9 @@ class _AnsDetailState extends State<AnsDetail> {
             margin: EdgeInsets.only(left: 20.0),
             child: Icon(
               Icons.arrow_upward,
-              color: AllCoustomTheme.getThemeData().textSelectionColor,
+              color: AllCoustomTheme.getThemeData()
+                  .textSelectionTheme
+                  .selectionColor,
             ),
           ),
         ),
@@ -530,7 +534,8 @@ class _AnsDetailState extends State<AnsDetail> {
     print("create comment tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmitResponse('forum/create_comment', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('forum/create_comment', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("comment add response: $result");
@@ -614,7 +619,8 @@ class _AnsDetailState extends State<AnsDetail> {
     print("update vote tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmitResponse('forum/update_votes', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('forum/update_votes', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("votes update response: $result");

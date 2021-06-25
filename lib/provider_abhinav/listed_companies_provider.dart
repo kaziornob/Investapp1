@@ -5,10 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
-
-class ListedCompanyProvider with ChangeNotifier{
-  Future<List> getTopXListedCompanies(noOfCompanies) async{
+class ListedCompanyProvider with ChangeNotifier {
+  Future<List> getTopXListedCompanies(noOfCompanies) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -22,13 +20,13 @@ class ListedCompanyProvider with ChangeNotifier{
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get url: $url");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get top x listed response: ${jsonDecode(response.body)}");
     var result = jsonDecode(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-     return result["message"];
-    }else{
+      return result["message"];
+    } else {
       return [];
     }
   }

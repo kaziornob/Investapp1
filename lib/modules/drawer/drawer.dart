@@ -115,8 +115,10 @@ class _AppDrawerState extends State<AppDrawer> {
                           tween: Tween<double>(begin: 0, end: 1),
                           duration: Duration(milliseconds: 500),
                           cycles: 1,
-                          builder: (anim) => SizeTransition(
-                            sizeFactor: anim,
+                          builder: (_, anim, __) => SizeTransition(
+                            sizeFactor: CurvedAnimation(
+                                curve: Curves.fastOutSlowIn,
+                                parent: anim.controller),
                             axis: Axis.horizontal,
                             axisAlignment: 1,
                             child: CircleAvatar(
@@ -306,8 +308,9 @@ class _AppDrawerState extends State<AppDrawer> {
               tween: Tween<double>(begin: 0, end: 1),
               duration: Duration(milliseconds: 500),
               cycles: 1,
-              builder: (anim) => SizeTransition(
-                sizeFactor: anim,
+              builder: (_, anim, __) => SizeTransition(
+                sizeFactor: CurvedAnimation(
+                    curve: Curves.fastOutSlowIn, parent: anim.controller),
                 axis: Axis.horizontal,
                 axisAlignment: 1,
                 child: Container(
@@ -363,7 +366,7 @@ class _AppDrawerState extends State<AppDrawer> {
             // //   duration: Duration(milliseconds: 500),
             // //   cycles: 1,
             // //   builder: (anim) => SizeTransition(
-            // //     sizeFactor: anim,
+
             // //     axis: Axis.horizontal,
             // //     axisAlignment: 1,
             // //     child: Container(
@@ -391,17 +394,24 @@ class _AppDrawerState extends State<AppDrawer> {
                       //My Portfolio
                       Container(
                         child: ExpandablePanel(
-                          headerAlignment:
-                              ExpandablePanelHeaderAlignment.center,
-                          header: Row(
+                          theme: ExpandableThemeData(
+                            headerAlignment:
+                                ExpandablePanelHeaderAlignment.center,
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
+                            iconColor: Colors.blueGrey,
+                          ),
+                          collapsed: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Animator(
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: Image(
@@ -419,8 +429,54 @@ class _AppDrawerState extends State<AppDrawer> {
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: Text(
+                                    'My Portfolio',
+                                    style: TextStyle(
+                                      color: Color(0xffD8AF4F),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          header: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: Image(
+                                    width: 20.0,
+                                    fit: BoxFit.fill,
+                                    image:
+                                        AssetImage('assets/my_portfolio.png'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: Text(
@@ -464,8 +520,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -503,8 +561,8 @@ class _AppDrawerState extends State<AppDrawer> {
                               //         tween: Tween<double>(begin: 0, end: 1),
                               //         duration: Duration(milliseconds: 500),
                               //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
+                              //         builder: (_,anim,__) => SizeTransition(
+
                               //           axis: Axis.horizontal,
                               //           axisAlignment: 1,
                               //           child: Icon(
@@ -522,8 +580,8 @@ class _AppDrawerState extends State<AppDrawer> {
                               //         tween: Tween<double>(begin: 0, end: 1),
                               //         duration: Duration(milliseconds: 500),
                               //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
+                              //         builder: (_,anim,__) => SizeTransition(
+
                               //           axis: Axis.horizontal,
                               //           axisAlignment: 1,
                               //           child: Text(
@@ -561,8 +619,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -598,8 +658,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -650,8 +712,11 @@ class _AppDrawerState extends State<AppDrawer> {
                                               duration:
                                                   Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_, anim, __) =>
+                                                  SizeTransition(
+                                                sizeFactor: CurvedAnimation(
+                                                    curve: Curves.fastOutSlowIn,
+                                                    parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -691,8 +756,11 @@ class _AppDrawerState extends State<AppDrawer> {
                                               duration:
                                                   Duration(milliseconds: 500),
                                               cycles: 1,
-                                              builder: (anim) => SizeTransition(
-                                                sizeFactor: anim,
+                                              builder: (_, anim, __) =>
+                                                  SizeTransition(
+                                                sizeFactor: CurvedAnimation(
+                                                    curve: Curves.fastOutSlowIn,
+                                                    parent: anim.controller),
                                                 axis: Axis.horizontal,
                                                 axisAlignment: 1,
                                                 child: Text(
@@ -764,8 +832,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -802,8 +872,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -822,9 +894,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               ),
                             ],
                           ),
-                          tapHeaderToExpand: true,
-                          hasIcon: true,
-                          iconColor: Colors.blueGrey,
                         ),
                       ),
                       SizedBox(
@@ -833,211 +902,274 @@ class _AppDrawerState extends State<AppDrawer> {
                       //Invest
                       Container(
                         child: ExpandablePanel(
-                          headerAlignment:
-                              ExpandablePanelHeaderAlignment.center,
-                          header: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Animator(
-                                tween: Tween<double>(begin: 0, end: 1),
-                                duration: Duration(milliseconds: 500),
-                                cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
-                                  axis: Axis.horizontal,
-                                  axisAlignment: 1,
-                                  child: new Image(
-                                      width: 20.0,
-                                      fit: BoxFit.fill,
-                                      image: new AssetImage(
-                                          'assets/wpf_coins.png')),
+                            collapsed: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Animator(
+                                  tween: Tween<double>(begin: 0, end: 1),
+                                  duration: Duration(milliseconds: 500),
+                                  cycles: 1,
+                                  builder: (_, anim, __) => SizeTransition(
+                                    sizeFactor: CurvedAnimation(
+                                        curve: Curves.fastOutSlowIn,
+                                        parent: anim.controller),
+                                    axis: Axis.horizontal,
+                                    axisAlignment: 1,
+                                    child: new Image(
+                                        width: 20.0,
+                                        fit: BoxFit.fill,
+                                        image: new AssetImage(
+                                            'assets/wpf_coins.png')),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 14,
-                              ),
-                              Animator(
-                                tween: Tween<double>(begin: 0, end: 1),
-                                duration: Duration(milliseconds: 500),
-                                cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
-                                  axis: Axis.horizontal,
-                                  axisAlignment: 1,
-                                  child: Text(
-                                    'Invest',
-                                    style: TextStyle(
-                                      color: Color(0xffD8AF4F),
+                                SizedBox(
+                                  width: 14,
+                                ),
+                                Animator(
+                                  tween: Tween<double>(begin: 0, end: 1),
+                                  duration: Duration(milliseconds: 500),
+                                  cycles: 1,
+                                  builder: (_, anim, __) => SizeTransition(
+                                    sizeFactor: CurvedAnimation(
+                                        curve: Curves.fastOutSlowIn,
+                                        parent: anim.controller),
+                                    axis: Axis.horizontal,
+                                    axisAlignment: 1,
+                                    child: Text(
+                                      'Invest',
+                                      style: TextStyle(
+                                        color: Color(0xffD8AF4F),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          expanded: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (BuildContext context) =>
-                                          PublicCompanyMarketPlace(),
+                              ],
+                            ),
+
+                            // headerAlignment:
+                            //     ExpandablePanelHeaderAlignment.center,
+                            header: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Animator(
+                                  tween: Tween<double>(begin: 0, end: 1),
+                                  duration: Duration(milliseconds: 500),
+                                  cycles: 1,
+                                  builder: (_, anim, __) => SizeTransition(
+                                    sizeFactor: CurvedAnimation(
+                                        curve: Curves.fastOutSlowIn,
+                                        parent: anim.controller),
+                                    axis: Axis.horizontal,
+                                    axisAlignment: 1,
+                                    child: new Image(
+                                        width: 20.0,
+                                        fit: BoxFit.fill,
+                                        image: new AssetImage(
+                                            'assets/wpf_coins.png')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 14,
+                                ),
+                                Animator(
+                                  tween: Tween<double>(begin: 0, end: 1),
+                                  duration: Duration(milliseconds: 500),
+                                  cycles: 1,
+                                  builder: (_, anim, __) => SizeTransition(
+                                    sizeFactor: CurvedAnimation(
+                                        curve: Curves.fastOutSlowIn,
+                                        parent: anim.controller),
+                                    axis: Axis.horizontal,
+                                    axisAlignment: 1,
+                                    child: Text(
+                                      'Invest',
+                                      style: TextStyle(
+                                        color: Color(0xffD8AF4F),
+                                      ),
                                     ),
-                                  );
-                                },
-                                child: Row(
-                                  children: <Widget>[
-                                    Animator(
-                                      tween: Tween<double>(begin: 0, end: 1),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
-                                        axis: Axis.horizontal,
-                                        axisAlignment: 1,
-                                        child: Text(
-                                          'Listed',
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            expanded: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder: (BuildContext context) =>
+                                            PublicCompanyMarketPlace(),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (_, anim, __) =>
+                                            SizeTransition(
+                                          sizeFactor: CurvedAnimation(
+                                              curve: Curves.fastOutSlowIn,
+                                              parent: anim.controller),
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Text(
+                                            'Listed',
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (BuildContext context) =>
-                                          PrivateDealsMarketplaceMainPage(),
-                                    ),
-                                  );
-                                },
-                                child: Row(
-                                  children: <Widget>[
-                                    Animator(
-                                      tween: Tween<double>(begin: 0, end: 1),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
-                                        axis: Axis.horizontal,
-                                        axisAlignment: 1,
-                                        child: Text(
-                                          'Unlisted',
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE14,
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder: (BuildContext context) =>
+                                            PrivateDealsMarketplaceMainPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (_, anim, __) =>
+                                            SizeTransition(
+                                          sizeFactor: CurvedAnimation(
+                                              curve: Curves.fastOutSlowIn,
+                                              parent: anim.controller),
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Text(
+                                            'Unlisted',
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (BuildContext context) =>
-                                          CryptoCoinsMarketplace(),
-                                    ),
-                                  );
-                                },
-                                child: Row(
-                                  children: <Widget>[
-                                    Animator(
-                                      tween: Tween<double>(begin: 0, end: 1),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
-                                        axis: Axis.horizontal,
-                                        axisAlignment: 1,
-                                        child: Text(
-                                          'Crypto',
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE14,
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder: (BuildContext context) =>
+                                            CryptoCoinsMarketplace(),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (_, anim, __) =>
+                                            SizeTransition(
+                                          sizeFactor: CurvedAnimation(
+                                              curve: Curves.fastOutSlowIn,
+                                              parent: anim.controller),
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Text(
+                                            'Crypto',
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              InkWell(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (BuildContext context) =>
-                                          // AuroStars(),
-                                          AuroStar(),
-                                    ),
-                                  );
-                                },
-                                child: Row(
-                                  children: <Widget>[
-                                    Animator(
-                                      tween: Tween<double>(begin: 0, end: 1),
-                                      duration: Duration(milliseconds: 500),
-                                      cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
-                                        axis: Axis.horizontal,
-                                        axisAlignment: 1,
-                                        child: Text(
-                                          'Auro Star',
-                                          style: TextStyle(
-                                            color: AllCoustomTheme
-                                                .getTextThemeColor(),
-                                            fontSize:
-                                                ConstanceData.SIZE_TITLE14,
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder: (BuildContext context) =>
+                                            // AuroStars(),
+                                            AuroStar(),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Animator(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: Duration(milliseconds: 500),
+                                        cycles: 1,
+                                        builder: (_, anim, __) =>
+                                            SizeTransition(
+                                          sizeFactor: CurvedAnimation(
+                                              curve: Curves.fastOutSlowIn,
+                                              parent: anim.controller),
+                                          axis: Axis.horizontal,
+                                          axisAlignment: 1,
+                                          child: Text(
+                                            'Auro Star',
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE14,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          tapHeaderToExpand: true,
-                          hasIcon: true,
-                          iconColor: Colors.blueGrey,
-                        ),
+                              ],
+                            ),
+                            theme: ExpandableThemeData(
+                              headerAlignment:
+                                  ExpandablePanelHeaderAlignment.center,
+                              tapHeaderToExpand: true,
+                              hasIcon: true,
+                              iconColor: Colors.blueGrey,
+                            )),
                       ),
                       SizedBox(
                         height: 20,
@@ -1045,17 +1177,24 @@ class _AppDrawerState extends State<AppDrawer> {
                       //Auro.edu
                       Container(
                         child: ExpandablePanel(
-                          headerAlignment:
-                              ExpandablePanelHeaderAlignment.center,
-                          header: Row(
+                          theme: ExpandableThemeData(
+                            headerAlignment:
+                                ExpandablePanelHeaderAlignment.center,
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
+                            iconColor: Colors.blueGrey,
+                          ),
+                          collapsed: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Animator(
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: new Image(
@@ -1072,8 +1211,53 @@ class _AppDrawerState extends State<AppDrawer> {
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: Text(
+                                    'Auro.edu',
+                                    style: TextStyle(
+                                      color: Color(0xffD8AF4F),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          header: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: new Image(
+                                      width: 20.0,
+                                      fit: BoxFit.fill,
+                                      image: new AssetImage(
+                                          'assets/fluent_globe-16-filled.jpg')),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: Text(
@@ -1102,8 +1286,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1135,8 +1321,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1168,8 +1356,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1191,9 +1381,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               ),
                             ],
                           ),
-                          tapHeaderToExpand: true,
-                          hasIcon: true,
-                          iconColor: Colors.blueGrey,
                         ),
                       ),
                       // Container(
@@ -1206,7 +1393,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //           duration: Duration(milliseconds: 500),
                       //           cycles: 1,
                       //           builder: (anim) => SizeTransition(
-                      //             sizeFactor: anim,
+
                       //             axis: Axis.horizontal,
                       //             axisAlignment: 1,
                       //             child: Icon(
@@ -1225,7 +1412,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //           duration: Duration(milliseconds: 500),
                       //           cycles: 1,
                       //           builder: (anim) => SizeTransition(
-                      //             sizeFactor: anim,
+
                       //             axis: Axis.horizontal,
                       //             axisAlignment: 1,
                       //             child: Text(
@@ -1259,7 +1446,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Icon(
@@ -1278,7 +1465,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Text(
@@ -1311,7 +1498,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Icon(
@@ -1332,7 +1519,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                   duration: Duration(milliseconds: 500),
                       //                   cycles: 1,
                       //                   builder: (anim) => SizeTransition(
-                      //                     sizeFactor: anim,
+
                       //                     axis: Axis.horizontal,
                       //                     axisAlignment: 1,
                       //                     child: Text(
@@ -1366,7 +1553,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Icon(
@@ -1385,7 +1572,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Text(
@@ -1418,7 +1605,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Icon(
@@ -1437,7 +1624,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Text(
@@ -1496,7 +1683,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Icon(
@@ -1515,7 +1702,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Text(
@@ -1548,7 +1735,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Icon(
@@ -1567,7 +1754,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       //                 duration: Duration(milliseconds: 500),
                       //                 cycles: 1,
                       //                 builder: (anim) => SizeTransition(
-                      //                   sizeFactor: anim,
+
                       //                   axis: Axis.horizontal,
                       //                   axisAlignment: 1,
                       //                   child: Text(
@@ -1594,16 +1781,23 @@ class _AppDrawerState extends State<AppDrawer> {
                       // exchange
                       Container(
                         child: ExpandablePanel(
-                          headerAlignment:
-                              ExpandablePanelHeaderAlignment.center,
-                          header: Row(
+                          theme: ExpandableThemeData(
+                            headerAlignment:
+                                ExpandablePanelHeaderAlignment.center,
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
+                            iconColor: Colors.blueGrey,
+                          ),
+                          collapsed: Row(
                             children: <Widget>[
                               Animator(
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: new Image(
@@ -1620,8 +1814,55 @@ class _AppDrawerState extends State<AppDrawer> {
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: Text(
+                                    'Exchange',
+                                    style: TextStyle(
+                                      color: Color(0xffD8AF4F),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: SizedBox(),
+                              ),
+                            ],
+                          ),
+                          header: Row(
+                            children: <Widget>[
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: new Image(
+                                      width: 20.0,
+                                      fit: BoxFit.fill,
+                                      image: new AssetImage(
+                                          'assets/exchange_handshake.jpg')),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: Text(
@@ -1659,8 +1900,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1692,8 +1935,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1725,8 +1970,8 @@ class _AppDrawerState extends State<AppDrawer> {
                               //         tween: Tween<double>(begin: 0, end: 1),
                               //         duration: Duration(milliseconds: 500),
                               //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
+                              //         builder: (_,anim,__) => SizeTransition(
+
                               //           axis: Axis.horizontal,
                               //           axisAlignment: 1,
                               //           child: Icon(
@@ -1744,8 +1989,8 @@ class _AppDrawerState extends State<AppDrawer> {
                               //         tween: Tween<double>(begin: 0, end: 1),
                               //         duration: Duration(milliseconds: 500),
                               //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
+                              //         builder: (_,anim,__) => SizeTransition(
+
                               //           axis: Axis.horizontal,
                               //           axisAlignment: 1,
                               //           child: Text(
@@ -1764,9 +2009,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               // ),
                             ],
                           ),
-                          tapHeaderToExpand: true,
-                          hasIcon: true,
-                          iconColor: Colors.blueGrey,
                         ),
                       ),
                       SizedBox(
@@ -1774,16 +2016,23 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       Container(
                         child: ExpandablePanel(
-                          headerAlignment:
-                              ExpandablePanelHeaderAlignment.center,
-                          header: Row(
+                          theme: ExpandableThemeData(
+                            headerAlignment:
+                                ExpandablePanelHeaderAlignment.center,
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
+                            iconColor: Colors.blueGrey,
+                          ),
+                          collapsed: Row(
                             children: <Widget>[
                               Animator(
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: new Image(
@@ -1801,8 +2050,56 @@ class _AppDrawerState extends State<AppDrawer> {
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: Text(
+                                    'Investment Pitches',
+                                    style: TextStyle(
+                                      color: Color(0xffD8AF4F),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: SizedBox(),
+                              ),
+                            ],
+                          ),
+                          header: Row(
+                            children: <Widget>[
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: new Image(
+                                    width: 20.0,
+                                    fit: BoxFit.fill,
+                                    image:
+                                        new AssetImage('assets/megaphone.jpg'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: Text(
@@ -1840,8 +2137,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1879,8 +2178,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1912,8 +2213,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -1935,9 +2238,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               ),
                             ],
                           ),
-                          tapHeaderToExpand: true,
-                          hasIcon: true,
-                          iconColor: Colors.blueGrey,
                         ),
                       ),
                       SizedBox(
@@ -1946,16 +2246,53 @@ class _AppDrawerState extends State<AppDrawer> {
                       //Help
                       Container(
                         child: ExpandablePanel(
-                          headerAlignment:
-                              ExpandablePanelHeaderAlignment.center,
+                          theme: ExpandableThemeData(
+                            headerAlignment:
+                                ExpandablePanelHeaderAlignment.center,
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
+                            iconColor: Colors.blueGrey,
+                          ),
                           header: Row(
                             children: <Widget>[
                               Animator(
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: new Image(
+                                      width: 20.0,
+                                      fit: BoxFit.fill,
+                                      image:
+                                          new AssetImage('assets/support.jpg')),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Text(
+                                'Help',
+                                style: TextStyle(
+                                  color: Color(0xffD8AF4F),
+                                ),
+                              ),
+                            ],
+                          ),
+                          collapsed: Row(
+                            children: <Widget>[
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: new Image(
@@ -1972,8 +2309,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                 tween: Tween<double>(begin: 0, end: 1),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: Text(
@@ -2014,8 +2353,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2054,8 +2395,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2094,8 +2437,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2134,8 +2479,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2190,8 +2537,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2223,8 +2572,8 @@ class _AppDrawerState extends State<AppDrawer> {
                               //         tween: Tween<double>(begin: 0, end: 1),
                               //         duration: Duration(milliseconds: 500),
                               //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
+                              //         builder: (_,anim,__) => SizeTransition(
+
                               //           axis: Axis.horizontal,
                               //           axisAlignment: 1,
                               //           child: Icon(
@@ -2242,8 +2591,8 @@ class _AppDrawerState extends State<AppDrawer> {
                               //         tween: Tween<double>(begin: 0, end: 1),
                               //         duration: Duration(milliseconds: 500),
                               //         cycles: 1,
-                              //         builder: (anim) => SizeTransition(
-                              //           sizeFactor: anim,
+                              //         builder: (_,anim,__) => SizeTransition(
+
                               //           axis: Axis.horizontal,
                               //           axisAlignment: 1,
                               //           child: Text(
@@ -2283,8 +2632,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2327,8 +2678,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2361,8 +2714,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2395,8 +2750,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2429,8 +2786,10 @@ class _AppDrawerState extends State<AppDrawer> {
                                       tween: Tween<double>(begin: 0, end: 1),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 1,
-                                      builder: (anim) => SizeTransition(
-                                        sizeFactor: anim,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
                                         axis: Axis.horizontal,
                                         axisAlignment: 1,
                                         child: Text(
@@ -2449,9 +2808,6 @@ class _AppDrawerState extends State<AppDrawer> {
                               ),
                             ],
                           ),
-                          tapHeaderToExpand: true,
-                          hasIcon: true,
-                          iconColor: Colors.blueGrey,
                         ),
                       ),
                       SizedBox(
@@ -2531,7 +2887,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                         duration: Duration(milliseconds: 500),
 //                         cycles: 1,
 //                         builder: (anim) => SizeTransition(
-//                           sizeFactor: anim,
+
 //                           axis: Axis.horizontal,
 //                           axisAlignment: 1,
 //                           child: CircleAvatar(
@@ -2662,7 +3018,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //             duration: Duration(milliseconds: 500),
 //             cycles: 1,
 //             builder: (anim) => SizeTransition(
-//               sizeFactor: anim,
+
 //               axis: Axis.horizontal,
 //               axisAlignment: 1,
 //               child: Container(
@@ -2718,7 +3074,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //             duration: Duration(milliseconds: 500),
 //             cycles: 1,
 //             builder: (anim) => SizeTransition(
-//               sizeFactor: anim,
+
 //               axis: Axis.horizontal,
 //               axisAlignment: 1,
 //               child: Container(
@@ -2754,7 +3110,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                 duration: Duration(milliseconds: 500),
 //                                 cycles: 1,
 //                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
+
 //                                   axis: Axis.horizontal,
 //                                   axisAlignment: 1,
 //                                   child: new Image(
@@ -2772,7 +3128,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                 duration: Duration(milliseconds: 500),
 //                                 cycles: 1,
 //                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
+
 //                                   axis: Axis.horizontal,
 //                                   axisAlignment: 1,
 //                                   child: Text(
@@ -2803,7 +3159,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -2822,7 +3178,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: GestureDetector(
@@ -2870,7 +3226,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -2889,7 +3245,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -2928,7 +3284,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                 duration: Duration(milliseconds: 500),
 //                                 cycles: 1,
 //                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
+
 //                                   axis: Axis.horizontal,
 //                                   axisAlignment: 1,
 //                                   child: Icon(
@@ -2947,7 +3303,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                 duration: Duration(milliseconds: 500),
 //                                 cycles: 1,
 //                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
+
 //                                   axis: Axis.horizontal,
 //                                   axisAlignment: 1,
 //                                   child: Text(
@@ -2981,7 +3337,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3000,7 +3356,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3033,7 +3389,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3054,7 +3410,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                         duration: Duration(milliseconds: 500),
 //                                         cycles: 1,
 //                                         builder: (anim) => SizeTransition(
-//                                           sizeFactor: anim,
+
 //                                           axis: Axis.horizontal,
 //                                           axisAlignment: 1,
 //                                           child: Text(
@@ -3088,7 +3444,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3107,7 +3463,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3140,7 +3496,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3159,7 +3515,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3218,7 +3574,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3237,7 +3593,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3270,7 +3626,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3289,7 +3645,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3341,7 +3697,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3360,7 +3716,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3393,7 +3749,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3412,7 +3768,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3445,7 +3801,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3464,7 +3820,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3518,7 +3874,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3537,7 +3893,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3570,7 +3926,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3591,7 +3947,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                         duration: Duration(milliseconds: 500),
 //                                         cycles: 1,
 //                                         builder: (anim) => SizeTransition(
-//                                           sizeFactor: anim,
+
 //                                           axis: Axis.horizontal,
 //                                           axisAlignment: 1,
 //                                           child: Text(
@@ -3653,7 +4009,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3672,7 +4028,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3713,7 +4069,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3732,7 +4088,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3765,7 +4121,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3784,7 +4140,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3817,7 +4173,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3836,7 +4192,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3869,7 +4225,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3888,7 +4244,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(
@@ -3921,7 +4277,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Icon(
@@ -3940,7 +4296,7 @@ class _AppDrawerState extends State<AppDrawer> {
 //                                       duration: Duration(milliseconds: 500),
 //                                       cycles: 1,
 //                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
+
 //                                         axis: Axis.horizontal,
 //                                         axisAlignment: 1,
 //                                         child: Text(

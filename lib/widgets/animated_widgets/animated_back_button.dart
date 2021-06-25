@@ -25,15 +25,15 @@ class _AnimatedBackButtonState extends State<AnimatedBackButton> {
         ),
         duration: Duration(milliseconds: 500),
         cycles: 0,
-        builder: (anim) =>
-            FractionalTranslation(
-              translation: anim.value,
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: widget.color == null ? AllCoustomTheme
-                    .getTextThemeColor() : widget.color,
-              ),
-            ),
+        builder: (_, anim, __) => FractionalTranslation(
+          translation: anim.value,
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: widget.color == null
+                ? AllCoustomTheme.getTextThemeColor()
+                : widget.color,
+          ),
+        ),
       ),
     );
   }

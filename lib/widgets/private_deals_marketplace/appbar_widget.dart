@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +82,8 @@ class _AppbarWidgetState extends State<AppbarWidget> {
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       size: 15,
                     ),
-                    hintText: widget.hintText == null ? "Search" : widget.hintText,
+                    hintText:
+                        widget.hintText == null ? "Search" : widget.hintText,
                     hintStyle: TextStyle(
                       color: AllCoustomTheme.getNewSecondTextThemeColor(),
                       fontSize: ConstanceData.SIZE_TITLE14,

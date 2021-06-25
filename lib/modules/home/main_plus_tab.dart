@@ -5,7 +5,6 @@ import 'package:auroim/modules/home/add_comment_bottom_sheet_widget.dart';
 import 'package:auroim/provider_abhinav/progress.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/provider_abhinav/user_posts_provider.dart';
-import 'package:auroim/reusable_widgets/customButton.dart';
 import 'package:auroim/reusable_widgets/progress_bar.dart';
 import 'package:auroim/reusables/local_pick_file.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
@@ -15,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:provider/provider.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MainPlusTab extends StatefulWidget {
   @override
@@ -273,7 +271,6 @@ class _MainPlusTabState extends State<MainPlusTab> {
                         ),
                       )
                     : SizedBox(),
-
               ],
             ),
           ),

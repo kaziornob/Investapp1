@@ -10,7 +10,6 @@ import 'package:super_tooltip/super_tooltip.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../main.dart';
-import 'appbar_widget.dart';
 
 class SingleCompanyDetails extends StatefulWidget {
   final companyDetails;

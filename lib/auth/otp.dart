@@ -65,8 +65,9 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
     return Stack(
       children: <Widget>[
         Container(
-          foregroundDecoration:
-              BoxDecoration(color: Colors.white.withOpacity(0.85),),
+          foregroundDecoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.85),
+          ),
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -171,7 +172,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
                             duration: Duration(milliseconds: 500),
                             curve: Curves.decelerate,
                             cycles: 1,
-                            builder: (anim) => Transform.scale(
+                            builder: (_, anim, __) => Transform.scale(
                               scale: anim.value,
                               child: Column(
                                 children: <Widget>[
@@ -289,7 +290,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
       ),
       duration: Duration(milliseconds: 500),
       cycles: 2,
-      builder: (anim) => Transform(
+      builder: (_, anim, __) => Transform(
         transform: Matrix4.translationValues(anim.value.dx, 0, 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -379,7 +380,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
   //             ),
   //           ),
   //           actions: <Widget>[
-  //             FlatButton(
+  //             TextButton(
   //               child: Text(
   //                   'Ok',
   //                 style: TextStyle(
@@ -426,7 +427,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
   //             ),
   //           ),
   //           actions: <Widget>[
-  //             FlatButton(
+  //             TextButton(
   //               child: Text('Ok'),
   //               onPressed: () {
   //                 Navigator.of(context).pop();
@@ -1025,7 +1026,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
 //   //             ),
 //   //           ),
 //   //           actions: <Widget>[
-//   //             FlatButton(
+//   //             TextButton(
 //   //               child: Text(
 //   //                   'Ok',
 //   //                 style: TextStyle(
@@ -1072,7 +1073,7 @@ class _EnterOtpScreenState extends State<EnterOtpScreen> {
 //   //             ),
 //   //           ),
 //   //           actions: <Widget>[
-//   //             FlatButton(
+//   //             TextButton(
 //   //               child: Text('Ok'),
 //   //               onPressed: () {
 //   //                 Navigator.of(context).pop();

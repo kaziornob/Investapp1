@@ -4,26 +4,13 @@ import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/global.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/home/investment_masterclass.dart';
 import 'package:auroim/investment_masterclass/retail_learn_tab.dart';
 import 'package:auroim/modules/questionAndAnswerModule/models/question.dart';
 import 'package:auroim/modules/questionAndAnswerModule/resources/question_api_provider.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/error.dart';
 import 'package:auroim/modules/questionAndAnswerModule/ui/pages/questionTemplate.dart';
-import 'package:auroim/modules/socialInvestRelatedPages/clubDetail.dart';
-import 'package:auroim/widgets/auro_stars.dart';
-import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
-import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
-import 'package:auroim/widgets/go_to_marketplace_button.dart';
-import 'package:auroim/widgets/payment_pages/payment_types.dart';
-import 'package:auroim/widgets/private_deals_marketplace/private_deals_intro.dart';
-import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
-import 'package:auroim/widgets/public_companies_list.dart';
-import 'package:auroim/widgets/public_company/public_company_marketplace.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class MainLearnMarketTab extends StatefulWidget {
   @override
@@ -145,7 +132,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
               ),
               backgroundColor: Color(0xff161946),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text(
                     "OK",
                     style: TextStyle(
@@ -195,11 +182,11 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
     ];
 
     return SingleChildScrollView(
-      controller: _scrollController,
-      child:
-      // globals.isGoldBlack
-      //     ?
-      RetailLeanTab()
+        controller: _scrollController,
+        child:
+            // globals.isGoldBlack
+            //     ?
+            RetailLeanTab()
 //           : Column(
 //               mainAxisAlignment: MainAxisAlignment.start,
 //               children: <Widget>[
@@ -1644,7 +1631,7 @@ class _MainLearnMarketTabState extends State<MainLearnMarketTab> {
 //                 ),
 //               ],
 //             ),
-    );
+        );
   }
 
   Widget getWeeklyLeagueMemberView(data) {

@@ -1,15 +1,12 @@
-import 'package:animator/animator.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/settings/add_about_info.dart';
-import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/myProfile/addEditEducation.dart';
 import 'package:auroim/widgets/myProfile/addEditEmployment.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 class ProfileBackground extends StatefulWidget {
   final userName;
@@ -310,6 +307,48 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
           height: 10.0,
         ),
         ExpandablePanel(
+          collapsed: Padding(
+            padding: const EdgeInsets.only(
+              left: 15.0,
+              right: 20,
+            ),
+            child: Container(
+              // decoration: BoxDecoration(border: Border.all()),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'About',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AllCoustomTheme.getTextThemeColor(),
+                      fontSize: ConstanceData.SIZE_TITLE16,
+                      fontFamily: "Roboto",
+                      package: 'Roboto-Regular',
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  Material(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.white,
+                      ),
+                    ),
+                    elevation: 10,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Colors.grey,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           header: Padding(
             padding: const EdgeInsets.only(
               left: 15.0,
@@ -352,7 +391,9 @@ class _ProfileBackgroundState extends State<ProfileBackground> {
               ),
             ),
           ),
-          hasIcon: false,
+          theme: ExpandableThemeData(
+            hasIcon: false,
+          ),
           expanded: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(

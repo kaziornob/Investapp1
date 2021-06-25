@@ -78,14 +78,17 @@ class _UserProfileState extends State<UserProfile> {
                                   Navigator.pop(context);
                                 },
                                 child: Animator(
-                                  tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                  tween: Tween<Offset>(
+                                      begin: Offset(0, 0), end: Offset(0.2, 0)),
                                   duration: Duration(milliseconds: 500),
                                   cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
+                                  builder: (_, anim, __) =>
+                                      FractionalTranslation(
                                     translation: anim.value,
                                     child: Icon(
                                       Icons.arrow_back_ios,
-                                      color: AllCoustomTheme.getTextThemeColors(),
+                                      color:
+                                          AllCoustomTheme.getTextThemeColors(),
                                     ),
                                   ),
                                 ),
@@ -95,13 +98,14 @@ class _UserProfileState extends State<UserProfile> {
                                   duration: Duration(milliseconds: 500),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: Text(
                                       'User Profile',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
                                         fontWeight: FontWeight.bold,
                                         fontSize: ConstanceData.SIZE_TITLE20,
                                       ),
@@ -119,7 +123,8 @@ class _UserProfileState extends State<UserProfile> {
                               Text(
                                 'Name',
                                 style: TextStyle(
-                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                  color: AllCoustomTheme
+                                      .getsecoundTextThemeColor(),
                                   fontSize: ConstanceData.SIZE_TITLE16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -161,7 +166,8 @@ class _UserProfileState extends State<UserProfile> {
                               Text(
                                 'E-Mail',
                                 style: TextStyle(
-                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                  color: AllCoustomTheme
+                                      .getsecoundTextThemeColor(),
                                   fontSize: ConstanceData.SIZE_TITLE16,
                                   fontWeight: FontWeight.bold,
                                 ),

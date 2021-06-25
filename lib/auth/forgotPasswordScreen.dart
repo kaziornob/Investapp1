@@ -81,7 +81,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
-                                builder: (anim) => FractionalTranslation(
+                                builder: (_, anim, __) => FractionalTranslation(
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
@@ -102,8 +102,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             tween: Tween<double>(begin: 0, end: 1),
                             duration: Duration(milliseconds: 500),
                             cycles: 1,
-                            builder: (anim) => SizeTransition(
-                              sizeFactor: anim,
+                            builder: (_, anim, __) => SizeTransition(
+                              sizeFactor: CurvedAnimation(
+                                  curve: Curves.fastOutSlowIn,
+                                  parent: anim.controller),
                               axis: Axis.horizontal,
                               axisAlignment: 1,
                               child: Padding(
@@ -204,8 +206,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                           ? Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 10, left: 10, top: 20),
-                                              child: FlatButton(
-                                                padding: EdgeInsets.all(0),
+                                              child: TextButton(
                                                 child: new Container(
                                                   height: 35.0,
                                                   width: 150,
@@ -261,7 +262,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  void getDialog(text,goToNextScreen) {
+  void getDialog(text, goToNextScreen) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -286,7 +287,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Ok',
                   style: TextStyle(
@@ -297,12 +298,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  if(goToNextScreen){
+                  if (goToNextScreen) {
                     Navigator.of(context, rootNavigator: true)
                         .push(
                       CupertinoPageRoute<void>(
                         builder: (BuildContext context) =>
-                            ForgotPasswordOtpScreen(email: _emailController.text,),
+                            ForgotPasswordOtpScreen(
+                          email: _emailController.text,
+                        ),
                       ),
                     )
                         .then((onValue) {
@@ -310,7 +313,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         _isInProgress = false;
                       });
                     });
-                  }else{
+                  } else {
                     print("Cannot go to next screen");
                     setState(() {
                       _isInProgress = false;
@@ -340,16 +343,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
     _forgotFormKey.currentState.save();
 
-    bool otpSent = await Provider.of<ForgotPasswordProvider>(context,listen: false)
-        .sendOtp(_emailController.text);
-    if(otpSent){
-      getDialog("OTP sent to your email",true);
-    }else{
-      getDialog("Something Went Wrong",false);
+    bool otpSent =
+        await Provider.of<ForgotPasswordProvider>(context, listen: false)
+            .sendOtp(_emailController.text);
+    if (otpSent) {
+      getDialog("OTP sent to your email", true);
+    } else {
+      getDialog("Something Went Wrong", false);
     }
 
     await Future.delayed(const Duration(seconds: 1));
-
 
     // Navigator.of(context)
     //     .push(

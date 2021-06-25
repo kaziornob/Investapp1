@@ -1,6 +1,4 @@
-import 'package:auroim/investment_masterclass/quiz.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
-import 'package:auroim/widgets/crypto_marketplace/crypto_marketplace_main_page.dart';
 import 'package:auroim/widgets/invest_tab/auro_star/auro_stars.dart';
 import 'package:auroim/widgets/private_deals_marketplace/private_deals_main_page.dart';
 import 'package:auroim/widgets/public_company/public_company_marketplace.dart';
@@ -75,7 +73,8 @@ class _MainInvestTabState extends State<MainInvestTab> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => PrivateDealsMarketplaceMainPage(),
+                          builder: (context) =>
+                              PrivateDealsMarketplaceMainPage(),
                         ),
                       );
                     },

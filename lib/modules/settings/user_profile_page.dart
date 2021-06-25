@@ -263,7 +263,8 @@ class _UserProfilePageState extends State<UserProfilePage>
                                       begin: Offset(0, 0), end: Offset(0.2, 0)),
                                   duration: Duration(milliseconds: 500),
                                   cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
+                                  builder: (_, anim, __) =>
+                                      FractionalTranslation(
                                     translation: anim.value,
                                     child: Icon(
                                       Icons.arrow_back_ios,

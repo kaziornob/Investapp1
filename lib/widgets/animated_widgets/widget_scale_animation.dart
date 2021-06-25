@@ -16,20 +16,16 @@ class _WidgetScaleAnimationState extends State<WidgetScaleAnimation> {
   @override
   Widget build(BuildContext context) {
     return Animator(
-      tween: Tween<double>(
-          begin: 0.8, end: 1.1),
+      tween: Tween<double>(begin: 0.8, end: 1.1),
       curve: Curves.easeInToLinear,
       cycles: 0,
-      builder: (anim) =>
-          Transform.scale(
-            scale: anim.value,
-            child: Padding(
-              padding:
-              const EdgeInsets.only(
-                  right: 16),
-              child: widget.child,
-            ),
-          ),
+      builder: (_, anim, __) => Transform.scale(
+        scale: anim.value,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: widget.child,
+        ),
+      ),
     );
   }
 }

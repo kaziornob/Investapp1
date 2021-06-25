@@ -11,7 +11,6 @@ class ManagementFeeOptions extends StatefulWidget {
 }
 
 class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
-
   bool _isFeeInProgress = false;
 
   @override
@@ -29,7 +28,6 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
       _isFeeInProgress = false;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +67,11 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
                                 Navigator.pop(context);
                               },
                               child: Animator(
-                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                tween: Tween<Offset>(
+                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
-                                builder: (anim) => FractionalTranslation(
+                                builder: (_, anim, __) => FractionalTranslation(
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
@@ -86,37 +85,35 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.decelerate,
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
-                                  child:  Container(
-                                      height: MediaQuery.of(context).size.height * 0.09,
+                                  child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.09,
                                       child: Center(
                                         child: new Image(
                                             width: 150.0,
                                             fit: BoxFit.fill,
-                                            image: new AssetImage('assets/logo.png')
-                                        ),
-                                      )
-                                  ),
+                                            image: new AssetImage(
+                                                'assets/logo.png')),
+                                      )),
                                 ),
                               ),
                             )
                           ],
                         ),
-
                         Container(
-                          margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                          margin: EdgeInsets.only(left: 80.0, right: 80.0),
                           padding: EdgeInsets.only(
                             bottom: 1, // space between underline and text
                           ),
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                    color: Color(0xFFD8AF4F),
-                                    width: 1.5, // Underline width
-                                  )
-                              )
-                          ),
+                            color: Color(0xFFD8AF4F),
+                            width: 1.5, // Underline width
+                          ))),
                         ),
                         Container(
                           child: Column(
@@ -125,31 +122,35 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
                                 height: 20,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10,right: 5.0),
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 5.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                       child: Container(
                                           child: Padding(
-                                            padding: EdgeInsets.only(top: 5.0),
-                                            child: Text(
-                                              'Select your management fee option',
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                                fontSize: ConstanceData.SIZE_TITLE18,
-                                                fontFamily: "Roboto",
-                                              ),
-                                            ),
-                                          )
-                                      ),
+                                        padding: EdgeInsets.only(top: 5.0),
+                                        child: Text(
+                                          'Select your management fee option',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE18,
+                                            fontFamily: "Roboto",
+                                          ),
+                                        ),
+                                      )),
                                     ),
                                   ],
                                 ),
                               ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.08,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,45 +160,51 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
                                     width: 5.0,
                                   ),
                                   Container(
-                                    height: MediaQuery.of(context).size.height * 0.12,
-                                    width: MediaQuery.of(context).size.width * 0.85,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.12,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      border: new Border.all(color: Color(0xFFfec20f), width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                      border: new Border.all(
+                                          color: Color(0xFFfec20f), width: 1.5),
                                       color: Color(0xFFfec20f),
                                     ),
                                     child: MaterialButton(
                                       splashColor: Colors.grey,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             "Management Fee: 0.75 %",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE20,
                                             ),
                                           ),
                                           Text(
                                             "Performance Fee: 5 %",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE20,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      onPressed: () async
-                                      {
-
-                                      },
+                                      onPressed: () async {},
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.08,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,45 +214,51 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
                                     width: 5.0,
                                   ),
                                   Container(
-                                    height: MediaQuery.of(context).size.height * 0.12,
-                                    width: MediaQuery.of(context).size.width * 0.85,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.12,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      border: new Border.all(color: Color(0xFFfec20f), width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                      border: new Border.all(
+                                          color: Color(0xFFfec20f), width: 1.5),
                                       color: Color(0xFFfec20f),
                                     ),
                                     child: MaterialButton(
                                       splashColor: Colors.grey,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             "Management Fee: 0.50 %",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE20,
                                             ),
                                           ),
                                           Text(
                                             "Performance Fee: 10 %",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE20,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      onPressed: () async
-                                      {
-
-                                      },
+                                      onPressed: () async {},
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.08,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,39 +268,44 @@ class _ManagementFeeOptionsState extends State<ManagementFeeOptions> {
                                     width: 5.0,
                                   ),
                                   Container(
-                                    height: MediaQuery.of(context).size.height * 0.12,
-                                    width: MediaQuery.of(context).size.width * 0.85,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.12,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      border: new Border.all(color: Color(0xFFfec20f), width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                      border: new Border.all(
+                                          color: Color(0xFFfec20f), width: 1.5),
                                       color: Color(0xFFfec20f),
                                     ),
                                     child: MaterialButton(
                                       splashColor: Colors.grey,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             "Management Fee: 0 %",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE20,
                                             ),
                                           ),
                                           Text(
                                             "Performance Fee: 25 %",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: ConstanceData.SIZE_TITLE20,
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE20,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      onPressed: () async
-                                      {
-
-                                      },
+                                      onPressed: () async {},
                                     ),
                                   ),
                                 ],

@@ -33,8 +33,8 @@ class PortfolioPitchProvider with ChangeNotifier {
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("upload portfolio pitch url: $url");
 
-    var response =
-        await http.post(url, headers: headers, body: jsonEncode(body));
+    var response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
     print("get upload portfolio pitch response: ${response.statusCode}");
     var result = jsonDecode(response.body);
     print(result.toString());
@@ -61,7 +61,7 @@ class PortfolioPitchProvider with ChangeNotifier {
     print("get portfolio pitches url: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode({"email": email}),
     );

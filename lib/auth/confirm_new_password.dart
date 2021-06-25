@@ -90,7 +90,7 @@ class _ConfirmNewPasswordState extends State<ConfirmNewPassword> {
                                     begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
-                                builder: (anim) => FractionalTranslation(
+                                builder: (_, anim, __) => FractionalTranslation(
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
@@ -111,8 +111,10 @@ class _ConfirmNewPasswordState extends State<ConfirmNewPassword> {
                             tween: Tween<double>(begin: 0, end: 1),
                             duration: Duration(milliseconds: 500),
                             cycles: 1,
-                            builder: (anim) => SizeTransition(
-                              sizeFactor: anim,
+                            builder: (_, anim, __) => SizeTransition(
+                              sizeFactor: CurvedAnimation(
+                                  curve: Curves.fastOutSlowIn,
+                                  parent: anim.controller),
                               axis: Axis.horizontal,
                               axisAlignment: 1,
                               child: Padding(
@@ -260,8 +262,7 @@ class _ConfirmNewPasswordState extends State<ConfirmNewPassword> {
                                           ? Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 10, left: 10, top: 20),
-                                              child: FlatButton(
-                                                padding: EdgeInsets.all(0),
+                                              child: TextButton(
                                                 child: new Container(
                                                   height: 35.0,
                                                   width: 150,
@@ -342,7 +343,7 @@ class _ConfirmNewPasswordState extends State<ConfirmNewPassword> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Ok',
                   style: TextStyle(

@@ -60,7 +60,9 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
         Scaffold(
           key: _currScaffoldKey,
           drawer: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.75 < 400 ? MediaQuery.of(context).size.width * 0.75 : 350,
+            width: MediaQuery.of(context).size.width * 0.75 < 400
+                ? MediaQuery.of(context).size.width * 0.75
+                : 350,
             child: Drawer(
               elevation: 0,
               child: AppDrawer(
@@ -101,19 +103,21 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                   },
                                   child: Icon(
                                     Icons.sort,
-                                    color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                    color: AllCoustomTheme
+                                        .getsecoundTextThemeColor(),
                                   ),
                                 ),
                                 Animator(
                                   duration: Duration(milliseconds: 500),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: Text(
                                       "Request Payment",
                                       style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
                                         fontSize: ConstanceData.SIZE_TITLE18,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -131,7 +135,7 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                             duration: Duration(milliseconds: 500),
                             curve: Curves.decelerate,
                             cycles: 1,
-                            builder: (anim) => Transform.scale(
+                            builder: (_, anim, __) => Transform.scale(
                               scale: anim.value,
                               child: Column(
                                 children: <Widget>[
@@ -154,7 +158,8 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                       Text(
                                         'zhxczxcsaudg23874t237rgufbw892yrfhne',
                                         style: TextStyle(
-                                          color: AllCoustomTheme.getTextThemeColors(),
+                                          color: AllCoustomTheme
+                                              .getTextThemeColors(),
                                         ),
                                       )
                                     ],
@@ -163,37 +168,47 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                     height: 20,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 16, left: 16),
+                                    padding: const EdgeInsets.only(
+                                        right: 16, left: 16),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Expanded(
                                           child: Container(
                                             height: 40,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
                                               color: AllCoustomTheme.boxColor(),
                                             ),
                                             child: TextFormField(
                                               onSaved: (value) {
                                                 btc = value;
                                               },
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               style: TextStyle(
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColors(),
                                               ),
-                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                              cursorColor: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                               decoration: InputDecoration(
                                                 hintText: 'BTC',
                                                 prefixIcon: Icon(
                                                   FontAwesomeIcons.bitcoin,
                                                   size: 18,
-                                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                  color: AllCoustomTheme
+                                                      .getsecoundTextThemeColor(),
                                                 ),
                                                 hintStyle: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
+                                                  color: AllCoustomTheme
+                                                      .getsecoundTextThemeColor(),
                                                 ),
                                                 border: InputBorder.none,
                                               ),
@@ -207,29 +222,37 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                           child: Container(
                                             height: 40,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
                                               color: AllCoustomTheme.boxColor(),
                                             ),
                                             child: TextFormField(
                                               onSaved: (value) {
                                                 usd = value;
                                               },
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               style: TextStyle(
-                                                fontSize: ConstanceData.SIZE_TITLE16,
-                                                color: AllCoustomTheme.getTextThemeColors(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColors(),
                                               ),
-                                              cursorColor: AllCoustomTheme.getTextThemeColors(),
+                                              cursorColor: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                               decoration: InputDecoration(
                                                 hintText: 'USD',
                                                 prefixIcon: Icon(
                                                   FontAwesomeIcons.dollarSign,
                                                   size: 16,
-                                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                  color: AllCoustomTheme
+                                                      .getsecoundTextThemeColor(),
                                                 ),
                                                 hintStyle: TextStyle(
-                                                  fontSize: ConstanceData.SIZE_TITLE16,
-                                                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
+                                                  color: AllCoustomTheme
+                                                      .getsecoundTextThemeColor(),
                                                 ),
                                                 border: InputBorder.none,
                                               ),
@@ -243,15 +266,18 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                     height: 40,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 16, left: 16),
+                                    padding: const EdgeInsets.only(
+                                        right: 16, left: 16),
                                     child: Row(
                                       children: <Widget>[
                                         Text(
                                           'To',
                                           style: TextStyle(
-                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                            color: AllCoustomTheme
+                                                .getsecoundTextThemeColor(),
                                             fontWeight: FontWeight.bold,
-                                            fontSize: ConstanceData.SIZE_TITLE18,
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE18,
                                           ),
                                         )
                                       ],
@@ -268,40 +294,53 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                         Container(
                                           height: 85,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20)),
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(20)),
                                             color: AllCoustomTheme.boxColor(),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.only(right: 14, left: 14, bottom: 6),
+                                            padding: const EdgeInsets.only(
+                                                right: 14, left: 14, bottom: 6),
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Row(
                                                   children: <Widget>[
                                                     Icon(
                                                       FontAwesomeIcons.bitcoin,
                                                       size: 40,
-                                                      color: AllCoustomTheme.getTextThemeColors(),
+                                                      color: AllCoustomTheme
+                                                          .getTextThemeColors(),
                                                     ),
                                                     SizedBox(
                                                       width: 10,
                                                     ),
                                                     Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Text(
                                                           'Bitcoin',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getTextThemeColors(),
-                                                            fontWeight: FontWeight.bold,
+                                                            color: AllCoustomTheme
+                                                                .getTextThemeColors(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                           ),
                                                         ),
                                                         Text(
                                                           'BTC',
                                                           style: TextStyle(
-                                                            color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: ConstanceData.SIZE_TITLE14,
+                                                            color: AllCoustomTheme
+                                                                .getsecoundTextThemeColor(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                ConstanceData
+                                                                    .SIZE_TITLE14,
                                                           ),
                                                         )
                                                       ],
@@ -310,7 +349,8 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                                       child: SizedBox(),
                                                     ),
                                                     AnimatedForwardArrow(
-                                                      isShowingarroeForward: true,
+                                                      isShowingarroeForward:
+                                                          true,
                                                     )
                                                   ],
                                                 )
@@ -325,25 +365,33 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                     height: 20,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 16, right: 16),
+                                    padding: const EdgeInsets.only(
+                                        left: 16, right: 16),
                                     child: !isShowingPopup
                                         ? Animator(
-                                            tween: Tween<double>(begin: 0.9, end: 1),
+                                            tween: Tween<double>(
+                                                begin: 0.9, end: 1),
                                             curve: Curves.elasticIn,
                                             cycles: 0,
-                                            builder: (anim) => Transform.scale(
+                                            builder: (_, anim, __) =>
+                                                Transform.scale(
                                               scale: anim.value,
-                                              child: FlatButton(
-                                                padding: EdgeInsets.all(0),
+                                              child: TextButton(
                                                 child: Container(
                                                   height: 47,
-                                                  alignment: FractionalOffset.center,
+                                                  alignment:
+                                                      FractionalOffset.center,
                                                   decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.white, width: 1.5),
-                                                    borderRadius: BorderRadius.circular(30),
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 1.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
                                                     gradient: LinearGradient(
                                                       begin: Alignment.topLeft,
-                                                      end: Alignment.bottomRight,
+                                                      end:
+                                                          Alignment.bottomRight,
                                                       colors: [
                                                         globals.buttoncolor1,
                                                         globals.buttoncolor2,
@@ -353,9 +401,11 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
                                                   child: Text(
                                                     "Request Payment",
                                                     style: TextStyle(
-                                                        color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                                        color: AllCoustomTheme
+                                                            .getReBlackAndWhiteThemeColors(),
                                                         letterSpacing: 0.3,
-                                                        fontSize: ConstanceData.SIZE_TITLE16),
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE16),
                                                   ),
                                                 ),
                                                 onPressed: () {
@@ -411,7 +461,7 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
             Animator(
               duration: Duration(milliseconds: 500),
               cycles: 1,
-              builder: (anim) => Transform.scale(
+              builder: (_, anim, __) => Transform.scale(
                 scale: anim.value,
                 child: Icon(
                   Icons.done,
@@ -450,10 +500,9 @@ class _DepositeCurrencyState extends State<DepositeCurrency> {
             Animator(
               duration: Duration(milliseconds: 500),
               cycles: 1,
-              builder: (anim) => Transform.scale(
+              builder: (_, anim, __) => Transform.scale(
                 scale: anim.value,
-                child: FlatButton(
-                  padding: EdgeInsets.all(0),
+                child: TextButton(
                   child: Container(
                     height: 45.0,
                     alignment: FractionalOffset.center,

@@ -1,8 +1,6 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/portfolio_pitch_provider.dart';
-import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
-import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/show_portfolio_pitch_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +72,9 @@ class _LivePaperPortfolioState extends State<LivePaperPortfolio> {
               SizedBox(
                 height: 10.0,
               ),
-              Divider(thickness: 1,),
+              Divider(
+                thickness: 1,
+              ),
               Container(
                 height: 300,
                 child: ListView.builder(

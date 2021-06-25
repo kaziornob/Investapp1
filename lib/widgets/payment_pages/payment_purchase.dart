@@ -1,5 +1,3 @@
-import 'package:auroim/constance/themes.dart';
-import 'package:auroim/widgets/private_deals_marketplace/appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class PaymentPurchaseScreen extends StatefulWidget {

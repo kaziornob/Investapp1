@@ -1,8 +1,6 @@
-
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/widgets/crypto_marketplace/single_crypto_details_by_id.dart';
 import 'package:flutter/material.dart';
-
 
 class AllCryptocurrenciesList extends StatefulWidget {
   final String sortingType;
@@ -15,14 +13,15 @@ class AllCryptocurrenciesList extends StatefulWidget {
 
 class _AllCryptocurrenciesListState extends State<AllCryptocurrenciesList> {
   FeaturedCompaniesProvider _featuredCompaniesProvider =
-  FeaturedCompaniesProvider();
+      FeaturedCompaniesProvider();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: FutureBuilder(
-        future: _featuredCompaniesProvider.getCoinsListSorted(widget.sortingType),
+        future:
+            _featuredCompaniesProvider.getCoinsListSorted(widget.sortingType),
         builder: (context, snapshot) {
           // print("cryptocurrencies");
           // print(snapshot.data);
@@ -60,7 +59,6 @@ class _AllCryptocurrenciesListState extends State<AllCryptocurrenciesList> {
       ),
     );
   }
-
 
 // getData() async {
 //   print("in get data");
@@ -118,10 +116,7 @@ class CryptocurrencyItem extends StatelessWidget {
         // print(boxConstraints.maxWidth);
         return Container(
           height: boxConstraints.maxHeight,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width / 2,
+          width: MediaQuery.of(context).size.width / 2,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
@@ -137,8 +132,7 @@ class CryptocurrencyItem extends StatelessWidget {
                 // decoration: BoxDecoration(border: Border.all()),
                 padding: EdgeInsets.all(5.0),
                 child: Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       child: Text(
@@ -151,7 +145,7 @@ class CryptocurrencyItem extends StatelessWidget {
                       ),
                       width: boxConstraints.maxHeight / 3,
                     ),
-                   Container(
+                    Container(
                       height: boxConstraints.maxHeight / 4,
                       width: boxConstraints.maxHeight / 4,
                       decoration: BoxDecoration(
@@ -159,8 +153,7 @@ class CryptocurrencyItem extends StatelessWidget {
                           color: Color(0xff5A56B9),
                         ),
                       ),
-                      child: Image.network(
-                          coinDetails["logo_link"]),
+                      child: Image.network(coinDetails["logo_link"]),
                     ),
                   ],
                 ),
@@ -277,10 +270,9 @@ class CryptocurrencyItem extends StatelessWidget {
                     // getUserDetails();
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) =>
-                            SingleCryptoCurrencyDetailsById(
-                              coinId:  coinDetails["coin_id"],
-                            ),
+                        builder: (context) => SingleCryptoCurrencyDetailsById(
+                          coinId: coinDetails["coin_id"],
+                        ),
                       ),
                     );
                   },
@@ -307,7 +299,7 @@ class CryptocurrencyItem extends StatelessWidget {
               //   child: Container(
               //     height: 40,
               //     width: 100,
-              //     child: FlatButton(
+              //     child: TextButton(
               //       color: Color(0xff7499C6),
               //       onPressed: () {
               //         // getUserDetails();
@@ -345,7 +337,6 @@ class CryptocurrencyItem extends StatelessWidget {
       }),
     );
   }
-
 
   // sss() {
   //   // Provider.of<CoinUrl>(context, listen: false).getImageUrl(coinDetails["id"]);
@@ -516,7 +507,7 @@ class CryptocurrencyItem extends StatelessWidget {
   //             //   child: Container(
   //             //     height: 40,
   //             //     width: 100,
-  //             //     child: FlatButton(
+  //             //     child: TextButton(
   //             //       color: Color(0xff7499C6),
   //             //       onPressed: () {
   //             //         // getUserDetails();

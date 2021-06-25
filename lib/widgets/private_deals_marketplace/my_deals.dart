@@ -4,8 +4,6 @@ import 'package:auroim/widgets/private_deals_marketplace/appbar_widget_with_draw
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'appbar_widget.dart';
-
 class MyDeals extends StatefulWidget {
   @override
   _MyDealsState createState() => _MyDealsState();
@@ -149,7 +147,9 @@ class _MyDealsState extends State<MyDeals> {
                             children: [
                               Container(
                                 height: 40,
-                                width: (MediaQuery.of(context).size.width - 60) /2,
+                                width:
+                                    (MediaQuery.of(context).size.width - 60) /
+                                        2,
                                 // decoration: BoxDecoration(
                                 //   border: Border.all(),
                                 // ),
@@ -159,7 +159,6 @@ class _MyDealsState extends State<MyDeals> {
                                     Text(
                                       "\$500M",
                                       style: TextStyle(
-
                                           color: Color(0xff5A56B9),
                                           fontFamily: "Roboto",
                                           fontSize: 14.5,
@@ -183,7 +182,9 @@ class _MyDealsState extends State<MyDeals> {
                               ),
                               Container(
                                 height: 40,
-                                width: (MediaQuery.of(context).size.width - 60) /2,
+                                width:
+                                    (MediaQuery.of(context).size.width - 60) /
+                                        2,
                                 // decoration: BoxDecoration(
                                 //   border: Border.all(),
                                 // ),
@@ -193,8 +194,7 @@ class _MyDealsState extends State<MyDeals> {
                                     Text(
                                       "Action Required",
                                       style: TextStyle(
-
-                                          color:Color(0xff7499C6),
+                                          color: Color(0xff7499C6),
                                           fontFamily: "Roboto",
                                           fontSize: 14.5,
                                           fontStyle: FontStyle.normal,
@@ -227,7 +227,9 @@ class _MyDealsState extends State<MyDeals> {
                             children: [
                               Container(
                                 height: 40,
-                                width: (MediaQuery.of(context).size.width - 60) /2,
+                                width:
+                                    (MediaQuery.of(context).size.width - 60) /
+                                        2,
                                 // decoration: BoxDecoration(
                                 //   border: Border.all(),
                                 // ),
@@ -237,7 +239,6 @@ class _MyDealsState extends State<MyDeals> {
                                     Text(
                                       "\$12500",
                                       style: TextStyle(
-
                                           color: Color(0xff5A56B9),
                                           fontFamily: "Roboto",
                                           fontSize: 14.5,
@@ -261,7 +262,9 @@ class _MyDealsState extends State<MyDeals> {
                               ),
                               Container(
                                 height: 40,
-                                width: (MediaQuery.of(context).size.width - 60) /2,
+                                width:
+                                    (MediaQuery.of(context).size.width - 60) /
+                                        2,
                                 // decoration: BoxDecoration(
                                 //   border: Border.all(),
                                 // ),

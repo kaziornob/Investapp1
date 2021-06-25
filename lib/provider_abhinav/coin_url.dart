@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class CoinUrl with ChangeNotifier {
-  Map<String,String> imageUrl = {};
+  Map<String, String> imageUrl = {};
 
   getImageUrl(coinId) async {
     print("single coin imageurl");
@@ -18,11 +18,12 @@ class CoinUrl with ChangeNotifier {
       'Authorization': 'Token $sessionToken',
     };
 
-    String url = GlobalInstance.apiBaseUrl + "company_details/cryptoLogos?coin_name=$coinId";
+    String url = GlobalInstance.apiBaseUrl +
+        "company_details/cryptoLogos?coin_name=$coinId";
     print("post url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get image url response $coinId : ${response.body}");
     var result = jsonDecode(response.body);
 
@@ -50,7 +51,4 @@ class CoinUrl with ChangeNotifier {
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
-
-
-
 }

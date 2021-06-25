@@ -16,7 +16,6 @@ import 'package:auroim/modules/investRelatedPages/riskOnboardingPages/onBoarding
 import 'package:auroim/modules/settings/myAccount.dart';
 import 'package:auroim/modules/settings/myProfile.dart';
 import 'package:auroim/modules/settings/setting.dart';
-import 'package:auroim/presentation/pages/help/auro_faq_page.dart';
 import 'package:auroim/presentation/pages/help/coins/auro_coins_info.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/crypto_marketplace/crypto_coins_marketplace.dart';
@@ -116,8 +115,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                         tween: Tween<double>(begin: 0, end: 1),
                         duration: Duration(milliseconds: 500),
                         cycles: 1,
-                        builder: (anim) => SizeTransition(
-                          sizeFactor: anim,
+                        builder: (_, anim, __) => SizeTransition(
+                          sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                           axis: Axis.horizontal,
                           axisAlignment: 1,
                           child: CircleAvatar(
@@ -305,8 +306,9 @@ class _AuroSidebarState extends State<AuroSidebar> {
             tween: Tween<double>(begin: 0, end: 1),
             duration: Duration(milliseconds: 500),
             cycles: 1,
-            builder: (anim) => SizeTransition(
-              sizeFactor: anim,
+            builder: (_, anim, __) => SizeTransition(
+              sizeFactor: CurvedAnimation(
+                  curve: Curves.fastOutSlowIn, parent: anim.controller),
               axis: Axis.horizontal,
               axisAlignment: 1,
               child: Container(
@@ -334,16 +336,24 @@ class _AuroSidebarState extends State<AuroSidebar> {
                     //My Portfolio
                     Container(
                       child: ExpandablePanel(
-                        headerAlignment: ExpandablePanelHeaderAlignment.center,
-                        header: Row(
+                        theme: ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapHeaderToExpand: true,
+                          hasIcon: true,
+                          iconColor: Colors.blueGrey,
+                        ),
+                        collapsed: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Animator(
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Image(
@@ -360,8 +370,53 @@ class _AuroSidebarState extends State<AuroSidebar> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Text(
+                                  'My Portfolio',
+                                  style: TextStyle(
+                                    color: Color(0xffD8AF4F),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        header: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Image(
+                                  width: 20.0,
+                                  fit: BoxFit.fill,
+                                  image: AssetImage('assets/my_portfolio.png'),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 14,
+                            ),
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Text(
@@ -405,8 +460,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -425,65 +482,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                             SizedBox(
                               height: 10,
                             ),
-                            // InkWell(
-                            //   highlightColor: Colors.transparent,
-                            //   splashColor: Colors.transparent,
-                            //   onTap: () {
-                            //     Navigator.pop(context);
-                            //     Navigator.of(context).push(
-                            //       CupertinoPageRoute(
-                            //         builder: (BuildContext context) =>
-                            //             MyProfile(),
-                            //       ),
-                            //     );
-                            //   },
-                            //   child: Row(
-                            //     children: <Widget>[
-                            //       Animator(
-                            //         tween: Tween<double>(begin: 0, end: 1),
-                            //         duration: Duration(milliseconds: 500),
-                            //         cycles: 1,
-                            //         builder: (anim) => SizeTransition(
-                            //           sizeFactor: anim,
-                            //           axis: Axis.horizontal,
-                            //           axisAlignment: 1,
-                            //           child: Icon(
-                            //             Icons.circle,
-                            //             color: AllCoustomTheme
-                            //                 .getsecoundTextThemeColor(),
-                            //             size: 8,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       SizedBox(
-                            //         width: 14,
-                            //       ),
-                            //       Animator(
-                            //         tween: Tween<double>(begin: 0, end: 1),
-                            //         duration: Duration(milliseconds: 500),
-                            //         cycles: 1,
-                            //         builder: (anim) => SizeTransition(
-                            //           sizeFactor: anim,
-                            //           axis: Axis.horizontal,
-                            //           axisAlignment: 1,
-                            //           child: Text(
-                            //             'Listed',
-                            //             style: TextStyle(
-                            //               color: AllCoustomTheme
-                            //                   .getTextThemeColor(),
-                            //               fontSize:
-                            //               ConstanceData.SIZE_TITLE14,
-                            //             ),
-                            //           ),
-                            //
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
                             InkWell(
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
@@ -500,8 +498,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -536,8 +536,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -587,8 +589,11 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                             duration:
                                                 Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
@@ -628,8 +633,11 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                             duration:
                                                 Duration(milliseconds: 500),
                                             cycles: 1,
-                                            builder: (anim) => SizeTransition(
-                                              sizeFactor: anim,
+                                            builder: (_, anim, __) =>
+                                                SizeTransition(
+                                              sizeFactor: CurvedAnimation(
+                                                  curve: Curves.fastOutSlowIn,
+                                                  parent: anim.controller),
                                               axis: Axis.horizontal,
                                               axisAlignment: 1,
                                               child: Text(
@@ -650,7 +658,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                 }
                               },
                             ),
-
                             SizedBox(
                               height: 10,
                             ),
@@ -701,8 +708,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -738,8 +747,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -757,9 +768,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                             ),
                           ],
                         ),
-                        tapHeaderToExpand: true,
-                        hasIcon: true,
-                        iconColor: Colors.blueGrey,
                       ),
                     ),
                     SizedBox(
@@ -768,206 +776,270 @@ class _AuroSidebarState extends State<AuroSidebar> {
                     //Invest
                     Container(
                       child: ExpandablePanel(
-                        headerAlignment: ExpandablePanelHeaderAlignment.center,
-                        header: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Animator(
-                              tween: Tween<double>(begin: 0, end: 1),
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
-                                axis: Axis.horizontal,
-                                axisAlignment: 1,
-                                child: new Image(
-                                    width: 20.0,
-                                    fit: BoxFit.fill,
-                                    image:
-                                        new AssetImage('assets/wpf_coins.png')),
+                          collapsed: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: new Image(
+                                      width: 20.0,
+                                      fit: BoxFit.fill,
+                                      image: new AssetImage(
+                                          'assets/wpf_coins.png')),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 14,
-                            ),
-                            Animator(
-                              tween: Tween<double>(begin: 0, end: 1),
-                              duration: Duration(milliseconds: 500),
-                              cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
-                                axis: Axis.horizontal,
-                                axisAlignment: 1,
-                                child: Text(
-                                  'Invest',
-                                  style: TextStyle(
-                                    color: Color(0xffD8AF4F),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: Text(
+                                    'Invest',
+                                    style: TextStyle(
+                                      color: Color(0xffD8AF4F),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        expanded: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (BuildContext context) =>
-                                        PublicCompanyMarketPlace(),
+                            ],
+                          ),
+
+                          // headerAlignment:
+                          //     ExpandablePanelHeaderAlignment.center,
+                          header: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: new Image(
+                                      width: 20.0,
+                                      fit: BoxFit.fill,
+                                      image: new AssetImage(
+                                          'assets/wpf_coins.png')),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Animator(
+                                tween: Tween<double>(begin: 0, end: 1),
+                                duration: Duration(milliseconds: 500),
+                                cycles: 1,
+                                builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
+                                  axis: Axis.horizontal,
+                                  axisAlignment: 1,
+                                  child: Text(
+                                    'Invest',
+                                    style: TextStyle(
+                                      color: Color(0xffD8AF4F),
+                                    ),
                                   ),
-                                );
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Animator(
-                                    tween: Tween<double>(begin: 0, end: 1),
-                                    duration: Duration(milliseconds: 500),
-                                    cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
-                                      axis: Axis.horizontal,
-                                      axisAlignment: 1,
-                                      child: Text(
-                                        'Listed',
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          fontSize: ConstanceData.SIZE_TITLE14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          expanded: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          PublicCompanyMarketPlace(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Animator(
+                                      tween: Tween<double>(begin: 0, end: 1),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 1,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
+                                        axis: Axis.horizontal,
+                                        axisAlignment: 1,
+                                        child: Text(
+                                          'Listed',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE14,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (BuildContext context) =>
-                                        PrivateDealsMarketplaceMainPage(),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Animator(
-                                    tween: Tween<double>(begin: 0, end: 1),
-                                    duration: Duration(milliseconds: 500),
-                                    cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
-                                      axis: Axis.horizontal,
-                                      axisAlignment: 1,
-                                      child: Text(
-                                        'Unlisted',
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          fontSize: ConstanceData.SIZE_TITLE14,
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          PrivateDealsMarketplaceMainPage(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Animator(
+                                      tween: Tween<double>(begin: 0, end: 1),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 1,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
+                                        axis: Axis.horizontal,
+                                        axisAlignment: 1,
+                                        child: Text(
+                                          'Unlisted',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE14,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (BuildContext context) =>
-                                        CryptoCoinsMarketplace(),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Animator(
-                                    tween: Tween<double>(begin: 0, end: 1),
-                                    duration: Duration(milliseconds: 500),
-                                    cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
-                                      axis: Axis.horizontal,
-                                      axisAlignment: 1,
-                                      child: Text(
-                                        'Crypto',
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          fontSize: ConstanceData.SIZE_TITLE14,
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          CryptoCoinsMarketplace(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Animator(
+                                      tween: Tween<double>(begin: 0, end: 1),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 1,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
+                                        axis: Axis.horizontal,
+                                        axisAlignment: 1,
+                                        child: Text(
+                                          'Crypto',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE14,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (BuildContext context) =>
-                                        // AuroStars(),
-                                        AuroStar(),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Animator(
-                                    tween: Tween<double>(begin: 0, end: 1),
-                                    duration: Duration(milliseconds: 500),
-                                    cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
-                                      axis: Axis.horizontal,
-                                      axisAlignment: 1,
-                                      child: Text(
-                                        'Auro Star',
-                                        style: TextStyle(
-                                          color: AllCoustomTheme
-                                              .getTextThemeColor(),
-                                          fontSize: ConstanceData.SIZE_TITLE14,
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          // AuroStars(),
+                                          AuroStar(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Animator(
+                                      tween: Tween<double>(begin: 0, end: 1),
+                                      duration: Duration(milliseconds: 500),
+                                      cycles: 1,
+                                      builder: (_, anim, __) => SizeTransition(
+                                        sizeFactor: CurvedAnimation(
+                                            curve: Curves.fastOutSlowIn,
+                                            parent: anim.controller),
+                                        axis: Axis.horizontal,
+                                        axisAlignment: 1,
+                                        child: Text(
+                                          'Auro Star',
+                                          style: TextStyle(
+                                            color: AllCoustomTheme
+                                                .getTextThemeColor(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE14,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        tapHeaderToExpand: true,
-                        hasIcon: true,
-                        iconColor: Colors.blueGrey,
-                      ),
+                            ],
+                          ),
+                          theme: ExpandableThemeData(
+                            headerAlignment:
+                                ExpandablePanelHeaderAlignment.center,
+                            tapHeaderToExpand: true,
+                            hasIcon: true,
+                            iconColor: Colors.blueGrey,
+                          )),
                     ),
                     SizedBox(
                       height: 20,
@@ -975,16 +1047,24 @@ class _AuroSidebarState extends State<AuroSidebar> {
                     //Auro.edu
                     Container(
                       child: ExpandablePanel(
-                        headerAlignment: ExpandablePanelHeaderAlignment.center,
-                        header: Row(
+                        theme: ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapHeaderToExpand: true,
+                          hasIcon: true,
+                          iconColor: Colors.blueGrey,
+                        ),
+                        collapsed: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Animator(
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: new Image(
@@ -1001,8 +1081,53 @@ class _AuroSidebarState extends State<AuroSidebar> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Text(
+                                  'Auro.edu',
+                                  style: TextStyle(
+                                    color: Color(0xffD8AF4F),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        header: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: new Image(
+                                    width: 20.0,
+                                    fit: BoxFit.fill,
+                                    image: new AssetImage(
+                                        'assets/fluent_globe-16-filled.jpg')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 14,
+                            ),
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Text(
@@ -1031,8 +1156,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1063,8 +1190,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1095,8 +1224,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1117,418 +1248,31 @@ class _AuroSidebarState extends State<AuroSidebar> {
                             ),
                           ],
                         ),
-                        tapHeaderToExpand: true,
-                        hasIcon: true,
-                        iconColor: Colors.blueGrey,
                       ),
                     ),
-                    // Container(
-                    //   child: ExpandablePanel(
-                    //     headerAlignment: ExpandablePanelHeaderAlignment.center,
-                    //     header: Row(
-                    //       children: <Widget>[
-                    //         Animator(
-                    //           tween: Tween<double>(begin: 0, end: 1),
-                    //           duration: Duration(milliseconds: 500),
-                    //           cycles: 1,
-                    //           builder: (anim) => SizeTransition(
-                    //             sizeFactor: anim,
-                    //             axis: Axis.horizontal,
-                    //             axisAlignment: 1,
-                    //             child: Icon(
-                    //               Icons.bus_alert,
-                    //               color: AllCoustomTheme
-                    //                   .getsecoundTextThemeColor(),
-                    //               size: 20,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           width: 14,
-                    //         ),
-                    //         Animator(
-                    //           tween: Tween<double>(begin: 0, end: 1),
-                    //           duration: Duration(milliseconds: 500),
-                    //           cycles: 1,
-                    //           builder: (anim) => SizeTransition(
-                    //             sizeFactor: anim,
-                    //             axis: Axis.horizontal,
-                    //             axisAlignment: 1,
-                    //             child: Text(
-                    //               'Markets',
-                    //               style: TextStyle(
-                    //                 color: AllCoustomTheme
-                    //                     .getSeeMoreThemeColor(),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         Expanded(
-                    //           child: SizedBox(),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     expanded: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         InkWell(
-                    //           highlightColor: Colors.transparent,
-                    //           splashColor: Colors.transparent,
-                    //           onTap: () {
-                    //             Navigator.pop(context);
-                    //           },
-                    //           child: Row(
-                    //             children: <Widget>[
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Icon(
-                    //                     Icons.circle,
-                    //                     color: AllCoustomTheme
-                    //                         .getsecoundTextThemeColor(),
-                    //                     size: 8,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               SizedBox(
-                    //                 width: 14,
-                    //               ),
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Text(
-                    //                     'Public Equities',
-                    //                     style: TextStyle(
-                    //                       color: AllCoustomTheme
-                    //                           .getTextThemeColor(),
-                    //                       fontSize:
-                    //                           ConstanceData.SIZE_TITLE14,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           height: 10,
-                    //         ),
-                    //         InkWell(
-                    //           highlightColor: Colors.transparent,
-                    //           splashColor: Colors.transparent,
-                    //           onTap: () {
-                    //             Navigator.pop(context);
-                    //           },
-                    //           child: Row(
-                    //             children: <Widget>[
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Icon(
-                    //                     Icons.circle,
-                    //                     color: AllCoustomTheme
-                    //                         .getsecoundTextThemeColor(),
-                    //                     size: 8,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               SizedBox(
-                    //                 width: 14,
-                    //               ),
-                    //               Expanded(
-                    //                 child: Animator(
-                    //                   tween:
-                    //                       Tween<double>(begin: 0, end: 1),
-                    //                   duration: Duration(milliseconds: 500),
-                    //                   cycles: 1,
-                    //                   builder: (anim) => SizeTransition(
-                    //                     sizeFactor: anim,
-                    //                     axis: Axis.horizontal,
-                    //                     axisAlignment: 1,
-                    //                     child: Text(
-                    //                       'Private Equity/ Venture Capital deals',
-                    //                       style: TextStyle(
-                    //                         color: AllCoustomTheme
-                    //                             .getTextThemeColor(),
-                    //                         fontSize:
-                    //                             ConstanceData.SIZE_TITLE14,
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               )
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           height: 10,
-                    //         ),
-                    //         InkWell(
-                    //           highlightColor: Colors.transparent,
-                    //           splashColor: Colors.transparent,
-                    //           onTap: () {
-                    //             Navigator.pop(context);
-                    //           },
-                    //           child: Row(
-                    //             children: <Widget>[
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Icon(
-                    //                     Icons.circle,
-                    //                     color: AllCoustomTheme
-                    //                         .getsecoundTextThemeColor(),
-                    //                     size: 8,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               SizedBox(
-                    //                 width: 14,
-                    //               ),
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Text(
-                    //                     'Crypto Currencies',
-                    //                     style: TextStyle(
-                    //                       color: AllCoustomTheme
-                    //                           .getTextThemeColor(),
-                    //                       fontSize:
-                    //                           ConstanceData.SIZE_TITLE14,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           height: 10,
-                    //         ),
-                    //         InkWell(
-                    //           highlightColor: Colors.transparent,
-                    //           splashColor: Colors.transparent,
-                    //           onTap: () {
-                    //             Navigator.pop(context);
-                    //           },
-                    //           child: Row(
-                    //             children: <Widget>[
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Icon(
-                    //                     Icons.circle,
-                    //                     color: AllCoustomTheme
-                    //                         .getsecoundTextThemeColor(),
-                    //                     size: 8,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               SizedBox(
-                    //                 width: 14,
-                    //               ),
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Text(
-                    //                     'Auro Star Funds',
-                    //                     style: TextStyle(
-                    //                       color: AllCoustomTheme
-                    //                           .getTextThemeColor(),
-                    //                       fontSize:
-                    //                           ConstanceData.SIZE_TITLE14,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           height: 10,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     tapHeaderToExpand: true,
-                    //     hasIcon: true,
-                    //     iconColor: Colors.blueGrey,
-                    //   ),
-                    // ),
-                    // my profile
-                    // ListTileTheme(
-                    //   contentPadding: EdgeInsets.only(right: 10.0),
-                    //   child: ExpansionTile(
-                    //     title: Text(
-                    //       "My profile",
-                    //       style: TextStyle(
-                    //         color: AllCoustomTheme.getSeeMoreThemeColor(),
-                    //         fontSize: ConstanceData.SIZE_TITLE16,
-                    //       ),
-                    //     ),
-                    //     children: <Widget>[
-                    //       ListTile(
-                    //         title: InkWell(
-                    //           highlightColor: Colors.transparent,
-                    //           splashColor: Colors.transparent,
-                    //           onTap: () {
-                    //             Navigator.pop(context);
-                    //             Navigator.of(context).push(
-                    //               CupertinoPageRoute(
-                    //                 builder: (BuildContext context) =>
-                    //                     MyProfile(),
-                    //               ),
-                    //             );
-                    //           },
-                    //           child: Row(
-                    //             children: <Widget>[
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Icon(
-                    //                     Icons.circle,
-                    //                     color: AllCoustomTheme
-                    //                         .getsecoundTextThemeColor(),
-                    //                     size: 8,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               SizedBox(
-                    //                 width: 14,
-                    //               ),
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Text(
-                    //                     'My Investment Track Record',
-                    //                     style: TextStyle(
-                    //                       color: AllCoustomTheme
-                    //                           .getTextThemeColor(),
-                    //                       fontSize:
-                    //                           ConstanceData.SIZE_TITLE14,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       ListTile(
-                    //         title: InkWell(
-                    //           highlightColor: Colors.transparent,
-                    //           splashColor: Colors.transparent,
-                    //           onTap: () {
-                    //             Navigator.of(context).pop();
-                    //             widget.auroStreakCallback();
-                    //           },
-                    //           child: Row(
-                    //             children: <Widget>[
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Icon(
-                    //                     Icons.circle,
-                    //                     color: AllCoustomTheme
-                    //                         .getsecoundTextThemeColor(),
-                    //                     size: 8,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               SizedBox(
-                    //                 width: 14,
-                    //               ),
-                    //               Animator(
-                    //                 tween: Tween<double>(begin: 0, end: 1),
-                    //                 duration: Duration(milliseconds: 500),
-                    //                 cycles: 1,
-                    //                 builder: (anim) => SizeTransition(
-                    //                   sizeFactor: anim,
-                    //                   axis: Axis.horizontal,
-                    //                   axisAlignment: 1,
-                    //                   child: Text(
-                    //                     'My Auro Investment Club',
-                    //                     style: TextStyle(
-                    //                       color: AllCoustomTheme
-                    //                           .getTextThemeColor(),
-                    //                       fontSize:
-                    //                           ConstanceData.SIZE_TITLE14,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 20,
                     ),
                     // exchange
                     Container(
                       child: ExpandablePanel(
-                        headerAlignment: ExpandablePanelHeaderAlignment.center,
-                        header: Row(
+                        theme: ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapHeaderToExpand: true,
+                          hasIcon: true,
+                          iconColor: Colors.blueGrey,
+                        ),
+                        collapsed: Row(
                           children: <Widget>[
                             Animator(
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: new Image(
@@ -1545,8 +1289,55 @@ class _AuroSidebarState extends State<AuroSidebar> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Text(
+                                  'Exchange',
+                                  style: TextStyle(
+                                    color: Color(0xffD8AF4F),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(),
+                            ),
+                          ],
+                        ),
+                        header: Row(
+                          children: <Widget>[
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: new Image(
+                                    width: 20.0,
+                                    fit: BoxFit.fill,
+                                    image: new AssetImage(
+                                        'assets/exchange_handshake.jpg')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 14,
+                            ),
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Text(
@@ -1571,12 +1362,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                               splashColor: Colors.transparent,
                               onTap: () {
                                 Navigator.pop(context);
-                                // Navigator.of(context).push(
-                                //   CupertinoPageRoute(
-                                //     builder: (BuildContext context) =>
-                                //         QusAns(),
-                                //   ),
-                                // );
                               },
                               child: Row(
                                 children: <Widget>[
@@ -1584,8 +1369,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1616,8 +1403,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1636,60 +1425,8 @@ class _AuroSidebarState extends State<AuroSidebar> {
                             SizedBox(
                               height: 10,
                             ),
-                            // InkWell(
-                            //   highlightColor: Colors.transparent,
-                            //   splashColor: Colors.transparent,
-                            //   onTap: () {
-                            //     Navigator.pop(context);
-                            //   },
-                            //   child: Row(
-                            //     children: <Widget>[
-                            //       Animator(
-                            //         tween: Tween<double>(begin: 0, end: 1),
-                            //         duration: Duration(milliseconds: 500),
-                            //         cycles: 1,
-                            //         builder: (anim) => SizeTransition(
-                            //           sizeFactor: anim,
-                            //           axis: Axis.horizontal,
-                            //           axisAlignment: 1,
-                            //           child: Icon(
-                            //             Icons.circle,
-                            //             color: AllCoustomTheme
-                            //                 .getsecoundTextThemeColor(),
-                            //             size: 8,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       SizedBox(
-                            //         width: 14,
-                            //       ),
-                            //       Animator(
-                            //         tween: Tween<double>(begin: 0, end: 1),
-                            //         duration: Duration(milliseconds: 500),
-                            //         cycles: 1,
-                            //         builder: (anim) => SizeTransition(
-                            //           sizeFactor: anim,
-                            //           axis: Axis.horizontal,
-                            //           axisAlignment: 1,
-                            //           child: Text(
-                            //             'Trending Questions',
-                            //             style: TextStyle(
-                            //               color: AllCoustomTheme
-                            //                   .getTextThemeColor(),
-                            //               fontSize:
-                            //                   ConstanceData.SIZE_TITLE14,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                           ],
                         ),
-                        tapHeaderToExpand: true,
-                        hasIcon: true,
-                        iconColor: Colors.blueGrey,
                       ),
                     ),
                     SizedBox(
@@ -1697,15 +1434,23 @@ class _AuroSidebarState extends State<AuroSidebar> {
                     ),
                     Container(
                       child: ExpandablePanel(
-                        headerAlignment: ExpandablePanelHeaderAlignment.center,
-                        header: Row(
+                        theme: ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapHeaderToExpand: true,
+                          hasIcon: true,
+                          iconColor: Colors.blueGrey,
+                        ),
+                        collapsed: Row(
                           children: <Widget>[
                             Animator(
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: new Image(
@@ -1722,8 +1467,55 @@ class _AuroSidebarState extends State<AuroSidebar> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Text(
+                                  'Investment Pitches',
+                                  style: TextStyle(
+                                    color: Color(0xffD8AF4F),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(),
+                            ),
+                          ],
+                        ),
+                        header: Row(
+                          children: <Widget>[
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: new Image(
+                                  width: 20.0,
+                                  fit: BoxFit.fill,
+                                  image: new AssetImage('assets/megaphone.jpg'),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 14,
+                            ),
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Text(
@@ -1761,8 +1553,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1799,8 +1593,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1831,8 +1627,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1853,9 +1651,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                             ),
                           ],
                         ),
-                        tapHeaderToExpand: true,
-                        hasIcon: true,
-                        iconColor: Colors.blueGrey,
                       ),
                     ),
                     SizedBox(
@@ -1864,15 +1659,23 @@ class _AuroSidebarState extends State<AuroSidebar> {
                     //Help
                     Container(
                       child: ExpandablePanel(
-                        headerAlignment: ExpandablePanelHeaderAlignment.center,
+                        theme: ExpandableThemeData(
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center,
+                          tapHeaderToExpand: true,
+                          hasIcon: true,
+                          iconColor: Colors.blueGrey,
+                        ),
                         header: Row(
                           children: <Widget>[
                             Animator(
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: new Image(
@@ -1889,8 +1692,55 @@ class _AuroSidebarState extends State<AuroSidebar> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: Text(
+                                  'Help',
+                                  style: TextStyle(
+                                    color: Color(0xffD8AF4F),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(),
+                            ),
+                          ],
+                        ),
+                        collapsed: Row(
+                          children: <Widget>[
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
+                                axis: Axis.horizontal,
+                                axisAlignment: 1,
+                                child: new Image(
+                                    width: 20.0,
+                                    fit: BoxFit.fill,
+                                    image:
+                                        new AssetImage('assets/support.jpg')),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 14,
+                            ),
+                            Animator(
+                              tween: Tween<double>(begin: 0, end: 1),
+                              duration: Duration(milliseconds: 500),
+                              cycles: 1,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Text(
@@ -1931,8 +1781,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -1970,8 +1822,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2009,8 +1863,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2048,8 +1904,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2103,8 +1961,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2123,56 +1983,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                             SizedBox(
                               height: 10,
                             ),
-                            // InkWell(
-                            //   highlightColor: Colors.transparent,
-                            //   splashColor: Colors.transparent,
-                            //   onTap: () {
-                            //     Navigator.pop(context);
-                            //   },
-                            //   child: Row(
-                            //     children: <Widget>[
-                            //       Animator(
-                            //         tween: Tween<double>(begin: 0, end: 1),
-                            //         duration: Duration(milliseconds: 500),
-                            //         cycles: 1,
-                            //         builder: (anim) => SizeTransition(
-                            //           sizeFactor: anim,
-                            //           axis: Axis.horizontal,
-                            //           axisAlignment: 1,
-                            //           child: Icon(
-                            //             Icons.circle,
-                            //             color: AllCoustomTheme
-                            //                 .getsecoundTextThemeColor(),
-                            //             size: 8,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       SizedBox(
-                            //         width: 14,
-                            //       ),
-                            //       Animator(
-                            //         tween: Tween<double>(begin: 0, end: 1),
-                            //         duration: Duration(milliseconds: 500),
-                            //         cycles: 1,
-                            //         builder: (anim) => SizeTransition(
-                            //           sizeFactor: anim,
-                            //           axis: Axis.horizontal,
-                            //           axisAlignment: 1,
-                            //           child: Text(
-                            //             'Chat with us (whatsapp/Telegram)',
-                            //             style: TextStyle(
-                            //               color: AllCoustomTheme
-                            //                   .getTextThemeColor(),
-                            //               fontSize:
-                            //                   ConstanceData.SIZE_TITLE14,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            //How to customize your Auro Portfolio
                             InkWell(
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
@@ -2195,8 +2005,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2238,8 +2050,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2263,11 +2077,7 @@ class _AuroSidebarState extends State<AuroSidebar> {
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
                               onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => AuroFaqPage(),
-                                  ),
-                                );
+                                Navigator.pop(context);
                               },
                               child: Row(
                                 children: <Widget>[
@@ -2275,8 +2085,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2308,8 +2120,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2341,8 +2155,10 @@ class _AuroSidebarState extends State<AuroSidebar> {
                                     tween: Tween<double>(begin: 0, end: 1),
                                     duration: Duration(milliseconds: 500),
                                     cycles: 1,
-                                    builder: (anim) => SizeTransition(
-                                      sizeFactor: anim,
+                                    builder: (_, anim, __) => SizeTransition(
+                                      sizeFactor: CurvedAnimation(
+                                          curve: Curves.fastOutSlowIn,
+                                          parent: anim.controller),
                                       axis: Axis.horizontal,
                                       axisAlignment: 1,
                                       child: Text(
@@ -2360,9 +2176,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                             ),
                           ],
                         ),
-                        tapHeaderToExpand: true,
-                        hasIcon: true,
-                        iconColor: Colors.blueGrey,
                       ),
                     ),
                     SizedBox(
@@ -2389,20 +2202,6 @@ class _AuroSidebarState extends State<AuroSidebar> {
                           ),
                         ),
                       ),
-                      // Container(
-                      //   child: SwitchListTile(
-                      //     value: globals.isGoldBlack,
-                      //     onChanged: widget.changeThemeCallback,
-                      //     title: Text(
-                      //       globals.isGoldBlack
-                      //           ? "Non-Professional"
-                      //           : "Professional",
-                      //       style: TextStyle(
-                      //           color:
-                      //               AllCoustomTheme.getSeeMoreThemeColor()),
-                      //     ),
-                      //   ),
-                      // ),
                     ),
                   ]),
                 )
@@ -2413,1513 +2212,4 @@ class _AuroSidebarState extends State<AuroSidebar> {
       ),
     );
   }
-
-// @override
-// Widget build(BuildContext context) {
-//   AppBar appBar = AppBar();
-//   appBarheight = appBar.preferredSize.height;
-//   return Container(
-//     // color: AllCoustomTheme.getThemeData().primaryColor,
-//     color: AllCoustomTheme.getBodyContainerThemeColor(),
-//     child: SingleChildScrollView(
-//       physics: BouncingScrollPhysics(),
-//       child: Column(
-//         children: <Widget>[
-//           SizedBox(
-//             height: appBarheight,
-//           ),
-//           Padding(
-//               padding: const EdgeInsets.only(left: 10),
-//               child: Column(
-//                 children: [
-//                   Row(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     mainAxisAlignment: MainAxisAlignment.start,
-//                     children: <Widget>[
-//                       Animator(
-//                         tween: Tween<double>(begin: 0, end: 1),
-//                         duration: Duration(milliseconds: 500),
-//                         cycles: 1,
-//                         builder: (anim) => SizeTransition(
-//                           sizeFactor: anim,
-//                           axis: Axis.horizontal,
-//                           axisAlignment: 1,
-//                           child: CircleAvatar(
-//                             radius: 17.0,
-//                             backgroundImage:
-//                                 new AssetImage('assets/download.jpeg'),
-//                             backgroundColor: Colors.transparent,
-//                           ),
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         width: 10,
-//                       ),
-//                       Consumer<UserDetails>(
-//                         builder: (context, userDetailsProvider, index) {
-//                           if (userDetailsProvider.userDetails == null) {
-//                             print("No User Data to set");
-//                             return Text("Not Found");
-//                           } else {
-//                             print("Set Username");
-//                             return Text(userDetailsProvider
-//                                         .userDetails["f_name"] ==
-//                                     null
-//                                 ? "Not found"
-//                                 : userDetailsProvider.userDetails["f_name"]);
-//                           }
-//                         },
-//                       ),
-//                     ],
-//                   ),
-//                   Row(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     mainAxisAlignment: MainAxisAlignment.start,
-//                     children: <Widget>[
-//                       SizedBox(
-//                         width: 40.0,
-//                       ),
-//                       InkWell(
-//                           onTap: () {
-//                             Navigator.pop(context);
-//                             Navigator.of(context).push(
-//                               CupertinoPageRoute(
-//                                 builder: (BuildContext context) =>
-//                                     MyAccount(),
-//                               ),
-//                             );
-//                           },
-//                           child: Text(
-//                             'My Account',
-//                             style: TextStyle(
-//                               color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                               fontSize: ConstanceData.SIZE_TITLE14,
-//                               fontFamily: "Roboto",
-//                             ),
-//                           )),
-//                       SizedBox(
-//                         width: 2.0,
-//                       ),
-//                       Container(
-//                         margin: EdgeInsets.only(top: 7.0),
-//                         child: Icon(
-//                           Icons.circle,
-//                           size: 6,
-//                           color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         width: 2.0,
-//                       ),
-//                       InkWell(
-//                           onTap: () {
-//                             Navigator.pop(context);
-//                             Navigator.of(context).push(
-//                               CupertinoPageRoute(
-//                                 builder: (BuildContext context) => Setting(),
-//                               ),
-//                             );
-//                           },
-//                           child: Text(
-//                             'Settings',
-//                             style: TextStyle(
-//                               color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                               fontSize: ConstanceData.SIZE_TITLE14,
-//                               fontFamily: "Roboto",
-//                             ),
-//                           )),
-//                       SizedBox(
-//                         width: 2.0,
-//                       ),
-//                       Container(
-//                         margin: EdgeInsets.only(top: 7.0),
-//                         child: Icon(
-//                           Icons.circle,
-//                           size: 6,
-//                           color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         width: 2.0,
-//                       ),
-//                       InkWell(
-//                           onTap: () {
-//                             Navigator.pop(context);
-//                             Navigator.of(context).push(
-//                               CupertinoPageRoute(
-//                                 builder: (BuildContext context) =>
-//                                     MyProfile(),
-//                               ),
-//                             );
-//                           },
-//                           child: Text(
-//                             'My Profile',
-//                             style: TextStyle(
-//                               color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                               fontSize: ConstanceData.SIZE_TITLE14,
-//                               fontFamily: "Roboto",
-//                             ),
-//                           ))
-//                     ],
-//                   ),
-//                 ],
-//               )),
-//           SizedBox(
-//             height: 10,
-//           ),
-//           Animator(
-//             tween: Tween<double>(begin: 0, end: 1),
-//             duration: Duration(milliseconds: 500),
-//             cycles: 1,
-//             builder: (anim) => SizeTransition(
-//               sizeFactor: anim,
-//               axis: Axis.horizontal,
-//               axisAlignment: 1,
-//               child: Container(
-//                 height: 3,
-//                 width: double.infinity,
-//                 decoration: BoxDecoration(
-//                     border: Border(
-//                         bottom: BorderSide(
-//                   color: Color(0xFF525a6d),
-//                   width: 1.6, // Underline width
-//                 ))),
-//               ),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 10,
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.only(left: 16),
-//             child: Row(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               mainAxisAlignment: MainAxisAlignment.start,
-//               children: <Widget>[
-//                 Container(
-//                   margin: EdgeInsets.only(top: 7.0),
-//                   child: Icon(
-//                     Icons.crop_square_outlined,
-//                     size: 15,
-//                     color: Color(0xFFD8AF4F),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   width: 8,
-//                 ),
-//                 Container(
-//                     margin: EdgeInsets.only(top: 5.0),
-//                     child: Text(
-//                       'Go Live with Auro Portfolio',
-//                       style: TextStyle(
-//                         color: AllCoustomTheme.getTextThemeColor(),
-//                         fontSize: ConstanceData.SIZE_TITLE15,
-//                         fontFamily: "Roboto",
-//                       ),
-//                     )),
-//               ],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 10,
-//           ),
-//           Animator(
-//             tween: Tween<double>(begin: 0, end: 1),
-//             duration: Duration(milliseconds: 500),
-//             cycles: 1,
-//             builder: (anim) => SizeTransition(
-//               sizeFactor: anim,
-//               axis: Axis.horizontal,
-//               axisAlignment: 1,
-//               child: Container(
-//                 height: 3,
-//                 width: double.infinity,
-//                 decoration: BoxDecoration(
-//                     border: Border(
-//                         bottom: BorderSide(
-//                   color: Color(0xFF525a6d),
-//                   width: 1.6, // Underline width
-//                 ))),
-//               ),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 20,
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.only(left: 18),
-//             child: Column(
-//               children: <Widget>[
-//                 SingleChildScrollView(
-//                   physics: BouncingScrollPhysics(),
-//                   child: Column(
-//                     children: <Widget>[
-//                       Container(
-//                         child: ExpandablePanel(
-//                           header: Row(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: <Widget>[
-//                               Animator(
-//                                 tween: Tween<double>(begin: 0, end: 1),
-//                                 duration: Duration(milliseconds: 500),
-//                                 cycles: 1,
-//                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
-//                                   axis: Axis.horizontal,
-//                                   axisAlignment: 1,
-//                                   child: new Image(
-//                                       width: 20.0,
-//                                       fit: BoxFit.fill,
-//                                       image: new AssetImage(
-//                                           'assets/appIcon.jpg')),
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 width: 14,
-//                               ),
-//                               Animator(
-//                                 tween: Tween<double>(begin: 0, end: 1),
-//                                 duration: Duration(milliseconds: 500),
-//                                 cycles: 1,
-//                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
-//                                   axis: Axis.horizontal,
-//                                   axisAlignment: 1,
-//                                   child: Text(
-//                                     'Invest',
-//                                     style: TextStyle(
-//                                       color: AllCoustomTheme
-//                                           .getSeeMoreThemeColor(),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           expanded: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: GestureDetector(
-//                                           onTap: () {
-//                                             Navigator.of(context).push(
-//                                               MaterialPageRoute(
-//                                                 builder:
-//                                                     (BuildContext context) =>
-//                                                         OnBoardingFirst(
-//                                                   logo: "logo.png",
-//                                                   callingFrom:
-//                                                       "Accredited Investor",
-//                                                 ),
-//                                               ),
-//                                             );
-//                                           },
-//                                           child: Text(
-//                                             'Go pro',
-//                                             style: TextStyle(
-//                                               color: AllCoustomTheme
-//                                                   .getTextThemeColor(),
-//                                               fontSize:
-//                                                   ConstanceData.SIZE_TITLE14,
-//                                             ),
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Go live',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                             ],
-//                           ),
-//                           tapHeaderToExpand: true,
-//                           hasIcon: true,
-//                           iconColor: Colors.blueGrey,
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: 20,
-//                       ),
-//                       Container(
-//                         child: ExpandablePanel(
-//                           header: Row(
-//                             children: <Widget>[
-//                               Animator(
-//                                 tween: Tween<double>(begin: 0, end: 1),
-//                                 duration: Duration(milliseconds: 500),
-//                                 cycles: 1,
-//                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
-//                                   axis: Axis.horizontal,
-//                                   axisAlignment: 1,
-//                                   child: Icon(
-//                                     Icons.bus_alert,
-//                                     color: AllCoustomTheme
-//                                         .getsecoundTextThemeColor(),
-//                                     size: 20,
-//                                   ),
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 width: 14,
-//                               ),
-//                               Animator(
-//                                 tween: Tween<double>(begin: 0, end: 1),
-//                                 duration: Duration(milliseconds: 500),
-//                                 cycles: 1,
-//                                 builder: (anim) => SizeTransition(
-//                                   sizeFactor: anim,
-//                                   axis: Axis.horizontal,
-//                                   axisAlignment: 1,
-//                                   child: Text(
-//                                     'Markets',
-//                                     style: TextStyle(
-//                                       color: AllCoustomTheme
-//                                           .getSeeMoreThemeColor(),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Expanded(
-//                                 child: SizedBox(),
-//                               ),
-//                             ],
-//                           ),
-//                           expanded: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Public Equities',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Expanded(
-//                                       child: Animator(
-//                                         tween:
-//                                             Tween<double>(begin: 0, end: 1),
-//                                         duration: Duration(milliseconds: 500),
-//                                         cycles: 1,
-//                                         builder: (anim) => SizeTransition(
-//                                           sizeFactor: anim,
-//                                           axis: Axis.horizontal,
-//                                           axisAlignment: 1,
-//                                           child: Text(
-//                                             'Private Equity/ Venture Capital deals',
-//                                             style: TextStyle(
-//                                               color: AllCoustomTheme
-//                                                   .getTextThemeColor(),
-//                                               fontSize:
-//                                                   ConstanceData.SIZE_TITLE14,
-//                                             ),
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     )
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Crypto Currencies',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Auro Star Funds',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                             ],
-//                           ),
-//                           tapHeaderToExpand: true,
-//                           hasIcon: true,
-//                           iconColor: Colors.blueGrey,
-//                         ),
-//                       ),
-//                       // my prifle
-//                       ListTileTheme(
-//                         contentPadding: EdgeInsets.only(right: 10.0),
-//                         child: ExpansionTile(
-//                           title: Text(
-//                             "My profile",
-//                             style: TextStyle(
-//                               color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                               fontSize: ConstanceData.SIZE_TITLE16,
-//                             ),
-//                           ),
-//                           children: <Widget>[
-//                             ListTile(
-//                               title: InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                   Navigator.of(context).push(
-//                                     CupertinoPageRoute(
-//                                       builder: (BuildContext context) =>
-//                                           MyProfile(),
-//                                     ),
-//                                   );
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'My Investment Track Record',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             ),
-//                             ListTile(
-//                               title: InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.of(context).pop();
-//                                   widget.auroStreakCallback();
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'My Auro Investment Club',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             )
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: 20,
-//                       ),
-//                       // exchange
-//                       Container(
-//                         child: ExpandablePanel(
-//                           header: Text(
-//                             'Exchange',
-//                             textAlign: TextAlign.left,
-//                             style: TextStyle(
-//                               color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                               fontSize: ConstanceData.SIZE_TITLE16,
-//                             ),
-//                           ),
-//                           expanded: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'My Questions',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Recommended Questions',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Trending Questions',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           tapHeaderToExpand: true,
-//                           hasIcon: true,
-//                           iconColor: Colors.blueGrey,
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: 20,
-//                       ),
-//                       Container(
-//                         child: ExpandablePanel(
-//                           header: Text(
-//                             'Promotions',
-//                             textAlign: TextAlign.left,
-//                             style: TextStyle(
-//                               color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                               fontSize: ConstanceData.SIZE_TITLE16,
-//                             ),
-//                           ),
-//                           expanded: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Refer a friend and earn coins',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Expanded(
-//                                       child: Animator(
-//                                         tween:
-//                                             Tween<double>(begin: 0, end: 1),
-//                                         duration: Duration(milliseconds: 500),
-//                                         cycles: 1,
-//                                         builder: (anim) => SizeTransition(
-//                                           sizeFactor: anim,
-//                                           axis: Axis.horizontal,
-//                                           axisAlignment: 1,
-//                                           child: Text(
-//                                             'Register your product on one of our markets (Please send email with details to AuroLP@AuroIM.com)',
-//                                             style: TextStyle(
-//                                               color: AllCoustomTheme
-//                                                   .getTextThemeColor(),
-//                                               fontSize:
-//                                                   ConstanceData.SIZE_TITLE14,
-//                                             ),
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           tapHeaderToExpand: true,
-//                           hasIcon: true,
-//                           iconColor: Colors.blueGrey,
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: 20,
-//                       ),
-//                       Container(
-//                         child: ExpandablePanel(
-//                           header: Text(
-//                             'Support',
-//                             textAlign: TextAlign.left,
-//                             style: TextStyle(
-//                               color: AllCoustomTheme.getSeeMoreThemeColor(),
-//                               fontSize: ConstanceData.SIZE_TITLE16,
-//                             ),
-//                           ),
-//                           expanded: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () async {
-//                                   await showDialog(
-//                                       context: context,
-//                                       builder: (context) {
-//                                         return HowAppWorks(
-//                                           videoLink:
-//                                               "https://www.youtube.com/watch?v=RWFXn2Dsb9E",
-//                                         );
-//                                       });
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Presentation at Stanford \nAngels Summit',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                           overflow: TextOverflow.clip,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () async {
-//                                   await showDialog(
-//                                       context: context,
-//                                       builder: (context) {
-//                                         return HowAppWorks(
-//                                           videoLink:
-//                                               "https://www.youtube.com/watch?v=Tj5vvzUVqrc&t=2s",
-//                                         );
-//                                       });
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'How app works',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Chat with us (whatsapp/Telegram)',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Ask a question ( aurobot -Phase)',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'Contact Us',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 10,
-//                               ),
-//                               InkWell(
-//                                 highlightColor: Colors.transparent,
-//                                 splashColor: Colors.transparent,
-//                                 onTap: () {
-//                                   Navigator.pop(context);
-//                                 },
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Icon(
-//                                           Icons.circle,
-//                                           color: AllCoustomTheme
-//                                               .getsecoundTextThemeColor(),
-//                                           size: 8,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 14,
-//                                     ),
-//                                     Animator(
-//                                       tween: Tween<double>(begin: 0, end: 1),
-//                                       duration: Duration(milliseconds: 500),
-//                                       cycles: 1,
-//                                       builder: (anim) => SizeTransition(
-//                                         sizeFactor: anim,
-//                                         axis: Axis.horizontal,
-//                                         axisAlignment: 1,
-//                                         child: Text(
-//                                           'T & C',
-//                                           style: TextStyle(
-//                                             color: AllCoustomTheme
-//                                                 .getTextThemeColor(),
-//                                             fontSize:
-//                                                 ConstanceData.SIZE_TITLE14,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           tapHeaderToExpand: true,
-//                           hasIcon: true,
-//                           iconColor: Colors.blueGrey,
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: 20,
-//                       ),
-//                       Container(
-//                         child: ListTile(
-//                           onTap: () async {
-//                             final SharedPreferences prefs =
-//                                 await SharedPreferences.getInstance();
-//                             await prefs.remove('Session_token');
-//                             Navigator.of(context).push(
-//                               MaterialPageRoute(
-//                                 builder: (context) => IntroductionScreen2(),
-//                               ),
-//                             );
-//                           },
-//                           title: Text(
-//                             "Logout",
-//                             style: TextStyle(
-//                                 color:
-//                                     AllCoustomTheme.getSeeMoreThemeColor()),
-//                           ),
-//                         ),
-//                       ),
-//                       // Container(
-//                       //   child: SwitchListTile(
-//                       //     value: globals.isGoldBlack,
-//                       //     onChanged: widget.changeThemeCallback,
-//                       //     title: Text(
-//                       //       globals.isGoldBlack
-//                       //           ? "Non-Professional"
-//                       //           : "Professional",
-//                       //       style: TextStyle(
-//                       //           color:
-//                       //               AllCoustomTheme.getSeeMoreThemeColor()),
-//                       //     ),
-//                       //   ),
-//                       // ),
-//                     ],
-//                   ),
-//                 )
-//               ],
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//   );
-// }
 }

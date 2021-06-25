@@ -29,15 +29,22 @@ class QuickPercentChangeBar extends StatelessWidget {
             children: <Widget>[
               new Text(
                 "1h",
-                style: Theme.of(context).textTheme.body1.apply(color: Colors.white),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .apply(color: Colors.white),
               ),
               new Padding(
                 padding: const EdgeInsets.only(right: 3.0),
               ),
               new Text(
-                snapshot.percentChange1h >= 0 ? "+" + snapshot.percentChange1h.toString() + "%" : snapshot.percentChange1h.toString() + "%",
-                style: Theme.of(context).primaryTextTheme.body2.apply(
-                      color: snapshot.percentChange1h >= 0 ? Colors.green : Colors.red,
+                snapshot.percentChange1h >= 0
+                    ? "+" + snapshot.percentChange1h.toString() + "%"
+                    : snapshot.percentChange1h.toString() + "%",
+                style: Theme.of(context).primaryTextTheme.bodyText1.apply(
+                      color: snapshot.percentChange1h >= 0
+                          ? Colors.green
+                          : Colors.red,
                     ),
               )
             ],
@@ -47,11 +54,20 @@ class QuickPercentChangeBar extends StatelessWidget {
             children: <Widget>[
               new Text(
                 "24h",
-                style: Theme.of(context).textTheme.body1.apply(color: Colors.white),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .apply(color: Colors.white),
               ),
               new Padding(padding: const EdgeInsets.only(right: 3.0)),
-              new Text(snapshot.percentChange24h >= 0 ? "+" + snapshot.percentChange24h.toString() + "%" : snapshot.percentChange24h.toString() + "%",
-                  style: Theme.of(context).primaryTextTheme.body2.apply(color: snapshot.percentChange24h >= 0 ? Colors.green : Colors.red))
+              new Text(
+                  snapshot.percentChange24h >= 0
+                      ? "+" + snapshot.percentChange24h.toString() + "%"
+                      : snapshot.percentChange24h.toString() + "%",
+                  style: Theme.of(context).primaryTextTheme.bodyText1.apply(
+                      color: snapshot.percentChange24h >= 0
+                          ? Colors.green
+                          : Colors.red))
             ],
           ),
           new Row(
@@ -59,13 +75,20 @@ class QuickPercentChangeBar extends StatelessWidget {
             children: <Widget>[
               new Text(
                 "7D",
-                style: Theme.of(context).textTheme.body1.apply(color: Colors.white),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .apply(color: Colors.white),
               ),
               new Padding(padding: const EdgeInsets.only(right: 3.0)),
               new Text(
-                snapshot.percentChange7d >= 0 ? "+" + snapshot.percentChange7d.toString() + "%" : snapshot.percentChange7d.toString() + "%",
-                style: Theme.of(context).primaryTextTheme.body2.apply(
-                      color: snapshot.percentChange7d >= 0 ? Colors.green : Colors.red,
+                snapshot.percentChange7d >= 0
+                    ? "+" + snapshot.percentChange7d.toString() + "%"
+                    : snapshot.percentChange7d.toString() + "%",
+                style: Theme.of(context).primaryTextTheme.bodyText1.apply(
+                      color: snapshot.percentChange7d >= 0
+                          ? Colors.green
+                          : Colors.red,
                     ),
               ),
             ],

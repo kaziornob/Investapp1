@@ -22,7 +22,7 @@ class CurrencyRateProvider with ChangeNotifier {
     print("post all fx url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     // print("get  response of all fxs : ${response.body}");
     var result = jsonDecode(response.body);
 
@@ -49,7 +49,7 @@ class CurrencyRateProvider with ChangeNotifier {
     print("post all fx url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     // print("get  response of all fxs : ${response.body}");
     var result = jsonDecode(response.body);
 

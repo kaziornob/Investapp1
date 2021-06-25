@@ -22,7 +22,7 @@ class UserPostsProvider with ChangeNotifier {
     print("get url: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );

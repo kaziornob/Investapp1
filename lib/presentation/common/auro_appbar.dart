@@ -83,14 +83,14 @@ class AuroAppbar extends StatelessWidget implements PreferredSizeWidget {
           alignment: Alignment.bottomRight,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 3.0),
+              padding: EdgeInsets.only(bottom: 5, right: 5),
               child: Image(
                   height: 40,
                   width: 40,
                   image: new AssetImage('assets/appIcon.png')),
             ),
             FractionalTranslation(
-              translation: Offset(-0.5, 0.0),
+              translation: Offset(-0.8, -0.3),
               child: GestureDetector(
                 onTap: () {},
                 child: CircleAvatar(

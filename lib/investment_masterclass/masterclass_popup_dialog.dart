@@ -1,5 +1,4 @@
 import 'package:auroim/investment_masterclass/invesment_masterclass_models/module_details_response_model.dart';
-import 'package:auroim/investment_masterclass/style.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 

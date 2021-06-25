@@ -3,7 +3,6 @@ import 'package:auroim/constance/constance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ClubDetail extends StatefulWidget {
@@ -15,16 +14,13 @@ class ClubDetail extends StatefulWidget {
 }
 
 class _ClubDetailState extends State<ClubDetail> {
-
   bool _isInProgress = false;
-
 
   @override
   void initState() {
     super.initState();
     loadDetails();
   }
-
 
   loadDetails() async {
     setState(() {
@@ -35,7 +31,6 @@ class _ClubDetailState extends State<ClubDetail> {
       _isInProgress = false;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,125 +52,125 @@ class _ClubDetailState extends State<ClubDetail> {
                 padding: const EdgeInsets.only(right: 16, left: 16),
                 child: !_isInProgress
                     ? Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: appBarheight,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Animator(
-                            tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
-                            duration: Duration(milliseconds: 500),
-                            cycles: 0,
-                            builder: (anim) => FractionalTranslation(
-                              translation: anim.value,
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: AllCoustomTheme.getTextThemeColor(),
-                              ),
-                            ),
+                        children: <Widget>[
+                          SizedBox(
+                            height: appBarheight,
                           ),
-                        ),
-                        Expanded(
-                          child: Animator(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.decelerate,
-                            cycles: 1,
-                            builder: (anim) => Transform.scale(
-                              scale: anim.value,
-                              child: Text(
-                                '#${widget.allField["name"]}',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Color(0xfffec20f),
-                                  fontFamily: "Roboto",
-                                  fontSize: ConstanceData.SIZE_TITLE20,
+                          Row(
+                            children: <Widget>[
+                              InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Animator(
+                                  tween: Tween<Offset>(
+                                      begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                  duration: Duration(milliseconds: 500),
+                                  cycles: 0,
+                                  builder: (_, anim, __) =>
+                                      FractionalTranslation(
+                                    translation: anim.value,
+                                    child: Icon(
+                                      Icons.arrow_back_ios,
+                                      color:
+                                          AllCoustomTheme.getTextThemeColor(),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5,right: 5.0),
-                      child: Container(
-                        // color: Colors.white,
-                        child: Image(
-                          image: AssetImage('assets/weeklyAuroBadge.png'),
-                          fit: BoxFit.fill,
-                          height: 180,
-                          width: 230,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5,right: 5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    'Investment Philosophy:  ${widget.allField["text1"]}',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
-                                      fontSize: ConstanceData.SIZE_TITLE18,
-                                      fontFamily: "Rasa",
+                              Expanded(
+                                child: Animator(
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.decelerate,
+                                  cycles: 1,
+                                  builder: (_, anim, __) => Transform.scale(
+                                    scale: anim.value,
+                                    child: Text(
+                                      '#${widget.allField["name"]}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Color(0xfffec20f),
+                                        fontFamily: "Roboto",
+                                        fontSize: ConstanceData.SIZE_TITLE20,
+                                      ),
                                     ),
                                   ),
-                                )
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 5.0),
+                            child: Container(
+                              // color: Colors.white,
+                              child: Image(
+                                image: AssetImage('assets/weeklyAuroBadge.png'),
+                                fit: BoxFit.fill,
+                                height: 180,
+                                width: 230,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                      child: Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      'Investment Philosophy:  ${widget.allField["text1"]}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color:
+                                            AllCoustomTheme.getTextThemeColor(),
+                                        fontSize: ConstanceData.SIZE_TITLE18,
+                                        fontFamily: "Rasa",
+                                      ),
+                                    ),
+                                  )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                      child: Padding(
+                                    padding: EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      'Investment Track record:  ${widget.allField["text2"]}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: ConstanceData.SIZE_TITLE18,
+                                        fontFamily: "Rasa",
+                                      ),
+                                    ),
+                                  )),
+                                ),
+                              ],
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5,right: 5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    'Investment Track record:  ${widget.allField["text2"]}',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color:Colors.black,
-                                      fontSize: ConstanceData.SIZE_TITLE18,
-                                      fontFamily: "Rasa",
-
-                                    ),
-                                  ),
-                                )
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  ],
-                )
+                      )
                     : SizedBox(),
               ),
             ),

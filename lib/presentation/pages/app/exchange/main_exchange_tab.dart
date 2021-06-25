@@ -96,7 +96,7 @@ class _MainExchangeTabState extends State<MainExchangeTab>
               ),
               backgroundColor: Color(0xff161946),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text(
                     "OK",
                     style: TextStyle(
@@ -257,8 +257,9 @@ class _MainExchangeTabState extends State<MainExchangeTab>
                 tween: Tween<double>(begin: 0, end: 1),
                 duration: Duration(milliseconds: 500),
                 cycles: 1,
-                builder: (anim) => SizeTransition(
-                  sizeFactor: anim,
+                builder: (_, anim, __) => SizeTransition(
+                  sizeFactor: CurvedAnimation(
+                      curve: Curves.fastOutSlowIn, parent: anim.controller),
                   axis: Axis.horizontal,
                   axisAlignment: 1,
                   child: Padding(

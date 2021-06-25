@@ -8,8 +8,6 @@ import 'package:auroim/constance/themes.dart';
 import 'package:auroim/modules/qaInvForumPages/qusDetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
@@ -85,7 +83,8 @@ class _AnsViewState extends State<AnsView> {
                                           end: Offset(0.2, 0)),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
+                                      builder: (_, anim, __) =>
+                                          FractionalTranslation(
                                         translation: anim.value,
                                         child: Icon(
                                           Icons.arrow_back_ios,
@@ -269,7 +268,8 @@ class _AnsViewState extends State<AnsView> {
     print("create answer tempJsonReq: $tempJsonReq");
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmitResponse('forum/create_answer', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('forum/create_answer', jsonReq);
     var result = json.decode(jsonReqResp.body);
 
     print("ans add/edit response: $result");

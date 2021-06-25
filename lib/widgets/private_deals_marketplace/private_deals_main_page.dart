@@ -217,7 +217,7 @@ class _PrivateDealsMarketplaceMainPageState
                             letterSpacing: 0.1),
                       ),
                     ),
-                    FlatButton(
+                    TextButton(
                       onPressed: () {},
                       child: Text(
                         "See all",

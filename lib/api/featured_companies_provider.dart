@@ -26,7 +26,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
 
     print("get response: ${response.statusCode}");
 
@@ -64,15 +64,11 @@ class FeaturedCompaniesProvider {
   // }
 
   coinDetails(path) async {
-    Map<String, String> headers = {
-      "Content-type": "application/json",
-    };
-
     String url = path;
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url);
+    var response = await http.get(Uri.parse(url));
 
     print("get response: ${response.statusCode}");
 
@@ -98,7 +94,7 @@ class FeaturedCompaniesProvider {
     print("post url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
 
     print("get response: ${response.statusCode}");
 
@@ -125,7 +121,7 @@ class FeaturedCompaniesProvider {
     print("post url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     var result = jsonDecode(response.body);
     print("get image url response: ${response.statusCode}");
 
@@ -173,7 +169,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get compare chart response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -220,7 +216,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get filters response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -261,7 +257,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get single company response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -303,7 +299,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get industry response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -344,7 +340,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -385,7 +381,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     // print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
     // print("search compaiessssss");
@@ -429,8 +425,8 @@ class FeaturedCompaniesProvider {
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get user details by email url : $url");
 
-    var response =
-        await http.post(url, headers: headers, body: jsonEncode(body));
+    var response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
     print("get user badge response: ${response.statusCode}");
     var result = jsonDecode(response.body);
     print(result.toString());
@@ -457,7 +453,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
     print(result.toString());
@@ -499,7 +495,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -540,7 +536,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get public company list response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -581,7 +577,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get single company response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -641,7 +637,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get single company response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -689,7 +685,7 @@ class FeaturedCompaniesProvider {
     print("get daily return portfolio : $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get gopro risk metrics response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -724,7 +720,7 @@ class FeaturedCompaniesProvider {
     print("get gopro risk metrics url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get gopro risk metrics response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -761,7 +757,7 @@ class FeaturedCompaniesProvider {
     print("get static url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get static company response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -802,7 +798,7 @@ class FeaturedCompaniesProvider {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get single public company data response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -841,7 +837,7 @@ class FeaturedCompaniesProvider {
 //   print("post req url: $url");
 //   print("session token: $sessionToken");
 //
-//   var response = await http.get(url, headers: headers);
+//   var response = await http.get(Uri.parse(url), headers: headers);
 //
 //   print("post submit response: ${response.statusCode}");
 //

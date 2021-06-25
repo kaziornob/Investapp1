@@ -74,8 +74,8 @@ class GoProDataProvider with ChangeNotifier {
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get static url: $url");
 
-    var response =
-        await http.post(url, headers: headers, body: jsonEncode(body));
+    var response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
     print("get static company response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 
@@ -109,7 +109,7 @@ class GoProDataProvider with ChangeNotifier {
     print("get static url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get go pro response: ${response.statusCode}");
     print("${response.body}");
     var result = jsonDecode(response.body);
@@ -119,7 +119,7 @@ class GoProDataProvider with ChangeNotifier {
       print("results ${result["message"]}");
       Toast.show("${result['message']}", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      Provider.of<PortfolioProvider>(context,listen: false).changeStateOfListener();
+      Provider.of<PortfolioProvider>(context).changeStateOfListener();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),

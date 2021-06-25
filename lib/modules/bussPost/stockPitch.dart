@@ -99,9 +99,11 @@ class _StockPitchState extends State<StockPitch> {
 
   Future<bool> _openVideoExplorer() async {
     try {
-      path = await FilePicker.getFilePath(
-        type: FileType.video,
-      );
+      path = await FilePicker.platform
+          .pickFiles(
+            type: FileType.video,
+          )
+          .then((value) => value.files.first.path);
       if (path != null) {
         print(path);
         setState(() {
@@ -166,10 +168,12 @@ class _StockPitchState extends State<StockPitch> {
       //     allowedExtensions: extensions,
       //   );
       // } else {
-      path = await FilePicker.getFilePath(
-        type: fileType,
-        allowedExtensions: extensions,
-      );
+      path = await FilePicker.platform
+          .pickFiles(
+            type: fileType,
+            allowedExtensions: extensions,
+          )
+          .then((value) => value.files.first.path);
       if (path != null) {
         print(path);
         setState(() {

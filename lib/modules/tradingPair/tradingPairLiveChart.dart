@@ -13,7 +13,8 @@ class TradingPairChart extends StatefulWidget {
   final List<TransactionDetail> transactionDetail;
   final TradingPair tradingPair;
 
-  const TradingPairChart({Key key, this.transactionDetail, this.tradingPair}) : super(key: key);
+  const TradingPairChart({Key key, this.transactionDetail, this.tradingPair})
+      : super(key: key);
   @override
   _TradingPairChartState createState() => _TradingPairChartState();
 }
@@ -86,10 +87,11 @@ class _TradingPairChartState extends State<TradingPairChart> {
                         Navigator.pop(context);
                       },
                       child: Animator(
-                        tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                        tween: Tween<Offset>(
+                            begin: Offset(0, 0), end: Offset(0.2, 0)),
                         duration: Duration(milliseconds: 500),
                         cycles: 0,
-                        builder: (anim) => FractionalTranslation(
+                        builder: (_, anim, __) => FractionalTranslation(
                           translation: anim.value,
                           child: Icon(
                             Icons.arrow_back_ios,
@@ -103,11 +105,13 @@ class _TradingPairChartState extends State<TradingPairChart> {
                             duration: Duration(milliseconds: 500),
                             curve: Curves.decelerate,
                             cycles: 1,
-                            builder: (anim) => Transform.scale(
+                            builder: (_, anim, __) => Transform.scale(
                               scale: anim.value,
                               child: Text(
                                 widget.tradingPair.name,
-                                style: TextStyle(color: AllCoustomTheme.getTextThemeColors(), fontSize: ConstanceData.SIZE_TITLE18),
+                                style: TextStyle(
+                                    color: AllCoustomTheme.getTextThemeColors(),
+                                    fontSize: ConstanceData.SIZE_TITLE18),
                               ),
                             ),
                           )
@@ -132,7 +136,7 @@ class _TradingPairChartState extends State<TradingPairChart> {
                             tween: Tween<double>(begin: 0.8, end: 1),
                             curve: Curves.fastOutSlowIn,
                             cycles: 0,
-                            builder: (anim) => Transform.scale(
+                            builder: (_, anim, __) => Transform.scale(
                               scale: anim.value,
                               child: CircleAvatar(
                                 radius: 4,
@@ -140,7 +144,10 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     gradient: LinearGradient(
-                                      colors: [globals.buttoncolor1, globals.buttoncolor2],
+                                      colors: [
+                                        globals.buttoncolor1,
+                                        globals.buttoncolor2
+                                      ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                     ),
@@ -166,8 +173,10 @@ class _TradingPairChartState extends State<TradingPairChart> {
                       child: Animator(
                         duration: Duration(milliseconds: 500),
                         cycles: 1,
-                        builder: (anim) => SizeTransition(
-                          sizeFactor: anim,
+                        builder: (_, anim, __) => SizeTransition(
+                          sizeFactor: CurvedAnimation(
+                              curve: Curves.fastOutSlowIn,
+                              parent: anim.controller),
                           axisAlignment: -1,
                           axis: Axis.horizontal,
                           child: Row(
@@ -186,12 +195,19 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                 child: Sparkline(
                                   data: transactionList,
                                   lineGradient: LinearGradient(
-                                    colors: [globals.buttoncolor1, globals.buttoncolor2],
+                                    colors: [
+                                      globals.buttoncolor1,
+                                      globals.buttoncolor2
+                                    ],
                                   ),
-                                  pointColor: AllCoustomTheme.getTextThemeColors(),
+                                  pointColor:
+                                      AllCoustomTheme.getTextThemeColors(),
                                   lineWidth: 1,
                                   fillMode: FillMode.below,
-                                  fillGradient: LinearGradient(colors: [globals.buttoncolor1, globals.buttoncolor2]),
+                                  fillGradient: LinearGradient(colors: [
+                                    globals.buttoncolor1,
+                                    globals.buttoncolor2
+                                  ]),
                                 ),
                               ),
                             ],
@@ -229,32 +245,36 @@ class _TradingPairChartState extends State<TradingPairChart> {
                   padding: const EdgeInsets.only(left: 16),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30)),
+                      borderRadius:
+                          BorderRadius.only(topLeft: Radius.circular(30)),
                       color: AllCoustomTheme.boxColor(),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+                      padding:
+                          const EdgeInsets.only(top: 20, right: 20, left: 20),
                       child: Column(
                         children: <Widget>[
                           !_isInProgress
                               ? Expanded(
                                   child: ListView(
                                     physics: BouncingScrollPhysics(),
-                                    padding: EdgeInsets.all(0),
                                     children: <Widget>[
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Text(
                                             'Bitcoin/US Dollars',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                              color: AllCoustomTheme
+                                                  .getsecoundTextThemeColor(),
                                             ),
                                           ),
                                           Text(
                                             '12.01.2019',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                             ),
                                           ),
                                         ],
@@ -263,24 +283,28 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                         height: 10,
                                       ),
                                       Divider(
-                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getsecoundTextThemeColor(),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Text(
                                             'Euro/CDN Dollars',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                              color: AllCoustomTheme
+                                                  .getsecoundTextThemeColor(),
                                             ),
                                           ),
                                           Text(
                                             '17.12.2019',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                             ),
                                           ),
                                         ],
@@ -289,24 +313,28 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                         height: 10,
                                       ),
                                       Divider(
-                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getsecoundTextThemeColor(),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Text(
                                             'Ethereum/CDN Dollars',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                              color: AllCoustomTheme
+                                                  .getsecoundTextThemeColor(),
                                             ),
                                           ),
                                           Text(
                                             '15.05.2019',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                             ),
                                           ),
                                         ],
@@ -315,24 +343,28 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                         height: 10,
                                       ),
                                       Divider(
-                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getsecoundTextThemeColor(),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Text(
                                             'Bitcoin/CDN Dollars',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                              color: AllCoustomTheme
+                                                  .getsecoundTextThemeColor(),
                                             ),
                                           ),
                                           Text(
                                             '24.05.2020',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                             ),
                                           ),
                                         ],
@@ -341,24 +373,28 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                         height: 10,
                                       ),
                                       Divider(
-                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getsecoundTextThemeColor(),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Text(
                                             'Bitcoin/US Dollars',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                              color: AllCoustomTheme
+                                                  .getsecoundTextThemeColor(),
                                             ),
                                           ),
                                           Text(
                                             '12.01.2019',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                             ),
                                           ),
                                         ],
@@ -367,24 +403,28 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                         height: 10,
                                       ),
                                       Divider(
-                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getsecoundTextThemeColor(),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Text(
                                             'Euro/CDN Dollars',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                              color: AllCoustomTheme
+                                                  .getsecoundTextThemeColor(),
                                             ),
                                           ),
                                           Text(
                                             '23.01.2018',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                             ),
                                           ),
                                         ],
@@ -393,24 +433,28 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                         height: 10,
                                       ),
                                       Divider(
-                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                        color: AllCoustomTheme
+                                            .getsecoundTextThemeColor(),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Text(
                                             'Ethereum/CDN Dollars',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                              color: AllCoustomTheme
+                                                  .getsecoundTextThemeColor(),
                                             ),
                                           ),
                                           Text(
                                             '13.12.2019',
                                             style: TextStyle(
-                                              color: AllCoustomTheme.getTextThemeColors(),
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColors(),
                                             ),
                                           ),
                                         ],
@@ -446,24 +490,34 @@ class _TradingPairChartState extends State<TradingPairChart> {
                                                 (_) => Column(
                                                   children: <Widget>[
                                                     Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Expanded(
                                                           child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
                                                               Container(
-                                                                width: double.infinity,
+                                                                width: double
+                                                                    .infinity,
                                                                 height: 8.0,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                               Padding(
-                                                                padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        2.0),
                                                               ),
                                                               Container(
                                                                 width: 40.0,
                                                                 height: 8.0,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ],
                                                           ),

@@ -111,7 +111,7 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.decelerate,
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Text(
                                     "Withdraw Payment",
@@ -143,8 +143,10 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Column(
@@ -196,8 +198,10 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                  sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                  sizeFactor: CurvedAnimation(
+                                      curve: Curves.fastOutSlowIn,
+                                      parent: anim.controller),
                                   axis: Axis.horizontal,
                                   axisAlignment: 1,
                                   child: Column(
@@ -242,7 +246,7 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                           duration: Duration(milliseconds: 500),
                           curve: Curves.decelerate,
                           cycles: 1,
-                          builder: (anim) => Transform.scale(
+                          builder: (_, anim, __) => Transform.scale(
                             scale: anim.value,
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -378,7 +382,7 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.decelerate,
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
@@ -387,10 +391,9 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                                       tween: Tween<double>(begin: 0.9, end: 1),
                                       curve: Curves.elasticIn,
                                       cycles: 0,
-                                      builder: (anim) => Transform.scale(
+                                      builder: (_, anim, __) => Transform.scale(
                                         scale: anim.value,
-                                        child: FlatButton(
-                                          padding: EdgeInsets.all(0),
+                                        child: TextButton(
                                           child: Container(
                                             height: 47,
                                             alignment: FractionalOffset.center,
@@ -441,7 +444,7 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                           duration: Duration(milliseconds: 500),
                           curve: Curves.decelerate,
                           cycles: 1,
-                          builder: (anim) => Transform.scale(
+                          builder: (_, anim, __) => Transform.scale(
                             scale: anim.value,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16),
@@ -486,7 +489,7 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.decelerate,
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: ListView(
                                     physics: BouncingScrollPhysics(),
@@ -828,7 +831,7 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
             Animator(
               duration: Duration(milliseconds: 500),
               cycles: 1,
-              builder: (anim) => Transform.scale(
+              builder: (_, anim, __) => Transform.scale(
                 scale: anim.value,
                 child: Icon(
                   Icons.done,
@@ -867,10 +870,9 @@ class _WithDrawCurrencyState extends State<WithDrawCurrency> {
             Animator(
               duration: Duration(milliseconds: 500),
               cycles: 1,
-              builder: (anim) => Transform.scale(
+              builder: (_, anim, __) => Transform.scale(
                 scale: anim.value,
-                child: FlatButton(
-                  padding: EdgeInsets.all(0),
+                child: TextButton(
                   child: Container(
                     height: 45.0,
                     alignment: FractionalOffset.center,

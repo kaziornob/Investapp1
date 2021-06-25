@@ -7,6 +7,8 @@ import 'package:auroim/modules/home/main_plus_tab.dart';
 import 'package:auroim/modules/home/new_main_home_tab.dart';
 import 'package:auroim/modules/investRelatedPages/securityFirstPage.dart';
 import 'package:auroim/modules/settings/user_profile_page.dart';
+import 'package:auroim/presentation/common/auro_appbar.dart';
+import 'package:auroim/presentation/common/auro_sidebar.dart';
 import 'package:auroim/presentation/pages/app/exchange/main_exchange_tab.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/provider_abhinav/username_functionality_provider.dart';
@@ -262,22 +264,23 @@ class _HomeScreenState extends State<HomeScreen>
           bottom: true,
           child: Scaffold(
             key: homeScaffoldKey,
-            appBar: isSelect1 || isSelect2 || isSelect4
-                ? PreferredSize(
-                    preferredSize: Size.fromHeight(65.0),
-                    child: AppBar(
-                      automaticallyImplyLeading: false,
-                      backgroundColor:
-                          isSelect2 == true ? Colors.black : Color(0xFF7499C6),
-                      // globals.isGoldBlack
-                      //     ? isSelect2 == true
-                      //         ? Colors.black
-                      //         : Color(0xFF7499C6)
-                      //     : Color(0xFF7499C6),
-                      title: _buildAppBar(context),
-                    ),
-                  )
-                : null,
+            // appBar: isSelect1 || isSelect2 || isSelect4
+            //     ? PreferredSize(
+            //         preferredSize: Size.fromHeight(65.0),
+            //         child: AppBar(
+            //           automaticallyImplyLeading: false,
+            //           backgroundColor:
+            //               isSelect2 == true ? Colors.black : Color(0xFF7499C6),
+            //           // globals.isGoldBlack
+            //           //     ? isSelect2 == true
+            //           //         ? Colors.black
+            //           //         : Color(0xFF7499C6)
+            //           //     : Color(0xFF7499C6),
+            //           title: _buildAppBar(context),
+            //         ),
+            //       )
+            //     : null,
+            appBar: AuroAppbar(controller: TextEditingController()),
             bottomNavigationBar: Container(
               decoration: new BoxDecoration(
                 color: AllCoustomTheme.getBodyContainerThemeColor(),
@@ -301,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Animator(
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Container(
                                     height: 2.5,
@@ -333,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   tween: Tween<double>(begin: 0.8, end: 1.1),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                       scale: anim.value,
                                       child: Column(
                                         crossAxisAlignment:
@@ -389,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Animator(
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Container(
                                     height: 2.5,
@@ -421,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   tween: Tween<double>(begin: 0.8, end: 1.1),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: secondAnimation(),
                                   ),
@@ -440,7 +443,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Animator(
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Container(
                                     height: 2.5,
@@ -463,7 +466,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   tween: Tween<double>(begin: 0.8, end: 1.1),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: thirdAnimation(),
                                   ),
@@ -482,7 +485,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Animator(
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Container(
                                     height: 2.5,
@@ -514,7 +517,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   tween: Tween<double>(begin: 0.8, end: 1.1),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: fifthAnimation(),
                                   ),
@@ -533,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Animator(
                                 duration: Duration(milliseconds: 500),
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Container(
                                     height: 2.5,
@@ -565,7 +568,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   tween: Tween<double>(begin: 0.8, end: 1.1),
                                   curve: Curves.decelerate,
                                   cycles: 1,
-                                  builder: (anim) => Transform.scale(
+                                  builder: (_, anim, __) => Transform.scale(
                                     scale: anim.value,
                                     child: fourthAnimation(),
                                   ),
@@ -578,51 +581,8 @@ class _HomeScreenState extends State<HomeScreen>
                 ],
               ),
             ),
-            drawer: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.75 < 400
-                  ? MediaQuery.of(context).size.width * 0.75
-                  : 350,
-              child: Drawer(
-                elevation: 0,
-                child: AppDrawer(
-                  changeThemeCallback: (value) {
-                    // Navigator.of(context).pop();
-                    setState(() {
-                      globals.isGoldBlack = value;
-                      selectFirst();
-                    });
-                  },
-                  selectItemName: 'home',
-                  auroStreakCallback: () {
-                    print("auro streak page to go on tapped");
-                    // _scrollController = ScrollController(
-                    //   initialScrollOffset: 500,
-                    //   keepScrollOffset: true,
-                    // );
-                    setState(() {
-                      selectFive();
-                    });
-                    print("sfsfsfsf");
-                    // if (_scrollController.hasClients) {
-                    //   _scrollController
-                    //       .animateTo(
-                    //     500.0,
-                    //     duration: Duration(milliseconds: 500),
-                    //     curve: Curves.ease,
-                    //   )
-                    //       .whenComplete(() {
-                    //     print("the animation to auro streak finished");
-                    //   }).catchError((error) {
-                    //     print("the animation to auro streak error");
-                    //     print(error.toString());
-                    //   });
-                    // }else{
-                    //   print("no scroll client");
-                    // }
-                  },
-                ),
-              ),
-            ),
+            drawer: AuroSidebar(),
+
             backgroundColor: Colors.transparent,
             body: searching
                 ? Container(

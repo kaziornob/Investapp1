@@ -1,14 +1,10 @@
 import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/widgets/private_deals_marketplace/light_featured_companies.dart';
 import 'package:auroim/widgets/private_deals_marketplace/thank_you.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart';
-import 'package:toast/toast.dart';
-import 'dart:convert';
 
 import 'appbar_widget.dart';
 
@@ -25,15 +21,17 @@ class _BuyCompanyStocksState extends State<BuyCompanyStocks> {
   FeaturedCompaniesProvider _featuredCompaniesProvider =
       FeaturedCompaniesProvider();
 
-  TextEditingController _investTextEditingController =  TextEditingController();
-  TextEditingController _valuationSuggestionTextEditingController =  TextEditingController();
+  TextEditingController _investTextEditingController = TextEditingController();
+  TextEditingController _valuationSuggestionTextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double valuation = double.parse(
         widget.companyDetails["valuation"].toString().substring(1, 4));
-    double auro_suggested_valuation = valuation + (valuation/10);
-    _valuationSuggestionTextEditingController.text = "$auro_suggested_valuation"+"M";
+    double auro_suggested_valuation = valuation + (valuation / 10);
+    _valuationSuggestionTextEditingController.text =
+        "$auro_suggested_valuation" + "M";
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(65.0),
@@ -314,7 +312,7 @@ class _BuyCompanyStocksState extends State<BuyCompanyStocks> {
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
-                                      "\$$auro_suggested_valuation"+"M",
+                                      "\$$auro_suggested_valuation" + "M",
                                       style: TextStyle(
                                           color: Color(0xff5A56B9),
                                           fontFamily: "Roboto",
@@ -390,14 +388,17 @@ class _BuyCompanyStocksState extends State<BuyCompanyStocks> {
                                 width: 1,
                               ),
                             ),
-                            hintText: "  $auro_suggested_valuation"+"M",
+                            hintText: "  $auro_suggested_valuation" + "M",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Color(0xff5A56B9),
                               fontSize: 17,
                             ),
                             // prefixText: "\$",
-                            prefixIcon: Icon(FontAwesomeIcons.dollarSign,size: 15,),
+                            prefixIcon: Icon(
+                              FontAwesomeIcons.dollarSign,
+                              size: 15,
+                            ),
                             contentPadding: EdgeInsets.only(left: 16.0),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(

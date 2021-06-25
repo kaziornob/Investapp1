@@ -1,15 +1,12 @@
-import 'package:auroim/auth/otp.dart';
 import 'package:auroim/widgets/how_app_works.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:auroim/auth/signInScreen.dart';
-import 'package:auroim/auth/signUpScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/routes.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:auroim/constance/global.dart' as globals;
 
 class IntroductionScreen extends StatefulWidget {
   @override
@@ -142,7 +139,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                                   _current = index;
                                 });
                               }),
-                          itemBuilder: (context, index) {
+                          itemBuilder: (context, index, _) {
                             return MySliderView(listPaths[index], _current);
                           },
                         ),
@@ -248,7 +245,6 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                               CupertinoPageRoute<void>(
                                 builder: (BuildContext context) =>
                                     SignInScreen(),
-
                               ),
                             );
                           },

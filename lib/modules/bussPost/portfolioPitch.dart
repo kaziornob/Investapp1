@@ -111,9 +111,11 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
 
   Future<bool> _openVideoExplorer() async {
     try {
-      path = await FilePicker.getFilePath(
-        type: FileType.video,
-      );
+      path = await FilePicker.platform
+          .pickFiles(
+            type: FileType.video,
+          )
+          .then((value) => value.files.first.path);
       if (path != null) {
         print(path);
         setState(() {
@@ -1010,7 +1012,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                   spacing: 4.0,
                   runSpacing: 4.0,
                   children: <Widget>[
-                    new FlatButton(
+                    new TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -1019,7 +1021,7 @@ class _PortfolioPitchState extends State<PortfolioPitch> {
                         style: TextStyle(fontSize: 18.0, color: Colors.grey),
                       ),
                     ),
-                    new FlatButton(
+                    new TextButton(
                       // padding: EdgeInsets.fromLTRB(120, 0.0, 20, 0.0),
                       onPressed: () async {
                         if (from == 'option') {

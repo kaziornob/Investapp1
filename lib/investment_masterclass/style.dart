@@ -2,8 +2,6 @@ import 'package:auroim/investment_masterclass/api/investment_masterclass_present
 import 'package:auroim/investment_masterclass/invesment_masterclass_models/module_details_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:http/http.dart';
-import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'content.dart';
@@ -32,7 +30,7 @@ class _StyleScreenState extends State<StyleScreen>
   @override
   void initState() {
     super.initState();
-    heading =  ValueNotifier(widget.title);
+    heading = ValueNotifier(widget.title);
     tabController = TabController(length: 3, vsync: this);
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(

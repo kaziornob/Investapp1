@@ -16,7 +16,8 @@ Future signInWithGoogle() async {
     final header = {
       'Authorization': 'Bearer ${googleSignInAuthentication.accessToken}'
     };
-    final response = await http.get(url, headers: header).catchError((e) {
+    final response =
+        await http.get(Uri.parse(url), headers: header).catchError((e) {
       print(e.toString());
     });
     var userDetail = jsonDecode(response.body);

@@ -3,13 +3,10 @@ import 'package:animator/animator.dart';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:dropdown_date_picker/dropdown_date_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
-import 'package:auroim/constance/global.dart' as globals;
-
 
 class AddEditEmployment extends StatefulWidget {
   @override
@@ -17,7 +14,6 @@ class AddEditEmployment extends StatefulWidget {
 }
 
 class _AddEditEmploymentState extends State<AddEditEmployment> {
-
   final _addEditEmpFormKey = new GlobalKey<FormState>();
   bool _isEmpInProgress = false;
   bool _visibleEmployment = false;
@@ -29,15 +25,48 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
   String selectedEndMonth;
   String selectedEndYear;
 
-  List<String> employmentList = <String>['Employed','Retired','Self-Employed','At home trader (no other occupation)','Student/ Intern','Unemployed','Homemaker'];
-  List<String> monthList = <String>['Jan', 'Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec'];
-  List<String> yearList = <String>['2015', '2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
+  List<String> employmentList = <String>[
+    'Employed',
+    'Retired',
+    'Self-Employed',
+    'At home trader (no other occupation)',
+    'Student/ Intern',
+    'Unemployed',
+    'Homemaker'
+  ];
+  List<String> monthList = <String>[
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'June',
+    'July',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+  List<String> yearList = <String>[
+    '2015',
+    '2016',
+    '2017',
+    '2018',
+    '2019',
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+    '2024',
+    '2025',
+    '2026'
+  ];
 
   bool currentlyWorking = false;
   TextEditingController titleController = new TextEditingController();
   TextEditingController companyController = new TextEditingController();
   TextEditingController locationController = new TextEditingController();
-
 
   bool startDateFound = true;
   bool endDateFound = true;
@@ -63,14 +92,12 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
     ascending: false,
   );*/
 
-
   animation() async {
     await Future.delayed(const Duration(seconds: 1));
     setState(() {
       _visibleEmployment = true;
     });
   }
-
 
   @override
   void initState() {
@@ -113,7 +140,6 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
               borderSide: BorderSide(color: Colors.black, width: 1.0),
             ),
             hintText: "Month",
-
             labelStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: ConstanceData.SIZE_TITLE20,
@@ -126,7 +152,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
       },
       validator: (val) {
         return ((val != null && val != '') ||
-            (selectedEndMonth != null && selectedEndMonth != ''))
+                (selectedEndMonth != null && selectedEndMonth != ''))
             ? null
             : 'choose One';
       },
@@ -194,7 +220,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
       },
       validator: (val) {
         return ((val != null && val != '') ||
-            (selectedEndYear != null && selectedEndYear != ''))
+                (selectedEndYear != null && selectedEndYear != ''))
             ? null
             : 'choose One';
       },
@@ -262,7 +288,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
       },
       validator: (val) {
         return ((val != null && val != '') ||
-            (selectedStartMonth != null && selectedStartMonth != ''))
+                (selectedStartMonth != null && selectedStartMonth != ''))
             ? null
             : 'choose One';
       },
@@ -330,7 +356,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
       },
       validator: (val) {
         return ((val != null && val != '') ||
-            (selectedStartYear != null && selectedStartYear != ''))
+                (selectedStartYear != null && selectedStartYear != ''))
             ? null
             : 'choose One';
       },
@@ -377,10 +403,8 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
     }
   }
 
-  Widget getEmpStatusDropDownList()
-  {
-    if (employmentList != null && employmentList.length != 0)
-    {
+  Widget getEmpStatusDropDownList() {
+    if (employmentList != null && employmentList.length != 0) {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedEmpType,
@@ -394,17 +418,13 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
           items: employmentList.map((String value) {
             return new DropdownMenuItem(
               value: value,
-              child: new Text(
-                  value,
-                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
-              ),
+              child: new Text(value,
+                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
             );
           }).toList(),
         ),
       );
-    }
-    else
-    {
+    } else {
       return Container(
         height: 0.0,
         width: 0.0,
@@ -412,9 +432,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
     }
   }
 
-
-  Widget getEmpStatusField()
-  {
+  Widget getEmpStatusField() {
     return new FormField(
       builder: (FormFieldState state) {
         return InputDecorator(
@@ -428,11 +446,13 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
         );
       },
       validator: (val) {
-        return ((val != null && val!='') || (selectedEmpType!=null && selectedEmpType!='')) ? null : 'Please select employment status';
+        return ((val != null && val != '') ||
+                (selectedEmpType != null && selectedEmpType != ''))
+            ? null
+            : 'Please select employment status';
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -469,10 +489,11 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
                                 Navigator.pop(context);
                               },
                               child: Animator(
-                                tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                tween: Tween<Offset>(
+                                    begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
-                                builder: (anim) => FractionalTranslation(
+                                builder: (_, anim, __) => FractionalTranslation(
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back_ios,
@@ -486,13 +507,14 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.decelerate,
                                 cycles: 1,
-                                builder: (anim) => Transform.scale(
+                                builder: (_, anim, __) => Transform.scale(
                                   scale: anim.value,
                                   child: Text(
                                     'Edit Employment Detail',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: AllCoustomTheme.getTextThemeColor(),
+                                      color:
+                                          AllCoustomTheme.getTextThemeColor(),
                                       fontSize: ConstanceData.SIZE_TITLE18,
                                     ),
                                   ),
@@ -506,321 +528,415 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
                         ),
                         _visibleEmployment
                             ? Container(
-                          child: Form(
-                            key: _addEditEmpFormKey,
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 14, top: 4,right: 20),
-                                        child: TextFormField(
-                                          validator: _validateName,
-                                          controller: titleController,
-                                          cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                          style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                          keyboardType: TextInputType.text,
-                                          decoration: new InputDecoration(
-                                              focusColor: AllCoustomTheme.getTextThemeColor(),
-                                              fillColor: AllCoustomTheme.getTextThemeColor(),
-                                              hintText: 'Title',
-                                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                              labelText: 'Title',
-                                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
-                                        child: getEmpStatusField(),
-                                      ),
-                                    ),
-
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 14, top: 4,right: 20),
-                                        child: TextFormField(
-                                          validator: _validateName,
-                                          controller: companyController,
-                                          cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                          style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                          keyboardType: TextInputType.text,
-                                          decoration: new InputDecoration(
-                                              focusColor: AllCoustomTheme.getTextThemeColor(),
-                                              fillColor: AllCoustomTheme.getTextThemeColor(),
-                                              hintText: 'Company',
-                                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                              labelText: 'Company',
-                                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 14, top: 4,right: 20),
-                                        child: TextFormField(
-                                          validator: _validateName,
-                                          controller: locationController,
-                                          cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                          style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                          keyboardType: TextInputType.text,
-                                          decoration: new InputDecoration(
-                                              focusColor: AllCoustomTheme.getTextThemeColor(),
-                                              fillColor: AllCoustomTheme.getTextThemeColor(),
-                                              hintText: 'Location',
-                                              hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                              labelText: 'Location',
-                                              labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 30.0,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 5.0,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10.0, right: 8.0,top:3.0),
-                                      child: SizedBox(
-                                        height: 10,
-                                        width: 10,
-                                        child: Checkbox(
-                                          activeColor: Color(0xff5A56B9),
-                                          value: currentlyWorking,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              currentlyWorking = !currentlyWorking;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "I am currently working in this role",
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getNewSecondTextThemeColor(),
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 14, top: 4,right: 20),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      // start date
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 0, top: 4),
-                                            child: Text(
-                                                "Start Date:",
-                                                style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Container(
-                                            height: 60,
-                                            width: MediaQuery.of(context).size.width * 0.40,
-                                            child: getMonthField(),
-                                          ),
-                                          SizedBox(
-                                            height: 10.0,
-                                          ),
-                                          Container(
-                                            height: 60,
-                                            width: MediaQuery.of(context).size.width * 0.40,
-                                            child: getStartYearField(),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      Visibility(
-                                        visible: startDateFound==false ? true : false,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Padding(
-                                                padding: EdgeInsets.only(left: 14, top: 4),
-                                                child: Text(
-                                                  "Please Fill Start Date",
-                                                  style: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE12,
-                                                    color: Color(0xFFC70039),
-                                                  ),
-                                                )
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      // end date
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 0, top: 4),
-                                            child: Text(
-                                                "End Date:",
-                                                style: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Container(
-                                            height: 60,
-                                            width: MediaQuery.of(context).size.width * 0.40,
-                                            child: getEndMonthField(),
-                                          ),
-                                          SizedBox(
-                                            height: 10.0,
-                                          ),
-                                          Container(
-                                            height: 60,
-                                            width: MediaQuery.of(context).size.width * 0.40,
-                                            child: getEndYearField(),
-                                          ),
-                                        ],
-                                      ),
-                                      Visibility(
-                                        visible: endDateFound==false ? true : false,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Padding(
-                                                padding: EdgeInsets.only(left: 14, top: 4),
-                                                child: Text(
-                                                  "Please Fill End Date",
-                                                  style: TextStyle(
-                                                    fontSize: ConstanceData.SIZE_TITLE12,
-                                                    color: Color(0xFFC70039),
-                                                  ),
-                                                )
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 14, top: 4,right: 20),
-                                  child: Container(
-                                    height: 120,
-                                    child: TextField(
-                                      maxLines: 10,
-                                      decoration: InputDecoration(
-                                        labelText: 'Description',
-                                        hintText: 'Description',
-                                        hintStyle: TextStyle(
-                                          fontSize: ConstanceData.SIZE_TITLE14,
-                                          color: AllCoustomTheme.getTextThemeColor(),
-                                        ),
-                                        labelStyle: TextStyle(
-                                            fontSize: ConstanceData.SIZE_TITLE16,
-                                            color: AllCoustomTheme.getTextThemeColor()
-                                        ),
-                                        fillColor: Colors.white,
-                                        focusedBorder:OutlineInputBorder(
-                                          borderSide: const BorderSide(color: Colors.black, width: 1.0),
-                                          borderRadius: BorderRadius.circular(5.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.black, width: 1.0),
-                                        ),
-                                      ),
-                                      style: TextStyle(
-                                        color: AllCoustomTheme.getTextThemeColor(),
-                                        fontSize: ConstanceData.SIZE_TITLE16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                SizedBox(height: 40.0,),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                child: Form(
+                                  key: _addEditEmpFormKey,
+                                  child: Column(
                                     children: <Widget>[
                                       SizedBox(
-                                        height: MediaQuery.of(context).size.height * 0.06,
-                                        child: Container(
-                                          height: MediaQuery.of(context).size.height * 0.06,
-                                          width: MediaQuery.of(context).size.width * 0.27,
-                                          decoration: BoxDecoration(
-                                            color: AllCoustomTheme.getSeeMoreThemeColor(),
-                                            border: new Border.all(color: AllCoustomTheme.getSeeMoreThemeColor(), width: 1.5),
-                                          ),
-                                          child: MaterialButton(
-                                            splashColor: Colors.grey,
-                                            child: Text(
-                                              "Save",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: ConstanceData.SIZE_TITLE18,
-                                                fontWeight: FontWeight.bold,
+                                        height: 15,
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 14, top: 4, right: 20),
+                                              child: TextFormField(
+                                                validator: _validateName,
+                                                controller: titleController,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                decoration: new InputDecoration(
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText: 'Title',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText: 'Title',
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
                                               ),
                                             ),
-                                            onPressed: () async {
-                                              _submit();
-                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 14,
+                                                  bottom: 10,
+                                                  right: 20),
+                                              child: getEmpStatusField(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 14, top: 4, right: 20),
+                                              child: TextFormField(
+                                                validator: _validateName,
+                                                controller: companyController,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                decoration: new InputDecoration(
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText: 'Company',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText: 'Company',
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 14, top: 4, right: 20),
+                                              child: TextFormField(
+                                                validator: _validateName,
+                                                controller: locationController,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                decoration: new InputDecoration(
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText: 'Location',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText: 'Location',
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 30.0,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: 5.0,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0,
+                                                right: 8.0,
+                                                top: 3.0),
+                                            child: SizedBox(
+                                              height: 10,
+                                              width: 10,
+                                              child: Checkbox(
+                                                activeColor: Color(0xff5A56B9),
+                                                value: currentlyWorking,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    currentlyWorking =
+                                                        !currentlyWorking;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            "I am currently working in this role",
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getNewSecondTextThemeColor(),
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 14, top: 4, right: 20),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            // start date
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 0, top: 4),
+                                                  child: Text("Start Date:",
+                                                      style: AllCoustomTheme
+                                                          .getTextFormFieldLabelStyleTheme()),
+                                                ),
+                                                SizedBox(
+                                                  height: 20.0,
+                                                ),
+                                                Container(
+                                                  height: 60,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.40,
+                                                  child: getMonthField(),
+                                                ),
+                                                SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                Container(
+                                                  height: 60,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.40,
+                                                  child: getStartYearField(),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Visibility(
+                                              visible: startDateFound == false
+                                                  ? true
+                                                  : false,
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 14, top: 4),
+                                                      child: Text(
+                                                        "Please Fill Start Date",
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE12,
+                                                          color:
+                                                              Color(0xFFC70039),
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                            // end date
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 0, top: 4),
+                                                  child: Text("End Date:",
+                                                      style: AllCoustomTheme
+                                                          .getTextFormFieldLabelStyleTheme()),
+                                                ),
+                                                SizedBox(
+                                                  height: 20.0,
+                                                ),
+                                                Container(
+                                                  height: 60,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.40,
+                                                  child: getEndMonthField(),
+                                                ),
+                                                SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                Container(
+                                                  height: 60,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.40,
+                                                  child: getEndYearField(),
+                                                ),
+                                              ],
+                                            ),
+                                            Visibility(
+                                              visible: endDateFound == false
+                                                  ? true
+                                                  : false,
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 14, top: 4),
+                                                      child: Text(
+                                                        "Please Fill End Date",
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE12,
+                                                          color:
+                                                              Color(0xFFC70039),
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 14, top: 4, right: 20),
+                                        child: Container(
+                                          height: 120,
+                                          child: TextField(
+                                            maxLines: 10,
+                                            decoration: InputDecoration(
+                                              labelText: 'Description',
+                                              hintText: 'Description',
+                                              hintStyle: TextStyle(
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                              ),
+                                              labelStyle: TextStyle(
+                                                  fontSize: ConstanceData
+                                                      .SIZE_TITLE16,
+                                                  color: AllCoustomTheme
+                                                      .getTextThemeColor()),
+                                              fillColor: Colors.white,
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    color: Colors.black,
+                                                    width: 1.0),
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black,
+                                                    width: 1.0),
+                                              ),
+                                            ),
+                                            style: TextStyle(
+                                              color: AllCoustomTheme
+                                                  .getTextThemeColor(),
+                                              fontSize:
+                                                  ConstanceData.SIZE_TITLE16,
+                                            ),
                                           ),
                                         ),
                                       ),
+                                      SizedBox(
+                                        height: 40.0,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 20, left: 14, right: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.06,
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.06,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.27,
+                                                decoration: BoxDecoration(
+                                                  color: AllCoustomTheme
+                                                      .getSeeMoreThemeColor(),
+                                                  border: new Border.all(
+                                                      color: AllCoustomTheme
+                                                          .getSeeMoreThemeColor(),
+                                                      width: 1.5),
+                                                ),
+                                                child: MaterialButton(
+                                                  splashColor: Colors.grey,
+                                                  child: Text(
+                                                    "Save",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: ConstanceData
+                                                          .SIZE_TITLE18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  onPressed: () async {
+                                                    _submit();
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                     ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
+                                ),
+                              )
                             : SizedBox()
                       ],
                     ),
@@ -836,8 +952,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
 
   var myScreenFocusNode = FocusNode();
 
-  _submit() async
-  {
+  _submit() async {
     setState(() {
       _isEmpInProgress = true;
     });
@@ -850,57 +965,48 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
       return;
     }
 
-    var tempJsonReq = {"emp_status":"$selectedEmpType"};
+    var tempJsonReq = {"emp_status": "$selectedEmpType"};
 
     String jsonReq = json.encode(tempJsonReq);
 
-    var jsonReqResp = await request.postSubmitResponse('users/add_employment', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('users/add_employment', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit response: $result");
 
-
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
-
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true) {
         _addEditEmpFormKey.currentState.save();
 
         Toast.show("${result['message']}", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       }
-    }
-
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
-
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
       Toast.show("${result['message']}", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       setState(() {
         _isEmpInProgress = false;
       });
-    }
-    else{
+    } else {
       setState(() {
         _isEmpInProgress = false;
       });
       Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
 
   // ignore: missing_return
-  String _validateName(String value)
-  {
+  String _validateName(String value) {
     Pattern pattern = r'^[A-Za-z _]*[A-Za-z][A-Za-z _]*$';
     RegExp regex = new RegExp(pattern);
-    if(value!='' && value!=null)
-    {
+    if (value != '' && value != null) {
       if (!regex.hasMatch(value))
         return 'Name Consist Only Alphabets';
       else
@@ -909,8 +1015,7 @@ class _AddEditEmploymentState extends State<AddEditEmployment> {
   }
 
   // ignore: missing_return
-  String _validateOccupation(String value)
-  {
+  String _validateOccupation(String value) {
     if (value.isEmpty) {
       return "Occupation Cannot Be Empty";
     }

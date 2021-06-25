@@ -436,7 +436,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                         tween: Tween<double>(begin: 0.8, end: 1.1),
                         curve: Curves.easeInToLinear,
                         cycles: 0,
-                        builder: (anim) => Transform.scale(
+                        builder: (_, anim, __) => Transform.scale(
                           scale: anim.value,
                           child: Container(
                             height: 50,
@@ -498,7 +498,8 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
                                       begin: Offset(0, 0), end: Offset(0.2, 0)),
                                   duration: Duration(milliseconds: 500),
                                   cycles: 0,
-                                  builder: (anim) => FractionalTranslation(
+                                  builder: (_, anim, __) =>
+                                      FractionalTranslation(
                                     translation: anim.value,
                                     child: Icon(
                                       Icons.arrow_back_ios,
@@ -627,7 +628,8 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
 
     String jsonReq = json.encode(questionJson);
 
-    var jsonReqResp = await request.postSubmitResponse('qa/user_answer', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('qa/user_answer', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("question and answers response: $result");
@@ -691,7 +693,7 @@ class _QuestionTemplateState extends State<QuestionTemplate> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Ok'),
                 onPressed: () {
                   Navigator.of(context).pop();

@@ -1,16 +1,10 @@
-import 'package:flutter/widgets.dart';
-
-enum Type {
-  multiple,
-  boolean
-}
+enum Type { multiple, boolean }
 
 //enum Difficulty {
 //  easy,
 //  medium,
 //  hard
 //}
-
 
 class Question {
   final Type type;
@@ -23,16 +17,29 @@ class Question {
   List<dynamic> userAnswer;
   final List<dynamic> qusOptions;
 
-  Question({this.type,this.qusImages, this.question,this.videoLink,this.questionType,this.diffScore,this.questionId,this.qusOptions,this.userAnswer});
+  Question(
+      {this.type,
+      this.qusImages,
+      this.question,
+      this.videoLink,
+      this.questionType,
+      this.diffScore,
+      this.questionId,
+      this.qusOptions,
+      this.userAnswer});
 
-  Question.fromMap(Map<String, dynamic> data):
-        type = data["question_type"] == "mcq" ? Type.multiple : Type.boolean,
+  Question.fromMap(Map<String, dynamic> data)
+      : type = data["question_type"] == "mcq" ? Type.multiple : Type.boolean,
         questionType = data["question_type"],
         diffScore = data["diff_score"],
         question = data["question_text"],
         videoLink = data["video_link"],
         questionId = data["question_id"],
-        qusImages = data.containsKey('image') && data["image"]!=null && data["image"].length!=0 ? data["image"]: null,
+        qusImages = data.containsKey('image') &&
+                data["image"] != null &&
+                data["image"].length != 0
+            ? data["image"]
+            : null,
         userAnswer = [],
         qusOptions = data["option"];
 

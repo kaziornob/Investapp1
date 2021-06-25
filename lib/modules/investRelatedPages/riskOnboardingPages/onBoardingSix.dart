@@ -85,7 +85,8 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
                                       ),
                                       duration: Duration(milliseconds: 500),
                                       cycles: 0,
-                                      builder: (anim) => FractionalTranslation(
+                                      builder: (_, anim, __) =>
+                                          FractionalTranslation(
                                         translation: anim.value,
                                         child: Icon(
                                           Icons.arrow_back_ios,
@@ -475,13 +476,13 @@ class _OnBoardingSixState extends State<OnBoardingSix> {
         _monthlyDepositController.text != null &&
         _oneOffDepositController.text != "" &&
         _oneOffDepositController.text != null) {
-      for (int i = 1; i < 5*4; i++) {
+      for (int i = 1; i < 5 * 4; i++) {
         listOfChartData.add(
           NewSalesData(
             i / 4,
             _futureReturn.calculate(
               0.24,
-              i/4,
+              i / 4,
               1000,
               1000000,
             ),

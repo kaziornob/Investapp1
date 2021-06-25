@@ -7,7 +7,9 @@
         "**/.fvm": true
     },
     "dart.flutterSdkPaths": [
-        "/home/rikousik/fvm/versions"
+        "/home/rikousik/fvm/versions",
+        "/home/rikousik/snap/flutter/common/flutter"
     ],
-    "dart.flutterSdkPath": "/home/rikousik/fvm/versions/1.22.5"
+    "dart.sdkPath": "/home/rikousik/snap/flutter/common/flutter/bin/cache/dart-sdk",
+    "dart.flutterSdkPath": "/home/rikousik/snap/flutter/common/flutter"
 }

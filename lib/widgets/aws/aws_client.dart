@@ -103,7 +103,7 @@ class AWSClient {
     };
 
     var response = await http.post(
-      GlobalInstance.apiBaseUrl + 'aws_client/generatePresignedUrl',
+      Uri.parse(GlobalInstance.apiBaseUrl + 'aws_client/generatePresignedUrl'),
       body: jsonEncode(body),
       headers: headers,
     );

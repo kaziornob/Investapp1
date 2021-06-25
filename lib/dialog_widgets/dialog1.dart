@@ -31,7 +31,7 @@ class Dialog1 extends StatelessWidget {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(
             'Ok',
             style: TextStyle(

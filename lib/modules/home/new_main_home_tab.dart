@@ -50,7 +50,7 @@ class _NewMainHomeTabState extends State<NewMainHomeTab> {
               child: CarouselSlider.builder(
                 carouselController: _carouselController,
                 itemCount: 3,
-                itemBuilder: (context, int index) {
+                itemBuilder: (context, int index, _) {
                   return sliderItem(index);
                 },
                 options: CarouselOptions(

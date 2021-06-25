@@ -1,7 +1,6 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/provider_abhinav/stock_pitch_provider.dart';
-import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/stock_and_portfolio_pitch/show_stock_pitch_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -103,7 +102,6 @@ class _StockPitchesState extends State<StockPitches> {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<StockPitchProvider>(builder: (context, pitchProvider, _) {
       if (pitchProvider.allStockPitches != null &&
           pitchProvider.allStockPitches.length != 0) {
@@ -134,7 +132,9 @@ class _StockPitchesState extends State<StockPitches> {
             SizedBox(
               height: 10.0,
             ),
-            Divider(thickness: 1,),
+            Divider(
+              thickness: 1,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 5.0),
               child: Row(

@@ -9,7 +9,9 @@ class ContentScreen extends StatefulWidget {
   final Function playFunction;
   final VoidCallback pause;
 
-  const ContentScreen({Key key, this.moduleDetailsResponseModel, this.playFunction, this.pause}) : super(key: key);
+  const ContentScreen(
+      {Key key, this.moduleDetailsResponseModel, this.playFunction, this.pause})
+      : super(key: key);
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -47,18 +49,23 @@ class _ContentScreenState extends State<ContentScreen> {
                                 widget.pause();
                                 var response = await showDialog(
                                   context: context,
-                                  child: Dialog(
+                                  builder: (context) => Dialog(
                                     child: MasterClassPopupDialogScreen(
-                                      classDetails: widget.moduleDetailsResponseModel.message[index],
+                                      classDetails: widget
+                                          .moduleDetailsResponseModel
+                                          .message[index],
                                     ),
-                                    // contentPadding: EdgeInsets.all(0),
+                                    // content
                                     // content: MasterClassPopupDialogScreen(),
                                   ),
                                 );
                                 if (response != null) {
                                   if (response) {
-                                    widget.moduleDetailsResponseModel.message.forEach((element) {
-                                      if (widget.moduleDetailsResponseModel.message[index].classId == element.classId) {
+                                    widget.moduleDetailsResponseModel.message
+                                        .forEach((element) {
+                                      if (widget.moduleDetailsResponseModel
+                                              .message[index].classId ==
+                                          element.classId) {
                                         element.isPlaying = true;
                                       } else {
                                         element.isPlaying = false;
@@ -66,20 +73,30 @@ class _ContentScreenState extends State<ContentScreen> {
                                     });
 
                                     setState(() {});
-                                    widget.playFunction(widget.moduleDetailsResponseModel.message[index]);
+                                    widget.playFunction(widget
+                                        .moduleDetailsResponseModel
+                                        .message[index]);
                                   }
                                 }
                               },
                               child: Card(
                                 elevation: 5,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
                                 child: Column(
                                   children: [
                                     Row(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 0.0, top: 30),
-                                          child: widget.moduleDetailsResponseModel.message[index].isPlaying
+                                          padding: const EdgeInsets.only(
+                                              left: 15.0,
+                                              right: 15.0,
+                                              bottom: 0.0,
+                                              top: 30),
+                                          child: widget
+                                                  .moduleDetailsResponseModel
+                                                  .message[index]
+                                                  .isPlaying
                                               ? Image.asset(
                                                   'assets/stop.png',
                                                   width: 50,
@@ -93,10 +110,14 @@ class _ContentScreenState extends State<ContentScreen> {
                                         ),
                                         Flexible(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 0.0, top: 30),
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0,
+                                                right: 15.0,
+                                                bottom: 0.0,
+                                                top: 30),
                                             child: Text(
-                                              widget.moduleDetailsResponseModel.message[index].classTopic,
+                                              widget.moduleDetailsResponseModel
+                                                  .message[index].classTopic,
                                               style: TextStyle(fontSize: 17),
                                             ),
                                           ),
@@ -122,7 +143,8 @@ class _ContentScreenState extends State<ContentScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 8, bottom: 8),
                               /*child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -160,13 +182,18 @@ class _ContentScreenState extends State<ContentScreen> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => ChapterQuizScreen(
-                                            classId: widget.moduleDetailsResponseModel.message[index].classId,
-                                        classTitle: widget.moduleDetailsResponseModel.message[index].classTopic,
+                                            classId: widget
+                                                .moduleDetailsResponseModel
+                                                .message[index]
+                                                .classId,
                                           )));
                                 },
                                 child: Text(
                                   'Chapter Quiz',
-                                  style: TextStyle(color: Color(0xffFABE2C), fontSize: 17, fontWeight: FontWeight.w300),
+                                  style: TextStyle(
+                                      color: Color(0xffFABE2C),
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w300),
                                 ),
                               ),
                             )
@@ -182,7 +209,8 @@ class _ContentScreenState extends State<ContentScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0, top: 15, right: 8, bottom: 15),
+                      padding: const EdgeInsets.only(
+                          left: 30.0, top: 15, right: 8, bottom: 15),
                       child: Row(
                         children: [
                           Image.asset(
@@ -195,7 +223,8 @@ class _ContentScreenState extends State<ContentScreen> {
                           ),
                           Text(
                             'Take a test',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           )
                         ],
                       ),
@@ -203,14 +232,16 @@ class _ContentScreenState extends State<ContentScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
                   child: Card(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0, top: 15, right: 8, bottom: 15),
+                      padding: const EdgeInsets.only(
+                          left: 30.0, top: 15, right: 8, bottom: 15),
                       child: Row(
                         children: [
                           Image.asset(
@@ -223,7 +254,8 @@ class _ContentScreenState extends State<ContentScreen> {
                           ),
                           Text(
                             'Get a certificate',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           )
                         ],
                       ),

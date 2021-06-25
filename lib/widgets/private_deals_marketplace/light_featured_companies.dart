@@ -185,7 +185,7 @@ class LightFeaturedCompaniesListItem extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

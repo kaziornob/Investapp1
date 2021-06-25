@@ -70,7 +70,7 @@ class _SliderOpenState extends State<SliderOpen> {
                   ),
                   duration: Duration(milliseconds: 500),
                   cycles: 0,
-                  builder: (anim) => FractionalTranslation(
+                  builder: (_, anim, __) => FractionalTranslation(
                     translation: anim.value,
                     child: InkWell(
                       highlightColor: Colors.transparent,
@@ -96,19 +96,22 @@ class _SliderOpenState extends State<SliderOpen> {
                 Animator(
                   duration: Duration(milliseconds: 500),
                   cycles: 1,
-                  builder: (anim) => Transform.scale(
+                  builder: (_, anim, __) => Transform.scale(
                     scale: anim.value,
                     child: Container(
                       height: 50,
                       width: 50,
                       child: CachedNetworkImage(
                         errorWidget: (context, url, error) => CircleAvatar(
-                          backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                          backgroundColor:
+                              AllCoustomTheme.getsecoundTextThemeColor(),
                           child: Text(
                             widget.coinSymbol.substring(0, 1),
                           ),
                         ),
-                        imageUrl: coinImageURL + widget.coinSymbol.toLowerCase() + "@2x.png",
+                        imageUrl: coinImageURL +
+                            widget.coinSymbol.toLowerCase() +
+                            "@2x.png",
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -125,8 +128,9 @@ class _SliderOpenState extends State<SliderOpen> {
                   tween: Tween<double>(begin: 0, end: 1),
                   duration: Duration(milliseconds: 500),
                   cycles: 1,
-                  builder: (anim) => SizeTransition(
-                    sizeFactor: anim,
+                  builder: (_, anim, __) => SizeTransition(
+                    sizeFactor: CurvedAnimation(
+                        curve: Curves.fastOutSlowIn, parent: anim.controller),
                     axis: Axis.horizontal,
                     axisAlignment: 1,
                     child: Text(
@@ -151,8 +155,9 @@ class _SliderOpenState extends State<SliderOpen> {
                   tween: Tween<double>(begin: 0, end: 1),
                   duration: Duration(milliseconds: 500),
                   cycles: 1,
-                  builder: (anim) => SizeTransition(
-                    sizeFactor: anim,
+                  builder: (_, anim, __) => SizeTransition(
+                    sizeFactor: CurvedAnimation(
+                        curve: Curves.fastOutSlowIn, parent: anim.controller),
                     axis: Axis.horizontal,
                     axisAlignment: 1,
                     child: Text(
@@ -179,10 +184,9 @@ class _SliderOpenState extends State<SliderOpen> {
                     tween: Tween<double>(begin: 0.5, end: 1),
                     curve: Curves.fastOutSlowIn,
                     cycles: 0,
-                    builder: (anim) => Transform.scale(
+                    builder: (_, anim, __) => Transform.scale(
                       scale: anim.value,
-                      child: FlatButton(
-                        padding: EdgeInsets.all(0),
+                      child: TextButton(
                         child: new Container(
                           height: 40.0,
                           alignment: FractionalOffset.center,
@@ -207,8 +211,7 @@ class _SliderOpenState extends State<SliderOpen> {
                   width: 120,
                 ),
                 Expanded(
-                  child: FlatButton(
-                    padding: EdgeInsets.all(0),
+                  child: TextButton(
                     child: new Container(
                       height: 40.0,
                       alignment: FractionalOffset.center,
@@ -226,19 +229,21 @@ class _SliderOpenState extends State<SliderOpen> {
                             ),
                             duration: Duration(milliseconds: 500),
                             cycles: 0,
-                            builder: (anim) => FractionalTranslation(
+                            builder: (_, anim, __) => FractionalTranslation(
                               translation: anim.value,
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 2),
                                 child: widget.percentchange1h.contains('-')
                                     ? Icon(
                                         Icons.arrow_downward,
-                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
                                         size: 18,
                                       )
                                     : Icon(
                                         Icons.arrow_upward,
-                                        color: AllCoustomTheme.getTextThemeColors(),
+                                        color: AllCoustomTheme
+                                            .getTextThemeColors(),
                                         size: 18,
                                       ),
                               ),
@@ -357,7 +362,8 @@ class _SliderOpenState extends State<SliderOpen> {
                                     children: [
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Container(
                                               width: double.infinity,
@@ -365,7 +371,9 @@ class _SliderOpenState extends State<SliderOpen> {
                                               color: Colors.white,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 2.0),
                                             ),
                                             Container(
                                               width: 40.0,
@@ -491,10 +499,14 @@ class _SliderOpenState extends State<SliderOpen> {
                             ),
                           ),
                           Text(
-                            widget.changein24HR.contains('-') ? '' + widget.changein24HR + '%' : '+' + widget.changein24HR + '%',
+                            widget.changein24HR.contains('-')
+                                ? '' + widget.changein24HR + '%'
+                                : '+' + widget.changein24HR + '%',
                             style: TextStyle(
                               fontFamily: 'Ubuntu',
-                              color: widget.changein24HR.contains('-') ? Colors.red : Colors.green,
+                              color: widget.changein24HR.contains('-')
+                                  ? Colors.red
+                                  : Colors.green,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -46,7 +46,7 @@ class FollowProvider with ChangeNotifier {
     }
   }
 
-  setFollowing(userEmail, type, uniqueTypeIdentifier,context) async {
+  setFollowing(userEmail, type, uniqueTypeIdentifier, context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -62,7 +62,7 @@ class FollowProvider with ChangeNotifier {
     print("get set following url : $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get set following response: ${response.statusCode}");
     var result = jsonDecode(response.body);
     print("results ${result["message"]}");
@@ -100,7 +100,7 @@ class FollowProvider with ChangeNotifier {
     print("get following for user url : $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get following response: ${response.statusCode}");
     print(response.body);
     var result = jsonDecode(response.body);
@@ -114,9 +114,7 @@ class FollowProvider with ChangeNotifier {
       if (result["message"] == "True") {
         setFollowingToItems(type, uniqueId);
         notifyListeners();
-      } else {
-
-      }
+      } else {}
 
       // return result["message"];
     } else {
@@ -126,7 +124,7 @@ class FollowProvider with ChangeNotifier {
     }
   }
 
-  unfollowSingleItem(userEmail, type, uniqueId,context) async {
+  unfollowSingleItem(userEmail, type, uniqueId, context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -142,7 +140,7 @@ class FollowProvider with ChangeNotifier {
     print("get unfollow for user url : $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get following response: ${response.statusCode}");
     print(response.body);
     var result = jsonDecode(response.body);
@@ -178,7 +176,7 @@ class FollowProvider with ChangeNotifier {
     print("get following for user url : $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get following response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 

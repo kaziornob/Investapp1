@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "239207144494",
+    "project_id": "investapp-e67b3",
+    "storage_bucket": "investapp-e67b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239207144494:android:e8327f39a16f133bf013bf",
+        "android_client_info": {
+          "package_name": "com.auro.investapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239207144494-ifrmspa028mce72b36qil8jcu4piecej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaM6MFLwN8gWgnopmb_4JBGDXJ-bi7U0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239207144494-ifrmspa028mce72b36qil8jcu4piecej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

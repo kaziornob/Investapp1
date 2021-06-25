@@ -42,7 +42,7 @@ class _TransferMoneyState extends State<TransferMoney> {
                 ),
                 duration: Duration(seconds: 1),
                 cycles: 0,
-                builder: (anim) => FractionalTranslation(
+                builder: (_, anim, __) => FractionalTranslation(
                   translation: anim.value,
                   child: InkWell(
                     highlightColor: Colors.transparent,
@@ -67,7 +67,7 @@ class _TransferMoneyState extends State<TransferMoney> {
                 duration: Duration(milliseconds: 500),
                 curve: Curves.decelerate,
                 cycles: 1,
-                builder: (anim) => Transform.scale(
+                builder: (_, anim, __) => Transform.scale(
                   scale: anim.value,
                   child: Row(
                     children: <Widget>[
@@ -84,10 +84,11 @@ class _TransferMoneyState extends State<TransferMoney> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Animator(
-                              tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                              tween: Tween<Offset>(
+                                  begin: Offset(0, 0), end: Offset(0.2, 0)),
                               duration: Duration(milliseconds: 500),
                               cycles: 0,
-                              builder: (anim) => FractionalTranslation(
+                              builder: (_, anim, __) => FractionalTranslation(
                                 translation: anim.value,
                                 child: Icon(
                                   FontAwesomeIcons.angleLeft,
@@ -182,7 +183,7 @@ class _TransferMoneyState extends State<TransferMoney> {
               duration: Duration(milliseconds: 500),
               curve: Curves.decelerate,
               cycles: 1,
-              builder: (anim) => Transform.scale(
+              builder: (_, anim, __) => Transform.scale(
                 scale: anim.value,
                 child: Column(
                   children: <Widget>[
@@ -361,15 +362,16 @@ class _TransferMoneyState extends State<TransferMoney> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 10, left: 10, top: 20),
+                      padding:
+                          const EdgeInsets.only(right: 10, left: 10, top: 20),
                       child: !iswithDraw
-                          ? FlatButton(
-                              padding: EdgeInsets.all(0),
+                          ? TextButton(
                               child: new Container(
                                 height: 45.0,
                                 alignment: FractionalOffset.center,
                                 decoration: BoxDecoration(
-                                  border: new Border.all(color: Colors.white, width: 1.5),
+                                  border: new Border.all(
+                                      color: Colors.white, width: 1.5),
                                   borderRadius: new BorderRadius.circular(30),
                                   gradient: LinearGradient(
                                     begin: Alignment.topLeft,
@@ -383,7 +385,8 @@ class _TransferMoneyState extends State<TransferMoney> {
                                 child: new Text(
                                   "Withdraw to bank",
                                   style: new TextStyle(
-                                    color: AllCoustomTheme.getReBlackAndWhiteThemeColors(),
+                                    color: AllCoustomTheme
+                                        .getReBlackAndWhiteThemeColors(),
                                     fontSize: ConstanceData.SIZE_TITLE16,
                                     fontFamily: 'Ubuntu',
                                   ),
@@ -433,7 +436,7 @@ class _TransferMoneyState extends State<TransferMoney> {
             Animator(
               duration: Duration(milliseconds: 500),
               cycles: 1,
-              builder: (anim) => Transform.scale(
+              builder: (_, anim, __) => Transform.scale(
                 scale: anim.value,
                 child: Icon(
                   Icons.done,
@@ -472,10 +475,9 @@ class _TransferMoneyState extends State<TransferMoney> {
             Animator(
               duration: Duration(milliseconds: 500),
               cycles: 1,
-              builder: (anim) => Transform.scale(
+              builder: (_, anim, __) => Transform.scale(
                 scale: anim.value,
-                child: FlatButton(
-                  padding: EdgeInsets.all(0),
+                child: TextButton(
                   child: Container(
                     height: 45.0,
                     alignment: FractionalOffset.center,
@@ -535,22 +537,44 @@ class _TransferMoneyState extends State<TransferMoney> {
         fourthValue = buttonNumber;
       } else if (amonut.length == 4) {
         setState(() {
-          amonut = '$oneValue' + '$secValue' + '$thirdValue' + '$fourthValue' + '$buttonNumber';
+          amonut = '$oneValue' +
+              '$secValue' +
+              '$thirdValue' +
+              '$fourthValue' +
+              '$buttonNumber';
         });
         fifthValue = buttonNumber;
       } else if (amonut.length == 5) {
         setState(() {
-          amonut = '$oneValue' + '$secValue' + '$thirdValue' + '$fourthValue' + '$fifthValue' + '$buttonNumber';
+          amonut = '$oneValue' +
+              '$secValue' +
+              '$thirdValue' +
+              '$fourthValue' +
+              '$fifthValue' +
+              '$buttonNumber';
         });
         sixthValue = buttonNumber;
       } else if (amonut.length == 6) {
         setState(() {
-          amonut = '$oneValue' + '$secValue' + '$thirdValue' + '$fourthValue' + '$fifthValue' + '$sixthValue' + '$buttonNumber';
+          amonut = '$oneValue' +
+              '$secValue' +
+              '$thirdValue' +
+              '$fourthValue' +
+              '$fifthValue' +
+              '$sixthValue' +
+              '$buttonNumber';
         });
         seventhValue = buttonNumber;
       } else if (amonut.length == 7) {
         setState(() {
-          amonut = '$oneValue' + '$secValue' + '$thirdValue' + '$fourthValue' + '$fifthValue' + '$sixthValue' + '$seventhValue' + '$buttonNumber';
+          amonut = '$oneValue' +
+              '$secValue' +
+              '$thirdValue' +
+              '$fourthValue' +
+              '$fifthValue' +
+              '$sixthValue' +
+              '$seventhValue' +
+              '$buttonNumber';
         });
         eightthValue = buttonNumber;
       } else if (amonut.length == 8) {

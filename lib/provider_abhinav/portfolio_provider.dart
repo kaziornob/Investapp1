@@ -28,7 +28,7 @@ class PortfolioProvider with ChangeNotifier {
     }
   }
 
-  changeStateOfListener(){
+  changeStateOfListener() {
     notifyListeners();
   }
 
@@ -47,7 +47,7 @@ class PortfolioProvider with ChangeNotifier {
     print("get daily return portfolio : $url");
     // print("session token: $sessionToken");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get daily return portfolio response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 

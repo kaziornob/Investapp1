@@ -76,7 +76,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       backgroundColor: AllCoustomTheme.getBodyContainerThemeColor(),
       body: SafeArea(

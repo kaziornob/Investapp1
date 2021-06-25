@@ -1,11 +1,9 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/home/homeScreen.dart';
 import 'package:auroim/widgets/invest_tab/auro_star/portfolio_statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:auroim/constance/global.dart' as globals;
 
 class Quantanment extends StatefulWidget {
   final String title;

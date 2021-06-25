@@ -30,7 +30,7 @@ class UserDetails extends ChangeNotifier {
     print("get url: $url");
     // print("session token: $sessionToken");
 
-    var response = await http.post(url, headers: headers);
+    var response = await http.post(Uri.parse(url), headers: headers);
     print("get user badge response: ${response.statusCode}");
     var result = jsonDecode(response.body);
     // print(result.toString());
@@ -48,9 +48,4 @@ class UserDetails extends ChangeNotifier {
       //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
-
-
-
-
-
 }

@@ -1,5 +1,4 @@
 import 'package:auroim/api/featured_companies_provider.dart';
-import 'package:auroim/model/tagAndChartData.dart';
 import 'package:auroim/widgets/get_area_chart_view.dart';
 import 'package:flutter/material.dart';
 

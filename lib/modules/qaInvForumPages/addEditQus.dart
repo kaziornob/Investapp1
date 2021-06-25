@@ -15,7 +15,6 @@ import 'dart:convert';
 import 'package:auroim/constance/global.dart' as globals;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toast/toast.dart';
 
 class AddEditQus extends StatefulWidget {

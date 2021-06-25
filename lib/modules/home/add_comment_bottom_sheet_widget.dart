@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'package:auroim/modules/bussPost/portfolioPitch.dart';
 import 'package:auroim/modules/bussPost/stockPitch.dart';
 import 'package:auroim/modules/home/create_a_poll.dart';
 import 'package:auroim/modules/home/vote_long_short.dart';
 import 'package:auroim/modules/qaInvForumPages/addEditQus.dart';
-import 'package:auroim/reusables/local_pick_file.dart';
 import 'package:auroim/widgets/aws/aws_client.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';

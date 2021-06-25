@@ -24,7 +24,7 @@ class UsernameFunctionalityProvider with ChangeNotifier {
     // print("session token: $sessionToken");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -55,7 +55,7 @@ class UsernameFunctionalityProvider with ChangeNotifier {
     print("get set following url : $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -71,7 +71,6 @@ class UsernameFunctionalityProvider with ChangeNotifier {
     } else {
       print("Error occurred during checking username");
       return false;
-
     }
   }
 }

@@ -43,8 +43,7 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            PractionarsScreen(),
+                        builder: (BuildContext context) => PractionarsScreen(),
                       ),
                     );
                   },
@@ -104,7 +103,8 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                   replacement: Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(left: 20, right: 20),
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                    padding: EdgeInsets.only(
+                        left: 25, right: 25, top: 10, bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
@@ -178,7 +178,8 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                   replacement: Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(left: 20, right: 20),
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                    padding: EdgeInsets.only(
+                        left: 25, right: 25, top: 10, bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
@@ -251,7 +252,9 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.60,
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(color: Color(0xffF8F8F8), borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(
+                        color: Color(0xffF8F8F8),
+                        borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         focusColor: Colors.white,
@@ -285,7 +288,10 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                         ),
                         hint: Text(
                           "Select Module",
-                          style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
                         ),
                         onChanged: (String value) {
                           setState(() {
@@ -302,7 +308,9 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.60,
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(color: Color(0xffF8F8F8), borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(
+                        color: Color(0xffF8F8F8),
+                        borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         focusColor: Colors.white,
@@ -336,7 +344,10 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                         ),
                         hint: Text(
                           "Select Module",
-                          style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
                         ),
                         onChanged: (String value) {
                           setState(() {
@@ -359,7 +370,8 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
                           'Please book your seats buy clicking this button',
-                          style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300, fontSize: 20),
                         ),
                       ),
                       SizedBox(
@@ -378,7 +390,8 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                                     color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color(0xff000000).withOpacity(0.15),
+                                        color:
+                                            Color(0xff000000).withOpacity(0.15),
                                         offset: const Offset(
                                           5.0,
                                           5.0,
@@ -411,7 +424,10 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                       ListTile(
                         title: Text(
                           'Please select Date and time.',
-                          style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w300),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300),
                         ),
                         trailing: IconButton(
                           onPressed: () {},
@@ -437,7 +453,8 @@ class _GroupLiveClassesState extends State<GroupLiveClasses> {
                                     color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color(0xff000000).withOpacity(0.15),
+                                        color:
+                                            Color(0xff000000).withOpacity(0.15),
                                         offset: const Offset(
                                           5.0,
                                           5.0,

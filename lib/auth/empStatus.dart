@@ -13,7 +13,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
 class EmpStatus extends StatefulWidget {
-
   final String parentFrom;
 
   const EmpStatus({Key key, @required this.parentFrom}) : super(key: key);
@@ -27,7 +26,6 @@ class _EmpStatusState extends State<EmpStatus> {
   bool _visibleEmpStatus = false;
   ApiProvider request = new ApiProvider();
 
-
   TextEditingController empStatusNameController = new TextEditingController();
   TextEditingController empStatusOccpController = new TextEditingController();
 
@@ -38,12 +36,36 @@ class _EmpStatusState extends State<EmpStatus> {
     });
   }
 
-  List<String> empStatusList = <String>['Employed','Retired','Self-Employed','At home trader (no other occupation)','Student/ Intern','Unemployed','Homemaker'];
+  List<String> empStatusList = <String>[
+    'Employed',
+    'Retired',
+    'Self-Employed',
+    'At home trader (no other occupation)',
+    'Student/ Intern',
+    'Unemployed',
+    'Homemaker'
+  ];
 
-  List<String> empNatureBuss = <String>['Architecture/Engineering','Arts/Design','Business, Non-Finance','Community/Social Service',
-    'Computer/Information Technology','Construction/Extraction','Education/Training/Library','Farming, Fishing and Forestry','Finance/Broker Dealer (407 flag)',
-    'Food Preparation and Servicing','Healthcare','Installation, Maintenance, and Repair','Legal','Life, Physical and Social Science','Media and Communications',
-    'Military/Law Enforcement, Government, Protective Service','Personal Care/Service','Production','Transportation and Material Moving'
+  List<String> empNatureBuss = <String>[
+    'Architecture/Engineering',
+    'Arts/Design',
+    'Business, Non-Finance',
+    'Community/Social Service',
+    'Computer/Information Technology',
+    'Construction/Extraction',
+    'Education/Training/Library',
+    'Farming, Fishing and Forestry',
+    'Finance/Broker Dealer (407 flag)',
+    'Food Preparation and Servicing',
+    'Healthcare',
+    'Installation, Maintenance, and Repair',
+    'Legal',
+    'Life, Physical and Social Science',
+    'Media and Communications',
+    'Military/Law Enforcement, Government, Protective Service',
+    'Personal Care/Service',
+    'Production',
+    'Transportation and Material Moving'
   ];
 
   String selectedEmpStatus;
@@ -57,10 +79,8 @@ class _EmpStatusState extends State<EmpStatus> {
 
   final _empStatusFormKey = new GlobalKey<FormState>();
 
-  Widget getEmpStatusDropDownList()
-  {
-    if (empStatusList != null && empStatusList.length != 0)
-    {
+  Widget getEmpStatusDropDownList() {
+    if (empStatusList != null && empStatusList.length != 0) {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedEmpStatus,
@@ -74,17 +94,13 @@ class _EmpStatusState extends State<EmpStatus> {
           items: empStatusList.map((String value) {
             return new DropdownMenuItem(
               value: value,
-              child: new Text(
-                  value,
-                style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
-              ),
+              child: new Text(value,
+                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
             );
           }).toList(),
         ),
       );
-    }
-    else
-    {
+    } else {
       return Container(
         height: 0.0,
         width: 0.0,
@@ -92,9 +108,7 @@ class _EmpStatusState extends State<EmpStatus> {
     }
   }
 
-
-  Widget getEmpStatusField()
-  {
+  Widget getEmpStatusField() {
     return new FormField(
       builder: (FormFieldState state) {
         return InputDecorator(
@@ -108,16 +122,16 @@ class _EmpStatusState extends State<EmpStatus> {
         );
       },
       validator: (val) {
-        return ((val != null && val!='') || (selectedEmpStatus!=null && selectedEmpStatus!='')) ? null : 'Please select employment status';
+        return ((val != null && val != '') ||
+                (selectedEmpStatus != null && selectedEmpStatus != ''))
+            ? null
+            : 'Please select employment status';
       },
     );
   }
 
-
-  Widget getEmpBussDropDownList()
-  {
-    if (empNatureBuss != null && empNatureBuss.length != 0)
-    {
+  Widget getEmpBussDropDownList() {
+    if (empNatureBuss != null && empNatureBuss.length != 0) {
       return new DropdownButtonHideUnderline(
         child: new DropdownButton(
           value: selectedEmpBuss,
@@ -131,17 +145,13 @@ class _EmpStatusState extends State<EmpStatus> {
           items: empNatureBuss.map((String value) {
             return new DropdownMenuItem(
               value: value,
-              child: new Text(
-                  value,
-                style: AllCoustomTheme.getDropDownMenuItemStyleTheme()
-              ),
+              child: new Text(value,
+                  style: AllCoustomTheme.getDropDownMenuItemStyleTheme()),
             );
           }).toList(),
         ),
       );
-    }
-    else
-    {
+    } else {
       return Container(
         height: 0.0,
         width: 0.0,
@@ -149,10 +159,7 @@ class _EmpStatusState extends State<EmpStatus> {
     }
   }
 
-
-
-  Widget getEmpBusinessField()
-  {
+  Widget getEmpBusinessField() {
     return new FormField(
       builder: (FormFieldState state) {
         return InputDecorator(
@@ -166,12 +173,13 @@ class _EmpStatusState extends State<EmpStatus> {
         );
       },
       validator: (val) {
-        return ((val != null && val!='') || (selectedEmpBuss!=null && selectedEmpBuss!='')) ? null : 'choose nature of employer business';
+        return ((val != null && val != '') ||
+                (selectedEmpBuss != null && selectedEmpBuss != ''))
+            ? null
+            : 'choose nature of employer business';
       },
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -205,23 +213,19 @@ class _EmpStatusState extends State<EmpStatus> {
                               child: new Image(
                                   width: 150.0,
                                   fit: BoxFit.fill,
-                                  image: new AssetImage('assets/logo.png')
-                              ),
-                            )
-                        ),
+                                  image: new AssetImage('assets/logo.png')),
+                            )),
                         Container(
-                          margin: EdgeInsets.only(left: 80.0,right: 80.0),
+                          margin: EdgeInsets.only(left: 80.0, right: 80.0),
                           padding: EdgeInsets.only(
                             bottom: 1, // space between underline and text
                           ),
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                    color: Color(0xFFD8AF4F),
-                                    width: 1.5, // Underline width
-                                  )
-                              )
-                          ),
+                            color: Color(0xFFD8AF4F),
+                            width: 1.5, // Underline width
+                          ))),
                         ),
                         _visibleEmpStatus
                             ? Container(
@@ -236,11 +240,13 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10,right: 20),
+                                              padding: EdgeInsets.only(
+                                                  left: 14,
+                                                  bottom: 10,
+                                                  right: 20),
                                               child: getEmpStatusField(),
                                             ),
                                           ),
-
                                         ],
                                       ),
                                       SizedBox(
@@ -250,11 +256,13 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10,right:20),
+                                              padding: EdgeInsets.only(
+                                                  left: 14,
+                                                  bottom: 10,
+                                                  right: 20),
                                               child: getEmpBusinessField(),
                                             ),
                                           ),
-
                                         ],
                                       ),
                                       SizedBox(
@@ -264,25 +272,37 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10,right:20),
+                                              padding: EdgeInsets.only(
+                                                  left: 14,
+                                                  bottom: 10,
+                                                  right: 20),
                                               child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                                keyboardType: TextInputType.text,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                  hintText: 'Enter Occupation here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Function/Role',
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                                ),
-                                                controller: empStatusOccpController,
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText:
+                                                        'Enter Occupation here...',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText: 'Function/Role',
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
+                                                controller:
+                                                    empStatusOccpController,
                                                 validator: _validateOccupation,
                                               ),
                                             ),
                                           ),
-
                                         ],
                                       ),
                                       SizedBox(
@@ -292,109 +312,149 @@ class _EmpStatusState extends State<EmpStatus> {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.only(left: 14, bottom: 10,right:20),
+                                              padding: EdgeInsets.only(
+                                                  left: 14,
+                                                  bottom: 10,
+                                                  right: 20),
                                               child: TextFormField(
-                                                cursorColor: AllCoustomTheme.getTextThemeColor(),
-                                                style: AllCoustomTheme.getTextFormFieldBaseStyleTheme(),
-                                                keyboardType: TextInputType.text,
+                                                cursorColor: AllCoustomTheme
+                                                    .getTextThemeColor(),
+                                                style: AllCoustomTheme
+                                                    .getTextFormFieldBaseStyleTheme(),
+                                                keyboardType:
+                                                    TextInputType.text,
                                                 decoration: new InputDecoration(
-                                                  focusColor: AllCoustomTheme.getTextThemeColor(),
-                                                  fillColor: AllCoustomTheme.getTextThemeColor(),
-                                                  hintText: 'Enter Name here...',
-                                                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: ConstanceData.SIZE_TITLE14),
-                                                  labelText: 'Name of Employer',
-                                                  /*suffixText: "(can skip if not comfortable sharing",
+                                                    focusColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    fillColor: AllCoustomTheme
+                                                        .getTextThemeColor(),
+                                                    hintText:
+                                                        'Enter Name here...',
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: ConstanceData
+                                                            .SIZE_TITLE14),
+                                                    labelText:
+                                                        'Name of Employer',
+                                                    /*suffixText: "(can skip if not comfortable sharing",
                                                   suffixStyle: TextStyle(
                                                     fontSize: ConstanceData.SIZE_TITLE10,
                                                     color: Colors.black,
                                                     fontFamily: "Rasa",
                                                     fontStyle: FontStyle.normal,
                                                   ),*/
-                                                  labelStyle: AllCoustomTheme.getTextFormFieldLabelStyleTheme()
-                                                ),
+                                                    labelStyle: AllCoustomTheme
+                                                        .getTextFormFieldLabelStyleTheme()),
                                                 validator: _validateName,
-                                                controller: empStatusNameController,
+                                                controller:
+                                                    empStatusNameController,
                                               ),
                                             ),
                                           ),
-
                                         ],
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(bottom: 20, left: 14, right: 10),
+                                        padding: const EdgeInsets.only(
+                                            bottom: 20, left: 14, right: 10),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: <Widget>[
                                             SizedBox(
                                               height: 50,
                                               child: !_isEmpStatusInProgress
-                                                    ? GestureDetector(
-                                                onTap: () {
-                                                  _submit();
-                                                },
-                                                child: Animator(
-                                                  tween: Tween<double>(begin: 0.8, end: 1.1),
-                                                  curve: Curves.easeInToLinear,
-                                                  cycles: 0,
-                                                  builder: (anim) => Transform.scale(
-                                                    scale: anim.value,
-                                                    child: Container(
-                                                      height: 50,
-                                                      width: 50,
-                                                      decoration: BoxDecoration(
-                                                        border: new Border.all(color: Colors.white, width: 1.5),
-                                                        shape: BoxShape.circle,
-                                                        color: Color(0xFFD8AF4F),
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(left: 3),
-                                                        child: Icon(
-                                                          Icons.arrow_forward_ios,
-                                                          size: 20,
-                                                          color: AllCoustomTheme.getTextThemeColors(),
+                                                  ? GestureDetector(
+                                                      onTap: () {
+                                                        _submit();
+                                                      },
+                                                      child: Animator(
+                                                        tween: Tween<double>(
+                                                            begin: 0.8,
+                                                            end: 1.1),
+                                                        curve: Curves
+                                                            .easeInToLinear,
+                                                        cycles: 0,
+                                                        builder:
+                                                            (_, anim, __) =>
+                                                                Transform.scale(
+                                                          scale: anim.value,
+                                                          child: Container(
+                                                            height: 50,
+                                                            width: 50,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border: new Border
+                                                                      .all(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  width: 1.5),
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: Color(
+                                                                  0xFFD8AF4F),
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 3),
+                                                              child: Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios,
+                                                                size: 20,
+                                                                color: AllCoustomTheme
+                                                                    .getTextThemeColors(),
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                                    : Padding(
-                                                      padding: EdgeInsets.only(right: 14),
-                                                        child: CupertinoActivityIndicator(
-                                                          radius: 12,
-                                                        ),
+                                                    )
+                                                  : Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 14),
+                                                      child:
+                                                          CupertinoActivityIndicator(
+                                                        radius: 12,
+                                                      ),
                                                     ),
                                             ),
                                           ],
                                         ),
                                       ),
                                       SizedBox(
-                                          height: MediaQuery.of(context).size.height*0.30,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.30,
                                           child: Container(
-                                              margin: EdgeInsets.only(left: 10.0,right: 10.0),
+                                              margin: EdgeInsets.only(
+                                                  left: 10.0, right: 10.0),
                                               child: ListView(
-                                                physics: NeverScrollableScrollPhysics(),
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
                                                 children: <Widget>[
                                                   Container(
-                                                    margin: EdgeInsets.only(left: 10.0,right: 3.0),
+                                                    margin: EdgeInsets.only(
+                                                        left: 10.0, right: 3.0),
                                                     child: Text(
                                                       "Note: we will never share your information with a 3rd-party.it's only to make our AI customize",
                                                       style: new TextStyle(
-                                                        // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
+                                                          // color: widget.callingFrom=="Accredited Investor" ?  Color(0xFFFFFFFF) : Color(0xFFCD853F),
                                                           color: Colors.black,
-                                                          fontSize: ConstanceData.SIZE_TITLE14,
-                                                          fontFamily: "RobotoLight",
-                                                          letterSpacing: 0.1
-                                                      ),
+                                                          fontSize:
+                                                              ConstanceData
+                                                                  .SIZE_TITLE14,
+                                                          fontFamily:
+                                                              "RobotoLight",
+                                                          letterSpacing: 0.1),
                                                     ),
                                                   ),
                                                 ],
-                                              )
-                                          )
-                                      ),
+                                              ))),
                                     ],
                                   ),
                                 ),
@@ -414,8 +474,7 @@ class _EmpStatusState extends State<EmpStatus> {
 
   var myScreenFocusNode = FocusNode();
 
-  _submit() async
-  {
+  _submit() async {
     setState(() {
       _isEmpStatusInProgress = true;
     });
@@ -431,60 +490,61 @@ class _EmpStatusState extends State<EmpStatus> {
     var name = empStatusNameController.text.trim();
     var occupation = empStatusOccpController.text.trim();
 
-    var tempJsonReq = {"emp_status":"$selectedEmpStatus","emp_business":"$selectedEmpBuss","occupation":"$occupation","emp_name":"$name"};
+    var tempJsonReq = {
+      "emp_status": "$selectedEmpStatus",
+      "emp_business": "$selectedEmpBuss",
+      "occupation": "$occupation",
+      "emp_name": "$name"
+    };
 
     String jsonReq = json.encode(tempJsonReq);
     print("employment status : " + "${jsonReq.toString()}");
-    var jsonReqResp = await request.postSubmitResponse('users/add_employment', jsonReq);
+    var jsonReqResp =
+        await request.postSubmitResponse('users/add_employment', jsonReq);
 
     var result = json.decode(jsonReqResp.body);
     print("post submit response: $result");
 
-
-    if(jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201)
-    {
-
-      if (result!=null && result.containsKey('auth') && result['auth']==true)
-      {
+    if (jsonReqResp.statusCode == 200 || jsonReqResp.statusCode == 201) {
+      if (result != null &&
+          result.containsKey('auth') &&
+          result['auth'] == true) {
         _empStatusFormKey.currentState.save();
 
         Toast.show("${result['message']}", context,
-            duration: Toast.LENGTH_LONG,
-            gravity: Toast.BOTTOM);
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
-        List<RadioQusModel> questions = await getRadioQusTempData(widget.parentFrom,'piVersion');
+        List<RadioQusModel> questions =
+            await getRadioQusTempData(widget.parentFrom, 'piVersion');
 
-        Navigator.of(context, rootNavigator: true).push(
+        Navigator.of(context, rootNavigator: true)
+            .push(
           CupertinoPageRoute<void>(
             builder: (BuildContext context) =>
                 RiskAptForm(optionData: questions),
           ),
-        ).then((onValue) {
+        )
+            .then((onValue) {
           setState(() {
             _isEmpStatusInProgress = false;
           });
         });
       }
-    }
-
-    else if(result!=null && result.containsKey('auth') && result['auth']!=true)
-    {
-
+    } else if (result != null &&
+        result.containsKey('auth') &&
+        result['auth'] != true) {
       Toast.show("${result['message']}", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       setState(() {
         _isEmpStatusInProgress = false;
       });
-    }
-    else{
+    } else {
       setState(() {
         _isEmpStatusInProgress = false;
       });
       Toast.show("Something went wrong!", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
 
 /*    String jsonReq = "users/add_employment?emp_status=$selectedEmpBuss&emp_business=$selectedEmpBuss&occupation=$occupation&emp_name=$name";
@@ -524,12 +584,10 @@ class _EmpStatusState extends State<EmpStatus> {
   }
 
   // ignore: missing_return
-  String _validateName(String value)
-  {
+  String _validateName(String value) {
     Pattern pattern = r'^[A-Za-z _]*[A-Za-z][A-Za-z _]*$';
     RegExp regex = new RegExp(pattern);
-   if(value!='' && value!=null)
-    {
+    if (value != '' && value != null) {
       if (!regex.hasMatch(value))
         return 'Name Consist Only Alphabets';
       else
@@ -538,8 +596,7 @@ class _EmpStatusState extends State<EmpStatus> {
   }
 
   // ignore: missing_return
-  String _validateOccupation(String value)
-  {
+  String _validateOccupation(String value) {
     if (value.isEmpty) {
       return "Occupation Cannot Be Empty";
     }

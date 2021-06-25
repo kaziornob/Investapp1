@@ -103,7 +103,7 @@ class _StockPitchVideoState extends State<StockPitchVideo> {
                       },
                     ),
                   )
-                : _controller.value.initialized
+                : _controller.value.isInitialized
                     ? GestureDetector(
                         onTap: () {
                           if (_controller.value.isPlaying) {

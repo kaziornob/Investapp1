@@ -43,7 +43,7 @@ class PersonalSleeveProvider with ChangeNotifier {
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get daily return portfolio : $url");
 
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(Uri.parse(url), headers: headers);
     print("get daily return portfolio response: ${response.statusCode}");
     var result = jsonDecode(response.body);
 

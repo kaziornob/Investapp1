@@ -41,7 +41,7 @@ class _AuroAiPortfolioState extends State<AuroAiPortfolio> {
                         ),
                         child: ScreenTitleAppbar(
                           colorText: Color(0xFFD8AF4F),
-                          title: "AURO.AI PORTFOLIO ",
+                          title: "AURO.AI PORTFOLIO",
                         ),
                       ),
                       Padding(
@@ -174,7 +174,7 @@ class _AuroAiPortfolioState extends State<AuroAiPortfolio> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text("Auro Portfolio Not Created"),
-                    FlatButton(
+                    TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
@@ -246,7 +246,7 @@ class _AuroAiPortfolioState extends State<AuroAiPortfolio> {
         CarouselSlider.builder(
           carouselController: _carouselController,
           itemCount: 3,
-          itemBuilder: (context, int index) {
+          itemBuilder: (context, index, i) {
             return sliderItem(data[index]);
           },
           options: CarouselOptions(

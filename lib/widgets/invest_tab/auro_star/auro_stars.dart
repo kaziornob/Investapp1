@@ -1,10 +1,7 @@
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/home/homeScreen.dart';
-import 'package:auroim/widgets/invest_tab/auro_star/portfolio_statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:auroim/widgets/invest_tab/auro_star/quantanment.dart';
-import 'package:auroim/constance/global.dart' as globals;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AuroStar extends StatefulWidget {
@@ -45,7 +42,10 @@ class _AuroStarState extends State<AuroStar> {
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
                     onPressed: () => Navigator.of(context).pop(),
                   )
                 ],

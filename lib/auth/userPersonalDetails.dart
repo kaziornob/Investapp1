@@ -141,7 +141,7 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                                     begin: Offset(0, 0), end: Offset(0.2, 0)),
                                 duration: Duration(milliseconds: 500),
                                 cycles: 0,
-                                builder: (anim) => FractionalTranslation(
+                                builder: (_, anim, __) => FractionalTranslation(
                                   translation: anim.value,
                                   child: Icon(
                                     Icons.arrow_back,
@@ -157,8 +157,10 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
                               tween: Tween<double>(begin: 0, end: 1),
                               duration: Duration(milliseconds: 500),
                               cycles: 1,
-                              builder: (anim) => SizeTransition(
-                                sizeFactor: anim,
+                              builder: (_, anim, __) => SizeTransition(
+                                sizeFactor: CurvedAnimation(
+                                    curve: Curves.fastOutSlowIn,
+                                    parent: anim.controller),
                                 axis: Axis.horizontal,
                                 axisAlignment: 1,
                                 child: Text(
@@ -825,7 +827,6 @@ class _UserPersonalDetailsState extends State<UserPersonalDetails> {
 //                               duration: Duration(milliseconds: 500),
 //                               cycles: 1,
 //                               builder: (anim) => SizeTransition(
-//                                 sizeFactor: anim,
 //                                 axis: Axis.horizontal,
 //                                 axisAlignment: 1,
 //                                 child: Text(

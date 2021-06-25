@@ -23,8 +23,8 @@ class StockPitchProvider with ChangeNotifier {
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("upload stock pitch url: $url");
 
-    var response =
-        await http.post(url, headers: headers, body: jsonEncode(body));
+    var response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(body));
     print("get upload stock pitch response: ${response.statusCode}");
     var result = jsonDecode(response.body);
     print(result.toString());
@@ -36,8 +36,7 @@ class StockPitchProvider with ChangeNotifier {
     }
   }
 
-
-  likePitch(like,pitchNumber,email)async{
+  likePitch(like, pitchNumber, email) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -58,7 +57,7 @@ class StockPitchProvider with ChangeNotifier {
     print("post stock pitch likes: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -74,8 +73,7 @@ class StockPitchProvider with ChangeNotifier {
     }
   }
 
-
-  likeCommentReply(category,categoryId,vote)async{
+  likeCommentReply(category, categoryId, vote) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String sessionToken = prefs.getString('Session_token');
 
@@ -88,14 +86,14 @@ class StockPitchProvider with ChangeNotifier {
 
     var body = {
       "category": "$category",
-      "category_id" : "$categoryId",
+      "category_id": "$categoryId",
       "vote": "$vote"
     };
     String url = GlobalInstance.apiBaseUrl + filterPath;
     print("get stock pitch comments: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -110,7 +108,6 @@ class StockPitchProvider with ChangeNotifier {
       return "Error in like/dislike";
     }
   }
-
 
   addComment(email, pitchNumber, answer) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -132,7 +129,7 @@ class StockPitchProvider with ChangeNotifier {
     print("get stock pitch comments: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -168,7 +165,7 @@ class StockPitchProvider with ChangeNotifier {
     print("add stock pitch comments: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -204,7 +201,7 @@ class StockPitchProvider with ChangeNotifier {
     print("get stock pitch comments: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -239,7 +236,7 @@ class StockPitchProvider with ChangeNotifier {
     print("get stock pitch comment replies: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -272,7 +269,7 @@ class StockPitchProvider with ChangeNotifier {
     print("get stock pitch daily Return url: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode(body),
     );
@@ -303,7 +300,7 @@ class StockPitchProvider with ChangeNotifier {
     print("get stock pitches url: $url");
 
     var response = await http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: jsonEncode({"email": email}),
     );

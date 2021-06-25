@@ -22,12 +22,18 @@ class WishListDetail extends StatefulWidget {
   _WishListDetailState createState() => _WishListDetailState();
 }
 
-class _WishListDetailState extends State<WishListDetail> with SingleTickerProviderStateMixin {
+class _WishListDetailState extends State<WishListDetail>
+    with SingleTickerProviderStateMixin {
   bool _isInProgress = false;
 
   int selectedTabIndex;
 
-  final List<Tab> tabList = <Tab>[new Tab(text: 'Posts'), new Tab(text: 'Overview'), new Tab(text: 'Graph'), new Tab(text: 'Filter')];
+  final List<Tab> tabList = <Tab>[
+    new Tab(text: 'Posts'),
+    new Tab(text: 'Overview'),
+    new Tab(text: 'Graph'),
+    new Tab(text: 'Filter')
+  ];
 
   TabController _tabController;
 
@@ -80,18 +86,21 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
         } else {
           allCoinList.addAll(coindata);
           setState(() {
-            allCoinList.removeWhere((length) => length.quote.uSD.marketCap == null);
+            allCoinList
+                .removeWhere((length) => length.quote.uSD.marketCap == null);
             if (allCoin == true) {
               getApiAllData(index);
             }
             lstCryptoCoinDetail.clear();
             lstCryptoCoinDetail.addAll(allCoinList);
-            lstCryptoCoinDetail.sort((a, b) => b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
+            lstCryptoCoinDetail.sort((a, b) =>
+                b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
             print(lstCryptoCoinDetail[0].quote.uSD);
 
             marketListData.clear();
             marketListData.addAll(allCoinList);
-            marketListData.sort((a, b) => b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
+            marketListData.sort((a, b) =>
+                b.quote.uSD.marketCap.compareTo(a.quote.uSD.marketCap));
           });
         }
       }
@@ -105,7 +114,8 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
     callItself();
   }
 
-  Future<Null> changeHistory(String type, String amt, String total, String agg) async {
+  Future<Null> changeHistory(
+      String type, String amt, String total, String agg) async {
     setState(() {
       _high = "0";
       _low = "0";
@@ -158,14 +168,16 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
 
   Future<Null> getHistoryOHLCV() async {
     var response = await http.get(
-        Uri.encodeFull("https://min-api.cryptocompare.com/data/histo" +
+        Uri.parse("https://min-api.cryptocompare.com/data/histo" +
             ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][3] +
             "?fsym=" +
             symbol +
             "&tsym=USD&limit=" +
-            (ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][1] - 1).toString() +
+            (ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][1] - 1)
+                .toString() +
             "&aggregate=" +
-            ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][2].toString()),
+            ohlcvWidthOptions[historyTotal][currentOHLCVWidthSetting][2]
+                .toString()),
         headers: {"Accept": "application/json"});
     setState(() {
       historyOHLCV = new JsonDecoder().convert(response.body)["Data"];
@@ -187,7 +199,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
             margin: EdgeInsets.only(left: 12.0, right: 3.0),
             decoration: BoxDecoration(
               color: AllCoustomTheme.getsecoundTextThemeColor(),
-              border: new Border.all(color: AllCoustomTheme.getsecoundTextThemeColor(), width: 1.5),
+              border: new Border.all(
+                  color: AllCoustomTheme.getsecoundTextThemeColor(),
+                  width: 1.5),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,7 +331,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                   child: Text(
                     "Is Tesla Overvalued ? ",
                     style: new TextStyle(
-                        color: AllCoustomTheme.getTextThemeColors(), fontSize: ConstanceData.SIZE_TITLE14, fontStyle: FontStyle.italic),
+                        color: AllCoustomTheme.getTextThemeColors(),
+                        fontSize: ConstanceData.SIZE_TITLE14,
+                        fontStyle: FontStyle.italic),
                   ),
                 ),
               ],
@@ -353,7 +369,9 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
             height: 10,
           ),
           Container(
-            child: Image(fit: BoxFit.fill, image: new AssetImage('assets/handShake.png')),
+            child: Image(
+                fit: BoxFit.fill,
+                image: new AssetImage('assets/handShake.png')),
           ),
         ],
       ),
@@ -649,7 +667,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         duration: Duration(milliseconds: 500),
                         curve: Curves.decelerate,
                         cycles: 1,
-                        builder: (anim) => Transform.scale(
+                        builder: (_, anim, __) => Transform.scale(
                           scale: anim.value,
                           child: Text(
                             '\$',
@@ -668,7 +686,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         duration: Duration(milliseconds: 500),
                         curve: Curves.decelerate,
                         cycles: 1,
-                        builder: (anim) => Transform.scale(
+                        builder: (_, anim, __) => Transform.scale(
                           scale: anim.value,
                           child: Text(
                             generalStats != null
@@ -701,13 +719,14 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                         duration: Duration(milliseconds: 500),
                         curve: Curves.decelerate,
                         cycles: 1,
-                        builder: (anim) => Transform.scale(
+                        builder: (_, anim, __) => Transform.scale(
                           scale: anim.value,
                           child: OHLCVGraph(
                             data: historyOHLCV,
                             enableGridLines: true,
                             gridLineColor: globals.buttoncolor1,
-                            gridLineLabelColor: AllCoustomTheme.getsecoundTextThemeColor(),
+                            gridLineLabelColor:
+                                AllCoustomTheme.getsecoundTextThemeColor(),
                             gridLineAmount: 4,
                             volumeProp: 0.3,
                             lineWidth: 1,
@@ -718,7 +737,8 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                       )
                     : Container(
                         alignment: Alignment.topCenter,
-                        child: Text("No OHLCV data found :(", style: Theme.of(context).textTheme.caption),
+                        child: Text("No OHLCV data found :(",
+                            style: Theme.of(context).textTheme.caption),
                       )
                 : Container(
                     child: Center(
@@ -734,7 +754,7 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                       duration: Duration(milliseconds: 500),
                       curve: Curves.decelerate,
                       cycles: 1,
-                      builder: (anim) => Transform.scale(
+                      builder: (_, anim, __) => Transform.scale(
                         scale: anim.value,
                         child: QuickPercentChangeBar(
                           snapshot: generalStats,
@@ -798,14 +818,18 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                         Navigator.pop(context);
                                       },
                                       child: Animator(
-                                        tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                                        tween: Tween<Offset>(
+                                            begin: Offset(0, 0),
+                                            end: Offset(0.2, 0)),
                                         duration: Duration(milliseconds: 500),
                                         cycles: 0,
-                                        builder: (anim) => FractionalTranslation(
+                                        builder: (_, anim, __) =>
+                                            FractionalTranslation(
                                           translation: anim.value,
                                           child: Icon(
                                             Icons.arrow_back_ios,
-                                            color: AllCoustomTheme.getTextThemeColors(),
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors(),
                                           ),
                                         ),
                                       ),
@@ -823,13 +847,15 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                   children: [
                                     Container(
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(5.0), //or 15.0
+                                        borderRadius: BorderRadius.circular(
+                                            5.0), //or 15.0
                                         child: Container(
                                           height: 50.0,
                                           width: 50.0,
                                           color: Color(0xffFF0E58),
                                           child: Image(
-                                            image: AssetImage('assets/buttonBadge.png'),
+                                            image: AssetImage(
+                                                'assets/buttonBadge.png'),
                                             fit: BoxFit.fill,
                                             height: 40,
                                             width: 50,
@@ -842,19 +868,25 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                     ),
                                     Container(
                                         child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
                                             child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "GREEN",
                                               style: new TextStyle(
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColors(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE16,
                                               ),
                                             ),
                                             SizedBox(
@@ -864,7 +896,8 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                               "|",
                                               style: new TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
                                               ),
                                             ),
                                             SizedBox(
@@ -874,7 +907,8 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                               "Green Motors, Inc",
                                               style: new TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
                                               ),
                                             ),
                                           ],
@@ -884,14 +918,18 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                         ),
                                         Container(
                                             child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "854.41",
                                               style: new TextStyle(
-                                                color: AllCoustomTheme.getTextThemeColors(),
-                                                fontSize: ConstanceData.SIZE_TITLE16,
+                                                color: AllCoustomTheme
+                                                    .getTextThemeColors(),
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE16,
                                               ),
                                             ),
                                             SizedBox(
@@ -901,7 +939,8 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                               "4.97 (0.57%)",
                                               style: new TextStyle(
                                                 color: Colors.lightGreen,
-                                                fontSize: ConstanceData.SIZE_TITLE14,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE14,
                                               ),
                                             ),
                                           ],
@@ -911,14 +950,17 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                         ),
                                         Container(
                                             child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "PRICES BY NASDAQ, IN USD",
                                               style: new TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: ConstanceData.SIZE_TITLE12,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE12,
                                               ),
                                             ),
                                             Icon(
@@ -930,7 +972,8 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                               "MARKET CLOSED",
                                               style: new TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: ConstanceData.SIZE_TITLE10,
+                                                fontSize:
+                                                    ConstanceData.SIZE_TITLE10,
                                               ),
                                             ),
                                           ],
@@ -967,23 +1010,28 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                       height: 30,
                                       width: 150,
                                       decoration: BoxDecoration(
-                                        color: AllCoustomTheme.getThemeData().textSelectionColor,
-                                        border: new Border.all(color: Colors.white, width: 1.5),
+                                        color: AllCoustomTheme.getThemeData()
+                                            .textSelectionColor,
+                                        border: new Border.all(
+                                            color: Colors.white, width: 1.5),
                                       ),
                                       child: MaterialButton(
                                         splashColor: Colors.grey,
                                         child: Text(
                                           "TRADE",
                                           style: TextStyle(
-                                            color: AllCoustomTheme.getTextThemeColors(),
-                                            fontSize: ConstanceData.SIZE_TITLE16,
+                                            color: AllCoustomTheme
+                                                .getTextThemeColors(),
+                                            fontSize:
+                                                ConstanceData.SIZE_TITLE16,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         onPressed: () {
                                           Navigator.of(context).push(
                                             CupertinoPageRoute(
-                                              builder: (BuildContext context) => TradeForm(),
+                                              builder: (BuildContext context) =>
+                                                  TradeForm(),
                                             ),
                                           );
                                         },
@@ -1002,7 +1050,8 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                 margin: EdgeInsets.only(left: 5.0),
                                 width: MediaQuery.of(context).size.width,
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     TabBar(
@@ -1010,9 +1059,12 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                       onTap: (index) {
                                         selectedTabIndex = index;
                                       },
-                                      labelColor: AllCoustomTheme.getTextThemeColors(),
-                                      labelStyle: TextStyle(fontSize: 17.0, letterSpacing: 0.2),
-                                      indicatorColor: AllCoustomTheme.getTextThemeColors(),
+                                      labelColor:
+                                          AllCoustomTheme.getTextThemeColors(),
+                                      labelStyle: TextStyle(
+                                          fontSize: 17.0, letterSpacing: 0.2),
+                                      indicatorColor:
+                                          AllCoustomTheme.getTextThemeColors(),
                                       indicatorWeight: 4.0,
                                       isScrollable: true,
                                       unselectedLabelColor: Colors.grey,
@@ -1021,21 +1073,24 @@ class _WishListDetailState extends State<WishListDetail> with SingleTickerProvid
                                           width: 50,
                                           height: 50,
                                           child: new Tab(
-                                            icon: Icon(FontAwesomeIcons.briefcase),
+                                            icon: Icon(
+                                                FontAwesomeIcons.briefcase),
                                           ),
                                         ),
                                         Container(
                                           width: 50,
                                           height: 50,
                                           child: new Tab(
-                                            icon: Icon(FontAwesomeIcons.chartBar),
+                                            icon:
+                                                Icon(FontAwesomeIcons.chartBar),
                                           ),
                                         ),
                                         Container(
                                           width: 50,
                                           height: 50,
                                           child: new Tab(
-                                            icon: Icon(FontAwesomeIcons.arrowsAltV),
+                                            icon: Icon(
+                                                FontAwesomeIcons.arrowsAltV),
                                           ),
                                         ),
                                         Container(
@@ -1149,13 +1204,16 @@ class ReadMoreTextState extends State<ReadMoreText> {
       effectiveTextStyle = defaultTextStyle.style.merge(widget.style);
     }
 
-    final textAlign = widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
+    final textAlign =
+        widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
     final textDirection = widget.textDirection ?? Directionality.of(context);
-    final textScaleFactor = widget.textScaleFactor ?? MediaQuery.textScaleFactorOf(context);
+    final textScaleFactor =
+        widget.textScaleFactor ?? MediaQuery.textScaleFactorOf(context);
     final overflow = defaultTextStyle.overflow;
     final locale = widget.locale ?? Localizations.localeOf(context);
 
-    final colorClickableText = widget.colorClickableText ?? Theme.of(context).accentColor;
+    final colorClickableText =
+        widget.colorClickableText ?? Theme.of(context).accentColor;
 
     TextSpan link = TextSpan(
       text: _readMore ? widget.trimCollapsedText : widget.trimExpandedText,
@@ -1218,7 +1276,9 @@ class ReadMoreTextState extends State<ReadMoreText> {
             if (widget.trimLength < widget.data.length) {
               textSpan = TextSpan(
                 style: effectiveTextStyle,
-                text: _readMore ? widget.data.substring(0, widget.trimLength) : widget.data,
+                text: _readMore
+                    ? widget.data.substring(0, widget.trimLength)
+                    : widget.data,
                 children: <TextSpan>[link],
               );
             } else {
@@ -1232,7 +1292,10 @@ class ReadMoreTextState extends State<ReadMoreText> {
             if (textPainter.didExceedMaxLines) {
               textSpan = TextSpan(
                 style: effectiveTextStyle,
-                text: _readMore ? widget.data.substring(0, endIndex) + (linkLongerThanLine ? _kLineSeparator : '') : widget.data,
+                text: _readMore
+                    ? widget.data.substring(0, endIndex) +
+                        (linkLongerThanLine ? _kLineSeparator : '')
+                    : widget.data,
                 children: <TextSpan>[link],
               );
             } else {
@@ -1243,7 +1306,8 @@ class ReadMoreTextState extends State<ReadMoreText> {
             }
             break;
           default:
-            throw Exception('TrimMode type: ${widget.trimMode} is not supported');
+            throw Exception(
+                'TrimMode type: ${widget.trimMode} is not supported');
         }
 
         return RichText(

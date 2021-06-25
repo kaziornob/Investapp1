@@ -99,7 +99,7 @@ class _AuroPortfolioReturnState extends State<AuroPortfolioReturn> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text("Auro Portfolio Not Created"),
-                    FlatButton(
+                    TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(

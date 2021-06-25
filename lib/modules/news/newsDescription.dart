@@ -60,10 +60,11 @@ class _NewsDescriptionState extends State<NewsDescription> {
                         Navigator.pop(context);
                       },
                       child: Animator(
-                        tween: Tween<Offset>(begin: Offset(0, 0), end: Offset(0.2, 0)),
+                        tween: Tween<Offset>(
+                            begin: Offset(0, 0), end: Offset(0.2, 0)),
                         duration: Duration(milliseconds: 500),
                         cycles: 0,
-                        builder: (anim) => FractionalTranslation(
+                        builder: (_, anim, __) => FractionalTranslation(
                           translation: anim.value,
                           child: Icon(
                             Icons.arrow_back_ios,
@@ -76,7 +77,7 @@ class _NewsDescriptionState extends State<NewsDescription> {
                       duration: Duration(milliseconds: 500),
                       curve: Curves.decelerate,
                       cycles: 1,
-                      builder: (anim) => Transform.scale(
+                      builder: (_, anim, __) => Transform.scale(
                         scale: anim.value,
                         child: Text(
                           'Crypto News',
@@ -98,7 +99,7 @@ class _NewsDescriptionState extends State<NewsDescription> {
               //   child: Animator(
               //     duration: Duration(milliseconds: 500),
               //     cycles: 1,
-              //     builder: (anim) => Transform.scale(
+              //     builder: (_,anim,__) => Transform.scale(
               //       scale: anim.value,
               //       child: WebviewScaffold(
               //         url: widget.url,

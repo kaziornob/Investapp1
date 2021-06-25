@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/api/reusable_functions.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:auroim/widgets/auro_paper_portfolio_performace_chart.dart';
