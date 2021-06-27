@@ -34,6 +34,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screen/screen.dart';
@@ -41,7 +42,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'constance/global.dart';
 import 'constance/routes.dart';
 import 'constance/themes.dart';
-import 'modules/home/homeScreen.dart';
+import 'presentation/pages/app/homeScreen.dart';
 import 'package:auroim/constance/global.dart' as globals;
 
 import 'modules/introduction/introduction_screen2.dart';
@@ -254,7 +255,7 @@ class _MyAppState extends State<MyApp> {
       return new HomeScreen();
     } else {
       // return new IntroductionScreen();
-      return new IntroductionScreen2();
+      // return new IntroductionScreen2();
     }
   }
 
@@ -383,7 +384,7 @@ class _MyAppState extends State<MyApp> {
         child: ScreenUtilInit(
             designSize: const Size(490.9, 1036.4),
             builder: () {
-              return MaterialApp(
+              return GetMaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Auro',
                 home: _decideMainPage(context),

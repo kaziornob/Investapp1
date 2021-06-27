@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/constance.dart';
-import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/presentation/pages/app/homeScreen.dart';
 import 'package:auroim/reusable_widgets/customButton.dart';
 import 'package:auroim/reusable_widgets/screen_title_appbar.dart';
 import 'package:flutter/cupertino.dart';

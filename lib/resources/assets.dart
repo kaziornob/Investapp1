@@ -139,6 +139,7 @@ class Assets {
   static const String authImage = 'assets/authImage.jpg';
   static const String comment = 'assets/comment.png';
   static const String jhunjhunwala = 'assets/jhunjhunwala.png';
+  static const String ibImage = 'assets/ib_image.png';
   static const String growthArrowWithBars = 'assets/growth_arrow_with_bars.png';
   static const String zhang = 'assets/zhang.png';
   static const String eduInvest = 'assets/edu_invest.png';

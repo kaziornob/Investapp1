@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/presentation/pages/app/homeScreen.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -30,30 +30,32 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
   void startTimer(loadingSetState) {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
-        oneSec,
-        (Timer timer) => loadingSetState(() {
-              if (_start >= 130) {
-                print("timer completed");
-                // Navigator.of(context).pushReplacement(
-                //   MaterialPageRoute(
-                //     builder: (context) => HomeScreen(),
-                //   ),
-                // );
-                Provider.of<PortfolioProvider>(context,listen: false).changeStateOfListener();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                  ModalRoute.withName("/Home"),
-                );
-                // timer.cancel();
-              } else {
-                _start = _start + 1;
-                setState(() {
-                  percentage = _start / 130;
-                });
-                print(_start / 130);
-              }
-            }),);
+      oneSec,
+      (Timer timer) => loadingSetState(() {
+        if (_start >= 130) {
+          print("timer completed");
+          // Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(
+          //     builder: (context) => HomeScreen(),
+          //   ),
+          // );
+          Provider.of<PortfolioProvider>(context, listen: false)
+              .changeStateOfListener();
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            ModalRoute.withName("/Home"),
+          );
+          // timer.cancel();
+        } else {
+          _start = _start + 1;
+          setState(() {
+            percentage = _start / 130;
+          });
+          print(_start / 130);
+        }
+      }),
+    );
   }
 
   @override
@@ -95,7 +97,7 @@ class _LoadingDialogWithTimerState extends State<LoadingDialogWithTimer> {
             children: [
               widget.showTimer
                   ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Image.asset(
                           'assets/hourglass_bw.png',

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/presentation/pages/app/homeScreen.dart';
 import 'package:auroim/provider_abhinav/portfolio_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:auroim/constance/global.dart';

@@ -3,7 +3,7 @@ import 'package:auroim/api/featured_companies_provider.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
 import 'package:auroim/model/tagAndChartData.dart';
-import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/presentation/pages/app/homeScreen.dart';
 import 'package:auroim/modules/qaInvForumPages/qusView.dart';
 import 'package:auroim/reusable_widgets/customButton.dart';
 import 'package:auroim/reusable_widgets/screen_title_appbar.dart';

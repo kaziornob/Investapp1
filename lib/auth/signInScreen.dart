@@ -4,7 +4,7 @@ import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/auth/forgotPasswordScreen.dart';
 import 'package:auroim/constance/constance.dart';
 import 'package:auroim/constance/themes.dart';
-import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/presentation/pages/app/homeScreen.dart';
 import 'package:auroim/provider_abhinav/user_details.dart';
 import 'package:auroim/widgets/animated_widgets/animated_back_button.dart';
 import 'package:flutter/cupertino.dart';

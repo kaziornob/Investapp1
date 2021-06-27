@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:auroim/api/apiProvider.dart';
 import 'package:auroim/constance/global.dart';
-import 'package:auroim/modules/home/homeScreen.dart';
+import 'package:auroim/presentation/pages/app/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
